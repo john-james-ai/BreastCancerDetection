@@ -26,7 +26,7 @@ classifiers = [
 ]
 
 packages = [
-    { include = "bcd", from = "src" }
+    { include = "bcd"}
 ]
 
 [tool.poetry.dependencies]
@@ -62,7 +62,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 profile = "black"
-src_paths = ["src", "tests"]
+src_paths = ["bcd", "tests"]
 
 [tool.black]
 target-version = ["py37", "py38", "py39"]
@@ -75,6 +75,10 @@ addopts = """\
     --cov-report term-missing \
     --no-cov-on-fail \
 """
+filterwarnings = [
+    "ignore::pytest.PytestCollectionWarning",
+    "ignore::pytest.PytestUnknownMarkWarning",
+    ]
 
 [tool.coverage.report]
 fail_under = 100
