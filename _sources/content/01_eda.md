@@ -73,16 +73,15 @@ Metadata for each abnormality above contains:
 - Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image
 - Path to image files
 
-```{code-cell} ipython3
+```{"tags":["hide-cell"]}
 import sys
+import os
+sys.path.append(os.path.abspath(os.path.join("../..")))
+```
+
+```{code-cell} ipython3
 import warnings
 warnings.filterwarnings("ignore")
-import os
-print(sys.path)
-#os.chdir(os.path.abspath(os.path.join("../..")))
-sys.path.append(os.path.abspath(os.path.join("../..")))
-print(os.getcwd())
-print(sys.path)
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
