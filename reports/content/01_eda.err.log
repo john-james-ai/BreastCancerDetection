@@ -25,16 +25,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pydicom
 from PIL import Image
-from bcd.data.dataset import CBISMeta
+from ..bcd.data.dataset import CBISMeta
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;31mImportError[0m                               Traceback (most recent call last)
 Cell [0;32mIn[1], line 11[0m
 [1;32m      9[0m [38;5;28;01mimport[39;00m [38;5;21;01mpydicom[39;00m
 [1;32m     10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mPIL[39;00m [38;5;28;01mimport[39;00m Image
-[0;32m---> 11[0m [38;5;28;01mfrom[39;00m [38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdataset[39;00m [38;5;28;01mimport[39;00m CBISMeta
+[0;32m---> 11[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdataset[39;00m [38;5;28;01mimport[39;00m CBISMeta
 
-[0;31mModuleNotFoundError[0m: No module named 'bcd'
+[0;31mImportError[0m: attempted relative import with no known parent package
 

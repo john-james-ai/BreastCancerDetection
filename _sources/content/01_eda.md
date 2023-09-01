@@ -85,7 +85,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pydicom
 from PIL import Image
-from bcd.data.dataset import CBISMeta
+from ..bcd.data.dataset import CBISMeta
 ```
 
 ```{code-cell} python3
