@@ -81,9 +81,6 @@ Metadata for each abnormality above contains:
 import sys
 import os
 os.chdir(os.path.abspath(os.path.join("../..")))
-```
-
-```{code-cell}
 import warnings
 warnings.filterwarnings("ignore")
 from tqdm import tqdm
