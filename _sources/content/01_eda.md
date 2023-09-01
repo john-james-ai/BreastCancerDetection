@@ -74,7 +74,7 @@ Metadata for each abnormality above contains:
 - Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image
 - Path to image files
 
-```{code-cell} ipython3
+```python
 import warnings
 warnings.filterwarnings("ignore")
 import os
