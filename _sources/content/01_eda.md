@@ -77,7 +77,7 @@ Metadata for each abnormality above contains:
 {"tags":["hide-cell"]}
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join("../..")))
+os.chdir(os.path.abspath(os.path.join("../..")))
 ```
 
 ```{code-cell} ipython3
