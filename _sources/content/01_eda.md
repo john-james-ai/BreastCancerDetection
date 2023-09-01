@@ -79,8 +79,8 @@ import sys
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.chdir(os.path.abspath(os.path.join("..\..",os.getcwd())))
-sys.path.insert(0,os.path.abspath(os.path.join("..\..",os.getcwd())))
+os.chdir(os.path.abspath(os.path.join("..\..\..",os.getcwd())))
+sys.path.insert(0,os.path.abspath(os.path.join("..\..\..",os.getcwd())))
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
