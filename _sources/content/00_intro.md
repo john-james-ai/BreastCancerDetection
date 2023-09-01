@@ -8,7 +8,8 @@ It does not go in-depth into any particular topic - check out [the Jupyter Book 
 Check out the content pages bundled with this sample book to see more.
 
 ```{tableofcontents}
+import os
 import sys
-sys.path.insert(0,'/home/john/projects/bcd/')
+sys.path.insert(0,os.path.abspath(os.path.join("../../",os.getcwd()))))
 
 ```
