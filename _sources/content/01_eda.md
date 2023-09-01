@@ -94,7 +94,7 @@ from bcd.data.dataset import CBISMeta
 ```
 
 ```{code-cell} ipython3
-fpc = "../data/raw/meta/calc_case_description_train_set.csv"
+fpc = "data/raw/meta/calc_case_description_train_set.csv"
 fpm = "data/raw/meta/mass_case_description_train_set.csv"
 ```
 
