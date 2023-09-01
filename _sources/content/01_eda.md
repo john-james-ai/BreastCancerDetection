@@ -79,7 +79,7 @@ import warnings
 warnings.filterwarnings("ignore")
 import os
 print(sys.path)
-os.chdir(os.path.abspath(os.path.join("../..",os.getcwd())))
+os.chdir(os.path.abspath(os.path.join("../..")))
 sys.path.append(os.path.abspath(os.path.join("../..")))
 print(sys.path)
 from tqdm import tqdm
