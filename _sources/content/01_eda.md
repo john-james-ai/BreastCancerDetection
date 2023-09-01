@@ -74,7 +74,7 @@ Metadata for each abnormality above contains:
 - Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image
 - Path to image files
 
-```python
+```{code-cell}
 import warnings
 warnings.filterwarnings("ignore")
 import os
@@ -88,22 +88,22 @@ from PIL import Image
 from bcd.data.dataset import CBISMeta
 ```
 
-```python
+```{code-cell}
 fpc = "data/raw/meta/calc_case_description_train_set.csv"
 fpm = "data/raw/meta/mass_case_description_train_set.csv"
 ```
 
 ## Calcifications
 
-```python
+```{code-cell}
 dfc = pd.read_csv(fpc)
 dsc = CBISMeta(df=dfc)
 ```
 
-```python
+```{code-cell}
 dsc.head()
 ```
 
-```python
+```{code-cell}
 dsc.info
 ```
