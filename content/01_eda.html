@@ -590,7 +590,7 @@ document.write(`
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../..&quot;</span><span class="p">)))</span>
+<span class="c1">#os.chdir(os.path.abspath(os.path.join(&quot;../..&quot;)))</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../..&quot;</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -607,8 +607,8 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;/home/john/projects/bcd/jbook/content&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python310.zip&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/lib-dynload&#39;, &#39;&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/PyQt5_sip-12.11.0-py3.10-linux-x86_64.egg&#39;]
-/home/john/projects/bcd
-[&#39;/home/john/projects/bcd/jbook/content&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python310.zip&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/lib-dynload&#39;, &#39;&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/PyQt5_sip-12.11.0-py3.10-linux-x86_64.egg&#39;, &#39;/home/john&#39;]
+/home/john/projects/bcd/jbook/content
+[&#39;/home/john/projects/bcd/jbook/content&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python310.zip&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/lib-dynload&#39;, &#39;&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages&#39;, &#39;/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/PyQt5_sip-12.11.0-py3.10-linux-x86_64.egg&#39;, &#39;/home/john/projects/bcd&#39;]
 </pre></div>
 </div>
 </div>
