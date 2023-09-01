@@ -91,22 +91,22 @@ from PIL import Image
 from bcd.data.dataset import CBISMeta
 ```
 
-```{code-cell} python3
+```python
 fpc = "data/raw/meta/calc_case_description_train_set.csv"
 fpm = "data/raw/meta/mass_case_description_train_set.csv"
 ```
 
 ## Calcifications
 
-```{code-cell} python3
+```python
 dfc = pd.read_csv(fpc)
 dsc = CBISMeta(df=dfc)
 ```
 
-```{code-cell} python3
+```python
 dsc.head()
 ```
 
-```{code-cell} python3
+```python
 dsc.info
 ```
