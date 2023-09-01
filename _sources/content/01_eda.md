@@ -95,15 +95,15 @@ fpm = "data/raw/meta/mass_case_description_train_set.csv"
 
 ## Calcifications
 
-```{code-cell} ipython3
+```python
 dfc = pd.read_csv(fpc)
 dsc = CBISMeta(df=dfc)
 ```
 
-```{code-cell} ipython3
+```python
 dsc.head()
 ```
 
-```{code-cell} ipython3
+```python
 dsc.info
 ```
