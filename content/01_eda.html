@@ -583,7 +583,9 @@ document.write(`
 <li><p>Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image</p></li>
 <li><p>Path to image files</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -599,22 +601,52 @@ document.write(`
 <span class="kn">from</span> <span class="nn">bcd.data.dataset</span> <span class="kn">import</span> <span class="n">CBISMeta</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fpc</span> <span class="o">=</span> <span class="s2">&quot;data/raw/meta/calc_case_description_train_set.csv&quot;</span>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">14</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span> <span class="nn">pydicom</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">bcd.data.dataset</span> <span class="kn">import</span> <span class="n">CBISMeta</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;bcd&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpc</span> <span class="o">=</span> <span class="s2">&quot;data/raw/meta/calc_case_description_train_set.csv&quot;</span>
 <span class="n">fpm</span> <span class="o">=</span> <span class="s2">&quot;data/raw/meta/mass_case_description_train_set.csv&quot;</span>
 </pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="calcifications">
 <h2>Calcifications<a class="headerlink" href="#calcifications" title="Permalink to this heading">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dfc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpc</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpc</span><span class="p">)</span>
 <span class="n">dsc</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">dfc</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dsc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dsc</span><span class="o">.</span><span class="n">info</span>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsc</span><span class="o">.</span><span class="n">info</span>
 </pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
