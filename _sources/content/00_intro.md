@@ -13,6 +13,6 @@ Check out the content pages bundled with this sample book to see more.
 ```python
 import os
 import sys
-os.chdir(os.path.abspath(os.path.join("../../",os.getcwd())))))
+os.chdir(os.path.abspath(os.path.join("../../",os.getcwd())))
 #sys.path.insert(0,os.path.abspath(os.path.join("../../",os.getcwd()))))
 ```
