@@ -1,4 +1,15 @@
-# Welcome to your Jupyter Book
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.15.1
+kernelspec:
+  display_name: bcd
+  language: python
+  name: python3
+---
 
 This is a small sample book to give you a feel for how book content is
 structured.
@@ -8,13 +19,16 @@ It does not go in-depth into any particular topic - check out [the Jupyter Book 
 Check out the content pages bundled with this sample book to see more.
 
 ```{tableofcontents}
+
 ```
 
 ```python
+import logging
 import os
 import sys
-print(os.getcwd)
-print(os.path.abspath(os.path.join("../../",os.getcwd())))
+logger.debug(os.getcwd)
+logger.debug(os.path.abspath(os.path.join("../../",os.getcwd())))
 os.chdir(os.path.abspath(os.path.join("../../",os.getcwd())))
 sys.path.insert(0,os.path.abspath(os.path.join("../../",os.getcwd()))))
+
 ```
