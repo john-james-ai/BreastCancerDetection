@@ -9,9 +9,10 @@ kernelspec:
   language: python
   name: python3
 ---
-
 # Exploratory Data Analysis
+
 ## CBIS-DDSM Dataset
+
 Developed in 1997 through a grant from the DOD Breast Cancer Research Program and the US Army Research and Material Command, the Digital Database for Screening Mammography (DDSM) {cite}`USFDigitalMammography` is a collection of 2620 cases obtained by patient consent from Massachusetts General Hospital, Wake Forest University School of Medicine, Sacred Heart Hospital, and Washington University of St. Louis School of Medicine. Its cases are annotated with ROIs for calcifications and masses, they include Breast Imaging Reporting and Data System (BI-RADS) descriptors for mass shape, mass margin, calcification type, calcification distribution, and breast density, and an overall BI-RADS assessment from 0 to 5, and a rating of the subtlety of the abnormality from 1 to 5.
 
 The DDSM, a powerful and extensively used resource for imaging research, presented certain challenges in terms of accessibility and practical utility. For instance, the original DDSM is saved in a non-standard compression format no longer supported in modern computer systems. Regions of interest mark the general area of legions; but, lack the specificity of precise image segmentation, requiring researchers to implement segmentation algorithms for accurate feature extraction.
@@ -21,7 +22,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) {cite}`leeCuratedMammogra
 CBIS-DDSM was obtained from the Cancer Imaging Archive {cite}`sawyer-leeCuratedBreastImaging2016` and is summarized below:
 
 | Collection Statistics  |        |
-|------------------------|--------|
+| ---------------------- | ------ |
 | Image Size (GB)        | 163.6  |
 | Modalities             | MG     |
 | Number of Images       | 10239  |
@@ -33,32 +34,33 @@ Note, the data are structured such that a single participant has multiple patien
 
 The following files contain the mammography and ROIs for the cases with calcifications.
 
-| Type   | Filename                              | Format |
-|--------|---------------------------------------|--------|
-| Images | Calc-Test Full Mammogram Images       | DICOM  |
-| Images | Calc-Test ROI and Cropped Images      | DICOM  |
-| Images | Calc-Training Full Mammogram Images   | DICOM  |
-| Images | Calc-Training ROI and Cropped Images  | DICOM  |
+| Type   | Filename                             | Format |
+| ------ | ------------------------------------ | ------ |
+| Images | Calc-Test Full Mammogram Images      | DICOM  |
+| Images | Calc-Test ROI and Cropped Images     | DICOM  |
+| Images | Calc-Training Full Mammogram Images  | DICOM  |
+| Images | Calc-Training ROI and Cropped Images | DICOM  |
 
 The following files contain the mammography and ROIs for the mass cases.
 
-| Type   | Filename                              | Format |
-|--------|---------------------------------------|--------|
-| Images | Mass-Test Full Mammogram Images       | DICOM  |
-| Images | Mass-Test ROI and Cropped Images      | DICOM  |
-| Images | Mass-Training Full Mammogram Images   | DICOM  |
-| Images | Mass-Training ROI and Cropped Images  | DICOM  |
+| Type   | Filename                             | Format |
+| ------ | ------------------------------------ | ------ |
+| Images | Mass-Test Full Mammogram Images      | DICOM  |
+| Images | Mass-Test ROI and Cropped Images     | DICOM  |
+| Images | Mass-Training Full Mammogram Images  | DICOM  |
+| Images | Mass-Training ROI and Cropped Images | DICOM  |
 
 There are separate metadata files for the train and test calcification and mass cases.
 
-| Type     | Filename                   | Format |
-|----------|----------------------------|--------|
-| Metadata | Calc-Test-Description      | csv    |
-| Metadata | Calc-Training-Description  | csv    |
-| Metadata | Mass-Test-Description      | csv    |
-| Metadata | Mass-Training-Description  | csv    |
+| Type     | Filename                  | Format |
+| -------- | ------------------------- | ------ |
+| Metadata | Calc-Test-Description     | csv    |
+| Metadata | Calc-Training-Description | csv    |
+| Metadata | Mass-Test-Description     | csv    |
+| Metadata | Mass-Training-Description | csv    |
 
 Metadata for each abnormality above contains:
+
 - Patient ID: the first 7 characters of images in the case file
 - Density category
 - Breast: Left or Right
@@ -73,14 +75,15 @@ Metadata for each abnormality above contains:
 - Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image
 - Path to image files
 
-{"tags":["hide-cell",]}
-```{code-cell} ipython3
+
+```{code-cell}
+:tags: ["hide-cell"]
 import sys
 import os
 os.chdir(os.path.abspath(os.path.join("../..")))
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 import warnings
 warnings.filterwarnings("ignore")
 from tqdm import tqdm
@@ -93,22 +96,22 @@ from PIL import Image
 from bcd.data.dataset import CBISMeta
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 fpc = "/home/john/projects/bcd/data/raw/meta/calc_case_description_train_set.csv"
 fpm = "/home/john/projects/bcd/data/raw/meta/mass_case_description_train_set.csv"
 ```
 
 ## Calcifications
 
-```{code-cell} ipython3
+```{code-cell}
 dfc = pd.read_csv(fpc)
 dsc = CBISMeta(df=dfc)
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 dsc.head()
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 dsc.info
 ```
