@@ -13,11 +13,11 @@ kernelspec:
 
 # Exploratory Data Analysis
 ## CBIS-DDSM Dataset
-Developed in 1997 through a grant from the DOD Breast Cancer Research Program and the US Army Research and Material Command, the Digital Database for Screening Mammography (DDSM) {cite}`USFDigitalMammography` is a collection of 2620 cases obtained by patient consent from Massachusetts General Hospital, Wake Forest University School of Medicine, Sacred Heart Hospital, and Washington University of St. Louis School of Medicine. Its cases are annotated with ROIs for calcifications and masses, they include Breast Imaging Reporting and Data System (BI-RADS) descriptors for mass shape, mass margin, calcification type, calcification distribution, and breast density, and an overall BI-RADS assessment from 0 to 5, and a rating of the subtlety of the abnormality from 1 to 5. 
+Developed in 1997 through a grant from the DOD Breast Cancer Research Program and the US Army Research and Material Command, the Digital Database for Screening Mammography (DDSM) {cite}`USFDigitalMammography` is a collection of 2620 cases obtained by patient consent from Massachusetts General Hospital, Wake Forest University School of Medicine, Sacred Heart Hospital, and Washington University of St. Louis School of Medicine. Its cases are annotated with ROIs for calcifications and masses, they include Breast Imaging Reporting and Data System (BI-RADS) descriptors for mass shape, mass margin, calcification type, calcification distribution, and breast density, and an overall BI-RADS assessment from 0 to 5, and a rating of the subtlety of the abnormality from 1 to 5.
 
 The DDSM, a powerful and extensively used resource for imaging research, presented certain challenges in terms of accessibility and practical utility. For instance, the original DDSM is saved in a non-standard compression format no longer supported in modern computer systems. Regions of interest mark the general area of legions; but, lack the specificity of precise image segmentation, requiring researchers to implement segmentation algorithms for accurate feature extraction.
 
-This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) {cite}`leeCuratedMammographyData2017` is an updated and standardized version of the original DDSM, developed to address some of the challenges of the DDSM. The original DDSM images were distributed as lossless JPEG files (LJPEG); an obsolete image format. Raw pixel data were converted into 64-bit optical density values, then re-mapped to 16-bit grayscale TIFF format and finally converted to DICOM format for the data repository. Linux bash and C tools were re-implemented in Python to support cross-platform accessibility. A set of convenience images were cropped around the region of interest for researchers analyzing only the abnormalities and not the full mammogram image. Metadata, including patient age, date of the study, date of digitization, the dense tissue category, the scanner used to digitize, and the resolution of the image, stored in .ics files were extracted and compiled into a single CSV file. Three-hundred thirty-nine images deemed to have annotations of suspicious lesions that could not be seen, were removed from the dataset.  Segmentation was performed for the mass images and the data were split into train (80%) and test (20%) sets for method evaluation purposes.     
+This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) {cite}`leeCuratedMammographyData2017` is an updated and standardized version of the original DDSM, developed to address some of the challenges of the DDSM. The original DDSM images were distributed as lossless JPEG files (LJPEG); an obsolete image format. Raw pixel data were converted into 64-bit optical density values, then re-mapped to 16-bit grayscale TIFF format and finally converted to DICOM format for the data repository. Linux bash and C tools were re-implemented in Python to support cross-platform accessibility. A set of convenience images were cropped around the region of interest for researchers analyzing only the abnormalities and not the full mammogram image. Metadata, including patient age, date of the study, date of digitization, the dense tissue category, the scanner used to digitize, and the resolution of the image, stored in .ics files were extracted and compiled into a single CSV file. Three-hundred thirty-nine images deemed to have annotations of suspicious lesions that could not be seen, were removed from the dataset.  Segmentation was performed for the mass images and the data were split into train (80%) and test (20%) sets for method evaluation purposes.
 
 CBIS-DDSM was obtained from the Cancer Imaging Archive {cite}`sawyer-leeCuratedBreastImaging2016` and is summarized below:
 
@@ -30,7 +30,7 @@ CBIS-DDSM was obtained from the Cancer Imaging Archive {cite}`sawyer-leeCuratedB
 | Number of Series       | 6775   |
 | Number of Studies      | 6775   |
 
-Note, the data are structured such that a single participant has multiple patient IDs, where each id corresponds to a scan. 
+Note, the data are structured such that a single participant has multiple patient IDs, where each id corresponds to a scan.
 
 The following files contain the mammography and ROIs for the cases with calcifications.
 
@@ -74,7 +74,9 @@ Metadata for each abnormality above contains:
 - Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image
 - Path to image files
 
-```{code-cell} ipython3
+
+
+```python
 import warnings
 warnings.filterwarnings("ignore")
 import os
@@ -88,23 +90,23 @@ from PIL import Image
 from bcd.data.dataset import CBISMeta
 ```
 
-```{code-cell} ipython3
+```python
 fpc = "data/raw/meta/calc_case_description_train_set.csv"
 fpm = "data/raw/meta/mass_case_description_train_set.csv"
 ```
 
 ## Calcifications
 
-```{code-cell} ipython3
+```python
 dfc = pd.read_csv(fpc)
 dsc = CBISMeta(df=dfc)
 ```
 
-```{code-cell} ipython3
+```python
 
 dsc.head()
 ```
 
-```{code-cell} ipython3
+```python
 dsc.info
 ```
