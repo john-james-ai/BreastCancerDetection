@@ -21,14 +21,3 @@ Check out the content pages bundled with this sample book to see more.
 ```{tableofcontents}
 
 ```
-
-```python
-import logging
-import os
-import sys
-logger.debug(os.getcwd)
-logger.debug(os.path.abspath(os.path.join("../../",os.getcwd())))
-os.chdir(os.path.abspath(os.path.join("../../",os.getcwd())))
-sys.path.insert(0,os.path.abspath(os.path.join("../../",os.getcwd()))))
-
-```
