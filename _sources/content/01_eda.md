@@ -78,7 +78,7 @@ Metadata for each abnormality above contains:
 import warnings
 warnings.filterwarnings("ignore")
 import os
-os.chdir(os.path.abspath(os.path.join("..\..\",os.getcwd())))
+os.chdir(os.path.abspath(os.path.join("..",os.getcwd())))
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
@@ -86,7 +86,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pydicom
 from PIL import Image
-from ..bcd.data.dataset import CBISMeta
+from bcd.data.dataset import CBISMeta
 ```
 
 ```{code-cell} python3
