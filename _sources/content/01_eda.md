@@ -73,8 +73,8 @@ Metadata for each abnormality above contains:
 - Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image
 - Path to image files
 
+{"tags":["hide-cell",]}
 ```{code-cell} ipython3
-{"tags":["hide-cell"]}
 import sys
 import os
 os.chdir(os.path.abspath(os.path.join("../..")))
