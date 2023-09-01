@@ -585,6 +585,21 @@ document.write(`
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;tags&quot;</span><span class="p">:[</span><span class="s2">&quot;hide-cell&quot;</span><span class="p">]}</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../..&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;tags&#39;: [&#39;hide-cell&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
@@ -595,18 +610,6 @@ document.write(`
 <span class="kn">import</span> <span class="nn">pydicom</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">bcd.data.dataset</span> <span class="kn">import</span> <span class="n">CBISMeta</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span> <span class="nn">pydicom</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="ne">---&gt; </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">bcd.data.dataset</span> <span class="kn">import</span> <span class="n">CBISMeta</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;bcd&#39;
 </pre></div>
 </div>
 </div>
@@ -636,6 +639,130 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>patient_id</th>
+      <th>breast density</th>
+      <th>left or right breast</th>
+      <th>image view</th>
+      <th>abnormality id</th>
+      <th>abnormality type</th>
+      <th>calc type</th>
+      <th>calc distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>subtlety</th>
+      <th>image file path</th>
+      <th>cropped image file path</th>
+      <th>ROI mask file path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>P_00005</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>AMORPHOUS</td>
+      <td>CLUSTERED</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
+      <td>Calc-Training_P_00005_RIGHT_CC/1.3.6.1.4.1.959...</td>
+      <td>Calc-Training_P_00005_RIGHT_CC_1/1.3.6.1.4.1.9...</td>
+      <td>Calc-Training_P_00005_RIGHT_CC_1/1.3.6.1.4.1.9...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>P_00005</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>AMORPHOUS</td>
+      <td>CLUSTERED</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
+      <td>Calc-Training_P_00005_RIGHT_MLO/1.3.6.1.4.1.95...</td>
+      <td>Calc-Training_P_00005_RIGHT_MLO_1/1.3.6.1.4.1....</td>
+      <td>Calc-Training_P_00005_RIGHT_MLO_1/1.3.6.1.4.1....</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>P_00007</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>LINEAR</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>Calc-Training_P_00007_LEFT_CC/1.3.6.1.4.1.9590...</td>
+      <td>Calc-Training_P_00007_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+      <td>Calc-Training_P_00007_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>P_00007</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>LINEAR</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>Calc-Training_P_00007_LEFT_MLO/1.3.6.1.4.1.959...</td>
+      <td>Calc-Training_P_00007_LEFT_MLO_1/1.3.6.1.4.1.9...</td>
+      <td>Calc-Training_P_00007_LEFT_MLO_1/1.3.6.1.4.1.9...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>P_00008</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>NaN</td>
+      <td>REGIONAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>Calc-Training_P_00008_LEFT_CC/1.3.6.1.4.1.9590...</td>
+      <td>Calc-Training_P_00008_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+      <td>Calc-Training_P_00008_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -643,6 +770,193 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Column</th>
+      <th>DataType</th>
+      <th>Valid</th>
+      <th>Null</th>
+      <th>Validity</th>
+      <th>Cardinality</th>
+      <th>Percent Unique</th>
+      <th>Size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>patient_id</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>602</td>
+      <td>0.39</td>
+      <td>98944</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>breast density</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>4</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>left or right breast</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>2</td>
+      <td>0.00</td>
+      <td>95034</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>image view</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>2</td>
+      <td>0.00</td>
+      <td>92021</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>abnormality id</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>7</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>abnormality type</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1</td>
+      <td>0.00</td>
+      <td>108220</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>calc type</td>
+      <td>object</td>
+      <td>1526</td>
+      <td>20</td>
+      <td>0.99</td>
+      <td>45</td>
+      <td>0.03</td>
+      <td>109176</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>calc distribution</td>
+      <td>object</td>
+      <td>1170</td>
+      <td>376</td>
+      <td>0.76</td>
+      <td>9</td>
+      <td>0.01</td>
+      <td>89521</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>assessment</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>5</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>pathology</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>3</td>
+      <td>0.00</td>
+      <td>107088</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>subtlety</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>5</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>image file path</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1227</td>
+      <td>0.79</td>
+      <td>351713</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>cropped image file path</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1546</td>
+      <td>1.00</td>
+      <td>356298</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ROI mask file path</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1546</td>
+      <td>1.00</td>
+      <td>354753</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 </section>
