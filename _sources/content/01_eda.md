@@ -74,8 +74,6 @@ Metadata for each abnormality above contains:
 - Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image
 - Path to image files
 
-
-
 ```python
 import warnings
 warnings.filterwarnings("ignore")
@@ -103,7 +101,6 @@ dsc = CBISMeta(df=dfc)
 ```
 
 ```python
-
 dsc.head()
 ```
 
