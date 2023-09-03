@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 # ================================================================================================ #
-# Project    : Deep Learning for Breast Cancer Detection                                           #
-# Version    : 0.1.0                                                                               #
+# Project    : Enter Project Name in Workspace Settings                                            #
+# Version    : 0.1.19                                                                              #
 # Python     : 3.10.10                                                                             #
-# Filename   : /jbook/_toc.yml                                                                     #
+# Filename   : /bcd/__init__.py                                                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
-# URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
+# URL        : Enter URL in Workspace Settings                                                     #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Thursday August 31st 2023 03:42:38 pm                                               #
-# Modified   : Thursday August 31st 2023 11:04:48 pm                                               #
+# Created    : Thursday August 31st 2023 07:35:50 pm                                               #
+# Modified   : Thursday August 31st 2023 07:35:50 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-# Table of contents
-# Learn more at https://jupyterbook.org/customize/toc.html
-
-format: jb-book
-root: content/00_intro
-chapters:
-- file: content/01_eda
-- file: content/99_references

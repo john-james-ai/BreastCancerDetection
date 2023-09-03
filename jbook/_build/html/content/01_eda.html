@@ -1,0 +1,1275 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Exploratory Data Analysis &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/01_eda';</script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="99_references.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="00_intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="00_intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_intro.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="99_references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/john-james-ai/BreastCancerDetection/main/v2/gh/john-james-ai/BreastCancerDetection/main?urlpath=tree/jbook/content/01_eda.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/john-james-ai/BreastCancerDetection/blob/main/jbook/content/01_eda.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/edit/main/jbook/content/01_eda.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/issues/new?title=Issue%20on%20page%20%2Fcontent/01_eda.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/01_eda.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../_sources/content/01_eda.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Exploratory Data Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-cases">Calcification Cases</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#univariate-analysis">Univariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#patient-id">Patient Id</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-right">Left Right</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#birads-assessment">BIRADS Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sublety">Sublety</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-analysis">Bivariate Analysis</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis">
+<h1>Exploratory Data Analysis<a class="headerlink" href="#exploratory-data-analysis" title="Permalink to this heading">#</a></h1>
+<p><strong>CBIS-DDSM Dataset</strong></p>
+<p>Developed in 1997 through a grant from the DOD Breast Cancer Research Program and the US Army Research and Material Command, the Digital Database for Screening Mammography (DDSM) <span id="id1">[<a class="reference internal" href="99_references.html#id290" title="USF Digital Mammography Home Page - http://www.eng.usf.edu/cvprg/mammography/database.html. URL: http://www.eng.usf.edu/cvprg/mammography/database.html (visited on 2023-09-01).">1</a>]</span> is a collection of 2620 cases obtained by patient consent from Massachusetts General Hospital, Wake Forest University School of Medicine, Sacred Heart Hospital, and Washington University of St. Louis School of Medicine. Its cases are annotated with ROIs for calcifications and masses, they include Breast Imaging Reporting and Data System (BI-RADS) descriptors for mass shape, mass margin, calcification type, calcification distribution, and breast density. They also include overall BI-RADS assessments from 0 to 5 and ratings of the subtlety of the abnormalities from 1 to 5.</p>
+<p>The DDSM, a powerful and extensively used resource for imaging research, presented certain challenges that limited its accessibility and utility.  For instance, the original DDSM was saved in lossless JPEG files (LJPEG); a non-standard, and obsolete compression format. Regions of interest marked the general area of legions; but, lacked the specificity of precise image segmentation, requiring researchers to implement segmentation algorithms for accurate feature extraction. Some annotations marked legions that could not be seen. Further, the metadata processing and image correction routines distributed with the dataset were a set of bash and C routines that were difficult to refactor.
+This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class="reference internal" href="99_references.html#id136" title="Rebecca Sawyer Lee, Francisco Gimenez, Assaf Hoogi, Kanae Kawai Miyake, Mia Gorovoy, and Daniel L. Rubin. A curated mammography data set for use in computer-aided detection and diagnosis research. Scientific Data, 4(1):170177, December 2017. URL: https://www.nature.com/articles/sdata2017177 (visited on 2023-05-24), doi:10.1038/sdata.2017.177.">2</a>]</span> is an updated and standardized version of the original DDSM, developed to address some of the challenges. In particular, the questionable annotations were reviewed by a trained mammographer, and 254 images were removed from the dataset. The images were converted from PVRG-JPEG to 8-bit raw binary bitmaps. Python tools were developed to convert the 8-bit images to 16-bit grayscale TIFF files, which were later converted to DICOM. The bash and C preprocessing tools were re-implemented in Python to be cross-platform. Convenience images were cropped around the region of interest for researchers analyzing only the abnormalities. Precise segmentation was applied to the calcification images providing much more accurate regions of interest, and the data were split into training and test sets, based on the BIRADS category to support method evaluation and reproducibility.</p>
+<p>CBIS-DDSM was obtained from the Cancer Imaging Archive <span id="id3">[<a class="reference internal" href="99_references.html#id291" title="Rebecca Sawyer-Lee, Francisco Gimenez, Assaf Hoogi, and Daniel Rubin. Curated Breast Imaging Subset of Digital Database for Screening Mammography (CBIS-DDSM). 2016. URL: https://wiki.cancerimagingarchive.net/x/lZNXAQ (visited on 2023-09-01), doi:10.7937/K9/TCIA.2016.7O02S9CY.">3</a>]</span> and is summarized below:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Collection Statistics</p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Image Size (GB)</p></td>
+<td><p>163.6</p></td>
+</tr>
+<tr class="row-odd"><td><p>Modalities</p></td>
+<td><p>MG</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of Images</p></td>
+<td><p>10239</p></td>
+</tr>
+<tr class="row-odd"><td><p>Number of Participants</p></td>
+<td><p>1,566*</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of Series</p></td>
+<td><p>6775</p></td>
+</tr>
+<tr class="row-odd"><td><p>Number of Studies</p></td>
+<td><p>6775</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note, the data are structured such that a single participant has multiple patient IDs, where each id corresponds to a scan.</p>
+<p>The following files contain the mammography and ROIs for the cases with calcifications.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Filename</p></th>
+<th class="head"><p>Format</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Images</p></td>
+<td><p>Calc-Test Full Mammogram Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Images</p></td>
+<td><p>Calc-Test ROI and Cropped Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+<tr class="row-even"><td><p>Images</p></td>
+<td><p>Calc-Training Full Mammogram Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Images</p></td>
+<td><p>Calc-Training ROI and Cropped Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following files contain the mammography and ROIs for the mass cases.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Filename</p></th>
+<th class="head"><p>Format</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Images</p></td>
+<td><p>Mass-Test Full Mammogram Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Images</p></td>
+<td><p>Mass-Test ROI and Cropped Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+<tr class="row-even"><td><p>Images</p></td>
+<td><p>Mass-Training Full Mammogram Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Images</p></td>
+<td><p>Mass-Training ROI and Cropped Images</p></td>
+<td><p>DICOM</p></td>
+</tr>
+</tbody>
+</table>
+<p>There are separate metadata files for the train and test calcification and mass cases.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Filename</p></th>
+<th class="head"><p>Format</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Metadata</p></td>
+<td><p>Calc-Test-Description</p></td>
+<td><p>csv</p></td>
+</tr>
+<tr class="row-odd"><td><p>Metadata</p></td>
+<td><p>Calc-Training-Description</p></td>
+<td><p>csv</p></td>
+</tr>
+<tr class="row-even"><td><p>Metadata</p></td>
+<td><p>Mass-Test-Description</p></td>
+<td><p>csv</p></td>
+</tr>
+<tr class="row-odd"><td><p>Metadata</p></td>
+<td><p>Mass-Training-Description</p></td>
+<td><p>csv</p></td>
+</tr>
+</tbody>
+</table>
+<p>Metadata for each abnormality above contains:</p>
+<ul class="simple">
+<li><p>Patient ID: the first 7 characters of images in the case file</p></li>
+<li><p>Density category</p></li>
+<li><p>Breast: Left or Right</p></li>
+<li><p>View: CC or MLO</p></li>
+<li><p>Number of abnormality for the image (This is necessary as there are some cases containing multiple abnormalities.)</p></li>
+<li><p>Mass shape (when applicable)</p></li>
+<li><p>Mass margin (when applicable)</p></li>
+<li><p>Calcification type (when applicable)</p></li>
+<li><p>Calcification distribution (when applicable)</p></li>
+<li><p>BI-RADS assessment</p></li>
+<li><p>Pathology: Benign, Benign without call-back, or Malignant</p></li>
+<li><p>Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image</p></li>
+<li><p>Path to image files</p></li>
+</ul>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../..&quot;</span><span class="p">)))</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pydicom</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">bcd.data.dataset</span> <span class="kn">import</span> <span class="n">CBISMeta</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;Blues_r&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>We’ll begin our exploration with questions to guide the process.</p>
+<ol class="arabic simple">
+<li><p>Density is considered a potential signal of pathology. How does density relate?</p></li>
+<li><p>For calcifications, what does the calcification type indicate with respect to the BIRADS assessment, and pathology?</p></li>
+<li><p>What does the distribution of calcification indicate?</p></li>
+<li><p>How does mass shape relate to pathology?</p></li>
+<li><p>Are there interactions among density, shape, and type features?</p></li>
+<li><p>What distinguishes the subtle cases from others?</p></li>
+</ol>
+<p>We’ll approach calcification cases first, then move to the mass cases.</p>
+<section id="calcification-cases">
+<h2>Calcification Cases<a class="headerlink" href="#calcification-cases" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/calc_case_description_train_set.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>patient_id</th>
+      <th>breast density</th>
+      <th>left or right breast</th>
+      <th>image view</th>
+      <th>abnormality id</th>
+      <th>abnormality type</th>
+      <th>calc type</th>
+      <th>calc distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>subtlety</th>
+      <th>image file path</th>
+      <th>cropped image file path</th>
+      <th>ROI mask file path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>P_00005</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>AMORPHOUS</td>
+      <td>CLUSTERED</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
+      <td>Calc-Training_P_00005_RIGHT_CC/1.3.6.1.4.1.959...</td>
+      <td>Calc-Training_P_00005_RIGHT_CC_1/1.3.6.1.4.1.9...</td>
+      <td>Calc-Training_P_00005_RIGHT_CC_1/1.3.6.1.4.1.9...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>P_00005</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>AMORPHOUS</td>
+      <td>CLUSTERED</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
+      <td>Calc-Training_P_00005_RIGHT_MLO/1.3.6.1.4.1.95...</td>
+      <td>Calc-Training_P_00005_RIGHT_MLO_1/1.3.6.1.4.1....</td>
+      <td>Calc-Training_P_00005_RIGHT_MLO_1/1.3.6.1.4.1....</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>P_00007</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>LINEAR</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>Calc-Training_P_00007_LEFT_CC/1.3.6.1.4.1.9590...</td>
+      <td>Calc-Training_P_00007_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+      <td>Calc-Training_P_00007_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>P_00007</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>LINEAR</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>Calc-Training_P_00007_LEFT_MLO/1.3.6.1.4.1.959...</td>
+      <td>Calc-Training_P_00007_LEFT_MLO_1/1.3.6.1.4.1.9...</td>
+      <td>Calc-Training_P_00007_LEFT_MLO_1/1.3.6.1.4.1.9...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>P_00008</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>NaN</td>
+      <td>REGIONAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>Calc-Training_P_00008_LEFT_CC/1.3.6.1.4.1.9590...</td>
+      <td>Calc-Training_P_00008_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+      <td>Calc-Training_P_00008_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">info</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Column</th>
+      <th>DataType</th>
+      <th>Valid</th>
+      <th>Null</th>
+      <th>Validity</th>
+      <th>Cardinality</th>
+      <th>Percent Unique</th>
+      <th>Size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>patient_id</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>602</td>
+      <td>0.39</td>
+      <td>98944</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>breast density</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>4</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>left or right breast</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>2</td>
+      <td>0.00</td>
+      <td>95034</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>image view</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>2</td>
+      <td>0.00</td>
+      <td>92021</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>abnormality id</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>7</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>abnormality type</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1</td>
+      <td>0.00</td>
+      <td>108220</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>calc type</td>
+      <td>object</td>
+      <td>1526</td>
+      <td>20</td>
+      <td>0.99</td>
+      <td>45</td>
+      <td>0.03</td>
+      <td>109176</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>calc distribution</td>
+      <td>object</td>
+      <td>1170</td>
+      <td>376</td>
+      <td>0.76</td>
+      <td>9</td>
+      <td>0.01</td>
+      <td>89521</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>assessment</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>5</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>pathology</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>3</td>
+      <td>0.00</td>
+      <td>107088</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>subtlety</td>
+      <td>int64</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>5</td>
+      <td>0.00</td>
+      <td>12368</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>image file path</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1227</td>
+      <td>0.79</td>
+      <td>351713</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>cropped image file path</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1546</td>
+      <td>1.00</td>
+      <td>356298</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>ROI mask file path</td>
+      <td>object</td>
+      <td>1546</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>1546</td>
+      <td>1.00</td>
+      <td>354753</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Initial observations:</strong></p>
+<ol class="arabic simple">
+<li><p>We have 1546 calcification images in the dataset.</p></li>
+<li><p>There 602 unique patient ids in which multiple patient ids per patient are extant.</p></li>
+<li><p>With the exception of calcification type and distribution, we have no null values.</p></li>
+<li><p>There are 45 calcification types and 9 calcification distribution values.</p></li>
+</ol>
+<section id="univariate-analysis">
+<h3>Univariate Analysis<a class="headerlink" href="#univariate-analysis" title="Permalink to this heading">#</a></h3>
+<section id="patient-id">
+<h4>Patient Id<a class="headerlink" href="#patient-id" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The total number of unique ids </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The median number of images per patient id is </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average number of images per patient id is </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The range of images to patient_ids is </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total number of unique ids 602.
+The median number of images per patient id is 2.0
+The average number of images per patient id is 2.57
+The range of images to patient_ids is 1 to 24 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="breast-density">
+<h4>Breast Density<a class="headerlink" href="#breast-density" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;breast density&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Breast Density&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e7c948f6c575774f0696bda28657031f2c25d92dec75940b338b065cb7ae30b3.png" src="../_images/e7c948f6c575774f0696bda28657031f2c25d92dec75940b338b065cb7ae30b3.png" />
+</div>
+</div>
+</section>
+<section id="left-right">
+<h4>Left Right<a class="headerlink" href="#left-right" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;left or right breast&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of View&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/dca05531a1f881bbf025a108c1ed70c86a904d0f1c569b6489e3a20035ed8a5f.png" src="../_images/dca05531a1f881bbf025a108c1ed70c86a904d0f1c569b6489e3a20035ed8a5f.png" />
+</div>
+</div>
+</section>
+<section id="image-view">
+<h4>Image View<a class="headerlink" href="#image-view" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;image view&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Image View&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/364a3edc410fbab7ff0ca33eb6fc0f5f87a28f7ec07eea7a59781a7fc7397a03.png" src="../_images/364a3edc410fbab7ff0ca33eb6fc0f5f87a28f7ec07eea7a59781a7fc7397a03.png" />
+</div>
+</div>
+</section>
+<section id="abnormality-id">
+<h4>Abnormality Id<a class="headerlink" href="#abnormality-id" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality id&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Abnormaility ID&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/892414bd3267bf98ea84c84c25ad4c56e496544c72e2659d65ff51bbbf8bbdd7.png" src="../_images/892414bd3267bf98ea84c84c25ad4c56e496544c72e2659d65ff51bbbf8bbdd7.png" />
+</div>
+</div>
+<p>Most patients have only one abnormality.</p>
+</section>
+<section id="calcification-type">
+<h4>Calcification Type<a class="headerlink" href="#calcification-type" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc type&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Type&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1b67ffa312d6c9864e1378a26bb72d09118140c7b55cb725c7c3fb949c480b93.png" src="../_images/1b67ffa312d6c9864e1378a26bb72d09118140c7b55cb725c7c3fb949c480b93.png" />
+</div>
+</div>
+</section>
+<section id="calcification-distribution">
+<h4>Calcification Distribution<a class="headerlink" href="#calcification-distribution" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc distribution&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Distribution&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6779800a62b0e9e6ec82b87d762a07c067dc56b80c61e3682985b95db456484d.png" src="../_images/6779800a62b0e9e6ec82b87d762a07c067dc56b80c61e3682985b95db456484d.png" />
+</div>
+</div>
+</section>
+<section id="birads-assessment">
+<h4>BIRADS Assessment<a class="headerlink" href="#birads-assessment" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of BIRADS Assessment&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/82c53edd89d8b6af7566fd19701b0a516c33a116765f49c4d7692474e9eca63f.png" src="../_images/82c53edd89d8b6af7566fd19701b0a516c33a116765f49c4d7692474e9eca63f.png" />
+</div>
+</div>
+</section>
+<section id="pathology">
+<h4>Pathology<a class="headerlink" href="#pathology" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Pathology&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b633913ecb62bff129585f936a2959a06c983d1b6c99dd9a0fc6181e592dcc98.png" src="../_images/b633913ecb62bff129585f936a2959a06c983d1b6c99dd9a0fc6181e592dcc98.png" />
+</div>
+</div>
+</section>
+<section id="sublety">
+<h4>Sublety<a class="headerlink" href="#sublety" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;subtlety&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Subtlety&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1f664e35a27e33d7631cd2416a83fa025cadf986fd9125601cdae9faf7413728.png" src="../_images/1f664e35a27e33d7631cd2416a83fa025cadf986fd9125601cdae9faf7413728.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="bivariate-analysis">
+<h3>Bivariate Analysis<a class="headerlink" href="#bivariate-analysis" title="Permalink to this heading">#</a></h3>
+<p>At this stage, we are examining bivariate relationships between the variables and between the variables and the target, pathology.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="00_intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="99_references.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">References</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-cases">Calcification Cases</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#univariate-analysis">Univariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#patient-id">Patient Id</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-right">Left Right</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#birads-assessment">BIRADS Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sublety">Sublety</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-analysis">Bivariate Analysis</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By John James
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

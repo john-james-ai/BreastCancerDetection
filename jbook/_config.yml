@@ -19,16 +19,15 @@ only_build_toc_files: true
 # ================================================================================================ #
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: auto
-  exclude_patterns:
-    - '*.py'
+  execute_notebooks: force
+  exclude_patterns: ["*.py"]
 
 # ================================================================================================ #
 #                                        LATEX                                                     #
 # ================================================================================================ #
 latex:
   latex_documents:
-    targetname: appstore.tex
+    targetname: bcd.tex
 
 # ================================================================================================ #
 #                                       BIBTEX                                                     #
