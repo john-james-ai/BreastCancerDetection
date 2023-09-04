@@ -298,10 +298,10 @@ There are slightly more left views than right; still, the dataset is fairly bala
 #### Image View
 In mammography, each breast is typically imaged with two different views: the mediolateral oblique (MLO) view and cranial caudal (CC) view. The MLO view is taken from the center of the chest outward, while the CC view is taken from above the breast downward.
 ```{figure} ../figures/standard_image_views.jpg
-:name: image_views
+:name: image_views_ref
 Standard Radiological Views in Mammography
 ```
-
+The CBIS-DDSM distribution of the two views {ref}`image_views_ref` are roughly balanced.
 ```{code-cell}
 fig, ax = plt.subplots(figsize=(12,4))
 ds.plot.countplot(x='image view', ax=ax, title ="Distribution of Image View")
