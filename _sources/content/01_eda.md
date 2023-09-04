@@ -171,7 +171,7 @@ Hence, we shall proceed as follows:
 This initial stage focuses on the variables in common between the training sets.
 
 ```{code-cell}
-:tags: [hide-cell]
+:tags: [remove-input]
 
 # Filepaths
 fpc1 = "/home/john/projects/bcd/data/raw/meta/calc_case_description_train_set.csv"
@@ -181,6 +181,8 @@ fpm2 = "/home/john/projects/bcd/data/raw/meta/mass_case_description_test_set.csv
 ```
 
 ```{code-cell}
+:tags: [remove-input]
+
 ## Dataframes
 dfc1 = pd.read_csv(fpc1)
 dfc2 = pd.read_csv(fpc2)
@@ -231,7 +233,7 @@ ds.info
 #### Patient Id
 
 ```{code-cell}
-:tags: [hide-cell]
+:tags: [remove-input]
 print(f"The total number of patient unique ids {df['patient_id'].nunique()}, corresponding to the number of subjects in the studies.")
 print(f"The median number of images per patient id is {df['patient_id'].value_counts().median()}")
 print(f"The average number of images per patient id is {round(df['patient_id'].value_counts().mean(),2)}")
@@ -255,7 +257,7 @@ According to the American College of Radiology™️, breast density in the U.S.
 - 40% have heterogeneously dense breasts
 
 ```{code-cell}
-:tags: [hide-cell]
+:tags: [remove-input]
 
 d1 = np.repeat([1], 357)
 d2 = np.repeat([2], 1427)

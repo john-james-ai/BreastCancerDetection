@@ -715,52 +715,9 @@ which can always be made precise.” — John Tukey</p>
 <section id="eda-stage-1-cross-dataset-analysis">
 <h2>EDA Stage 1: Cross-Dataset Analysis<a class="headerlink" href="#eda-stage-1-cross-dataset-analysis" title="Permalink to this heading">#</a></h2>
 <p>This initial stage focuses on the variables in common between the training sets.</p>
-<div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filepaths</span>
-<span class="n">fpc1</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/calc_case_description_train_set.csv&quot;</span>
-<span class="n">fpc2</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/calc_case_description_test_set.csv&quot;</span>
-<span class="n">fpm1</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/mass_case_description_train_set.csv&quot;</span>
-<span class="n">fpm2</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/mass_case_description_test_set.csv&quot;</span>
-</pre></div>
+<div class="cell tag_remove-input docutils container">
 </div>
-</div>
-</details>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Dataframes</span>
-<span class="n">dfc1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpc1</span><span class="p">)</span>
-<span class="n">dfc2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpc2</span><span class="p">)</span>
-<span class="n">dfm1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpm1</span><span class="p">)</span>
-<span class="n">dfm2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpm2</span><span class="p">)</span>
-<span class="c1"># Rename breast density column</span>
-<span class="n">dfm1</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;breast_density&#39;</span><span class="p">:</span> <span class="s1">&#39;breast density&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">dfm2</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;breast_density&#39;</span><span class="p">:</span> <span class="s1">&#39;breast density&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># Add &#39;cancer&#39; variable</span>
-<span class="n">dfc1</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfc1</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">dfc2</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfc2</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">dfm1</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfm1</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">dfm2</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfm2</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="c1">## DataFrames by Abnormality Type</span>
-<span class="n">dfc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dfc1</span><span class="p">,</span><span class="n">dfc2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">dfm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dfm1</span><span class="p">,</span><span class="n">dfm2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="c1"># Whole DataFrames</span>
-<span class="n">df1</span> <span class="o">=</span> <span class="n">dfc</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;calc type&#39;</span><span class="p">,</span> <span class="s1">&#39;calc distribution&#39;</span><span class="p">])</span>
-<span class="n">df2</span> <span class="o">=</span> <span class="n">dfm</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mass shape&#39;</span><span class="p">,</span> <span class="s1">&#39;mass margins&#39;</span><span class="p">])</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span><span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="c1"># CBIS Datasets</span>
-<span class="n">ds</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># Whole dataset</span>
-<span class="n">dsc</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">dfc</span><span class="p">)</span>  <span class="c1"># Calcification Dataset</span>
-<span class="n">dsm</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">dfm</span><span class="p">)</span>  <span class="c1"># Mass Dataset</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1083,20 +1040,7 @@ which can always be made precise.” — John Tukey</p>
 <h3>Univariate Analysis<a class="headerlink" href="#univariate-analysis" title="Permalink to this heading">#</a></h3>
 <section id="patient-id">
 <h4>Patient Id<a class="headerlink" href="#patient-id" title="Permalink to this heading">#</a></h4>
-<div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The total number of patient unique ids </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">, corresponding to the number of subjects in the studies.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The median number of images per patient id is </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average number of images per patient id is </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The range of images to patient_ids is </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total number of patient unique ids 1566, corresponding to the number of subjects in the studies.
 The median number of images per patient id is 2.0
@@ -1105,7 +1049,6 @@ The range of images to patient_ids is 1 to 24
 </pre></div>
 </div>
 </div>
-</details>
 </div>
 </section>
 <section id="breast-density">
@@ -1124,30 +1067,7 @@ The range of images to patient_ids is 1 to 24
 <li><p>40% of women have scattered areas of fibroglandular density</p></li>
 <li><p>40% have heterogeneously dense breasts</p></li>
 </ul>
-<div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="mi">357</span><span class="p">)</span>
-<span class="n">d2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1427</span><span class="p">)</span>
-<span class="n">d3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="mi">1427</span><span class="p">)</span>
-<span class="n">d4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="mi">357</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="o">=</span><span class="n">d1</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="n">d2</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="o">=</span><span class="n">d</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="n">d3</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="o">=</span><span class="n">d</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="n">d4</span><span class="p">)</span>
-<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Breast Density&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;Sample&quot;</span><span class="p">:</span> <span class="s2">&quot;U.S.&quot;</span><span class="p">}</span>
-<span class="n">usd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
-<span class="n">density</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;breast density&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
-<span class="n">density</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;breast density&#39;</span><span class="p">:</span> <span class="s1">&#39;Breast Density&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">density</span><span class="p">[</span><span class="s1">&#39;Sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CBIS-DDSM&#39;</span>
-<span class="n">density</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">density</span><span class="p">,</span> <span class="n">usd</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</details>
+<div class="cell tag_remove-input docutils container">
 </div>
 <p>The following exhibits the counts by density in the CBIS-DDSM dataset vis-a-vis a sample from the US of the same size.</p>
 <div class="cell docutils container">
