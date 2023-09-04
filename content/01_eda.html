@@ -442,7 +442,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-organization">Dataset Organization</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-dataset-analysis">Training Dataset Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-plan">Exploratory Data Analysis Plan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-and-guiding-questions">Exploratory and Guiding Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-approach">Exploratory Approach</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eda-stage-1-cross-dataset-analysis">EDA Stage 1: Cross-Dataset Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#univariate-analysis">Univariate Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#patient-id">Patient Id</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
@@ -483,7 +488,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 <section id="dataset-statistics">
 <h3>Dataset Statistics<a class="headerlink" href="#dataset-statistics" title="Permalink to this heading">#</a></h3>
 <p>CBIS-DDSM was obtained from the Cancer Imaging Archive <span id="id3">[<a class="reference internal" href="99_references.html#id291" title="Rebecca Sawyer-Lee, Francisco Gimenez, Assaf Hoogi, and Daniel Rubin. Curated Breast Imaging Subset of Digital Database for Screening Mammography (CBIS-DDSM). 2016. URL: https://wiki.cancerimagingarchive.net/x/lZNXAQ (visited on 2023-09-01), doi:10.7937/K9/TCIA.2016.7O02S9CY.">3</a>]</span> and is summarized below:</p>
-<table class="table" id="cbis-ddsm-stats">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Collection Statistics</p></th>
 <th class="head"><p></p></th>
@@ -500,7 +505,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 <td><p>10239</p></td>
 </tr>
 <tr class="row-odd"><td><p>Number of Participants</p></td>
-<td><p>1,566*</p></td>
+<td><p>1,566</p></td>
 </tr>
 <tr class="row-even"><td><p>Number of Series</p></td>
 <td><p>6775</p></td>
@@ -511,8 +516,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 </tbody>
 </table>
 <p>The CBIS-DDSM data were split into training and test (20%), sets based on BI-RADS category. Splitting by abnormality type, 20% of the cases were allocated to the test sets and the remaining were designated for training.</p>
-<table class="table" id="dataset-splits">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Number of Cases and Abnormalities in the Training and Test Sets.</span><a class="headerlink" href="#dataset-splits" title="Permalink to this table">#</a></caption>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Dataset</p></th>
 <th class="head"><p>Benign Cases</p></th>
@@ -624,7 +628,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 </table>
 <p>Metadata for each abnormality above contains:</p>
 <ul class="simple">
-<li><p>Patient ID: the first 7 characters of images in the case file</p></li>
+<li><p>Patient ID: the first 7 characters of images in the case file*</p></li>
 <li><p>Density category</p></li>
 <li><p>Breast: Left or Right</p></li>
 <li><p>View: CC or MLO</p></li>
@@ -638,7 +642,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 <li><p>Subtlety rating: Radiologists’ rating of difficulty in viewing the abnormality in the image</p></li>
 <li><p>Path to image files</p></li>
 </ul>
-<p>Note, the data are structured such that a single participant has multiple patient IDs, where each id corresponds to a scan.</p>
+<p>Note, the data are structured such that a single participant has multiple patient IDs in the DICOM Metadata.</p>
 <div class="cell tag_hide-cell docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -666,6 +670,17 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 </div>
 </details>
 </div>
+</section>
+</section>
+<section id="exploratory-data-analysis-plan">
+<h2>Exploratory Data Analysis Plan<a class="headerlink" href="#exploratory-data-analysis-plan" title="Permalink to this heading">#</a></h2>
+<p>Here, we’ll put forward a set of questions and an approach to guide the analysis and discovery.</p>
+<section id="exploratory-and-guiding-questions">
+<h3>Exploratory and Guiding Questions<a class="headerlink" href="#exploratory-and-guiding-questions" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>“Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question,
+which can always be made precise.” — John Tukey</p>
+</div></blockquote>
 <p>We’ll begin our exploration with questions to guide the process.</p>
 <ol class="arabic simple">
 <li><p>Density is considered a potential signal of pathology. How does density relate to pathology in the CBIS-DDSM dataset?</p></li>
@@ -687,22 +702,64 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 <li><p>How does mass shape relate to subtlety? pathology?</p></li>
 <li><p>How does mass margin relate to subtlety? pathology?</p></li>
 </ol>
-<p>We’ll approach the analysis in three stages:</p>
+</section>
+<section id="exploratory-approach">
+<h3>Exploratory Approach<a class="headerlink" href="#exploratory-approach" title="Permalink to this heading">#</a></h3>
+<p>Our approach will include metadata and images for both train/test splits. To avoid bias during modeling, all feature engineering and data processing will be performed <em>after</em> data splitting, with one exception. There are three pathologies for our binary classification task [‘MALIGNANT’,’BENIGN’, ‘BENIGN_WITHOUT_CALLBACK’]. For this analysis we will add a new binary variable, ‘cancer’ in which a value of 0 means benign and a value of 1 indicates malignancy. We’ll decide what to do about these variables for modeling during the feature engineering stage.</p>
+<p>Hence, we shall proceed as follows:</p>
 <ol class="arabic simple">
-<li><p>Train Dataset Analysis using combined training sets for calcification and mass cases.</p></li>
-<li><p>Calcification Case Analysis using the calcifiation training set.</p></li>
-<li><p>Mass Case Analysis using the mass training set.</p></li>
+<li><p>Whole Dataset Analysis using the combined metadata datasets. Features analyzed will be the intersection of calcification and mass dataset features.</p></li>
+<li><p>Calcification Case Analysis using the combined calcifiation set.</p></li>
+<li><p>Mass Case Analysis using the combined mass set.</p></li>
 </ol>
 </section>
 </section>
-<section id="training-dataset-analysis">
-<h2>Training Dataset Analysis<a class="headerlink" href="#training-dataset-analysis" title="Permalink to this heading">#</a></h2>
-<p>This initial</p>
+<section id="eda-stage-1-cross-dataset-analysis">
+<h2>EDA Stage 1: Cross-Dataset Analysis<a class="headerlink" href="#eda-stage-1-cross-dataset-analysis" title="Permalink to this heading">#</a></h2>
+<p>This initial stage focuses on the variables in common between the training sets.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filepaths</span>
+<span class="n">fpc1</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/calc_case_description_train_set.csv&quot;</span>
+<span class="n">fpc2</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/calc_case_description_test_set.csv&quot;</span>
+<span class="n">fpm1</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/mass_case_description_train_set.csv&quot;</span>
+<span class="n">fpm2</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/mass_case_description_test_set.csv&quot;</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;/home/john/projects/bcd/data/raw/meta/calc_case_description_train_set.csv&quot;</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-<span class="n">ds</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Dataframes</span>
+<span class="n">dfc1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpc1</span><span class="p">)</span>
+<span class="n">dfc2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpc2</span><span class="p">)</span>
+<span class="n">dfm1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpm1</span><span class="p">)</span>
+<span class="n">dfm2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpm2</span><span class="p">)</span>
+<span class="c1"># Rename breast density column</span>
+<span class="n">dfm1</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;breast_density&#39;</span><span class="p">:</span> <span class="s1">&#39;breast density&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dfm2</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;breast_density&#39;</span><span class="p">:</span> <span class="s1">&#39;breast density&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Add &#39;cancer&#39; variable</span>
+<span class="n">dfc1</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfc1</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">dfc2</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfc2</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">dfm1</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfm1</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">dfm2</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dfm2</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;MALIGNANT&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1">## DataFrames by Abnormality Type</span>
+<span class="n">dfc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dfc1</span><span class="p">,</span><span class="n">dfc2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">dfm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dfm1</span><span class="p">,</span><span class="n">dfm2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Whole DataFrames</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">dfc</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;calc type&#39;</span><span class="p">,</span> <span class="s1">&#39;calc distribution&#39;</span><span class="p">])</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">dfm</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mass shape&#39;</span><span class="p">,</span> <span class="s1">&#39;mass margins&#39;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span><span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># CBIS Datasets</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># Whole dataset</span>
+<span class="n">dsc</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">dfc</span><span class="p">)</span>  <span class="c1"># Calcification Dataset</span>
+<span class="n">dsm</span> <span class="o">=</span> <span class="n">CBISMeta</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">dfm</span><span class="p">)</span>  <span class="c1"># Mass Dataset</span>
 </pre></div>
 </div>
 </div>
@@ -738,14 +795,13 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
       <th>image view</th>
       <th>abnormality id</th>
       <th>abnormality type</th>
-      <th>calc type</th>
-      <th>calc distribution</th>
       <th>assessment</th>
       <th>pathology</th>
       <th>subtlety</th>
       <th>image file path</th>
       <th>cropped image file path</th>
       <th>ROI mask file path</th>
+      <th>cancer</th>
     </tr>
   </thead>
   <tbody>
@@ -757,14 +813,13 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
       <td>CC</td>
       <td>1</td>
       <td>calcification</td>
-      <td>AMORPHOUS</td>
-      <td>CLUSTERED</td>
       <td>3</td>
       <td>MALIGNANT</td>
       <td>3</td>
       <td>Calc-Training_P_00005_RIGHT_CC/1.3.6.1.4.1.959...</td>
       <td>Calc-Training_P_00005_RIGHT_CC_1/1.3.6.1.4.1.9...</td>
       <td>Calc-Training_P_00005_RIGHT_CC_1/1.3.6.1.4.1.9...</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
@@ -774,14 +829,13 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
       <td>MLO</td>
       <td>1</td>
       <td>calcification</td>
-      <td>AMORPHOUS</td>
-      <td>CLUSTERED</td>
       <td>3</td>
       <td>MALIGNANT</td>
       <td>3</td>
       <td>Calc-Training_P_00005_RIGHT_MLO/1.3.6.1.4.1.95...</td>
       <td>Calc-Training_P_00005_RIGHT_MLO_1/1.3.6.1.4.1....</td>
       <td>Calc-Training_P_00005_RIGHT_MLO_1/1.3.6.1.4.1....</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
@@ -791,14 +845,13 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
       <td>CC</td>
       <td>1</td>
       <td>calcification</td>
-      <td>PLEOMORPHIC</td>
-      <td>LINEAR</td>
       <td>4</td>
       <td>BENIGN</td>
       <td>4</td>
       <td>Calc-Training_P_00007_LEFT_CC/1.3.6.1.4.1.9590...</td>
       <td>Calc-Training_P_00007_LEFT_CC_1/1.3.6.1.4.1.95...</td>
       <td>Calc-Training_P_00007_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
@@ -808,14 +861,13 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
       <td>MLO</td>
       <td>1</td>
       <td>calcification</td>
-      <td>PLEOMORPHIC</td>
-      <td>LINEAR</td>
       <td>4</td>
       <td>BENIGN</td>
       <td>4</td>
       <td>Calc-Training_P_00007_LEFT_MLO/1.3.6.1.4.1.959...</td>
       <td>Calc-Training_P_00007_LEFT_MLO_1/1.3.6.1.4.1.9...</td>
       <td>Calc-Training_P_00007_LEFT_MLO_1/1.3.6.1.4.1.9...</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
@@ -825,14 +877,13 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
       <td>CC</td>
       <td>1</td>
       <td>calcification</td>
-      <td>NaN</td>
-      <td>REGIONAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>3</td>
       <td>Calc-Training_P_00008_LEFT_CC/1.3.6.1.4.1.9590...</td>
       <td>Calc-Training_P_00008_LEFT_CC_1/1.3.6.1.4.1.95...</td>
       <td>Calc-Training_P_00008_LEFT_CC_1/1.3.6.1.4.1.95...</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -878,155 +929,144 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
       <th>0</th>
       <td>patient_id</td>
       <td>object</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
-      <td>602</td>
-      <td>0.39</td>
-      <td>98944</td>
+      <td>1566</td>
+      <td>0.44</td>
+      <td>228352</td>
     </tr>
     <tr>
       <th>1</th>
       <td>breast density</td>
       <td>int64</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
-      <td>4</td>
+      <td>5</td>
       <td>0.00</td>
-      <td>12368</td>
+      <td>28544</td>
     </tr>
     <tr>
       <th>2</th>
       <td>left or right breast</td>
       <td>object</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
       <td>2</td>
       <td>0.00</td>
-      <td>95034</td>
+      <td>219397</td>
     </tr>
     <tr>
       <th>3</th>
       <td>image view</td>
       <td>object</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
       <td>2</td>
       <td>0.00</td>
-      <td>92021</td>
+      <td>212408</td>
     </tr>
     <tr>
       <th>4</th>
       <td>abnormality id</td>
       <td>int64</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
       <td>7</td>
       <td>0.00</td>
-      <td>12368</td>
+      <td>28544</td>
     </tr>
     <tr>
       <th>5</th>
       <td>abnormality type</td>
       <td>object</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
-      <td>1</td>
+      <td>2</td>
       <td>0.00</td>
-      <td>108220</td>
+      <td>234496</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>calc type</td>
-      <td>object</td>
-      <td>1526</td>
-      <td>20</td>
-      <td>0.99</td>
-      <td>45</td>
-      <td>0.03</td>
-      <td>109176</td>
+      <td>assessment</td>
+      <td>int64</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>6</td>
+      <td>0.00</td>
+      <td>28544</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>calc distribution</td>
-      <td>object</td>
-      <td>1170</td>
-      <td>376</td>
-      <td>0.76</td>
-      <td>9</td>
-      <td>0.01</td>
-      <td>89521</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>assessment</td>
-      <td>int64</td>
-      <td>1546</td>
-      <td>0</td>
-      <td>1.00</td>
-      <td>5</td>
-      <td>0.00</td>
-      <td>12368</td>
-    </tr>
-    <tr>
-      <th>9</th>
       <td>pathology</td>
       <td>object</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
       <td>3</td>
       <td>0.00</td>
-      <td>107088</td>
+      <td>240749</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>subtlety</td>
+      <td>int64</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>6</td>
+      <td>0.00</td>
+      <td>28544</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>image file path</td>
+      <td>object</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+      <td>3103</td>
+      <td>0.87</td>
+      <td>809040</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>subtlety</td>
-      <td>int64</td>
-      <td>1546</td>
+      <td>cropped image file path</td>
+      <td>object</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
-      <td>5</td>
-      <td>0.00</td>
-      <td>12368</td>
+      <td>3568</td>
+      <td>1.00</td>
+      <td>817935</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>image file path</td>
+      <td>ROI mask file path</td>
       <td>object</td>
-      <td>1546</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
-      <td>1227</td>
-      <td>0.79</td>
-      <td>351713</td>
+      <td>3568</td>
+      <td>1.00</td>
+      <td>817762</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>cropped image file path</td>
-      <td>object</td>
-      <td>1546</td>
+      <td>cancer</td>
+      <td>int64</td>
+      <td>3568</td>
       <td>0</td>
       <td>1.00</td>
-      <td>1546</td>
-      <td>1.00</td>
-      <td>356298</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>ROI mask file path</td>
-      <td>object</td>
-      <td>1546</td>
-      <td>0</td>
-      <td>1.00</td>
-      <td>1546</td>
-      <td>1.00</td>
-      <td>354753</td>
+      <td>2</td>
+      <td>0.00</td>
+      <td>28544</td>
     </tr>
   </tbody>
 </table>
@@ -1034,19 +1074,25 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 </div>
 <p><strong>Initial observations:</strong></p>
 <ol class="arabic simple">
-<li><p>We have 1546 calcification images in the dataset.</p></li>
-<li><p>There 602 unique patient ids in which multiple patient ids per patient are extant.</p></li>
-<li><p>With the exception of calcification type and distribution, we have no null values.</p></li>
-<li><p>There are 45 calcification types and 9 calcification distribution values.</p></li>
-<li><p>There is some duplication in the image file path, which should be addressed.</p></li>
+<li><p>There are 3568 cases of abnormality seen on the craniocaudal (CC) and/or mediolateral oblique (MLO) views.</p></li>
+<li><p>We have 1566 patient_ids corresponding to each of the 1566 subjects in the studies.</p></li>
+<li><p>Breast density should have a cardinality of 4, not 5.</p></li>
+<li><p>There are 7 BIRADS assessment categories, yet 6 are indicated in the CBIS-DDSM. One would suspect values of [0,5] as a 6 would mean cancer was previously diagnosed using a biopsy.</p></li>
+<li><p>As indicated our binary classification actually has three pathologies [‘MALIGNANT’, ‘BENIGN’, and ‘BENIGN_WITHOUT_CALLBACK’]. We’ve added the cancer variable to capture the presence of malignancy in the assessment.</p></li>
+<li><p>There are 465 duplicate image filepaths, indicating several cases on an image.</p></li>
 </ol>
 <section id="univariate-analysis">
 <h3>Univariate Analysis<a class="headerlink" href="#univariate-analysis" title="Permalink to this heading">#</a></h3>
 <section id="patient-id">
 <h4>Patient Id<a class="headerlink" href="#patient-id" title="Permalink to this heading">#</a></h4>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The total number of unique ids </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The total number of patient unique ids </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">, corresponding to the number of subjects in the studies.&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The median number of images per patient id is </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average number of images per patient id is </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The range of images to patient_ids is </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
@@ -1054,13 +1100,14 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total number of unique ids 602.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The total number of patient unique ids 1566, corresponding to the number of subjects in the studies.
 The median number of images per patient id is 2.0
-The average number of images per patient id is 2.57
+The average number of images per patient id is 2.28
 The range of images to patient_ids is 1 to 24 
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 </section>
 <section id="breast-density">
@@ -1072,185 +1119,51 @@ The range of images to patient_ids is 1 to 24
 <li><p>Heterogeneously dense</p></li>
 <li><p>Extremely dense</p></li>
 </ol>
-<p>According to the American College of Radiology (ACR), the distribution of breast density in the U.S.</p>
-<div class="cell docutils container">
+<p>According to the American College of Radiology™️, breast density in the U.S.:</p>
+<ul class="simple">
+<li><p>10% of women have almost entirely fatty breasts,</p></li>
+<li><p>10% have extremely dense breasts,</p></li>
+<li><p>40% of women have scattered areas of fibroglandular density</p></li>
+<li><p>40% have heterogeneously dense breasts</p></li>
+</ul>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">breast_density_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;breast density&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
-<span class="n">breast_density_counts</span><span class="p">[</span><span class="s1">&#39;Sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CBIS-DDSM&#39;</span>
-<span class="n">us_counts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">.10</span><span class="o">*</span> <span class="n">breast_density_counts</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mf">.4</span><span class="o">*</span><span class="n">breast_density_counts</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mf">.4</span><span class="o">*</span><span class="n">breast_density_counts</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mf">.1</span><span class="o">*</span><span class="n">breast_density_counts</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()]</span>
-<span class="n">us_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">us_counts</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">us_counts</span><span class="p">[</span><span class="s2">&quot;Sample&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;U.S.&#39;</span>
-<span class="n">us_counts</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;Sample&#39;</span><span class="p">]</span>
-<span class="n">us_counts</span>
-<span class="n">us_counts</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
-<span class="n">counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">breast_density_counts</span><span class="p">,</span> <span class="n">us_counts</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">counts</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Breast Density&#39;</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="s1">&#39;Sample&#39;</span><span class="p">]</span>
-<span class="n">counts</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="mi">357</span><span class="p">)</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1427</span><span class="p">)</span>
+<span class="n">d3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="mi">1427</span><span class="p">)</span>
+<span class="n">d4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">4</span><span class="p">],</span> <span class="mi">357</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="o">=</span><span class="n">d1</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="n">d2</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="o">=</span><span class="n">d</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="n">d3</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="o">=</span><span class="n">d</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="n">d4</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Breast Density&quot;</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;Sample&quot;</span><span class="p">:</span> <span class="s2">&quot;U.S.&quot;</span><span class="p">}</span>
+<span class="n">usd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;breast density&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+<span class="n">density</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;breast density&#39;</span><span class="p">:</span> <span class="s1">&#39;Breast Density&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">density</span><span class="p">[</span><span class="s1">&#39;Sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CBIS-DDSM&#39;</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">density</span><span class="p">,</span> <span class="n">usd</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count</th>
-      <th>Sample</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>154.60</td>
-      <td>U.S.</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>618.40</td>
-      <td>U.S.</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>618.40</td>
-      <td>U.S.</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>154.60</td>
-      <td>U.S.</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Breast Density</th>
-      <th>Count</th>
-      <th>Sample</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>175.00</td>
-      <td>CBIS-DDSM</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>501.00</td>
-      <td>CBIS-DDSM</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>539.00</td>
-      <td>CBIS-DDSM</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>331.00</td>
-      <td>CBIS-DDSM</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>154.60</td>
-      <td>U.S.</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>2</td>
-      <td>618.40</td>
-      <td>U.S.</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>3</td>
-      <td>618.40</td>
-      <td>U.S.</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>4</td>
-      <td>154.60</td>
-      <td>U.S.</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+</details>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">dataCBIS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">175</span><span class="p">,</span><span class="mi">501</span><span class="p">,</span><span class="mi">539</span><span class="p">,</span><span class="mi">331</span><span class="p">]</span>
-<span class="n">dataUS</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
-<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Almost Entirely Fatty&#39;</span><span class="p">,</span><span class="s1">&#39;Scattered Areas of </span><span class="se">\n</span><span class="s1">Fibroglandular Density&#39;</span><span class="p">,</span> <span class="s1">&#39;Heterogeneously Dense&#39;</span><span class="p">,</span> <span class="s1">&#39;Extremely Dense&#39;</span><span class="p">]</span>
-<span class="n">palette_color</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;Blues_r&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">dataUS</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">palette_color</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">dataCBIS</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">palette_color</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Breast Density in the U.S.&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Breast Density in CBIS-DDSM.&quot;</span><span class="p">)</span>
-<span class="c1">#plt.show()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Almost Entirely Fatty&#39;</span><span class="p">,</span><span class="s1">&#39;Scattered Areas of </span><span class="se">\n</span><span class="s1">Fibroglandular Density&#39;</span><span class="p">,</span> <span class="s1">&#39;Heterogeneously Dense&#39;</span><span class="p">,</span> <span class="s1">&#39;Extremely Dense&#39;</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">palette_color</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;Blues_r&#39;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">ax1</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">dataUS</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">palette_color</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">dataCBIS</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">palette_color</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Breast Density in the U.S.&quot;</span><span class="p">)</span>
-
-<span class="ne">TypeError</span>: Axes.pie() got multiple values for argument &#39;ax&#39;
-</pre></div>
-</div>
-<img alt="../_images/bc07c2762fac90d720fd30f4da82a65c78236bc61135fddfcc2a258b314027eb.png" src="../_images/bc07c2762fac90d720fd30f4da82a65c78236bc61135fddfcc2a258b314027eb.png" />
-</div>
-</div>
+<p>The following exhibits the counts by density in the CBIS-DDSM dataset vis-a-vis a sample from the US of the same size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">countsx</span><span class="o">=</span><span class="s1">&#39;breast density&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Breast Density in CBIS-DDSM Calcification Cases&quot;</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">density</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Breast Density&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Breast Density in CBIS-DDSM vis-a-vis US Population of Same Size&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/3bb826cec68aca73a259e144aee77fc1955126dd8e5d1d4488ef0e67a01e77e5.png" src="../_images/3bb826cec68aca73a259e144aee77fc1955126dd8e5d1d4488ef0e67a01e77e5.png" />
 </div>
+</div>
+<p>If we were to perform a goodness of fit test on the two samples, the null hypothesis of breast density in CBIS-DDSM and breast density in the US Population originating from the same distribution, would likely be rejected. The CBIS-DDSM has fatter tails on both ends of the distribution. Some right skew is extant as well.</p>
 </section>
 <section id="left-right">
 <h4>Left Right<a class="headerlink" href="#left-right" title="Permalink to this heading">#</a></h4>
@@ -1261,7 +1174,11 @@ The range of images to patient_ids is 1 to 24
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/d11d4798539aec573ea1d37df77d192a9b4f043912d3e573451a7313045f0498.png" src="../_images/d11d4798539aec573ea1d37df77d192a9b4f043912d3e573451a7313045f0498.png" />
 </div>
+</div>
+<p>There are slightly more left views than right; still, the dataset is fairly balanced in this regard for what that’s worth.</p>
 </section>
 <section id="image-view">
 <h4>Image View<a class="headerlink" href="#image-view" title="Permalink to this heading">#</a></h4>
@@ -1272,7 +1189,11 @@ The range of images to patient_ids is 1 to 24
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/d049d9d385a2e6a28cc83627e27c27fa4ca70c44acbd9463ccf8237250f7171f.png" src="../_images/d049d9d385a2e6a28cc83627e27c27fa4ca70c44acbd9463ccf8237250f7171f.png" />
 </div>
+</div>
+<p>Mediolateral oblique views slightly outnumber craniocaudal views.</p>
 </section>
 <section id="abnormality-id">
 <h4>Abnormality Id<a class="headerlink" href="#abnormality-id" title="Permalink to this heading">#</a></h4>
@@ -1283,8 +1204,11 @@ The range of images to patient_ids is 1 to 24
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/a1b3d45dc0bd0aa5ca8a50630bc42972f3361036e8091c38cd57273738e287a1.png" src="../_images/a1b3d45dc0bd0aa5ca8a50630bc42972f3361036e8091c38cd57273738e287a1.png" />
 </div>
-<p>Most patients have only one abnormality.</p>
+</div>
+<p>A plurality of patients present only one abnormality.</p>
 </section>
 <section id="calcification-type">
 <h4>Calcification Type<a class="headerlink" href="#calcification-type" title="Permalink to this heading">#</a></h4>
@@ -1294,6 +1218,66 @@ The range of images to patient_ids is 1 to 24
 <span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;calc type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Type&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;calc type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Type&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/studioai/visual/seaborn.py:378,</span> in <span class="ni">Visualizer.countplot</span><span class="nt">(self, data, x, y, hue, orient, title, ax, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">375</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">376</span>     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canvas</span><span class="o">.</span><span class="n">get_figaxes</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">378</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">379</span>     <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">380</span>     <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">381</span>     <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">382</span>     <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">383</span>     <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">384</span>     <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">385</span>     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">386</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">388</span> <span class="k">if</span> <span class="n">orient</span> <span class="o">==</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">389</span>     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">:</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/seaborn/categorical.py:2943,</span> in <span class="ni">countplot</span><span class="nt">(data, x, y, hue, order, hue_order, orient, color, palette, saturation, width, dodge, ax, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2940</span> <span class="k">elif</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2941</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot pass values for both `x` and `y`&quot;</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2943</span> <span class="n">plotter</span> <span class="o">=</span> <span class="n">_CountPlotter</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2944</span>     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">hue</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">hue_order</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2945</span>     <span class="n">estimator</span><span class="p">,</span> <span class="n">errorbar</span><span class="p">,</span> <span class="n">n_boot</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2946</span>     <span class="n">orient</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">saturation</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2947</span>     <span class="n">width</span><span class="p">,</span> <span class="n">errcolor</span><span class="p">,</span> <span class="n">errwidth</span><span class="p">,</span> <span class="n">capsize</span><span class="p">,</span> <span class="n">dodge</span>
+<span class="g g-Whitespace">   </span><span class="mi">2948</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2950</span> <span class="n">plotter</span><span class="o">.</span><span class="n">value_label</span> <span class="o">=</span> <span class="s2">&quot;count&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">2952</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/seaborn/categorical.py:1530,</span> in <span class="ni">_BarPlotter.__init__</span><span class="nt">(self, x, y, hue, data, order, hue_order, estimator, errorbar, n_boot, units, seed, orient, color, palette, saturation, width, errcolor, errwidth, capsize, dodge)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1525</span> <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">hue</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">hue_order</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1526</span>              <span class="n">estimator</span><span class="p">,</span> <span class="n">errorbar</span><span class="p">,</span> <span class="n">n_boot</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1527</span>              <span class="n">orient</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">saturation</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1528</span>              <span class="n">errcolor</span><span class="p">,</span> <span class="n">errwidth</span><span class="p">,</span> <span class="n">capsize</span><span class="p">,</span> <span class="n">dodge</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1529</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Initialize the plotter.&quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1530</span>     <span class="bp">self</span><span class="o">.</span><span class="n">establish_variables</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">hue</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1531</span>                              <span class="n">order</span><span class="p">,</span> <span class="n">hue_order</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1532</span>     <span class="bp">self</span><span class="o">.</span><span class="n">establish_colors</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">saturation</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1533</span>     <span class="bp">self</span><span class="o">.</span><span class="n">estimate_statistic</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">errorbar</span><span class="p">,</span> <span class="n">n_boot</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/seaborn/categorical.py:541,</span> in <span class="ni">_CategoricalPlotter.establish_variables</span><span class="nt">(self, x, y, hue, data, orient, order, hue_order, units)</span>
+<span class="g g-Whitespace">    </span><span class="mi">539</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">540</span>         <span class="n">err</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Could not interpret input &#39;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">541</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">543</span> <span class="c1"># Figure out the plotting orientation</span>
+<span class="g g-Whitespace">    </span><span class="mi">544</span> <span class="n">orient</span> <span class="o">=</span> <span class="n">infer_orient</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">545</span>     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span> <span class="n">require_numeric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">require_numeric</span>
+<span class="g g-Whitespace">    </span><span class="mi">546</span> <span class="p">)</span>
+
+<span class="ne">ValueError</span>: Could not interpret input &#39;calc type&#39;
+</pre></div>
+</div>
+<img alt="../_images/06b2ed7b70c23fda487186b10c67a71b4b45591ee93c4112d0f0975958ac5765.png" src="../_images/06b2ed7b70c23fda487186b10c67a71b4b45591ee93c4112d0f0975958ac5765.png" />
 </div>
 </div>
 </section>
@@ -1447,7 +1431,12 @@ The range of images to patient_ids is 1 to 24
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-organization">Dataset Organization</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-dataset-analysis">Training Dataset Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-plan">Exploratory Data Analysis Plan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-and-guiding-questions">Exploratory and Guiding Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-approach">Exploratory Approach</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eda-stage-1-cross-dataset-analysis">EDA Stage 1: Cross-Dataset Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#univariate-analysis">Univariate Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#patient-id">Patient Id</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
