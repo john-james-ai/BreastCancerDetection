@@ -24,7 +24,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) {cite}`leeCuratedMammogra
 
 CBIS-DDSM was obtained from the Cancer Imaging Archive {cite}`sawyer-leeCuratedBreastImaging2016` and is summarized below:
 
-```{table}
+```{table} CBIS-DDSM Statistics
 
 | Collection Statistics  |        |
 | ---------------------- | ------ |
@@ -38,7 +38,7 @@ CBIS-DDSM was obtained from the Cancer Imaging Archive {cite}`sawyer-leeCuratedB
 
 The CBIS-DDSM data were split into training and test (20%), sets based on BI-RADS category. Splitting by abnormality type, 20% of the cases were allocated to the test sets and the remaining were designated for training.
 
-```{table}
+```{table} CBIS-DDSM Training and Test Sets
 
 | Dataset                    | Benign Cases                  | Malignant Cases               |
 |----------------------------|-------------------------------|-------------------------------|
@@ -52,7 +52,7 @@ The CBIS-DDSM data were split into training and test (20%), sets based on BI-RAD
 
 The following files contain the mammography and ROIs for the cases with calcifications.
 
-```{table}
+```{table} CBIS-DDSM Mammography Files for Calcification Cases
 
 | Type   | Filename                             | Format |
 | ------ | ------------------------------------ | ------ |
@@ -64,7 +64,7 @@ The following files contain the mammography and ROIs for the cases with calcific
 
 The following files contain the mammography and ROIs for the mass cases.
 
-```{table}
+```{table} CBIS-DDSM Mammography Files for Mass Cases
 
 
 | Type   | Filename                             | Format |
@@ -77,8 +77,7 @@ The following files contain the mammography and ROIs for the mass cases.
 
 There are separate metadata files for the train and test calcification and mass cases.
 
-```{table}
-
+```{table} CBIS-DDSM Metadata
 
 | Type     | Filename                  | Format |
 | -------- | ------------------------- | ------ |
@@ -171,7 +170,7 @@ Hence, we shall proceed as follows:
 This initial stage focuses on the variables in common between the training sets.
 
 ```{code-cell}
-:tags: [hide-cell]
+:tags: [remove-input]
 
 # Filepaths
 fpc1 = "/home/john/projects/bcd/data/raw/meta/calc_case_description_train_set.csv"
@@ -181,6 +180,8 @@ fpm2 = "/home/john/projects/bcd/data/raw/meta/mass_case_description_test_set.csv
 ```
 
 ```{code-cell}
+:tags: [remove-input]
+
 ## Dataframes
 dfc1 = pd.read_csv(fpc1)
 dfc2 = pd.read_csv(fpc2)
@@ -231,7 +232,7 @@ ds.info
 #### Patient Id
 
 ```{code-cell}
-:tags: [hide-cell]
+:tags: [remove-input]
 print(f"The total number of patient unique ids {df['patient_id'].nunique()}, corresponding to the number of subjects in the studies.")
 print(f"The median number of images per patient id is {df['patient_id'].value_counts().median()}")
 print(f"The average number of images per patient id is {round(df['patient_id'].value_counts().mean(),2)}")
@@ -255,7 +256,7 @@ According to the American College of Radiology™️, breast density in the U.S.
 - 40% have heterogeneously dense breasts
 
 ```{code-cell}
-:tags: [hide-cell]
+:tags: [remove-input]
 
 d1 = np.repeat([1], 357)
 d2 = np.repeat([2], 1427)
@@ -314,25 +315,11 @@ ds.plot.countplot(x='abnormality id', ax=ax, title ="Distribution of Abnormailit
 
 A plurality of patients present only one abnormality.
 
-#### Calcification Type
-
-```{code-cell}
-fig, ax = plt.subplots(figsize=(8,8))
-ds.plot.countplot(y='calc type', ax=ax, title ="Distribution of Calcification Type")
-```
-
-#### Calcification Distribution
+#### Abnormality Type
 
 ```{code-cell}
 fig, ax = plt.subplots(figsize=(12,4))
-ds.plot.countplot(y='calc distribution', ax=ax, title ="Calcification Distribution")
-```
-
-#### BIRADS Assessment
-
-```{code-cell}
-fig, ax = plt.subplots(figsize=(12,4))
-ds.plot.countplot(x='assessment', ax=ax, title ="Distribution of BIRADS Assessment")
+ds.plot.countplot(x='abnormality type', ax=ax, title ="Distribution of Abnormality Type")
 ```
 
 #### Pathology
