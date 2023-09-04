@@ -24,7 +24,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) {cite}`leeCuratedMammogra
 
 CBIS-DDSM was obtained from the Cancer Imaging Archive {cite}`sawyer-leeCuratedBreastImaging2016` and is summarized below:
 
-```{table}
+```{table} CBIS-DDSM Statistics
 
 | Collection Statistics  |        |
 | ---------------------- | ------ |
@@ -38,7 +38,7 @@ CBIS-DDSM was obtained from the Cancer Imaging Archive {cite}`sawyer-leeCuratedB
 
 The CBIS-DDSM data were split into training and test (20%), sets based on BI-RADS category. Splitting by abnormality type, 20% of the cases were allocated to the test sets and the remaining were designated for training.
 
-```{table}
+```{table} CBIS-DDSM Training and Test Sets
 
 | Dataset                    | Benign Cases                  | Malignant Cases               |
 |----------------------------|-------------------------------|-------------------------------|
@@ -52,7 +52,7 @@ The CBIS-DDSM data were split into training and test (20%), sets based on BI-RAD
 
 The following files contain the mammography and ROIs for the cases with calcifications.
 
-```{table}
+```{table} CBIS-DDSM Mammography Files for Calcification Cases
 
 | Type   | Filename                             | Format |
 | ------ | ------------------------------------ | ------ |
@@ -64,7 +64,7 @@ The following files contain the mammography and ROIs for the cases with calcific
 
 The following files contain the mammography and ROIs for the mass cases.
 
-```{table}
+```{table} CBIS-DDSM Mammography Files for Mass Cases
 
 
 | Type   | Filename                             | Format |
@@ -77,8 +77,7 @@ The following files contain the mammography and ROIs for the mass cases.
 
 There are separate metadata files for the train and test calcification and mass cases.
 
-```{table}
-
+```{table} CBIS-DDSM Metadata
 
 | Type     | Filename                  | Format |
 | -------- | ------------------------- | ------ |
