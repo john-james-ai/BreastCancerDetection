@@ -9,6 +9,8 @@ __pycache__/
 # Data
 /data
 
+# Research
+/research
 
 # Distribution / packaging
 .Python
