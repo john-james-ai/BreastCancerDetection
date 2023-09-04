@@ -454,9 +454,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-right">Left Right</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#birads-assessment">BIRADS Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-type">Abnormality Type</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sublety">Sublety</a></li>
 </ul>
@@ -1112,7 +1110,7 @@ The range of images to patient_ids is 1 to 24
 </section>
 <section id="breast-density">
 <h4>Breast Density<a class="headerlink" href="#breast-density" title="Permalink to this heading">#</a></h4>
-<p>Radiologists classify breast density using a 4-level density scale <span id="id4">[]</span>:</p>
+<p>Radiologists classify breast density using a 4-level density scale <span id="id4">[<a class="reference internal" href="99_references.html#id294" title="Breast Imaging Reporting &amp; Data System. URL: https://www.acr.org/Clinical-Resources/Reporting-and-Data-Systems/Bi-Rads (visited on 2023-09-03).">4</a>]</span>:</p>
 <ol class="arabic simple">
 <li><p>Almost entirely fatty</p></li>
 <li><p>Scattered areas of fibroglandular density</p></li>
@@ -1210,96 +1208,17 @@ The range of images to patient_ids is 1 to 24
 </div>
 <p>A plurality of patients present only one abnormality.</p>
 </section>
-<section id="calcification-type">
-<h4>Calcification Type<a class="headerlink" href="#calcification-type" title="Permalink to this heading">#</a></h4>
+<section id="abnormality-type">
+<h4>Abnormality Type<a class="headerlink" href="#abnormality-type" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;calc type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Type&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;abnormality type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Abnormality Type&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;calc type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Type&quot;</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/studioai/visual/seaborn.py:378,</span> in <span class="ni">Visualizer.countplot</span><span class="nt">(self, data, x, y, hue, orient, title, ax, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">375</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">376</span>     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canvas</span><span class="o">.</span><span class="n">get_figaxes</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">378</span> <span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">379</span>     <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">380</span>     <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">381</span>     <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">382</span>     <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">383</span>     <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">384</span>     <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">385</span>     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">386</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">387</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">388</span> <span class="k">if</span> <span class="n">orient</span> <span class="o">==</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">389</span>     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">:</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/seaborn/categorical.py:2943,</span> in <span class="ni">countplot</span><span class="nt">(data, x, y, hue, order, hue_order, orient, color, palette, saturation, width, dodge, ax, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2940</span> <span class="k">elif</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2941</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot pass values for both `x` and `y`&quot;</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">2943</span> <span class="n">plotter</span> <span class="o">=</span> <span class="n">_CountPlotter</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">2944</span>     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">hue</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">hue_order</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">2945</span>     <span class="n">estimator</span><span class="p">,</span> <span class="n">errorbar</span><span class="p">,</span> <span class="n">n_boot</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">2946</span>     <span class="n">orient</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">saturation</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">2947</span>     <span class="n">width</span><span class="p">,</span> <span class="n">errcolor</span><span class="p">,</span> <span class="n">errwidth</span><span class="p">,</span> <span class="n">capsize</span><span class="p">,</span> <span class="n">dodge</span>
-<span class="g g-Whitespace">   </span><span class="mi">2948</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2950</span> <span class="n">plotter</span><span class="o">.</span><span class="n">value_label</span> <span class="o">=</span> <span class="s2">&quot;count&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">2952</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/seaborn/categorical.py:1530,</span> in <span class="ni">_BarPlotter.__init__</span><span class="nt">(self, x, y, hue, data, order, hue_order, estimator, errorbar, n_boot, units, seed, orient, color, palette, saturation, width, errcolor, errwidth, capsize, dodge)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1525</span> <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">hue</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">hue_order</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1526</span>              <span class="n">estimator</span><span class="p">,</span> <span class="n">errorbar</span><span class="p">,</span> <span class="n">n_boot</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1527</span>              <span class="n">orient</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">saturation</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1528</span>              <span class="n">errcolor</span><span class="p">,</span> <span class="n">errwidth</span><span class="p">,</span> <span class="n">capsize</span><span class="p">,</span> <span class="n">dodge</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1529</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Initialize the plotter.&quot;&quot;&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1530</span>     <span class="bp">self</span><span class="o">.</span><span class="n">establish_variables</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">hue</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1531</span>                              <span class="n">order</span><span class="p">,</span> <span class="n">hue_order</span><span class="p">,</span> <span class="n">units</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1532</span>     <span class="bp">self</span><span class="o">.</span><span class="n">establish_colors</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">palette</span><span class="p">,</span> <span class="n">saturation</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1533</span>     <span class="bp">self</span><span class="o">.</span><span class="n">estimate_statistic</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">errorbar</span><span class="p">,</span> <span class="n">n_boot</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/seaborn/categorical.py:541,</span> in <span class="ni">_CategoricalPlotter.establish_variables</span><span class="nt">(self, x, y, hue, data, orient, order, hue_order, units)</span>
-<span class="g g-Whitespace">    </span><span class="mi">539</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">540</span>         <span class="n">err</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Could not interpret input &#39;</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">541</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">543</span> <span class="c1"># Figure out the plotting orientation</span>
-<span class="g g-Whitespace">    </span><span class="mi">544</span> <span class="n">orient</span> <span class="o">=</span> <span class="n">infer_orient</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">545</span>     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span> <span class="n">require_numeric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">require_numeric</span>
-<span class="g g-Whitespace">    </span><span class="mi">546</span> <span class="p">)</span>
-
-<span class="ne">ValueError</span>: Could not interpret input &#39;calc type&#39;
-</pre></div>
-</div>
-<img alt="../_images/06b2ed7b70c23fda487186b10c67a71b4b45591ee93c4112d0f0975958ac5765.png" src="../_images/06b2ed7b70c23fda487186b10c67a71b4b45591ee93c4112d0f0975958ac5765.png" />
-</div>
-</div>
-</section>
-<section id="calcification-distribution">
-<h4>Calcification Distribution<a class="headerlink" href="#calcification-distribution" title="Permalink to this heading">#</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;calc distribution&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Calcification Distribution&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="birads-assessment">
-<h4>BIRADS Assessment<a class="headerlink" href="#birads-assessment" title="Permalink to this heading">#</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;assessment&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of BIRADS Assessment&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<img alt="../_images/e8f87c27163e3ff239625a2164a737619202bbe32751782dabb69ef14329682c.png" src="../_images/e8f87c27163e3ff239625a2164a737619202bbe32751782dabb69ef14329682c.png" />
 </div>
 </div>
 </section>
@@ -1312,6 +1231,9 @@ The range of images to patient_ids is 1 to 24
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/436a145d85b9e2320ec07a87a40f923cc81899388f7a8d35889930ec946f1c83.png" src="../_images/436a145d85b9e2320ec07a87a40f923cc81899388f7a8d35889930ec946f1c83.png" />
+</div>
 </div>
 </section>
 <section id="sublety">
@@ -1322,6 +1244,9 @@ The range of images to patient_ids is 1 to 24
 <span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;subtlety&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Subtlety&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/176109c4d9fb87bcc6af0130ab6ef5dbeb7e7faf6d12952632a01c4faf5ff79c.png" src="../_images/176109c4d9fb87bcc6af0130ab6ef5dbeb7e7faf6d12952632a01c4faf5ff79c.png" />
 </div>
 </div>
 </section>
@@ -1339,6 +1264,9 @@ The range of images to patient_ids is 1 to 24
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/f00dc5206b2f69060e864cf0bdda74c92a1f8523fe7ddaf88aca019570701691.png" src="../_images/f00dc5206b2f69060e864cf0bdda74c92a1f8523fe7ddaf88aca019570701691.png" />
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1346,6 +1274,85 @@ The range of images to patient_ids is 1 to 24
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="4" halign="left">pathology</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>unique</th>
+      <th>top</th>
+      <th>freq</th>
+    </tr>
+    <tr>
+      <th>breast density</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>1</td>
+      <td>MALIGNANT</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>536</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>204</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1373</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>569</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1103</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>459</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>554</td>
+      <td>3</td>
+      <td>BENIGN</td>
+      <td>280</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p><strong>Key Observations</strong></p>
 <ol class="arabic simple">
@@ -1443,9 +1450,7 @@ The range of images to patient_ids is 1 to 24
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-right">Left Right</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#birads-assessment">BIRADS Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-type">Abnormality Type</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sublety">Sublety</a></li>
 </ul>

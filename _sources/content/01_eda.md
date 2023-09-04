@@ -314,25 +314,11 @@ ds.plot.countplot(x='abnormality id', ax=ax, title ="Distribution of Abnormailit
 
 A plurality of patients present only one abnormality.
 
-#### Calcification Type
-
-```{code-cell}
-fig, ax = plt.subplots(figsize=(8,8))
-ds.plot.countplot(y='calc type', ax=ax, title ="Distribution of Calcification Type")
-```
-
-#### Calcification Distribution
+#### Abnormality Type
 
 ```{code-cell}
 fig, ax = plt.subplots(figsize=(12,4))
-ds.plot.countplot(y='calc distribution', ax=ax, title ="Calcification Distribution")
-```
-
-#### BIRADS Assessment
-
-```{code-cell}
-fig, ax = plt.subplots(figsize=(12,4))
-ds.plot.countplot(x='assessment', ax=ax, title ="Distribution of BIRADS Assessment")
+ds.plot.countplot(x='abnormality type', ax=ax, title ="Distribution of Abnormality Type")
 ```
 
 #### Pathology
