@@ -11,11 +11,12 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday September 4th 2023 12:24:16 pm                                               #
-# Modified   : Sunday September 10th 2023 03:00:30 am                                              #
+# Modified   : Monday September 11th 2023 04:37:59 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+import sys
 import os
 from datetime import datetime
 from glob import glob
@@ -25,7 +26,9 @@ import pandas as pd
 import pydicom
 
 # ------------------------------------------------------------------------------------------------ #
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -51,46 +54,58 @@ class MetaPrep:
 
         collection_meta = self._init_meta()
 
+        fidx = 0
+
+        if os.path.exists(self._outfilepath):
+            x = input("Output file already exists. Delete? (y/n)")
+            if "y" in x.lower():
+                os.remove(self._outfilepath)
+            else:
+                exit()
+
         for idx, seriesmeta in self._input.iterrows():
             imagemeta = self._extract_metadata(seriesmeta)
             filepaths = self._get_filepaths(seriesmeta["file_location"])
             for filepath in filepaths:
+                fidx += 1
                 dicommeta = self._extract_dicom_data(filepath=filepath)
                 collection_meta = self._combine_metadata(collection_meta, imagemeta, dicommeta)
-            if (idx + 1) % 500 == 0:
+            if (idx + 1) % 100 == 0:
                 now = datetime.now()
                 elapsed = (now - start).total_seconds()
-                rate = round((idx + 1) / elapsed, 2)
+                rrate = round((idx + 1) / elapsed, 2)
+                irate = round(fidx / elapsed, 2)
                 df = pd.DataFrame.from_dict(data=collection_meta, orient="columns")
-                df.to_csv(path_or_buf=self._outfilepath, mode="a")
+                df.to_csv(path_or_buf=self._outfilepath, mode="a", index=False)
                 collection_meta = self._init_meta()
-                msg = f"Processed {idx+1} rows in {round(elapsed,2)} seconds at {rate} rows per second."
-                print(msg)
+                msg = f"Processed {idx+1} rows and {fidx} images in {round(elapsed,2)} seconds at {rrate} rows per second / {irate} images per second."
+                logger.debug(msg)
+
         df = pd.DataFrame.from_dict(data=collection_meta, orient="columns")
-        df.to_csv(path_or_buf=self._outfilepath, mode="a")
         msg = f"Prepared dataframe of shape {df.shape}"
-        print(msg)
+        logger.debug(msg)
+        df.to_csv(path_or_buf=self._outfilepath, mode="a", index=False)
 
     def _init_meta(self) -> None:
         """Adds image metadata to the file metadata."""
-        collection_meta = {}
-        collection_meta["patient_id"] = []
-        collection_meta["subject_id"] = []
-        collection_meta["series_uid"] = []
-        collection_meta["description"] = []
-        collection_meta["view"] = []
-        collection_meta["side"] = []
-        collection_meta["casetype"] = []
-        collection_meta["fileset"] = []
-        collection_meta["filepath"] = []
-        collection_meta["width"] = []
-        collection_meta["height"] = []
-        collection_meta["aspect_ratio"] = []
-        collection_meta["bits"] = []
-        collection_meta["smallest_pixel"] = []
-        collection_meta["largest_pixel"] = []
-        collection_meta["pixel_range"] = []
-        return collection_meta
+        meta = {}
+        meta["patient_id"] = []
+        meta["subject_id"] = []
+        meta["series_uid"] = []
+        meta["description"] = []
+        meta["view"] = []
+        meta["side"] = []
+        meta["casetype"] = []
+        meta["fileset"] = []
+        meta["filepath"] = []
+        meta["width"] = []
+        meta["height"] = []
+        meta["aspect_ratio"] = []
+        meta["bits"] = []
+        meta["smallest_pixel"] = []
+        meta["largest_pixel"] = []
+        meta["pixel_range"] = []
+        return meta
 
     def _extract_metadata(self, seriesmeta: pd.Series) -> dict:
         """Extracts metadata from the series"""
