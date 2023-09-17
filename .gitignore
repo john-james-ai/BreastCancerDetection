@@ -9,7 +9,8 @@ __pycache__/
 # Data
 /data
 
-# Research
+# Notes and Research
+/notes
 /research
 
 # Distribution / packaging
