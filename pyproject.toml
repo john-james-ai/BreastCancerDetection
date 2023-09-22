@@ -69,6 +69,8 @@ target-version = ["py37", "py38", "py39"]
 include = '\.pyi?$'
 
 [tool.pytest.ini_options]
+log_cli = "true"
+log_level = "NOTSET"
 addopts = """\
     --cov bcd \
     --cov tests \
@@ -76,7 +78,6 @@ addopts = """\
     --no-cov-on-fail \
 """
 filterwarnings = [
-    "ignore::pytest.PytestCollectionWarning",
     "ignore::pytest.PytestUnknownMarkWarning",
     ]
 
