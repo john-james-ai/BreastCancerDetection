@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:16 am                                              #
-# Modified   : Friday September 22nd 2023 03:30:34 am                                              #
+# Modified   : Friday September 22nd 2023 04:54:10 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -66,8 +66,11 @@ class SeriesPrep(DataPrep):
 
         if force or not os.path.exists(fp_out):
             df1 = pd.read_csv(fp_in)
-            df2 = df1[SERIES_COLS]
+            df2 = df1[SERIES_COLS].copy()
             df2 = self._format_column_names(df=df2)
+            df2["file_location"] = df2["file_location"].str.replace(
+                "./CBIS-DDSM", "data/raw/CBIS-DDSM", regex=False
+            )
             df2.to_csv(fp_out, index=False)
         if result:
             return pd.read_csv(fp_out)

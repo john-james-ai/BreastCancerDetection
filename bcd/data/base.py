@@ -11,14 +11,17 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Friday September 22nd 2023 09:50:38 am                                              #
+# Modified   : Friday September 22nd 2023 07:13:41 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 # %%
+import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Union
+
 import pandas as pd
 from studioai.data.dataset import Dataset
 
@@ -53,17 +56,62 @@ class DQA(ABC):
     """Data Quality Analysis Base Class"""
 
     @abstractmethod
-    def run(self) -> None:
+    def validate(self) -> pd.DataFrame:
+        "Validates the data and returns a boolean mask of cell validity."
+
+    @abstractmethod
+    def analyze_validity(self) -> DQAResult:
         "Executes the data quality analysis"
 
-    def run_completeness(self) -> DQAResult:
+    def analyze_completeness(self) -> DQAResult:
         """Executes the completeness analysis"""
         result = DQAResult(
-            summary=self._run_completeness_summary(), detail=self._run_completeness_detail()
+            summary=self._analyze_completeness_summary(), detail=self._analyze_completeness_detail()
         )
         return result
 
-    def _run_completeness_summary(self) -> pd.DataFrame:
+    def analyze_uniqueness(self) -> DQAResult:
+        """Executes the uniqueness analysis"""
+        result = DQAResult(
+            summary=self._analyze_uniqueness_summary(), detail=self._analyze_uniqueness_detail()
+        )
+        return result
+
+    def get_incomplete_data(self, subset: Union[list, str] = None) -> pd.DataFrame:
+        """Returns rows of incomplete data
+
+        Considering certain columns is optional.
+
+        Args:
+            subset (Union[str,list]): A column or list of columns to be evaluated
+                for completeness.
+        """
+        if subset is None:
+            return self._df.loc[self._df.isnull().any(axis=1)]
+        elif isinstance(subset, str):
+            return self._df.loc[self._df[subset].isnull()]
+        else:
+            return self._df.loc(self._df[subset].isnull().any(axis=1))
+
+    def get_duplicate_data(
+        self, subset: Union[list, str] = None, keep: str = "first"
+    ) -> pd.DataFrame:
+        """Returns duplicate rows of data
+
+        Considering certain columns is optional.
+
+        Args:
+            subset (Union[str,list]): A column or list of columns to be evaluated
+                for duplication.
+            keep (str): Either 'first', 'last', or false.  Determines which duplicates to mark.
+                - first : Mark duplicates as True except for the first occurrence.
+                - last : Mark duplicates as True except for the last occurrence.
+                - False : Mark all duplicates as True.
+
+        """
+        return self._df.loc[self._df.duplicated(subset=subset, keep=keep)]
+
+    def _analyze_completeness_summary(self) -> pd.DataFrame:
         """Returns a summary completeness analysis"""
         nr = self._n_rows(df=self._df)
         ncr = self._n_rows_complete(df=self._df)
@@ -86,7 +134,7 @@ class DQA(ABC):
         dfc = dfc.round(3)
         return dfc
 
-    def _run_completeness_detail(self) -> pd.DataFrame:
+    def _analyze_completeness_detail(self) -> pd.DataFrame:
         """Returns a detailed completeness analysis"""
         n = self._n_by_var(df=self._df)
         n_complete = self._n_complete_by_var(df=self._df)
@@ -96,14 +144,7 @@ class DQA(ABC):
         dfc = dfc.round(3)
         return dfc
 
-    def run_uniqueness(self) -> DQAResult:
-        """Executes the uniqueness analysis"""
-        result = DQAResult(
-            summary=self._run_uniqueness_summary(), detail=self._run_uniqueness_detail()
-        )
-        return result
-
-    def _run_uniqueness_summary(self) -> pd.DataFrame:
+    def _analyze_uniqueness_summary(self) -> pd.DataFrame:
         """Returns a summary uniqueness analysis"""
         nr = self._n_rows(df=self._df)
         nur = self._n_unique(df=self._df)
@@ -119,7 +160,7 @@ class DQA(ABC):
         dfu = dfu.round(3)
         return dfu
 
-    def _run_uniqueness_detail(self) -> pd.DataFrame:
+    def _analyze_uniqueness_detail(self) -> pd.DataFrame:
         """Returns a detailed uniqueness analysis"""
         n = self._n_by_var(df=self._df)
         n_unique = self._n_unique_by_var(df=self._df)
@@ -159,7 +200,7 @@ class DQA(ABC):
 
     def _n_rows_complete(self, df: pd.DataFrame) -> int:
         """Returns total number of rows complete for the dataset"""
-        return len(df) - len(df[df.isnull()].any(axis=1))
+        return df.notnull().all(axis=1).sum()
 
     def _p_rows_complete(self, df: pd.DataFrame) -> float:
         """Returns proportion of complete rows for the dataset"""
@@ -181,13 +222,13 @@ class DQA(ABC):
         """Returns the proportion of unique values by variable"""
         return self._n_unique_by_var(df=df) / self._n_by_var(df=df)
 
-    def _n_range_valid(self, s: pd.Series, min_value: int, max_value: int) -> int:
+    def _n_within_range(self, s: pd.Series, min_value: int, max_value: int) -> int:
         """Number of values that are between min and max value inclusive"""
         return s.between(left=min_value, right=max_value).sum()
 
-    def _p_range_valid(self, s: pd.Series, min_value: int, max_value: int) -> float:
+    def _p_within_range(self, s: pd.Series, min_value: int, max_value: int) -> float:
         """Returns proportion of values within range"""
-        return self._n_range_valid(s=s, min_value=min_value, max_value=max_value) / len(s)
+        return self._n_within_range(s=s, min_value=min_value, max_value=max_value) / len(s)
 
     def _n_values_valid(self, s: pd.Series, values: list) -> int:
         """Returns the number of values that are in list of valid values"""
@@ -212,6 +253,14 @@ class DQA(ABC):
     def _p_values_nonnull(self, s: pd.Series) -> float:
         """Returns the proportion of non-null values"""
         return self._n_values_nonnull(s=s) / len(s)
+
+    def _n_filepaths_exist(self, s: pd.Series) -> int:
+        """Returns the number of file paths that exist"""
+        return s.apply(lambda x: os.path.exists(x)).sum()
+
+    def _p_filepaths_exist(self, s: pd.Series) -> float:
+        """Returns the number of file paths that exist"""
+        return self._n_filepaths_exist(s=s) / len(s)
 
 
 # ------------------------------------------------------------------------------------------------ #
