@@ -11,19 +11,19 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Friday September 22nd 2023 07:44:58 pm                                              #
+# Modified   : Saturday September 23rd 2023 03:25:15 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """DICOM Data Quality Module"""
-import os
 import sys
 import logging
 
 import pandas as pd
+import numpy as np
 
-from bcd.data.base import DQA, DQAResult
+from bcd.data.dqa import DQA, Validator
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -33,163 +33,60 @@ logger.setLevel(logging.DEBUG)
 
 # ------------------------------------------------------------------------------------------------ #
 class DicomDQA(DQA):
-    def __init__(self, filepath: str) -> None:
-        self._filepath = os.path.abspath(filepath)
+    def __init__(self, filepath: str, validator: Validator = Validator, name: str = None) -> None:
+        super().__init__(filepath=filepath, name=name)
+        self._validator = validator()
         self._df = pd.read_csv(self._filepath)
+        self._validation_mask = None
 
-    @property
-    def series_uid_validity(self) -> pd.Series:
-        sop = "1.3.6.1.4.1.9590"
-        n = self._n_rows(df=self._df)
-        nv = self._n_values_containing(s=self._df["series_uid"], substr=sop)
-        pv = self._p_values_containing(s=self._df["series_uid"], substr=sop)
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def filepath_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_filepaths_exist(self._df["filepath"])
-        pv = self._p_filepaths_exist(self._df["filepath"])
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def patient_id_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_values_containing(s=self._df["patient_id"], substr="P_")
-        pv = self._p_values_containing(s=self._df["patient_id"], substr="P_")
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def side_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_values_valid(s=self._df["side"], values=["LEFT", "RIGHT"])
-        pv = self._p_values_valid(s=self._df["side"], values=["LEFT", "RIGHT"])
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def image_view_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_values_valid(s=self._df["image_view"], values=["CC", "MLO"])
-        pv = self._p_values_valid(s=self._df["image_view"], values=["CC", "MLO"])
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def height_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_within_range(
-            s=self._df["height"].astype("int32"), min_value=1, max_value=10000
-        )
-        pv = self._p_within_range(
-            s=self._df["height"].astype("int32"), min_value=1, max_value=10000
-        )
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def width_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_within_range(s=self._df["width"].astype("int32"), min_value=1, max_value=10000)
-        pv = self._p_within_range(s=self._df["width"].astype("int32"), min_value=1, max_value=10000)
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def bits_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_values_valid(s=self._df["bits"].astype("int32"), values=[8, 16])
-        pv = self._p_values_valid(s=self._df["bits"].astype("int32"), values=[8, 16])
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def smallest_image_pixel_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_within_range(
-            s=self._df["smallest_image_pixel"].astype("int64"), min_value=0, max_value=65535
-        )
-        pv = self._p_within_range(
-            s=self._df["smallest_image_pixel"].astype("int64"), min_value=0, max_value=65535
-        )
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def largest_image_pixel_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_within_range(
-            s=self._df["largest_image_pixel"].astype("int64"), min_value=0, max_value=65535
-        )
-        pv = self._p_within_range(
-            s=self._df["largest_image_pixel"].astype("int64"), min_value=0, max_value=65535
-        )
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    @property
-    def image_pixel_range_validity(self) -> pd.Series:
-        n = self._n_rows(df=self._df)
-        nv = self._n_within_range(
-            s=self._df["image_pixel_range"].astype("int64"), min_value=0, max_value=65535
-        )
-        pv = self._p_within_range(
-            s=self._df["image_pixel_range"].astype("int64"), min_value=0, max_value=65535
-        )
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        return pd.Series(dv)
-
-    def validate(self) -> pd.DataFrame:
+    def validate(self) -> np.ndarray:
         "Validates the data and returns a boolean mask of cell validity."
+        if self._validation_mask is None:
+            suid = self._validator.validate_series_uid(series_uid=self._df["series_uid"])
+            filepath = self._validator.validate_filepath(filepath=self._df["filepath"])
+            pid = self._validator.validate_patient_id(patient_id=self._df["patient_id"])
+            side = self._validator.validate_side(side=self._df["side"])
+            view = self._validator.validate_image_view(image_view=self._df["image_view"])
+            height = self._validator.validate_between(data=self._df["height"], left=0, right=10000)
+            width = self._validator.validate_between(data=self._df["width"], left=0, right=10000)
+            bits = self._validator.validate_image_bits(image_bits=self._df["bits"])
+            sip = self._validator.validate_between(
+                data=self._df["smallest_image_pixel"], left=0, right=65535
+            )
+            lip = self._validator.validate_between(
+                data=self._df["largest_image_pixel"], left=0, right=65535
+            )
+            ipr = self._validator.validate_between(
+                data=self._df["image_pixel_range"], left=0, right=65535
+            )
+            self._validation_mask = pd.concat(
+                [
+                    suid,
+                    filepath,
+                    pid,
+                    side,
+                    view,
+                    height,
+                    width,
+                    bits,
+                    sip,
+                    lip,
+                    ipr,
+                ],
+                axis=1,
+            )
+            self._validation_mask.columns = [
+                "series_uid",
+                "filepath",
+                "patient_id",
+                "side",
+                "image_view",
+                "height",
+                "width",
+                "bits",
+                "smallest_image_pixel",
+                "largest_image_pixel",
+                "image_pixel_range",
+            ]
 
-    def analyze_validity(self) -> DQAResult:
-        """Executes a Validity Assessment"""
-        dvd = self._analyze_validity()
-        dvs = self._summarize_validity(dfv=dvd)
-        result = DQAResult(summary=dvs, detail=dvd)
-        return result
-
-    def _analyze_validity(self) -> pd.DataFrame:
-        """Performs detailed validity assessment"""
-        suid = self.series_uid_validity
-        fp = self.filepath_validity
-        pid = self.patient_id_validity
-        side = self.side_validity
-        view = self.image_view_validity
-        height = self.height_validity
-        width = self.width_validity
-        bits = self.bits_validity
-        sip = self.smallest_image_pixel_validity
-        lip = self.largest_image_pixel_validity
-        ipr = self.image_pixel_range_validity
-        dfv = pd.concat(
-            [suid, fp, pid, side, view, height, width, bits, sip, lip, ipr],
-            axis=1,
-        )
-        dfv.columns = [
-            "series_uid",
-            "filepath",
-            "patient_id",
-            "side",
-            "image_view",
-            "height",
-            "width",
-            "bits",
-            "smallest_image_pixel",
-            "largest_image_pixel",
-            "image_pixel_range",
-        ]
-        return dfv.T
-
-    def _summarize_validity(self, dfv: pd.DataFrame) -> pd.DataFrame:
-        """Summarizes the validity assessment"""
-        n = dfv["N"].sum()
-        nv = dfv["Valid"].sum()
-        pv = nv / n
-        dv = {"N": n, "Valid": nv, "Validity": pv}
-        dfv = pd.DataFrame(data=dv, index=[0]).T
-        dfv.columns = ["Values"]
-        return dfv
+        return self._validation_mask

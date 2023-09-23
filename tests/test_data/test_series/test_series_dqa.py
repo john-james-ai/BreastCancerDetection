@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Friday September 22nd 2023 07:13:41 pm                                              #
+# Modified   : Saturday September 23rd 2023 03:49:09 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,6 +24,7 @@ import logging
 import pandas as pd
 
 from bcd.data.series.dqa import SeriesDQA
+from bcd.data.dqa import DQASummary
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -53,10 +54,22 @@ class TestSeriesDQA:  # pragma: no cover
         dqa = SeriesDQA(filepath=SERIES_FP)
         result = dqa.analyze_completeness()
 
-        assert isinstance(result.summary, pd.DataFrame)
+        assert isinstance(result.summary, DQASummary)
         assert isinstance(result.detail, pd.DataFrame)
         logger.debug(f"Completeness Summary\n{result.summary}")
         logger.debug(f"Completeness Detail\n{result.detail}")
+
+        # Complete Rows
+        df = dqa.get_complete_data()
+        assert df.shape[0] == result.summary.rows_complete
+
+        # Incomplete Rows
+        df = dqa.get_incomplete_data()
+        assert df.shape[0] == result.summary.rows - result.summary.rows_complete
+
+        # Incomplete rows by mass shape
+        df = dqa.get_incomplete_data(subset="series_uid")
+        assert df.shape[0] == 0
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -89,10 +102,16 @@ class TestSeriesDQA:  # pragma: no cover
         dqa = SeriesDQA(filepath=SERIES_FP)
         result = dqa.analyze_uniqueness()
 
-        assert isinstance(result.summary, pd.DataFrame)
+        assert isinstance(result.summary, DQASummary)
         assert isinstance(result.detail, pd.DataFrame)
         logger.debug(f"Uniqueness Summary\n{result.summary}")
         logger.debug(f"Uniqueness Detail\n{result.detail}")
+
+        df = dqa.get_unique_data()
+        assert df.shape[0] == result.summary.unique_rows
+
+        df = dqa.get_duplicate_data()
+        assert df.shape[0] == 0
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -124,10 +143,16 @@ class TestSeriesDQA:  # pragma: no cover
         dqa = SeriesDQA(filepath=SERIES_FP)
         result = dqa.analyze_validity()
 
-        assert isinstance(result.summary, pd.DataFrame)
+        assert isinstance(result.summary, DQASummary)
         assert isinstance(result.detail, pd.DataFrame)
         logger.debug(f"Validity Summary\n{result.summary}")
         logger.debug(f"Validity Detail\n{result.detail}")
+
+        df = dqa.get_valid_data()
+        assert df.shape[0] == result.summary.rows_valid
+
+        df = dqa.get_invalid_data()
+        assert df.shape[0] == result.summary.rows - result.summary.rows_valid
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Friday September 22nd 2023 03:33:59 am                                              #
+# Modified   : Saturday September 23rd 2023 12:51:41 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ import logging
 
 import pandas as pd
 
-from bcd.data.base import CBISDataset
+from bcd.data.dataset import Dataset
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -46,7 +46,7 @@ DICOM_DTYPES = {
 
 
 # ------------------------------------------------------------------------------------------------ #
-class DicomDataset(CBISDataset):
+class DicomDataset(Dataset):
     """Dataset containing dicom image metadata
 
     Args:

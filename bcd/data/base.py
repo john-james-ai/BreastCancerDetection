@@ -11,266 +11,121 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Friday September 22nd 2023 07:13:41 pm                                              #
+# Modified   : Saturday September 23rd 2023 12:56:03 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-# %%
-import os
-from abc import ABC, abstractmethod
+"""Data Package Base Module"""
+from __future__ import annotations
+import string
+from abc import ABC
 from dataclasses import dataclass
-from typing import Union
+from datetime import datetime
 
 import pandas as pd
-from studioai.data.dataset import Dataset
+import numpy as np
 
 
-# ================================================================================================ #
-class DataPrep(ABC):
-    @abstractmethod
-    def prep(self, force: bool = False, result: bool = False, *args, **kwargs) -> None:
-        """Performs the data preparation task."""
+# ------------------------------------------------------------------------------------------------ #
+IMMUTABLE_TYPES: tuple = (
+    str,
+    int,
+    float,
+    bool,
+    np.int16,
+    np.int32,
+    np.int64,
+    np.int8,
+    np.float16,
+    np.float32,
+    np.float64,
+    np.float128,
+)
+SEQUENCE_TYPES: tuple = (
+    list,
+    tuple,
+)
+# ------------------------------------------------------------------------------------------------ #
+NUMERIC_TYPES = [
+    "int16",
+    "int32",
+    "int64",
+    "float16",
+    "float32",
+    "float64",
+    np.int16,
+    np.int32,
+    np.int64,
+    np.int8,
+    np.float16,
+    np.float32,
+    np.float64,
+    np.float128,
+    np.number,
+    int,
+    float,
+    complex,
+]
 
-    def _format_column_names(self, df: pd.DataFrame) -> str:
-        """Replaces spaces in column names with underscores."""
-
-        def replace_columns(colname: str) -> str:
-            return colname.replace(" ", "_")
-
-        df.columns = df.columns.to_series().apply(replace_columns)
-        return df
+# ------------------------------------------------------------------------------------------------ #
+NON_NUMERIC_TYPES = ["category", "object"]
 
 
-# ================================================================================================ #
-#                                      DATA QUALITY                                                #
-# ================================================================================================ #
+# ------------------------------------------------------------------------------------------------ #
 @dataclass
-class DQAResult:
-    summary: pd.DataFrame
-    detail: pd.DataFrame
-
-
-# ------------------------------------------------------------------------------------------------ #
-class DQA(ABC):
-    """Data Quality Analysis Base Class"""
-
-    @abstractmethod
-    def validate(self) -> pd.DataFrame:
-        "Validates the data and returns a boolean mask of cell validity."
-
-    @abstractmethod
-    def analyze_validity(self) -> DQAResult:
-        "Executes the data quality analysis"
-
-    def analyze_completeness(self) -> DQAResult:
-        """Executes the completeness analysis"""
-        result = DQAResult(
-            summary=self._analyze_completeness_summary(), detail=self._analyze_completeness_detail()
+class DataClass(ABC):
+    def __repr__(self) -> str:  # pragma: no cover tested, but missing in coverage
+        s = "{}({})".format(
+            self.__class__.__name__,
+            ", ".join(
+                "{}={!r}".format(k, v)
+                for k, v in self.__dict__.items()
+                if type(v) in IMMUTABLE_TYPES
+            ),
         )
-        return result
+        return s
 
-    def analyze_uniqueness(self) -> DQAResult:
-        """Executes the uniqueness analysis"""
-        result = DQAResult(
-            summary=self._analyze_uniqueness_summary(), detail=self._analyze_uniqueness_detail()
-        )
-        return result
+    def __str__(self) -> str:
+        width = 32
+        breadth = width * 2
+        s = f"\n\n{self.__class__.__name__.center(breadth, ' ')}"
+        d = self.as_dict()
+        for k, v in d.items():
+            if type(v) in IMMUTABLE_TYPES:
+                k = string.capwords(
+                    k.replace(
+                        "_",
+                        " ",
+                    )
+                )
+                s += f"\n{k.rjust(width,' ')} | {v}"
+        s += "\n\n"
+        return s
 
-    def get_incomplete_data(self, subset: Union[list, str] = None) -> pd.DataFrame:
-        """Returns rows of incomplete data
+    def as_dict(self) -> dict:
+        """Returns a dictionary representation of the the Config object."""
+        return {
+            k: self._export_config(v) for k, v in self.__dict__.items() if not k.startswith("_")
+        }
 
-        Considering certain columns is optional.
-
-        Args:
-            subset (Union[str,list]): A column or list of columns to be evaluated
-                for completeness.
-        """
-        if subset is None:
-            return self._df.loc[self._df.isnull().any(axis=1)]
-        elif isinstance(subset, str):
-            return self._df.loc[self._df[subset].isnull()]
+    @classmethod
+    def _export_config(cls, v):  # pragma: no cover
+        """Returns v with Configs converted to dicts, recursively."""
+        if isinstance(v, IMMUTABLE_TYPES):
+            return v
+        elif isinstance(v, SEQUENCE_TYPES):
+            return type(v)(map(cls._export_config, v))
+        elif isinstance(v, datetime):
+            return v
+        elif isinstance(v, dict):
+            return v
+        elif hasattr(v, "as_dict"):
+            return v.as_dict()
         else:
-            return self._df.loc(self._df[subset].isnull().any(axis=1))
+            """Else nothing. What do you want?"""
 
-    def get_duplicate_data(
-        self, subset: Union[list, str] = None, keep: str = "first"
-    ) -> pd.DataFrame:
-        """Returns duplicate rows of data
-
-        Considering certain columns is optional.
-
-        Args:
-            subset (Union[str,list]): A column or list of columns to be evaluated
-                for duplication.
-            keep (str): Either 'first', 'last', or false.  Determines which duplicates to mark.
-                - first : Mark duplicates as True except for the first occurrence.
-                - last : Mark duplicates as True except for the last occurrence.
-                - False : Mark all duplicates as True.
-
-        """
-        return self._df.loc[self._df.duplicated(subset=subset, keep=keep)]
-
-    def _analyze_completeness_summary(self) -> pd.DataFrame:
-        """Returns a summary completeness analysis"""
-        nr = self._n_rows(df=self._df)
-        ncr = self._n_rows_complete(df=self._df)
-        pcr = self._p_rows_complete(df=self._df)
-
-        nc = self._n(df=self._df)
-        ncc = self._n_complete(df=self._df)
-        pcc = self._p_complete(df=self._df)
-
-        dc = {
-            "Rows": nr,
-            "Rows Complete": ncr,
-            "Row Completeness": pcr,
-            "Cells": nc,
-            "Cells Complete": ncc,
-            "Cell Completeness": pcc,
-        }
-        dfc = pd.DataFrame(data=dc, index=[0]).T
-        dfc.columns = ["Values"]
-        dfc = dfc.round(3)
-        return dfc
-
-    def _analyze_completeness_detail(self) -> pd.DataFrame:
-        """Returns a detailed completeness analysis"""
-        n = self._n_by_var(df=self._df)
-        n_complete = self._n_complete_by_var(df=self._df)
-        p_complete = self._p_complete_by_var(df=self._df)
-        dfc = pd.concat([n, n_complete, p_complete], axis=1)
-        dfc.columns = ["N", "Complete", "Completeness"]
-        dfc = dfc.round(3)
-        return dfc
-
-    def _analyze_uniqueness_summary(self) -> pd.DataFrame:
-        """Returns a summary uniqueness analysis"""
-        nr = self._n_rows(df=self._df)
-        nur = self._n_unique(df=self._df)
-        pur = self._p_unique(df=self._df)
-
-        du = {
-            "Rows": nr,
-            "Unique Rows": nur,
-            "Row Uniqueness": pur,
-        }
-        dfu = pd.DataFrame(data=du, index=[0]).T
-        dfu.columns = ["Values"]
-        dfu = dfu.round(3)
-        return dfu
-
-    def _analyze_uniqueness_detail(self) -> pd.DataFrame:
-        """Returns a detailed uniqueness analysis"""
-        n = self._n_by_var(df=self._df)
-        n_unique = self._n_unique_by_var(df=self._df)
-        p_unique = self._p_unique_by_var(df=self._df)
-        dfu = pd.concat([n, n_unique, p_unique], axis=1)
-        dfu.columns = ["N", "Unique", "Uniqueness"]
-        dfu = dfu.round(3)
-        return dfu
-
-    def _n(self, df: pd.DataFrame) -> int:
-        """Returns number of cells in the dataframe."""
-        return df.shape[0] * df.shape[1]
-
-    def _n_complete(self, df: pd.DataFrame) -> int:
-        """Returns number of complete cells in the DataFrame"""
-        return df.notnull().sum().sum()
-
-    def _p_complete(self, df: pd.DataFrame) -> float:
-        """Returns proportion of cells complete in the DataFrame"""
-        return self._n_complete(df=df) / self._n(df=df)
-
-    def _n_by_var(self, df: pd.DataFrame) -> pd.Series:
-        """Returns number of cells by variable."""
-        return df.count() + df.isnull().sum()
-
-    def _n_complete_by_var(self, df: pd.DataFrame) -> pd.Series:
-        """Returns number of complete cells by variable"""
-        return df.notnull().sum()
-
-    def _p_complete_by_var(self, df: pd.DataFrame) -> pd.Series:
-        """Returns proportion of complete cells by variable"""
-        return self._n_complete_by_var(df=df) / self._n_by_var(df=df)
-
-    def _n_rows(self, df: pd.DataFrame) -> int:
-        """Returns number of rows in the dataframe."""
-        return df.shape[0]
-
-    def _n_rows_complete(self, df: pd.DataFrame) -> int:
-        """Returns total number of rows complete for the dataset"""
-        return df.notnull().all(axis=1).sum()
-
-    def _p_rows_complete(self, df: pd.DataFrame) -> float:
-        """Returns proportion of complete rows for the dataset"""
-        return self._n_rows_complete(df=df) / df.shape[0]
-
-    def _n_unique(self, df: pd.DataFrame) -> int:
-        """Returns the number of unique rows"""
-        return len(df) + (len(df)) - len(df.drop_duplicates())
-
-    def _p_unique(self, df: pd.DataFrame) -> float:
-        """Returns the proportion of unique rows"""
-        return self._n_unique(df=df) / len(df)
-
-    def _n_unique_by_var(self, df: pd.DataFrame) -> pd.Series:
-        """Returns the number of unique values by variable"""
-        return df.nunique()
-
-    def _p_unique_by_var(self, df: pd.DataFrame) -> pd.Series:
-        """Returns the proportion of unique values by variable"""
-        return self._n_unique_by_var(df=df) / self._n_by_var(df=df)
-
-    def _n_within_range(self, s: pd.Series, min_value: int, max_value: int) -> int:
-        """Number of values that are between min and max value inclusive"""
-        return s.between(left=min_value, right=max_value).sum()
-
-    def _p_within_range(self, s: pd.Series, min_value: int, max_value: int) -> float:
-        """Returns proportion of values within range"""
-        return self._n_within_range(s=s, min_value=min_value, max_value=max_value) / len(s)
-
-    def _n_values_valid(self, s: pd.Series, values: list) -> int:
-        """Returns the number of values that are in list of valid values"""
-        return s.isin(values).sum()
-
-    def _p_values_valid(self, s: pd.Series, values: list) -> float:
-        """Returns the proportion of values that are in list of valid values"""
-        return self._n_values_valid(s=s, values=values) / len(s)
-
-    def _n_values_containing(self, s: pd.Series, substr: str) -> int:
-        """Returns the number of values containing the substring"""
-        return s.str.contains(substr, regex=False).sum()
-
-    def _p_values_containing(self, s: pd.Series, substr: str) -> float:
-        """Returns the proportion of values containing the substring"""
-        return s.str.contains(substr, regex=False).sum() / len(s)
-
-    def _n_values_nonnull(self, s: pd.Series) -> int:
-        """Returns the number of non-null values"""
-        return s.notnull().sum()
-
-    def _p_values_nonnull(self, s: pd.Series) -> float:
-        """Returns the proportion of non-null values"""
-        return self._n_values_nonnull(s=s) / len(s)
-
-    def _n_filepaths_exist(self, s: pd.Series) -> int:
-        """Returns the number of file paths that exist"""
-        return s.apply(lambda x: os.path.exists(x)).sum()
-
-    def _p_filepaths_exist(self, s: pd.Series) -> float:
-        """Returns the number of file paths that exist"""
-        return self._n_filepaths_exist(s=s) / len(s)
-
-
-# ------------------------------------------------------------------------------------------------ #
-class CBISDataset(Dataset):
-    def summary(self) -> pd.DataFrame:
-        counts = []
-        cols = self._df.columns
-        for col in cols:
-            d = {}
-            d[col] = self._df[col].value_counts()
-            counts.append(d)
-        df = pd.DataFrame(counts)
-        return df
+    def as_df(self) -> pd.DataFrame:
+        """Returns the project in DataFrame format"""
+        d = self.as_dict()
+        return pd.DataFrame(data=d, index=[0])

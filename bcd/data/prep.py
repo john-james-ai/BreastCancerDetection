@@ -4,51 +4,35 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/series/dataset.py                                                         #
+# Filename   : /bcd/data/prep.py                                                                   #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Friday September 22nd 2023 03:24:16 am                                              #
-# Modified   : Saturday September 23rd 2023 12:51:41 am                                            #
+# Created    : Saturday September 23rd 2023 12:45:39 am                                            #
+# Modified   : Saturday September 23rd 2023 12:49:18 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Series Dataset Module"""
-import sys
-import os
-import logging
+"""Base module for Data Preparation"""
+from abc import ABC, abstractmethod
 
 import pandas as pd
 
-from bcd.data.dataset import Dataset
 
 # ------------------------------------------------------------------------------------------------ #
-logging.basicConfig(stream=sys.stdout)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+class DataPrep(ABC):
+    @abstractmethod
+    def prep(self, force: bool = False, result: bool = False, *args, **kwargs) -> None:
+        """Performs the data preparation task."""
 
-# ------------------------------------------------------------------------------------------------ #
-SERIES_DTYPES = {
-    "series_uid": "str",
-    "series_description": "category",
-    "number_of_images": "int32",
-    "file_location": "str",
-}
-SERIES_COLS = SERIES_DTYPES.keys()
+    def _format_column_names(self, df: pd.DataFrame) -> str:
+        """Replaces spaces in column names with underscores."""
 
+        def replace_columns(colname: str) -> str:
+            return colname.replace(" ", "_")
 
-# ------------------------------------------------------------------------------------------------ #
-class SeriesDataset(Dataset):
-    """Dataset containing series metadata
-
-    Args:
-        filepath (str): File path to the series metadata.
-    """
-
-    def __init__(self, filepath: str) -> None:
-        self._filepath = os.path.abspath(filepath)
-        df = pd.read_csv(self._filepath, dtype=SERIES_DTYPES)
-        super().__init__(df=df)
+        df.columns = df.columns.to_series().apply(replace_columns)
+        return df
