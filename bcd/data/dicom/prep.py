@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Saturday September 23rd 2023 12:49:08 am                                            #
+# Modified   : Sunday September 24th 2023 06:47:57 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -39,6 +39,7 @@ class DicomPrep(DataPrep):
     def prep(
         self,
         location: str,
+        master_fp: str,
         dicom_fp: str,
         skip_list: list = [],
         force: bool = False,
@@ -48,6 +49,7 @@ class DicomPrep(DataPrep):
 
         Args:
             location (str): The base location for the DICOM image files.
+            master_fp: File path to the master cases dataset.
             dicom_fp (str) Filename for the dicom metadata dataset.
             skip_list (list): List of filepaths relative to the location to skip.
             force (bool): Whether to force execution if output already exists. Default is False.
@@ -55,13 +57,18 @@ class DicomPrep(DataPrep):
         """
         location = os.path.abspath(location)
         dicom_fp = os.path.abspath(dicom_fp)
+        master_fp = os.path.abspath(master_fp)
 
         os.makedirs(os.path.dirname(dicom_fp), exist_ok=True)
 
         if force or not os.path.exists(dicom_fp):
             filepaths = self._get_filepaths(location, skip_list)
             dicom_data = self._extract_dicom_data(filepaths=filepaths)
+            dicom_data = self._merge_case_data(dicom_data=dicom_data, master_fp=master_fp)
             dicom_data.to_csv(dicom_fp, index=False)
+            msg = f"Shape of DICOM Data: {dicom_data.shape}"
+            logger.debug(msg)
+
         if result:
             return pd.read_csv(dicom_fp)
 
@@ -108,12 +115,8 @@ class DicomPrep(DataPrep):
                 dcm.SmallestImagePixelValue
             )
             dicom_data.append(dcm_data)
-        msg = f"Length of DICOM data: {len(dicom_data)}"
-        logger.debug(msg)
 
         dicom_data = pd.DataFrame(data=dicom_data)
-        msg = f"Shape of DICOM Data: {dicom_data.shape}"
-        logger.debug(msg)
 
         return dicom_data
 
@@ -143,3 +146,11 @@ class DicomPrep(DataPrep):
         """
         view = "MLO" if "MLO" in s else "CC"
         return view
+
+    def _merge_case_data(self, dicom_data: pd.DataFrame, master_fp: str) -> pd.DataFrame:
+        """Adds case data to the DICOM metadata"""
+
+        dfm = pd.read_csv(master_fp)
+        dfm = dfm.drop(columns=["patient_id", "left_or_right_breast", "image_view"])
+        dicom_data = dicom_data.merge(dfm, on="series_uid", how="left")
+        return dicom_data

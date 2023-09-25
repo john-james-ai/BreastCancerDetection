@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Saturday September 23rd 2023 12:49:08 am                                            #
+# Modified   : Sunday September 24th 2023 06:51:23 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -82,3 +82,47 @@ class CasePrep(DataPrep):
             df3.to_csv(cases_fp, index=False)
         if result:
             return pd.read_csv(cases_fp)
+
+
+# ------------------------------------------------------------------------------------------------ #
+class MasterCasePrep(DataPrep):
+    def prep(
+        self, mass_fp: str, calc_fp: str, master_fp: str, force: bool = False, result: bool = False
+    ) -> Union[None, pd.DataFrame]:
+        """Combines mass and calcification cases and converts to long-form by series description.
+
+        Args:
+            mass_fp (str): File path to the mass dataset
+            calc_fp (str): File path to the calc dataset
+            master_fp (str): File path to master case dataset.
+            force (bool): Whether to force execution if output already exists. Default is False.
+            result (bool): Whether the result should be returned. Default is False.
+        """
+        mass_fp = os.path.abspath(mass_fp)
+        calc_fp = os.path.abspath(calc_fp)
+        master_fp = os.path.abspath(master_fp)
+
+        os.makedirs(os.path.dirname(master_fp), exist_ok=True)
+
+        if force or not os.path.exists(master_fp):
+            dfm = pd.read_csv(mass_fp)
+            dfc = pd.read_csv(calc_fp)
+            df = pd.concat([dfm, dfc], axis=0)
+            dfi = df.drop(columns=["roi_mask_series_uid", "cropped_image_series_uid"]).rename(
+                columns={"image_series_uid": "series_uid"}
+            )
+            dfr = df.drop(columns=["image_series_uid", "cropped_image_series_uid"]).rename(
+                columns={"roi_mask_series_uid": "series_uid"}
+            )
+            dfc = df.drop(columns=["roi_mask_series_uid", "image_series_uid"]).rename(
+                columns={"cropped_image_series_uid": "series_uid"}
+            )
+            dfi["series_description"] = "full mammogram images"
+            dfr["series_description"] = "ROI mask images"
+            dfc["series_description"] = "cropped images"
+            dfm = pd.concat([dfi, dfr, dfc], axis=0)
+            dfm = dfm.drop_duplicates(subset=["series_uid"])
+            dfm.to_csv(master_fp, index=False)
+
+        if result:
+            return pd.read_csv(master_fp)
