@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/dicom/dqa.py                                                              #
+# Filename   : /bcd/data/dqa/dicom.py                                                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Saturday September 23rd 2023 03:25:15 am                                            #
+# Modified   : Tuesday September 26th 2023 05:40:35 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,12 +23,14 @@ import logging
 import pandas as pd
 import numpy as np
 
-from bcd.data.dqa import DQA, Validator
+from bcd.data.dqa.base import DQA, Validator, DQAResult, Consistency
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
+FP_CASE_SERIES_XREF = "data/staged/case_series_xref.csv"
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -37,6 +39,7 @@ class DicomDQA(DQA):
         super().__init__(filepath=filepath, name=name)
         self._validator = validator()
         self._df = pd.read_csv(self._filepath)
+        self._case_series_xref = pd.read_csv(FP_CASE_SERIES_XREF)
         self._validation_mask = None
 
     def validate(self) -> np.ndarray:
@@ -47,6 +50,13 @@ class DicomDQA(DQA):
             pid = self._validator.validate_patient_id(patient_id=self._df["patient_id"])
             side = self._validator.validate_side(side=self._df["side"])
             view = self._validator.validate_image_view(image_view=self._df["image_view"])
+            pi = self._validator.validate_photometric_interpretation(
+                photometric_interpretation=self._df["photometric_interpretation"]
+            )
+            spp = self._validator.validate_samples_per_pixel(
+                samples_per_pixel=self._df["samples_per_pixel"]
+            )
+            ar = self._validator.validate_aspect_ratio(aspect_ratio=self._df["aspect_ratio"])
             height = self._validator.validate_between(data=self._df["height"], left=0, right=10000)
             width = self._validator.validate_between(data=self._df["width"], left=0, right=10000)
             bits = self._validator.validate_image_bits(image_bits=self._df["bits"])
@@ -59,6 +69,7 @@ class DicomDQA(DQA):
             ipr = self._validator.validate_between(
                 data=self._df["image_pixel_range"], left=0, right=65535
             )
+            size = self._validator.validate_size(df=self._df)
             self._validation_mask = pd.concat(
                 [
                     suid,
@@ -66,8 +77,12 @@ class DicomDQA(DQA):
                     pid,
                     side,
                     view,
+                    pi,
+                    spp,
                     height,
                     width,
+                    size,
+                    ar,
                     bits,
                     sip,
                     lip,
@@ -81,8 +96,12 @@ class DicomDQA(DQA):
                 "patient_id",
                 "side",
                 "image_view",
+                "photometric_interpretation",
+                "samples_per_pixel",
                 "height",
                 "width",
+                "size",
+                "aspect_ratio",
                 "bits",
                 "smallest_image_pixel",
                 "largest_image_pixel",
@@ -90,3 +109,43 @@ class DicomDQA(DQA):
             ]
 
         return self._validation_mask
+
+    def analyze_consistency(self) -> DQAResult:
+        """Parse the case_id and confirm values match"""
+
+        # Join the with the case/series xref file.
+        df = self._df.merge(self._case_series_xref, on="series_uid", how="left")
+
+        pid = df["case_id"].str[:7]
+        cid_split = df["case_id"].str.split("_", expand=True)
+        side = cid_split[2]
+        view = cid_split[4]
+
+        pid = df["patient_id"] == pid
+        side = df["side"] == side
+        view = df["image_view"] == view
+
+        mask = pd.concat([pid, side, view], axis=1)
+
+        # Summary Consistency
+        nrows = df.shape[0]
+        nrows_consistent = mask.all(axis=1).sum(axis=0)
+        row_consistency = round(nrows_consistent / nrows, 3)
+
+        ncells = mask.shape[0] * mask.shape[1]
+        ncells_consistent = mask.sum().sum()
+        cell_consistency = round(ncells_consistent / ncells, 3)
+
+        sc = Consistency(
+            dataset=self._name,
+            filename=self._filename,
+            records=nrows,
+            consistent_records=nrows_consistent,
+            record_consistency=row_consistency,
+            data_values=ncells,
+            consistent_data_values=ncells_consistent,
+            data_value_consistency=cell_consistency,
+        )
+
+        result = DQAResult(summary=sc, detail=None)
+        return result

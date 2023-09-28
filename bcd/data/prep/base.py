@@ -4,56 +4,36 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/dicom/dataset.py                                                          #
+# Filename   : /bcd/data/prep/base.py                                                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Saturday September 23rd 2023 12:51:41 am                                            #
+# Created    : Saturday September 23rd 2023 12:45:39 am                                            #
+# Modified   : Wednesday September 27th 2023 03:36:02 am                                           #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""DICOM Dataset Module"""
-import sys
-import os
-import logging
+"""Base module for Data Preparation"""
+from __future__ import annotations
+from abc import ABC, abstractmethod
 
 import pandas as pd
 
-from bcd.data.dataset import Dataset
 
 # ------------------------------------------------------------------------------------------------ #
-logging.basicConfig(stream=sys.stdout)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+class DataPrep(ABC):
+    @abstractmethod
+    def prep(self, force: bool = False, result: bool = False, *args, **kwargs) -> None:
+        """Performs the data preparation task."""
 
-# ------------------------------------------------------------------------------------------------ #
-DICOM_DTYPES = {
-    "patient_id": "str",
-    "series_uid": "str",
-    "side": "category",
-    "image_view": "category",
-    "height": "int32",
-    "width": "int32",
-    "bits": "category",
-    "smallest_image_pixel": "int32",
-    "largest_image_pixel": "int32",
-    "image_pixel_range": "int32",
-}
+    def _format_column_names(self, df: pd.DataFrame) -> str:
+        """Replaces spaces in column names with underscores."""
 
+        def replace_columns(colname: str) -> str:
+            return colname.replace(" ", "_")
 
-# ------------------------------------------------------------------------------------------------ #
-class DicomDataset(Dataset):
-    """Dataset containing dicom image metadata
-
-    Args:
-        filepath (str): File path to the dataset
-    """
-
-    def __init__(self, filepath: str) -> None:
-        self._filepath = os.path.abspath(filepath)
-        df = pd.read_csv(self._filepath, dtype=DICOM_DTYPES)
-        super().__init__(df=df)
+        df.columns = df.columns.to_series().apply(replace_columns)
+        return df

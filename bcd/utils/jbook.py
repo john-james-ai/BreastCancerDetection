@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 # ================================================================================================ #
-# Project    : Enter Project Name in Workspace Settings                                            #
-# Version    : 0.1.19                                                                              #
+# Project    : Deep Learning for Breast Cancer Detection                                           #
+# Version    : 0.1.0                                                                               #
 # Python     : 3.10.10                                                                             #
 # Filename   : /bcd/utils/jbook.py                                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
-# URL        : Enter URL in Workspace Settings                                                     #
+# URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 10:11:34 pm                                               #
-# Modified   : Thursday August 31st 2023 10:17:00 pm                                               #
+# Modified   : Tuesday September 26th 2023 07:48:08 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -31,9 +31,9 @@ class DocConverter:
     """Converts documents between jupyter and myst formats"""
 
     __jbook_module = "jbook"
-    __jbook_search_path = "jbook/**/*.md"
+    __jbook_search_path = "jbook/content/*.md"
     __notebook_module = "notebooks"
-    __notebook_search_path = "notebooks/content/**/*.ipynb"
+    __notebook_search_path = "notebooks/content/*.ipynb"
 
     def __init__(
         self,

@@ -9,6 +9,9 @@ __pycache__/
 # Data
 /data
 
+# Proprietary File Formats
+**/*.pptx
+
 # Notes and Research
 /notes
 /research

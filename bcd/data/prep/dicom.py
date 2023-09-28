@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/dicom/prep.py                                                             #
+# Filename   : /bcd/data/prep/dicom.py                                                             #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Sunday September 24th 2023 06:47:57 pm                                              #
+# Modified   : Thursday September 28th 2023 04:22:18 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,10 +23,13 @@ import logging
 from typing import Union
 from glob import glob
 
+from tqdm import tqdm
+from skimage.transform import resize
+import imquality.brisque as brisque
 import pandas as pd
 import pydicom
 
-from bcd.data.prep import DataPrep
+from bcd.data.prep.base import DataPrep
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -39,7 +42,6 @@ class DicomPrep(DataPrep):
     def prep(
         self,
         location: str,
-        master_fp: str,
         dicom_fp: str,
         skip_list: list = [],
         force: bool = False,
@@ -49,7 +51,6 @@ class DicomPrep(DataPrep):
 
         Args:
             location (str): The base location for the DICOM image files.
-            master_fp: File path to the master cases dataset.
             dicom_fp (str) Filename for the dicom metadata dataset.
             skip_list (list): List of filepaths relative to the location to skip.
             force (bool): Whether to force execution if output already exists. Default is False.
@@ -57,20 +58,36 @@ class DicomPrep(DataPrep):
         """
         location = os.path.abspath(location)
         dicom_fp = os.path.abspath(dicom_fp)
-        master_fp = os.path.abspath(master_fp)
 
         os.makedirs(os.path.dirname(dicom_fp), exist_ok=True)
 
         if force or not os.path.exists(dicom_fp):
             filepaths = self._get_filepaths(location, skip_list)
             dicom_data = self._extract_dicom_data(filepaths=filepaths)
-            dicom_data = self._merge_case_data(dicom_data=dicom_data, master_fp=master_fp)
             dicom_data.to_csv(dicom_fp, index=False)
             msg = f"Shape of DICOM Data: {dicom_data.shape}"
             logger.debug(msg)
 
         if result:
             return pd.read_csv(dicom_fp)
+
+    def add_series_description(self, dicom_fp, series_fp: str) -> None:
+        """Adds series description to the DICOM data
+
+        Args:
+            dicom_fp (str) Filename for the dicom metadata dataset.
+            series_fp (str): Filepath to the series description data.
+
+        Returns:
+            Dataset with series description added..
+        """
+        dicom = pd.read_csv(dicom_fp)
+        if "series_description" not in dicom.columns:
+            series = pd.read_csv(series_fp)
+            series = series[["series_uid", "series_description"]].drop_duplicates()
+            dicom = dicom.merge(series, on="series_uid", how="left")
+            dicom.to_csv(dicom_fp, index=False)
+        return dicom
 
     def _get_filepaths(self, location: str, skip_list: list = []) -> list:
         """Returns a filtered list of DICOM filepaths"""
@@ -97,8 +114,10 @@ class DicomPrep(DataPrep):
     def _extract_dicom_data(self, filepaths: list) -> pd.DataFrame:
         """Extracts dicom data and returns a list of dictionaries."""
         dicom_data = []
-        for filepath in filepaths:
+
+        for filepath in tqdm(filepaths):
             dcm = pydicom.dcmread(filepath)
+
             dcm_data = {}
 
             dcm_data["series_uid"] = dcm.SeriesInstanceUID
@@ -106,19 +125,29 @@ class DicomPrep(DataPrep):
             dcm_data["patient_id"] = self._extract_patient_id(str(dcm.PatientID))
             dcm_data["side"] = self._extract_side(str(dcm.PatientID))
             dcm_data["image_view"] = self._extract_view(str(dcm.PatientID))
+            dcm_data["photometric_interpretation"] = dcm.PhotometricInterpretation
+            dcm_data["samples_per_pixel"] = int(dcm.SamplesPerPixel)
             dcm_data["height"] = int(dcm.Rows)
             dcm_data["width"] = int(dcm.Columns)
+            dcm_data["size"] = int(dcm.Columns) * int(dcm.Rows)
+            dcm_data["aspect_ratio"] = int(dcm.Rows) / int(dcm.Columns)
             dcm_data["bits"] = int(dcm.BitsStored)
             dcm_data["smallest_image_pixel"] = int(dcm.SmallestImagePixelValue)
             dcm_data["largest_image_pixel"] = int(dcm.LargestImagePixelValue)
             dcm_data["image_pixel_range"] = int(dcm.LargestImagePixelValue) - int(
                 dcm.SmallestImagePixelValue
             )
+            dcm_data["brisque"] = self._assess_quality(dcm=dcm)
             dicom_data.append(dcm_data)
 
         dicom_data = pd.DataFrame(data=dicom_data)
 
         return dicom_data
+
+    def _assess_quality(self, dcm: pydicom.FileDataset) -> float:
+        """Returns the Brisque Score for the Image"""
+        img = resize(dcm.pixel_array, (512, 512))
+        return brisque.score(img)
 
     def _extract_patient_id(self, s: str) -> str:
         """Extracts patient_id from a string
@@ -146,11 +175,3 @@ class DicomPrep(DataPrep):
         """
         view = "MLO" if "MLO" in s else "CC"
         return view
-
-    def _merge_case_data(self, dicom_data: pd.DataFrame, master_fp: str) -> pd.DataFrame:
-        """Adds case data to the DICOM metadata"""
-
-        dfm = pd.read_csv(master_fp)
-        dfm = dfm.drop(columns=["patient_id", "left_or_right_breast", "image_view"])
-        dicom_data = dicom_data.merge(dfm, on="series_uid", how="left")
-        return dicom_data

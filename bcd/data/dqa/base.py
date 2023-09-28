@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/dqa.py                                                                    #
+# Filename   : /bcd/data/dqa/base.py                                                               #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Saturday September 23rd 2023 04:18:44 am                                            #
+# Modified   : Thursday September 28th 2023 12:07:26 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -49,12 +49,12 @@ class DQASummary(DataClass):
 class Completeness(DQASummary):
     dataset: str
     filename: str
-    rows: int
-    rows_complete: int
-    row_completeness: float
-    cells: int
-    cells_complete: int
-    cell_completeness: float
+    records: int
+    complete_records: int
+    record_completeness: float
+    data_values: int
+    complete_data_values: int
+    data_value_completeness: float
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -62,12 +62,12 @@ class Completeness(DQASummary):
 class Uniqueness(DQASummary):
     dataset: str
     filename: str
-    rows: int
-    unique_rows: int
-    row_uniqueness: float
-    cells: int
-    unique_cells: int
-    cell_uniqueness: float
+    records: int
+    unique_records: int
+    record_uniqueness: float
+    data_values: int
+    unique_data_values: int
+    data_value_uniqueness: float
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -75,12 +75,25 @@ class Uniqueness(DQASummary):
 class Validity(DQASummary):
     dataset: str
     filename: str
-    rows: int
-    rows_valid: int
-    row_validity: float
-    cells: int
-    cells_valid: int
-    cell_validity: float
+    records: int
+    valid_records: int
+    record_validity: float
+    data_values: int
+    valid_data_values: int
+    data_value_validity: float
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class Consistency(DQASummary):
+    dataset: str
+    filename: str
+    records: int
+    consistent_records: int
+    record_consistency: float
+    data_values: int
+    consistent_data_values: int
+    data_value_consistency: float
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -107,8 +120,9 @@ class DQA(ABC):
         dc = mask.sum(axis=0).to_frame()
         dc.columns = ["Complete"]
         dc["N"] = self._df.shape[0]
+        dc["Missing"] = dc["N"] - dc["Complete"]
         dc["Completeness"] = dc["Complete"] / dc["N"]
-        dc = dc[["N", "Complete", "Completeness"]]
+        dc = dc[["N", "Complete", "Missing", "Completeness"]]
 
         # Summary completeness
         nrows = self._df.shape[0]
@@ -122,12 +136,12 @@ class DQA(ABC):
         sc = Completeness(
             dataset=self._name,
             filename=self._filename,
-            rows=nrows,
-            rows_complete=ncr,
-            row_completeness=pcr,
-            cells=ncells,
-            cells_complete=ncc,
-            cell_completeness=pcc,
+            records=nrows,
+            complete_records=ncr,
+            record_completeness=pcr,
+            data_values=ncells,
+            complete_data_values=ncc,
+            data_value_completeness=pcc,
         )
 
         # Format result
@@ -142,8 +156,9 @@ class DQA(ABC):
         du = self._df.nunique(axis=0).to_frame()
         du.columns = ["Unique"]
         du["N"] = self._df.shape[0]
+        du["Duplicate"] = du["N"] - du["Unique"]
         du["Uniqueness"] = du["Unique"] / du["N"]
-        du = du[["N", "Unique", "Uniqueness"]]
+        du = du[["N", "Unique", "Duplicate", "Uniqueness"]]
 
         # Summary Uniqueness
         nrows = self._df.shape[0]
@@ -157,12 +172,12 @@ class DQA(ABC):
         su = Uniqueness(
             dataset=self._name,
             filename=self._filename,
-            rows=nrows,
-            unique_rows=nur,
-            row_uniqueness=pur,
-            cells=ncells,
-            unique_cells=nuc,
-            cell_uniqueness=puc,
+            records=nrows,
+            unique_records=nur,
+            record_uniqueness=pur,
+            data_values=ncells,
+            unique_data_values=nuc,
+            data_value_uniqueness=puc,
         )
 
         result = DQAResult(summary=su, detail=du)
@@ -177,8 +192,10 @@ class DQA(ABC):
         dv = validation_mask.sum(axis=0).to_frame()
         dv.columns = ["Valid"]
         dv["N"] = self._df.shape[0]
+        dv["Invalid"] = dv["N"] - dv["Valid"]
         dv["Validity"] = dv["Valid"] / dv["N"]
-        dv = dv[["N", "Valid", "Validity"]]
+
+        dv = dv[["N", "Valid", "Invalid", "Validity"]]
 
         # Summary Validity
         nrows = self._df.shape[0]
@@ -186,18 +203,18 @@ class DQA(ABC):
         pvr = round(nvr / nrows, 3)
 
         ncells = self._df.shape[0] * self._df.shape[1]
-        nvc = dv["Valid"].sum()
+        nvc = dv["Valid"].sum(axis=0)
         pvc = round(nvc / ncells, 3)
 
         vs = Validity(
             dataset=self._name,
             filename=self._filename,
-            rows=nrows,
-            rows_valid=nvr,
-            row_validity=pvr,
-            cells=ncells,
-            cells_valid=nvc,
-            cell_validity=pvc,
+            records=nrows,
+            valid_records=nvr,
+            record_validity=pvr,
+            data_values=ncells,
+            valid_data_values=nvc,
+            data_value_validity=pvc,
         )
 
         # Format result
@@ -254,15 +271,46 @@ class DQA(ABC):
         validation_mask = self.validate()
         return self._df[validation_mask.values.all(axis=1)]
 
-    def get_invalid_data(self) -> pd.DataFrame:
+    def get_invalid_data(self, subset: Union[list, str] = None) -> pd.DataFrame:
         """Returns dataframe of rows containing invalid data."""
         validation_mask = self.validate()
-        return self._df[~validation_mask.values.all(axis=1)]
+        if subset is None:
+            return self._df[~validation_mask.values.all(axis=1)]
+        else:
+            validation_mask = validation_mask[subset]
+            return self._df.loc[~validation_mask.values]
 
 
 # ------------------------------------------------------------------------------------------------ #
 class Validator:
     """Encapsulates methods that evaluate data validity for data quality analysis."""
+
+    def validate_case_id(self, data: Union[pd.DataFrame, pd.Series]) -> pd.Series:
+        """Evaluates validity of case_id data
+
+        Args:
+            df (pd.DataFrame): DataFrame containing the case data.
+
+        Returns: Boolean mask in Series format.
+
+        """
+        # If a Dataframe, the caller is a case dqa class.
+        if isinstance(data, pd.DataFrame):
+            case_ids = (
+                data["patient_id"]
+                + "_"
+                + data["left_or_right_breast"]
+                + "_"
+                + data["abnormality_type"]
+                + "_"
+                + data["image_view"]
+                + "_"
+                + data["abnormality_id"].astype("str")
+            )
+            return case_ids == data["case_id"]
+        # Otherwise, the caller is the DICOM Data DQA class.
+        else:
+            return data.str.contains("P_", regex=False)
 
     def validate_patient_id(self, patient_id: pd.Series) -> pd.Series:
         """Evaluates validity of patient_id data
@@ -356,18 +404,18 @@ class Validator:
         Returns: Boolean mask in Series format.
 
         """
-        return assessment.astype("int32").between(left=1, right=6)
+        return assessment.astype("int32").between(left=0, right=6)
 
     def validate_pathology(self, pathology: pd.Series) -> pd.Series:
         """Evaluates validity of pathology data.
 
         Args:
-            pathology (pd.Series): Validates pathology is in ['BENIGN', 'MALIGNANT']
+            pathology (pd.Series): Validates pathology is in ['BENIGN', 'MALIGNANT', 'BENIGN_WITHOUT_CALLBACK']
 
         Returns: Boolean mask in Series format.
 
         """
-        values = ["BENIGN", "MALIGNANT"]
+        values = ["BENIGN", "MALIGNANT", "BENIGN_WITHOUT_CALLBACK"]
         return pathology.isin(values)
 
     def validate_subtlety(self, subtlety: pd.Series) -> pd.Series:
@@ -381,17 +429,17 @@ class Validator:
         """
         return subtlety.astype("int32").between(left=1, right=5)
 
-    def validate_dataset(self, dataset: pd.Series) -> pd.Series:
-        """Evaluates validity of dataset values
+    def validate_fileset(self, fileset: pd.Series) -> pd.Series:
+        """Evaluates validity of fileset values
 
         Args:
-            dataset (pd.Series): Validates dataset is in ['train', 'test']
+            fileset (pd.Series): Validates fileset is in ['train', 'test']
 
         Returns: Boolean mask in Series format.
 
         """
         values = ["train", "test"]
-        return dataset.isin(values)
+        return fileset.isin(values)
 
     def validate_calc_type(self, calc_type: pd.Series) -> pd.Series:
         """Evaluates validity of calc_type values
@@ -450,6 +498,7 @@ class Validator:
             "PUNCTATE-FINE_LINEAR_BRANCHING",
             "PLEOMORPHIC-AMORPHOUS",
             "PUNCTATE-AMORPHOUS-PLEOMORPHIC",
+            "NA",
         ]
 
         return calc_type.isin(values)
@@ -473,6 +522,7 @@ class Validator:
             "CLUSTERED-SEGMENTAL",
             "LINEAR-SEGMENTAL",
             "REGIONAL-REGIONAL",
+            "NA",
         ]
         return calc_distribution.isin(values)
 
@@ -506,6 +556,7 @@ class Validator:
             "ROUND-LOBULATED",
             "OVAL-LOBULATED",
             "IRREGULAR-ASYMMETRIC_BREAST_TISSUE",
+            "NA",
         ]
 
         return mass_shape.isin(values)
@@ -539,12 +590,25 @@ class Validator:
             "CIRCUMSCRIBED-SPICULATED",
             "CIRCUMSCRIBED-OBSCURED-ILL_DEFINED",
             "CIRCUMSCRIBED-MICROLOBULATED-ILL_DEFINED",
+            "NA",
         ]
 
         return mass_margins.isin(values)
 
+    def validate_cancer(self, cancer: pd.Series) -> pd.Series:
+        """Evaluates the validity of cancer values.
+
+        Args:
+            cancer (pd.Series): Series containing cancer variable.
+
+         Returns: Boolean mask in Series format.
+
+        """
+        values = [True, False]
+        return cancer.isin(values)
+
     def validate_series_description(self, series_description: pd.Series) -> pd.Series:
-        """Evaluates validity of dataset values
+        """Evaluates validity of series description.
 
         Args:
             series_description (pd.Series): Validates series description is in
@@ -554,7 +618,7 @@ class Validator:
 
         """
         values = ["ROI mask images", "full mammogram images", "cropped images"]
-        return series_description.isin(values)
+        return series_description.astype("str").isin(values)
 
     def validate_filepath(self, filepath: pd.Series) -> pd.Series:
         """Evaluates validity and existence of filepaths
@@ -571,10 +635,59 @@ class Validator:
         """Evaluates validity of image_bits
 
         Args:
-            dataset (pd.Series): Validates image_bits
+            image_bits (pd.Series): Validates image_bits
 
         Returns: Boolean mask in Series format.
 
         """
         values = [8, 16]
         return image_bits.astype("int32").isin(values)
+
+    def validate_photometric_interpretation(
+        self, photometric_interpretation: pd.Series
+    ) -> pd.Series:
+        """Evaluates validity of photometric_interpretation
+
+        Args:
+            photometric_interpretation (pd.Series): Series containing photometric_interpretation
+
+        Returns: Boolean mask in Series format.
+
+        """
+        values = ["MONOCHROME1", "MONOCHROME2", "PALETTE COLOR", "RGB", "YBR_FULL"]
+        return photometric_interpretation.isin(values)
+
+    def validate_samples_per_pixel(self, samples_per_pixel: pd.Series) -> pd.Series:
+        """Evaluates validity of samples_per_pixel
+
+        Args:
+            photometric_interpretation (pd.Series): Series containing samples_per_pixel
+
+        Returns: Boolean mask in Series format.
+
+        """
+        values = [1, 3]
+        return samples_per_pixel.isin(values)
+
+    def validate_aspect_ratio(self, aspect_ratio: pd.Series) -> pd.Series:
+        """Evaluates validity of aspect_ratio
+
+        Args:
+            aspect_ratio (pd.Series): Series containing aspect_ratio
+
+        Returns: Boolean mask in Series format.
+
+        """
+        return aspect_ratio.between(left=0, right=19)
+
+    def validate_size(self, df: pd.DataFrame) -> pd.Series:
+        """Evaluates validity of size
+
+        Args:
+            df (pd.DataFrameies): DataFrame containing DICOM data size
+
+        Returns: Boolean mask in Series format.
+
+        """
+        size = df["width"] * df["height"]
+        return size == df["size"]

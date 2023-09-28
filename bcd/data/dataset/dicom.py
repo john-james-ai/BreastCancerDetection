@@ -4,19 +4,19 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/series/dataset.py                                                         #
+# Filename   : /bcd/data/dataset/dicom.py                                                          #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Friday September 22nd 2023 03:24:16 am                                              #
-# Modified   : Saturday September 23rd 2023 12:51:41 am                                            #
+# Created    : Friday September 22nd 2023 03:24:00 am                                              #
+# Modified   : Thursday September 28th 2023 04:25:59 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Series Dataset Module"""
+"""DICOM Dataset Module"""
 import sys
 import os
 import logging
@@ -31,24 +31,52 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 # ------------------------------------------------------------------------------------------------ #
-SERIES_DTYPES = {
+DICOM_DTYPES = {
     "series_uid": "str",
-    "series_description": "category",
-    "number_of_images": "int32",
-    "file_location": "str",
+    "filepath": "str",
+    "patient_id": "str",
+    "side": "category",
+    "image_view": "category",
+    "photometric_interpretation": "category",
+    "samples_per_pixel": "int32",
+    "height": "int64",
+    "width": "int64",
+    "size": "int64",
+    "aspect_ratio": "float",
+    "bits": "category",
+    "smallest_image_pixel": "int64",
+    "largest_image_pixel": "int64",
+    "image_pixel_range": "int64",
+    "case_id": "str",
+    "series_description": "str",
 }
-SERIES_COLS = SERIES_DTYPES.keys()
 
 
 # ------------------------------------------------------------------------------------------------ #
-class SeriesDataset(Dataset):
-    """Dataset containing series metadata
+class DicomDataset(Dataset):
+    """Dataset containing dicom image metadata
 
     Args:
-        filepath (str): File path to the series metadata.
+        filepath (str): File path to the dataset
     """
 
     def __init__(self, filepath: str) -> None:
         self._filepath = os.path.abspath(filepath)
-        df = pd.read_csv(self._filepath, dtype=SERIES_DTYPES)
+        df = pd.read_csv(self._filepath, dtype=DICOM_DTYPES)
         super().__init__(df=df)
+
+    def summary(self) -> pd.DataFrame:
+        """Provides a summary of the DICOM Dataset"""
+        df = self._df[
+            [
+                "series_description",
+                "height",
+                "width",
+                "bits",
+                "smallest_image_pixel",
+                "largest_image_pixel",
+                "image_pixel_range",
+                "brisque",
+            ]
+        ]
+        return df.groupby(by=["series_description"]).describe()
