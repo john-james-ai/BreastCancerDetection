@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Thursday September 28th 2023 12:07:26 pm                                            #
+# Modified   : Thursday September 28th 2023 01:18:00 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -361,7 +361,7 @@ class Validator:
     def validate_image_view(self, image_view: pd.Series) -> pd.Series:
         """Evaluates validity of image_view data.
 
-        Valid values are CC (craniocaudal) and MLO (mediolateral oblique)
+        Valid values are CC (cranial caudal) and MLO (mediolateral oblique)
 
         Args:
             image_view (pd.Series): A series containing image view data.

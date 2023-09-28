@@ -218,7 +218,7 @@ ds.info
 
 **Initial observations:**
 
-1. There are 3568 cases of abnormality seen on the craniocaudal (CC) and/or mediolateral oblique (MLO) views.
+1. There are 3568 cases of abnormality seen on the cranial caudal (CC) and/or mediolateral oblique (MLO) views.
 2. We have 1566 patient_ids corresponding to each of the 1566 subjects in the studies.
 3. Breast density should have a cardinality of 4, not 5.
 4. There are 7 BIRADS assessment categories, yet 6 are indicated in the CBIS-DDSM. One would suspect values of [0,5] as a 6 would mean cancer was previously diagnosed using a biopsy.
@@ -307,7 +307,7 @@ fig, ax = plt.subplots(figsize=(12,4))
 ds.plot.countplot(x='image view', ax=ax, title ="Distribution of Image View")
 ```
 
-Mediolateral oblique views slightly outnumber craniocaudal views.
+Mediolateral oblique views slightly outnumber cranial caudal views.
 
 +++
 
