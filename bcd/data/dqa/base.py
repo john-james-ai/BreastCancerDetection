@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Thursday September 28th 2023 01:18:00 pm                                            #
+# Modified   : Friday September 29th 2023 07:25:25 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -498,7 +498,7 @@ class Validator:
             "PUNCTATE-FINE_LINEAR_BRANCHING",
             "PLEOMORPHIC-AMORPHOUS",
             "PUNCTATE-AMORPHOUS-PLEOMORPHIC",
-            "NA",
+            "NOT APPLICABLE",
         ]
 
         return calc_type.isin(values)
@@ -522,7 +522,7 @@ class Validator:
             "CLUSTERED-SEGMENTAL",
             "LINEAR-SEGMENTAL",
             "REGIONAL-REGIONAL",
-            "NA",
+            "NOT APPLICABLE",
         ]
         return calc_distribution.isin(values)
 
@@ -556,7 +556,7 @@ class Validator:
             "ROUND-LOBULATED",
             "OVAL-LOBULATED",
             "IRREGULAR-ASYMMETRIC_BREAST_TISSUE",
-            "NA",
+            "NOT APPLICABLE",
         ]
 
         return mass_shape.isin(values)
@@ -590,7 +590,7 @@ class Validator:
             "CIRCUMSCRIBED-SPICULATED",
             "CIRCUMSCRIBED-OBSCURED-ILL_DEFINED",
             "CIRCUMSCRIBED-MICROLOBULATED-ILL_DEFINED",
-            "NA",
+            "NOT APPLICABLE",
         ]
 
         return mass_margins.isin(values)
