@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Saturday September 30th 2023 04:07:55 am                                            #
+# Modified   : Sunday October 1st 2023 02:15:20 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,6 +24,8 @@ import logging
 import pandas as pd
 
 from bcd.data.dataset import Dataset
+from bcd.utils.string import proper
+from studioai.visual.visualizer import SeabornCanvas
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -31,6 +33,36 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 # ------------------------------------------------------------------------------------------------ #
+CALCIFICATION_DATA = [
+    "case_id",
+    "patient_id",
+    "breast_density",
+    "left_or_right_breast",
+    "image_view",
+    "abnormality_id",
+    "calc_type",
+    "calc_distribution",
+    "assessment",
+    "pathology",
+    "subtlety",
+    "fileset",
+    "cancer",
+]
+MASS_DATA = [
+    "case_id",
+    "patient_id",
+    "breast_density",
+    "left_or_right_breast",
+    "image_view",
+    "abnormality_id",
+    "mass_shape",
+    "mass_margins",
+    "assessment",
+    "pathology",
+    "subtlety",
+    "fileset",
+    "cancer",
+]
 CASE_DTYPES = {
     "case_id": "str",
     "patient_id": "str",
@@ -46,7 +78,7 @@ CASE_DTYPES = {
     "assessment": "int32",
     "pathology": "category",
     "subtlety": "int32",
-    "dataset": "category",
+    "fileset": "category",
     "cancer": "bool",
 }
 ORDINAL_DTYPES = {
@@ -54,7 +86,6 @@ ORDINAL_DTYPES = {
     "assessment": "category",
     "subtlety": "category",
 }
-
 FEATURES = {
     "breast_density": "ordinal",
     "left_or_right_breast": "nominal",
@@ -62,6 +93,24 @@ FEATURES = {
     "abnormality_type": "nominal",
     "calc_type": "nominal",
     "calc_distribution": "nominal",
+    "mass_shape": "nominal",
+    "mass_margins": "nominal",
+    "assessment": "ordinal",
+    "subtlety": "ordinal",
+}
+CALC_FEATURES = {
+    "breast_density": "ordinal",
+    "left_or_right_breast": "nominal",
+    "image_view": "nominal",
+    "calc_type": "nominal",
+    "calc_distribution": "nominal",
+    "assessment": "ordinal",
+    "subtlety": "ordinal",
+}
+MASS_FEATURES = {
+    "breast_density": "ordinal",
+    "left_or_right_breast": "nominal",
+    "image_view": "nominal",
     "mass_shape": "nominal",
     "mass_margins": "nominal",
     "assessment": "ordinal",
@@ -82,24 +131,59 @@ CORE_VARIABLES = {
     "cancer": "nominal",
 }
 
+MORPHOLOGY_PREFIX = {
+    "calc_type": "CT_",
+    "calc_distribution": "CD_",
+    "mass_shape": "MS_",
+    "mass_margins": "MM_",
+}
+
 
 # ------------------------------------------------------------------------------------------------ #
 class CaseDataset(Dataset):
-    """Dataset containing mass cases
+    """Encapsulates Case Data
+
+    Can be instantiated from a DataFrame or a file path to the data. If both are provided,
+    the DataFrame will be used as the data and the file path will be considered
+    the persistence location.
 
     Args:
-        filepath (str): File path to the dataset
+        df (pd.DataFrame): DataFrame containing cases. Optional. If not provided,
+            the filepath  will be used to obtain the data.
+        filepath (str): File path to the dataset. Optional. If not provided,
+            the df parameter must not be None.
     """
 
-    def __init__(self, filepath: str) -> None:
-        self._filepath = os.path.abspath(filepath)
-        df = pd.read_csv(self._filepath, dtype=CASE_DTYPES)
+    def __init__(
+        self, df: pd.DataFrame = None, filepath: str = None, canvas: SeabornCanvas = SeabornCanvas()
+    ) -> None:
+        if df is None and filepath is None:
+            msg = "Must provide 'df' and/or 'filepath' parameters."
+            raise ValueError(msg)
+        if df is None:
+            self._filepath = os.path.abspath(filepath)
+            df = pd.read_csv(self._filepath, dtype=CASE_DTYPES)
         super().__init__(df=df)
+        self._canvas = canvas
 
-    def plot_feature_associations(self, *args, **kwargs) -> None:
+    def get_calc_data(self) -> pd.DataFrame:
+        df = self._df.loc[self._df["abnormality_type"] == "calcification"]
+        return df[CALCIFICATION_DATA]
+
+    def get_mass_data(self) -> pd.DataFrame:
+        df = self._df.loc[self._df["abnormality_type"] == "mass"]
+        return df[MASS_DATA]
+
+    def plot_mass_feature_associations(self, *args, **kwargs) -> None:
         """Plots an association matrix showing strength (not direction) of the association between features."""
-        df = self._get_feature_association_matrix()
-        title = f"CBIS-DDSM Feature Association Plot\nCramer's V"  # noqa
+        df = self._get_feature_association_matrix(features=MASS_FEATURES)
+        title = f"CBIS-DDSM Mass Case Feature Association Plot\nCramer's V"  # noqa
+        self.plot.heatmap(data=df, title=title, *args, **kwargs)
+
+    def plot_calc_feature_associations(self, *args, **kwargs) -> None:
+        """Plots an association matrix showing strength (not direction) of the association between features."""
+        df = self._get_feature_association_matrix(features=CALC_FEATURES)
+        title = f"CBIS-DDSM Calcification Case Feature Association Plot\nCramer's V"  # noqa
         self.plot.heatmap(data=df, title=title, *args, **kwargs)
 
     def plot_target_associations(self, *args, **kwargs) -> None:
@@ -129,18 +213,71 @@ class CaseDataset(Dataset):
         mass = self._df.loc[self._df["abnormality_type"] == "mass"]
         return self._get_most_malignant(data=mass, x=x, n=n)
 
-    def _get_most_malignant(self, data: pd.DataFrame, x: str, n: int = 10) -> pd.DataFrame:
-        prop = (
-            data[[x, "cancer"]]
-            .groupby(by=[x])
-            .value_counts(normalize=True)
-            .to_frame()
-            .reset_index()
-            .sort_values(by="proportion", ascending=False)
+    def summarize_morphology_by_feature(
+        self, morphology: str, by: str, figsize: tuple = (12, 4)
+    ) -> pd.DataFrame:
+        """Summarizes calcification or mass morphology by a feature.
+
+        Morphology data are summarized in terms of the proportion of records
+        in the dataset for the values of a feature designated by the 'by' variable.
+
+        Args:
+            morphology (str): Calcification or mass morphology variable.
+            by (str): A (non-morphology) feature in the dataset.
+            figsize (tuple): Tuple containing (maximum row width, height of single row)
+        """
+        summary = pd.DataFrame()
+        prefix = MORPHOLOGY_PREFIX[morphology]
+        df = self._df
+        df[by] = df[by].astype("category")
+        morph_columns = df.columns[df.columns.str.contains(prefix)].values
+        for col in morph_columns:
+            dfm = df.loc[df[col] == 1]
+            dfm_summary = dfm[by].value_counts(normalize=True).to_frame()
+            dfm_summary[morphology] = col.replace(prefix, "")
+            summary = pd.concat([summary, dfm_summary], axis=0)
+        summary = (
+            summary.groupby(by=[morphology, by])
+            .sum()
+            .sort_values(by=[morphology, "proportion"], ascending=[True, False])
         )
-        prop = prop.loc[prop["cancer"] == True].nlargest(n, "proportion")  # noqa
-        prop[x] = prop[x].astype("object")
-        return prop
+        self._plot_morphology_by_feature(df=summary, morphology=morphology, by=by, figsize=figsize)
+
+        return summary
+
+    def compare_morphology(
+        self, m1: str, m2: str, figsize: tuple = (12, 8), *args, **kwargs
+    ) -> pd.DataFrame:
+        """Compares two morphologies, providing proportions in which m2 is present for m1
+
+        Args:
+            m1,m2 (str): Complementary morphologies, e.g., mass_shape and mass_margins
+            figsize (tuple): Tuple containing (max width, row_height)
+        """
+        df = self._df
+        proportions = []
+        m1_cols = [col for col in df.columns if col.__contains__(MORPHOLOGY_PREFIX[m1])]
+        m2_cols = [col for col in df.columns if col.__contains__(MORPHOLOGY_PREFIX[m2])]
+        for a in m1_cols:
+            arows = len(df.loc[df[a] == 1])
+            for b in m2_cols:
+                abrows = len(df.loc[(df[a] == 1) & (df[b] == 1)])
+                d = {
+                    m1: a.replace(MORPHOLOGY_PREFIX[m1], ""),
+                    m2: b.replace(MORPHOLOGY_PREFIX[m2], ""),
+                    "proportion": abrows / arows,
+                }
+                proportions.append(d)
+        comparison = pd.DataFrame(data=proportions).groupby(by=[m1, m2]).sum()
+
+        # Drop rows with proportion = 0
+        comparison = comparison.loc[comparison["proportion"] > 0]
+
+        self._plot_morphology_by_feature(
+            df=comparison, morphology=m1, by=m2, figsize=figsize, *args, **kwargs
+        )
+
+        return comparison
 
     def summary(self) -> pd.DataFrame:  # noqa
         """Summarizes the case dataset"""
@@ -182,19 +319,19 @@ class CaseDataset(Dataset):
         else:
             return self._df
 
-    def _get_feature_association_matrix(self) -> pd.DataFrame:
+    def _get_feature_association_matrix(self, features: dict) -> pd.DataFrame:
         """Creates an association matrix using Cramer's V"""
         matrix = []
-        for a in FEATURES.keys():
+        for a in features.keys():
             vector = []
-            for b in FEATURES.keys():
+            for b in features.keys():
                 if a == b:
                     vector.append(1)
                 else:
                     result = self.stats.cramersv(a=a, b=b)
                     vector.append(result.value)
             matrix.append(vector)
-        matrix = pd.DataFrame(data=matrix, columns=FEATURES.keys(), index=FEATURES.keys())
+        matrix = pd.DataFrame(data=matrix, columns=features.keys(), index=features.keys())
         return matrix
 
     def _get_target_association_matrix(self) -> pd.DataFrame:
@@ -207,3 +344,33 @@ class CaseDataset(Dataset):
         scores = pd.DataFrame(data=scores)
         scores = scores.sort_values(by="strength", ascending=False)
         return scores
+
+    def _get_most_malignant(self, data: pd.DataFrame, x: str, n: int = 10) -> pd.DataFrame:
+        prop = (
+            data[[x, "cancer"]]
+            .groupby(by=[x])
+            .value_counts(normalize=True)
+            .to_frame()
+            .reset_index()
+            .sort_values(by="proportion", ascending=False)
+        )
+        prop = prop.loc[prop["cancer"] == True].nlargest(n, "proportion")  # noqa
+        prop[x] = prop[x].astype("object")
+        return prop
+
+    def _plot_morphology_by_feature(
+        self, df: pd.DataFrame, morphology: str, by: str, figsize: tuple, *args, **kwargs
+    ) -> None:
+        """Plots morphology proportional counts by feature."""
+        df2 = df.reset_index()
+
+        nplots = df2[morphology].nunique()
+        fig, axes = self._canvas.get_figaxes(nplots=nplots, figsize=figsize)
+
+        title = proper(f"{morphology} and {by}")
+        suptitle = f"CBIS-DDSM Morphology Analysis\n{title}"
+
+        for ax, (value, group) in zip(axes, df2.groupby(by=morphology)):
+            self.plot.barplot(data=group, x=by, y="proportion", ax=ax, title=value, *args, **kwargs)
+
+        fig.suptitle(suptitle)

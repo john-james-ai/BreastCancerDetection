@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Friday September 29th 2023 07:25:25 am                                              #
+# Modified   : Sunday October 1st 2023 08:35:39 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -272,7 +272,7 @@ class DQA(ABC):
         return self._df[validation_mask.values.all(axis=1)]
 
     def get_invalid_data(self, subset: Union[list, str] = None) -> pd.DataFrame:
-        """Returns dataframe of rows containing invalid data."""
+        """Returns dataframe of rows containing invalid non-null data."""
         validation_mask = self.validate()
         if subset is None:
             return self._df[~validation_mask.values.all(axis=1)]
@@ -453,19 +453,19 @@ class Validator:
         values = [
             "AMORPHOUS",
             "PLEOMORPHIC",
-            "ROUND_AND_REGULAR-LUCENT_CENTER-DYSTROPHIC",
+            "ROUND_AND_REGULAR-LUCENT_CENTERED-DYSTROPHIC",
             "PUNCTATE",
             "COARSE",
             "VASCULAR",
             "FINE_LINEAR_BRANCHING",
             "LARGE_RODLIKE",
-            "PUNCTATE-LUCENT_CENTER",
-            "VASCULAR-COARSE-LUCENT_CENTER-ROUND_AND_REGULAR-PUNCTATE",
+            "PUNCTATE-LUCENT_CENTERED",
+            "VASCULAR-COARSE-LUCENT_CENTERED-ROUND_AND_REGULAR-PUNCTATE",
             "ROUND_AND_REGULAR-EGGSHELL",
             "PUNCTATE-PLEOMORPHIC",
             "PLEOMORPHIC-FINE_LINEAR_BRANCHING",
             "DYSTROPHIC",
-            "LUCENT_CENTER",
+            "LUCENT_CENTERED",
             "AMORPHOUS-PLEOMORPHIC",
             "ROUND_AND_REGULAR",
             "VASCULAR-COARSE-LUCENT_CENTERED",
@@ -474,23 +474,22 @@ class Validator:
             "LUCENT_CENTERED",
             "VASCULAR-COARSE",
             "ROUND_AND_REGULAR-PUNCTATE",
-            "ROUND_AND_REGULAR-LUCENT_CENTER",
+            "ROUND_AND_REGULAR-LUCENT_CENTERED",
             "COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED",
             "SKIN",
-            "LUCENT_CENTER-PUNCTATE",
+            "LUCENT_CENTERED-PUNCTATE",
             "SKIN-PUNCTATE",
             "SKIN-PUNCTATE-ROUND_AND_REGULAR",
             "MILK_OF_CALCIUM",
-            "PLEOMORPHIC-PLEOMORPHIC",
             "SKIN-COARSE-ROUND_AND_REGULAR",
             "AMORPHOUS-ROUND_AND_REGULAR",
             "ROUND_AND_REGULAR-PLEOMORPHIC",
             "ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS",
             "ROUND_AND_REGULAR-AMORPHOUS",
-            "COARSE-ROUND_AND_REGULAR-LUCENT_CENTER",
+            "COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED",
             "LARGE_RODLIKE-ROUND_AND_REGULAR",
-            "ROUND_AND_REGULAR-LUCENT_CENTER-PUNCTATE",
-            "COARSE-LUCENT_CENTER",
+            "ROUND_AND_REGULAR-LUCENT_CENTERED-PUNCTATE",
+            "COARSE-LUCENT_CENTERED",
             "PUNCTATE-AMORPHOUS",
             "ROUND_AND_REGULAR-LUCENT_CENTERED",
             "PUNCTATE-ROUND_AND_REGULAR",

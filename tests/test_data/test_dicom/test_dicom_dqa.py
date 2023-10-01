@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Tuesday September 26th 2023 05:31:59 pm                                             #
+# Modified   : Sunday October 1st 2023 01:10:32 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,6 @@ import logging
 import pandas as pd
 
 from bcd.data.dqa.dicom import DicomDQA
-from bcd.data.dqa import DQASummary
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -54,7 +53,6 @@ class TestDicomDQA:  # pragma: no cover
         dqa = DicomDQA(filepath=DICOM_FP)
         result = dqa.analyze_completeness()
 
-        assert isinstance(result.summary, DQASummary)
         assert isinstance(result.detail, pd.DataFrame)
         logger.debug(f"Completeness Summary\n{result.summary}")
         logger.debug(f"Completeness Detail\n{result.detail}")
@@ -102,7 +100,6 @@ class TestDicomDQA:  # pragma: no cover
         dqa = DicomDQA(filepath=DICOM_FP)
         result = dqa.analyze_uniqueness()
 
-        assert isinstance(result.summary, DQASummary)
         assert isinstance(result.detail, pd.DataFrame)
         logger.debug(f"Uniqueness Summary\n{result.summary}")
         logger.debug(f"Uniqueness Detail\n{result.detail}")
@@ -143,7 +140,6 @@ class TestDicomDQA:  # pragma: no cover
         dqa = DicomDQA(filepath=DICOM_FP)
         result = dqa.analyze_validity()
 
-        assert isinstance(result.summary, DQASummary)
         assert isinstance(result.detail, pd.DataFrame)
         logger.debug(f"Validity Summary\n{result.summary}")
         logger.debug(f"Validity Detail\n{result.detail}")

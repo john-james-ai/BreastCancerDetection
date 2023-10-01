@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_data/test_series/test_series_dqa.py                                     #
+# Filename   : /tests/test_utils/test_string.py                                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Saturday September 23rd 2023 03:49:09 am                                            #
+# Created    : Sunday October 1st 2023 01:06:01 pm                                                 #
+# Modified   : Sunday October 1st 2023 01:07:31 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,10 +21,10 @@ from datetime import datetime
 import pytest
 import logging
 
-import pandas as pd
+from bcd.utils.string import proper
 
-from bcd.data.series.dqa import SeriesDQA
-from bcd.data.dqa import DQASummary
+# Import whatever your testing here
+
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -32,14 +32,11 @@ logger = logging.getLogger(__name__)
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
-SERIES_FP = "data/staged/series.csv"
 
-
-@pytest.mark.dqa
-@pytest.mark.seriesdqa
-class TestSeriesDQA:  # pragma: no cover
+@pytest.mark.string
+class TestString:  # pragma: no cover
     # ============================================================================================ #
-    def test_completeness(self, caplog):
+    def test_string(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -51,26 +48,9 @@ class TestSeriesDQA:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        dqa = SeriesDQA(filepath=SERIES_FP)
-        result = dqa.analyze_completeness()
-
-        assert isinstance(result.summary, DQASummary)
-        assert isinstance(result.detail, pd.DataFrame)
-        logger.debug(f"Completeness Summary\n{result.summary}")
-        logger.debug(f"Completeness Detail\n{result.detail}")
-
-        # Complete Rows
-        df = dqa.get_complete_data()
-        assert df.shape[0] == result.summary.rows_complete
-
-        # Incomplete Rows
-        df = dqa.get_incomplete_data()
-        assert df.shape[0] == result.summary.rows - result.summary.rows_complete
-
-        # Incomplete rows by mass shape
-        df = dqa.get_incomplete_data(subset="series_uid")
-        assert df.shape[0] == 0
-
+        s = "calc_type is a word-too"
+        s2 = proper(s)
+        logger.debug(s2)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -87,7 +67,7 @@ class TestSeriesDQA:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_unique(self, caplog):
+    def test_something(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -99,19 +79,7 @@ class TestSeriesDQA:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        dqa = SeriesDQA(filepath=SERIES_FP)
-        result = dqa.analyze_uniqueness()
 
-        assert isinstance(result.summary, DQASummary)
-        assert isinstance(result.detail, pd.DataFrame)
-        logger.debug(f"Uniqueness Summary\n{result.summary}")
-        logger.debug(f"Uniqueness Detail\n{result.detail}")
-
-        df = dqa.get_unique_data()
-        assert df.shape[0] == result.summary.unique_rows
-
-        df = dqa.get_duplicate_data()
-        assert df.shape[0] == 0
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -128,7 +96,7 @@ class TestSeriesDQA:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_validity(self, caplog):
+    def test_teardown(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -140,19 +108,7 @@ class TestSeriesDQA:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        dqa = SeriesDQA(filepath=SERIES_FP)
-        result = dqa.analyze_validity()
 
-        assert isinstance(result.summary, DQASummary)
-        assert isinstance(result.detail, pd.DataFrame)
-        logger.debug(f"Validity Summary\n{result.summary}")
-        logger.debug(f"Validity Detail\n{result.detail}")
-
-        df = dqa.get_valid_data()
-        assert df.shape[0] == result.summary.rows_valid
-
-        df = dqa.get_invalid_data()
-        assert df.shape[0] == result.summary.rows - result.summary.rows_valid
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
