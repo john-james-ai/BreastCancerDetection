@@ -483,7 +483,8 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-analysis">Classification Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-cases">Calcification Cases</a></li>
 </ul>
 </li>
@@ -1013,47 +1014,15 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>1268</th>
-      <td>P_01628_RIGHT_calcification_CC_2</td>
-      <td>P_01628</td>
+      <th>1402</th>
+      <td>P_01830_RIGHT_calcification_MLO_3</td>
+      <td>P_01830</td>
       <td>3</td>
       <td>RIGHT</td>
-      <td>CC</td>
-      <td>2</td>
-      <td>LUCENT_CENTERED</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>5</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1218</th>
-      <td>P_01566_LEFT_calcification_CC_1</td>
-      <td>P_01566</td>
-      <td>3</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>PUNCTATE-PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>3</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>394</th>
-      <td>P_00519_LEFT_calcification_MLO_1</td>
-      <td>P_00519</td>
-      <td>3</td>
-      <td>LEFT</td>
       <td>MLO</td>
-      <td>1</td>
-      <td>COARSE</td>
-      <td>SEGMENTAL</td>
+      <td>3</td>
+      <td>PUNCTATE</td>
+      <td>REGIONAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>5</td>
@@ -1061,36 +1030,68 @@ The section has the following python package dependencies:</p>
       <td>False</td>
     </tr>
     <tr>
-      <th>1834</th>
-      <td>P_01867_LEFT_calcification_CC_1</td>
-      <td>P_01867</td>
+      <th>581</th>
+      <td>P_00735_LEFT_calcification_CC_1</td>
+      <td>P_00735</td>
       <td>2</td>
       <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>COARSE-LUCENT_CENTERED</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>3</td>
-      <td>test</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>490</th>
-      <td>P_00609_RIGHT_calcification_CC_1</td>
-      <td>P_00609</td>
-      <td>3</td>
-      <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
       <td>PLEOMORPHIC</td>
-      <td>SEGMENTAL</td>
+      <td>CLUSTERED</td>
       <td>4</td>
       <td>MALIGNANT</td>
-      <td>3</td>
+      <td>1</td>
       <td>train</td>
       <td>True</td>
+    </tr>
+    <tr>
+      <th>407</th>
+      <td>P_00530_LEFT_calcification_CC_1</td>
+      <td>P_00530</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
+      <td>LINEAR</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>1</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>537</th>
+      <td>P_00666_RIGHT_calcification_MLO_3</td>
+      <td>P_00666</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1808</th>
+      <td>P_01643_RIGHT_calcification_MLO_1</td>
+      <td>P_01643</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>3</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>test</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -1129,11 +1130,59 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>3326</th>
-      <td>P_00601_LEFT_mass_CC_1</td>
-      <td>P_00601</td>
+      <th>2248</th>
+      <td>P_00532_LEFT_mass_CC_1</td>
+      <td>P_00532</td>
       <td>2</td>
       <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>OVAL</td>
+      <td>OBSCURED</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>3</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3113</th>
+      <td>P_01790_LEFT_mass_CC_1</td>
+      <td>P_01790</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>ARCHITECTURAL_DISTORTION</td>
+      <td>ILL_DEFINED</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>2</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2466</th>
+      <td>P_00849_LEFT_mass_MLO_1</td>
+      <td>P_00849</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>LOBULATED</td>
+      <td>MICROLOBULATED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1992</th>
+      <td>P_00160_RIGHT_mass_CC_1</td>
+      <td>P_00160</td>
+      <td>1</td>
+      <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
       <td>OVAL</td>
@@ -1141,71 +1190,23 @@ The section has the following python package dependencies:</p>
       <td>3</td>
       <td>BENIGN</td>
       <td>5</td>
-      <td>test</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2606</th>
-      <td>P_01070_LEFT_mass_MLO_1</td>
-      <td>P_01070</td>
-      <td>1</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>IRREGULAR</td>
-      <td>ILL_DEFINED</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>4</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2839</th>
-      <td>P_01388_LEFT_mass_CC_1</td>
-      <td>P_01388</td>
-      <td>1</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>LOBULATED</td>
-      <td>MICROLOBULATED</td>
-      <td>0</td>
-      <td>BENIGN</td>
-      <td>4</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>2568</th>
-      <td>P_01008_RIGHT_mass_CC_1</td>
-      <td>P_01008</td>
+      <th>3558</th>
+      <td>P_01815_RIGHT_mass_CC_1</td>
+      <td>P_01815</td>
       <td>3</td>
       <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
       <td>IRREGULAR</td>
-      <td>SPICULATED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>3100</th>
-      <td>P_01761_LEFT_mass_MLO_1</td>
-      <td>P_01761</td>
-      <td>1</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>OVAL</td>
       <td>ILL_DEFINED</td>
-      <td>5</td>
+      <td>4</td>
       <td>MALIGNANT</td>
-      <td>2</td>
-      <td>train</td>
+      <td>1</td>
+      <td>test</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -1970,13 +1971,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_2863f" style='display:inline; margin-right:220px;'>
+<table id="T_bc05b" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by BI-RADS Assessment</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_2863f_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_bc05b_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -1986,70 +1987,70 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_2863f_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_2863f_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_2863f_row0_col0" class="data row0 col0" >177</td>
+      <th id="T_bc05b_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_bc05b_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_bc05b_row0_col0" class="data row0 col0" >177</td>
     </tr>
     <tr>
-      <th id="T_2863f_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_2863f_row1_col0" class="data row1 col0" >59</td>
+      <th id="T_bc05b_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_bc05b_row1_col0" class="data row1 col0" >59</td>
     </tr>
     <tr>
-      <th id="T_2863f_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_2863f_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_2863f_row2_col0" class="data row2 col0" >0</td>
+      <th id="T_bc05b_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_bc05b_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_bc05b_row2_col0" class="data row2 col0" >0</td>
     </tr>
     <tr>
-      <th id="T_2863f_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_2863f_row3_col0" class="data row3 col0" >3</td>
+      <th id="T_bc05b_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_bc05b_row3_col0" class="data row3 col0" >3</td>
     </tr>
     <tr>
-      <th id="T_2863f_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_2863f_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_2863f_row4_col0" class="data row4 col0" >642</td>
+      <th id="T_bc05b_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_bc05b_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_bc05b_row4_col0" class="data row4 col0" >642</td>
     </tr>
     <tr>
-      <th id="T_2863f_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_2863f_row5_col0" class="data row5 col0" >2</td>
+      <th id="T_bc05b_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_bc05b_row5_col0" class="data row5 col0" >2</td>
     </tr>
     <tr>
-      <th id="T_2863f_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_2863f_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_2863f_row6_col0" class="data row6 col0" >375</td>
+      <th id="T_bc05b_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_bc05b_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_bc05b_row6_col0" class="data row6 col0" >375</td>
     </tr>
     <tr>
-      <th id="T_2863f_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_2863f_row7_col0" class="data row7 col0" >102</td>
+      <th id="T_bc05b_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_bc05b_row7_col0" class="data row7 col0" >102</td>
     </tr>
     <tr>
-      <th id="T_2863f_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_2863f_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_2863f_row8_col0" class="data row8 col0" >902</td>
+      <th id="T_bc05b_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_bc05b_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_bc05b_row8_col0" class="data row8 col0" >902</td>
     </tr>
     <tr>
-      <th id="T_2863f_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_2863f_row9_col0" class="data row9 col0" >731</td>
+      <th id="T_bc05b_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_bc05b_row9_col0" class="data row9 col0" >731</td>
     </tr>
     <tr>
-      <th id="T_2863f_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_2863f_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_2863f_row10_col0" class="data row10 col0" >13</td>
+      <th id="T_bc05b_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_bc05b_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_bc05b_row10_col0" class="data row10 col0" >13</td>
     </tr>
     <tr>
-      <th id="T_2863f_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_2863f_row11_col0" class="data row11 col0" >560</td>
+      <th id="T_bc05b_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_bc05b_row11_col0" class="data row11 col0" >560</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_dbd94" style='display:inline; margin-right:120px'>
+<table id="T_be809" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by BI-RADS Assessment (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_dbd94_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_be809_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2059,58 +2060,58 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_dbd94_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_dbd94_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_dbd94_row0_col0" class="data row0 col0" >0.750000</td>
+      <th id="T_be809_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_be809_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_be809_row0_col0" class="data row0 col0" >0.750000</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_dbd94_row1_col0" class="data row1 col0" >0.250000</td>
+      <th id="T_be809_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_be809_row1_col0" class="data row1 col0" >0.250000</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_dbd94_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_dbd94_row2_col0" class="data row2 col0" >0.000000</td>
+      <th id="T_be809_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_be809_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_be809_row2_col0" class="data row2 col0" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_dbd94_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_be809_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_be809_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_dbd94_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_dbd94_row4_col0" class="data row4 col0" >0.996894</td>
+      <th id="T_be809_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_be809_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_be809_row4_col0" class="data row4 col0" >0.996894</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_dbd94_row5_col0" class="data row5 col0" >0.003106</td>
+      <th id="T_be809_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_be809_row5_col0" class="data row5 col0" >0.003106</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_dbd94_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_dbd94_row6_col0" class="data row6 col0" >0.786164</td>
+      <th id="T_be809_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_be809_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_be809_row6_col0" class="data row6 col0" >0.786164</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_dbd94_row7_col0" class="data row7 col0" >0.213836</td>
+      <th id="T_be809_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_be809_row7_col0" class="data row7 col0" >0.213836</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_dbd94_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_dbd94_row8_col0" class="data row8 col0" >0.552358</td>
+      <th id="T_be809_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_be809_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_be809_row8_col0" class="data row8 col0" >0.552358</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_dbd94_row9_col0" class="data row9 col0" >0.447642</td>
+      <th id="T_be809_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_be809_row9_col0" class="data row9 col0" >0.447642</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_dbd94_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_dbd94_row10_col0" class="data row10 col0" >0.022688</td>
+      <th id="T_be809_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_be809_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_be809_row10_col0" class="data row10 col0" >0.022688</td>
     </tr>
     <tr>
-      <th id="T_dbd94_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_dbd94_row11_col0" class="data row11 col0" >0.977312</td>
+      <th id="T_be809_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_be809_row11_col0" class="data row11 col0" >0.977312</td>
     </tr>
   </tbody>
 </table>
@@ -2188,13 +2189,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_fc8b7" style='display:inline; margin-right:220px;'>
+<table id="T_e2809" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by Subtlety</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_fc8b7_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_e2809_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2204,61 +2205,61 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_fc8b7_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_fc8b7_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_fc8b7_row0_col0" class="data row0 col0" >78</td>
+      <th id="T_e2809_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_e2809_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_e2809_row0_col0" class="data row0 col0" >78</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_fc8b7_row1_col0" class="data row1 col0" >96</td>
+      <th id="T_e2809_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_e2809_row1_col0" class="data row1 col0" >96</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_fc8b7_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_fc8b7_row2_col0" class="data row2 col0" >232</td>
+      <th id="T_e2809_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_e2809_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_e2809_row2_col0" class="data row2 col0" >232</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_fc8b7_row3_col0" class="data row3 col0" >207</td>
+      <th id="T_e2809_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_e2809_row3_col0" class="data row3 col0" >207</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_fc8b7_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_fc8b7_row4_col0" class="data row4 col0" >627</td>
+      <th id="T_e2809_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_e2809_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_e2809_row4_col0" class="data row4 col0" >627</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_fc8b7_row5_col0" class="data row5 col0" >337</td>
+      <th id="T_e2809_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_e2809_row5_col0" class="data row5 col0" >337</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_fc8b7_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_fc8b7_row6_col0" class="data row6 col0" >559</td>
+      <th id="T_e2809_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_e2809_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_e2809_row6_col0" class="data row6 col0" >559</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_fc8b7_row7_col0" class="data row7 col0" >316</td>
+      <th id="T_e2809_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_e2809_row7_col0" class="data row7 col0" >316</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_fc8b7_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_fc8b7_row8_col0" class="data row8 col0" >613</td>
+      <th id="T_e2809_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_e2809_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_e2809_row8_col0" class="data row8 col0" >613</td>
     </tr>
     <tr>
-      <th id="T_fc8b7_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_fc8b7_row9_col0" class="data row9 col0" >501</td>
+      <th id="T_e2809_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_e2809_row9_col0" class="data row9 col0" >501</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_ca0d7" style='display:inline; margin-right:120px'>
+<table id="T_b450b" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by Subtlety (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_ca0d7_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_b450b_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2268,49 +2269,49 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_ca0d7_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_ca0d7_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_ca0d7_row0_col0" class="data row0 col0" >0.448276</td>
+      <th id="T_b450b_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_b450b_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_b450b_row0_col0" class="data row0 col0" >0.448276</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_ca0d7_row1_col0" class="data row1 col0" >0.551724</td>
+      <th id="T_b450b_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_b450b_row1_col0" class="data row1 col0" >0.551724</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_ca0d7_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_ca0d7_row2_col0" class="data row2 col0" >0.528474</td>
+      <th id="T_b450b_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_b450b_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_b450b_row2_col0" class="data row2 col0" >0.528474</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_ca0d7_row3_col0" class="data row3 col0" >0.471526</td>
+      <th id="T_b450b_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_b450b_row3_col0" class="data row3 col0" >0.471526</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_ca0d7_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_ca0d7_row4_col0" class="data row4 col0" >0.650415</td>
+      <th id="T_b450b_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_b450b_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_b450b_row4_col0" class="data row4 col0" >0.650415</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_ca0d7_row5_col0" class="data row5 col0" >0.349585</td>
+      <th id="T_b450b_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_b450b_row5_col0" class="data row5 col0" >0.349585</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_ca0d7_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_ca0d7_row6_col0" class="data row6 col0" >0.638857</td>
+      <th id="T_b450b_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_b450b_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_b450b_row6_col0" class="data row6 col0" >0.638857</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_ca0d7_row7_col0" class="data row7 col0" >0.361143</td>
+      <th id="T_b450b_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_b450b_row7_col0" class="data row7 col0" >0.361143</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_ca0d7_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_ca0d7_row8_col0" class="data row8 col0" >0.550269</td>
+      <th id="T_b450b_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_b450b_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_b450b_row8_col0" class="data row8 col0" >0.550269</td>
     </tr>
     <tr>
-      <th id="T_ca0d7_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_ca0d7_row9_col0" class="data row9 col0" >0.449731</td>
+      <th id="T_b450b_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_b450b_row9_col0" class="data row9 col0" >0.449731</td>
     </tr>
   </tbody>
 </table>
@@ -2863,24 +2864,24 @@ Indeed, 100% of the above cases were malignant.</p></li>
 <h2>Case Data Multivariate Analysis<a class="headerlink" href="#case-data-multivariate-analysis" title="Permalink to this heading">#</a></h2>
 <p>The purpose of the multivariate analysis is to elucidate features of the data, beyond that which can be derived from the univariate, and bivariate analyses above. Our objectives; therefore, are to:</p>
 <ol class="arabic simple">
-<li><p>Explain: Identify the variables that most impact the diagnosis of cancer, and estimate the importance of each independent variable in explaining the diagnosis.</p></li>
-<li><p>Classification: Establish a logistic model for determining the diagnosis, given the independent variables.</p></li>
-<li><p>Cluster: Partition the cases into groups based on morphological and other features.</p></li>
+<li><p>Identify the variables that most impact the diagnosis of cancer,</p></li>
+<li><p>Estimate the importance of each independent variable in explaining the diagnosis.</p></li>
+<li><p>Establish a model to predict a diagnosis, given the independent variables.</p></li>
+<li><p>Cluster the cases into groups based on morphological and other features.</p></li>
 </ol>
-<p>Hence, we’ll be conducting multivariate logistic regression and cluster analyses.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CALC_TRAIN_FP</span> <span class="o">=</span> <span class="s2">&quot;data/cooked/calc_train.csv&quot;</span>
-<span class="n">CALC_TEST_FP</span> <span class="o">=</span> <span class="s2">&quot;data/cooked/calc_test.csv&quot;</span>
-<span class="n">MASS_TRAIN_FP</span> <span class="o">=</span> <span class="s2">&quot;data/cooked/mass_train.csv&quot;</span>
-<span class="n">MASS_TEST_FP</span> <span class="o">=</span> <span class="s2">&quot;data/cooked/mass_test.csv&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>For objectives 1-3, we will train a series of classifiers, namely Logistic Regression, Support Vector Machines, and Random Forest classifiers, on the calcification and mass training data, and use these models to predict a diagnosis for each instance in the test set. The cluster analysis will For the cluster analysis, the K-Modes and k-Mediods algorithms to determine an optimal clustering solution.</p>
+<section id="classification-analysis">
+<h3>Classification Analysis<a class="headerlink" href="#classification-analysis" title="Permalink to this heading">#</a></h3>
+<p>Logistic Regression, Support Vector Machines, and Random Forests classifiers will be used to identify variates, evaluate their relative importance, and predict a diagnosis given the variates.</p>
 <section id="logistic-regression">
-<h3>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h3>
-<p>Logistic regression is a discriminative classifier that learns to distinguish the classes (diagnosis) by directly computing <span class="math notranslate nohighlight">\(P(c|d)\)</span>, the probability of a class, given the data.</p>
+<h4>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h4>
+<p>Logistic regression is a discriminative classifier that learns to distinguish the classes (diagnose) by directly computing <span class="math notranslate nohighlight">\(P(y=1|X)\)</span>, the probability that the case is malignant, given the features in the dataset. It accomplishes this task using the logistic, or sigmoid function given by:</p>
+<div class="math notranslate nohighlight" id="equation-sigmoid">
+<span class="eqno">(1)<a class="headerlink" href="#equation-sigmoid" title="Permalink to this equation">#</a></span>\[P(y=1|X) = \frac{e^{\beta_0+\beta_1X}}{1+e^{\beta_0+\beta_1 X}}\]</div>
+<p>To make this concrete, let <span class="math notranslate nohighlight">\(y\)</span> be a discrete random variable with values in [0,1], our target. In our case, we will let zero represent a benign outcome, and one means a malignancy. Let <span class="math notranslate nohighlight">\(X\)</span> be our random <span class="math notranslate nohighlight">\(m\)</span>-vector of variates, our features.</p>
+<div class="math notranslate nohighlight">
+\[P(y=1|X) = \frac{}{}\]</div>
+</section>
 <section id="calcification-cases">
 <h4>Calcification Cases<a class="headerlink" href="#calcification-cases" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
@@ -2898,784 +2899,25 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-<span class="n">X_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>breast_density</th>
-      <th>subtlety</th>
-      <th>LR_LEFT</th>
-      <th>LR_RIGHT</th>
-      <th>IV_CC</th>
-      <th>IV_MLO</th>
-      <th>CT_AMORPHOUS</th>
-      <th>CT_AMORPHOUS-PLEOMORPHIC</th>
-      <th>CT_AMORPHOUS-ROUND_AND_REGULAR</th>
-      <th>CT_COARSE</th>
-      <th>CT_COARSE-LUCENT_CENTERED</th>
-      <th>CT_COARSE-PLEOMORPHIC</th>
-      <th>CT_COARSE-ROUND_AND_REGULAR</th>
-      <th>CT_COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <th>CT_DYSTROPHIC</th>
-      <th>CT_EGGSHELL</th>
-      <th>CT_FINE_LINEAR_BRANCHING</th>
-      <th>CT_LARGE_RODLIKE</th>
-      <th>CT_LARGE_RODLIKE-ROUND_AND_REGULAR</th>
-      <th>CT_LUCENT_CENTERED</th>
-      <th>CT_LUCENT_CENTERED-PUNCTATE</th>
-      <th>CT_MILK_OF_CALCIUM</th>
-      <th>CT_PLEOMORPHIC</th>
-      <th>CT_PLEOMORPHIC-AMORPHOUS</th>
-      <th>CT_PLEOMORPHIC-FINE_LINEAR_BRANCHING</th>
-      <th>CT_PUNCTATE</th>
-      <th>CT_PUNCTATE-AMORPHOUS</th>
-      <th>CT_PUNCTATE-AMORPHOUS-PLEOMORPHIC</th>
-      <th>CT_PUNCTATE-FINE_LINEAR_BRANCHING</th>
-      <th>CT_PUNCTATE-LUCENT_CENTERED</th>
-      <th>CT_PUNCTATE-PLEOMORPHIC</th>
-      <th>CT_PUNCTATE-ROUND_AND_REGULAR</th>
-      <th>CT_ROUND_AND_REGULAR</th>
-      <th>CT_ROUND_AND_REGULAR-AMORPHOUS</th>
-      <th>CT_ROUND_AND_REGULAR-EGGSHELL</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-DYSTROPHIC</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-PUNCTATE</th>
-      <th>CT_ROUND_AND_REGULAR-PLEOMORPHIC</th>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE</th>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS</th>
-      <th>CT_SKIN</th>
-      <th>CT_SKIN-COARSE-ROUND_AND_REGULAR</th>
-      <th>CT_SKIN-PUNCTATE</th>
-      <th>CT_SKIN-PUNCTATE-ROUND_AND_REGULAR</th>
-      <th>CT_VASCULAR</th>
-      <th>CT_VASCULAR-COARSE</th>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED</th>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED-ROUND_AND_REGULAR-PUNCTATE</th>
-      <th>CD_CLUSTERED</th>
-      <th>CD_CLUSTERED-LINEAR</th>
-      <th>CD_CLUSTERED-SEGMENTAL</th>
-      <th>CD_DIFFUSELY_SCATTERED</th>
-      <th>CD_LINEAR</th>
-      <th>CD_LINEAR-SEGMENTAL</th>
-      <th>CD_REGIONAL</th>
-      <th>CD_SEGMENTAL</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>3</td>
-      <td>3</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>3</td>
-      <td>3</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>4</td>
-      <td>4</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>4</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>3</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>breast_density</th>
-      <th>subtlety</th>
-      <th>LR_LEFT</th>
-      <th>LR_RIGHT</th>
-      <th>IV_CC</th>
-      <th>IV_MLO</th>
-      <th>CT_AMORPHOUS</th>
-      <th>CT_AMORPHOUS-PLEOMORPHIC</th>
-      <th>CT_AMORPHOUS-ROUND_AND_REGULAR</th>
-      <th>CT_COARSE</th>
-      <th>CT_COARSE-LUCENT_CENTERED</th>
-      <th>CT_COARSE-PLEOMORPHIC</th>
-      <th>CT_COARSE-ROUND_AND_REGULAR</th>
-      <th>CT_COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <th>CT_DYSTROPHIC</th>
-      <th>CT_EGGSHELL</th>
-      <th>CT_FINE_LINEAR_BRANCHING</th>
-      <th>CT_LARGE_RODLIKE</th>
-      <th>CT_LARGE_RODLIKE-ROUND_AND_REGULAR</th>
-      <th>CT_LUCENT_CENTERED</th>
-      <th>CT_LUCENT_CENTERED-PUNCTATE</th>
-      <th>CT_MILK_OF_CALCIUM</th>
-      <th>CT_PLEOMORPHIC</th>
-      <th>CT_PLEOMORPHIC-AMORPHOUS</th>
-      <th>CT_PLEOMORPHIC-FINE_LINEAR_BRANCHING</th>
-      <th>CT_PUNCTATE</th>
-      <th>CT_PUNCTATE-AMORPHOUS</th>
-      <th>CT_PUNCTATE-AMORPHOUS-PLEOMORPHIC</th>
-      <th>CT_PUNCTATE-FINE_LINEAR_BRANCHING</th>
-      <th>CT_PUNCTATE-LUCENT_CENTERED</th>
-      <th>CT_PUNCTATE-PLEOMORPHIC</th>
-      <th>CT_PUNCTATE-ROUND_AND_REGULAR</th>
-      <th>CT_ROUND_AND_REGULAR</th>
-      <th>CT_ROUND_AND_REGULAR-AMORPHOUS</th>
-      <th>CT_ROUND_AND_REGULAR-EGGSHELL</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-DYSTROPHIC</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-PUNCTATE</th>
-      <th>CT_ROUND_AND_REGULAR-PLEOMORPHIC</th>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE</th>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS</th>
-      <th>CT_SKIN</th>
-      <th>CT_SKIN-COARSE-ROUND_AND_REGULAR</th>
-      <th>CT_SKIN-PUNCTATE</th>
-      <th>CT_SKIN-PUNCTATE-ROUND_AND_REGULAR</th>
-      <th>CT_VASCULAR</th>
-      <th>CT_VASCULAR-COARSE</th>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED</th>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED-ROUND_AND_REGULAR-PUNCTATE</th>
-      <th>CD_CLUSTERED</th>
-      <th>CD_CLUSTERED-LINEAR</th>
-      <th>CD_CLUSTERED-SEGMENTAL</th>
-      <th>CD_DIFFUSELY_SCATTERED</th>
-      <th>CD_LINEAR</th>
-      <th>CD_LINEAR-SEGMENTAL</th>
-      <th>CD_REGIONAL</th>
-      <th>CD_SEGMENTAL</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2</td>
-      <td>2</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>2</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>5</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2</td>
-      <td>5</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2</td>
-      <td>5</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">Cs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
 <span class="n">y_hat</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_test</span><span class="p">)</span>
-<span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_hat</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_hat</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;              precision    recall  f1-score   support\n\n           0       0.74      0.78      0.76       197\n           1       0.63      0.58      0.60       129\n\n    accuracy                           0.70       326\n   macro avg       0.68      0.68      0.68       326\nweighted avg       0.70      0.70      0.70       326\n&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6993865030674846
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+
+           0       0.74      0.78      0.76       197
+           1       0.63      0.58      0.60       129
+
+    accuracy                           0.70       326
+   macro avg       0.68      0.68      0.68       326
+weighted avg       0.70      0.70      0.70       326
 </pre></div>
 </div>
 </div>
@@ -3683,7 +2925,7 @@ Indeed, 100% of the above cases were malignant.</p></li>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_coef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">)</span>
-<span class="n">df_coef</span>
+<span class="n">df_coef</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
 </div>
@@ -3706,125 +2948,237 @@ Indeed, 100% of the above cases were malignant.</p></li>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>breast_density</th>
-      <th>subtlety</th>
-      <th>LR_LEFT</th>
-      <th>LR_RIGHT</th>
-      <th>IV_CC</th>
-      <th>IV_MLO</th>
-      <th>CT_AMORPHOUS</th>
-      <th>CT_AMORPHOUS-PLEOMORPHIC</th>
-      <th>CT_AMORPHOUS-ROUND_AND_REGULAR</th>
-      <th>CT_COARSE</th>
-      <th>CT_COARSE-LUCENT_CENTERED</th>
-      <th>CT_COARSE-PLEOMORPHIC</th>
-      <th>CT_COARSE-ROUND_AND_REGULAR</th>
-      <th>CT_COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <th>CT_DYSTROPHIC</th>
-      <th>CT_EGGSHELL</th>
-      <th>CT_FINE_LINEAR_BRANCHING</th>
-      <th>CT_LARGE_RODLIKE</th>
-      <th>CT_LARGE_RODLIKE-ROUND_AND_REGULAR</th>
-      <th>CT_LUCENT_CENTERED</th>
-      <th>CT_LUCENT_CENTERED-PUNCTATE</th>
-      <th>CT_MILK_OF_CALCIUM</th>
-      <th>CT_PLEOMORPHIC</th>
-      <th>CT_PLEOMORPHIC-AMORPHOUS</th>
-      <th>CT_PLEOMORPHIC-FINE_LINEAR_BRANCHING</th>
-      <th>CT_PUNCTATE</th>
-      <th>CT_PUNCTATE-AMORPHOUS</th>
-      <th>CT_PUNCTATE-AMORPHOUS-PLEOMORPHIC</th>
-      <th>CT_PUNCTATE-FINE_LINEAR_BRANCHING</th>
-      <th>CT_PUNCTATE-LUCENT_CENTERED</th>
-      <th>CT_PUNCTATE-PLEOMORPHIC</th>
-      <th>CT_PUNCTATE-ROUND_AND_REGULAR</th>
-      <th>CT_ROUND_AND_REGULAR</th>
-      <th>CT_ROUND_AND_REGULAR-AMORPHOUS</th>
-      <th>CT_ROUND_AND_REGULAR-EGGSHELL</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-DYSTROPHIC</th>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-PUNCTATE</th>
-      <th>CT_ROUND_AND_REGULAR-PLEOMORPHIC</th>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE</th>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS</th>
-      <th>CT_SKIN</th>
-      <th>CT_SKIN-COARSE-ROUND_AND_REGULAR</th>
-      <th>CT_SKIN-PUNCTATE</th>
-      <th>CT_SKIN-PUNCTATE-ROUND_AND_REGULAR</th>
-      <th>CT_VASCULAR</th>
-      <th>CT_VASCULAR-COARSE</th>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED</th>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED-ROUND_AND_REGULAR-PUNCTATE</th>
-      <th>CD_CLUSTERED</th>
-      <th>CD_CLUSTERED-LINEAR</th>
-      <th>CD_CLUSTERED-SEGMENTAL</th>
-      <th>CD_DIFFUSELY_SCATTERED</th>
-      <th>CD_LINEAR</th>
-      <th>CD_LINEAR-SEGMENTAL</th>
-      <th>CD_REGIONAL</th>
-      <th>CD_SEGMENTAL</th>
+      <th>0</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
+      <th>breast_density</th>
       <td>0.12</td>
+    </tr>
+    <tr>
+      <th>subtlety</th>
       <td>0.07</td>
-      <td>-0.64</td>
-      <td>-0.71</td>
-      <td>-0.67</td>
-      <td>-0.68</td>
-      <td>4.72</td>
-      <td>5.39</td>
-      <td>10.64</td>
-      <td>-3.96</td>
-      <td>-1.32</td>
-      <td>-1.04</td>
-      <td>-1.36</td>
-      <td>-3.08</td>
-      <td>-3.26</td>
-      <td>-2.21</td>
+    </tr>
+    <tr>
+      <th>LR_LEFT</th>
+      <td>-0.50</td>
+    </tr>
+    <tr>
+      <th>LR_RIGHT</th>
+      <td>-0.57</td>
+    </tr>
+    <tr>
+      <th>IV_CC</th>
+      <td>-0.53</td>
+    </tr>
+    <tr>
+      <th>IV_MLO</th>
+      <td>-0.54</td>
+    </tr>
+    <tr>
+      <th>CT_AMORPHOUS</th>
+      <td>5.21</td>
+    </tr>
+    <tr>
+      <th>CT_AMORPHOUS-PLEOMORPHIC</th>
+      <td>5.87</td>
+    </tr>
+    <tr>
+      <th>CT_AMORPHOUS-ROUND_AND_REGULAR</th>
+      <td>11.71</td>
+    </tr>
+    <tr>
+      <th>CT_COARSE</th>
+      <td>-3.97</td>
+    </tr>
+    <tr>
+      <th>CT_COARSE-LUCENT_CENTERED</th>
+      <td>-1.59</td>
+    </tr>
+    <tr>
+      <th>CT_COARSE-PLEOMORPHIC</th>
+      <td>-1.26</td>
+    </tr>
+    <tr>
+      <th>CT_COARSE-ROUND_AND_REGULAR</th>
+      <td>-1.61</td>
+    </tr>
+    <tr>
+      <th>CT_COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED</th>
+      <td>-3.18</td>
+    </tr>
+    <tr>
+      <th>CT_DYSTROPHIC</th>
+      <td>-3.33</td>
+    </tr>
+    <tr>
+      <th>CT_EGGSHELL</th>
+      <td>-2.48</td>
+    </tr>
+    <tr>
+      <th>CT_FINE_LINEAR_BRANCHING</th>
+      <td>6.41</td>
+    </tr>
+    <tr>
+      <th>CT_LARGE_RODLIKE</th>
+      <td>-1.96</td>
+    </tr>
+    <tr>
+      <th>CT_LARGE_RODLIKE-ROUND_AND_REGULAR</th>
+      <td>-3.31</td>
+    </tr>
+    <tr>
+      <th>CT_LUCENT_CENTERED</th>
+      <td>-5.00</td>
+    </tr>
+    <tr>
+      <th>CT_LUCENT_CENTERED-PUNCTATE</th>
+      <td>-2.82</td>
+    </tr>
+    <tr>
+      <th>CT_MILK_OF_CALCIUM</th>
+      <td>-1.29</td>
+    </tr>
+    <tr>
+      <th>CT_PLEOMORPHIC</th>
+      <td>5.98</td>
+    </tr>
+    <tr>
+      <th>CT_PLEOMORPHIC-AMORPHOUS</th>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>CT_PLEOMORPHIC-FINE_LINEAR_BRANCHING</th>
+      <td>7.68</td>
+    </tr>
+    <tr>
+      <th>CT_PUNCTATE</th>
+      <td>4.39</td>
+    </tr>
+    <tr>
+      <th>CT_PUNCTATE-AMORPHOUS</th>
+      <td>-3.13</td>
+    </tr>
+    <tr>
+      <th>CT_PUNCTATE-AMORPHOUS-PLEOMORPHIC</th>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>CT_PUNCTATE-FINE_LINEAR_BRANCHING</th>
+      <td>12.44</td>
+    </tr>
+    <tr>
+      <th>CT_PUNCTATE-LUCENT_CENTERED</th>
+      <td>-2.34</td>
+    </tr>
+    <tr>
+      <th>CT_PUNCTATE-PLEOMORPHIC</th>
       <td>5.92</td>
-      <td>-1.65</td>
-      <td>-3.01</td>
-      <td>-5.07</td>
-      <td>-2.69</td>
-      <td>-1.07</td>
-      <td>5.49</td>
-      <td>0.00</td>
-      <td>7.19</td>
-      <td>3.90</td>
-      <td>-3.05</td>
-      <td>0.00</td>
-      <td>11.53</td>
-      <td>-2.02</td>
-      <td>5.42</td>
-      <td>-2.08</td>
-      <td>3.74</td>
-      <td>-0.60</td>
-      <td>-3.07</td>
-      <td>-4.22</td>
-      <td>-1.13</td>
-      <td>-2.77</td>
-      <td>-2.09</td>
-      <td>3.82</td>
-      <td>-1.71</td>
-      <td>-1.50</td>
-      <td>-0.89</td>
-      <td>-1.68</td>
-      <td>-1.68</td>
-      <td>-4.84</td>
-      <td>-2.11</td>
-      <td>-2.31</td>
-      <td>-1.65</td>
-      <td>-0.58</td>
-      <td>0.28</td>
-      <td>-6.43</td>
-      <td>-0.85</td>
-      <td>0.59</td>
-      <td>5.69</td>
-      <td>0.16</td>
-      <td>-0.20</td>
+    </tr>
+    <tr>
+      <th>CT_PUNCTATE-ROUND_AND_REGULAR</th>
+      <td>-2.35</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR</th>
+      <td>4.28</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-AMORPHOUS</th>
+      <td>-0.80</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-EGGSHELL</th>
+      <td>-3.46</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED</th>
+      <td>-4.23</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-DYSTROPHIC</th>
+      <td>-1.31</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-PUNCTATE</th>
+      <td>-3.17</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-PLEOMORPHIC</th>
+      <td>-2.29</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-PUNCTATE</th>
+      <td>4.36</td>
+    </tr>
+    <tr>
+      <th>CT_ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS</th>
+      <td>-1.96</td>
+    </tr>
+    <tr>
+      <th>CT_SKIN</th>
+      <td>-1.75</td>
+    </tr>
+    <tr>
+      <th>CT_SKIN-COARSE-ROUND_AND_REGULAR</th>
+      <td>-1.08</td>
+    </tr>
+    <tr>
+      <th>CT_SKIN-PUNCTATE</th>
+      <td>-1.94</td>
+    </tr>
+    <tr>
+      <th>CT_SKIN-PUNCTATE-ROUND_AND_REGULAR</th>
+      <td>-1.91</td>
+    </tr>
+    <tr>
+      <th>CT_VASCULAR</th>
+      <td>-4.79</td>
+    </tr>
+    <tr>
+      <th>CT_VASCULAR-COARSE</th>
+      <td>-2.42</td>
+    </tr>
+    <tr>
+      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED</th>
+      <td>-2.64</td>
+    </tr>
+    <tr>
+      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED-ROUND_AND_REGULAR-PUNCTATE</th>
+      <td>-1.97</td>
+    </tr>
+    <tr>
+      <th>CD_CLUSTERED</th>
+      <td>-0.47</td>
+    </tr>
+    <tr>
+      <th>CD_CLUSTERED-LINEAR</th>
+      <td>0.41</td>
+    </tr>
+    <tr>
+      <th>CD_CLUSTERED-SEGMENTAL</th>
+      <td>-7.43</td>
+    </tr>
+    <tr>
+      <th>CD_DIFFUSELY_SCATTERED</th>
+      <td>-0.73</td>
+    </tr>
+    <tr>
+      <th>CD_LINEAR</th>
+      <td>0.69</td>
+    </tr>
+    <tr>
+      <th>CD_LINEAR-SEGMENTAL</th>
+      <td>6.27</td>
+    </tr>
+    <tr>
+      <th>CD_REGIONAL</th>
+      <td>0.27</td>
+    </tr>
+    <tr>
+      <th>CD_SEGMENTAL</th>
+      <td>-0.09</td>
     </tr>
   </tbody>
 </table>
@@ -3976,7 +3330,8 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-analysis">Classification Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-cases">Calcification Cases</a></li>
 </ul>
 </li>
