@@ -485,6 +485,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-analysis">Classification Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-classifier">Support Vector Classifier</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-cases">Calcification Cases</a></li>
 </ul>
 </li>
@@ -1020,82 +1021,82 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>219</th>
-      <td>P_00302_RIGHT_calcification_MLO_1</td>
-      <td>P_00302</td>
+      <th>1210</th>
+      <td>P_01563_LEFT_calcification_MLO_2</td>
+      <td>P_01563</td>
+      <td>3</td>
+      <td>LEFT</td>
+      <td>MLO</td>
       <td>2</td>
-      <td>RIGHT</td>
+      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1668</th>
+      <td>P_00753_LEFT_calcification_MLO_1</td>
+      <td>P_00753</td>
+      <td>2</td>
+      <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>PUNCTATE</td>
-      <td>SEGMENTAL</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>2</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>155</th>
-      <td>P_00208_RIGHT_calcification_CC_1</td>
-      <td>P_00208</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
+      <td>AMORPHOUS</td>
       <td>CLUSTERED</td>
-      <td>4</td>
+      <td>3</td>
       <td>BENIGN</td>
-      <td>4</td>
-      <td>train</td>
+      <td>3</td>
+      <td>test</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>308</th>
-      <td>P_00448_LEFT_calcification_CC_1</td>
-      <td>P_00448</td>
+      <th>783</th>
+      <td>P_01002_LEFT_calcification_CC_1</td>
+      <td>P_01002</td>
       <td>3</td>
       <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>2</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>419</th>
-      <td>P_00539_RIGHT_calcification_CC_4</td>
-      <td>P_00539</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>CC</td>
-      <td>4</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
+      <td>FINE_LINEAR_BRANCHING</td>
+      <td>REGIONAL</td>
+      <td>5</td>
       <td>MALIGNANT</td>
-      <td>3</td>
+      <td>5</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>715</th>
-      <td>P_00912_LEFT_calcification_MLO_1</td>
-      <td>P_00912</td>
-      <td>2</td>
+      <th>139</th>
+      <td>P_00179_LEFT_calcification_MLO_1</td>
+      <td>P_00179</td>
+      <td>3</td>
       <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>PUNCTATE</td>
+      <td>PLEOMORPHIC</td>
       <td>CLUSTERED</td>
       <td>4</td>
       <td>BENIGN</td>
       <td>2</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1418</th>
+      <td>P_01838_RIGHT_calcification_CC_2</td>
+      <td>P_01838</td>
+      <td>1</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>5</td>
       <td>train</td>
       <td>False</td>
     </tr>
@@ -1136,27 +1137,27 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>3386</th>
-      <td>P_00947_RIGHT_mass_MLO_1</td>
-      <td>P_00947</td>
+      <th>2687</th>
+      <td>P_01175_LEFT_mass_MLO_1</td>
+      <td>P_01175</td>
       <td>1</td>
-      <td>RIGHT</td>
+      <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>LOBULATED</td>
+      <td>OVAL</td>
       <td>CIRCUMSCRIBED</td>
+      <td>3</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>test</td>
-      <td>True</td>
+      <td>train</td>
+      <td>False</td>
     </tr>
     <tr>
-      <th>3307</th>
-      <td>P_00500_RIGHT_mass_MLO_1</td>
-      <td>P_00500</td>
-      <td>2</td>
-      <td>RIGHT</td>
+      <th>2727</th>
+      <td>P_01230_LEFT_mass_MLO_1</td>
+      <td>P_01230</td>
+      <td>1</td>
+      <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
       <td>IRREGULAR</td>
@@ -1164,34 +1165,34 @@ The section has the following python package dependencies:</p>
       <td>4</td>
       <td>MALIGNANT</td>
       <td>2</td>
-      <td>test</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2970</th>
-      <td>P_01600_RIGHT_mass_MLO_1</td>
-      <td>P_01600</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>ROUND</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>2118</th>
-      <td>P_00363_LEFT_mass_MLO_1</td>
-      <td>P_00363</td>
-      <td>2</td>
+      <th>2176</th>
+      <td>P_00430_LEFT_mass_MLO_1</td>
+      <td>P_00430</td>
+      <td>3</td>
       <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>OVAL</td>
+      <td>LOBULATED</td>
+      <td>CIRCUMSCRIBED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3035</th>
+      <td>P_01669_LEFT_mass_CC_1</td>
+      <td>P_01669</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
       <td>SPICULATED</td>
       <td>5</td>
       <td>MALIGNANT</td>
@@ -1200,20 +1201,20 @@ The section has the following python package dependencies:</p>
       <td>True</td>
     </tr>
     <tr>
-      <th>2299</th>
-      <td>P_00607_RIGHT_mass_MLO_1</td>
-      <td>P_00607</td>
-      <td>1</td>
+      <th>2861</th>
+      <td>P_01417_RIGHT_mass_MLO_1</td>
+      <td>P_01417</td>
+      <td>4</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>IRREGULAR</td>
-      <td>ILL_DEFINED</td>
-      <td>3</td>
-      <td>MALIGNANT</td>
-      <td>2</td>
+      <td>ARCHITECTURAL_DISTORTION</td>
+      <td>SPICULATED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
       <td>train</td>
-      <td>True</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -1977,13 +1978,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_e5f93" style='display:inline; margin-right:220px;'>
+<table id="T_7e692" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by BI-RADS Assessment</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_e5f93_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_7e692_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -1993,70 +1994,70 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_e5f93_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_e5f93_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_e5f93_row0_col0" class="data row0 col0" >177</td>
+      <th id="T_7e692_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_7e692_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_7e692_row0_col0" class="data row0 col0" >177</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_e5f93_row1_col0" class="data row1 col0" >59</td>
+      <th id="T_7e692_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_7e692_row1_col0" class="data row1 col0" >59</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_e5f93_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_e5f93_row2_col0" class="data row2 col0" >0</td>
+      <th id="T_7e692_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_7e692_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_7e692_row2_col0" class="data row2 col0" >0</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_e5f93_row3_col0" class="data row3 col0" >3</td>
+      <th id="T_7e692_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_7e692_row3_col0" class="data row3 col0" >3</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_e5f93_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_e5f93_row4_col0" class="data row4 col0" >642</td>
+      <th id="T_7e692_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_7e692_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_7e692_row4_col0" class="data row4 col0" >642</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_e5f93_row5_col0" class="data row5 col0" >2</td>
+      <th id="T_7e692_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_7e692_row5_col0" class="data row5 col0" >2</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_e5f93_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_e5f93_row6_col0" class="data row6 col0" >375</td>
+      <th id="T_7e692_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_7e692_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_7e692_row6_col0" class="data row6 col0" >375</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_e5f93_row7_col0" class="data row7 col0" >102</td>
+      <th id="T_7e692_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_7e692_row7_col0" class="data row7 col0" >102</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_e5f93_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_e5f93_row8_col0" class="data row8 col0" >902</td>
+      <th id="T_7e692_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_7e692_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_7e692_row8_col0" class="data row8 col0" >902</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_e5f93_row9_col0" class="data row9 col0" >731</td>
+      <th id="T_7e692_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_7e692_row9_col0" class="data row9 col0" >731</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_e5f93_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_e5f93_row10_col0" class="data row10 col0" >13</td>
+      <th id="T_7e692_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_7e692_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_7e692_row10_col0" class="data row10 col0" >13</td>
     </tr>
     <tr>
-      <th id="T_e5f93_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_e5f93_row11_col0" class="data row11 col0" >560</td>
+      <th id="T_7e692_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_7e692_row11_col0" class="data row11 col0" >560</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_18c36" style='display:inline; margin-right:120px'>
+<table id="T_18bb2" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by BI-RADS Assessment (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_18c36_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_18bb2_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2066,58 +2067,58 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_18c36_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_18c36_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_18c36_row0_col0" class="data row0 col0" >0.750000</td>
+      <th id="T_18bb2_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_18bb2_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_18bb2_row0_col0" class="data row0 col0" >0.750000</td>
     </tr>
     <tr>
-      <th id="T_18c36_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_18c36_row1_col0" class="data row1 col0" >0.250000</td>
+      <th id="T_18bb2_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_18bb2_row1_col0" class="data row1 col0" >0.250000</td>
     </tr>
     <tr>
-      <th id="T_18c36_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_18c36_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_18c36_row2_col0" class="data row2 col0" >0.000000</td>
+      <th id="T_18bb2_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_18bb2_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_18bb2_row2_col0" class="data row2 col0" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_18c36_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_18c36_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_18bb2_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_18bb2_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_18c36_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_18c36_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_18c36_row4_col0" class="data row4 col0" >0.996894</td>
+      <th id="T_18bb2_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_18bb2_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_18bb2_row4_col0" class="data row4 col0" >0.996894</td>
     </tr>
     <tr>
-      <th id="T_18c36_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_18c36_row5_col0" class="data row5 col0" >0.003106</td>
+      <th id="T_18bb2_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_18bb2_row5_col0" class="data row5 col0" >0.003106</td>
     </tr>
     <tr>
-      <th id="T_18c36_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_18c36_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_18c36_row6_col0" class="data row6 col0" >0.786164</td>
+      <th id="T_18bb2_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_18bb2_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_18bb2_row6_col0" class="data row6 col0" >0.786164</td>
     </tr>
     <tr>
-      <th id="T_18c36_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_18c36_row7_col0" class="data row7 col0" >0.213836</td>
+      <th id="T_18bb2_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_18bb2_row7_col0" class="data row7 col0" >0.213836</td>
     </tr>
     <tr>
-      <th id="T_18c36_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_18c36_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_18c36_row8_col0" class="data row8 col0" >0.552358</td>
+      <th id="T_18bb2_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_18bb2_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_18bb2_row8_col0" class="data row8 col0" >0.552358</td>
     </tr>
     <tr>
-      <th id="T_18c36_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_18c36_row9_col0" class="data row9 col0" >0.447642</td>
+      <th id="T_18bb2_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_18bb2_row9_col0" class="data row9 col0" >0.447642</td>
     </tr>
     <tr>
-      <th id="T_18c36_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_18c36_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_18c36_row10_col0" class="data row10 col0" >0.022688</td>
+      <th id="T_18bb2_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_18bb2_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_18bb2_row10_col0" class="data row10 col0" >0.022688</td>
     </tr>
     <tr>
-      <th id="T_18c36_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_18c36_row11_col0" class="data row11 col0" >0.977312</td>
+      <th id="T_18bb2_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_18bb2_row11_col0" class="data row11 col0" >0.977312</td>
     </tr>
   </tbody>
 </table>
@@ -2195,13 +2196,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_f4e50" style='display:inline; margin-right:220px;'>
+<table id="T_7f996" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by Subtlety</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_f4e50_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_7f996_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2211,61 +2212,61 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_f4e50_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_f4e50_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_f4e50_row0_col0" class="data row0 col0" >78</td>
+      <th id="T_7f996_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_7f996_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_7f996_row0_col0" class="data row0 col0" >78</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_f4e50_row1_col0" class="data row1 col0" >96</td>
+      <th id="T_7f996_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_7f996_row1_col0" class="data row1 col0" >96</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_f4e50_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_f4e50_row2_col0" class="data row2 col0" >232</td>
+      <th id="T_7f996_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_7f996_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_7f996_row2_col0" class="data row2 col0" >232</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_f4e50_row3_col0" class="data row3 col0" >207</td>
+      <th id="T_7f996_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_7f996_row3_col0" class="data row3 col0" >207</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_f4e50_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_f4e50_row4_col0" class="data row4 col0" >627</td>
+      <th id="T_7f996_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_7f996_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_7f996_row4_col0" class="data row4 col0" >627</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_f4e50_row5_col0" class="data row5 col0" >337</td>
+      <th id="T_7f996_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_7f996_row5_col0" class="data row5 col0" >337</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_f4e50_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_f4e50_row6_col0" class="data row6 col0" >559</td>
+      <th id="T_7f996_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_7f996_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_7f996_row6_col0" class="data row6 col0" >559</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_f4e50_row7_col0" class="data row7 col0" >316</td>
+      <th id="T_7f996_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_7f996_row7_col0" class="data row7 col0" >316</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_f4e50_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_f4e50_row8_col0" class="data row8 col0" >613</td>
+      <th id="T_7f996_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_7f996_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_7f996_row8_col0" class="data row8 col0" >613</td>
     </tr>
     <tr>
-      <th id="T_f4e50_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_f4e50_row9_col0" class="data row9 col0" >501</td>
+      <th id="T_7f996_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_7f996_row9_col0" class="data row9 col0" >501</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_3945b" style='display:inline; margin-right:120px'>
+<table id="T_6a07d" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by Subtlety (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_3945b_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_6a07d_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2275,49 +2276,49 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_3945b_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_3945b_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_3945b_row0_col0" class="data row0 col0" >0.448276</td>
+      <th id="T_6a07d_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_6a07d_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_6a07d_row0_col0" class="data row0 col0" >0.448276</td>
     </tr>
     <tr>
-      <th id="T_3945b_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_3945b_row1_col0" class="data row1 col0" >0.551724</td>
+      <th id="T_6a07d_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_6a07d_row1_col0" class="data row1 col0" >0.551724</td>
     </tr>
     <tr>
-      <th id="T_3945b_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_3945b_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_3945b_row2_col0" class="data row2 col0" >0.528474</td>
+      <th id="T_6a07d_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_6a07d_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_6a07d_row2_col0" class="data row2 col0" >0.528474</td>
     </tr>
     <tr>
-      <th id="T_3945b_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_3945b_row3_col0" class="data row3 col0" >0.471526</td>
+      <th id="T_6a07d_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_6a07d_row3_col0" class="data row3 col0" >0.471526</td>
     </tr>
     <tr>
-      <th id="T_3945b_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_3945b_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_3945b_row4_col0" class="data row4 col0" >0.650415</td>
+      <th id="T_6a07d_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_6a07d_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_6a07d_row4_col0" class="data row4 col0" >0.650415</td>
     </tr>
     <tr>
-      <th id="T_3945b_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_3945b_row5_col0" class="data row5 col0" >0.349585</td>
+      <th id="T_6a07d_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_6a07d_row5_col0" class="data row5 col0" >0.349585</td>
     </tr>
     <tr>
-      <th id="T_3945b_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_3945b_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_3945b_row6_col0" class="data row6 col0" >0.638857</td>
+      <th id="T_6a07d_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_6a07d_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_6a07d_row6_col0" class="data row6 col0" >0.638857</td>
     </tr>
     <tr>
-      <th id="T_3945b_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_3945b_row7_col0" class="data row7 col0" >0.361143</td>
+      <th id="T_6a07d_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_6a07d_row7_col0" class="data row7 col0" >0.361143</td>
     </tr>
     <tr>
-      <th id="T_3945b_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_3945b_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_3945b_row8_col0" class="data row8 col0" >0.550269</td>
+      <th id="T_6a07d_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_6a07d_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_6a07d_row8_col0" class="data row8 col0" >0.550269</td>
     </tr>
     <tr>
-      <th id="T_3945b_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_3945b_row9_col0" class="data row9 col0" >0.449731</td>
+      <th id="T_6a07d_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_6a07d_row9_col0" class="data row9 col0" >0.449731</td>
     </tr>
   </tbody>
 </table>
@@ -2896,6 +2897,9 @@ P(y=0|X=x) = 1-\sigma(\theta^Tx)\]</div>
 <span class="eqno">(4)<a class="headerlink" href="#equation-likelihood" title="Permalink to this equation">#</a></span>\[LL(\theta) = \displaystyle_{i=0}^n y^{(i)} log\sigma(\theta^Tx^{x{(i)}}) + (1-y^{(i)})log[1-\sigma(\theta^Tx^{(i)})]\]</div>
 <p>Now that we have a function for the log-likelihood, we simply need to choose the values of theta that maximize it. Unlike linear regression, there is no closed-form way of calculating theta. Rather, we chose theta using an iterative optimization algorithm, such as gradient descent.</p>
 </section>
+<section id="support-vector-classifier">
+<h4>Support Vector Classifier<a class="headerlink" href="#support-vector-classifier" title="Permalink to this heading">#</a></h4>
+</section>
 <section id="calcification-cases">
 <h4>Calcification Cases<a class="headerlink" href="#calcification-cases" title="Permalink to this heading">#</a></h4>
 <p>Let’s load the calcification training and test sets.</p>
@@ -3015,7 +3019,9 @@ P(y=0|X=x) = 1-\sigma(\theta^Tx)\]</div>
 <p>Now, let’s use the best model to predict on the entire dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">best_gs</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">BEST_MODEL_FP</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pickle_file</span><span class="p">:</span>
+    <span class="n">best_gs</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pickle_file</span><span class="p">)</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">best_gs</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">))</span>
@@ -3023,14 +3029,15 @@ P(y=0|X=x) = 1-\sigma(\theta^Tx)\]</div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">74</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">best_gs</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">))</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7216880341880342
+              precision    recall  f1-score   support
 
-<span class="ne">NameError</span>: name &#39;best_gs&#39; is not defined
+           0       0.86      0.68      0.76      1199
+           1       0.58      0.79      0.67       673
+
+    accuracy                           0.72      1872
+   macro avg       0.72      0.74      0.72      1872
+weighted avg       0.76      0.72      0.73      1872
 </pre></div>
 </div>
 </div>
@@ -3191,6 +3198,7 @@ P(y=0|X=x) = 1-\sigma(\theta^Tx)\]</div>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-analysis">Classification Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#support-vector-classifier">Support Vector Classifier</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-cases">Calcification Cases</a></li>
 </ul>
 </li>
