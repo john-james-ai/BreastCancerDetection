@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Sunday October 1st 2023 02:15:20 pm                                                 #
+# Modified   : Monday October 2nd 2023 01:07:22 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -174,6 +174,12 @@ class CaseDataset(Dataset):
         df = self._df.loc[self._df["abnormality_type"] == "mass"]
         return df[MASS_DATA]
 
+    def plot_feature_associations(self, *args, **kwargs) -> None:
+        """Plots an association matrix showing strength (not direction) of the association between features."""
+        df = self._get_feature_association_matrix(features=FEATURES)
+        title = f"CBIS-DDSM Case Feature Association Plot\nCramer's V"  # noqa
+        self.plot.heatmap(data=df, title=title, *args, **kwargs)
+
     def plot_mass_feature_associations(self, *args, **kwargs) -> None:
         """Plots an association matrix showing strength (not direction) of the association between features."""
         df = self._get_feature_association_matrix(features=MASS_FEATURES)
@@ -214,7 +220,7 @@ class CaseDataset(Dataset):
         return self._get_most_malignant(data=mass, x=x, n=n)
 
     def summarize_morphology_by_feature(
-        self, morphology: str, by: str, figsize: tuple = (12, 4)
+        self, morphology: str, by: str, figsize: tuple = (12, 8)
     ) -> pd.DataFrame:
         """Summarizes calcification or mass morphology by a feature.
 
