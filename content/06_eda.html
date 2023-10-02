@@ -834,13 +834,19 @@ The section has the following python package dependencies:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display_html</span><span class="p">,</span> <span class="n">HTML</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">seaborn.objects</span> <span class="k">as</span> <span class="nn">so</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegressionCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span><span class="n">classification_report</span>
 
 <span class="kn">from</span> <span class="nn">bcd.data.dataset.case</span> <span class="kn">import</span> <span class="n">CaseDataset</span><span class="p">,</span> <span class="n">CALCIFICATION_DATA</span><span class="p">,</span> <span class="n">MASS_DATA</span>
 <span class="kn">from</span> <span class="nn">bcd.data.dataset.dicom</span> <span class="kn">import</span> <span class="n">DicomDataset</span>
@@ -1014,83 +1020,83 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>1402</th>
-      <td>P_01830_RIGHT_calcification_MLO_3</td>
-      <td>P_01830</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>3</td>
+      <th>501</th>
+      <td>P_00627_LEFT_calcification_CC_1</td>
+      <td>P_00627</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
       <td>PUNCTATE</td>
+      <td>SEGMENTAL</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>1</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1017</th>
+      <td>P_01307_LEFT_calcification_CC_1</td>
+      <td>P_01307</td>
+      <td>3</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>AMORPHOUS</td>
+      <td>CLUSTERED</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>2</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>P_01250_LEFT_calcification_MLO_1</td>
+      <td>P_01250</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
       <td>REGIONAL</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>2</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>865</th>
+      <td>P_01099_RIGHT_calcification_CC_3</td>
+      <td>P_01099</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>3</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>5</td>
+      <td>4</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>581</th>
-      <td>P_00735_LEFT_calcification_CC_1</td>
-      <td>P_00735</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>1</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>407</th>
-      <td>P_00530_LEFT_calcification_CC_1</td>
-      <td>P_00530</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>LINEAR</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>1</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>537</th>
-      <td>P_00666_RIGHT_calcification_MLO_3</td>
-      <td>P_00666</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>3</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>5</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1808</th>
-      <td>P_01643_RIGHT_calcification_MLO_1</td>
-      <td>P_01643</td>
+      <th>1443</th>
+      <td>P_01864_RIGHT_calcification_MLO_1</td>
+      <td>P_01864</td>
       <td>2</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>3</td>
-      <td>BENIGN</td>
-      <td>5</td>
-      <td>test</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>4</td>
+      <td>train</td>
       <td>False</td>
     </tr>
   </tbody>
@@ -1130,84 +1136,84 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>2248</th>
-      <td>P_00532_LEFT_mass_CC_1</td>
-      <td>P_00532</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>OVAL</td>
-      <td>OBSCURED</td>
-      <td>0</td>
-      <td>BENIGN</td>
+      <th>2463</th>
+      <td>P_00848_LEFT_mass_CC_1</td>
+      <td>P_00848</td>
       <td>3</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3113</th>
-      <td>P_01790_LEFT_mass_CC_1</td>
-      <td>P_01790</td>
-      <td>2</td>
       <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
-      <td>ARCHITECTURAL_DISTORTION</td>
-      <td>ILL_DEFINED</td>
+      <td>IRREGULAR-ARCHITECTURAL_DISTORTION</td>
+      <td>ILL_DEFINED-SPICULATED</td>
       <td>4</td>
       <td>MALIGNANT</td>
-      <td>2</td>
+      <td>4</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>2466</th>
-      <td>P_00849_LEFT_mass_MLO_1</td>
-      <td>P_00849</td>
-      <td>1</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>LOBULATED</td>
-      <td>MICROLOBULATED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1992</th>
-      <td>P_00160_RIGHT_mass_CC_1</td>
-      <td>P_00160</td>
-      <td>1</td>
+      <th>2516</th>
+      <td>P_00920_RIGHT_mass_CC_1</td>
+      <td>P_00920</td>
+      <td>3</td>
       <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
       <td>OVAL</td>
       <td>CIRCUMSCRIBED</td>
-      <td>3</td>
+      <td>4</td>
       <td>BENIGN</td>
       <td>5</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>3558</th>
-      <td>P_01815_RIGHT_mass_CC_1</td>
-      <td>P_01815</td>
-      <td>3</td>
+      <th>3128</th>
+      <td>P_01814_RIGHT_mass_CC_1</td>
+      <td>P_01814</td>
+      <td>4</td>
       <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
-      <td>IRREGULAR</td>
-      <td>ILL_DEFINED</td>
-      <td>4</td>
+      <td>ARCHITECTURAL_DISTORTION</td>
+      <td>OBSCURED</td>
+      <td>5</td>
       <td>MALIGNANT</td>
-      <td>1</td>
-      <td>test</td>
+      <td>4</td>
+      <td>train</td>
       <td>True</td>
+    </tr>
+    <tr>
+      <th>3001</th>
+      <td>P_01635_LEFT_mass_MLO_1</td>
+      <td>P_01635</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>ARCHITECTURAL_DISTORTION</td>
+      <td>ILL_DEFINED</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3259</th>
+      <td>P_00343_RIGHT_mass_CC_2</td>
+      <td>P_00343</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>LYMPH_NODE</td>
+      <td>SPICULATED</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>test</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -1971,13 +1977,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_bc05b" style='display:inline; margin-right:220px;'>
+<table id="T_1ca71" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by BI-RADS Assessment</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_bc05b_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_1ca71_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -1987,70 +1993,70 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_bc05b_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_bc05b_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_bc05b_row0_col0" class="data row0 col0" >177</td>
+      <th id="T_1ca71_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_1ca71_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_1ca71_row0_col0" class="data row0 col0" >177</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_bc05b_row1_col0" class="data row1 col0" >59</td>
+      <th id="T_1ca71_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_1ca71_row1_col0" class="data row1 col0" >59</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_bc05b_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_bc05b_row2_col0" class="data row2 col0" >0</td>
+      <th id="T_1ca71_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_1ca71_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_1ca71_row2_col0" class="data row2 col0" >0</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_bc05b_row3_col0" class="data row3 col0" >3</td>
+      <th id="T_1ca71_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_1ca71_row3_col0" class="data row3 col0" >3</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_bc05b_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_bc05b_row4_col0" class="data row4 col0" >642</td>
+      <th id="T_1ca71_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_1ca71_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_1ca71_row4_col0" class="data row4 col0" >642</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_bc05b_row5_col0" class="data row5 col0" >2</td>
+      <th id="T_1ca71_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_1ca71_row5_col0" class="data row5 col0" >2</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_bc05b_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_bc05b_row6_col0" class="data row6 col0" >375</td>
+      <th id="T_1ca71_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_1ca71_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_1ca71_row6_col0" class="data row6 col0" >375</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_bc05b_row7_col0" class="data row7 col0" >102</td>
+      <th id="T_1ca71_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_1ca71_row7_col0" class="data row7 col0" >102</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_bc05b_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_bc05b_row8_col0" class="data row8 col0" >902</td>
+      <th id="T_1ca71_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_1ca71_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_1ca71_row8_col0" class="data row8 col0" >902</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_bc05b_row9_col0" class="data row9 col0" >731</td>
+      <th id="T_1ca71_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_1ca71_row9_col0" class="data row9 col0" >731</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_bc05b_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_bc05b_row10_col0" class="data row10 col0" >13</td>
+      <th id="T_1ca71_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_1ca71_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_1ca71_row10_col0" class="data row10 col0" >13</td>
     </tr>
     <tr>
-      <th id="T_bc05b_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_bc05b_row11_col0" class="data row11 col0" >560</td>
+      <th id="T_1ca71_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_1ca71_row11_col0" class="data row11 col0" >560</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_be809" style='display:inline; margin-right:120px'>
+<table id="T_49718" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by BI-RADS Assessment (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_be809_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_49718_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2060,58 +2066,58 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_be809_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_be809_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_be809_row0_col0" class="data row0 col0" >0.750000</td>
+      <th id="T_49718_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_49718_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_49718_row0_col0" class="data row0 col0" >0.750000</td>
     </tr>
     <tr>
-      <th id="T_be809_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_be809_row1_col0" class="data row1 col0" >0.250000</td>
+      <th id="T_49718_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_49718_row1_col0" class="data row1 col0" >0.250000</td>
     </tr>
     <tr>
-      <th id="T_be809_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_be809_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_be809_row2_col0" class="data row2 col0" >0.000000</td>
+      <th id="T_49718_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_49718_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_49718_row2_col0" class="data row2 col0" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_be809_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_be809_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_49718_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_49718_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_be809_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_be809_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_be809_row4_col0" class="data row4 col0" >0.996894</td>
+      <th id="T_49718_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_49718_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_49718_row4_col0" class="data row4 col0" >0.996894</td>
     </tr>
     <tr>
-      <th id="T_be809_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_be809_row5_col0" class="data row5 col0" >0.003106</td>
+      <th id="T_49718_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_49718_row5_col0" class="data row5 col0" >0.003106</td>
     </tr>
     <tr>
-      <th id="T_be809_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_be809_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_be809_row6_col0" class="data row6 col0" >0.786164</td>
+      <th id="T_49718_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_49718_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_49718_row6_col0" class="data row6 col0" >0.786164</td>
     </tr>
     <tr>
-      <th id="T_be809_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_be809_row7_col0" class="data row7 col0" >0.213836</td>
+      <th id="T_49718_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_49718_row7_col0" class="data row7 col0" >0.213836</td>
     </tr>
     <tr>
-      <th id="T_be809_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_be809_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_be809_row8_col0" class="data row8 col0" >0.552358</td>
+      <th id="T_49718_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_49718_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_49718_row8_col0" class="data row8 col0" >0.552358</td>
     </tr>
     <tr>
-      <th id="T_be809_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_be809_row9_col0" class="data row9 col0" >0.447642</td>
+      <th id="T_49718_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_49718_row9_col0" class="data row9 col0" >0.447642</td>
     </tr>
     <tr>
-      <th id="T_be809_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_be809_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_be809_row10_col0" class="data row10 col0" >0.022688</td>
+      <th id="T_49718_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_49718_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_49718_row10_col0" class="data row10 col0" >0.022688</td>
     </tr>
     <tr>
-      <th id="T_be809_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_be809_row11_col0" class="data row11 col0" >0.977312</td>
+      <th id="T_49718_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_49718_row11_col0" class="data row11 col0" >0.977312</td>
     </tr>
   </tbody>
 </table>
@@ -2189,13 +2195,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_e2809" style='display:inline; margin-right:220px;'>
+<table id="T_a3f26" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by Subtlety</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_e2809_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_a3f26_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2205,61 +2211,61 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_e2809_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_e2809_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_e2809_row0_col0" class="data row0 col0" >78</td>
+      <th id="T_a3f26_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_a3f26_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_a3f26_row0_col0" class="data row0 col0" >78</td>
     </tr>
     <tr>
-      <th id="T_e2809_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_e2809_row1_col0" class="data row1 col0" >96</td>
+      <th id="T_a3f26_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_a3f26_row1_col0" class="data row1 col0" >96</td>
     </tr>
     <tr>
-      <th id="T_e2809_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_e2809_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_e2809_row2_col0" class="data row2 col0" >232</td>
+      <th id="T_a3f26_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_a3f26_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_a3f26_row2_col0" class="data row2 col0" >232</td>
     </tr>
     <tr>
-      <th id="T_e2809_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_e2809_row3_col0" class="data row3 col0" >207</td>
+      <th id="T_a3f26_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_a3f26_row3_col0" class="data row3 col0" >207</td>
     </tr>
     <tr>
-      <th id="T_e2809_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_e2809_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_e2809_row4_col0" class="data row4 col0" >627</td>
+      <th id="T_a3f26_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_a3f26_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_a3f26_row4_col0" class="data row4 col0" >627</td>
     </tr>
     <tr>
-      <th id="T_e2809_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_e2809_row5_col0" class="data row5 col0" >337</td>
+      <th id="T_a3f26_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_a3f26_row5_col0" class="data row5 col0" >337</td>
     </tr>
     <tr>
-      <th id="T_e2809_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_e2809_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_e2809_row6_col0" class="data row6 col0" >559</td>
+      <th id="T_a3f26_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_a3f26_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_a3f26_row6_col0" class="data row6 col0" >559</td>
     </tr>
     <tr>
-      <th id="T_e2809_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_e2809_row7_col0" class="data row7 col0" >316</td>
+      <th id="T_a3f26_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_a3f26_row7_col0" class="data row7 col0" >316</td>
     </tr>
     <tr>
-      <th id="T_e2809_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_e2809_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_e2809_row8_col0" class="data row8 col0" >613</td>
+      <th id="T_a3f26_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_a3f26_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_a3f26_row8_col0" class="data row8 col0" >613</td>
     </tr>
     <tr>
-      <th id="T_e2809_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_e2809_row9_col0" class="data row9 col0" >501</td>
+      <th id="T_a3f26_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_a3f26_row9_col0" class="data row9 col0" >501</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_b450b" style='display:inline; margin-right:120px'>
+<table id="T_531fb" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by Subtlety (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_b450b_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_531fb_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2269,49 +2275,49 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_b450b_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_b450b_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_b450b_row0_col0" class="data row0 col0" >0.448276</td>
+      <th id="T_531fb_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_531fb_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_531fb_row0_col0" class="data row0 col0" >0.448276</td>
     </tr>
     <tr>
-      <th id="T_b450b_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_b450b_row1_col0" class="data row1 col0" >0.551724</td>
+      <th id="T_531fb_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_531fb_row1_col0" class="data row1 col0" >0.551724</td>
     </tr>
     <tr>
-      <th id="T_b450b_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_b450b_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_b450b_row2_col0" class="data row2 col0" >0.528474</td>
+      <th id="T_531fb_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_531fb_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_531fb_row2_col0" class="data row2 col0" >0.528474</td>
     </tr>
     <tr>
-      <th id="T_b450b_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_b450b_row3_col0" class="data row3 col0" >0.471526</td>
+      <th id="T_531fb_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_531fb_row3_col0" class="data row3 col0" >0.471526</td>
     </tr>
     <tr>
-      <th id="T_b450b_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_b450b_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_b450b_row4_col0" class="data row4 col0" >0.650415</td>
+      <th id="T_531fb_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_531fb_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_531fb_row4_col0" class="data row4 col0" >0.650415</td>
     </tr>
     <tr>
-      <th id="T_b450b_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_b450b_row5_col0" class="data row5 col0" >0.349585</td>
+      <th id="T_531fb_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_531fb_row5_col0" class="data row5 col0" >0.349585</td>
     </tr>
     <tr>
-      <th id="T_b450b_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_b450b_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_b450b_row6_col0" class="data row6 col0" >0.638857</td>
+      <th id="T_531fb_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_531fb_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_531fb_row6_col0" class="data row6 col0" >0.638857</td>
     </tr>
     <tr>
-      <th id="T_b450b_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_b450b_row7_col0" class="data row7 col0" >0.361143</td>
+      <th id="T_531fb_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_531fb_row7_col0" class="data row7 col0" >0.361143</td>
     </tr>
     <tr>
-      <th id="T_b450b_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_b450b_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_b450b_row8_col0" class="data row8 col0" >0.550269</td>
+      <th id="T_531fb_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_531fb_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_531fb_row8_col0" class="data row8 col0" >0.550269</td>
     </tr>
     <tr>
-      <th id="T_b450b_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_b450b_row9_col0" class="data row9 col0" >0.449731</td>
+      <th id="T_531fb_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_531fb_row9_col0" class="data row9 col0" >0.449731</td>
     </tr>
   </tbody>
 </table>
@@ -2869,21 +2875,30 @@ Indeed, 100% of the above cases were malignant.</p></li>
 <li><p>Establish a model to predict a diagnosis, given the independent variables.</p></li>
 <li><p>Cluster the cases into groups based on morphological and other features.</p></li>
 </ol>
-<p>For objectives 1-3, we will train a series of classifiers, namely Logistic Regression, Support Vector Machines, and Random Forest classifiers, on the calcification and mass training data, and use these models to predict a diagnosis for each instance in the test set. The cluster analysis will For the cluster analysis, the K-Modes and k-Mediods algorithms to determine an optimal clustering solution.</p>
+<p>A series of classifiers will be trained on the calcification and mass training data. Then, we’ll evaluate the performance of the trained models on the test sets. The best algorithm and model will then be applied to the entire dataset to arrive at an overall prediction and a set of weights for each variate, indicating its level of importance to the classification task. Next, a clustering analysis will group mass and calcification cases to maximize intra group similarity and inter-group dissimilarity.</p>
 <section id="classification-analysis">
 <h3>Classification Analysis<a class="headerlink" href="#classification-analysis" title="Permalink to this heading">#</a></h3>
-<p>Logistic Regression, Support Vector Machines, and Random Forests classifiers will be used to identify variates, evaluate their relative importance, and predict a diagnosis given the variates.</p>
+<p>The aim of the classification analysis is to identify the variates that most influence a diagnosis, evaluate their relative importance, and predict a diagnosis given the variates. For this task, three algorithms will be evaluated: Logistic Regression, Support Vector Machines, and Random Forests. Before moving on to the classification task, let’s quickly review these classical machine learning algorithms.</p>
 <section id="logistic-regression">
 <h4>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h4>
-<p>Logistic regression is a discriminative classifier that learns to distinguish the classes (diagnose) by directly computing <span class="math notranslate nohighlight">\(P(y=1|X)\)</span>, the probability that the case is malignant, given the features in the dataset. It accomplishes this task using the logistic, or sigmoid function given by:</p>
+<p>Logistic regression is a discriminative classifier that learns to distinguish the classes (diagnose) by directly computing <span class="math notranslate nohighlight">\(P(y=1|X)\)</span>, the probability that the case is malignant, given a variate, a single multivariate relationship with regression-like coefficients indicating the relative impact of each predictor. It makes the central assumption that <span class="math notranslate nohighlight">\(P(y|X)\)</span> can be approximated as a logit, or sigmoid function applied to a linear combination of the input features. Concretely, Logistic Regression assumes the following for a single training instance.</p>
+<div class="math notranslate nohighlight" id="equation-assumption">
+<span class="eqno">(1)<a class="headerlink" href="#equation-assumption" title="Permalink to this equation">#</a></span>\[P(y=1|X=x) = \sigma(z) where z = \theta_0 + \displaystyle_i=1^m \theta_ix_i\]</div>
+<p>Where the sigmoid function is:</p>
 <div class="math notranslate nohighlight" id="equation-sigmoid">
-<span class="eqno">(1)<a class="headerlink" href="#equation-sigmoid" title="Permalink to this equation">#</a></span>\[P(y=1|X) = \frac{e^{\beta_0+\beta_1X}}{1+e^{\beta_0+\beta_1 X}}\]</div>
-<p>To make this concrete, let <span class="math notranslate nohighlight">\(y\)</span> be a discrete random variable with values in [0,1], our target. In our case, we will let zero represent a benign outcome, and one means a malignancy. Let <span class="math notranslate nohighlight">\(X\)</span> be our random <span class="math notranslate nohighlight">\(m\)</span>-vector of variates, our features.</p>
-<div class="math notranslate nohighlight">
-\[P(y=1|X) = \frac{}{}\]</div>
+<span class="eqno">(2)<a class="headerlink" href="#equation-sigmoid" title="Permalink to this equation">#</a></span>\[\sigma(z) = \frac{1}{1+e^{-z}}\]</div>
+<p>Often, this assumption is also written as:</p>
+<div class="math notranslate nohighlight" id="equation-assumption2">
+<span class="eqno">(3)<a class="headerlink" href="#equation-assumption2" title="Permalink to this equation">#</a></span>\[P(y=1|X=x) = \sigma(\theta^Tx)
+P(y=0|X=x) = 1-\sigma(\theta^Tx)\]</div>
+<p>Logistic Regression selects values of the predictors, <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the likelihood of all data. We can express the log likelihood of all data as:</p>
+<div class="math notranslate nohighlight" id="equation-likelihood">
+<span class="eqno">(4)<a class="headerlink" href="#equation-likelihood" title="Permalink to this equation">#</a></span>\[LL(\theta) = \displaystyle_{i=0}^n y^{(i)} log\sigma(\theta^Tx^{x{(i)}}) + (1-y^{(i)})log[1-\sigma(\theta^Tx^{(i)})]\]</div>
+<p>Now that we have a function for the log-likelihood, we simply need to choose the values of theta that maximize it. Unlike linear regression, there is no closed-form way of calculating theta. Rather, we chose theta using an iterative optimization algorithm, such as gradient descent.</p>
 </section>
 <section id="calcification-cases">
 <h4>Calcification Cases<a class="headerlink" href="#calcification-cases" title="Permalink to this heading">#</a></h4>
+<p>Let’s load the calcification training and test sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CALC_TRAIN_FP</span><span class="p">)</span>
@@ -2893,308 +2908,287 @@ Indeed, 100% of the above cases were malignant.</p></li>
 <span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CALC_TEST_FP</span><span class="p">)</span>
 <span class="n">X_test</span><span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">test</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s1">&#39;cancer&#39;</span><span class="p">]</span>
 <span class="n">y_test</span> <span class="o">=</span> <span class="n">test</span><span class="p">[</span><span class="s1">&#39;cancer&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Next, we’ll construct some pipelines.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">Cs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
-<span class="n">y_hat</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_test</span><span class="p">)</span>
-<span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_hat</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_lr</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">))])</span>
+<span class="n">pipe_svm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">))])</span>
+<span class="n">pipe_rf</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">))])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we set the grid search hyperparameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_lr_c</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="n">param_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="n">grid_params_lr</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;clf__penalty&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="s1">&#39;l2&#39;</span><span class="p">],</span>
+		           <span class="s1">&#39;clf__C&#39;</span><span class="p">:</span> <span class="n">param_lr_c</span><span class="p">,</span>
+		           <span class="s1">&#39;clf__solver&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;liblinear&#39;</span><span class="p">]}]</span> 
+
+<span class="n">grid_params_svm</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;clf__kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;rbf&#39;</span><span class="p">],</span> 
+		            <span class="s1">&#39;clf__C&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">}]</span>
+
+<span class="n">grid_params_rf</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;clf__criterion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">],</span>
+		          <span class="s1">&#39;clf__min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">,</span>
+		          <span class="s1">&#39;clf__max_depth&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">,</span>
+		          <span class="s1">&#39;clf__min_samples_split&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">[</span><span class="mi">1</span><span class="p">:]}]</span>                    
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we construct our GridSearchCV objects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jobs</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">gs_lr</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">pipe_lr</span><span class="p">,</span>
+			<span class="n">param_grid</span><span class="o">=</span><span class="n">grid_params_lr</span><span class="p">,</span>
+			<span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+			<span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> 
+<span class="n">gs_rf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">pipe_rf</span><span class="p">,</span>
+			<span class="n">param_grid</span><span class="o">=</span><span class="n">grid_params_rf</span><span class="p">,</span>
+			<span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+			<span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
+			<span class="n">n_jobs</span><span class="o">=</span><span class="n">jobs</span><span class="p">)</span>
+<span class="n">gs_svm</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">pipe_svm</span><span class="p">,</span>
+			<span class="n">param_grid</span><span class="o">=</span><span class="n">grid_params_svm</span><span class="p">,</span>
+			<span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+			<span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+			<span class="n">n_jobs</span><span class="o">=</span><span class="n">jobs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s build a list of GridSearchCV objects for iteration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grids</span> <span class="o">=</span> <span class="p">[</span><span class="n">gs_lr</span><span class="p">,</span> <span class="n">gs_rf</span><span class="p">,</span> <span class="n">gs_svm</span><span class="p">]</span>
+<span class="n">grid_dict</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;Logistic Regression&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Random Forest&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Support Vector Machine&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, let’s fit the GridSearchCV objects.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">BEST_MODEL_FP</span><span class="p">)</span> <span class="ow">or</span> <span class="n">MODEL_FORCE</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Performing model optimizations...&#39;</span><span class="p">)</span>
+    <span class="n">best_acc</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">best_clf</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">best_gs</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">gs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grids</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Estimator: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">grid_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>	
+        <span class="c1"># Fit grid search	</span>
+        <span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="c1"># Best params</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best params: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+        <span class="c1"># Best training data accuracy</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best training accuracy: </span><span class="si">%.3f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+        <span class="c1"># Predict on test data with best params</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="c1"># Test data accuracy of model with best params</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test set accuracy score for best params: </span><span class="si">%.3f</span><span class="s1"> &#39;</span> <span class="o">%</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+        <span class="c1"># Track best (highest test accuracy) model</span>
+        <span class="k">if</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">best_acc</span><span class="p">:</span>
+            <span class="n">best_acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+            <span class="n">best_gs</span> <span class="o">=</span> <span class="n">gs</span>
+            <span class="n">best_clf</span> <span class="o">=</span> <span class="n">idx</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Classifier with best test set accuracy: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">grid_dict</span><span class="p">[</span><span class="n">best_clf</span><span class="p">])</span>
+    
+    <span class="c1"># Save best grid search pipeline to file</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">BEST_MODEL_FP</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">BEST_MODEL_FP</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pickle_file</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">best_gs</span><span class="p">,</span> <span class="n">pickle_file</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Saved </span><span class="si">%s</span><span class="s1"> grid search pipeline to file: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">grid_dict</span><span class="p">[</span><span class="n">best_clf</span><span class="p">],</span> <span class="n">BEST_MODEL_FP</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6993865030674846
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performing model optimizations...
+
+Estimator: Logistic Regression
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+<div class="output text_html"><style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=10,
+             estimator=Pipeline(steps=[(&#x27;scaler&#x27;, StandardScaler()),
+                                       (&#x27;clf&#x27;,
+                                        LogisticRegression(random_state=5))]),
+             param_grid=[{&#x27;clf__C&#x27;: [1.0, 0.5, 0.1],
+                          &#x27;clf__penalty&#x27;: [&#x27;l1&#x27;, &#x27;l2&#x27;],
+                          &#x27;clf__solver&#x27;: [&#x27;liblinear&#x27;]}],
+             scoring=&#x27;accuracy&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">GridSearchCV</label><div class="sk-toggleable__content"><pre>GridSearchCV(cv=10,
+             estimator=Pipeline(steps=[(&#x27;scaler&#x27;, StandardScaler()),
+                                       (&#x27;clf&#x27;,
+                                        LogisticRegression(random_state=5))]),
+             param_grid=[{&#x27;clf__C&#x27;: [1.0, 0.5, 0.1],
+                          &#x27;clf__penalty&#x27;: [&#x27;l1&#x27;, &#x27;l2&#x27;],
+                          &#x27;clf__solver&#x27;: [&#x27;liblinear&#x27;]}],
+             scoring=&#x27;accuracy&#x27;)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;scaler&#x27;, StandardScaler()),
+                (&#x27;clf&#x27;, LogisticRegression(random_state=5))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(random_state=5)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best params: {&#39;clf__C&#39;: 0.1, &#39;clf__penalty&#39;: &#39;l1&#39;, &#39;clf__solver&#39;: &#39;liblinear&#39;}
+Best training accuracy: 0.685
+Test set accuracy score for best params: 0.672 
 
-           0       0.74      0.78      0.76       197
-           1       0.63      0.58      0.60       129
+Estimator: Random Forest
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">73</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Estimator: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">grid_dict</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>	
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="c1"># Fit grid search	</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># Best params</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best params: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
 
-    accuracy                           0.70       326
-   macro avg       0.68      0.68      0.68       326
-weighted avg       0.70      0.70      0.70       326
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/sklearn/base.py:1151,</span> in <span class="ni">_fit_context.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(estimator, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1144</span>     <span class="n">estimator</span><span class="o">.</span><span class="n">_validate_params</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1146</span> <span class="k">with</span> <span class="n">config_context</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1147</span>     <span class="n">skip_parameter_validation</span><span class="o">=</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1148</span>         <span class="n">prefer_skip_nested_validation</span> <span class="ow">or</span> <span class="n">global_skip_validation</span>
+<span class="g g-Whitespace">   </span><span class="mi">1149</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1150</span> <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1151</span>     <span class="k">return</span> <span class="n">fit_method</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/sklearn/model_selection/_search.py:898,</span> in <span class="ni">BaseSearchCV.fit</span><span class="nt">(self, X, y, groups, **fit_params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">892</span>     <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_results</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">893</span>         <span class="n">all_candidate_params</span><span class="p">,</span> <span class="n">n_splits</span><span class="p">,</span> <span class="n">all_out</span><span class="p">,</span> <span class="n">all_more_results</span>
+<span class="g g-Whitespace">    </span><span class="mi">894</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">896</span>     <span class="k">return</span> <span class="n">results</span>
+<span class="ne">--&gt; </span><span class="mi">898</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_search</span><span class="p">(</span><span class="n">evaluate_candidates</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">900</span> <span class="c1"># multimetric is determined here because in the case of a callable</span>
+<span class="g g-Whitespace">    </span><span class="mi">901</span> <span class="c1"># self.scoring the return type is only known after calling</span>
+<span class="g g-Whitespace">    </span><span class="mi">902</span> <span class="n">first_test_score</span> <span class="o">=</span> <span class="n">all_out</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;test_scores&quot;</span><span class="p">]</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/sklearn/model_selection/_search.py:1419,</span> in <span class="ni">GridSearchCV._run_search</span><span class="nt">(self, evaluate_candidates)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1417</span> <span class="k">def</span> <span class="nf">_run_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">evaluate_candidates</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1418</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Search all candidates in param_grid&quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">1419</span>     <span class="n">evaluate_candidates</span><span class="p">(</span><span class="n">ParameterGrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param_grid</span><span class="p">))</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/sklearn/model_selection/_search.py:845,</span> in <span class="ni">BaseSearchCV.fit.&lt;locals&gt;.evaluate_candidates</span><span class="nt">(candidate_params, cv, more_results)</span>
+<span class="g g-Whitespace">    </span><span class="mi">837</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">838</span>     <span class="nb">print</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">839</span>         <span class="s2">&quot;Fitting </span><span class="si">{0}</span><span class="s2"> folds for each of </span><span class="si">{1}</span><span class="s2"> candidates,&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">840</span>         <span class="s2">&quot; totalling </span><span class="si">{2}</span><span class="s2"> fits&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">841</span>             <span class="n">n_splits</span><span class="p">,</span> <span class="n">n_candidates</span><span class="p">,</span> <span class="n">n_candidates</span> <span class="o">*</span> <span class="n">n_splits</span>
+<span class="g g-Whitespace">    </span><span class="mi">842</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">843</span>     <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">845</span> <span class="n">out</span> <span class="o">=</span> <span class="n">parallel</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">846</span>     <span class="n">delayed</span><span class="p">(</span><span class="n">_fit_and_score</span><span class="p">)(</span>
+<span class="g g-Whitespace">    </span><span class="mi">847</span>         <span class="n">clone</span><span class="p">(</span><span class="n">base_estimator</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">848</span>         <span class="n">X</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">849</span>         <span class="n">y</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">850</span>         <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">851</span>         <span class="n">test</span><span class="o">=</span><span class="n">test</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">852</span>         <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">853</span>         <span class="n">split_progress</span><span class="o">=</span><span class="p">(</span><span class="n">split_idx</span><span class="p">,</span> <span class="n">n_splits</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">854</span>         <span class="n">candidate_progress</span><span class="o">=</span><span class="p">(</span><span class="n">cand_idx</span><span class="p">,</span> <span class="n">n_candidates</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">855</span>         <span class="o">**</span><span class="n">fit_and_score_kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">856</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">857</span>     <span class="k">for</span> <span class="p">(</span><span class="n">cand_idx</span><span class="p">,</span> <span class="n">parameters</span><span class="p">),</span> <span class="p">(</span><span class="n">split_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">858</span>         <span class="nb">enumerate</span><span class="p">(</span><span class="n">candidate_params</span><span class="p">),</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">859</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">860</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">862</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">863</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">864</span>         <span class="s2">&quot;No fits were performed. &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">865</span>         <span class="s2">&quot;Was the CV iterator empty? &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">866</span>         <span class="s2">&quot;Were there no candidates?&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">867</span>     <span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/sklearn/utils/parallel.py:65,</span> in <span class="ni">Parallel.__call__</span><span class="nt">(self, iterable)</span>
+<span class="g g-Whitespace">     </span><span class="mi">60</span> <span class="n">config</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span> <span class="n">iterable_with_config</span> <span class="o">=</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span>     <span class="p">(</span><span class="n">_with_config</span><span class="p">(</span><span class="n">delayed_func</span><span class="p">,</span> <span class="n">config</span><span class="p">),</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span>     <span class="k">for</span> <span class="n">delayed_func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="n">iterable</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">65</span> <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="n">iterable_with_config</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/joblib/parallel.py:1952,</span> in <span class="ni">Parallel.__call__</span><span class="nt">(self, iterable)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1946</span> <span class="c1"># The first item from the output is blank, but it makes the interpreter</span>
+<span class="g g-Whitespace">   </span><span class="mi">1947</span> <span class="c1"># progress until it enters the Try/Except block of the generator and</span>
+<span class="g g-Whitespace">   </span><span class="mi">1948</span> <span class="c1"># reach the first `yield` statement. This starts the aynchronous</span>
+<span class="g g-Whitespace">   </span><span class="mi">1949</span> <span class="c1"># dispatch of the tasks to the workers.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1950</span> <span class="nb">next</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1952</span> <span class="k">return</span> <span class="n">output</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_generator</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/joblib/parallel.py:1595,</span> in <span class="ni">Parallel._get_outputs</span><span class="nt">(self, iterator, pre_dispatch)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1592</span>     <span class="k">yield</span>
+<span class="g g-Whitespace">   </span><span class="mi">1594</span>     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">retrieval_context</span><span class="p">():</span>
+<span class="ne">-&gt; </span><span class="mi">1595</span>         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1597</span> <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1598</span>     <span class="c1"># The generator has been garbage collected before being fully</span>
+<span class="g g-Whitespace">   </span><span class="mi">1599</span>     <span class="c1"># consumed. This aborts the remaining tasks if possible and warn</span>
+<span class="g g-Whitespace">   </span><span class="mi">1600</span>     <span class="c1"># the user if necessary.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1601</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/joblib/parallel.py:1707,</span> in <span class="ni">Parallel._retrieve</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1702</span> <span class="c1"># If the next job is not ready for retrieval yet, we just wait for</span>
+<span class="g g-Whitespace">   </span><span class="mi">1703</span> <span class="c1"># async callbacks to progress.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1704</span> <span class="k">if</span> <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jobs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span>
+<span class="g g-Whitespace">   </span><span class="mi">1705</span>     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jobs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1706</span>         <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span> <span class="o">==</span> <span class="n">TASK_PENDING</span><span class="p">)):</span>
+<span class="ne">-&gt; </span><span class="mi">1707</span>     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1708</span>     <span class="k">continue</span>
+<span class="g g-Whitespace">   </span><span class="mi">1710</span> <span class="c1"># We need to be careful: the job list can be filling up as</span>
+<span class="g g-Whitespace">   </span><span class="mi">1711</span> <span class="c1"># we empty it and Python list are not thread-safe by</span>
+<span class="g g-Whitespace">   </span><span class="mi">1712</span> <span class="c1"># default hence the use of the lock</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
+<p>Now, let’s use the best model to predict on the entire dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_coef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">)</span>
-<span class="n">df_coef</span><span class="o">.</span><span class="n">T</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">best_gs</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7216880341880342
+              precision    recall  f1-score   support
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+           0       0.86      0.68      0.76      1199
+           1       0.58      0.79      0.67       673
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>breast_density</th>
-      <td>0.12</td>
-    </tr>
-    <tr>
-      <th>subtlety</th>
-      <td>0.07</td>
-    </tr>
-    <tr>
-      <th>LR_LEFT</th>
-      <td>-0.50</td>
-    </tr>
-    <tr>
-      <th>LR_RIGHT</th>
-      <td>-0.57</td>
-    </tr>
-    <tr>
-      <th>IV_CC</th>
-      <td>-0.53</td>
-    </tr>
-    <tr>
-      <th>IV_MLO</th>
-      <td>-0.54</td>
-    </tr>
-    <tr>
-      <th>CT_AMORPHOUS</th>
-      <td>5.21</td>
-    </tr>
-    <tr>
-      <th>CT_AMORPHOUS-PLEOMORPHIC</th>
-      <td>5.87</td>
-    </tr>
-    <tr>
-      <th>CT_AMORPHOUS-ROUND_AND_REGULAR</th>
-      <td>11.71</td>
-    </tr>
-    <tr>
-      <th>CT_COARSE</th>
-      <td>-3.97</td>
-    </tr>
-    <tr>
-      <th>CT_COARSE-LUCENT_CENTERED</th>
-      <td>-1.59</td>
-    </tr>
-    <tr>
-      <th>CT_COARSE-PLEOMORPHIC</th>
-      <td>-1.26</td>
-    </tr>
-    <tr>
-      <th>CT_COARSE-ROUND_AND_REGULAR</th>
-      <td>-1.61</td>
-    </tr>
-    <tr>
-      <th>CT_COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <td>-3.18</td>
-    </tr>
-    <tr>
-      <th>CT_DYSTROPHIC</th>
-      <td>-3.33</td>
-    </tr>
-    <tr>
-      <th>CT_EGGSHELL</th>
-      <td>-2.48</td>
-    </tr>
-    <tr>
-      <th>CT_FINE_LINEAR_BRANCHING</th>
-      <td>6.41</td>
-    </tr>
-    <tr>
-      <th>CT_LARGE_RODLIKE</th>
-      <td>-1.96</td>
-    </tr>
-    <tr>
-      <th>CT_LARGE_RODLIKE-ROUND_AND_REGULAR</th>
-      <td>-3.31</td>
-    </tr>
-    <tr>
-      <th>CT_LUCENT_CENTERED</th>
-      <td>-5.00</td>
-    </tr>
-    <tr>
-      <th>CT_LUCENT_CENTERED-PUNCTATE</th>
-      <td>-2.82</td>
-    </tr>
-    <tr>
-      <th>CT_MILK_OF_CALCIUM</th>
-      <td>-1.29</td>
-    </tr>
-    <tr>
-      <th>CT_PLEOMORPHIC</th>
-      <td>5.98</td>
-    </tr>
-    <tr>
-      <th>CT_PLEOMORPHIC-AMORPHOUS</th>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>CT_PLEOMORPHIC-FINE_LINEAR_BRANCHING</th>
-      <td>7.68</td>
-    </tr>
-    <tr>
-      <th>CT_PUNCTATE</th>
-      <td>4.39</td>
-    </tr>
-    <tr>
-      <th>CT_PUNCTATE-AMORPHOUS</th>
-      <td>-3.13</td>
-    </tr>
-    <tr>
-      <th>CT_PUNCTATE-AMORPHOUS-PLEOMORPHIC</th>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>CT_PUNCTATE-FINE_LINEAR_BRANCHING</th>
-      <td>12.44</td>
-    </tr>
-    <tr>
-      <th>CT_PUNCTATE-LUCENT_CENTERED</th>
-      <td>-2.34</td>
-    </tr>
-    <tr>
-      <th>CT_PUNCTATE-PLEOMORPHIC</th>
-      <td>5.92</td>
-    </tr>
-    <tr>
-      <th>CT_PUNCTATE-ROUND_AND_REGULAR</th>
-      <td>-2.35</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR</th>
-      <td>4.28</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-AMORPHOUS</th>
-      <td>-0.80</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-EGGSHELL</th>
-      <td>-3.46</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED</th>
-      <td>-4.23</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-DYSTROPHIC</th>
-      <td>-1.31</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-LUCENT_CENTERED-PUNCTATE</th>
-      <td>-3.17</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-PLEOMORPHIC</th>
-      <td>-2.29</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE</th>
-      <td>4.36</td>
-    </tr>
-    <tr>
-      <th>CT_ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS</th>
-      <td>-1.96</td>
-    </tr>
-    <tr>
-      <th>CT_SKIN</th>
-      <td>-1.75</td>
-    </tr>
-    <tr>
-      <th>CT_SKIN-COARSE-ROUND_AND_REGULAR</th>
-      <td>-1.08</td>
-    </tr>
-    <tr>
-      <th>CT_SKIN-PUNCTATE</th>
-      <td>-1.94</td>
-    </tr>
-    <tr>
-      <th>CT_SKIN-PUNCTATE-ROUND_AND_REGULAR</th>
-      <td>-1.91</td>
-    </tr>
-    <tr>
-      <th>CT_VASCULAR</th>
-      <td>-4.79</td>
-    </tr>
-    <tr>
-      <th>CT_VASCULAR-COARSE</th>
-      <td>-2.42</td>
-    </tr>
-    <tr>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED</th>
-      <td>-2.64</td>
-    </tr>
-    <tr>
-      <th>CT_VASCULAR-COARSE-LUCENT_CENTERED-ROUND_AND_REGULAR-PUNCTATE</th>
-      <td>-1.97</td>
-    </tr>
-    <tr>
-      <th>CD_CLUSTERED</th>
-      <td>-0.47</td>
-    </tr>
-    <tr>
-      <th>CD_CLUSTERED-LINEAR</th>
-      <td>0.41</td>
-    </tr>
-    <tr>
-      <th>CD_CLUSTERED-SEGMENTAL</th>
-      <td>-7.43</td>
-    </tr>
-    <tr>
-      <th>CD_DIFFUSELY_SCATTERED</th>
-      <td>-0.73</td>
-    </tr>
-    <tr>
-      <th>CD_LINEAR</th>
-      <td>0.69</td>
-    </tr>
-    <tr>
-      <th>CD_LINEAR-SEGMENTAL</th>
-      <td>6.27</td>
-    </tr>
-    <tr>
-      <th>CD_REGIONAL</th>
-      <td>0.27</td>
-    </tr>
-    <tr>
-      <th>CD_SEGMENTAL</th>
-      <td>-0.09</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+    accuracy                           0.72      1872
+   macro avg       0.72      0.74      0.72      1872
+weighted avg       0.76      0.72      0.73      1872
+</pre></div>
 </div>
+</div>
+</div>
+<p>The coefficients of the model indicate the importance of the feature to the prediction task. A positive value provides evidence that the instance being classified belongs to the positive or malignant class; whereas, a negative value provides evidence that the instance being classified belongs to the negative or benign class. Let’s take a look.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
-<span class="n">sklearn</span><span class="o">.</span><span class="n">__version__</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the best estimator</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">best_gs</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s1">&#39;clf&#39;</span><span class="p">]</span>
+<span class="c1"># Create a dataframe containing the coefficients from the model.</span>
+<span class="n">calc_imp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">calc_imp</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span><span class="s1">&#39;Coefficient&#39;</span><span class="p">]</span>
+<span class="c1"># Sort by the absolute value of the coefficient.</span>
+<span class="n">calc_imp</span><span class="p">[</span><span class="s1">&#39;abs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">calc_imp</span><span class="p">[</span><span class="s1">&#39;Coefficient&#39;</span><span class="p">])</span>
+<span class="n">calc_imp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;abs&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Plot the coefficients.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+<span class="n">cases</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">calc_imp</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Feature&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Coefficient&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;1.3.0&#39;
-</pre></div>
-</div>
+<img alt="../_images/b29dca80d910dd3d25a3e7ce5dd7f1eb997384a10c800661e1c7640772eff6f5.png" src="../_images/b29dca80d910dd3d25a3e7ce5dd7f1eb997384a10c800661e1c7640772eff6f5.png" />
 </div>
 </div>
 </section>
