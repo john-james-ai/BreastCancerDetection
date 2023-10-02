@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 2nd 2023 07:08:15 am                                                 #
-# Modified   : Monday October 2nd 2023 08:46:48 am                                                 #
+# Modified   : Monday October 2nd 2023 04:49:18 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -84,5 +84,5 @@ class BasePipelineBuilder(ABC):
         """Set scoring function."""
 
     @abstractmethod
-    def create_gridsearch_cv(self, *args, **kwargs) -> None:
+    def build_gridsearch_cv(self, *args, **kwargs) -> None:
         """Creates the GridSearchCV object"""
