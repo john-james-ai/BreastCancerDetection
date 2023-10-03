@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Thursday September 28th 2023 04:25:59 am                                            #
+# Modified   : Monday October 2nd 2023 11:19:53 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,8 +20,12 @@
 import sys
 import os
 import logging
+from typing import Callable
 
+import pydicom
+import matplotlib.pyplot as plt
 import pandas as pd
+from tqdm import tqdm
 
 from bcd.data.dataset import Dataset
 
@@ -51,6 +55,29 @@ DICOM_DTYPES = {
     "series_description": "str",
 }
 
+MASS_FEATURES = [
+    "cancer",
+    "abnormality_type",
+    "side",
+    "image_view",
+    "brisque",
+    "breast_density",
+    "subtlety",
+    "mass_shape",
+    "mass_margins",
+]
+CALC_FEATURES = [
+    "cancer",
+    "abnormality_type",
+    "side",
+    "image_view",
+    "brisque",
+    "breast_density",
+    "subtlety",
+    "calc_type",
+    "calc_distribution",
+]
+
 
 # ------------------------------------------------------------------------------------------------ #
 class DicomDataset(Dataset):
@@ -64,6 +91,46 @@ class DicomDataset(Dataset):
         self._filepath = os.path.abspath(filepath)
         df = pd.read_csv(self._filepath, dtype=DICOM_DTYPES)
         super().__init__(df=df)
+
+    def plot_images(
+        self,
+        condition: Callable = None,
+        n: int = 4,
+        nrows: int = 2,
+        ncols: int = 2,
+        figsize: tuple = (16, 8),
+        random_state: int = None,
+    ) -> None:
+        """Plots a sample of images the meet the designated condition.
+
+        Args:
+            condition (Callable): Lambda expression that will be used to subset the DICOM dataset.
+            n (int): The number of images to plot
+            rows (int): Number of rows to plot
+            cols (int): Number of columns to plot
+            figsize (tuple): Image width and height
+            random_state (int): Pseudo random seed.
+        """
+        n = nrows * ncols
+        fig = plt.figure(figsize=figsize)
+        # Filter data as required
+        if condition is not None:
+            df = super().subset(condition=condition)
+        else:
+            df = self._df
+        df = df.loc[df["series_description"] == "full mammogram images"]
+        df.drop_duplicates(inplace=True)
+        dfs = round(df.sample(n=n, random_state=random_state), 2)
+
+        for idx, (_, row) in enumerate(tqdm(dfs.iterrows(), total=dfs.shape[0])):
+            filepath = os.path.abspath(row["filepath"])
+            fig.add_subplot(nrows, ncols, idx + 1)
+            img = pydicom.dcmread(filepath)
+            title = self._format_title(row)
+            plt.imshow(img.pixel_array, cmap="gray_r")
+            plt.title(title)
+        plt.tight_layout()
+        plt.show()
 
     def summary(self) -> pd.DataFrame:
         """Provides a summary of the DICOM Dataset"""
@@ -80,3 +147,17 @@ class DicomDataset(Dataset):
             ]
         ]
         return df.groupby(by=["series_description"]).describe()
+
+    def _format_title(self, row: pd.Series) -> str:
+        """Formats the title for an image"""
+        if row["abnormality_type"] == "calcification":
+            features = CALC_FEATURES
+        else:
+            features = MASS_FEATURES
+
+        title = ""
+        for idx, feature in enumerate(features):
+            title += f"{feature}: {row[feature]} "
+            if idx % 3 == 0:
+                title += "\n"
+        return title
