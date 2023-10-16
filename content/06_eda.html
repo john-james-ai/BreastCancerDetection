@@ -432,81 +432,83 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-plan">Exploratory Data Analysis Plan</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-univariate-analysis">Case Data Univariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#left-or-right-side">Left or Right Side</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-type">Abnormality Type</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety">Subtlety</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment">BI-RADS Assessment</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape">Mass Shape</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins">Mass Margins</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer">Cancer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-case-univariate-analysis">Summary CBIS-DDSM Case Univariate Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-exploratory-data-analysis">Case Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-univariate-analysis">Case Univariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-or-right-side">Left or Right Side</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-type">Abnormality Type</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety">Subtlety</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment">BI-RADS Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape">Mass Shape</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins">Mass Margins</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer">Cancer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-case-univariate-analysis">Summary CBIS-DDSM Case Univariate Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-bivariate-analysis">Case Data Bivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-variable-association-analysis">Bivariate Target Variable Association Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast-density">Cancer Diagnosis by Breast Density</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast">Cancer Diagnosis by Breast</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-image-view">Cancer by Image View</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-abnormality-type">Cancer by Abnormality Type</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment-and-cancer">BI-RADS Assessment and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety-and-cancer">Subtlety and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type-and-cancer">Calcification Type and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Calcification Distribution</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-and-cancer">Mass Shape and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins-and-cancer">Mass Margins and Cancer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-bivariate-analysis">Case Bivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-variable-association-analysis">Bivariate Target Variable Association Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast-density">Cancer Diagnosis by Breast Density</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast">Cancer Diagnosis by Breast</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-image-view">Cancer by Image View</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-abnormality-type">Cancer by Abnormality Type</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment-and-cancer">BI-RADS Assessment and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety-and-cancer">Subtlety and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type-and-cancer">Calcification Type and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Calcification Distribution</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-and-cancer">Mass Shape and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins-and-cancer">Mass Margins and Cancer</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-feature-association-analysis">Bivariate Feature Association Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-feature-bivariate-analysis">Calcification Feature Bivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-large-effect">Calcification Variables with Large Effect</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type-and-assessment">Calcification Type and Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#case-bivariate-feature-association-analysis">Case Bivariate Feature Association Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-feature-bivariate-analysis">Calcification Feature Bivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-large-effect">Calcification Variables with Large Effect</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-moderate-effect">Calcification Variables with Moderate Effect</a></li>
 </ul>
 </li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-moderate-effect">Calcification Variables with Moderate Effect</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-feature-bivariate-analysis">Mass Feature Bivariate Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-feature-bivariate-analysis">Mass Feature Bivariate Analysis</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-bivariate-analysis">Summary CBIS-DDSM Bivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-association-analysis-summary">Bivariate Target Association Analysis Summary</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-feature-association-analysis-summary">Bivariate Feature Association Analysis Summary</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-pipelines">Build Pipelines</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-multivariate-analysis">Calcification Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-execute-model-selection">Build and Execute Model Selection</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-results">Prediction Results</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variable-importance">Calcification Variable Importance</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-multivariate-analysis">Mass Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Load Data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Build and Execute Model Selection</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Prediction Results</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-variable-importance">Mass Variable Importance</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-case-bivariate-analysis">Summary CBIS-DDSM Case Bivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-association-analysis-summary">Bivariate Target Association Analysis Summary</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-feature-association-analysis-summary">Bivariate Feature Association Analysis Summary</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-data">DICOM Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata">DICOM Metadata</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-pipelines">Build Pipelines</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-multivariate-analysis">Calcification Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-execute-model-selection">Build and Execute Model Selection</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-results">Prediction Results</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variable-importance">Calcification Variable Importance</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-multivariate-analysis">Mass Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Load Data</a></li>
+</ul>
+</li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#photometric-interpretation-samples-per-pixel-and-bit-depth">Photometric Interpretation, Samples per Pixel and Bit Depth</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-height-width-size-and-aspect-ratio">DICOM Image Height, Width, Size, and Aspect Ratio</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-pixel-values">DICOM Image Pixel Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-pixel-values">DICOM Image Pixel Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Build and Execute Model Selection</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Prediction Results</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-variable-importance">Mass Variable Importance</a></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata-exploratory-data-analysis">DICOM Metadata Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Photometric Interpretation, Samples per Pixel and Bit Depth</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">DICOM Image Height, Width, Size, and Aspect Ratio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">DICOM Image Pixel Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-quality">DICOM Image Quality</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-images">DICOM Images</a></li>
 </ul>
@@ -560,7 +562,7 @@ document.write(`
 <tr class="row-odd"><td><p>2</p></td>
 <td><p>breast_density</p></td>
 <td><p>Discrete</p></td>
-<td><p>BI-RADS overall assessment of the volume of attenuating tissues in the   breast.</p></td>
+<td><p>BI-RADS overall assessment of the volume of attenuating tissues in the breast.</p></td>
 <td><p>Integer range [1,4]</p></td>
 </tr>
 <tr class="row-even"><td><p>3</p></td>
@@ -578,7 +580,7 @@ document.write(`
 <tr class="row-even"><td><p>5</p></td>
 <td><p>abnormality_id</p></td>
 <td><p>Discrete</p></td>
-<td><p>Number of abnormality for the patient.</p></td>
+<td><p>Number of abnormalities for the patient.</p></td>
 <td><p>Integer</p></td>
 </tr>
 <tr class="row-odd"><td><p>6</p></td>
@@ -596,7 +598,7 @@ document.write(`
 <tr class="row-odd"><td><p>8</p></td>
 <td><p>calc_distribution</p></td>
 <td><p>Nominal</p></td>
-<td><p>The arrangement of the calcifications inside the breast and, relative to   the probability of malignancy. (where applicable)</p></td>
+<td><p>The arrangement of the calcifications inside the breast and, relative to the probability of malignancy. (where applicable)</p></td>
 <td><p>See appendix</p></td>
 </tr>
 <tr class="row-even"><td><p>9</p></td>
@@ -739,12 +741,12 @@ document.write(`
 <tr class="row-odd"><td><p>16</p></td>
 <td><p>brisque</p></td>
 <td><p>Continuous</p></td>
-<td><p>BRISQUE score indicating overall quality of the image.</p></td>
+<td><p>BRISQUE score indicating the overall quality of the image.</p></td>
 </tr>
 <tr class="row-even"><td><p>17</p></td>
 <td><p>series_description</p></td>
 <td><p>Nominal</p></td>
-<td><p>Whether the series contains full mammography, ROI mask or cropped images.</p></td>
+<td><p>Whether the series contains full mammography, ROI mask, or cropped images.</p></td>
 </tr>
 </tbody>
 </table>
@@ -800,48 +802,12 @@ document.write(`
 </section>
 <section id="exploratory-data-analysis-plan">
 <h3>Exploratory Data Analysis Plan<a class="headerlink" href="#exploratory-data-analysis-plan" title="Permalink to this heading">#</a></h3>
-<p>The EDA will be conducted in six stages:</p>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Stage</p></th>
-<th class="head"><p>Dataset</p></th>
-<th class="head"><p>Analysis</p></th>
-<th class="head"><p>Focus</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>1</p></td>
-<td><p>Case</p></td>
-<td><p>Univariate</p></td>
-<td><p>Explore descriptive statistics for each variable in the datasets   separately.</p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
-<td><p>Case</p></td>
-<td><p>Bivariate</p></td>
-<td><p>Analyze pairwise relationships between variables.</p></td>
-</tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Case</p></td>
-<td><p>Multivariate</p></td>
-<td><p>Evaluate the relationships among multiple variables (more than two) and   patterns.</p></td>
-</tr>
-<tr class="row-odd"><td><p>4</p></td>
-<td><p>DICOM Metadata</p></td>
-<td><p>Quality</p></td>
-<td><p>Assessment of overall quality of images.</p></td>
-</tr>
-<tr class="row-even"><td><p>5</p></td>
-<td><p>DICOM Metadata</p></td>
-<td><p>Structure</p></td>
-<td><p>Analyze the image sizes, shape and pixel values.</p></td>
-</tr>
-<tr class="row-odd"><td><p>6</p></td>
-<td><p>DICOM Images</p></td>
-<td><p>Visual</p></td>
-<td><p>Conduct visual analysis of various abnormalities, densities, and   diagnoses.</p></td>
-</tr>
-</tbody>
-</table>
+<p>The EDA will be conducted in three stages:</p>
+<ol class="arabic simple">
+<li><p><strong>Case Exploratory Data Analysis</strong>: Univariate, Bivariate and Multivariate EDA</p></li>
+<li><p><strong>DICOM Metadata Exploratory Data Analysis</strong>: DICOM Image and Quality Metadata EDA</p></li>
+<li><p><strong>DICOM Image Exploratory Data Analysis</strong>: Visual Case EDA</p></li>
+</ol>
 <p><strong>Preliminaries</strong>
 The section has the following python package dependencies:</p>
 <ul class="simple">
@@ -889,8 +855,11 @@ The section has the following python package dependencies:</p>
 </div>
 </section>
 </section>
-<section id="case-data-univariate-analysis">
-<h2>Case Data Univariate Analysis<a class="headerlink" href="#case-data-univariate-analysis" title="Permalink to this heading">#</a></h2>
+<section id="case-exploratory-data-analysis">
+<h2>Case Exploratory Data Analysis<a class="headerlink" href="#case-exploratory-data-analysis" title="Permalink to this heading">#</a></h2>
+<p>This stage will comprise univariate, bivariate, and multivariate analyses of the case data.</p>
+<section id="case-univariate-analysis">
+<h3>Case Univariate Analysis<a class="headerlink" href="#case-univariate-analysis" title="Permalink to this heading">#</a></h3>
 <p>Let’s get an overall sense of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1039,79 +1008,79 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>441</th>
-      <td>P_00557_RIGHT_calcification_CC_1</td>
-      <td>P_00557</td>
-      <td>2</td>
+      <th>623</th>
+      <td>P_00780_RIGHT_calcification_CC_5</td>
+      <td>P_00780</td>
+      <td>1</td>
       <td>RIGHT</td>
+      <td>CC</td>
+      <td>5</td>
+      <td>FINE_LINEAR_BRANCHING</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>4</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>376</th>
+      <td>P_00505_RIGHT_calcification_MLO_2</td>
+      <td>P_00505</td>
+      <td>1</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1545</th>
+      <td>P_02584_LEFT_calcification_MLO_1</td>
+      <td>P_02584</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
+      <td>SEGMENTAL</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1101</th>
+      <td>P_01409_LEFT_calcification_CC_1</td>
+      <td>P_01409</td>
+      <td>2</td>
+      <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
       <td>PLEOMORPHIC</td>
       <td>CLUSTERED</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>4</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>481</th>
-      <td>P_00597_LEFT_calcification_MLO_1</td>
-      <td>P_00597</td>
-      <td>4</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>ROUND_AND_REGULAR</td>
-      <td>CLUSTERED</td>
-      <td>3</td>
       <td>BENIGN</td>
-      <td>5</td>
+      <td>2</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>1096</th>
-      <td>P_01408_LEFT_calcification_MLO_1</td>
-      <td>P_01408</td>
+      <th>1646</th>
+      <td>P_00589_LEFT_calcification_MLO_1</td>
+      <td>P_00589</td>
       <td>3</td>
       <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>LARGE_RODLIKE-ROUND_AND_REGULAR</td>
-      <td>REGIONAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>5</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>582</th>
-      <td>P_00735_LEFT_calcification_MLO_1</td>
-      <td>P_00735</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
+      <td>AMORPHOUS</td>
       <td>CLUSTERED</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>1</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1825</th>
-      <td>P_01820_LEFT_calcification_MLO_1</td>
-      <td>P_01820</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>LINEAR</td>
       <td>4</td>
       <td>BENIGN</td>
       <td>1</td>
@@ -1155,62 +1124,30 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>2776</th>
-      <td>P_01281_RIGHT_mass_MLO_1</td>
-      <td>P_01281</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>FOCAL_ASYMMETRIC_DENSITY</td>
-      <td>ILL_DEFINED</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>2</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2600</th>
-      <td>P_01054_RIGHT_mass_MLO_1</td>
-      <td>P_01054</td>
-      <td>1</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>IRREGULAR</td>
-      <td>ILL_DEFINED</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>3461</th>
-      <td>P_01331_LEFT_mass_CC_1</td>
-      <td>P_01331</td>
+      <th>2543</th>
+      <td>P_00970_LEFT_mass_MLO_1</td>
+      <td>P_00970</td>
       <td>2</td>
       <td>LEFT</td>
-      <td>CC</td>
+      <td>MLO</td>
       <td>1</td>
-      <td>IRREGULAR</td>
-      <td>SPICULATED</td>
-      <td>3</td>
+      <td>ROUND</td>
+      <td>CIRCUMSCRIBED</td>
+      <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>3</td>
-      <td>test</td>
+      <td>4</td>
+      <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>2830</th>
-      <td>P_01374_RIGHT_mass_CC_1</td>
-      <td>P_01374</td>
-      <td>1</td>
+      <th>3172</th>
+      <td>P_01888_RIGHT_mass_MLO_1</td>
+      <td>P_01888</td>
+      <td>2</td>
       <td>RIGHT</td>
-      <td>CC</td>
+      <td>MLO</td>
       <td>1</td>
-      <td>ROUND</td>
+      <td>IRREGULAR</td>
       <td>SPICULATED</td>
       <td>5</td>
       <td>MALIGNANT</td>
@@ -1219,18 +1156,50 @@ The section has the following python package dependencies:</p>
       <td>True</td>
     </tr>
     <tr>
-      <th>2111</th>
-      <td>P_00351_LEFT_mass_CC_1</td>
-      <td>P_00351</td>
+      <th>2308</th>
+      <td>P_00630_LEFT_mass_MLO_1</td>
+      <td>P_00630</td>
       <td>2</td>
       <td>LEFT</td>
-      <td>CC</td>
+      <td>MLO</td>
       <td>1</td>
       <td>OVAL</td>
+      <td>MICROLOBULATED</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2017</th>
+      <td>P_00208_RIGHT_mass_MLO_3</td>
+      <td>P_00208</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>LOBULATED</td>
       <td>CIRCUMSCRIBED</td>
       <td>3</td>
       <td>BENIGN</td>
       <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2387</th>
+      <td>P_00733_RIGHT_mass_MLO_1</td>
+      <td>P_00733</td>
+      <td>1</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>LOBULATED</td>
+      <td>ILL_DEFINED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
       <td>train</td>
       <td>False</td>
     </tr>
@@ -1256,7 +1225,7 @@ The section has the following python package dependencies:</p>
 </ul>
 <p>And we begin…</p>
 <section id="breast-density">
-<h3>Breast Density<a class="headerlink" href="#breast-density" title="Permalink to this heading">#</a></h3>
+<h4>Breast Density<a class="headerlink" href="#breast-density" title="Permalink to this heading">#</a></h4>
 <p>Radiologists classify breast density using a 4-level density scale {cite}BreastImagingReporting:</p>
 <ol class="arabic simple">
 <li><p>Almost entirely fatty</p></li>
@@ -1301,7 +1270,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The distribution of breast density in the CBIS-DDSM approximates a normal distribution, to the extent four points make a distribution.</p>
 </section>
 <section id="left-or-right-side">
-<h3>Left or Right Side<a class="headerlink" href="#left-or-right-side" title="Permalink to this heading">#</a></h3>
+<h4>Left or Right Side<a class="headerlink" href="#left-or-right-side" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
@@ -1316,7 +1285,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The dataset is approximately balanced with respect to left or right breasts.</p>
 </section>
 <section id="image-view">
-<h3>Image View<a class="headerlink" href="#image-view" title="Permalink to this heading">#</a></h3>
+<h4>Image View<a class="headerlink" href="#image-view" title="Permalink to this heading">#</a></h4>
 <p>CBIS-DDSM contains digital mammography images in two different views: cranial caudal (CC) and mediolateral oblique (MLO). The CC view is taken from above the breast; whereas, the MLO view is taken from the center of the breast outward.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1332,7 +1301,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>Slightly greater number of MLO views; however, the dataset has a reasonable balance of image views.</p>
 </section>
 <section id="abnormality-id">
-<h3>Abnormality Id<a class="headerlink" href="#abnormality-id" title="Permalink to this heading">#</a></h3>
+<h4>Abnormality Id<a class="headerlink" href="#abnormality-id" title="Permalink to this heading">#</a></h4>
 <p>The abnormality id is a sequence number assigned to each abnormality for a patient.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1348,7 +1317,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The vast majority of patients present with a single abnormality; although, a considerable number have two or more.</p>
 </section>
 <section id="abnormality-type">
-<h3>Abnormality Type<a class="headerlink" href="#abnormality-type" title="Permalink to this heading">#</a></h3>
+<h4>Abnormality Type<a class="headerlink" href="#abnormality-type" title="Permalink to this heading">#</a></h4>
 <p>CBIS-DDSM contains two abnormality types: calcification and mass.</p>
 <p>Calcifications, common on mammograms, especially after age 50, are calcium deposits within the breast tissue. Typically benign, calcifications show up as either macrocalcifications or microcalcifications. Macrocalcifications appear as large white dots or dashes which are almost always noncancerous, requiring no further testing or follow-up. Microcalcifications show up as fine, white specks, similar to grains of salt. Usually noncancerous, but certain patterns can be an early sign of cancer.</p>
 <p>Masses are also common, particularly among women of reproductive age. For the 25% of women affected by breast disease in their lifetime, the vast majority will present initially with a new breast mass in the primary care setting. Breast masses have a wide range of causes, from physiological adenosis to highly aggressive malignancy.</p>
@@ -1366,7 +1335,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </section>
 <section id="subtlety">
-<h3>Subtlety<a class="headerlink" href="#subtlety" title="Permalink to this heading">#</a></h3>
+<h4>Subtlety<a class="headerlink" href="#subtlety" title="Permalink to this heading">#</a></h4>
 <p>Subtlety is a measure of the degree to which a particular case is difficult to diagnose. Values range from 1 (highly subtle) to 5 (obvious).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1382,7 +1351,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>CBIS-DDSM cases cover the range from highly subtle to obvious, trending towards a greater number of cases considered moderately subtle to obvious.</p>
 </section>
 <section id="bi-rads-assessment">
-<h3>BI-RADS Assessment<a class="headerlink" href="#bi-rads-assessment" title="Permalink to this heading">#</a></h3>
+<h4>BI-RADS Assessment<a class="headerlink" href="#bi-rads-assessment" title="Permalink to this heading">#</a></h4>
 <p>A BI-RADS assessment an overall assessment of the imaging and has size categories:</p>
 <table class="table">
 <thead>
@@ -1427,7 +1396,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </section>
 <section id="calcification-type">
-<h3>Calcification Type<a class="headerlink" href="#calcification-type" title="Permalink to this heading">#</a></h3>
+<h4>Calcification Type<a class="headerlink" href="#calcification-type" title="Permalink to this heading">#</a></h4>
 <p>Calcification type describes the morphology of a case and is the most important factor in the differentiation between benign and malignant cases. There are over 40 different categories of calc_type in the dataset; yet, the some of the main categories are:</p>
 <table class="table">
 <thead>
@@ -1514,7 +1483,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The vast majority of calcification types are pleomorphic, amorphous, and lucent-centered.</p>
 </section>
 <section id="calcification-distribution">
-<h3>Calcification Distribution<a class="headerlink" href="#calcification-distribution" title="Permalink to this heading">#</a></h3>
+<h4>Calcification Distribution<a class="headerlink" href="#calcification-distribution" title="Permalink to this heading">#</a></h4>
 <p>Calcification distribution refers to the arrangement of the calcifications inside the breast. BI-RADS describes the following categories of calcification distribution:</p>
 <ol class="arabic simple">
 <li><p>Diffuse or Scattered: Calcifications throughout the whole breast.</p></li>
@@ -1535,7 +1504,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </section>
 <section id="mass-shape">
-<h3>Mass Shape<a class="headerlink" href="#mass-shape" title="Permalink to this heading">#</a></h3>
+<h4>Mass Shape<a class="headerlink" href="#mass-shape" title="Permalink to this heading">#</a></h4>
 <p>The BI-RADS lexicon defines four mass shapes:</p>
 <ol class="arabic simple">
 <li><p>Round</p></li>
@@ -1558,7 +1527,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>Most mass cases have lobulated, irregular, oval or round shapes.</p>
 </section>
 <section id="mass-margins">
-<h3>Mass Margins<a class="headerlink" href="#mass-margins" title="Permalink to this heading">#</a></h3>
+<h4>Mass Margins<a class="headerlink" href="#mass-margins" title="Permalink to this heading">#</a></h4>
 <p>A feature that separates the mass from the adjacent breast parenchyma. Mass margins can be:</p>
 <ol class="arabic simple">
 <li><p>Circumscribed: Low probability of malignancy.</p></li>
@@ -1581,7 +1550,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>Circumscribed, ill-defined, obscured and microlobulated are the most frequently observed mass margins in this dataset.</p>
 </section>
 <section id="pathology">
-<h3>Pathology<a class="headerlink" href="#pathology" title="Permalink to this heading">#</a></h3>
+<h4>Pathology<a class="headerlink" href="#pathology" title="Permalink to this heading">#</a></h4>
 <p>The dataset distinguishes three outcomes: malignant, benign, and benign without callback. The latter indicates that the region may be suspicious, and should be monitored, but no further investigation is required.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1597,7 +1566,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The majority of cases are benign; although, benign without callback represents a considerable proportion of the cases.</p>
 </section>
 <section id="cancer">
-<h3>Cancer<a class="headerlink" href="#cancer" title="Permalink to this heading">#</a></h3>
+<h4>Cancer<a class="headerlink" href="#cancer" title="Permalink to this heading">#</a></h4>
 <p>Here, we collapse BENIGN and BENIGN_WITHOUT_CALLBACK into a single category.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1612,7 +1581,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </section>
 <section id="summary-cbis-ddsm-case-univariate-analysis">
-<h3>Summary CBIS-DDSM Case Univariate Analysis<a class="headerlink" href="#summary-cbis-ddsm-case-univariate-analysis" title="Permalink to this heading">#</a></h3>
+<h4>Summary CBIS-DDSM Case Univariate Analysis<a class="headerlink" href="#summary-cbis-ddsm-case-univariate-analysis" title="Permalink to this heading">#</a></h4>
 <p>Several observations can be made at this stage.</p>
 <ol class="arabic simple">
 <li><p>The CBIS-DDSM is well-balanced with respect to breast density, morphology, subtlety, BI-RADS assessment, and pathology.</p></li>
@@ -1629,8 +1598,8 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>Next up, bivariate analysis.</p>
 </section>
 </section>
-<section id="case-data-bivariate-analysis">
-<h2>Case Data Bivariate Analysis<a class="headerlink" href="#case-data-bivariate-analysis" title="Permalink to this heading">#</a></h2>
+<section id="case-bivariate-analysis">
+<h3>Case Bivariate Analysis<a class="headerlink" href="#case-bivariate-analysis" title="Permalink to this heading">#</a></h3>
 <p>This bivariate analysis will comprise a dependency analysis, and an inter-dependence analysis.  The former assesses the degree to which a cancer diagnosis depends upon the values of the explanatory variables, such as breast density, type and distribution of calcifications, and the shape and margins of masses. The inter-dependence analysis explores the association between two independent variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1640,9 +1609,9 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <section id="bivariate-target-variable-association-analysis">
-<h3>Bivariate Target Variable Association Analysis<a class="headerlink" href="#bivariate-target-variable-association-analysis" title="Permalink to this heading">#</a></h3>
+<h4>Bivariate Target Variable Association Analysis<a class="headerlink" href="#bivariate-target-variable-association-analysis" title="Permalink to this heading">#</a></h4>
 <section id="cancer-diagnosis-by-breast-density">
-<h4>Cancer Diagnosis by Breast Density<a class="headerlink" href="#cancer-diagnosis-by-breast-density" title="Permalink to this heading">#</a></h4>
+<h5>Cancer Diagnosis by Breast Density<a class="headerlink" href="#cancer-diagnosis-by-breast-density" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;breast_density&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cancer&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Bar</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Count</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Stack</span><span class="p">())</span><span class="o">.</span><span class="n">theme</span><span class="p">({</span><span class="o">**</span><span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">),</span> <span class="s2">&quot;grid.linestyle&quot;</span><span class="p">:</span> <span class="s2">&quot;:&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Diagnosis by Breast Density&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
@@ -1690,7 +1659,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The Kendall’s Tau test measuring the association between breast density and malignancy indicated a non-significant association of weak effect, (<span class="math notranslate nohighlight">\(\phi_\tau\)</span> = 0.01, p = 0.54).</p>
 </section>
 <section id="cancer-diagnosis-by-breast">
-<h4>Cancer Diagnosis by Breast<a class="headerlink" href="#cancer-diagnosis-by-breast" title="Permalink to this heading">#</a></h4>
+<h5>Cancer Diagnosis by Breast<a class="headerlink" href="#cancer-diagnosis-by-breast" title="Permalink to this heading">#</a></h5>
 <p>A 2022 study published in Nature <span id="id3">[<a class="reference internal" href="99_references.html#id308" title="Yara Abdou, Medhavi Gupta, Mariko Asaoka, Kristopher Attwood, Opyrchal Mateusz, Shipra Gandhi, and Kazuaki Takabe. Left sided breast cancer is associated with aggressive biology and worse outcomes than right sided breast cancer. Scientific Reports, 12(1):13377, August 2022. URL: https://www.nature.com/articles/s41598-022-16749-4 (visited on 2023-09-29), doi:10.1038/s41598-022-16749-4.">3</a>]</span> suggests that breast cancer is slightly more prevalent on the left side of the body than it is on the right. Do the CBIS-DDSM data support this finding?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1731,7 +1700,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The chi-square test above, indicates a non-significant association of negligible effect between breast and diagnosis, (<span class="math notranslate nohighlight">\(X^2\)</span> (1,n=3566)=2.97 p=0.08, <span class="math notranslate nohighlight">\(\phi\)</span>=.03).</p>
 </section>
 <section id="cancer-by-image-view">
-<h4>Cancer by Image View<a class="headerlink" href="#cancer-by-image-view" title="Permalink to this heading">#</a></h4>
+<h5>Cancer by Image View<a class="headerlink" href="#cancer-by-image-view" title="Permalink to this heading">#</a></h5>
 <p>A study published in RSNA Journals <span id="id4">[<a class="reference internal" href="99_references.html#id309" title="Katrina E. Korhonen, Emily F. Conant, Eric A. Cohen, Marie Synnestvedt, Elizabeth S. McDonald, and Susan P. Weinstein. Breast Cancer Conspicuity on Simultaneously Acquired Digital Mammographic Images versus Digital Breast Tomosynthesis Images. Radiology, 292(1):69–76, July 2019. URL: http://pubs.rsna.org/doi/10.1148/radiol.2019182027 (visited on 2023-09-29), doi:10.1148/radiol.2019182027.">4</a>]</span> analyzed breast cancer conspicuity by view and determined that cancers were more likely to be high conspicuity in the craniocaudal (CC) than the mediolateral oblique (MLO) view.  Let’s see what our data suggest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1829,7 +1798,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The chi-square test above, indicates a non-significant association of negligible effect between image view and diagnosis, (<span class="math notranslate nohighlight">\(X^2\)</span> (1,n=3566)=0.007 p=0.93, <span class="math notranslate nohighlight">\(\phi\)</span>=.002).</p>
 </section>
 <section id="cancer-by-abnormality-type">
-<h4>Cancer by Abnormality Type<a class="headerlink" href="#cancer-by-abnormality-type" title="Permalink to this heading">#</a></h4>
+<h5>Cancer by Abnormality Type<a class="headerlink" href="#cancer-by-abnormality-type" title="Permalink to this heading">#</a></h5>
 <p>Is abnormality type an indicator of malignancy?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1927,7 +1896,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The chi-square test above, indicates a significant association of small effect between abnormality type and diagnosis, (<span class="math notranslate nohighlight">\(X^2\)</span> (1,n=3566)=38.85 p&lt;0.01, <span class="math notranslate nohighlight">\(\phi\)</span>=.10). More malignancies were diagnosed among the mass cases, compared to calcifications (54% vs 46%).</p>
 </section>
 <section id="bi-rads-assessment-and-cancer">
-<h4>BI-RADS Assessment and Cancer<a class="headerlink" href="#bi-rads-assessment-and-cancer" title="Permalink to this heading">#</a></h4>
+<h5>BI-RADS Assessment and Cancer<a class="headerlink" href="#bi-rads-assessment-and-cancer" title="Permalink to this heading">#</a></h5>
 <p>The BI-RADS assessment is an overall summary of the mammography report and has seven categories.</p>
 <table class="table">
 <thead>
@@ -1996,13 +1965,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_b9f63" style='display:inline; margin-right:220px;'>
+<table id="T_040ff" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by BI-RADS Assessment</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_b9f63_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_040ff_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2012,70 +1981,70 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_b9f63_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_b9f63_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_b9f63_row0_col0" class="data row0 col0" >177</td>
+      <th id="T_040ff_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_040ff_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_040ff_row0_col0" class="data row0 col0" >177</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_b9f63_row1_col0" class="data row1 col0" >59</td>
+      <th id="T_040ff_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_040ff_row1_col0" class="data row1 col0" >59</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_b9f63_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_b9f63_row2_col0" class="data row2 col0" >0</td>
+      <th id="T_040ff_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_040ff_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_040ff_row2_col0" class="data row2 col0" >0</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_b9f63_row3_col0" class="data row3 col0" >3</td>
+      <th id="T_040ff_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_040ff_row3_col0" class="data row3 col0" >3</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_b9f63_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_b9f63_row4_col0" class="data row4 col0" >642</td>
+      <th id="T_040ff_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_040ff_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_040ff_row4_col0" class="data row4 col0" >642</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_b9f63_row5_col0" class="data row5 col0" >2</td>
+      <th id="T_040ff_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_040ff_row5_col0" class="data row5 col0" >2</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_b9f63_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_b9f63_row6_col0" class="data row6 col0" >375</td>
+      <th id="T_040ff_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_040ff_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_040ff_row6_col0" class="data row6 col0" >375</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_b9f63_row7_col0" class="data row7 col0" >102</td>
+      <th id="T_040ff_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_040ff_row7_col0" class="data row7 col0" >102</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_b9f63_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_b9f63_row8_col0" class="data row8 col0" >902</td>
+      <th id="T_040ff_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_040ff_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_040ff_row8_col0" class="data row8 col0" >902</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_b9f63_row9_col0" class="data row9 col0" >731</td>
+      <th id="T_040ff_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_040ff_row9_col0" class="data row9 col0" >731</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_b9f63_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_b9f63_row10_col0" class="data row10 col0" >13</td>
+      <th id="T_040ff_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_040ff_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_040ff_row10_col0" class="data row10 col0" >13</td>
     </tr>
     <tr>
-      <th id="T_b9f63_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_b9f63_row11_col0" class="data row11 col0" >560</td>
+      <th id="T_040ff_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_040ff_row11_col0" class="data row11 col0" >560</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_1deb4" style='display:inline; margin-right:120px'>
+<table id="T_ead9f" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by BI-RADS Assessment (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_1deb4_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_ead9f_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2085,58 +2054,58 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_1deb4_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_1deb4_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_1deb4_row0_col0" class="data row0 col0" >0.750000</td>
+      <th id="T_ead9f_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_ead9f_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_ead9f_row0_col0" class="data row0 col0" >0.750000</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_1deb4_row1_col0" class="data row1 col0" >0.250000</td>
+      <th id="T_ead9f_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_ead9f_row1_col0" class="data row1 col0" >0.250000</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_1deb4_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_1deb4_row2_col0" class="data row2 col0" >0.000000</td>
+      <th id="T_ead9f_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_ead9f_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_ead9f_row2_col0" class="data row2 col0" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_1deb4_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_ead9f_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_ead9f_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_1deb4_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_1deb4_row4_col0" class="data row4 col0" >0.996894</td>
+      <th id="T_ead9f_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_ead9f_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_ead9f_row4_col0" class="data row4 col0" >0.996894</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_1deb4_row5_col0" class="data row5 col0" >0.003106</td>
+      <th id="T_ead9f_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_ead9f_row5_col0" class="data row5 col0" >0.003106</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_1deb4_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_1deb4_row6_col0" class="data row6 col0" >0.786164</td>
+      <th id="T_ead9f_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_ead9f_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_ead9f_row6_col0" class="data row6 col0" >0.786164</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_1deb4_row7_col0" class="data row7 col0" >0.213836</td>
+      <th id="T_ead9f_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_ead9f_row7_col0" class="data row7 col0" >0.213836</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_1deb4_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_1deb4_row8_col0" class="data row8 col0" >0.552358</td>
+      <th id="T_ead9f_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_ead9f_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_ead9f_row8_col0" class="data row8 col0" >0.552358</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_1deb4_row9_col0" class="data row9 col0" >0.447642</td>
+      <th id="T_ead9f_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_ead9f_row9_col0" class="data row9 col0" >0.447642</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_1deb4_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_1deb4_row10_col0" class="data row10 col0" >0.022688</td>
+      <th id="T_ead9f_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_ead9f_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_ead9f_row10_col0" class="data row10 col0" >0.022688</td>
     </tr>
     <tr>
-      <th id="T_1deb4_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_1deb4_row11_col0" class="data row11 col0" >0.977312</td>
+      <th id="T_ead9f_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_ead9f_row11_col0" class="data row11 col0" >0.977312</td>
     </tr>
   </tbody>
 </table>
@@ -2174,7 +2143,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </ol>
 </section>
 <section id="subtlety-and-cancer">
-<h4>Subtlety and Cancer<a class="headerlink" href="#subtlety-and-cancer" title="Permalink to this heading">#</a></h4>
+<h5>Subtlety and Cancer<a class="headerlink" href="#subtlety-and-cancer" title="Permalink to this heading">#</a></h5>
 <p>Are malignancies more or less conspicuous?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2214,13 +2183,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_c7d79" style='display:inline; margin-right:220px;'>
+<table id="T_e97ad" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by Subtlety</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_c7d79_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_e97ad_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2230,61 +2199,61 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_c7d79_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_c7d79_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_c7d79_row0_col0" class="data row0 col0" >78</td>
+      <th id="T_e97ad_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_e97ad_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_e97ad_row0_col0" class="data row0 col0" >78</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_c7d79_row1_col0" class="data row1 col0" >96</td>
+      <th id="T_e97ad_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_e97ad_row1_col0" class="data row1 col0" >96</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_c7d79_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_c7d79_row2_col0" class="data row2 col0" >232</td>
+      <th id="T_e97ad_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_e97ad_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_e97ad_row2_col0" class="data row2 col0" >232</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_c7d79_row3_col0" class="data row3 col0" >207</td>
+      <th id="T_e97ad_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_e97ad_row3_col0" class="data row3 col0" >207</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_c7d79_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_c7d79_row4_col0" class="data row4 col0" >627</td>
+      <th id="T_e97ad_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_e97ad_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_e97ad_row4_col0" class="data row4 col0" >627</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_c7d79_row5_col0" class="data row5 col0" >337</td>
+      <th id="T_e97ad_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_e97ad_row5_col0" class="data row5 col0" >337</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_c7d79_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_c7d79_row6_col0" class="data row6 col0" >559</td>
+      <th id="T_e97ad_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_e97ad_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_e97ad_row6_col0" class="data row6 col0" >559</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_c7d79_row7_col0" class="data row7 col0" >316</td>
+      <th id="T_e97ad_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_e97ad_row7_col0" class="data row7 col0" >316</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_c7d79_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_c7d79_row8_col0" class="data row8 col0" >613</td>
+      <th id="T_e97ad_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_e97ad_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_e97ad_row8_col0" class="data row8 col0" >613</td>
     </tr>
     <tr>
-      <th id="T_c7d79_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_c7d79_row9_col0" class="data row9 col0" >501</td>
+      <th id="T_e97ad_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_e97ad_row9_col0" class="data row9 col0" >501</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_cc52d" style='display:inline; margin-right:120px'>
+<table id="T_8eb15" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by Subtlety (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_cc52d_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_8eb15_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2294,49 +2263,49 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_cc52d_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_cc52d_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_cc52d_row0_col0" class="data row0 col0" >0.448276</td>
+      <th id="T_8eb15_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_8eb15_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_8eb15_row0_col0" class="data row0 col0" >0.448276</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_cc52d_row1_col0" class="data row1 col0" >0.551724</td>
+      <th id="T_8eb15_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_8eb15_row1_col0" class="data row1 col0" >0.551724</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_cc52d_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_cc52d_row2_col0" class="data row2 col0" >0.528474</td>
+      <th id="T_8eb15_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_8eb15_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_8eb15_row2_col0" class="data row2 col0" >0.528474</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_cc52d_row3_col0" class="data row3 col0" >0.471526</td>
+      <th id="T_8eb15_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_8eb15_row3_col0" class="data row3 col0" >0.471526</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_cc52d_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_cc52d_row4_col0" class="data row4 col0" >0.650415</td>
+      <th id="T_8eb15_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_8eb15_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_8eb15_row4_col0" class="data row4 col0" >0.650415</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_cc52d_row5_col0" class="data row5 col0" >0.349585</td>
+      <th id="T_8eb15_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_8eb15_row5_col0" class="data row5 col0" >0.349585</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_cc52d_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_cc52d_row6_col0" class="data row6 col0" >0.638857</td>
+      <th id="T_8eb15_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_8eb15_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_8eb15_row6_col0" class="data row6 col0" >0.638857</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_cc52d_row7_col0" class="data row7 col0" >0.361143</td>
+      <th id="T_8eb15_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_8eb15_row7_col0" class="data row7 col0" >0.361143</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_cc52d_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_cc52d_row8_col0" class="data row8 col0" >0.550269</td>
+      <th id="T_8eb15_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_8eb15_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_8eb15_row8_col0" class="data row8 col0" >0.550269</td>
     </tr>
     <tr>
-      <th id="T_cc52d_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_cc52d_row9_col0" class="data row9 col0" >0.449731</td>
+      <th id="T_8eb15_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_8eb15_row9_col0" class="data row9 col0" >0.449731</td>
     </tr>
   </tbody>
 </table>
@@ -2367,7 +2336,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>The Kendall’s Tau test measuring the association between subtlety and malignancy indicated a non-significant association of weak effect, <span class="math notranslate nohighlight">\(\phi_\tau\)</span> = 0.003, p = 0.86.</p>
 </section>
 <section id="calcification-type-and-cancer">
-<h4>Calcification Type and Cancer<a class="headerlink" href="#calcification-type-and-cancer" title="Permalink to this heading">#</a></h4>
+<h5>Calcification Type and Cancer<a class="headerlink" href="#calcification-type-and-cancer" title="Permalink to this heading">#</a></h5>
 <p>What is the association between calcification type and malignancy. According to the literature, fine linear branching, and pleomorphic calcifications are of the highest concern, followed by amorphous and coarse heterogenous abnormalities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2423,7 +2392,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </section>
 <section id="id5">
-<h4>Calcification Distribution<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
+<h5>Calcification Distribution<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h5>
 <p>How do we characterize the association between calcification distribution and malignancy?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2477,7 +2446,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>This chi-square test of independence between calcification distribution and diagnosis indicates a moderate and significant association (<span class="math notranslate nohighlight">\(X^2\)</span>(1,n=1872)=198.56 p&lt;0.01, <span class="math notranslate nohighlight">\(V\)</span>=0.33).</p>
 </section>
 <section id="mass-shape-and-cancer">
-<h4>Mass Shape and Cancer<a class="headerlink" href="#mass-shape-and-cancer" title="Permalink to this heading">#</a></h4>
+<h5>Mass Shape and Cancer<a class="headerlink" href="#mass-shape-and-cancer" title="Permalink to this heading">#</a></h5>
 <p>Mass shape and mass margins are the most significant features that indicate whether a mass is benign or malignant <span id="id6">[<a class="reference internal" href="99_references.html#id310" title="Lawrence W. Bassett, Karen Conner, and Iv Ms. The Abnormal Mammogram. In Holland-Frei Cancer Medicine. 6th edition. BC Decker, 2003. URL: https://www.ncbi.nlm.nih.gov/books/NBK12642/ (visited on 2023-09-29).">5</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2532,7 +2501,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>This chi-square test of independence between mass shape and diagnosis indicates a large and significant association (<span class="math notranslate nohighlight">\(X^2\)</span>(1,n=1694)=440.92 p&lt;0.01, <span class="math notranslate nohighlight">\(V\)</span>=0.51).</p>
 </section>
 <section id="mass-margins-and-cancer">
-<h4>Mass Margins and Cancer<a class="headerlink" href="#mass-margins-and-cancer" title="Permalink to this heading">#</a></h4>
+<h5>Mass Margins and Cancer<a class="headerlink" href="#mass-margins-and-cancer" title="Permalink to this heading">#</a></h5>
 <p>Mass margins, a feature that separates the mass from the adjacent breast parenchyma, is often the feature which enables differentiation between benign and malignant.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2587,8 +2556,8 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>That concludes the target association section of the bivariate analysis. Let’s examine the relationships among the features.</p>
 </section>
 </section>
-<section id="bivariate-feature-association-analysis">
-<h3>Bivariate Feature Association Analysis<a class="headerlink" href="#bivariate-feature-association-analysis" title="Permalink to this heading">#</a></h3>
+<section id="case-bivariate-feature-association-analysis">
+<h4>Case Bivariate Feature Association Analysis<a class="headerlink" href="#case-bivariate-feature-association-analysis" title="Permalink to this heading">#</a></h4>
 <p>What does calcification type imply about calcification distribution? To what degree is mass shape and mass margin related? Are certain morphologies more or less subtle? In this section, we examine the strength of associations among the features in the CBIS-DDSM using Cramer’s V effect size measurement. For this exercise, we’ll interpret the Cramer’s V effect sizes as follows:</p>
 <table class="table">
 <thead>
@@ -2644,7 +2613,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 <p>Abnormality types tends to behave similarly across breast density categories, thus the weak association.</p>
 <section id="calcification-feature-bivariate-analysis">
-<h4>Calcification Feature Bivariate Analysis<a class="headerlink" href="#calcification-feature-bivariate-analysis" title="Permalink to this heading">#</a></h4>
+<h5>Calcification Feature Bivariate Analysis<a class="headerlink" href="#calcification-feature-bivariate-analysis" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
@@ -2657,10 +2626,9 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <section id="calcification-variables-with-large-effect">
-<h5>Calcification Variables with Large Effect<a class="headerlink" href="#calcification-variables-with-large-effect" title="Permalink to this heading">#</a></h5>
+<h6>Calcification Variables with Large Effect<a class="headerlink" href="#calcification-variables-with-large-effect" title="Permalink to this heading">#</a></h6>
 <p>Calcification type and assessment appear to be strongly associated. Let’s take a closer look.</p>
-<section id="calcification-type-and-assessment">
-<h6>Calcification Type and Assessment<a class="headerlink" href="#calcification-type-and-assessment" title="Permalink to this heading">#</a></h6>
+<p>####### Calcification Type and Assessment</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">cramersv</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s1">&#39;calc_type&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s1">&#39;assessment&#39;</span><span class="p">)</span>
@@ -2700,9 +2668,8 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 <p>Above, we show the proportion of BI-RADS assessments for each calcification type. Pleomorphic, fine linear branching and amorphous calcifications appear to render the highest levels of suspicion with BI-RADS 4 and 5 assessments. Those of intermediate concern are dystrophic and punctate. The remaining are associated with generally benign classifications.</p>
 </section>
-</section>
 <section id="calcification-variables-with-moderate-effect">
-<h5>Calcification Variables with Moderate Effect<a class="headerlink" href="#calcification-variables-with-moderate-effect" title="Permalink to this heading">#</a></h5>
+<h6>Calcification Variables with Moderate Effect<a class="headerlink" href="#calcification-variables-with-moderate-effect" title="Permalink to this heading">#</a></h6>
 <p>Moderate associations appear to be extant between:</p>
 <ul class="simple">
 <li><p>calcification type and calcification distribution</p></li>
@@ -2764,7 +2731,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </section>
 </section>
 <section id="mass-feature-bivariate-analysis">
-<h4>Mass Feature Bivariate Analysis<a class="headerlink" href="#mass-feature-bivariate-analysis" title="Permalink to this heading">#</a></h4>
+<h5>Mass Feature Bivariate Analysis<a class="headerlink" href="#mass-feature-bivariate-analysis" title="Permalink to this heading">#</a></h5>
 <p>Next, let’s examine feature relationships for mass cases.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2810,8 +2777,8 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <p>Spiculated, ill-defined, and microlobulated masses appear to be of greater concern than obscured, and perhaps circumscribed mass margins.</p>
 </section>
 </section>
-<section id="summary-cbis-ddsm-bivariate-analysis">
-<h3>Summary CBIS-DDSM Bivariate Analysis<a class="headerlink" href="#summary-cbis-ddsm-bivariate-analysis" title="Permalink to this heading">#</a></h3>
+<section id="summary-cbis-ddsm-case-bivariate-analysis">
+<h4>Summary CBIS-DDSM Case Bivariate Analysis<a class="headerlink" href="#summary-cbis-ddsm-case-bivariate-analysis" title="Permalink to this heading">#</a></h4>
 <p>This concludes the bivariate component of this exploratory data analysis. Let’s summarize our observations thus far.</p>
 <p>Our bivariate analysis was conducted in two parts:</p>
 <ol class="arabic simple">
@@ -2830,7 +2797,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <section id="bivariate-target-association-analysis-summary">
-<h4>Bivariate Target Association Analysis Summary<a class="headerlink" href="#bivariate-target-association-analysis-summary" title="Permalink to this heading">#</a></h4>
+<h5>Bivariate Target Association Analysis Summary<a class="headerlink" href="#bivariate-target-association-analysis-summary" title="Permalink to this heading">#</a></h5>
 <p>The plot above depicts the Cramer’s V associations between the independent variables and our target variable, ‘cancer’. The main observations are as follows:</p>
 <ol class="arabic simple">
 <li><p>There was strong agreement between the BI-RADS assessments and the pathology (<span class="math notranslate nohighlight">\(\tau\)</span>=0.60, p&lt;0.01); an expected finding as many of the BI-RADS assessments were likely updated as additional information was gathered by the physician <span id="id7">[<a class="reference internal" href="99_references.html#id136" title="Rebecca Sawyer Lee, Francisco Gimenez, Assaf Hoogi, Kanae Kawai Miyake, Mia Gorovoy, and Daniel L. Rubin. A curated mammography data set for use in computer-aided detection and diagnosis research. Scientific Data, 4(1):170177, December 2017. URL: https://www.nature.com/articles/sdata2017177 (visited on 2023-05-24), doi:10.1038/sdata.2017.177.">6</a>]</span>.</p></li>
@@ -2851,7 +2818,7 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </ol>
 </section>
 <section id="bivariate-feature-association-analysis-summary">
-<h4>Bivariate Feature Association Analysis Summary<a class="headerlink" href="#bivariate-feature-association-analysis-summary" title="Permalink to this heading">#</a></h4>
+<h5>Bivariate Feature Association Analysis Summary<a class="headerlink" href="#bivariate-feature-association-analysis-summary" title="Permalink to this heading">#</a></h5>
 <p>Cramer’s V was used to measure the degree of association between the features. We observed several strong associations in both calcification and mass cases:</p>
 <ol class="arabic simple">
 <li><p>Calcification Cases:</p>
@@ -2886,7 +2853,7 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </section>
 </section>
 <section id="case-data-multivariate-analysis">
-<h2>Case Data Multivariate Analysis<a class="headerlink" href="#case-data-multivariate-analysis" title="Permalink to this heading">#</a></h2>
+<h3>Case Data Multivariate Analysis<a class="headerlink" href="#case-data-multivariate-analysis" title="Permalink to this heading">#</a></h3>
 <p>The purpose of the multivariate analysis is to elucidate features of the data, beyond that which can be derived from the univariate, and bivariate analyses above. Our objectives; therefore, are to:</p>
 <ol class="arabic simple">
 <li><p>Identify the variables that most impact the diagnosis of cancer,</p></li>
@@ -2895,7 +2862,7 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </ol>
 <p>Logistic Regression, Support Vector Machines, and Random Forests classifiers will be trained on the calcification and mass training data. The models will be evaluated using cross-validation, and the best algorithm will make predictions on the entire mass or calcification dataset.</p>
 <section id="build-pipelines">
-<h3>Build Pipelines<a class="headerlink" href="#build-pipelines" title="Permalink to this heading">#</a></h3>
+<h4>Build Pipelines<a class="headerlink" href="#build-pipelines" title="Permalink to this heading">#</a></h4>
 <p>Pipelines are built for each classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2937,9 +2904,9 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </div>
 </section>
 <section id="calcification-case-multivariate-analysis">
-<h3>Calcification Case Multivariate Analysis<a class="headerlink" href="#calcification-case-multivariate-analysis" title="Permalink to this heading">#</a></h3>
+<h4>Calcification Case Multivariate Analysis<a class="headerlink" href="#calcification-case-multivariate-analysis" title="Permalink to this heading">#</a></h4>
 <section id="load-data">
-<h4>Load Data<a class="headerlink" href="#load-data" title="Permalink to this heading">#</a></h4>
+<h5>Load Data<a class="headerlink" href="#load-data" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CALC_TRAIN_FP</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;data/cooked/calc_train.csv&quot;</span><span class="p">)</span>
@@ -2965,7 +2932,7 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </div>
 </section>
 <section id="build-and-execute-model-selection">
-<h4>Build and Execute Model Selection<a class="headerlink" href="#build-and-execute-model-selection" title="Permalink to this heading">#</a></h4>
+<h5>Build and Execute Model Selection<a class="headerlink" href="#build-and-execute-model-selection" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BEST_CALC_MODEL_FP</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;model/eda/best_calc_pipeline.pkl&#39;</span><span class="p">)</span>
@@ -2986,7 +2953,7 @@ Indeed, 100% of the above cases were malignant.</p></li>
 </div>
 </section>
 <section id="prediction-results">
-<h4>Prediction Results<a class="headerlink" href="#prediction-results" title="Permalink to this heading">#</a></h4>
+<h5>Prediction Results<a class="headerlink" href="#prediction-results" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calc_ms</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">FORCE_MODEL_FIT</span><span class="p">)</span>
@@ -3015,7 +2982,7 @@ weighted avg       0.76      0.72      0.73      1872
 <p>Logistic Regression outperformed Support Vector Machine and Random Forest on the calcification dataset. It achieved an overall accuracy of 0.72. The precision (positive class), or the ability of the classifier not to classify false negatives was 0.58. The ability of the classifier to find all positive (malignant) cases was 0.79. The weighted harmonic mean of precision and recall was 0.67.</p>
 </section>
 <section id="calcification-variable-importance">
-<h4>Calcification Variable Importance<a class="headerlink" href="#calcification-variable-importance" title="Permalink to this heading">#</a></h4>
+<h5>Calcification Variable Importance<a class="headerlink" href="#calcification-variable-importance" title="Permalink to this heading">#</a></h5>
 <p>The coefficients of the model indicate the importance of the feature to the prediction task. A positive value provides evidence that the instance being classified belongs to the positive or malignant class; whereas, a negative value provides evidence that the instance being classified belongs to the negative or benign class. Let’s take a look.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3033,9 +3000,9 @@ weighted avg       0.76      0.72      0.73      1872
 </section>
 </section>
 <section id="mass-case-multivariate-analysis">
-<h3>Mass Case Multivariate Analysis<a class="headerlink" href="#mass-case-multivariate-analysis" title="Permalink to this heading">#</a></h3>
+<h4>Mass Case Multivariate Analysis<a class="headerlink" href="#mass-case-multivariate-analysis" title="Permalink to this heading">#</a></h4>
 <section id="id8">
-<h4>Load Data<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h4>
+<h5>Load Data<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MASS_TRAIN_FP</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;data/cooked/mass_train.csv&quot;</span><span class="p">)</span>
@@ -3060,8 +3027,139 @@ weighted avg       0.76      0.72      0.73      1872
 </div>
 </div>
 </section>
+</section>
+<section id="photometric-interpretation-samples-per-pixel-and-bit-depth">
+<h4>Photometric Interpretation, Samples per Pixel and Bit Depth<a class="headerlink" href="#photometric-interpretation-samples-per-pixel-and-bit-depth" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as_df</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All images are of the </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;photometric_interpretation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> representation.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All images have </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;samples_per_pixel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> sample(s) per pixel.&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;bits&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;series_description&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;CBIS-DDSM Image Bit Depth&quot;</span><span class="p">,</span> <span class="n">plot_counts</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">77</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as_df</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All images are of the </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;photometric_interpretation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> representation.&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All images have </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;samples_per_pixel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> sample(s) per pixel.&quot;</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;ds&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<p>The full mammogram images have a bit depth of 16. The ROI masks appear to be evenly distributed between 8 and 16 bits, and cropped images have a depth of 16 bits.</p>
+</section>
+<section id="dicom-image-height-width-size-and-aspect-ratio">
+<h4>DICOM Image Height, Width, Size, and Aspect Ratio<a class="headerlink" href="#dicom-image-height-width-size-and-aspect-ratio" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribution of Image Height&quot;</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribution of Image Width&quot;</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribution of Image Size&quot;</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;aspect_ratio&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribution of Aspect Ratio&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;CBIS-DDSM Image Quality Assessment</span><span class="se">\n</span><span class="s2">Image Properties&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/36dbf7fa9fc68248c9c496218e68959140551d5506969d09d76a03a800aec2a8.png" src="../_images/36dbf7fa9fc68248c9c496218e68959140551d5506969d09d76a03a800aec2a8.png" />
+</div>
+</div>
+<p>The plot above reveals the distribution of image height, width, size, and aspect ratio. All full mammogram images will be transformed to a common height and width.</p>
+</section>
+<section id="dicom-image-pixel-values">
+<h4>DICOM Image Pixel Values<a class="headerlink" href="#dicom-image-pixel-values" title="Permalink to this heading">#</a></h4>
+<p>Here, our interest is in the pixel values for full mammogram images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as_df</span><span class="p">()</span>
+<span class="n">df_full</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;series_description&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;full mammogram images&#39;</span><span class="p">]</span>
+<span class="n">df_full_desc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;smallest_pixel_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;smallest_image_pixel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;largest_pixel_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;largest_image_pixel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;image_pixel_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;image_pixel_range&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_full_desc</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>smallest_pixel_value</th>
+      <td>3,567.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>largest_pixel_value</th>
+      <td>3,567.00</td>
+      <td>64,926.59</td>
+      <td>1,946.28</td>
+      <td>40,968.00</td>
+      <td>65,535.00</td>
+      <td>65,535.00</td>
+      <td>65,535.00</td>
+      <td>65,535.00</td>
+    </tr>
+    <tr>
+      <th>image_pixel_range</th>
+      <td>3,567.00</td>
+      <td>64,926.59</td>
+      <td>1,946.28</td>
+      <td>40,968.00</td>
+      <td>65,535.00</td>
+      <td>65,535.00</td>
+      <td>65,535.00</td>
+      <td>65,535.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Full mammogram image pixels range from zero to 65,535, which comports with a depth of 16 bits.</p>
 <section id="id9">
-<h4>Build and Execute Model Selection<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h4>
+<h5>Build and Execute Model Selection<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BEST_MASS_MODEL_FP</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;model/eda/best_mass_pipeline.pkl&#39;</span><span class="p">)</span>
@@ -3082,7 +3180,7 @@ weighted avg       0.76      0.72      0.73      1872
 </div>
 </section>
 <section id="id10">
-<h4>Prediction Results<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h4>
+<h5>Prediction Results<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mass_ms</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">X_train</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">FORCE_MODEL_FIT</span><span class="p">)</span>
@@ -3111,7 +3209,7 @@ weighted avg       0.79      0.79      0.79      1694
 <p>Random Forest performed the best on the mass data. It achieved an accuracy of 0.79. Precision and recall were 0.77, and 0.78 respectively.</p>
 </section>
 <section id="mass-variable-importance">
-<h4>Mass Variable Importance<a class="headerlink" href="#mass-variable-importance" title="Permalink to this heading">#</a></h4>
+<h5>Mass Variable Importance<a class="headerlink" href="#mass-variable-importance" title="Permalink to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
@@ -3129,11 +3227,10 @@ weighted avg       0.79      0.79      0.79      1694
 </section>
 </section>
 </section>
-<section id="dicom-data">
-<h2>DICOM Data<a class="headerlink" href="#dicom-data" title="Permalink to this heading">#</a></h2>
-<p>In this section, we examine the DICOM metadata and image data starting with a summary of the DICOM metadata.</p>
-<section id="dicom-metadata">
-<h3>DICOM Metadata<a class="headerlink" href="#dicom-metadata" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dicom-metadata-exploratory-data-analysis">
+<h2>DICOM Metadata Exploratory Data Analysis<a class="headerlink" href="#dicom-metadata-exploratory-data-analysis" title="Permalink to this heading">#</a></h2>
+<p>Let’s summarize the available DICOM metadata.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">DicomDataset</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">)</span>
@@ -3548,15 +3645,15 @@ weighted avg       0.79      0.79      0.79      1694
 <li><p>Case metadata: Patient ID, side, image view, case id, abnormality and morphology information</p></li>
 <li><p>Image metadata: Image height, width, size, aspect ratio, bit depth, pixel ranges, and image quality</p></li>
 </ul>
-<p>Series and case metadata are cross-referenced from the series and case data examined above. Our focus here will be the following image metadata:</p>
+<p>Series and case metadata are cross-referenced from the series and case data examined above. Our focus here will be the following <em>image</em> metadata:</p>
 <ul class="simple">
 <li><p>photometric_interpretation, samples_per_pixel, and bit depth</p></li>
 <li><p>height, width, size, and aspect_ratio</p></li>
 <li><p>smallest, largest, image pixel values and ranges</p></li>
 <li><p>brisque image quality</p></li>
 </ul>
-<section id="photometric-interpretation-samples-per-pixel-and-bit-depth">
-<h4>Photometric Interpretation, Samples per Pixel and Bit Depth<a class="headerlink" href="#photometric-interpretation-samples-per-pixel-and-bit-depth" title="Permalink to this heading">#</a></h4>
+<section id="id15">
+<h3>Photometric Interpretation, Samples per Pixel and Bit Depth<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as_df</span><span class="p">()</span>
@@ -3577,8 +3674,8 @@ All images have 1 sample(s) per pixel.
 </div>
 <p>The full mammogram images have a bit depth of 16. The ROI masks appear to be evenly distributed between 8 and 16 bits, and cropped images have a depth of 16 bits.</p>
 </section>
-<section id="dicom-image-height-width-size-and-aspect-ratio">
-<h4>DICOM Image Height, Width, Size, and Aspect Ratio<a class="headerlink" href="#dicom-image-height-width-size-and-aspect-ratio" title="Permalink to this heading">#</a></h4>
+<section id="id16">
+<h3>DICOM Image Height, Width, Size, and Aspect Ratio<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -3597,8 +3694,8 @@ All images have 1 sample(s) per pixel.
 </div>
 <p>The plot above reveals the distribution of image height, width, size, and aspect ratio. All full mammogram images will be transformed to a common height and width.</p>
 </section>
-<section id="dicom-image-pixel-values">
-<h4>DICOM Image Pixel Values<a class="headerlink" href="#dicom-image-pixel-values" title="Permalink to this heading">#</a></h4>
+<section id="id17">
+<h3>DICOM Image Pixel Values<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
 <p>Here, our interest is in the pixel values for full mammogram images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3681,10 +3778,9 @@ All images have 1 sample(s) per pixel.
 </div>
 <p>Full mammogram image pixels range from zero to 65,535, which comports with a depth of 16 bits.</p>
 </section>
-</section>
 <section id="dicom-image-quality">
 <h3>DICOM Image Quality<a class="headerlink" href="#dicom-image-quality" title="Permalink to this heading">#</a></h3>
-<p>Image quality in mammography is affected by the shape an size of the image, the x-ray absorption properties of the lesion or anatomy being radiographed, x-ray beam quality, geometric unsharpness, resolution,  annotations and noise properties of the recording system.  Here, we use the Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE) <span id="id15">[<a class="reference internal" href="99_references.html#id315" title="A. Mittal, A. K. Moorthy, and A. C. Bovik. No-Reference Image Quality Assessment in the Spatial Domain. IEEE Transactions on Image Processing, 21(12):4695–4708, December 2012. URL: http://ieeexplore.ieee.org/document/6272356/ (visited on 2023-10-16), doi:10.1109/TIP.2012.2214050.">11</a>]</span>, a state-of-the-art No-Reference Image Quality Assessment (NR-IQA) algorithm to evaluate the quality of the full mammogram images.</p>
+<p>Image quality in mammography is affected by the shape an size of the image, the x-ray absorption properties of the lesion or anatomy being radiographed, x-ray beam quality, geometric unsharpness, resolution,  annotations and noise properties of the recording system.  Here, we use the Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE) <span id="id18">[<a class="reference internal" href="99_references.html#id315" title="A. Mittal, A. K. Moorthy, and A. C. Bovik. No-Reference Image Quality Assessment in the Spatial Domain. IEEE Transactions on Image Processing, 21(12):4695–4708, December 2012. URL: http://ieeexplore.ieee.org/document/6272356/ (visited on 2023-10-16), doi:10.1109/TIP.2012.2214050.">11</a>]</span>, a state-of-the-art No-Reference Image Quality Assessment (NR-IQA) algorithm to evaluate the quality of the full mammogram images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -3752,25 +3848,10 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                                    | 0/8 [00:00&lt;?, ?it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 62%|██████▎   | 5/8 [00:00&lt;00:00, 10.89it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 12%|█████▌                                      | 1/8 [00:00&lt;00:00,  7.56it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|████████████████▌                           | 3/8 [00:00&lt;00:00, 12.07it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 62%|███████████████████████████▌                | 5/8 [00:00&lt;00:00, 10.73it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 88%|██████████████████████████████████████▌     | 7/8 [00:00&lt;00:00, 10.61it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 10.72it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 8/8 [00:00&lt;00:00, 10.86it/s]
 </pre></div>
 </div>
 <img alt="../_images/36a709be8ce599192d6771de81c6790448646f66ef8cdb30bb861db0ec0a3251.png" src="../_images/36a709be8ce599192d6771de81c6790448646f66ef8cdb30bb861db0ec0a3251.png" />
@@ -3858,81 +3939,83 @@ All images have 1 sample(s) per pixel.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-plan">Exploratory Data Analysis Plan</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-univariate-analysis">Case Data Univariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#left-or-right-side">Left or Right Side</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-type">Abnormality Type</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety">Subtlety</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment">BI-RADS Assessment</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape">Mass Shape</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins">Mass Margins</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer">Cancer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-case-univariate-analysis">Summary CBIS-DDSM Case Univariate Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-exploratory-data-analysis">Case Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-univariate-analysis">Case Univariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-or-right-side">Left or Right Side</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#image-view">Image View</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-id">Abnormality Id</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abnormality-type">Abnormality Type</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety">Subtlety</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment">BI-RADS Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type">Calcification Type</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">Calcification Distribution</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape">Mass Shape</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins">Mass Margins</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer">Cancer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-case-univariate-analysis">Summary CBIS-DDSM Case Univariate Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-bivariate-analysis">Case Data Bivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-variable-association-analysis">Bivariate Target Variable Association Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast-density">Cancer Diagnosis by Breast Density</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast">Cancer Diagnosis by Breast</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-image-view">Cancer by Image View</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-abnormality-type">Cancer by Abnormality Type</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment-and-cancer">BI-RADS Assessment and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety-and-cancer">Subtlety and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type-and-cancer">Calcification Type and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Calcification Distribution</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-and-cancer">Mass Shape and Cancer</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins-and-cancer">Mass Margins and Cancer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-bivariate-analysis">Case Bivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-variable-association-analysis">Bivariate Target Variable Association Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast-density">Cancer Diagnosis by Breast Density</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-diagnosis-by-breast">Cancer Diagnosis by Breast</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-image-view">Cancer by Image View</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#cancer-by-abnormality-type">Cancer by Abnormality Type</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bi-rads-assessment-and-cancer">BI-RADS Assessment and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety-and-cancer">Subtlety and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type-and-cancer">Calcification Type and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Calcification Distribution</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-and-cancer">Mass Shape and Cancer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margins-and-cancer">Mass Margins and Cancer</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-feature-association-analysis">Bivariate Feature Association Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-feature-bivariate-analysis">Calcification Feature Bivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-large-effect">Calcification Variables with Large Effect</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-type-and-assessment">Calcification Type and Assessment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#case-bivariate-feature-association-analysis">Case Bivariate Feature Association Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-feature-bivariate-analysis">Calcification Feature Bivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-large-effect">Calcification Variables with Large Effect</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-moderate-effect">Calcification Variables with Moderate Effect</a></li>
 </ul>
 </li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variables-with-moderate-effect">Calcification Variables with Moderate Effect</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-feature-bivariate-analysis">Mass Feature Bivariate Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-feature-bivariate-analysis">Mass Feature Bivariate Analysis</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-bivariate-analysis">Summary CBIS-DDSM Bivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-association-analysis-summary">Bivariate Target Association Analysis Summary</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-feature-association-analysis-summary">Bivariate Feature Association Analysis Summary</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-pipelines">Build Pipelines</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-multivariate-analysis">Calcification Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-execute-model-selection">Build and Execute Model Selection</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-results">Prediction Results</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variable-importance">Calcification Variable Importance</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-multivariate-analysis">Mass Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Load Data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Build and Execute Model Selection</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Prediction Results</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-variable-importance">Mass Variable Importance</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-cbis-ddsm-case-bivariate-analysis">Summary CBIS-DDSM Case Bivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-target-association-analysis-summary">Bivariate Target Association Analysis Summary</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#bivariate-feature-association-analysis-summary">Bivariate Feature Association Analysis Summary</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-data">DICOM Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata">DICOM Metadata</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-data-multivariate-analysis">Case Data Multivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-pipelines">Build Pipelines</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-multivariate-analysis">Calcification Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-execute-model-selection">Build and Execute Model Selection</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-results">Prediction Results</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-variable-importance">Calcification Variable Importance</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-multivariate-analysis">Mass Case Multivariate Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Load Data</a></li>
+</ul>
+</li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#photometric-interpretation-samples-per-pixel-and-bit-depth">Photometric Interpretation, Samples per Pixel and Bit Depth</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-height-width-size-and-aspect-ratio">DICOM Image Height, Width, Size, and Aspect Ratio</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-pixel-values">DICOM Image Pixel Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-pixel-values">DICOM Image Pixel Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Build and Execute Model Selection</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Prediction Results</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-variable-importance">Mass Variable Importance</a></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata-exploratory-data-analysis">DICOM Metadata Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Photometric Interpretation, Samples per Pixel and Bit Depth</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">DICOM Image Height, Width, Size, and Aspect Ratio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">DICOM Image Pixel Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-quality">DICOM Image Quality</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-images">DICOM Images</a></li>
 </ul>
