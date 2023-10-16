@@ -432,7 +432,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-plan">Exploratory Data Analysis Plan</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-exploratory-data-analysis">Case Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-eda">Case EDA</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-univariate-analysis">Case Univariate Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-or-right-side">Left or Right Side</a></li>
@@ -500,14 +500,31 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata-exploratory-data-analysis">DICOM Metadata Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata-eda">DICOM Metadata EDA</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#photometric-interpretation-samples-per-pixel-and-bit-depth">Photometric Interpretation, Samples per Pixel and Bit Depth</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-height-width-size-and-aspect-ratio">DICOM Image Height, Width, Size, and Aspect Ratio</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-pixel-values">DICOM Image Pixel Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-quality">DICOM Image Quality</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-images">DICOM Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-eda">DICOM Image EDA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-quality-analysis">DICOM Image Quality Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-case-analysis">DICOM Calcification Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-benign">DICOM Calcification Cases - Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-probably-benign">DICOM Calcification Cases - Probably Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-suspicious">DICOM Calcification Cases - Suspicious</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-highly-suspicious">DICOM Calcification Cases - Highly Suspicious</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-case-analysis">DICOM Mass Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-benign">DICOM Mass Cases - Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-probably-benign">DICOM Mass Cases - Probably Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-suspicious">DICOM Mass Cases - Suspicious</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-highly-suspicious">DICOM Mass Cases - Highly Suspicious</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -799,9 +816,9 @@ document.write(`
 <h3>Exploratory Data Analysis Plan<a class="headerlink" href="#exploratory-data-analysis-plan" title="Permalink to this heading">#</a></h3>
 <p>The EDA will be conducted in three stages:</p>
 <ol class="arabic simple">
-<li><p><strong>Case Exploratory Data Analysis</strong>: Univariate, Bivariate and Multivariate EDA</p></li>
-<li><p><strong>DICOM Metadata Exploratory Data Analysis</strong>: DICOM Image and Quality Metadata EDA</p></li>
-<li><p><strong>DICOM Image Exploratory Data Analysis</strong>: Visual Case EDA</p></li>
+<li><p><strong>Case EDA</strong>: Univariate, Bivariate and Multivariate EDA of the case data</p></li>
+<li><p><strong>DICOM Metadata EDA</strong>: Exploration of DICOM image properties and metadata.</p></li>
+<li><p><strong>DICOM Image EDA</strong>: Visual Quality and Case Analysis</p></li>
 </ol>
 <p><strong>Preliminaries</strong>
 The section has the following python package dependencies:</p>
@@ -850,8 +867,8 @@ The section has the following python package dependencies:</p>
 </div>
 </section>
 </section>
-<section id="case-exploratory-data-analysis">
-<h2>Case Exploratory Data Analysis<a class="headerlink" href="#case-exploratory-data-analysis" title="Permalink to this heading">#</a></h2>
+<section id="case-eda">
+<h2>Case EDA<a class="headerlink" href="#case-eda" title="Permalink to this heading">#</a></h2>
 <p>This stage will comprise univariate, bivariate, and multivariate analyses of the case data.</p>
 <section id="case-univariate-analysis">
 <h3>Case Univariate Analysis<a class="headerlink" href="#case-univariate-analysis" title="Permalink to this heading">#</a></h3>
@@ -1003,84 +1020,84 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>961</th>
-      <td>P_01255_RIGHT_calcification_CC_1</td>
-      <td>P_01255</td>
-      <td>4</td>
+      <th>570</th>
+      <td>P_00710_RIGHT_calcification_CC_2</td>
+      <td>P_00710</td>
+      <td>2</td>
       <td>RIGHT</td>
       <td>CC</td>
-      <td>1</td>
+      <td>2</td>
       <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>4</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1357</th>
-      <td>P_01769_RIGHT_calcification_CC_5</td>
-      <td>P_01769</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>CC</td>
-      <td>5</td>
-      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>5</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>926</th>
-      <td>P_01184_LEFT_calcification_CC_1</td>
-      <td>P_01184</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>AMORPHOUS</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>2</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1812</th>
-      <td>P_01670_LEFT_calcification_MLO_3</td>
-      <td>P_01670</td>
-      <td>3</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>3</td>
-      <td>PUNCTATE-AMORPHOUS-PLEOMORPHIC</td>
       <td>CLUSTERED</td>
       <td>4</td>
       <td>MALIGNANT</td>
       <td>3</td>
-      <td>test</td>
+      <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>424</th>
-      <td>P_00548_LEFT_calcification_CC_1</td>
-      <td>P_00548</td>
+      <th>596</th>
+      <td>P_00757_LEFT_calcification_MLO_1</td>
+      <td>P_00757</td>
       <td>4</td>
       <td>LEFT</td>
-      <td>CC</td>
+      <td>MLO</td>
       <td>1</td>
       <td>PLEOMORPHIC</td>
       <td>CLUSTERED</td>
       <td>4</td>
       <td>BENIGN</td>
-      <td>5</td>
+      <td>4</td>
       <td>train</td>
       <td>False</td>
+    </tr>
+    <tr>
+      <th>318</th>
+      <td>P_00455_LEFT_calcification_CC_1</td>
+      <td>P_00455</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1060</th>
+      <td>P_01358_RIGHT_calcification_MLO_1</td>
+      <td>P_01358</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
+      <td>REGIONAL</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>781</th>
+      <td>P_00993_RIGHT_calcification_MLO_1</td>
+      <td>P_00993</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
+      <td>LINEAR</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>4</td>
+      <td>train</td>
+      <td>True</td>
     </tr>
   </tbody>
 </table>
@@ -1119,46 +1136,46 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>2454</th>
-      <td>P_00831_RIGHT_mass_MLO_1</td>
-      <td>P_00831</td>
-      <td>4</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>IRREGULAR</td>
-      <td>SPICULATED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
+      <th>2104</th>
+      <td>P_00335_LEFT_mass_MLO_1</td>
+      <td>P_00335</td>
       <td>2</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
+      <td>ILL_DEFINED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>3151</th>
-      <td>P_01848_RIGHT_mass_MLO_1</td>
-      <td>P_01848</td>
-      <td>1</td>
+      <th>2082</th>
+      <td>P_00313_RIGHT_mass_MLO_1</td>
+      <td>P_00313</td>
+      <td>2</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>OVAL</td>
-      <td>MICROLOBULATED</td>
+      <td>LOBULATED</td>
+      <td>ILL_DEFINED</td>
       <td>4</td>
       <td>MALIGNANT</td>
-      <td>5</td>
+      <td>4</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>2610</th>
-      <td>P_01076_RIGHT_mass_MLO_1</td>
-      <td>P_01076</td>
-      <td>3</td>
-      <td>RIGHT</td>
+      <th>2874</th>
+      <td>P_01434_LEFT_mass_MLO_1</td>
+      <td>P_01434</td>
+      <td>1</td>
+      <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>IRREGULAR</td>
+      <td>LOBULATED</td>
       <td>MICROLOBULATED</td>
       <td>5</td>
       <td>MALIGNANT</td>
@@ -1167,36 +1184,36 @@ The section has the following python package dependencies:</p>
       <td>True</td>
     </tr>
     <tr>
-      <th>3388</th>
-      <td>P_00951_RIGHT_mass_CC_1</td>
-      <td>P_00951</td>
-      <td>1</td>
+      <th>3285</th>
+      <td>P_00409_RIGHT_mass_MLO_1</td>
+      <td>P_00409</td>
+      <td>2</td>
       <td>RIGHT</td>
-      <td>CC</td>
+      <td>MLO</td>
       <td>1</td>
-      <td>IRREGULAR</td>
-      <td>SPICULATED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
+      <td>LOBULATED</td>
+      <td>ILL_DEFINED</td>
+      <td>0</td>
+      <td>BENIGN</td>
       <td>5</td>
       <td>test</td>
-      <td>True</td>
+      <td>False</td>
     </tr>
     <tr>
-      <th>2366</th>
-      <td>P_00711_RIGHT_mass_CC_1</td>
-      <td>P_00711</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>CC</td>
+      <th>2329</th>
+      <td>P_00665_LEFT_mass_MLO_1</td>
+      <td>P_00665</td>
       <td>1</td>
-      <td>ROUND</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>2</td>
-      <td>BENIGN</td>
-      <td>3</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
+      <td>SPICULATED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>4</td>
       <td>train</td>
-      <td>False</td>
+      <td>True</td>
     </tr>
   </tbody>
 </table>
@@ -1467,12 +1484,12 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">cases</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;calc_type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Types in CBIS-DDSM&quot;</span><span class="p">,</span> <span class="n">plot_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">order_by_count</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">calc</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;calc_type&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;Distribution of Calcification Types in CBIS-DDSM&quot;</span><span class="p">,</span> <span class="n">plot_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">order_by_count</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6d229e164f0decc34a339eed2a755be52947af5c28ed182fcdcc6bc8218b290d.png" src="../_images/6d229e164f0decc34a339eed2a755be52947af5c28ed182fcdcc6bc8218b290d.png" />
+<img alt="../_images/05325dbc10d8d0b1db63a109af137dd1c41c80e6335774424c8e0e6d73a58f40.png" src="../_images/05325dbc10d8d0b1db63a109af137dd1c41c80e6335774424c8e0e6d73a58f40.png" />
 </div>
 </div>
 <p>The vast majority of calcification types are pleomorphic, amorphous, and lucent-centered.</p>
@@ -1960,13 +1977,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_4324a" style='display:inline; margin-right:220px;'>
+<table id="T_973e0" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by BI-RADS Assessment</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_4324a_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_973e0_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -1976,70 +1993,70 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_4324a_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_4324a_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_4324a_row0_col0" class="data row0 col0" >177</td>
+      <th id="T_973e0_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_973e0_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_973e0_row0_col0" class="data row0 col0" >177</td>
     </tr>
     <tr>
-      <th id="T_4324a_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_4324a_row1_col0" class="data row1 col0" >59</td>
+      <th id="T_973e0_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_973e0_row1_col0" class="data row1 col0" >59</td>
     </tr>
     <tr>
-      <th id="T_4324a_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_4324a_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_4324a_row2_col0" class="data row2 col0" >0</td>
+      <th id="T_973e0_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_973e0_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_973e0_row2_col0" class="data row2 col0" >0</td>
     </tr>
     <tr>
-      <th id="T_4324a_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_4324a_row3_col0" class="data row3 col0" >3</td>
+      <th id="T_973e0_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_973e0_row3_col0" class="data row3 col0" >3</td>
     </tr>
     <tr>
-      <th id="T_4324a_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_4324a_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_4324a_row4_col0" class="data row4 col0" >642</td>
+      <th id="T_973e0_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_973e0_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_973e0_row4_col0" class="data row4 col0" >642</td>
     </tr>
     <tr>
-      <th id="T_4324a_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_4324a_row5_col0" class="data row5 col0" >2</td>
+      <th id="T_973e0_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_973e0_row5_col0" class="data row5 col0" >2</td>
     </tr>
     <tr>
-      <th id="T_4324a_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_4324a_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_4324a_row6_col0" class="data row6 col0" >375</td>
+      <th id="T_973e0_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_973e0_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_973e0_row6_col0" class="data row6 col0" >375</td>
     </tr>
     <tr>
-      <th id="T_4324a_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_4324a_row7_col0" class="data row7 col0" >102</td>
+      <th id="T_973e0_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_973e0_row7_col0" class="data row7 col0" >102</td>
     </tr>
     <tr>
-      <th id="T_4324a_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_4324a_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_4324a_row8_col0" class="data row8 col0" >902</td>
+      <th id="T_973e0_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_973e0_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_973e0_row8_col0" class="data row8 col0" >902</td>
     </tr>
     <tr>
-      <th id="T_4324a_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_4324a_row9_col0" class="data row9 col0" >731</td>
+      <th id="T_973e0_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_973e0_row9_col0" class="data row9 col0" >731</td>
     </tr>
     <tr>
-      <th id="T_4324a_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_4324a_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_4324a_row10_col0" class="data row10 col0" >13</td>
+      <th id="T_973e0_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_973e0_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_973e0_row10_col0" class="data row10 col0" >13</td>
     </tr>
     <tr>
-      <th id="T_4324a_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_4324a_row11_col0" class="data row11 col0" >560</td>
+      <th id="T_973e0_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_973e0_row11_col0" class="data row11 col0" >560</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_f063b" style='display:inline; margin-right:120px'>
+<table id="T_4d87c" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by BI-RADS Assessment (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_f063b_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_4d87c_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2049,58 +2066,58 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_f063b_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_f063b_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_f063b_row0_col0" class="data row0 col0" >0.750000</td>
+      <th id="T_4d87c_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_4d87c_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_4d87c_row0_col0" class="data row0 col0" >0.750000</td>
     </tr>
     <tr>
-      <th id="T_f063b_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_f063b_row1_col0" class="data row1 col0" >0.250000</td>
+      <th id="T_4d87c_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_4d87c_row1_col0" class="data row1 col0" >0.250000</td>
     </tr>
     <tr>
-      <th id="T_f063b_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_f063b_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_f063b_row2_col0" class="data row2 col0" >0.000000</td>
+      <th id="T_4d87c_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_4d87c_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_4d87c_row2_col0" class="data row2 col0" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_f063b_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_f063b_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_4d87c_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_4d87c_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_f063b_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_f063b_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_f063b_row4_col0" class="data row4 col0" >0.996894</td>
+      <th id="T_4d87c_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_4d87c_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_4d87c_row4_col0" class="data row4 col0" >0.996894</td>
     </tr>
     <tr>
-      <th id="T_f063b_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_f063b_row5_col0" class="data row5 col0" >0.003106</td>
+      <th id="T_4d87c_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_4d87c_row5_col0" class="data row5 col0" >0.003106</td>
     </tr>
     <tr>
-      <th id="T_f063b_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_f063b_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_f063b_row6_col0" class="data row6 col0" >0.786164</td>
+      <th id="T_4d87c_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_4d87c_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_4d87c_row6_col0" class="data row6 col0" >0.786164</td>
     </tr>
     <tr>
-      <th id="T_f063b_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_f063b_row7_col0" class="data row7 col0" >0.213836</td>
+      <th id="T_4d87c_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_4d87c_row7_col0" class="data row7 col0" >0.213836</td>
     </tr>
     <tr>
-      <th id="T_f063b_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_f063b_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_f063b_row8_col0" class="data row8 col0" >0.552358</td>
+      <th id="T_4d87c_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_4d87c_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_4d87c_row8_col0" class="data row8 col0" >0.552358</td>
     </tr>
     <tr>
-      <th id="T_f063b_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_f063b_row9_col0" class="data row9 col0" >0.447642</td>
+      <th id="T_4d87c_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_4d87c_row9_col0" class="data row9 col0" >0.447642</td>
     </tr>
     <tr>
-      <th id="T_f063b_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_f063b_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_f063b_row10_col0" class="data row10 col0" >0.022688</td>
+      <th id="T_4d87c_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_4d87c_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_4d87c_row10_col0" class="data row10 col0" >0.022688</td>
     </tr>
     <tr>
-      <th id="T_f063b_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_f063b_row11_col0" class="data row11 col0" >0.977312</td>
+      <th id="T_4d87c_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_4d87c_row11_col0" class="data row11 col0" >0.977312</td>
     </tr>
   </tbody>
 </table>
@@ -2178,13 +2195,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_a9b18" style='display:inline; margin-right:220px;'>
+<table id="T_20943" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by Subtlety</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_a9b18_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_20943_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2194,61 +2211,61 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_a9b18_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_a9b18_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_a9b18_row0_col0" class="data row0 col0" >78</td>
+      <th id="T_20943_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_20943_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_20943_row0_col0" class="data row0 col0" >78</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_a9b18_row1_col0" class="data row1 col0" >96</td>
+      <th id="T_20943_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_20943_row1_col0" class="data row1 col0" >96</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_a9b18_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_a9b18_row2_col0" class="data row2 col0" >232</td>
+      <th id="T_20943_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_20943_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_20943_row2_col0" class="data row2 col0" >232</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_a9b18_row3_col0" class="data row3 col0" >207</td>
+      <th id="T_20943_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_20943_row3_col0" class="data row3 col0" >207</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_a9b18_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_a9b18_row4_col0" class="data row4 col0" >627</td>
+      <th id="T_20943_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_20943_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_20943_row4_col0" class="data row4 col0" >627</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_a9b18_row5_col0" class="data row5 col0" >337</td>
+      <th id="T_20943_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_20943_row5_col0" class="data row5 col0" >337</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_a9b18_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_a9b18_row6_col0" class="data row6 col0" >559</td>
+      <th id="T_20943_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_20943_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_20943_row6_col0" class="data row6 col0" >559</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_a9b18_row7_col0" class="data row7 col0" >316</td>
+      <th id="T_20943_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_20943_row7_col0" class="data row7 col0" >316</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_a9b18_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_a9b18_row8_col0" class="data row8 col0" >613</td>
+      <th id="T_20943_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_20943_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_20943_row8_col0" class="data row8 col0" >613</td>
     </tr>
     <tr>
-      <th id="T_a9b18_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_a9b18_row9_col0" class="data row9 col0" >501</td>
+      <th id="T_20943_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_20943_row9_col0" class="data row9 col0" >501</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_91fea" style='display:inline; margin-right:120px'>
+<table id="T_ef7f5" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by Subtlety (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_91fea_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_ef7f5_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2258,49 +2275,49 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_91fea_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_91fea_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_91fea_row0_col0" class="data row0 col0" >0.448276</td>
+      <th id="T_ef7f5_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_ef7f5_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_ef7f5_row0_col0" class="data row0 col0" >0.448276</td>
     </tr>
     <tr>
-      <th id="T_91fea_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_91fea_row1_col0" class="data row1 col0" >0.551724</td>
+      <th id="T_ef7f5_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_ef7f5_row1_col0" class="data row1 col0" >0.551724</td>
     </tr>
     <tr>
-      <th id="T_91fea_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_91fea_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_91fea_row2_col0" class="data row2 col0" >0.528474</td>
+      <th id="T_ef7f5_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_ef7f5_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_ef7f5_row2_col0" class="data row2 col0" >0.528474</td>
     </tr>
     <tr>
-      <th id="T_91fea_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_91fea_row3_col0" class="data row3 col0" >0.471526</td>
+      <th id="T_ef7f5_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_ef7f5_row3_col0" class="data row3 col0" >0.471526</td>
     </tr>
     <tr>
-      <th id="T_91fea_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_91fea_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_91fea_row4_col0" class="data row4 col0" >0.650415</td>
+      <th id="T_ef7f5_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_ef7f5_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_ef7f5_row4_col0" class="data row4 col0" >0.650415</td>
     </tr>
     <tr>
-      <th id="T_91fea_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_91fea_row5_col0" class="data row5 col0" >0.349585</td>
+      <th id="T_ef7f5_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_ef7f5_row5_col0" class="data row5 col0" >0.349585</td>
     </tr>
     <tr>
-      <th id="T_91fea_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_91fea_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_91fea_row6_col0" class="data row6 col0" >0.638857</td>
+      <th id="T_ef7f5_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_ef7f5_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_ef7f5_row6_col0" class="data row6 col0" >0.638857</td>
     </tr>
     <tr>
-      <th id="T_91fea_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_91fea_row7_col0" class="data row7 col0" >0.361143</td>
+      <th id="T_ef7f5_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_ef7f5_row7_col0" class="data row7 col0" >0.361143</td>
     </tr>
     <tr>
-      <th id="T_91fea_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_91fea_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_91fea_row8_col0" class="data row8 col0" >0.550269</td>
+      <th id="T_ef7f5_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_ef7f5_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_ef7f5_row8_col0" class="data row8 col0" >0.550269</td>
     </tr>
     <tr>
-      <th id="T_91fea_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_91fea_row9_col0" class="data row9 col0" >0.449731</td>
+      <th id="T_ef7f5_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_ef7f5_row9_col0" class="data row9 col0" >0.449731</td>
     </tr>
   </tbody>
 </table>
@@ -3092,8 +3109,8 @@ weighted avg       0.79      0.79      0.79      1694
 </section>
 </section>
 </section>
-<section id="dicom-metadata-exploratory-data-analysis">
-<h2>DICOM Metadata Exploratory Data Analysis<a class="headerlink" href="#dicom-metadata-exploratory-data-analysis" title="Permalink to this heading">#</a></h2>
+<section id="dicom-metadata-eda">
+<h2>DICOM Metadata EDA<a class="headerlink" href="#dicom-metadata-eda" title="Permalink to this heading">#</a></h2>
 <p>Let’s summarize the available DICOM metadata.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3703,20 +3720,162 @@ All images have 1 sample(s) per pixel.
 <p>Our BRISQUE scores appear to have a Gaussian distribution, ranging from approximately 24 (best) to 117 (worst), with a mean value of about 73. Image preprocessing will enhance contrast and sharpness, and reduce noise, artifacts, and labeling.</p>
 </section>
 </section>
-<section id="dicom-images">
-<h2>DICOM Images<a class="headerlink" href="#dicom-images" title="Permalink to this heading">#</a></h2>
-<p>In this section, we examine the DICOM images</p>
+<section id="dicom-image-eda">
+<h2>DICOM Image EDA<a class="headerlink" href="#dicom-image-eda" title="Permalink to this heading">#</a></h2>
+<p>The purpose of this section is three fold:</p>
+<ol class="arabic simple">
+<li><p>Inspect image quality for noise, annotations, artifacts, and labeling that may negatively affect the classification task.</p></li>
+<li><p>Visually compare cases, abnormality types, subtlety and BI-RADS assessment.</p></li>
+<li><p>Examine interclass dissimilarity and intraclass similarity by abnormality type and morphology.</p></li>
+</ol>
+<p>As such, this section is organized as follows:</p>
+<ol class="arabic simple">
+<li><p><strong>DICOM Image Quality Analysis</strong>: Visual image quality assessment</p></li>
+<li><p><strong>DICOM Calcification Case Analysis</strong>: Visual analysis of various calcification types and distributions by BI-RADS Assessment.</p></li>
+<li><p><strong>DICOM Mass Case Analysis</strong>: Visual analysis of various mass sizes and margins by BI-RADS Assessment.</p></li>
+</ol>
+<section id="dicom-image-quality-analysis">
+<h3>DICOM Image Quality Analysis<a class="headerlink" href="#dicom-image-quality-analysis" title="Permalink to this heading">#</a></h3>
+<p>Let’s sample the image data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c95595e4e6ecfdbf542dc61506c270ab91e3a86504c3f8175b7f58e7439fa9c2.png" src="../_images/c95595e4e6ecfdbf542dc61506c270ab91e3a86504c3f8175b7f58e7439fa9c2.png" />
+<img alt="../_images/2e8dfb31fbdcad8c22e71c675146d096f9629c6d4edb9502d7a367dd356031e9.png" src="../_images/2e8dfb31fbdcad8c22e71c675146d096f9629c6d4edb9502d7a367dd356031e9.png" />
 </div>
 </div>
-<p>Each of the images sampled has artifacts and labeling which may affect the modeling and classification of the cases. Image data preprocessing will remove these artifacts from the images.</p>
+<p>Thirteen out of 16 images (81%) have artifacts and labeling which may affect the modeling and classification of the cases. Image data preprocessing will remove these artifacts from the images.</p>
+</section>
+<section id="dicom-calcification-case-analysis">
+<h3>DICOM Calcification Case Analysis<a class="headerlink" href="#dicom-calcification-case-analysis" title="Permalink to this heading">#</a></h3>
+<p>In this section, we sample calcification types and distributions vis-a-vis BI-RADS assessment, subtlety, and diagnosis.</p>
+<section id="dicom-calcification-cases-benign">
+<h4>DICOM Calcification Cases - Benign<a class="headerlink" href="#dicom-calcification-cases-benign" title="Permalink to this heading">#</a></h4>
+<p>Here, we examine BI-RADS 1 and 2 calcification cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;calcification&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/fd8baf4045fcef8fa29965d6770a1cf147fbeddaedafb21d2564d5ac13a2a569.png" src="../_images/fd8baf4045fcef8fa29965d6770a1cf147fbeddaedafb21d2564d5ac13a2a569.png" />
+</div>
+</div>
+</section>
+<section id="dicom-calcification-cases-probably-benign">
+<h4>DICOM Calcification Cases - Probably Benign<a class="headerlink" href="#dicom-calcification-cases-probably-benign" title="Permalink to this heading">#</a></h4>
+<p>The following calcification cases are assessed as BI-RADS 3. A finding in this category has a 2% or lower chance of malignancy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;calcification&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8a0c0b652b9e1f10e51089aa538fb03711ec4853da893fd5ebd8f727fd8b3de3.png" src="../_images/8a0c0b652b9e1f10e51089aa538fb03711ec4853da893fd5ebd8f727fd8b3de3.png" />
+</div>
+</div>
+</section>
+<section id="dicom-calcification-cases-suspicious">
+<h4>DICOM Calcification Cases - Suspicious<a class="headerlink" href="#dicom-calcification-cases-suspicious" title="Permalink to this heading">#</a></h4>
+<p>The following calcification cases are assessed as BI-RADS 4, a suspicious abnormality with a probability of malignancy ranging from 2%-10%, 10%-50%, and 50%-95% for subcategories 4A, 4B, and 4C respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;calcification&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0fada6a29fe753275fd5d44e044e2b9fcf848851896e1a0b4f4448541563d899.png" src="../_images/0fada6a29fe753275fd5d44e044e2b9fcf848851896e1a0b4f4448541563d899.png" />
+</div>
+</div>
+</section>
+<section id="dicom-calcification-cases-highly-suspicious">
+<h4>DICOM Calcification Cases - Highly Suspicious<a class="headerlink" href="#dicom-calcification-cases-highly-suspicious" title="Permalink to this heading">#</a></h4>
+<p>The following BI-RADS 5 calcification cases have at least a 95% chance of malignancy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;calcification&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6597fafd5cd97b4d5ac73f94946102f70736a2277875513ade701e3ccbfc26f6.png" src="../_images/6597fafd5cd97b4d5ac73f94946102f70736a2277875513ade701e3ccbfc26f6.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="dicom-mass-case-analysis">
+<h3>DICOM Mass Case Analysis<a class="headerlink" href="#dicom-mass-case-analysis" title="Permalink to this heading">#</a></h3>
+<section id="dicom-mass-cases-benign">
+<h4>DICOM Mass Cases - Benign<a class="headerlink" href="#dicom-mass-cases-benign" title="Permalink to this heading">#</a></h4>
+<p>Here, we examine BI-RADS 1 and 2 mass cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;mass&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ba19589db73b3a8953c8dc58b2d16a90eeb21ccc0c40a47fa50cde9487d8b7a1.png" src="../_images/ba19589db73b3a8953c8dc58b2d16a90eeb21ccc0c40a47fa50cde9487d8b7a1.png" />
+</div>
+</div>
+</section>
+<section id="dicom-mass-cases-probably-benign">
+<h4>DICOM Mass Cases - Probably Benign<a class="headerlink" href="#dicom-mass-cases-probably-benign" title="Permalink to this heading">#</a></h4>
+<p>The following mass cases are assessed as BI-RADS 3. A finding in this category has a 2% or lower chance of malignancy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;mass&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f0a5cb330808594ca83f4990f1350645f9c98b3f43ec1aaaabd0917a3c1f7137.png" src="../_images/f0a5cb330808594ca83f4990f1350645f9c98b3f43ec1aaaabd0917a3c1f7137.png" />
+</div>
+</div>
+</section>
+<section id="dicom-mass-cases-suspicious">
+<h4>DICOM Mass Cases - Suspicious<a class="headerlink" href="#dicom-mass-cases-suspicious" title="Permalink to this heading">#</a></h4>
+<p>The following mass cases are assessed as BI-RADS 4, a suspicious abnormality with a probability of malignancy ranging from 2%-10%, 10%-50%, and 50%-95% for subcategories 4A, 4B, and 4C respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;mass&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f45d599733e09c7732d498ca868480302152ef967712900ff17eb042182b6668.png" src="../_images/f45d599733e09c7732d498ca868480302152ef967712900ff17eb042182b6668.png" />
+</div>
+</div>
+</section>
+<section id="dicom-mass-cases-highly-suspicious">
+<h4>DICOM Mass Cases - Highly Suspicious<a class="headerlink" href="#dicom-mass-cases-highly-suspicious" title="Permalink to this heading">#</a></h4>
+<p>The following BI-RADS 5 mass cases have at least a 95% chance of malignancy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;mass&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;assessment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/da5fc6468012c43cc185b73c104748bb5e09edac64425e80658a09b3bc3a8d50.png" src="../_images/da5fc6468012c43cc185b73c104748bb5e09edac64425e80658a09b3bc3a8d50.png" />
+</div>
+</div>
+</section>
+</section>
 </section>
 </section>
 
@@ -3797,7 +3956,7 @@ All images have 1 sample(s) per pixel.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploratory-data-analysis-plan">Exploratory Data Analysis Plan</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-exploratory-data-analysis">Case Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-eda">Case EDA</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-univariate-analysis">Case Univariate Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">Breast Density</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#left-or-right-side">Left or Right Side</a></li>
@@ -3865,14 +4024,31 @@ All images have 1 sample(s) per pixel.
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata-exploratory-data-analysis">DICOM Metadata Exploratory Data Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-metadata-eda">DICOM Metadata EDA</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#photometric-interpretation-samples-per-pixel-and-bit-depth">Photometric Interpretation, Samples per Pixel and Bit Depth</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-height-width-size-and-aspect-ratio">DICOM Image Height, Width, Size, and Aspect Ratio</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-pixel-values">DICOM Image Pixel Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-quality">DICOM Image Quality</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-images">DICOM Images</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-eda">DICOM Image EDA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-quality-analysis">DICOM Image Quality Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-case-analysis">DICOM Calcification Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-benign">DICOM Calcification Cases - Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-probably-benign">DICOM Calcification Cases - Probably Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-suspicious">DICOM Calcification Cases - Suspicious</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-calcification-cases-highly-suspicious">DICOM Calcification Cases - Highly Suspicious</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-case-analysis">DICOM Mass Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-benign">DICOM Mass Cases - Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-probably-benign">DICOM Mass Cases - Probably Benign</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-suspicious">DICOM Mass Cases - Suspicious</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-mass-cases-highly-suspicious">DICOM Mass Cases - Highly Suspicious</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
