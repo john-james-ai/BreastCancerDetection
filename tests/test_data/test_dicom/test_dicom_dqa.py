@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Sunday October 1st 2023 01:10:32 pm                                                 #
+# Modified   : Monday October 16th 2023 08:39:44 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ import logging
 
 import pandas as pd
 
-from bcd.data.dqa.dicom import DicomDQA
+from bcd.data.quality.dicom import DicomDQA
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)

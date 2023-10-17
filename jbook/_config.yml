@@ -8,7 +8,7 @@ title: |
 
 author: John James
 copyright: "2023"
-logo: "figures/logo.jpg"
+logo: "figures/logo.png"
 root: forward
 options:
   numbered: true
@@ -42,7 +42,7 @@ sphinx:
 #                                       HTML                                                       #
 # ================================================================================================ #
 html:
-  favicon: "figures/favicon.png" # A path to a favicon image
+  favicon: "figures/favicon-32x32.png" # A path to a favicon image
   use_multitoc_numbering: true # Whether to continue numbering over multiple TOC sections.
   use_edit_page_button: true # Whether to add an "edit this page" button to pages. If `true`, repository information in repository: must be filled in
   use_repository_button: true # Whether to add a link to your repository button
