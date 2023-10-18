@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Monday October 16th 2023 08:39:38 pm                                                #
+# Modified   : Wednesday October 18th 2023 11:23:28 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -30,7 +30,6 @@ from sklearn.experimental import enable_iterative_imputer  # noqa
 from sklearn.impute import IterativeImputer
 
 from bcd.data.prep.meta.base import DataPrep
-from bcd.data import CALC_VARIABLES, MASS_VARIABLES
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -46,8 +45,7 @@ class CasePrep(DataPrep):
         calc_test_fp: str,
         mass_train_fp: str,
         mass_test_fp: str,
-        calc_fp: str,
-        mass_fp: str,
+        case_fp: str,
         case_series_fp: str,
         force: bool = False,
         result: bool = False,
@@ -62,16 +60,16 @@ class CasePrep(DataPrep):
             force (bool): Whether to force execution if output already exists. Default is False.
             result (bool): Whether the result should be returned. Default is False.
 
-        Returns Calcification and Mass DataFrames (in that order)
+        Returns
+            If result is True, the following tuple is returned: (df_cases,  df_case_series)
         """
-        calc_fp = os.path.abspath(calc_fp)
-        mass_fp = os.path.abspath(mass_fp)
+        case_fp = os.path.abspath(case_fp)
         case_series_fp = os.path.abspath(case_series_fp)
 
-        os.makedirs(os.path.dirname(calc_fp), exist_ok=True)
+        os.makedirs(os.path.dirname(case_fp), exist_ok=True)
         os.makedirs(os.path.dirname(case_series_fp), exist_ok=True)
 
-        if force or not os.path.exists(calc_fp):
+        if force or not os.path.exists(case_fp):
             # Merge all case data into a single DataFrame
             df_cases = self._merge_cases(
                 calc_train_fp=calc_train_fp,
@@ -88,19 +86,12 @@ class CasePrep(DataPrep):
             # Create the series/ case cross-reference file
             df_cases, df_case_series = self._create_case_series_xref(df=df_cases)
 
-            # Split the datasets
-            df_calc = df_cases[CALC_VARIABLES].loc[df_cases["abnormality_type"] == "calcification"]
-            df_mass = df_cases[MASS_VARIABLES].loc[df_cases["abnormality_type"] == "mass"]
-
             # Save datasets
-            df_calc.to_csv(calc_fp, index=False)
-            df_mass.to_csv(mass_fp, index=False)
+            df_cases.to_csv(case_fp, index=False)
             df_case_series.to_csv(case_series_fp, index=False)
 
         if result:
-            calc_cases = pd.read_csv(calc_fp)
-            mass_cases = pd.read_csv(mass_fp)
-            return calc_cases, mass_cases
+            return (df_cases, df_case_series)
 
     def _merge_cases(
         self,
@@ -131,6 +122,10 @@ class CasePrep(DataPrep):
         df_mass_test = self._format_column_names(df=df_mass_test)
 
         df = pd.concat([df_calc_train, df_calc_test, df_mass_train, df_mass_test], axis=0)
+        df.loc[df["abnormality_type"] == "mass", "calc_type"] = "NOT APPLICABLE"
+        df.loc[df["abnormality_type"] == "mass", "calc_distribution"] = "NOT APPLICABLE"
+        df.loc[df["abnormality_type"] == "calcification", "mass_shape"] = "NOT APPLICABLE"
+        df.loc[df["abnormality_type"] == "calcification", "mass_margins"] = "NOT APPLICABLE"
         return df
 
     def _assign_case_id(self, df: pd.DataFrame) -> pd.DataFrame:

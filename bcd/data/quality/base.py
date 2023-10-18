@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/dqa/base.py                                                               #
+# Filename   : /bcd/data/quality/base.py                                                           #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Sunday October 1st 2023 08:35:39 am                                                 #
+# Modified   : Wednesday October 18th 2023 01:04:39 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -203,7 +203,7 @@ class DQA(ABC):
         pvr = round(nvr / nrows, 3)
 
         ncells = self._df.shape[0] * self._df.shape[1]
-        nvc = dv["Valid"].sum(axis=0)
+        nvc = ncells - validation_mask.eq(0).sum().sum()
         pvc = round(nvc / ncells, 3)
 
         vs = Validity(

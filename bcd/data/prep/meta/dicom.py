@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Monday October 16th 2023 08:39:37 pm                                                #
+# Modified   : Wednesday October 18th 2023 09:51:58 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -46,6 +46,7 @@ class DicomPrep(DataPrep):
         skip_list: list = [],
         force: bool = False,
         result: bool = False,
+        brisque: bool = False,
     ) -> Union[None, pd.DataFrame]:
         """Extracts image metadata from the DICOM image files.
 
@@ -55,6 +56,7 @@ class DicomPrep(DataPrep):
             skip_list (list): List of filepaths relative to the location to skip.
             force (bool): Whether to force execution if output already exists. Default is False.
             result (bool): Whether the result should be returned. Default is False.
+            brisque (bool): Whether to compute the BRISQUE image quality assessment.
         """
         location = os.path.abspath(location)
         dicom_fp = os.path.abspath(dicom_fp)
@@ -63,7 +65,7 @@ class DicomPrep(DataPrep):
 
         if force or not os.path.exists(dicom_fp):
             filepaths = self._get_filepaths(location, skip_list)
-            dicom_data = self._extract_dicom_data(filepaths=filepaths)
+            dicom_data = self._extract_dicom_data(filepaths=filepaths, brisque=brisque)
             dicom_data.to_csv(dicom_fp, index=False)
             msg = f"Shape of DICOM Data: {dicom_data.shape}"
             logger.debug(msg)
@@ -111,7 +113,7 @@ class DicomPrep(DataPrep):
                     filtered_filepaths.append(filepath)
         return filtered_filepaths
 
-    def _extract_dicom_data(self, filepaths: list) -> pd.DataFrame:
+    def _extract_dicom_data(self, filepaths: list, brisque: bool = False) -> pd.DataFrame:
         """Extracts dicom data and returns a list of dictionaries."""
         dicom_data = []
 
@@ -137,7 +139,8 @@ class DicomPrep(DataPrep):
             dcm_data["image_pixel_range"] = int(dcm.LargestImagePixelValue) - int(
                 dcm.SmallestImagePixelValue
             )
-            dcm_data["brisque"] = self._assess_quality(dcm=dcm)
+            if brisque:
+                dcm_data["brisque"] = self._assess_quality(dcm=dcm)
             dicom_data.append(dcm_data)
 
         dicom_data = pd.DataFrame(data=dicom_data)

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 16th 2023 08:41:25 pm                                                #
-# Modified   : Wednesday October 18th 2023 07:00:49 am                                             #
+# Modified   : Wednesday October 18th 2023 07:16:21 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,7 +19,6 @@
 """Image Preparation Base Module"""
 from abc import ABC, abstractmethod
 from typing import Any
-import shutil
 
 import numpy as np
 from tqdm import tqdm
