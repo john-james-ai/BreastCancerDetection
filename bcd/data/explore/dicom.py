@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Tuesday October 17th 2023 12:39:35 am                                               #
+# Modified   : Wednesday October 18th 2023 07:04:50 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -59,7 +59,6 @@ MASS_FEATURES = [
     "abnormality_type",
     "side",
     "image_view",
-    "brisque",
     "breast_density",
     "subtlety",
     "mass_shape",
@@ -70,7 +69,6 @@ CALC_FEATURES = [
     "abnormality_type",
     "side",
     "image_view",
-    "brisque",
     "breast_density",
     "subtlety",
     "calc_type",

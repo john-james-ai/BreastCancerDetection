@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Monday October 16th 2023 08:40:43 pm                                                #
+# Modified   : Wednesday October 18th 2023 06:53:32 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -98,6 +98,94 @@ FEATURES = {
     "assessment": "ordinal",
     "subtlety": "ordinal",
 }
+MODEL_FEATURES = [
+    "AT_calcification",
+    "AT_mass",
+    "breast_density",
+    "CD_CLUSTERED",
+    "CD_DIFFUSELY_SCATTERED",
+    "CD_LINEAR",
+    "CD_REGIONAL",
+    "CD_SEGMENTAL",
+    "CT_AMORPHOUS",
+    "CT_COARSE",
+    "CT_DYSTROPHIC",
+    "CT_EGGSHELL",
+    "CT_FINE_LINEAR_BRANCHING",
+    "CT_LARGE_RODLIKE",
+    "CT_LUCENT_CENTERED",
+    "CT_MILK_OF_CALCIUM",
+    "CT_PLEOMORPHIC",
+    "CT_PUNCTATE",
+    "CT_ROUND_AND_REGULAR",
+    "CT_SKIN",
+    "CT_VASCULAR",
+    "IV_CC",
+    "IV_MLO",
+    "LR_LEFT",
+    "LR_RIGHT",
+    "MM_CIRCUMSCRIBED",
+    "MM_ILL_DEFINED",
+    "MM_MICROLOBULATED",
+    "MM_OBSCURED",
+    "MM_SPICULATED",
+    "MS_ARCHITECTURAL_DISTORTION",
+    "MS_ASYMMETRIC_BREAST_TISSUE",
+    "MS_FOCAL_ASYMMETRIC_DENSITY",
+    "MS_IRREGULAR",
+    "MS_LOBULATED",
+    "MS_LYMPH_NODE",
+    "MS_OVAL",
+    "MS_ROUND",
+    "subtlety",
+]
+CALC_MODEL_FEATURES = [
+    "breast_density",
+    "CD_CLUSTERED",
+    "CD_DIFFUSELY_SCATTERED",
+    "CD_LINEAR",
+    "CD_REGIONAL",
+    "CD_SEGMENTAL",
+    "CT_AMORPHOUS",
+    "CT_COARSE",
+    "CT_DYSTROPHIC",
+    "CT_EGGSHELL",
+    "CT_FINE_LINEAR_BRANCHING",
+    "CT_LARGE_RODLIKE",
+    "CT_LUCENT_CENTERED",
+    "CT_MILK_OF_CALCIUM",
+    "CT_PLEOMORPHIC",
+    "CT_PUNCTATE",
+    "CT_ROUND_AND_REGULAR",
+    "CT_SKIN",
+    "CT_VASCULAR",
+    "IV_CC",
+    "IV_MLO",
+    "LR_LEFT",
+    "LR_RIGHT",
+    "subtlety",
+]
+MASS_MODEL_FEATURES = [
+    "breast_density",
+    "IV_CC",
+    "IV_MLO",
+    "LR_LEFT",
+    "LR_RIGHT",
+    "MM_CIRCUMSCRIBED",
+    "MM_ILL_DEFINED",
+    "MM_MICROLOBULATED",
+    "MM_OBSCURED",
+    "MM_SPICULATED",
+    "MS_ARCHITECTURAL_DISTORTION",
+    "MS_ASYMMETRIC_BREAST_TISSUE",
+    "MS_FOCAL_ASYMMETRIC_DENSITY",
+    "MS_IRREGULAR",
+    "MS_LOBULATED",
+    "MS_LYMPH_NODE",
+    "MS_OVAL",
+    "MS_ROUND",
+    "subtlety",
+]
 CALC_FEATURES = {
     "breast_density": "ordinal",
     "left_or_right_breast": "nominal",
@@ -115,20 +203,6 @@ MASS_FEATURES = {
     "mass_margins": "nominal",
     "assessment": "ordinal",
     "subtlety": "ordinal",
-}
-
-CORE_VARIABLES = {
-    "breast_density": "ordinal",
-    "left_or_right_breast": "nominal",
-    "image_view": "nominal",
-    "abnormality_type": "nominal",
-    "calc_type": "nominal",
-    "calc_distribution": "nominal",
-    "mass_shape": "nominal",
-    "mass_margins": "nominal",
-    "assessment": "ordinal",
-    "subtlety": "ordinal",
-    "cancer": "nominal",
 }
 
 MORPHOLOGY_PREFIX = {
@@ -173,6 +247,58 @@ class CaseDataset(Dataset):
     def get_mass_data(self) -> pd.DataFrame:
         df = self._df.loc[self._df["abnormality_type"] == "mass"]
         return df[MASS_DATA]
+
+    def get_model_data(self) -> tuple:
+        """Returns model data for both calcification and mass cases
+
+        Returns:
+            Tuple containing train test splits.
+        """
+        X_train = self._df.loc[self._df["fileset"] == "train"][MODEL_FEATURES]
+        y_train = self._df.loc[self._df["fileset"] == "train"]["cancer"]
+        X_test = self._df.loc[self._df["fileset"] == "test"][MODEL_FEATURES]
+        y_test = self._df.loc[self._df["fileset"] == "test"]["cancer"]
+        return (X_train, y_train, X_test, y_test)
+
+    def get_calc_model_data(self) -> tuple:
+        """Returns model data for calcification cases
+
+        Returns:
+            Tuple containing train test splits.
+        """
+        X_train = self._df.loc[
+            (self._df["abnormality_type"] == "calcification") & (self._df["fileset"] == "train")
+        ][CALC_MODEL_FEATURES]
+        y_train = self._df.loc[
+            (self._df["abnormality_type"] == "calcification") & (self._df["fileset"] == "train")
+        ]["cancer"]
+        X_test = self._df.loc[
+            (self._df["abnormality_type"] == "calcification") & (self._df["fileset"] == "test")
+        ][CALC_MODEL_FEATURES]
+        y_test = self._df.loc[
+            (self._df["abnormality_type"] == "calcification") & (self._df["fileset"] == "test")
+        ]["cancer"]
+        return (X_train, y_train, X_test, y_test)
+
+    def get_mass_model_data(self) -> tuple:
+        """Returns model data for mass cases
+
+        Returns:
+            Tuple containing train test splits.
+        """
+        X_train = self._df.loc[
+            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "train")
+        ][MASS_MODEL_FEATURES]
+        y_train = self._df.loc[
+            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "train")
+        ]["cancer"]
+        X_test = self._df.loc[
+            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "test")
+        ][MASS_MODEL_FEATURES]
+        y_test = self._df.loc[
+            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "test")
+        ]["cancer"]
+        return (X_train, y_train, X_test, y_test)
 
     def plot_feature_associations(self, *args, **kwargs) -> None:
         """Plots an association matrix showing strength (not direction) of the association between features."""
