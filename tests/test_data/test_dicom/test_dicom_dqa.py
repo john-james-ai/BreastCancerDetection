@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Monday October 16th 2023 08:39:44 pm                                                #
+# Modified   : Saturday October 21st 2023 09:50:32 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ import logging
 
 import pandas as pd
 
-from bcd.data.quality.dicom import DicomDQA
+from bcd.analyze.quality.dicom import DicomDQA
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
-DICOM_FP = "data/staged/dicom.csv"
+DICOM_FP = "data/meta/1_staged/dicom.csv"
 
 
 @pytest.mark.dqa

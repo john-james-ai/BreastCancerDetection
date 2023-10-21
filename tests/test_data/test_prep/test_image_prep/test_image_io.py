@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 17th 2023 06:10:54 pm                                               #
-# Modified   : Wednesday October 18th 2023 06:24:00 am                                             #
+# Modified   : Friday October 20th 2023 02:58:56 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -59,7 +59,7 @@ class TestDICOMIO:  # pragma: no cover
         assert isinstance(io.get_paths(), list)
         logger.debug(io.get_paths(n=10))
 
-        filepaths = io.get_paths(n=100, directory="data/staged")
+        filepaths = io.get_paths(n=100, directory="data/meta/1_staged")
         assert len(filepaths) <= 100
         for filepath in filepaths:
             assert "staged" in filepath
