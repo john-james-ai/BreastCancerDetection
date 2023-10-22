@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Saturday October 21st 2023 09:50:35 am                                              #
+# Modified   : Saturday October 21st 2023 04:16:46 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -49,7 +49,7 @@ class DicomDQA(DQA):
             filepath = self._validator.validate_filepath(filepath=self._df["filepath"])
             pid = self._validator.validate_patient_id(patient_id=self._df["patient_id"])
             side = self._validator.validate_side(side=self._df["side"])
-            view = self._validator.validate_image_view(image_view=self._df["image_view"])
+            image_view = self._validator.validate_image_view(image_view=self._df["image_view"])
             pi = self._validator.validate_photometric_interpretation(
                 photometric_interpretation=self._df["photometric_interpretation"]
             )
@@ -59,15 +59,15 @@ class DicomDQA(DQA):
             ar = self._validator.validate_aspect_ratio(aspect_ratio=self._df["aspect_ratio"])
             height = self._validator.validate_between(data=self._df["height"], left=0, right=10000)
             width = self._validator.validate_between(data=self._df["width"], left=0, right=10000)
-            bits = self._validator.validate_image_bits(image_bits=self._df["bits"])
+            bit_depth = self._validator.validate_bit_depth(bit_depth=self._df["bit_depth"])
             sip = self._validator.validate_between(
-                data=self._df["smallest_image_pixel"], left=0, right=65535
+                data=self._df["min_pixel_value"], left=0, right=65535
             )
             lip = self._validator.validate_between(
-                data=self._df["largest_image_pixel"], left=0, right=65535
+                data=self._df["max_pixel_value"], left=0, right=65535
             )
             ipr = self._validator.validate_between(
-                data=self._df["image_pixel_range"], left=0, right=65535
+                data=self._df["range_pixel_values"], left=0, right=65535
             )
             size = self._validator.validate_size(df=self._df)
             self._validation_mask = pd.concat(
@@ -76,14 +76,14 @@ class DicomDQA(DQA):
                     filepath,
                     pid,
                     side,
-                    view,
+                    image_view,
                     pi,
                     spp,
                     height,
                     width,
                     size,
                     ar,
-                    bits,
+                    bit_depth,
                     sip,
                     lip,
                     ipr,
@@ -102,10 +102,10 @@ class DicomDQA(DQA):
                 "width",
                 "size",
                 "aspect_ratio",
-                "bits",
-                "smallest_image_pixel",
-                "largest_image_pixel",
-                "image_pixel_range",
+                "bit_depth",
+                "min_pixel_value",
+                "max_pixel_value",
+                "range_pixel_values",
             ]
 
         return self._validation_mask
@@ -119,13 +119,13 @@ class DicomDQA(DQA):
         pid = df["case_id"].str[:7]
         cid_split = df["case_id"].str.split("_", expand=True)
         side = cid_split[2]
-        view = cid_split[4]
+        image_view = cid_split[4]
 
         pid = df["patient_id"] == pid
         side = df["side"] == side
-        view = df["image_view"] == view
+        image_view = df["image_view"] == image_view
 
-        mask = pd.concat([pid, side, view], axis=1)
+        mask = pd.concat([pid, side, image_view], axis=1)
 
         # Summary Consistency
         nrows = df.shape[0]

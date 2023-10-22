@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Saturday October 21st 2023 10:29:18 am                                              #
+# Modified   : Sunday October 22nd 2023 12:03:21 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ from typing import Union
 
 import pandas as pd
 
-from bcd.data.structure.dataclass import DataClass
+from bcd.manage_data.structure.dataclass import DataClass
 
 
 # ================================================================================================ #
@@ -297,11 +297,13 @@ class Validator:
         # If a Dataframe, the caller is a case dqa class.
         if isinstance(data, pd.DataFrame):
             case_ids = (
-                data["patient_id"]
+                data["abnormality_type"].apply(lambda x: x.capitalize())
+                + "-"
+                + data["fileset"].apply(lambda x: x.capitalize())
+                + "_"
+                + data["patient_id"]
                 + "_"
                 + data["left_or_right_breast"]
-                + "_"
-                + data["abnormality_type"]
                 + "_"
                 + data["image_view"]
                 + "_"
@@ -364,7 +366,7 @@ class Validator:
         Valid values are CC (cranial caudal) and MLO (mediolateral oblique)
 
         Args:
-            image_view (pd.Series): A series containing image view data.
+            image_view (pd.Series): A series containing image image_view data.
 
         Returns: Boolean mask in Series format.
 
@@ -630,17 +632,17 @@ class Validator:
         """
         return filepath.apply(lambda x: os.path.exists(x))
 
-    def validate_image_bits(self, image_bits: pd.Series) -> pd.Series:
-        """Evaluates validity of image_bits
+    def validate_bit_depth(self, bit_depth: pd.Series) -> pd.Series:
+        """Evaluates validity of bit_depth
 
         Args:
-            image_bits (pd.Series): Validates image_bits
+            bit_depth (pd.Series): Validates bit_depth
 
         Returns: Boolean mask in Series format.
 
         """
         values = [8, 16]
-        return image_bits.astype("int32").isin(values)
+        return bit_depth.astype("int32").isin(values)
 
     def validate_photometric_interpretation(
         self, photometric_interpretation: pd.Series

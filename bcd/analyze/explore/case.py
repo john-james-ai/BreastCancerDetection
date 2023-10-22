@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/explore/case.py                                                           #
+# Filename   : /bcd/analyze/explore/case.py                                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Wednesday October 18th 2023 06:53:32 pm                                             #
+# Modified   : Saturday October 21st 2023 02:28:27 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,9 +23,9 @@ import logging
 
 import pandas as pd
 
-from bcd.data.explore import Dataset
+from bcd.analyze.explore import Explorer
 from bcd.utils.string import proper
-from studioai.visual.visualizer import SeabornCanvas
+from studioai.analysis.visualize.visualizer import SeabornCanvas
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -214,7 +214,7 @@ MORPHOLOGY_PREFIX = {
 
 
 # ------------------------------------------------------------------------------------------------ #
-class CaseDataset(Dataset):
+class CaseExplorer(Explorer):
     """Encapsulates Case Data
 
     Can be instantiated from a DataFrame or a file path to the data. If both are provided,

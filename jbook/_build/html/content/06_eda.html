@@ -844,7 +844,7 @@ The section has the following python package dependencies:</p>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
 <span class="kn">from</span> <span class="nn">bcd.data.dataset.case</span> <span class="kn">import</span> <span class="n">CaseDataset</span>
-<span class="kn">from</span> <span class="nn">bcd.data.dataset.dicom</span> <span class="kn">import</span> <span class="n">DicomDataset</span>
+<span class="kn">from</span> <span class="nn">bcd.data.dataset.dicom</span> <span class="kn">import</span> <span class="n">DicomExplorer</span>
 <span class="kn">from</span> <span class="nn">bcd.model.pipeline</span> <span class="kn">import</span> <span class="n">PipelineBuilder</span>
 <span class="kn">from</span> <span class="nn">bcd.model.selection</span> <span class="kn">import</span> <span class="n">ModelSelector</span>
 
@@ -3114,7 +3114,7 @@ weighted avg       0.79      0.79      0.79      1694
 <p>Let’s summarize the available DICOM metadata.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">DicomDataset</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">DicomExplorer</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -11,18 +11,18 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 19th 2023 08:41:07 pm                                              #
-# Modified   : Saturday October 21st 2023 10:29:15 am                                              #
+# Modified   : Sunday October 22nd 2023 12:02:34 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 from typing import Union, Tuple
 
-from bcd.data.structure.dataclass import DataClass
+from bcd.manage_data.structure.dataclass import DataClass
 from bcd.preprocess.domain.service.filter import Filter
 
 # Inject from container.
-from bcd.preprocess.domain.entity.image import Image
+from bcd.manage_data.entity.image import Image
 
 
 # ------------------------------------------------------------------------------------------------ #

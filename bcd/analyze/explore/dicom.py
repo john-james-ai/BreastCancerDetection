@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/explore/dicom.py                                                          #
+# Filename   : /bcd/analyze/explore/dicom.py                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Wednesday October 18th 2023 07:04:50 pm                                             #
+# Modified   : Saturday October 21st 2023 03:30:12 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ import pydicom
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from bcd.data.explore import Dataset
+from bcd.analyze.explore import Explorer
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -46,10 +46,13 @@ DICOM_DTYPES = {
     "width": "int64",
     "size": "int64",
     "aspect_ratio": "float",
-    "bits": "category",
-    "smallest_image_pixel": "int64",
-    "largest_image_pixel": "int64",
-    "image_pixel_range": "int64",
+    "bit_depth": "category",
+    "min_pixel_value": "int64",
+    "max_pixel_value": "int64",
+    "range_pixel_values": "int64",
+    "mean_pixel_value": "float",
+    "median_pixel_value": "int64",
+    "std_pixel_value": "float",
     "case_id": "str",
     "series_description": "str",
 }
@@ -77,7 +80,7 @@ CALC_FEATURES = [
 
 
 # ------------------------------------------------------------------------------------------------ #
-class DicomDataset(Dataset):
+class DicomExplorer(Explorer):
     """Dataset containing dicom image metadata
 
     Args:
@@ -140,11 +143,13 @@ class DicomDataset(Dataset):
                 "series_description",
                 "height",
                 "width",
-                "bits",
-                "smallest_image_pixel",
-                "largest_image_pixel",
-                "image_pixel_range",
-                "brisque",
+                "bit_depth",
+                "min_pixel_value",
+                "max_pixel_value",
+                "range_pixel_values",
+                "mean_pixel_value",
+                "median_pixel_value",
+                "std_pixel_value",
             ]
         ]
         return df.groupby(by=["series_description"]).describe()

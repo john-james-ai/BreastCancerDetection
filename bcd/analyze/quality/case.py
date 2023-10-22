@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:51 am                                              #
-# Modified   : Saturday October 21st 2023 09:50:36 am                                              #
+# Modified   : Saturday October 21st 2023 02:32:36 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -46,7 +46,7 @@ class CaseDQA(DQA):
             pid = self._validator.validate_patient_id(self._df["patient_id"])
             bd = self._validator.validate_breast_density(self._df["breast_density"])
             side = self._validator.validate_side(self._df["left_or_right_breast"])
-            view = self._validator.validate_image_view(self._df["image_view"])
+            image_view = self._validator.validate_image_view(self._df["image_view"])
             aid = self._validator.validate_between(self._df["abnormality_id"], left=1, right=10)
             at = self._validator.validate_abnormality_type(self._df["abnormality_type"])
             ct = self._validator.validate_calc_type(self._df["calc_type"])
@@ -64,7 +64,7 @@ class CaseDQA(DQA):
                     pid,
                     bd,
                     side,
-                    view,
+                    image_view,
                     aid,
                     at,
                     ct,

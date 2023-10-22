@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 18th 2023 06:37:38 pm                                             #
-# Modified   : Wednesday October 18th 2023 06:54:04 pm                                             #
+# Modified   : Saturday October 21st 2023 02:06:42 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ import logging
 
 import pandas as pd
 
-from bcd.data.explore.case import CaseDataset
+from bcd.analyze.explore.case import CaseExplorer
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -51,7 +51,7 @@ class TestDataset:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        ds = CaseDataset(filepath=CASES_FP)
+        ds = CaseExplorer(filepath=CASES_FP)
         X_train, y_train, X_test, y_test = ds.get_model_data()
         assert isinstance(X_train, pd.DataFrame)
         assert isinstance(y_train, pd.Series)
