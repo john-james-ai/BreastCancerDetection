@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Sunday October 22nd 2023 04:00:31 am                                                #
+# Modified   : Sunday October 22nd 2023 12:21:35 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,8 +23,6 @@ import pandas as pd
 import pytest
 
 from bcd.container import BCDContainer
-from bcd.manage_data.io.image import ImageIO
-from bcd.manage_data.entity.image import Image
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*"]
@@ -54,7 +52,7 @@ def mode():
 def container():
     container = BCDContainer()
     container.init_resources()
-    container.wire(packages=["bcd.manage_data.repo.image"])
+    container.wire(packages=["bcd.manage_data"])
 
     return container
 
@@ -62,22 +60,9 @@ def container():
 # ------------------------------------------------------------------------------------------------ #
 #                                         IMAGE                                                    #
 # ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="function", autouse=False)
-def image():
+@pytest.fixture(scope="module", autouse=False)
+def case_ids():
     df = pd.read_csv(IMAGE_FP)
     df = df.loc[df["series_description"] == "full mammogram images"]
-    df = df.sample(n=1)
-    io = ImageIO()
-    pixel_data = io.read(filepath=df["filepath"])
-    pixel_data = (pixel_data / 256).astype("uint8")
-
-    return Image.create(
-        case_id=df["case_id"].values[0],
-        stage_id=0,
-        bit_depth=8,
-        pixel_data=pixel_data,
-        cancer=df["cancer"].values[0],
-        fileset=df["fileset"].values[0],
-        task="TestImage",
-        taskrun_id="some_taskrun_id",
-    )
+    df = df.sample(n=10)
+    return list(df["case_id"])

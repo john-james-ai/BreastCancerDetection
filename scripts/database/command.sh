@@ -4,18 +4,19 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /scripts/database/start.sh                                                          #
+# Filename   : /scripts/database/command.sh                                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday October 21st 2023 10:06:52 am                                              #
-# Modified   : Sunday October 22nd 2023 09:51:27 am                                                #
+# Created    : Tuesday August 8th 2023 09:52:11 am                                                 #
+# Modified   : Sunday October 22nd 2023 01:24:57 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-echo '\nStarting MySQL...'
-echo 'xlr8ds' | sudo -S /etc/init.d/mysql start
 
+echo $'\nRunning Database Commands...'
+sudo mysql -u root -p --database mysql < scripts/database/command.sql
+echo $'\nDatabase Commands Complete.'

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Sunday October 22nd 2023 04:03:35 am                                                #
+# Modified   : Sunday October 22nd 2023 01:29:37 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -50,7 +50,7 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image_repo()
+        repo = container.image.repo()
         condition = lambda df: df["mode"] == "test"  # noqa
         try:
             repo.delete_images(condition=condition, force=True)
@@ -73,7 +73,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_add_exists(self, image, container, caplog):
+    def test_add_exists(self, case_ids, container, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -85,19 +85,26 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image_repo()
-        repo.add(image=image)
-        assert os.path.exists(image.filepath)
-
-        condition = lambda df: df["id"] == image.id  # noqa
-        assert repo.exists(condition=condition)
+        factory = container.image.factory()
+        repo = container.image.repo()
+        for case_id in case_ids:
+            # Obtain image
+            image = factory.from_case(
+                case_id=case_id, stage_id=0, task="TestAddExists", taskrun_id="some_taskrun_id"
+            )
+            # Add image to repository
+            repo.add(image=image)
+            # Confirm image has been saved to disk
+            assert os.path.exists(image.filepath)
+            # Confirm image exists in repo.
+            condition = lambda df: df["id"] == image.id  # noqa
+            assert repo.exists(condition=condition)
+            # Test adding image already exists
+            with pytest.raises(FileExistsError):
+                repo.add(image=image)
 
         condition = lambda df: df["id"] == "999"  # noqa
         assert not repo.exists(condition=condition)
-
-        # Test adding image already exists
-        with pytest.raises(FileExistsError):
-            repo.add(image=image)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -105,38 +112,6 @@ class TestImageRepo:  # pragma: no cover
 
         logger.info(
             "\nCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_add_again(self, image, container, caplog):
-        start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image_repo()
-        repo.add(image=image)
-        assert os.path.exists(image.filepath)
-
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
                 self.__class__.__name__,
                 inspect.stack()[0][3],
                 duration,
@@ -159,9 +134,9 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image_repo()
+        repo = container.image.repo()
         images = repo.get_images()
-        assert len(images) == 2
+        assert len(images) == 10
         for _, image in images.iterrows():
             image = repo.get_image(image["id"])
             assert isinstance(image, Image)
@@ -207,12 +182,12 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image_repo()
+        repo = container.image.repo()
         condition = lambda df: df["mode"] == "test"  # noqa
         repo.delete_images(condition=condition)
 
         meta = repo.get_images()
-        assert len(meta) == 2
+        assert len(meta) == 10
 
         repo.delete_images(condition=condition, force=True)
 

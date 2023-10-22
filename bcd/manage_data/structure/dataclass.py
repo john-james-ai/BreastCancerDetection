@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Sunday October 22nd 2023 02:01:02 am                                                #
+# Modified   : Sunday October 22nd 2023 12:01:09 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,6 +38,7 @@ IMMUTABLE_TYPES: tuple = (
     np.int64,
     np.int8,
     np.uint8,
+    np.uint16,
     np.float16,
     np.float32,
     np.float64,

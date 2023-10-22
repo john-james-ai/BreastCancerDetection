@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Sunday October 22nd 2023 04:00:31 am                                                #
+# Modified   : Sunday October 22nd 2023 11:28:42 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,6 +24,7 @@ from dependency_injector import containers, providers
 from bcd.manage_data.database.mysql import MySQLDatabase
 from bcd.manage_data.database.config import DatabaseConfig
 from bcd.manage_data.repo.image import ImageRepo
+from bcd.manage_data.entity.image import ImageFactory
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -41,9 +42,14 @@ class LoggingContainer(containers.DeclarativeContainer):
 # ------------------------------------------------------------------------------------------------ #
 #                                        REPO                                                      #
 # ------------------------------------------------------------------------------------------------ #
-class RepoContainer(containers.DeclarativeContainer):
+class ImagingContainer(containers.DeclarativeContainer):
+    config = providers.Configuration()
+
     db = providers.Singleton(MySQLDatabase, config=DatabaseConfig)
-    image_repo = providers.Singleton(ImageRepo, database=db)
+
+    factory = providers.Singleton(ImageFactory, case_fp=config.image.factory.case_fp)
+
+    repo = providers.Singleton(ImageRepo, database=db, image_factory=factory)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -54,7 +60,7 @@ class BCDContainer(containers.DeclarativeContainer):
 
     logs = providers.Container(LoggingContainer, config=config)
 
-    repo = providers.Container(RepoContainer)
+    image = providers.Container(ImagingContainer, config=config)
 
 
 if __name__ == "__main__":

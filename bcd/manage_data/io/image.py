@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Sunday October 22nd 2023 01:28:00 am                                                #
+# Modified   : Sunday October 22nd 2023 12:04:53 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -64,7 +64,7 @@ class ImageIO:
 
     def _read_image(self, filepath: str) -> np.ndarray:
         try:
-            image = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
+            image = cv2.imread(filepath, cv2.IMREAD_UNCHANGED)
         except FileNotFoundError as e:
             self._logger.exception(e)
             raise

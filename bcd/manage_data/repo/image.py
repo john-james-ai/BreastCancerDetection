@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 22nd 2023 04:02:35 am                                                #
+# Modified   : Sunday October 22nd 2023 01:20:19 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,18 +22,45 @@ from typing import Union, Callable
 
 import pandas as pd
 import numpy as np
-import cv2
-
-from bcd.manage_data.entity.image import Image
+from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT, TINYINT, BIGINT
+from bcd.manage_data.entity.image import Image, ImageFactory
 from bcd.manage_data.database.base import Database
+from bcd.manage_data.io.image import ImageIO
+
+# ------------------------------------------------------------------------------------------------ #
+IMAGE_DTYPES = {
+    "id": VARCHAR(length=64),
+    "case_id": VARCHAR(length=64),
+    "mode": VARCHAR(length=8),
+    "stage_id": TINYINT(),
+    "stage": VARCHAR(length=64),
+    "cancer": TINYINT(),
+    "bit_depth": TINYINT(),
+    "height": INTEGER(),
+    "width": INTEGER(),
+    "size": BIGINT(),
+    "aspect_ratio": FLOAT(),
+    "min_pixel_value": INTEGER(),
+    "max_pixel_value": INTEGER(),
+    "range_pixel_values": INTEGER(),
+    "mean_pixel_value": FLOAT(),
+    "median_pixel_value": INTEGER(),
+    "std_pixel_value": FLOAT(),
+    "filepath": VARCHAR(length=256),
+    "fileset": VARCHAR(length=8),
+    "created": DATETIME(),
+    "task": VARCHAR(length=64),
+    "taskrun_id": VARCHAR(length=64),
+}
 
 
 # ------------------------------------------------------------------------------------------------ #
 class ImageRepo:
     __tablename = "image"
 
-    def __init__(self, database: Database) -> None:
+    def __init__(self, database: Database, image_factory: ImageFactory) -> None:
         self._database = database
+        self._image_factory = image_factory
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     def add(self, image: Image) -> None:
@@ -48,7 +75,9 @@ class ImageRepo:
         if not self.exists(condition=condition):
             self._write_image(pixel_data=image.pixel_data, filepath=image.filepath)
             data = image.as_df()
-            self._database.insert(data=data, tablename=self.__tablename, if_exists="append")
+            self._database.insert(
+                data=data, tablename=self.__tablename, dtype=IMAGE_DTYPES, if_exists="append"
+            )
         else:
             msg = f"Image {image.id} already exists."
             self._logger.exception(msg)
@@ -94,7 +123,7 @@ class ImageRepo:
                 msg = f"Image id {id} does not exist."
                 self._logger.exception(msg)
                 raise FileNotFoundError(msg)
-            return Image.from_df(df=image_meta)
+            return self._image_factory.from_df(df=image_meta)
 
     def get_images(
         self, condition: Callable = None, metadata_only: bool = False
@@ -173,18 +202,6 @@ class ImageRepo:
         for _, image in image_meta.iterrows():
             self.delete_image(id=image["id"], force=force)
 
-    def _read_image(self, filepath: str) -> np.ndarray:
-        abs_filepath = os.path.abspath(filepath)
-        try:
-            image = cv2.imread(abs_filepath)
-        except FileNotFoundError:
-            msg = f"No image found at {filepath}"
-            self._logger.exception(msg)
-            raise
-        else:
-            return image
-
     def _write_image(self, pixel_data: np.ndarray, filepath: str) -> None:
-        abs_filepath = os.path.abspath(filepath)
-        os.makedirs(os.path.dirname(abs_filepath), exist_ok=True)
-        cv2.imwrite(filename=abs_filepath, img=pixel_data)
+        io = ImageIO()
+        io.write(pixel_data=pixel_data, filepath=filepath)
