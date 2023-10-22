@@ -1,0 +1,1054 @@
+[10/22/2023 02:48:03 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 02:48:03 AM on 10/22/2023
+[10/22/2023 02:48:03 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 02:48:04 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 02:48:04 AM on 10/22/2023
+[10/22/2023 02:48:04 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 02:48:05 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 02:48:05 AM on 10/22/2023
+[10/22/2023 02:48:05 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 02:48:05 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 02:48:05 AM on 10/22/2023
+[10/22/2023 02:48:05 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 02:50:53 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 02:50:53 AM on 10/22/2023
+[10/22/2023 02:50:53 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 02:50:55 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 02:50:55 AM on 10/22/2023
+[10/22/2023 02:50:55 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 02:50:56 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 02:50:56 AM on 10/22/2023
+[10/22/2023 02:50:56 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 02:50:58 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 02:50:58 AM on 10/22/2023
+[10/22/2023 02:50:58 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 02:53:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 02:53:08 AM on 10/22/2023
+[10/22/2023 02:53:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 02:53:10 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 02:53:10 AM on 10/22/2023
+[10/22/2023 02:53:10 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 02:53:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 02:53:11 AM on 10/22/2023
+[10/22/2023 02:53:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 02:53:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 02:53:13 AM on 10/22/2023
+[10/22/2023 02:53:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 02:57:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 02:57:23 AM on 10/22/2023
+[10/22/2023 02:57:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 02:57:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 02:57:25 AM on 10/22/2023
+[10/22/2023 02:57:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 02:57:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 02:57:27 AM on 10/22/2023
+[10/22/2023 02:57:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 02:57:28 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 02:57:28 AM on 10/22/2023
+[10/22/2023 02:57:28 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:05:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:04:59 AM on 10/22/2023
+[10/22/2023 03:05:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:05:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:05:02 AM on 10/22/2023
+[10/22/2023 03:05:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:05:03 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:05:03 AM on 10/22/2023
+[10/22/2023 03:05:03 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:05:05 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:05:05 AM on 10/22/2023
+[10/22/2023 03:05:05 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:07:06 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:07:05 AM on 10/22/2023
+[10/22/2023 03:07:06 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:07:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:07:08 AM on 10/22/2023
+[10/22/2023 03:07:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:07:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.4 seconds at 03:07:08 AM on 10/22/2023
+[10/22/2023 03:07:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:07:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:07:08 AM on 10/22/2023
+[10/22/2023 03:07:08 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:07:09 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:07:08 AM on 10/22/2023
+[10/22/2023 03:07:09 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:10:46 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:10:46 AM on 10/22/2023
+[10/22/2023 03:10:46 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:10:47 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:10:47 AM on 10/22/2023
+[10/22/2023 03:10:47 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:10:48 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:10:48 AM on 10/22/2023
+[10/22/2023 03:10:48 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:10:48 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:10:48 AM on 10/22/2023
+[10/22/2023 03:10:48 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:10:48 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:10:48 AM on 10/22/2023
+[10/22/2023 03:10:48 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:14:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:14:11 AM on 10/22/2023
+[10/22/2023 03:14:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:14:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.4 seconds at 03:14:11 AM on 10/22/2023
+[10/22/2023 03:14:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:14:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:14:12 AM on 10/22/2023
+[10/22/2023 03:14:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:14:13 AM on 10/22/2023
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.2 seconds at 03:14:13 AM on 10/22/2023
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:14:13 AM on 10/22/2023
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:14:13 AM on 10/22/2023
+[10/22/2023 03:14:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:18:18 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:18:18 AM on 10/22/2023
+[10/22/2023 03:18:18 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:18:18 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.4 seconds at 03:18:18 AM on 10/22/2023
+[10/22/2023 03:18:18 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:18:19 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:18:19 AM on 10/22/2023
+[10/22/2023 03:18:19 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:18:19 AM] [ERROR] [ImageRepo] [repo] [add] : Image 0639c8d5-af40-475b-9228-715a17cade8d already exists.
+NoneType: None
+[10/22/2023 03:18:19 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.3 seconds at 03:18:19 AM on 10/22/2023
+[10/22/2023 03:18:19 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:18:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:18:20 AM on 10/22/2023
+[10/22/2023 03:18:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:18:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:18:20 AM on 10/22/2023
+[10/22/2023 03:18:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:18:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:18:20 AM on 10/22/2023
+[10/22/2023 03:18:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:18:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:18:21 AM on 10/22/2023
+[10/22/2023 03:18:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:19:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:19:23 AM on 10/22/2023
+[10/22/2023 03:19:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:19:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.4 seconds at 03:19:23 AM on 10/22/2023
+[10/22/2023 03:19:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:19:24 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:19:24 AM on 10/22/2023
+[10/22/2023 03:19:24 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:19:24 AM] [ERROR] [ImageRepo] [repo] [add] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 already exists.
+NoneType: None
+[10/22/2023 03:19:24 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.4 seconds at 03:19:24 AM on 10/22/2023
+[10/22/2023 03:19:24 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:19:25 AM on 10/22/2023
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:19:25 AM on 10/22/2023
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:19:25 AM on 10/22/2023
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:19:25 AM on 10/22/2023
+[10/22/2023 03:19:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:22:49 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:22:49 AM on 10/22/2023
+[10/22/2023 03:22:49 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:22:49 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.4 seconds at 03:22:49 AM on 10/22/2023
+[10/22/2023 03:22:49 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:22:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:22:50 AM on 10/22/2023
+[10/22/2023 03:22:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:22:50 AM] [ERROR] [ImageRepo] [repo] [add] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 already exists.
+NoneType: None
+[10/22/2023 03:22:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.2 seconds at 03:22:50 AM on 10/22/2023
+[10/22/2023 03:22:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:22:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:22:50 AM on 10/22/2023
+[10/22/2023 03:22:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:22:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.4 seconds at 03:22:51 AM on 10/22/2023
+[10/22/2023 03:22:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:22:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:22:51 AM on 10/22/2023
+[10/22/2023 03:22:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:22:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:22:51 AM on 10/22/2023
+[10/22/2023 03:22:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:26:10 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:26:10 AM on 10/22/2023
+[10/22/2023 03:26:10 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:26:10 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.5 seconds at 03:26:10 AM on 10/22/2023
+[10/22/2023 03:26:10 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:26:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:26:11 AM on 10/22/2023
+[10/22/2023 03:26:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:26:11 AM] [ERROR] [ImageRepo] [repo] [add] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d already exists.
+NoneType: None
+[10/22/2023 03:26:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.4 seconds at 03:26:11 AM on 10/22/2023
+[10/22/2023 03:26:11 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:26:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:26:12 AM on 10/22/2023
+[10/22/2023 03:26:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:26:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.4 seconds at 03:26:12 AM on 10/22/2023
+[10/22/2023 03:26:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:26:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:26:12 AM on 10/22/2023
+[10/22/2023 03:26:12 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:26:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:26:13 AM on 10/22/2023
+[10/22/2023 03:26:13 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:33:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:33:21 AM on 10/22/2023
+[10/22/2023 03:33:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 2549256f-8229-41b7-98e1-ea4aa86dc4e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image bcfa398a-dac4-4a0c-8a23-e7729e7712e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c2664709-3a2b-402b-a2ae-d32ba99fbe9d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 03:33:22 AM on 10/22/2023
+[10/22/2023 03:33:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:33:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:33:22 AM on 10/22/2023
+[10/22/2023 03:33:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:33:23 AM] [ERROR] [ImageRepo] [repo] [add] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd already exists.
+NoneType: None
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.3 seconds at 03:33:23 AM on 10/22/2023
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:33:23 AM on 10/22/2023
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:33:23 AM on 10/22/2023
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:33:23 AM on 10/22/2023
+[10/22/2023 03:33:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:33:24 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:33:24 AM on 10/22/2023
+[10/22/2023 03:33:24 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 2549256f-8229-41b7-98e1-ea4aa86dc4e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image bcfa398a-dac4-4a0c-8a23-e7729e7712e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c2664709-3a2b-402b-a2ae-d32ba99fbe9d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:33:24 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:39:20 AM on 10/22/2023
+[10/22/2023 03:39:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 2549256f-8229-41b7-98e1-ea4aa86dc4e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image bcfa398a-dac4-4a0c-8a23-e7729e7712e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c2664709-3a2b-402b-a2ae-d32ba99fbe9d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 03:39:21 AM on 10/22/2023
+[10/22/2023 03:39:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:39:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:39:22 AM on 10/22/2023
+[10/22/2023 03:39:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:39:22 AM] [ERROR] [ImageRepo] [repo] [add] : Image 26424f4a-f0d9-469b-90ec-f373ea7934c3 already exists.
+NoneType: None
+[10/22/2023 03:39:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.4 seconds at 03:39:22 AM on 10/22/2023
+[10/22/2023 03:39:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:39:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:39:22 AM on 10/22/2023
+[10/22/2023 03:39:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:39:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.2 seconds at 03:39:23 AM on 10/22/2023
+[10/22/2023 03:39:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:39:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:39:23 AM on 10/22/2023
+[10/22/2023 03:39:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:39:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:39:23 AM on 10/22/2023
+[10/22/2023 03:39:23 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 2549256f-8229-41b7-98e1-ea4aa86dc4e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image bcfa398a-dac4-4a0c-8a23-e7729e7712e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c2664709-3a2b-402b-a2ae-d32ba99fbe9d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 26424f4a-f0d9-469b-90ec-f373ea7934c3 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:39:23 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 786ff567-7185-4bd0-8fc9-009ecfb4b83f is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:40:24 AM on 10/22/2023
+[10/22/2023 03:40:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:40:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.5 seconds at 03:40:25 AM on 10/22/2023
+[10/22/2023 03:40:25 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:40:26 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:40:26 AM on 10/22/2023
+[10/22/2023 03:40:26 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:40:26 AM] [ERROR] [ImageRepo] [repo] [add] : Image 13ea0142-7395-4fd7-9aa4-fda24c822235 already exists.
+NoneType: None
+[10/22/2023 03:40:26 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.3 seconds at 03:40:26 AM on 10/22/2023
+[10/22/2023 03:40:26 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:40:26 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:40:26 AM on 10/22/2023
+[10/22/2023 03:40:26 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:40:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:40:27 AM on 10/22/2023
+[10/22/2023 03:40:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:40:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:40:27 AM on 10/22/2023
+[10/22/2023 03:40:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:40:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:40:27 AM on 10/22/2023
+[10/22/2023 03:40:27 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 2549256f-8229-41b7-98e1-ea4aa86dc4e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image bcfa398a-dac4-4a0c-8a23-e7729e7712e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c2664709-3a2b-402b-a2ae-d32ba99fbe9d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 26424f4a-f0d9-469b-90ec-f373ea7934c3 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 786ff567-7185-4bd0-8fc9-009ecfb4b83f is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 13ea0142-7395-4fd7-9aa4-fda24c822235 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:40:27 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image a438d184-9049-43ae-98e8-8b55a6e05b78 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:29 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:43:29 AM on 10/22/2023
+[10/22/2023 03:43:29 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:43:30 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 2549256f-8229-41b7-98e1-ea4aa86dc4e0
+[10/22/2023 03:43:30 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.4 seconds at 03:43:30 AM on 10/22/2023
+[10/22/2023 03:43:30 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:43:30 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:43:30 AM on 10/22/2023
+[10/22/2023 03:43:30 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:43:31 AM] [ERROR] [ImageRepo] [repo] [add] : Image a8020906-dd0d-4aea-be18-bf62ddd9b1dd already exists.
+NoneType: None
+[10/22/2023 03:43:31 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.3 seconds at 03:43:31 AM on 10/22/2023
+[10/22/2023 03:43:31 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:43:31 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:43:31 AM on 10/22/2023
+[10/22/2023 03:43:31 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:43:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:43:32 AM on 10/22/2023
+[10/22/2023 03:43:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:43:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:43:32 AM on 10/22/2023
+[10/22/2023 03:43:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:43:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:43:32 AM on 10/22/2023
+[10/22/2023 03:43:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 2549256f-8229-41b7-98e1-ea4aa86dc4e0
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 2549256f-8229-41b7-98e1-ea4aa86dc4e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image bcfa398a-dac4-4a0c-8a23-e7729e7712e0
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image bcfa398a-dac4-4a0c-8a23-e7729e7712e0 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 5c340c1a-0880-4992-9fa3-d88b54c34820
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 5c340c1a-0880-4992-9fa3-d88b54c34820
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5c340c1a-0880-4992-9fa3-d88b54c34820 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image c2664709-3a2b-402b-a2ae-d32ba99fbe9d
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c2664709-3a2b-402b-a2ae-d32ba99fbe9d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 896888c6-04fd-41d8-b124-4bb60a046d38
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 896888c6-04fd-41d8-b124-4bb60a046d38
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 0c458e0c-00d2-4983-a26b-9b3251d708f4
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 0639c8d5-af40-475b-9228-715a17cade8d
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image e844440a-ba53-4981-8d81-c3a708d0684e
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image e6230578-a2ca-40a2-8cb5-c019977240cf
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image ea6bca6d-a095-49a5-8adc-eafeb4645474
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 476be0af-dc24-4e93-889c-f4aa3bb64a56
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 40012e40-e1b7-4120-914b-b8e4ba0ad76a
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 26424f4a-f0d9-469b-90ec-f373ea7934c3
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 26424f4a-f0d9-469b-90ec-f373ea7934c3 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 786ff567-7185-4bd0-8fc9-009ecfb4b83f
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 786ff567-7185-4bd0-8fc9-009ecfb4b83f is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 13ea0142-7395-4fd7-9aa4-fda24c822235
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 13ea0142-7395-4fd7-9aa4-fda24c822235 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image a438d184-9049-43ae-98e8-8b55a6e05b78
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image a438d184-9049-43ae-98e8-8b55a6e05b78 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image a8020906-dd0d-4aea-be18-bf62ddd9b1dd
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image a8020906-dd0d-4aea-be18-bf62ddd9b1dd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:43:32 AM] [DEBUG] [ImageRepo] [repo] [delete_image] : Request to delete image 5bc50fc8-2051-4660-9c86-2040aab4f555
+[10/22/2023 03:43:32 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5bc50fc8-2051-4660-9c86-2040aab4f555 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:56 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:45:56 AM on 10/22/2023
+[10/22/2023 03:45:56 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:45:56 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 03:45:56 AM on 10/22/2023
+[10/22/2023 03:45:56 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:45:57 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:45:57 AM on 10/22/2023
+[10/22/2023 03:45:57 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:45:58 AM] [ERROR] [ImageRepo] [repo] [add] : Image cab36adc-abb9-4f85-a35a-461051561543 already exists.
+NoneType: None
+[10/22/2023 03:45:58 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.4 seconds at 03:45:58 AM on 10/22/2023
+[10/22/2023 03:45:58 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:45:59 AM on 10/22/2023
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:45:59 AM on 10/22/2023
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:45:59 AM on 10/22/2023
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:45:59 AM on 10/22/2023
+[10/22/2023 03:45:59 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c2664709-3a2b-402b-a2ae-d32ba99fbe9d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 896888c6-04fd-41d8-b124-4bb60a046d38 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 26424f4a-f0d9-469b-90ec-f373ea7934c3 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 786ff567-7185-4bd0-8fc9-009ecfb4b83f is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 13ea0142-7395-4fd7-9aa4-fda24c822235 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image a438d184-9049-43ae-98e8-8b55a6e05b78 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image a8020906-dd0d-4aea-be18-bf62ddd9b1dd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5bc50fc8-2051-4660-9c86-2040aab4f555 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image cab36adc-abb9-4f85-a35a-461051561543 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:45:59 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image aa07e27f-3f5a-4015-ba82-be8613ad6510 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:46:59 AM on 10/22/2023
+[10/22/2023 03:47:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:47:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.5 seconds at 03:47:00 AM on 10/22/2023
+[10/22/2023 03:47:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:47:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:47:00 AM on 10/22/2023
+[10/22/2023 03:47:00 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:47:01 AM] [ERROR] [ImageRepo] [repo] [add] : Image 8da6a8d1-251b-4d45-a462-069b511e2a13 already exists.
+NoneType: None
+[10/22/2023 03:47:01 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.3 seconds at 03:47:01 AM on 10/22/2023
+[10/22/2023 03:47:01 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:47:01 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:47:01 AM on 10/22/2023
+[10/22/2023 03:47:01 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:47:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.4 seconds at 03:47:02 AM on 10/22/2023
+[10/22/2023 03:47:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:47:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:47:02 AM on 10/22/2023
+[10/22/2023 03:47:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:47:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:47:02 AM on 10/22/2023
+[10/22/2023 03:47:02 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0c458e0c-00d2-4983-a26b-9b3251d708f4 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0639c8d5-af40-475b-9228-715a17cade8d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e844440a-ba53-4981-8d81-c3a708d0684e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5ec1a0e5-e3ec-4626-87c8-5e86e564d547 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image e6230578-a2ca-40a2-8cb5-c019977240cf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image ea6bca6d-a095-49a5-8adc-eafeb4645474 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 476be0af-dc24-4e93-889c-f4aa3bb64a56 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image d0708ed3-bebc-4ff5-a09c-7831dbe38e1d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 40012e40-e1b7-4120-914b-b8e4ba0ad76a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 0679ea7f-f8ed-4bad-bddf-e2a4a15935fd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 18169d7c-bc9b-4f17-a31c-48b2a5fe9fcc is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 26424f4a-f0d9-469b-90ec-f373ea7934c3 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 786ff567-7185-4bd0-8fc9-009ecfb4b83f is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 13ea0142-7395-4fd7-9aa4-fda24c822235 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image a438d184-9049-43ae-98e8-8b55a6e05b78 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image a8020906-dd0d-4aea-be18-bf62ddd9b1dd is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 5bc50fc8-2051-4660-9c86-2040aab4f555 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image cab36adc-abb9-4f85-a35a-461051561543 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image aa07e27f-3f5a-4015-ba82-be8613ad6510 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 8da6a8d1-251b-4d45-a462-069b511e2a13 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:47:02 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 48949234-2806-49da-8a11-b10bbc606704 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:52:30 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:52:30 AM on 10/22/2023
+[10/22/2023 03:52:30 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:52:31 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 1.1 seconds at 03:52:31 AM on 10/22/2023
+[10/22/2023 03:52:31 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:52:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:52:32 AM on 10/22/2023
+[10/22/2023 03:52:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:52:32 AM] [ERROR] [ImageRepo] [repo] [add] : Image c77cfc8a-914d-458f-953a-f511bb584e39 already exists.
+NoneType: None
+[10/22/2023 03:52:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.3 seconds at 03:52:32 AM on 10/22/2023
+[10/22/2023 03:52:32 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:52:33 AM on 10/22/2023
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.2 seconds at 03:52:33 AM on 10/22/2023
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:52:33 AM on 10/22/2023
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:52:33 AM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | c77cfc8a-914d-458f-953a-f511bb584e39
+                         Case Id | Calcification-Train_P_00030_RIGHT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 8
+                          Height | 4608
+                           Width | 3072
+                            Size | 14155776
+                    Aspect Ratio | 0.6666666666666666
+                 Min Pixel Value | 0
+                 Max Pixel Value | 255
+              Range Pixel Values | 255
+                Mean Pixel Value | 32.99504958258735
+              Median Pixel Value | 0
+                 Std Pixel Value | 58.1397252228511
+                        Filepath | tests/data/images/c77cfc8a-914d-458f-953a-f511bb584e39.png
+                         Fileset | train
+                            Task | TestImage
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 03:52:33 AM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 6a9371c9-ad9c-4b93-aa41-998a226b5700
+                         Case Id | Calcification-Test_P_00495_RIGHT_CC_2
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 8
+                          Height | 4608
+                           Width | 3112
+                            Size | 14340096
+                    Aspect Ratio | 0.6753472222222222
+                 Min Pixel Value | 0
+                 Max Pixel Value | 255
+              Range Pixel Values | 255
+                Mean Pixel Value | 44.782249993305484
+              Median Pixel Value | 0
+                 Std Pixel Value | 73.11044956677667
+                        Filepath | tests/data/images/6a9371c9-ad9c-4b93-aa41-998a226b5700.png
+                         Fileset | test
+                            Task | TestImage
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:52:33 AM on 10/22/2023
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:52:33 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image c77cfc8a-914d-458f-953a-f511bb584e39 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:52:33 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 6a9371c9-ad9c-4b93-aa41-998a226b5700 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.1 seconds at 03:52:33 AM on 10/22/2023
+[10/22/2023 03:52:33 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:55:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 03:55:19 AM on 10/22/2023
+[10/22/2023 03:55:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 03:55:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.4 seconds at 03:55:20 AM on 10/22/2023
+[10/22/2023 03:55:20 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:55:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 03:55:21 AM on 10/22/2023
+[10/22/2023 03:55:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 03:55:21 AM] [ERROR] [ImageRepo] [repo] [add] : Image f79e1486-5845-4f0b-bb48-8f2bc9d11cbf already exists.
+NoneType: None
+[10/22/2023 03:55:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.4 seconds at 03:55:21 AM on 10/22/2023
+[10/22/2023 03:55:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:55:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 03:55:21 AM on 10/22/2023
+[10/22/2023 03:55:21 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.3 seconds at 03:55:22 AM on 10/22/2023
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 03:55:22 AM on 10/22/2023
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 03:55:22 AM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | f79e1486-5845-4f0b-bb48-8f2bc9d11cbf
+                         Case Id | Mass-Train_P_01182_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 8
+                          Height | 5386
+                           Width | 3241
+                            Size | 17456026
+                    Aspect Ratio | 0.6017452655031563
+                 Min Pixel Value | 0
+                 Max Pixel Value | 255
+              Range Pixel Values | 255
+                Mean Pixel Value | 71.1972427745009
+              Median Pixel Value | 51
+                 Std Pixel Value | 74.18082124309765
+                        Filepath | tests/data/images/f79e1486-5845-4f0b-bb48-8f2bc9d11cbf.png
+                         Fileset | train
+                            Task | TestImage
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 03:55:22 AM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 194856b3-79ea-41a1-85b5-094cca68551a
+                         Case Id | Mass-Train_P_00728_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 8
+                          Height | 4640
+                           Width | 3240
+                            Size | 15033600
+                    Aspect Ratio | 0.6982758620689655
+                 Min Pixel Value | 0
+                 Max Pixel Value | 255
+              Range Pixel Values | 255
+                Mean Pixel Value | 59.38151587111537
+              Median Pixel Value | 0
+                 Std Pixel Value | 72.19033748861271
+                        Filepath | tests/data/images/194856b3-79ea-41a1-85b5-094cca68551a.png
+                         Fileset | train
+                            Task | TestImage
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 03:55:22 AM] [ERROR] [ImageRepo] [repo] [get_image] : Image id invalid does not exist.
+NoneType: None
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+	Completed TestImageRepo test_get_image in 0.6 seconds at 03:55:22 AM on 10/22/2023
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 03:55:22 AM on 10/22/2023
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 03:55:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image f79e1486-5845-4f0b-bb48-8f2bc9d11cbf is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:55:22 AM] [INFO] [ImageRepo] [repo] [delete_image] : Image 194856b3-79ea-41a1-85b5-094cca68551a is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.1 seconds at 03:55:22 AM on 10/22/2023
+[10/22/2023 03:55:22 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 04:00:49 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 04:00:49 AM on 10/22/2023
+[10/22/2023 04:00:49 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 04:00:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.4 seconds at 04:00:50 AM on 10/22/2023
+[10/22/2023 04:00:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 04:00:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 04:00:50 AM on 10/22/2023
+[10/22/2023 04:00:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 04:00:50 AM] [ERROR] [ImageRepo] [image] [add] : Image 09e83150-d40b-4cf1-86c0-4fb6ada74135 already exists.
+NoneType: None
+[10/22/2023 04:00:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 0.2 seconds at 04:00:50 AM on 10/22/2023
+[10/22/2023 04:00:50 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+
+Started TestImageRepo test_add_again at 04:00:51 AM on 10/22/2023
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+====================================================================================================
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+	Completed TestImageRepo test_add_again in 0.2 seconds at 04:00:51 AM on 10/22/2023
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_add_again] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 04:00:51 AM on 10/22/2023
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 04:00:51 AM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 09e83150-d40b-4cf1-86c0-4fb6ada74135
+                         Case Id | Mass-Train_P_01714_RIGHT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 8
+                          Height | 4681
+                           Width | 2206
+                            Size | 10326286
+                    Aspect Ratio | 0.4712668233283486
+                 Min Pixel Value | 0
+                 Max Pixel Value | 255
+              Range Pixel Values | 255
+                Mean Pixel Value | 48.665203249261154
+              Median Pixel Value | 0
+                 Std Pixel Value | 66.72270434763306
+                        Filepath | tests/data/images/09e83150-d40b-4cf1-86c0-4fb6ada74135.png
+                         Fileset | train
+                            Task | TestImage
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 04:00:51 AM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | a3c84854-814d-48ac-9061-26aa3bb1595c
+                         Case Id | Calcification-Train_P_00112_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 8
+                          Height | 4640
+                           Width | 3040
+                            Size | 14105600
+                    Aspect Ratio | 0.6551724137931034
+                 Min Pixel Value | 0
+                 Max Pixel Value | 255
+              Range Pixel Values | 255
+                Mean Pixel Value | 43.830602313974595
+              Median Pixel Value | 0
+                 Std Pixel Value | 65.11303437025119
+                        Filepath | tests/data/images/a3c84854-814d-48ac-9061-26aa3bb1595c.png
+                         Fileset | train
+                            Task | TestImage
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 04:00:51 AM] [ERROR] [ImageRepo] [image] [get_image] : Image id invalid does not exist.
+NoneType: None
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+	Completed TestImageRepo test_get_image in 0.4 seconds at 04:00:51 AM on 10/22/2023
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 04:00:51 AM on 10/22/2023
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 04:00:51 AM] [INFO] [ImageRepo] [image] [delete_image] : Image 09e83150-d40b-4cf1-86c0-4fb6ada74135 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 04:00:51 AM] [INFO] [ImageRepo] [image] [delete_image] : Image a3c84854-814d-48ac-9061-26aa3bb1595c is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.1 seconds at 04:00:51 AM on 10/22/2023
+[10/22/2023 04:00:51 AM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------

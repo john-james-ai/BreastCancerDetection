@@ -4,45 +4,15 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /config.yml                                                                         #
+# Filename   : /bcd/manage_data/repo/__init__.py                                                   #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday October 21st 2023 07:46:07 pm                                              #
-# Modified   : Sunday October 22nd 2023 02:52:54 am                                                #
+# Created    : Sunday October 22nd 2023 03:56:49 am                                                #
+# Modified   : Sunday October 22nd 2023 03:56:54 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-logging:
-  disable_existing_loggers: false
-  formatters:
-    console:
-      datefmt: '%m/%d/%Y %I:%M:%S %p'
-      format: '[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s] : %(message)s'
-    file:
-      datefmt: '%m/%d/%Y %I:%M:%S %p'
-      format: '[%(asctime)s] [%(levelname)s] [%(name)s] [%(module)s] [%(funcName)s]
-        : %(message)s'
-  handlers:
-    console:
-      class: logging.StreamHandler
-      formatter: console
-      level: DEBUG
-      stream: ext://sys.stderr
-    file:
-      backupCount: 0
-      class: logging.handlers.TimedRotatingFileHandler
-      filename: logs/bcd.log
-      formatter: file
-      interval: 1
-      level: DEBUG
-      when: midnight
-  root:
-    handlers:
-    - console
-    - file
-    level: DEBUG
-  version: 1

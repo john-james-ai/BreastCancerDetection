@@ -11,16 +11,14 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Sunday October 22nd 2023 12:29:00 am                                                #
+# Modified   : Sunday October 22nd 2023 03:36:19 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Case Data Prep Module"""
 from __future__ import annotations
-import sys
 import os
-import logging
 from typing import Union
 
 import pandas as pd
@@ -30,11 +28,6 @@ from sklearn.experimental import enable_iterative_imputer  # noqa
 from sklearn.impute import IterativeImputer
 
 from bcd.prep.base import DataPrep
-
-# ------------------------------------------------------------------------------------------------ #
-logging.basicConfig(stream=sys.stdout)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 # ------------------------------------------------------------------------------------------------ #

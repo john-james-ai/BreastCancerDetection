@@ -11,13 +11,12 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Sunday October 22nd 2023 12:49:55 am                                                #
+# Modified   : Sunday October 22nd 2023 03:37:50 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """DICOM Data Prep Module"""
-import sys
 import os
 import logging
 from typing import Union
@@ -32,14 +31,13 @@ import pydicom
 
 from bcd.prep.base import DataPrep
 
-# ------------------------------------------------------------------------------------------------ #
-logging.basicConfig(stream=sys.stdout)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
 
 # ------------------------------------------------------------------------------------------------ #
 class DicomPrep(DataPrep):
+    def __init__(self) -> None:
+        super().__init__()
+        self._logger = logging.getLogger(f"{self.__class__.__name__}")
+
     def prep(
         self,
         location: str,
@@ -67,7 +65,7 @@ class DicomPrep(DataPrep):
             dicom_data = self._extract_dicom_data(filepaths=filepaths)
             dicom_data.to_csv(dicom_fp, index=False)
             msg = f"Shape of DICOM Data: {dicom_data.shape}"
-            logger.debug(msg)
+            self._logger.debug(msg)
 
         if result:
             return pd.read_csv(dicom_fp)
@@ -96,11 +94,11 @@ class DicomPrep(DataPrep):
         filepaths = glob(pattern, recursive=True)
 
         msg = f"Number of filepaths: {len(filepaths)}"
-        logger.debug(msg)
+        self._logger.debug(msg)
         if len(skip_list) > 0:
             filepaths = self._filter_filepaths(filepaths=filepaths, skip_list=skip_list)
         msg = f"Number of filtered filepaths: {len(filepaths)}"
-        logger.debug(msg)
+        self._logger.debug(msg)
         return filepaths
 
     def _filter_filepaths(self, filepaths: list, skip_list: list) -> bool:

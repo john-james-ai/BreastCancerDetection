@@ -11,18 +11,19 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Sunday October 22nd 2023 12:02:43 am                                                #
+# Modified   : Sunday October 22nd 2023 04:00:31 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import logging
+import logging.config
 
 from dependency_injector import containers, providers
 
-from bcd.manage_data.storage.mysql import MySQLDatabase
-from bcd.manage_data.storage.config import DatabaseConfig
-from bcd.manage_data.storage.repo import ImageRepo
+from bcd.manage_data.database.mysql import MySQLDatabase
+from bcd.manage_data.database.config import DatabaseConfig
+from bcd.manage_data.repo.image import ImageRepo
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -38,33 +39,11 @@ class LoggingContainer(containers.DeclarativeContainer):
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        DATA                                                      #
+#                                        REPO                                                      #
 # ------------------------------------------------------------------------------------------------ #
-class PersistenceContainer(containers.DeclarativeContainer):
+class RepoContainer(containers.DeclarativeContainer):
     db = providers.Singleton(MySQLDatabase, config=DatabaseConfig)
-    image_repo = providers.Singleton(ImageRepo)
-
-    appdata_repo = providers.Singleton(AppDataRepo, database=db, config=FileConfig)
-    review_repo = providers.Singleton(ReviewRepo, database=db, config=FileConfig)
-    rating_repo = providers.Singleton(RatingRepo, database=db, config=FileConfig)
-    job_repo = providers.Singleton(JobRepo, database=db, config=FileConfig)
-    project_repo = providers.Singleton(AppDataProjectRepo, database=db, config=FileConfig)
-    rating_jobrun_repo = providers.Singleton(RatingJobRunRepo, database=db, config=FileConfig)
-    review_jobrun_repo = providers.Singleton(ReviewJobRunRepo, database=db, config=FileConfig)
-    review_request_repo = providers.Singleton(ReviewRequestRepo, database=db, config=FileConfig)
-
-    uow = providers.Singleton(
-        UoW,
-        database=db,
-        appdata_repo=AppDataRepo,
-        review_repo=ReviewRepo,
-        rating_repo=RatingRepo,
-        appdata_project_repo=AppDataProjectRepo,
-        job_repo=JobRepo,
-        rating_jobrun_repo=RatingJobRunRepo,
-        review_jobrun_repo=ReviewJobRunRepo,
-        review_request_repo=ReviewRequestRepo,
-    )
+    image_repo = providers.Singleton(ImageRepo, database=db)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -75,4 +54,10 @@ class BCDContainer(containers.DeclarativeContainer):
 
     logs = providers.Container(LoggingContainer, config=config)
 
-    data = providers.Container(PersistenceContainer)
+    repo = providers.Container(RepoContainer)
+
+
+if __name__ == "__main__":
+    container = BCDContainer()
+    container.init_resources()
+    container.wire(packages=["bcd.manage_data.repo.image"])

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/manage_data/storage/repo.py                                                    #
+# Filename   : /bcd/manage_data/repo/image.py                                                      #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 22nd 2023 12:03:38 am                                                #
+# Modified   : Sunday October 22nd 2023 04:02:35 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,7 +25,7 @@ import numpy as np
 import cv2
 
 from bcd.manage_data.entity.image import Image
-from bcd.manage_data.storage.base import Database
+from bcd.manage_data.database.base import Database
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -44,7 +44,8 @@ class ImageRepo:
                 containing image metadata.
 
         """
-        if not self.exists(image.id):
+        condition = lambda df: df["id"] == image.id  # noqa
+        if not self.exists(condition=condition):
             self._write_image(pixel_data=image.pixel_data, filepath=image.filepath)
             data = image.as_df()
             self._database.insert(data=data, tablename=self.__tablename, if_exists="append")
@@ -62,11 +63,15 @@ class ImageRepo:
         Returns:
             Boolean indicator of existence.
         """
-        query = f"SELECT EXISTS(SELECT 1 FROM {self.__tablename};"
+        query = f"SELECT * FROM {self.__tablename};"
         params = None
-        image_meta = self._database.exists(query=query, params=params)
-        image_meta = image_meta[condition]
-        return len(image_meta > 0)
+        try:
+            image_meta = self._database.query(query=query, params=params)
+            image_meta = image_meta[condition]
+        except Exception:  # pragma: no cover
+            return False
+        else:
+            return len(image_meta) > 0
 
     def get_image(self, id: str) -> Image:
         """Obtains an image by identifier.
@@ -79,8 +84,17 @@ class ImageRepo:
         """
         query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
         params = {"id": id}
-        image_meta = self._database.query(query=query, params=params)
-        return Image.from_df(df=image_meta)
+        try:
+            image_meta = self._database.query(query=query, params=params)
+        except Exception as e:  # pragma: no cover
+            self._logger.exception(e)
+            raise
+        else:
+            if len(image_meta) == 0:
+                msg = f"Image id {id} does not exist."
+                self._logger.exception(msg)
+                raise FileNotFoundError(msg)
+            return Image.from_df(df=image_meta)
 
     def get_images(
         self, condition: Callable = None, metadata_only: bool = False
@@ -117,45 +131,47 @@ class ImageRepo:
                     images[meta["id"]] = image
                 return (image_meta, images)
 
-    def delete_image(self, id: str) -> None:
+    def delete_image(self, id: str, force: bool = False) -> None:
         """Removes an image and its metadata from the repository.
 
         Args:
             id (str): Image identifier
-
+            force (bool): If True, stage 0, original images will be deleted.
         """
         query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
         params = {"id": id}
         image_meta = self._database.query(query=query, params=params)
 
-        if image_meta["stage_id"] == 0:
+        if not force and image_meta["stage_id"].values[0] == 0:
             msg = f"Image {id} is a stage 0, original image. Original images cannot be deleted."
             self._logger.info(msg)
 
         else:
             try:
-                os.remove(image_meta["filepath"])
+                os.remove(image_meta["filepath"].values[0])
             except OSError:
-                msg = f"Image id: {id} does not exist at {image_meta['filepath']}"
+                msg = f"Image id: {id} does not exist at {image_meta['filepath'].values[0]}"
                 self._logger.info(msg)
-            else:
+
+            finally:
                 query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
                 params = {"id": id}
-                self._database.query(query=query, params=params)
+                self._database.delete(query=query, params=params)
 
-    def delete_images(self, condition: Callable) -> None:
+    def delete_images(self, condition: Callable, force: bool = False) -> None:
         """Removes images matching the condition.
 
         Args:
             condition (Callable): Lambda expression subsetting the data.
+            force (bool): If True, stage 0, original images will be deleted.
         """
         query = f"SELECT * FROM {self.__tablename}"
         params = None
         image_meta = self._database.query(query=query, params=params)
         image_meta = image_meta[condition]
 
-        for _, meta in image_meta.iterrows():
-            self.delete_image(id=meta["id"])
+        for _, image in image_meta.iterrows():
+            self.delete_image(id=image["id"], force=force)
 
     def _read_image(self, filepath: str) -> np.ndarray:
         abs_filepath = os.path.abspath(filepath)

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.11                                                                             #
-# Filename   : /bcd/data/database/mysql.py                                                         #
+# Filename   : /bcd/manage_data/storage/mysql.py                                                   #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday April 10th 2023 09:50:40 pm                                                  #
-# Modified   : Saturday October 21st 2023 10:17:05 am                                              #
+# Modified   : Sunday October 22nd 2023 02:36:17 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -47,7 +47,7 @@ class MySQLDatabase(Database):
         self._connection_string = self._get_connection_string()
         self.connect()
 
-    def connect(self, autocommit: bool = False) -> None:
+    def connect(self, autocommit: bool = True) -> None:
         attempts = 0
         max_attempts = 3
         database_started = False
