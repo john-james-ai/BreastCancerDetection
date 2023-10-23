@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 22nd 2023 09:10:33 pm                                                #
+# Modified   : Sunday October 22nd 2023 11:17:00 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -75,8 +75,7 @@ class ImageRepo(Repo):
         """Adds an image to the repository
 
         Args:
-            data (Union[Image, pd.DataFrame]): An Image object or a DataFrame
-                containing image metadata.
+            image (Image): An Image object.
 
         """
         if not self.exists(id=image.id):

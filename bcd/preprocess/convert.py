@@ -4,65 +4,40 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/base.py                                                             #
+# Filename   : /bcd/preprocess/convert.py                                                          #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Sunday October 22nd 2023 10:17:41 pm                                                #
-# Modified   : Sunday October 22nd 2023 11:14:35 pm                                                #
+# Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
+# Modified   : Sunday October 22nd 2023 11:33:24 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Base module for the image preprocessing package."""
-from __future__ import annotations
-from abc import ABC, abstractmethod, abstractproperty
-from datetime import datetime
-from dataclasses import dataclass, field
-from collections import defaultdict
+"""Converts DICOM Data to PNG Format"""
+import os
+from dataclasses import dataclass
+from dotenv import load_dotenv
 
-from bcd.manage_data.structure.dataclass import DataClass
+import pandas as pd
+from dependency_injector.wiring import inject, Provide
 
-
+from bcd.preprocess.base import Task, TaskRun, TaskParams
+from bcd.manage_data.repo.base import Repo
+from bcd.manage_data.entity.image import ImageFactory
+from bcd.container import BCDContainer
 # ------------------------------------------------------------------------------------------------ #
-class Task(ABC):
-    """Defines the interface for image preprocessing tasks"""
-
-    @property
-    def name(self) -> str:
-        return self.__class__.__name__
-
-    @abstractproperty
-    def stage_id(self) -> int:
-        """Stage id for the task"""
-
-    @abstractproperty
-    def stage(self) -> str:
-        """Stage for the task."""
-
-    @abstractproperty
-    def taskrun(self) -> TaskRun:
-        """Returns the TaskRun object."""
-
-    @abstractmethod
-    def execute(self):
-        """Executes the task"""
-
-
+load_dotenv()
 # ------------------------------------------------------------------------------------------------ #
-@dataclass
-class TaskRun(DataClass):
-    id: str
-    task: str
-    mode: str
-    stage_id: int
-    stage: str
-    started: datetime
-    ended: datetime
-    duration: float
-    images_processed: int
-    image_processing_time: float
-    success: bool
-    params: defaultdict[dict] = field(default_factory=lambda: defaultdict(dict))
+class ImageConverter(Task):
+    @inject
+    def __init__(self, frac: float = 0.1, random_state: int = None, image_repo: Repo = Provide[BCDContainer], taskrun_repo: Repo, image_factory: ImageFactory) -> None:
+        df = pd.read_csv(os.getenv('DICOM_FILEPATH'))
+        self._cases = df.loc[df['series_description'] == 'full mammogram images']
+        self._frac = frac
+        self._random_state = random_state
+        self._image_repo = image_repo
+        self._taskrun_repo = taskrun_repo
+        self._image_factory = ImageFactory
