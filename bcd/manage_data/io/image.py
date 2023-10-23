@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Sunday October 22nd 2023 12:04:53 pm                                                #
+# Modified   : Monday October 23rd 2023 03:29:22 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -53,9 +53,6 @@ class ImageIO:
     def _read_dicom(self, filepath: str) -> np.ndarray:
         try:
             ds = pydicom.dcmread(filepath)
-        except pydicom.errors.InvalidDicomError as e:
-            self._logger.exception(e)
-            raise
         except Exception as e:
             self._logger.exception(e)
             raise

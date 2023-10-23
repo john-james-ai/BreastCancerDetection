@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Monday October 23rd 2023 12:10:06 am                                                #
+# Modified   : Monday October 23rd 2023 02:07:55 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -55,7 +55,12 @@ def mode():
 def container():
     container = BCDContainer()
     container.init_resources()
-    container.wire(packages=["bcd.manage_data"])
+    container.wire(
+        packages=[
+            "bcd.manage_data",
+            "bcd.preprocess.convert",
+        ]
+    )
 
     return container
 
@@ -78,16 +83,16 @@ def case_ids():
 def taskruns():
     taskruns = []
     params = [
-        {"n": 10},
-        {"kernel": 20, "a": 20},
-        {"b": 20, "c": 20, "d": 200},
-        {"e": 20},
-        {"b": 20, "f": 20, "d": 200},
-        {"b": 20, "c": 20, "kernel": 200},
-        {"x": 20, "y": 20, "d": 200, "z": "a"},
-        {"w": 20, "f": 20, "d": 200},
-        {"x": 20, "c": 20, "kernel": 200},
-        {"y": 20, "hat": 20, "d": 200, "z": "a"},
+        '{"n": "10"}',
+        '{"kernel": "20", "a": "20"}',
+        '{"b": 20, "c": "20", "d": "200"}',
+        '{"e": "20"}',
+        '{"b": "20", "f": "20", "d": "200"}',
+        '{"b": "20", "c": "20", "kernel": "200"}',
+        '{"x": "20", "y": "20", "d": "200", "z": "a"}',
+        '{"w": "20", "f": "20", "d": "200"}',
+        '{"x": "20", "c": "20", "kernel": "200"}',
+        '{"y": "20", "hat": "20", "d": "200", "z": "a"}',
     ]
     for i in range(10):
         taskid = i % 2

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday April 10th 2023 09:50:40 pm                                                  #
-# Modified   : Sunday October 22nd 2023 07:42:38 pm                                                #
+# Modified   : Monday October 23rd 2023 03:14:54 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -55,7 +55,10 @@ class MySQLDatabase(Database):
         while attempts < max_attempts:
             attempts += 1
             try:
-                self._engine = sqlalchemy.create_engine(self._connection_string)
+                self._engine = sqlalchemy.create_engine(
+                    self._connection_string,
+                    connect_args={"read_timeout": int(self._config.timeout)},
+                )
                 self._connection = self._engine.connect()
                 if self._autocommit is True:
                     self._connection.execution_options(isolation_level="AUTOCOMMIT")

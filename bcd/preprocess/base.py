@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 10:17:41 pm                                                #
-# Modified   : Sunday October 22nd 2023 11:14:35 pm                                                #
+# Modified   : Monday October 23rd 2023 01:52:39 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -59,10 +59,19 @@ class TaskRun(DataClass):
     mode: str
     stage_id: int
     stage: str
-    started: datetime
-    ended: datetime
-    duration: float
-    images_processed: int
-    image_processing_time: float
-    success: bool
+    started: datetime = None
+    ended: datetime = None
+    duration: float = None
+    images_processed: int = None
+    image_processing_time: float = None
+    success: bool = None
     params: defaultdict[dict] = field(default_factory=lambda: defaultdict(dict))
+
+    def start(self) -> None:
+        self.started = datetime.now()
+
+    def end(self) -> None:
+        self.ended = datetime.now()
+        self.duration = (self.ended - self.started).total_seconds()
+        self.image_processing_time = self.duration / self.images_processed
+        self.success = True

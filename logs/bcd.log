@@ -635,3 +635,1502 @@ Started TestTaskRunRepo test_delete at 12:22:42 AM on 10/23/2023
 	Completed TestTaskRunRepo test_delete in 0.0 seconds at 12:22:42 AM on 10/23/2023
 [10/23/2023 12:22:42 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
 ----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+
+Started TestTaskRunRepo test_setup at 12:25:05 AM on 10/23/2023
+[10/23/2023 12:25:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+====================================================================================================
+[10/23/2023 12:25:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+	Completed TestTaskRunRepo test_setup in 0.4 seconds at 12:25:05 AM on 10/23/2023
+[10/23/2023 12:25:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+Started TestTaskRunRepo test_add_exists at 12:25:05 AM on 10/23/2023
+[10/23/2023 12:25:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+====================================================================================================
+[10/23/2023 12:25:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 1f2acebb-5861-447f-a053-8f6082e334bb
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.00001
+                Images Processed | 100
+           Image Processing Time | 0.2000001
+                         Success | True
+
+
+[10/23/2023 12:25:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 9622f6d9-3851-4d1c-b509-98825cf4fc37
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000005
+                Images Processed | 100
+           Image Processing Time | 0.20000005
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | c522cad0-1232-41e4-b16f-b1a73e8b9a46
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 57262799-5ef7-4ddb-81c9-fd5ad06efbb5
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 897b1f61-ef6c-47b2-8bb8-9cb4488c5a8d
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 9e6b95d4-91ed-4fc0-954f-f4c1c7583ab7
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 060407fc-3b68-4017-87b1-7fcd4425bb4e
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 5cc822b1-8948-4356-b251-e2f8377e4849
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 3bcb1b03-5a90-4f23-8369-d3c21a05285d
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 95f9d67e-8040-4938-9dd4-e26465e4cdb9
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:06 AM] [ERROR] [TaskRunRepo] [task] [add] : TaskRun 1f2acebb-5861-447f-a053-8f6082e334bb already exists.
+NoneType: None
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+Completed TestTaskRunRepo test_add_exists in 0.2 seconds at 12:25:06 AM on 10/23/2023
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+
+Started TestTaskRunRepo test_get at 12:25:06 AM on 10/23/2023
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+====================================================================================================
+[10/23/2023 12:25:06 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_get] :                                      id              task  mode  ...  image_processing_time success params
+0  1f2acebb-5861-447f-a053-8f6082e334bb  TestTaskRunRepo0  test  ...                    0.2       1   null
+1  9622f6d9-3851-4d1c-b509-98825cf4fc37  TestTaskRunRepo1  test  ...                    0.2       1   null
+2  c522cad0-1232-41e4-b16f-b1a73e8b9a46  TestTaskRunRepo0  test  ...                    0.2       1   null
+3  57262799-5ef7-4ddb-81c9-fd5ad06efbb5  TestTaskRunRepo1  test  ...                    0.2       1   null
+4  897b1f61-ef6c-47b2-8bb8-9cb4488c5a8d  TestTaskRunRepo0  test  ...                    0.2       1   null
+5  9e6b95d4-91ed-4fc0-954f-f4c1c7583ab7  TestTaskRunRepo1  test  ...                    0.2       1   null
+6  060407fc-3b68-4017-87b1-7fcd4425bb4e  TestTaskRunRepo0  test  ...                    0.2       1   null
+7  5cc822b1-8948-4356-b251-e2f8377e4849  TestTaskRunRepo1  test  ...                    0.2       1   null
+8  3bcb1b03-5a90-4f23-8369-d3c21a05285d  TestTaskRunRepo0  test  ...                    0.2       1   null
+9  95f9d67e-8040-4938-9dd4-e26465e4cdb9  TestTaskRunRepo1  test  ...                    0.2       1   null
+
+[10 rows x 12 columns]
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+	Completed TestTaskRunRepo test_get in 0.1 seconds at 12:25:06 AM on 10/23/2023
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+
+Started TestTaskRunRepo test_count at 12:25:06 AM on 10/23/2023
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+====================================================================================================
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+	Completed TestTaskRunRepo test_count in 0.0 seconds at 12:25:06 AM on 10/23/2023
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+
+Started TestTaskRunRepo test_delete at 12:25:06 AM on 10/23/2023
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+====================================================================================================
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+	Completed TestTaskRunRepo test_delete in 0.0 seconds at 12:25:06 AM on 10/23/2023
+[10/23/2023 12:25:06 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+
+Started TestTaskRunRepo test_setup at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+====================================================================================================
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+	Completed TestTaskRunRepo test_setup in 0.4 seconds at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+Started TestTaskRunRepo test_add_exists at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+====================================================================================================
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 9e4f91b4-efdf-4981-afef-8902f61690e1
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000012
+                Images Processed | 100
+           Image Processing Time | 0.20000012
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 3fd9173f-454b-4d5f-b9be-f976004532c0
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000005
+                Images Processed | 100
+           Image Processing Time | 0.20000005
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | a40ed770-c9e4-4283-954d-0ad52d703058
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 030fd03e-a017-41b3-87a3-7403c3f4e087
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | fdbaa9c4-f40e-4f0e-b621-21b728bc7519
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 3984cd78-a783-45de-93c9-96b19cc65b28
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 59a885ff-72b9-4b7f-97b3-1ad125237704
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 999c13ba-19c6-4952-ba10-3eea5b2c508a
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | fa045154-b0b2-4faa-bb24-6242ea15201c
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 3236f446-b384-42d4-82b9-97198b0454c3
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000002
+                Images Processed | 100
+           Image Processing Time | 0.20000001999999997
+                         Success | True
+
+
+[10/23/2023 12:25:30 AM] [ERROR] [TaskRunRepo] [task] [add] : TaskRun 9e4f91b4-efdf-4981-afef-8902f61690e1 already exists.
+NoneType: None
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+Completed TestTaskRunRepo test_add_exists in 0.2 seconds at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+
+Started TestTaskRunRepo test_get at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+====================================================================================================
+[10/23/2023 12:25:30 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_get] :                                      id              task  mode  stage_id     stage             started               ended  duration  images_processed  image_processing_time  success params
+0  9e4f91b4-efdf-4981-afef-8902f61690e1  TestTaskRunRepo0  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+1  3fd9173f-454b-4d5f-b9be-f976004532c0  TestTaskRunRepo1  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+2  a40ed770-c9e4-4283-954d-0ad52d703058  TestTaskRunRepo0  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+3  030fd03e-a017-41b3-87a3-7403c3f4e087  TestTaskRunRepo1  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+4  fdbaa9c4-f40e-4f0e-b621-21b728bc7519  TestTaskRunRepo0  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+5  3984cd78-a783-45de-93c9-96b19cc65b28  TestTaskRunRepo1  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+6  59a885ff-72b9-4b7f-97b3-1ad125237704  TestTaskRunRepo0  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+7  999c13ba-19c6-4952-ba10-3eea5b2c508a  TestTaskRunRepo1  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+8  fa045154-b0b2-4faa-bb24-6242ea15201c  TestTaskRunRepo0  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+9  3236f446-b384-42d4-82b9-97198b0454c3  TestTaskRunRepo1  test         0  original 2023-10-23 00:25:10 2023-10-23 00:25:30      20.0               100                    0.2        1   null
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+	Completed TestTaskRunRepo test_get in 0.1 seconds at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+
+Started TestTaskRunRepo test_count at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+====================================================================================================
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+	Completed TestTaskRunRepo test_count in 0.0 seconds at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+
+Started TestTaskRunRepo test_delete at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+====================================================================================================
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+	Completed TestTaskRunRepo test_delete in 0.0 seconds at 12:25:30 AM on 10/23/2023
+[10/23/2023 12:25:30 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+
+Started TestTaskRunRepo test_setup at 12:41:44 AM on 10/23/2023
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+====================================================================================================
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+	Completed TestTaskRunRepo test_setup in 0.4 seconds at 12:41:44 AM on 10/23/2023
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+Started TestTaskRunRepo test_add_exists at 12:41:44 AM on 10/23/2023
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+====================================================================================================
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | cc744aa3-d5c8-43b8-8615-c61f03fb3283
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000009
+                Images Processed | 100
+           Image Processing Time | 0.20000009
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | e2ee6ae6-6b0b-4529-bd9b-27889c3d14ff
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000005
+                Images Processed | 100
+           Image Processing Time | 0.20000005
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | cb5e47e5-ed9c-48ad-9f9a-6221066c95cf
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000004
+                Images Processed | 100
+           Image Processing Time | 0.20000004000000002
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | ce1ca7d2-a772-4acd-b769-ec3c17f2c5f3
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 4a7feed2-ad50-4aed-9fc3-51dcfbcd5b32
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 81de3722-1adb-4721-b291-721214d0830f
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 752dcae2-8205-4aa5-a57d-b3b7cd6dff35
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 91e6ab67-5e17-42d2-bb83-56658dbd7766
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000002
+                Images Processed | 100
+           Image Processing Time | 0.20000001999999997
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 68453809-c2c0-4268-9421-8b5f75fcafee
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000002
+                Images Processed | 100
+           Image Processing Time | 0.20000001999999997
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | f11c6879-40c8-4d3f-be51-aab2fcaa1fc4
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+
+
+[10/23/2023 12:41:44 AM] [ERROR] [TaskRunRepo] [task] [add] : TaskRun cc744aa3-d5c8-43b8-8615-c61f03fb3283 already exists.
+NoneType: None
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+Completed TestTaskRunRepo test_add_exists in 0.2 seconds at 12:41:44 AM on 10/23/2023
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+
+Started TestTaskRunRepo test_get at 12:41:44 AM on 10/23/2023
+[10/23/2023 12:41:44 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+====================================================================================================
+[10/23/2023 12:41:45 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_get] :                                      id              task  mode  stage_id     stage             started               ended  duration  images_processed  image_processing_time  success params
+0  cc744aa3-d5c8-43b8-8615-c61f03fb3283  TestTaskRunRepo0  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+1  e2ee6ae6-6b0b-4529-bd9b-27889c3d14ff  TestTaskRunRepo1  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+2  cb5e47e5-ed9c-48ad-9f9a-6221066c95cf  TestTaskRunRepo0  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+3  ce1ca7d2-a772-4acd-b769-ec3c17f2c5f3  TestTaskRunRepo1  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+4  4a7feed2-ad50-4aed-9fc3-51dcfbcd5b32  TestTaskRunRepo0  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+5  81de3722-1adb-4721-b291-721214d0830f  TestTaskRunRepo1  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+6  752dcae2-8205-4aa5-a57d-b3b7cd6dff35  TestTaskRunRepo0  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+7  91e6ab67-5e17-42d2-bb83-56658dbd7766  TestTaskRunRepo1  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+8  68453809-c2c0-4268-9421-8b5f75fcafee  TestTaskRunRepo0  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+9  f11c6879-40c8-4d3f-be51-aab2fcaa1fc4  TestTaskRunRepo1  test         0  original 2023-10-23 00:41:25 2023-10-23 00:41:45      20.0               100                    0.2        1   null
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+	Completed TestTaskRunRepo test_get in 0.1 seconds at 12:41:45 AM on 10/23/2023
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+
+Started TestTaskRunRepo test_count at 12:41:45 AM on 10/23/2023
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+====================================================================================================
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+	Completed TestTaskRunRepo test_count in 0.0 seconds at 12:41:45 AM on 10/23/2023
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+
+Started TestTaskRunRepo test_delete at 12:41:45 AM on 10/23/2023
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+====================================================================================================
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+	Completed TestTaskRunRepo test_delete in 0.0 seconds at 12:41:45 AM on 10/23/2023
+[10/23/2023 12:41:45 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:20:32 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+
+Started TestTaskRunRepo test_setup at 01:20:32 AM on 10/23/2023
+[10/23/2023 01:20:32 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+====================================================================================================
+[10/23/2023 01:20:32 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+	Completed TestTaskRunRepo test_setup in 0.4 seconds at 01:20:32 AM on 10/23/2023
+[10/23/2023 01:20:32 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:20:32 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+Started TestTaskRunRepo test_add_exists at 01:20:32 AM on 10/23/2023
+[10/23/2023 01:20:32 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+====================================================================================================
+[10/23/2023 01:20:32 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 56ec551b-92f9-44e8-b668-e5e7cb728ef0
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000008
+                Images Processed | 100
+           Image Processing Time | 0.20000008000000002
+                         Success | True
+                          Params | {"n": "10"}
+
+
+[10/23/2023 01:20:32 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 84e74d58-2dc4-4d18-8182-19d53a633088
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000005
+                Images Processed | 100
+           Image Processing Time | 0.20000005
+                         Success | True
+                          Params | {"kernel": "20", "a": "20"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 1933b9a6-caa2-4e7d-ab67-de9347378ea4
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000004
+                Images Processed | 100
+           Image Processing Time | 0.20000004000000002
+                         Success | True
+                          Params | {"b": "20", "c": "20", "d": "200"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | e32f18d5-0630-4efd-a250-1cbdc34c684c
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"e": "20"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | eedbf63e-a0ef-4b22-b43c-32ff3bd61903
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000005
+                Images Processed | 100
+           Image Processing Time | 0.20000005
+                         Success | True
+                          Params | {"b": "20", "f": "20", "d": "200"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | e374c836-d4cb-4c1c-bee5-08ae0fa70fcc
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"b": "20", "c": "20", "kernel": "200"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | ee970dc8-9015-4293-bd01-36165870cff4
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"x": "20", "y": "20", "d": "200", "z": "a"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | ce1730a1-457f-4bea-8c35-c4ea9d782da4
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000002
+                Images Processed | 100
+           Image Processing Time | 0.20000001999999997
+                         Success | True
+                          Params | {"w": "20", "f": "20", "d": "200"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | ac7173b9-6a95-4caf-8b6e-8de9711fd65c
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"x": "20", "c": "20", "kernel": "200"}
+
+
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 8d5908ee-1fee-4a58-bdfb-93592a447347
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"y": "20", "hat": "20", "d": "200", "z": "a"}
+
+
+[10/23/2023 01:20:33 AM] [ERROR] [TaskRunRepo] [task] [add] : TaskRun 56ec551b-92f9-44e8-b668-e5e7cb728ef0 already exists.
+NoneType: None
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+Completed TestTaskRunRepo test_add_exists in 0.2 seconds at 01:20:33 AM on 10/23/2023
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+
+Started TestTaskRunRepo test_get at 01:20:33 AM on 10/23/2023
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+====================================================================================================
+[10/23/2023 01:20:33 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_get] :                                      id              task  ... success                                             params
+0  56ec551b-92f9-44e8-b668-e5e7cb728ef0  TestTaskRunRepo0  ...       1                                  "{\"n\": \"10\"}"
+1  84e74d58-2dc4-4d18-8182-19d53a633088  TestTaskRunRepo1  ...       1              "{\"kernel\": \"20\", \"a\": \"20\"}"
+2  1933b9a6-caa2-4e7d-ab67-de9347378ea4  TestTaskRunRepo0  ...       1   "{\"b\": \"20\", \"c\": \"20\", \"d\": \"200\"}"
+3  e32f18d5-0630-4efd-a250-1cbdc34c684c  TestTaskRunRepo1  ...       1                                  "{\"e\": \"20\"}"
+4  eedbf63e-a0ef-4b22-b43c-32ff3bd61903  TestTaskRunRepo0  ...       1   "{\"b\": \"20\", \"f\": \"20\", \"d\": \"200\"}"
+5  e374c836-d4cb-4c1c-bee5-08ae0fa70fcc  TestTaskRunRepo1  ...       1  "{\"b\": \"20\", \"c\": \"20\", \"kernel\": \"...
+6  ee970dc8-9015-4293-bd01-36165870cff4  TestTaskRunRepo0  ...       1  "{\"x\": \"20\", \"y\": \"20\", \"d\": \"200\"...
+7  ce1730a1-457f-4bea-8c35-c4ea9d782da4  TestTaskRunRepo1  ...       1   "{\"w\": \"20\", \"f\": \"20\", \"d\": \"200\"}"
+8  ac7173b9-6a95-4caf-8b6e-8de9711fd65c  TestTaskRunRepo0  ...       1  "{\"x\": \"20\", \"c\": \"20\", \"kernel\": \"...
+9  8d5908ee-1fee-4a58-bdfb-93592a447347  TestTaskRunRepo1  ...       1  "{\"y\": \"20\", \"hat\": \"20\", \"d\": \"200...
+
+[10 rows x 12 columns]
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+	Completed TestTaskRunRepo test_get in 0.1 seconds at 01:20:33 AM on 10/23/2023
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+
+Started TestTaskRunRepo test_count at 01:20:33 AM on 10/23/2023
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+====================================================================================================
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+	Completed TestTaskRunRepo test_count in 0.0 seconds at 01:20:33 AM on 10/23/2023
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+
+Started TestTaskRunRepo test_delete at 01:20:33 AM on 10/23/2023
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+====================================================================================================
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+	Completed TestTaskRunRepo test_delete in 0.0 seconds at 01:20:33 AM on 10/23/2023
+[10/23/2023 01:20:33 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+
+Started TestTaskRunRepo test_setup at 01:22:04 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+====================================================================================================
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+	Completed TestTaskRunRepo test_setup in 0.7 seconds at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+Started TestTaskRunRepo test_add_exists at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+====================================================================================================
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 5c4baa46-d0b8-4fbb-ab52-42eb634de5ad
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000013
+                Images Processed | 100
+           Image Processing Time | 0.20000013
+                         Success | True
+                          Params | {"n": "10"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | c12dbfd8-4998-486d-8cba-d8aa1f86423c
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000005
+                Images Processed | 100
+           Image Processing Time | 0.20000005
+                         Success | True
+                          Params | {"kernel": "20", "a": "20"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 3baf49d5-ca95-4fa1-ab26-64cf69850a1d
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000004
+                Images Processed | 100
+           Image Processing Time | 0.20000004000000002
+                         Success | True
+                          Params | {"b": 20, "c": "20", "d": "200"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | bf626de8-bef5-4d91-9fc2-42d04c6b08c3
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"e": "20"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 538f9901-f70e-4f07-a947-ba2b3491d92f
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"b": "20", "f": "20", "d": "200"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | d6daf5b0-c051-48cc-8795-b7005700818a
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"b": "20", "c": "20", "kernel": "200"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 099d49f4-affe-4e58-a937-5027c0a89a48
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"x": "20", "y": "20", "d": "200", "z": "a"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 672aca1a-0f35-496c-8625-22f564deee57
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"w": "20", "f": "20", "d": "200"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 9ddca8ac-6b68-48bd-acda-48b470db4239
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"x": "20", "c": "20", "kernel": "200"}
+
+
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | d63ea304-9ec6-4a77-b814-ef9bd6828321
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"y": "20", "hat": "20", "d": "200", "z": "a"}
+
+
+[10/23/2023 01:22:05 AM] [ERROR] [TaskRunRepo] [task] [add] : TaskRun 5c4baa46-d0b8-4fbb-ab52-42eb634de5ad already exists.
+NoneType: None
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+Completed TestTaskRunRepo test_add_exists in 0.2 seconds at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+
+Started TestTaskRunRepo test_get at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+====================================================================================================
+[10/23/2023 01:22:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_get] :                                      id              task  ... success                                             params
+0  5c4baa46-d0b8-4fbb-ab52-42eb634de5ad  TestTaskRunRepo0  ...       1                                  "{\"n\": \"10\"}"
+1  c12dbfd8-4998-486d-8cba-d8aa1f86423c  TestTaskRunRepo1  ...       1              "{\"kernel\": \"20\", \"a\": \"20\"}"
+2  3baf49d5-ca95-4fa1-ab26-64cf69850a1d  TestTaskRunRepo0  ...       1       "{\"b\": 20, \"c\": \"20\", \"d\": \"200\"}"
+3  bf626de8-bef5-4d91-9fc2-42d04c6b08c3  TestTaskRunRepo1  ...       1                                  "{\"e\": \"20\"}"
+4  538f9901-f70e-4f07-a947-ba2b3491d92f  TestTaskRunRepo0  ...       1   "{\"b\": \"20\", \"f\": \"20\", \"d\": \"200\"}"
+5  d6daf5b0-c051-48cc-8795-b7005700818a  TestTaskRunRepo1  ...       1  "{\"b\": \"20\", \"c\": \"20\", \"kernel\": \"...
+6  099d49f4-affe-4e58-a937-5027c0a89a48  TestTaskRunRepo0  ...       1  "{\"x\": \"20\", \"y\": \"20\", \"d\": \"200\"...
+7  672aca1a-0f35-496c-8625-22f564deee57  TestTaskRunRepo1  ...       1   "{\"w\": \"20\", \"f\": \"20\", \"d\": \"200\"}"
+8  9ddca8ac-6b68-48bd-acda-48b470db4239  TestTaskRunRepo0  ...       1  "{\"x\": \"20\", \"c\": \"20\", \"kernel\": \"...
+9  d63ea304-9ec6-4a77-b814-ef9bd6828321  TestTaskRunRepo1  ...       1  "{\"y\": \"20\", \"hat\": \"20\", \"d\": \"200...
+
+[10 rows x 12 columns]
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+	Completed TestTaskRunRepo test_get in 0.1 seconds at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+
+Started TestTaskRunRepo test_count at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+====================================================================================================
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+	Completed TestTaskRunRepo test_count in 0.0 seconds at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+
+Started TestTaskRunRepo test_delete at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+====================================================================================================
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+	Completed TestTaskRunRepo test_delete in 0.0 seconds at 01:22:05 AM on 10/23/2023
+[10/23/2023 01:22:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+
+Started TestTaskRunRepo test_setup at 01:26:38 AM on 10/23/2023
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+====================================================================================================
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+	Completed TestTaskRunRepo test_setup in 0.4 seconds at 01:26:39 AM on 10/23/2023
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+
+Started TestTaskRunRepo test_get at 01:26:39 AM on 10/23/2023
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+====================================================================================================
+[10/23/2023 01:26:39 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_get] : Empty DataFrame
+Columns: [id, task, mode, stage_id, stage, started, ended, duration, images_processed, image_processing_time, success, params]
+Index: []
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+
+Started TestTaskRunRepo test_count at 01:26:39 AM on 10/23/2023
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+====================================================================================================
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+
+Started TestTaskRunRepo test_delete at 01:26:39 AM on 10/23/2023
+[10/23/2023 01:26:39 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+====================================================================================================
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+
+Started TestTaskRunRepo test_setup at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+====================================================================================================
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+	Completed TestTaskRunRepo test_setup in 0.4 seconds at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+Started TestTaskRunRepo test_add_exists at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+====================================================================================================
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 67ab33e5-7d25-4f74-9f0f-1fe8e20a4444
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000009
+                Images Processed | 100
+           Image Processing Time | 0.20000009
+                         Success | True
+                          Params | {"n": "10"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | e8dfc0d3-524d-4d8d-9bfd-240e04c1e895
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000005
+                Images Processed | 100
+           Image Processing Time | 0.20000005
+                         Success | True
+                          Params | {"kernel": "20", "a": "20"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 00096477-c7ee-47aa-8831-15a74bc3a44f
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000004
+                Images Processed | 100
+           Image Processing Time | 0.20000004000000002
+                         Success | True
+                          Params | {"b": 20, "c": "20", "d": "200"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 4408b7df-e542-48a1-876f-449cc56d2552
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"e": "20"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 222702db-cec5-4a59-804d-2d7279d867ab
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000004
+                Images Processed | 100
+           Image Processing Time | 0.20000004000000002
+                         Success | True
+                          Params | {"b": "20", "f": "20", "d": "200"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | a1308f5e-6b74-43ec-b06f-9a406d3ef104
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"b": "20", "c": "20", "kernel": "200"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 3fe6ee6e-3794-41b7-a85e-1c9db65eb80c
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"x": "20", "y": "20", "d": "200", "z": "a"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 6aec4c70-ab9c-404f-be24-41b68d4476fb
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000007
+                Images Processed | 100
+           Image Processing Time | 0.20000007
+                         Success | True
+                          Params | {"w": "20", "f": "20", "d": "200"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | bfed1df2-b5e2-4688-88f4-18f6d8c59ff7
+                            Task | TestTaskRunRepo0
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"x": "20", "c": "20", "kernel": "200"}
+
+
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+
+                            TaskRun                             
+                              Id | 221a1ca5-6012-44db-b9b1-06ad5a332b40
+                            Task | TestTaskRunRepo1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.000003
+                Images Processed | 100
+           Image Processing Time | 0.20000003
+                         Success | True
+                          Params | {"y": "20", "hat": "20", "d": "200", "z": "a"}
+
+
+[10/23/2023 01:45:05 AM] [ERROR] [TaskRunRepo] [task] [add] : TaskRun 67ab33e5-7d25-4f74-9f0f-1fe8e20a4444 already exists.
+NoneType: None
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+Completed TestTaskRunRepo test_add_exists in 0.2 seconds at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+
+Started TestTaskRunRepo test_get at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+====================================================================================================
+[10/23/2023 01:45:05 AM] [DEBUG] [test_taskrun_repo] [test_taskrun_repo] [test_get] :                                      id              task  ... success                                             params
+0  67ab33e5-7d25-4f74-9f0f-1fe8e20a4444  TestTaskRunRepo0  ...       1                                  "{\"n\": \"10\"}"
+1  e8dfc0d3-524d-4d8d-9bfd-240e04c1e895  TestTaskRunRepo1  ...       1              "{\"kernel\": \"20\", \"a\": \"20\"}"
+2  00096477-c7ee-47aa-8831-15a74bc3a44f  TestTaskRunRepo0  ...       1       "{\"b\": 20, \"c\": \"20\", \"d\": \"200\"}"
+3  4408b7df-e542-48a1-876f-449cc56d2552  TestTaskRunRepo1  ...       1                                  "{\"e\": \"20\"}"
+4  222702db-cec5-4a59-804d-2d7279d867ab  TestTaskRunRepo0  ...       1   "{\"b\": \"20\", \"f\": \"20\", \"d\": \"200\"}"
+5  a1308f5e-6b74-43ec-b06f-9a406d3ef104  TestTaskRunRepo1  ...       1  "{\"b\": \"20\", \"c\": \"20\", \"kernel\": \"...
+6  3fe6ee6e-3794-41b7-a85e-1c9db65eb80c  TestTaskRunRepo0  ...       1  "{\"x\": \"20\", \"y\": \"20\", \"d\": \"200\"...
+7  6aec4c70-ab9c-404f-be24-41b68d4476fb  TestTaskRunRepo1  ...       1   "{\"w\": \"20\", \"f\": \"20\", \"d\": \"200\"}"
+8  bfed1df2-b5e2-4688-88f4-18f6d8c59ff7  TestTaskRunRepo0  ...       1  "{\"x\": \"20\", \"c\": \"20\", \"kernel\": \"...
+9  221a1ca5-6012-44db-b9b1-06ad5a332b40  TestTaskRunRepo1  ...       1  "{\"y\": \"20\", \"hat\": \"20\", \"d\": \"200...
+
+[10 rows x 12 columns]
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+	Completed TestTaskRunRepo test_get in 0.1 seconds at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_get] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+
+Started TestTaskRunRepo test_count at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+====================================================================================================
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+	Completed TestTaskRunRepo test_count in 0.0 seconds at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+
+Started TestTaskRunRepo test_delete at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+====================================================================================================
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+	Completed TestTaskRunRepo test_delete in 0.0 seconds at 01:45:05 AM on 10/23/2023
+[10/23/2023 01:45:05 AM] [INFO] [test_taskrun_repo] [test_taskrun_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:03:34 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:03:34 AM on 10/23/2023
+[10/23/2023 02:03:34 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:03:34 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 02:03:34 AM on 10/23/2023
+[10/23/2023 02:03:34 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:03:34 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:03:34 AM on 10/23/2023
+[10/23/2023 02:03:34 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 02:04:56 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:04:56 AM on 10/23/2023
+[10/23/2023 02:04:56 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:04:56 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 02:04:56 AM on 10/23/2023
+[10/23/2023 02:04:56 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:04:56 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:04:56 AM on 10/23/2023
+[10/23/2023 02:04:56 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 02:08:06 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:08:05 AM on 10/23/2023
+[10/23/2023 02:08:06 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:08:06 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 02:08:06 AM on 10/23/2023
+[10/23/2023 02:08:06 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:08:06 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:08:06 AM on 10/23/2023
+[10/23/2023 02:08:06 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 02:08:46 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:08:45 AM on 10/23/2023
+[10/23/2023 02:08:46 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:08:46 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 02:08:46 AM on 10/23/2023
+[10/23/2023 02:08:46 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:08:46 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:08:46 AM on 10/23/2023
+[10/23/2023 02:08:46 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 02:43:47 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:43:47 AM on 10/23/2023
+[10/23/2023 02:43:47 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:43:47 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 02:43:47 AM on 10/23/2023
+[10/23/2023 02:43:47 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:43:47 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:43:47 AM on 10/23/2023
+[10/23/2023 02:43:47 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 02:44:13 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:44:13 AM on 10/23/2023
+[10/23/2023 02:44:13 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:44:13 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 02:44:13 AM on 10/23/2023
+[10/23/2023 02:44:13 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:44:13 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:44:13 AM on 10/23/2023
+[10/23/2023 02:44:13 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 02:46:50 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:46:50 AM on 10/23/2023
+[10/23/2023 02:46:50 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:46:50 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.3 seconds at 02:46:50 AM on 10/23/2023
+[10/23/2023 02:46:50 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:46:50 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:46:50 AM on 10/23/2023
+[10/23/2023 02:46:50 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 02:49:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 02:49:29 AM on 10/23/2023
+[10/23/2023 02:49:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 02:49:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.3 seconds at 02:49:29 AM on 10/23/2023
+[10/23/2023 02:49:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 02:49:29 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 02:49:29 AM on 10/23/2023
+[10/23/2023 02:49:29 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 03:04:08 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 03:04:07 AM on 10/23/2023
+[10/23/2023 03:04:08 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 03:04:08 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.3 seconds at 03:04:08 AM on 10/23/2023
+[10/23/2023 03:04:08 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 03:04:08 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 03:04:08 AM on 10/23/2023
+[10/23/2023 03:04:08 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 03:14:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 03:14:29 AM on 10/23/2023
+[10/23/2023 03:14:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 03:14:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.3 seconds at 03:14:29 AM on 10/23/2023
+[10/23/2023 03:14:29 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 03:14:29 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 03:14:29 AM on 10/23/2023
+[10/23/2023 03:14:29 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 03:15:04 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 03:15:04 AM on 10/23/2023
+[10/23/2023 03:15:04 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 03:15:04 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 03:15:04 AM on 10/23/2023
+[10/23/2023 03:15:04 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 03:15:04 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 03:15:04 AM on 10/23/2023
+[10/23/2023 03:15:04 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 03:24:31 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 03:24:30 AM on 10/23/2023
+[10/23/2023 03:24:31 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 03:24:31 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.3 seconds at 03:24:31 AM on 10/23/2023
+[10/23/2023 03:24:31 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 03:24:31 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 03:24:31 AM on 10/23/2023
+[10/23/2023 03:24:31 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 03:24:52 AM] [DEBUG] [test_converter] [test_converter] [test_converter] : 
+
+                            TaskRun                             
+                              Id | e3c2c8dc-e7fa-496b-a56a-82337df191e3
+                            Task | ImageConverter
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 4.402573
+                Images Processed | 36
+           Image Processing Time | 0.12229369444444445
+                         Success | True
+
+
+[10/23/2023 03:26:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 03:26:57 AM on 10/23/2023
+[10/23/2023 03:26:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 03:26:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 03:26:58 AM on 10/23/2023
+[10/23/2023 03:26:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 03:26:58 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 03:26:58 AM on 10/23/2023
+[10/23/2023 03:26:58 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 03:27:16 AM] [DEBUG] [test_converter] [test_converter] [test_converter] : 
+
+                            TaskRun                             
+                              Id | 0216b173-0a5b-4406-9ae7-bdd891329b20
+                            Task | ImageConverter
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 4.17736
+                Images Processed | 36
+           Image Processing Time | 0.11603777777777778
+                         Success | True
+
+
+[10/23/2023 03:27:16 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+Completed TestConverter test_converter in 18.9 seconds at 03:27:16 AM on 10/23/2023
+[10/23/2023 03:27:16 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 03:29:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+
+Started TestConverter test_setup at 03:29:58 AM on 10/23/2023
+[10/23/2023 03:29:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+====================================================================================================
+[10/23/2023 03:29:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+	Completed TestConverter test_setup in 0.4 seconds at 03:29:58 AM on 10/23/2023
+[10/23/2023 03:29:58 AM] [INFO] [test_converter] [test_converter] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/23/2023 03:29:58 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+
+Started TestConverter test_converter at 03:29:58 AM on 10/23/2023
+[10/23/2023 03:29:58 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+====================================================================================================
+[10/23/2023 03:30:29 AM] [DEBUG] [test_converter] [test_converter] [test_converter] : 
+
+                            TaskRun                             
+                              Id | 75ea939e-2eef-4659-b750-06ce7e1d5181
+                            Task | ImageConverter
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                        Duration | 20.338854
+                Images Processed | 36
+           Image Processing Time | 0.5649681666666667
+                         Success | True
+
+
+[10/23/2023 03:30:29 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+Completed TestConverter test_converter in 30.6 seconds at 03:30:29 AM on 10/23/2023
+[10/23/2023 03:30:29 AM] [INFO] [test_converter] [test_converter] [test_converter] : 
+----------------------------------------------------------------------------------------------------

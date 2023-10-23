@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 11:34:02 pm                                                #
-# Modified   : Monday October 23rd 2023 12:08:52 am                                                #
+# Modified   : Monday October 23rd 2023 12:24:53 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -120,6 +120,7 @@ class TestTaskRunRepo:  # pragma: no cover
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.taskrun()
         taskruns = repo.get()
+        logger.debug(taskruns)
         assert len(taskruns) == 10
 
         condition = lambda df: df["task"] == "TestTaskRunRepo1"  # noqa

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday October 23rd 2023 12:22:19 am                                                #
+# Modified   : Monday October 23rd 2023 01:18:46 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -42,6 +42,8 @@ TASKRUN_DTYPES = {
     "success": TINYINT(),
     "params": JSON(),
 }
+
+TASKRUN_DTYPES_PANDAS = {"id": str}
 
 
 # ------------------------------------------------------------------------------------------------ #
