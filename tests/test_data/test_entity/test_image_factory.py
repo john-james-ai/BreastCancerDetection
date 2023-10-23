@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 02:14:19 pm                                              #
-# Modified   : Sunday October 22nd 2023 11:55:44 am                                                #
+# Modified   : Sunday October 22nd 2023 07:17:14 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -56,7 +56,7 @@ class TestImageFactory:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        factory = container.image.factory()
+        factory = container.repo.factory()
         df = pd.read_csv(DICOM_FP)
         df = df.loc[df["case_id"] == CASE_ID]
 
@@ -157,7 +157,7 @@ class TestImageFactory:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        factory = container.image.factory()
+        factory = container.repo.factory()
         df = pd.read_csv(DICOM_FP)
         df = df.loc[df["case_id"] == CASE_ID]
 

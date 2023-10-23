@@ -4600,3 +4600,1455 @@ Started TestImageRepo test_delete at 01:30:04 PM on 10/22/2023
 	Completed TestImageRepo test_delete in 0.5 seconds at 01:30:05 PM on 10/22/2023
 [10/22/2023 01:30:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
 ----------------------------------------------------------------------------------------------------
+[10/22/2023 07:18:19 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 07:18:19 PM on 10/22/2023
+[10/22/2023 07:18:19 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 07:18:20 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.5 seconds at 07:18:20 PM on 10/22/2023
+[10/22/2023 07:18:20 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 07:18:20 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 07:18:20 PM on 10/22/2023
+[10/22/2023 07:18:20 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 07:18:21 PM] [ERROR] [ImageRepo] [image] [add] : Image 10c8931c-9a2a-4dca-a71f-24e71be9088d already exists.
+NoneType: None
+[10/22/2023 07:18:21 PM] [ERROR] [ImageRepo] [image] [add] : Image 9f3a50f0-ac13-4048-b2be-4d45357b34a1 already exists.
+NoneType: None
+[10/22/2023 07:18:22 PM] [ERROR] [ImageRepo] [image] [add] : Image 5db22113-92a8-4871-b843-898051920dfa already exists.
+NoneType: None
+[10/22/2023 07:18:23 PM] [ERROR] [ImageRepo] [image] [add] : Image 5410523e-6681-4db1-8a99-6045cbe5afb3 already exists.
+NoneType: None
+[10/22/2023 07:18:24 PM] [ERROR] [ImageRepo] [image] [add] : Image b5a38120-0b27-4f77-994f-ae719753b9f5 already exists.
+NoneType: None
+[10/22/2023 07:18:25 PM] [ERROR] [ImageRepo] [image] [add] : Image f5ee4445-8f44-4e36-80e1-68ddca293aee already exists.
+NoneType: None
+[10/22/2023 07:18:26 PM] [ERROR] [ImageRepo] [image] [add] : Image ea02389b-ad37-4ce2-aac2-17ea67fbf18c already exists.
+NoneType: None
+[10/22/2023 07:18:27 PM] [ERROR] [ImageRepo] [image] [add] : Image bbd34d88-7257-4dac-b817-69f3952f743e already exists.
+NoneType: None
+[10/22/2023 07:18:28 PM] [ERROR] [ImageRepo] [image] [add] : Image 21f547dd-07b6-4777-8ce7-2aa916f3fe90 already exists.
+NoneType: None
+[10/22/2023 07:18:29 PM] [ERROR] [ImageRepo] [image] [add] : Image 724ca78f-55e3-4d89-8f93-6659484ae932 already exists.
+NoneType: None
+[10/22/2023 07:18:29 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 9.2 seconds at 07:18:29 PM on 10/22/2023
+[10/22/2023 07:18:29 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 07:18:29 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 07:18:29 PM on 10/22/2023
+[10/22/2023 07:18:29 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 07:18:29 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 10c8931c-9a2a-4dca-a71f-24e71be9088d
+                         Case Id | Calcification-Train_P_00642_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5720
+                           Width | 4040
+                            Size | 23108800
+                    Aspect Ratio | 0.706294
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 5527.99
+              Median Pixel Value | 0
+                 Std Pixel Value | 9511.99
+                        Filepath | tests/data/images/10c8931c-9a2a-4dca-a71f-24e71be9088d.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:29 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 9f3a50f0-ac13-4048-b2be-4d45357b34a1
+                         Case Id | Mass-Train_P_01638_RIGHT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5236
+                           Width | 2221
+                            Size | 11629156
+                    Aspect Ratio | 0.424179
+                 Min Pixel Value | 0
+                 Max Pixel Value | 61543
+              Range Pixel Values | 61543
+                Mean Pixel Value | 9161.71
+              Median Pixel Value | 0
+                 Std Pixel Value | 14598.8
+                        Filepath | tests/data/images/9f3a50f0-ac13-4048-b2be-4d45357b34a1.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:30 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 5db22113-92a8-4871-b843-898051920dfa
+                         Case Id | Mass-Train_P_00059_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5386
+                           Width | 3601
+                            Size | 19394986
+                    Aspect Ratio | 0.668585
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 13439.2
+              Median Pixel Value | 0
+                 Std Pixel Value | 16391.2
+                        Filepath | tests/data/images/5db22113-92a8-4871-b843-898051920dfa.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:30 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 5410523e-6681-4db1-8a99-6045cbe5afb3
+                         Case Id | Calcification-Train_P_01437_RIGHT_MLO_5
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4384
+                           Width | 2976
+                            Size | 13046784
+                    Aspect Ratio | 0.678832
+                 Min Pixel Value | 0
+                 Max Pixel Value | 59336
+              Range Pixel Values | 59336
+                Mean Pixel Value | 10833.0
+              Median Pixel Value | 119
+                 Std Pixel Value | 14409.9
+                        Filepath | tests/data/images/5410523e-6681-4db1-8a99-6045cbe5afb3.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:30 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | b5a38120-0b27-4f77-994f-ae719753b9f5
+                         Case Id | Calcification-Train_P_01628_LEFT_CC_3
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5680
+                           Width | 4096
+                            Size | 23265280
+                    Aspect Ratio | 0.721127
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 6245.08
+              Median Pixel Value | 0
+                 Std Pixel Value | 12752.0
+                        Filepath | tests/data/images/b5a38120-0b27-4f77-994f-ae719753b9f5.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:30 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | f5ee4445-8f44-4e36-80e1-68ddca293aee
+                         Case Id | Calcification-Train_P_00924_RIGHT_MLO_4
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4632
+                           Width | 3072
+                            Size | 14229504
+                    Aspect Ratio | 0.663212
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 10798.3
+              Median Pixel Value | 0
+                 Std Pixel Value | 14177.4
+                        Filepath | tests/data/images/f5ee4445-8f44-4e36-80e1-68ddca293aee.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:31 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | ea02389b-ad37-4ce2-aac2-17ea67fbf18c
+                         Case Id | Calcification-Test_P_00678_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 6271
+                           Width | 3226
+                            Size | 20230246
+                    Aspect Ratio | 0.514432
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 13439.8
+              Median Pixel Value | 0
+                 Std Pixel Value | 17275.8
+                        Filepath | tests/data/images/ea02389b-ad37-4ce2-aac2-17ea67fbf18c.png
+                         Fileset | test
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:31 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | bbd34d88-7257-4dac-b817-69f3952f743e
+                         Case Id | Mass-Test_P_00510_LEFT_CC_4
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5720
+                           Width | 4040
+                            Size | 23108800
+                    Aspect Ratio | 0.706294
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 10092.7
+              Median Pixel Value | 0
+                 Std Pixel Value | 12998.2
+                        Filepath | tests/data/images/bbd34d88-7257-4dac-b817-69f3952f743e.png
+                         Fileset | test
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:31 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 21f547dd-07b6-4777-8ce7-2aa916f3fe90
+                         Case Id | Calcification-Train_P_00422_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4584
+                           Width | 2944
+                            Size | 13495296
+                    Aspect Ratio | 0.642234
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 4791.24
+              Median Pixel Value | 0
+                 Std Pixel Value | 11484.1
+                        Filepath | tests/data/images/21f547dd-07b6-4777-8ce7-2aa916f3fe90.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:32 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 724ca78f-55e3-4d89-8f93-6659484ae932
+                         Case Id | Calcification-Test_P_01154_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5491
+                           Width | 3256
+                            Size | 17878696
+                    Aspect Ratio | 0.59297
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 17830.5
+              Median Pixel Value | 0
+                 Std Pixel Value | 20913.0
+                        Filepath | tests/data/images/724ca78f-55e3-4d89-8f93-6659484ae932.png
+                         Fileset | test
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 07:18:34 PM] [ERROR] [ImageRepo] [image] [get_image] : Image id invalid does not exist.
+NoneType: None
+[10/22/2023 07:18:34 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+	Completed TestImageRepo test_get_image in 5.0 seconds at 07:18:34 PM on 10/22/2023
+[10/22/2023 07:18:34 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 07:18:34 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 07:18:34 PM on 10/22/2023
+[10/22/2023 07:18:34 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image 10c8931c-9a2a-4dca-a71f-24e71be9088d is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image 9f3a50f0-ac13-4048-b2be-4d45357b34a1 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image 5db22113-92a8-4871-b843-898051920dfa is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image 5410523e-6681-4db1-8a99-6045cbe5afb3 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image b5a38120-0b27-4f77-994f-ae719753b9f5 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image f5ee4445-8f44-4e36-80e1-68ddca293aee is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image ea02389b-ad37-4ce2-aac2-17ea67fbf18c is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image bbd34d88-7257-4dac-b817-69f3952f743e is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image 21f547dd-07b6-4777-8ce7-2aa916f3fe90 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [ImageRepo] [image] [delete_image] : Image 724ca78f-55e3-4d89-8f93-6659484ae932 is a stage 0, original image. Original images cannot be deleted.
+[10/22/2023 07:18:34 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.4 seconds at 07:18:34 PM on 10/22/2023
+[10/22/2023 07:18:34 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:09:23 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 09:09:22 PM on 10/22/2023
+[10/22/2023 09:09:23 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 09:09:23 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 09:09:23 PM on 10/22/2023
+[10/22/2023 09:09:23 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:09:23 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 09:09:23 PM on 10/22/2023
+[10/22/2023 09:09:23 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 09:09:24 PM on 10/22/2023
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+
+Started TestImageRepo test_count at 09:09:24 PM on 10/22/2023
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+====================================================================================================
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 09:09:24 PM on 10/22/2023
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.0 seconds at 09:09:24 PM on 10/22/2023
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+
+Started TestImageRepo test_teardown at 09:09:24 PM on 10/22/2023
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+====================================================================================================
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+	Completed TestImageRepo test_teardown in 0.0 seconds at 09:09:24 PM on 10/22/2023
+[10/22/2023 09:09:24 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:10:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 09:10:48 PM on 10/22/2023
+[10/22/2023 09:10:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 09:10:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 09:10:49 PM on 10/22/2023
+[10/22/2023 09:10:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:10:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 09:10:49 PM on 10/22/2023
+[10/22/2023 09:10:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 09:10:50 PM] [ERROR] [ImageRepo] [image] [add] : Image 4e573a1e-4f3d-4afa-8856-2854c961655d already exists.
+NoneType: None
+[10/22/2023 09:10:51 PM] [ERROR] [ImageRepo] [image] [add] : Image b17da90e-cc8e-4cce-9de6-847291438da3 already exists.
+NoneType: None
+[10/22/2023 09:10:52 PM] [ERROR] [ImageRepo] [image] [add] : Image d7b3543f-6bee-48b6-8e91-86e966f0f8b0 already exists.
+NoneType: None
+[10/22/2023 09:10:53 PM] [ERROR] [ImageRepo] [image] [add] : Image 4213ebf1-d5ca-4b31-aa74-a340c44ec5f2 already exists.
+NoneType: None
+[10/22/2023 09:10:54 PM] [ERROR] [ImageRepo] [image] [add] : Image b10bf9f6-2fb5-417b-9c2a-81585e9ceeca already exists.
+NoneType: None
+[10/22/2023 09:10:54 PM] [ERROR] [ImageRepo] [image] [add] : Image 02cfa94d-a46f-4304-9969-6347762a090a already exists.
+NoneType: None
+[10/22/2023 09:10:55 PM] [ERROR] [ImageRepo] [image] [add] : Image f154ee29-4920-4c59-af8c-6a994c9a851f already exists.
+NoneType: None
+[10/22/2023 09:10:56 PM] [ERROR] [ImageRepo] [image] [add] : Image f6adf53e-568a-46b6-a5d8-10eb32193217 already exists.
+NoneType: None
+[10/22/2023 09:10:57 PM] [ERROR] [ImageRepo] [image] [add] : Image e84a1367-9639-40c9-92c7-e4498b32a178 already exists.
+NoneType: None
+[10/22/2023 09:10:58 PM] [ERROR] [ImageRepo] [image] [add] : Image a5c5f22e-1a6e-456a-8371-391d69703c46 already exists.
+NoneType: None
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 09:10:58 PM on 10/22/2023
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+
+Started TestImageRepo test_count at 09:10:58 PM on 10/22/2023
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+====================================================================================================
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+	Completed TestImageRepo test_count in 0.0 seconds at 09:10:58 PM on 10/22/2023
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 09:10:58 PM on 10/22/2023
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.1 seconds at 09:10:58 PM on 10/22/2023
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+
+Started TestImageRepo test_teardown at 09:10:58 PM on 10/22/2023
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+====================================================================================================
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+	Completed TestImageRepo test_teardown in 0.0 seconds at 09:10:58 PM on 10/22/2023
+[10/22/2023 09:10:58 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:11:55 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 09:11:55 PM on 10/22/2023
+[10/22/2023 09:11:55 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 09:11:55 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 09:11:55 PM on 10/22/2023
+[10/22/2023 09:11:55 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:11:55 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 09:11:55 PM on 10/22/2023
+[10/22/2023 09:11:55 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 09:11:56 PM] [ERROR] [ImageRepo] [image] [add] : Image 98cdab37-8549-420e-b845-121a678185e5 already exists.
+NoneType: None
+[10/22/2023 09:11:57 PM] [ERROR] [ImageRepo] [image] [add] : Image 9acc6bc5-800e-4d41-a5c3-5ffdb20eb6da already exists.
+NoneType: None
+[10/22/2023 09:11:58 PM] [ERROR] [ImageRepo] [image] [add] : Image 10c27351-0ee2-4529-9f19-3640655475d7 already exists.
+NoneType: None
+[10/22/2023 09:11:59 PM] [ERROR] [ImageRepo] [image] [add] : Image f9062095-39ed-487a-af94-f77df91dff21 already exists.
+NoneType: None
+[10/22/2023 09:12:00 PM] [ERROR] [ImageRepo] [image] [add] : Image 24cb3a0e-a7e9-4037-8c7e-602268a1bd2a already exists.
+NoneType: None
+[10/22/2023 09:12:01 PM] [ERROR] [ImageRepo] [image] [add] : Image b40f1307-4314-4b4b-a400-2b5a85a94270 already exists.
+NoneType: None
+[10/22/2023 09:12:02 PM] [ERROR] [ImageRepo] [image] [add] : Image ccf6a240-9f20-4e7f-96e5-19e2c45d369f already exists.
+NoneType: None
+[10/22/2023 09:12:04 PM] [ERROR] [ImageRepo] [image] [add] : Image d548cc69-5a80-498e-8a24-10f54cda7c39 already exists.
+NoneType: None
+[10/22/2023 09:12:05 PM] [ERROR] [ImageRepo] [image] [add] : Image f5791424-00ce-4343-b951-13f04ac425e2 already exists.
+NoneType: None
+[10/22/2023 09:12:06 PM] [ERROR] [ImageRepo] [image] [add] : Image a6e5144b-a913-40da-b1e4-1d1dabd138a6 already exists.
+NoneType: None
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 09:12:06 PM on 10/22/2023
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+
+Started TestImageRepo test_count at 09:12:06 PM on 10/22/2023
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+====================================================================================================
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+	Completed TestImageRepo test_count in 0.0 seconds at 09:12:06 PM on 10/22/2023
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 09:12:06 PM on 10/22/2023
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.2 seconds at 09:12:06 PM on 10/22/2023
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+
+Started TestImageRepo test_teardown at 09:12:06 PM on 10/22/2023
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+====================================================================================================
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+	Completed TestImageRepo test_teardown in 0.0 seconds at 09:12:06 PM on 10/22/2023
+[10/22/2023 09:12:06 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:15:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 09:15:49 PM on 10/22/2023
+[10/22/2023 09:15:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 09:15:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 09:15:49 PM on 10/22/2023
+[10/22/2023 09:15:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:15:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 09:15:49 PM on 10/22/2023
+[10/22/2023 09:15:49 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 09:15:50 PM] [ERROR] [ImageRepo] [image] [add] : Image c6db93f1-c44d-4f83-a507-1209c0642423 already exists.
+NoneType: None
+[10/22/2023 09:15:51 PM] [ERROR] [ImageRepo] [image] [add] : Image 7e9457f1-583c-4699-9999-b2a346492969 already exists.
+NoneType: None
+[10/22/2023 09:15:52 PM] [ERROR] [ImageRepo] [image] [add] : Image ee924d31-13d8-4ada-941d-6c308d968e8b already exists.
+NoneType: None
+[10/22/2023 09:15:53 PM] [ERROR] [ImageRepo] [image] [add] : Image 6859dcdb-b536-406b-938f-d0e2aeb450b9 already exists.
+NoneType: None
+[10/22/2023 09:15:54 PM] [ERROR] [ImageRepo] [image] [add] : Image ed1d686b-e21b-4d55-91a9-e1e5c89aa1d2 already exists.
+NoneType: None
+[10/22/2023 09:15:55 PM] [ERROR] [ImageRepo] [image] [add] : Image b62fe401-b777-462f-b317-09ecf222e602 already exists.
+NoneType: None
+[10/22/2023 09:15:56 PM] [ERROR] [ImageRepo] [image] [add] : Image 16e1f366-105d-49a3-a98d-b2b39a70126d already exists.
+NoneType: None
+[10/22/2023 09:15:57 PM] [ERROR] [ImageRepo] [image] [add] : Image 10d215d1-b4c7-4946-96ff-c3224ba0cfb5 already exists.
+NoneType: None
+[10/22/2023 09:15:58 PM] [ERROR] [ImageRepo] [image] [add] : Image 0329f424-d4dd-43c2-803f-5c86e64b9189 already exists.
+NoneType: None
+[10/22/2023 09:15:59 PM] [ERROR] [ImageRepo] [image] [add] : Image f7239daa-e664-4c88-a0dc-9484f55daf03 already exists.
+NoneType: None
+[10/22/2023 09:15:59 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 09:15:59 PM on 10/22/2023
+[10/22/2023 09:15:59 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 09:15:59 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | c6db93f1-c44d-4f83-a507-1209c0642423
+                         Case Id | Mass-Train_P_00021_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4480
+                           Width | 2904
+                            Size | 13009920
+                    Aspect Ratio | 0.648214
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 12596.7
+              Median Pixel Value | 0
+                 Std Pixel Value | 15944.8
+                        Filepath | tests/data/images/c6db93f1-c44d-4f83-a507-1209c0642423.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:00 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 7e9457f1-583c-4699-9999-b2a346492969
+                         Case Id | Mass-Train_P_00592_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5386
+                           Width | 3061
+                            Size | 16486546
+                    Aspect Ratio | 0.568325
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 21334.8
+              Median Pixel Value | 253
+                 Std Pixel Value | 20064.5
+                        Filepath | tests/data/images/7e9457f1-583c-4699-9999-b2a346492969.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:00 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | ee924d31-13d8-4ada-941d-6c308d968e8b
+                         Case Id | Mass-Train_P_00412_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4464
+                           Width | 2832
+                            Size | 12642048
+                    Aspect Ratio | 0.634409
+                 Min Pixel Value | 0
+                 Max Pixel Value | 59842
+              Range Pixel Values | 59842
+                Mean Pixel Value | 15475.4
+              Median Pixel Value | 194
+                 Std Pixel Value | 16522.0
+                        Filepath | tests/data/images/ee924d31-13d8-4ada-941d-6c308d968e8b.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:00 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 6859dcdb-b536-406b-938f-d0e2aeb450b9
+                         Case Id | Calcification-Train_P_01408_LEFT_CC_2
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5592
+                           Width | 4008
+                            Size | 22412736
+                    Aspect Ratio | 0.716738
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 10653.1
+              Median Pixel Value | 0
+                 Std Pixel Value | 14459.5
+                        Filepath | tests/data/images/6859dcdb-b536-406b-938f-d0e2aeb450b9.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:00 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | ed1d686b-e21b-4d55-91a9-e1e5c89aa1d2
+                         Case Id | Calcification-Train_P_00121_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4768
+                           Width | 3120
+                            Size | 14876160
+                    Aspect Ratio | 0.654362
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 4926.93
+              Median Pixel Value | 0
+                 Std Pixel Value | 8334.14
+                        Filepath | tests/data/images/ed1d686b-e21b-4d55-91a9-e1e5c89aa1d2.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:01 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | b62fe401-b777-462f-b317-09ecf222e602
+                         Case Id | Calcification-Train_P_00034_RIGHT_CC_2
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 6451
+                           Width | 3406
+                            Size | 21972106
+                    Aspect Ratio | 0.52798
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 18763.2
+              Median Pixel Value | 57
+                 Std Pixel Value | 20709.6
+                        Filepath | tests/data/images/b62fe401-b777-462f-b317-09ecf222e602.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:01 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 16e1f366-105d-49a3-a98d-b2b39a70126d
+                         Case Id | Calcification-Train_P_00666_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5816
+                           Width | 3944
+                            Size | 22938304
+                    Aspect Ratio | 0.678129
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 5108.79
+              Median Pixel Value | 0
+                 Std Pixel Value | 8528.64
+                        Filepath | tests/data/images/16e1f366-105d-49a3-a98d-b2b39a70126d.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:01 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 10d215d1-b4c7-4946-96ff-c3224ba0cfb5
+                         Case Id | Mass-Test_P_00194_RIGHT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4776
+                           Width | 2776
+                            Size | 13258176
+                    Aspect Ratio | 0.58124
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 10084.5
+              Median Pixel Value | 0
+                 Std Pixel Value | 14713.3
+                        Filepath | tests/data/images/10d215d1-b4c7-4946-96ff-c3224ba0cfb5.png
+                         Fileset | test
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:02 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 0329f424-d4dd-43c2-803f-5c86e64b9189
+                         Case Id | Calcification-Test_P_01272_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5281
+                           Width | 2956
+                            Size | 15610636
+                    Aspect Ratio | 0.559742
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 12061.2
+              Median Pixel Value | 0
+                 Std Pixel Value | 15357.1
+                        Filepath | tests/data/images/0329f424-d4dd-43c2-803f-5c86e64b9189.png
+                         Fileset | test
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:02 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | f7239daa-e664-4c88-a0dc-9484f55daf03
+                         Case Id | Mass-Train_P_00700_RIGHT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5728
+                           Width | 4064
+                            Size | 23278592
+                    Aspect Ratio | 0.709497
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 7953.96
+              Median Pixel Value | 0
+                 Std Pixel Value | 15204.6
+                        Filepath | tests/data/images/f7239daa-e664-4c88-a0dc-9484f55daf03.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+
+Started TestImageRepo test_count at 09:16:05 PM on 10/22/2023
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+====================================================================================================
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+	Completed TestImageRepo test_count in 0.0 seconds at 09:16:05 PM on 10/22/2023
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 09:16:05 PM on 10/22/2023
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.2 seconds at 09:16:05 PM on 10/22/2023
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+
+Started TestImageRepo test_teardown at 09:16:05 PM on 10/22/2023
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+====================================================================================================
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+	Completed TestImageRepo test_teardown in 0.0 seconds at 09:16:05 PM on 10/22/2023
+[10/22/2023 09:16:05 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:19:15 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 09:19:15 PM on 10/22/2023
+[10/22/2023 09:19:15 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 09:19:16 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.6 seconds at 09:19:16 PM on 10/22/2023
+[10/22/2023 09:19:16 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:19:16 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 09:19:16 PM on 10/22/2023
+[10/22/2023 09:19:16 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 09:19:17 PM] [ERROR] [ImageRepo] [image] [add] : Image 1ee50cb2-6e46-4d43-9ea4-8ccf3ab64702 already exists.
+NoneType: None
+[10/22/2023 09:19:17 PM] [ERROR] [ImageRepo] [image] [add] : Image cfcb1640-efc9-4cd5-a328-8e55df2a6a66 already exists.
+NoneType: None
+[10/22/2023 09:19:18 PM] [ERROR] [ImageRepo] [image] [add] : Image 56d9a804-b782-4393-837f-97503a65dee7 already exists.
+NoneType: None
+[10/22/2023 09:19:19 PM] [ERROR] [ImageRepo] [image] [add] : Image 14c11eed-51d3-4163-ac76-1b76e39546b0 already exists.
+NoneType: None
+[10/22/2023 09:19:20 PM] [ERROR] [ImageRepo] [image] [add] : Image 142c61ac-5273-49e4-9f46-6da4b7af0e5a already exists.
+NoneType: None
+[10/22/2023 09:19:21 PM] [ERROR] [ImageRepo] [image] [add] : Image c25f1fe2-b462-4574-8a60-83dd55aef6e7 already exists.
+NoneType: None
+[10/22/2023 09:19:22 PM] [ERROR] [ImageRepo] [image] [add] : Image 397ee76b-779f-4ef0-b706-57f867f7e519 already exists.
+NoneType: None
+[10/22/2023 09:19:23 PM] [ERROR] [ImageRepo] [image] [add] : Image e75324f1-8761-42d5-a8f2-d655053dd3d2 already exists.
+NoneType: None
+[10/22/2023 09:19:24 PM] [ERROR] [ImageRepo] [image] [add] : Image c0747091-a285-46e3-aa5b-e39bc3864787 already exists.
+NoneType: None
+[10/22/2023 09:19:25 PM] [ERROR] [ImageRepo] [image] [add] : Image 0689b8bc-15a8-45f6-b32c-2884e2c83811 already exists.
+NoneType: None
+[10/22/2023 09:19:25 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 09:19:25 PM on 10/22/2023
+[10/22/2023 09:19:25 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 09:19:25 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 1ee50cb2-6e46-4d43-9ea4-8ccf3ab64702
+                         Case Id | Calcification-Train_P_01524_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5251
+                           Width | 2761
+                            Size | 14498011
+                    Aspect Ratio | 0.525805
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65534
+              Range Pixel Values | 65534
+                Mean Pixel Value | 14465.4
+              Median Pixel Value | 222
+                 Std Pixel Value | 14525.6
+                        Filepath | tests/data/images/1ee50cb2-6e46-4d43-9ea4-8ccf3ab64702.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:26 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | cfcb1640-efc9-4cd5-a328-8e55df2a6a66
+                         Case Id | Mass-Train_P_01120_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5341
+                           Width | 2656
+                            Size | 14185696
+                    Aspect Ratio | 0.497285
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 11866.3
+              Median Pixel Value | 0
+                 Std Pixel Value | 16099.4
+                        Filepath | tests/data/images/cfcb1640-efc9-4cd5-a328-8e55df2a6a66.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:26 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 56d9a804-b782-4393-837f-97503a65dee7
+                         Case Id | Calcification-Train_P_01358_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4640
+                           Width | 2976
+                            Size | 13808640
+                    Aspect Ratio | 0.641379
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 14350.3
+              Median Pixel Value | 63
+                 Std Pixel Value | 14222.6
+                        Filepath | tests/data/images/56d9a804-b782-4393-837f-97503a65dee7.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:26 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 14c11eed-51d3-4163-ac76-1b76e39546b0
+                         Case Id | Calcification-Train_P_01128_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5236
+                           Width | 2881
+                            Size | 15084916
+                    Aspect Ratio | 0.550229
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65534
+              Range Pixel Values | 65534
+                Mean Pixel Value | 20379.6
+              Median Pixel Value | 230
+                 Std Pixel Value | 17921.4
+                        Filepath | tests/data/images/14c11eed-51d3-4163-ac76-1b76e39546b0.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:26 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 142c61ac-5273-49e4-9f46-6da4b7af0e5a
+                         Case Id | Calcification-Train_P_00842_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5936
+                           Width | 3456
+                            Size | 20514816
+                    Aspect Ratio | 0.58221
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 10038.4
+              Median Pixel Value | 0
+                 Std Pixel Value | 13319.7
+                        Filepath | tests/data/images/142c61ac-5273-49e4-9f46-6da4b7af0e5a.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:27 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | c25f1fe2-b462-4574-8a60-83dd55aef6e7
+                         Case Id | Calcification-Train_P_00471_LEFT_MLO_3
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4736
+                           Width | 3184
+                            Size | 15079424
+                    Aspect Ratio | 0.672297
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 29602.9
+              Median Pixel Value | 31
+                 Std Pixel Value | 19661.2
+                        Filepath | tests/data/images/c25f1fe2-b462-4574-8a60-83dd55aef6e7.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:27 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 397ee76b-779f-4ef0-b706-57f867f7e519
+                         Case Id | Calcification-Train_P_01370_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5491
+                           Width | 2551
+                            Size | 14007541
+                    Aspect Ratio | 0.464578
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 12673.9
+              Median Pixel Value | 0
+                 Std Pixel Value | 18562.0
+                        Filepath | tests/data/images/397ee76b-779f-4ef0-b706-57f867f7e519.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:27 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | e75324f1-8761-42d5-a8f2-d655053dd3d2
+                         Case Id | Calcification-Test_P_01419_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5491
+                           Width | 3241
+                            Size | 17796331
+                    Aspect Ratio | 0.590239
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 16462.1
+              Median Pixel Value | 82
+                 Std Pixel Value | 18820.9
+                        Filepath | tests/data/images/e75324f1-8761-42d5-a8f2-d655053dd3d2.png
+                         Fileset | test
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:28 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | c0747091-a285-46e3-aa5b-e39bc3864787
+                         Case Id | Calcification-Test_P_01502_LEFT_MLO_2
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5792
+                           Width | 3856
+                            Size | 22333952
+                    Aspect Ratio | 0.665746
+                 Min Pixel Value | 0
+                 Max Pixel Value | 61868
+              Range Pixel Values | 61868
+                Mean Pixel Value | 12541.9
+              Median Pixel Value | 0
+                 Std Pixel Value | 17021.0
+                        Filepath | tests/data/images/c0747091-a285-46e3-aa5b-e39bc3864787.png
+                         Fileset | test
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:28 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 0689b8bc-15a8-45f6-b32c-2884e2c83811
+                         Case Id | Calcification-Train_P_01691_RIGHT_CC_3
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4632
+                           Width | 2912
+                            Size | 13488384
+                    Aspect Ratio | 0.62867
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 4307.68
+              Median Pixel Value | 0
+                 Std Pixel Value | 10465.2
+                        Filepath | tests/data/images/0689b8bc-15a8-45f6-b32c-2884e2c83811.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+	Completed TestImageRepo test_get_image in 5.2 seconds at 09:19:30 PM on 10/22/2023
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+
+Started TestImageRepo test_count at 09:19:30 PM on 10/22/2023
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+====================================================================================================
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+	Completed TestImageRepo test_count in 0.0 seconds at 09:19:30 PM on 10/22/2023
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 09:19:30 PM on 10/22/2023
+[10/22/2023 09:19:30 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 09:19:31 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.2 seconds at 09:19:30 PM on 10/22/2023
+[10/22/2023 09:19:31 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:19:31 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+
+Started TestImageRepo test_teardown at 09:19:31 PM on 10/22/2023
+[10/22/2023 09:19:31 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+====================================================================================================
+[10/22/2023 09:19:31 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+	Completed TestImageRepo test_teardown in 0.0 seconds at 09:19:31 PM on 10/22/2023
+[10/22/2023 09:19:31 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:19:53 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+
+Started TestImageRepo test_setup at 09:19:53 PM on 10/22/2023
+[10/22/2023 09:19:53 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+====================================================================================================
+[10/22/2023 09:19:53 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+	Completed TestImageRepo test_setup in 0.7 seconds at 09:19:53 PM on 10/22/2023
+[10/22/2023 09:19:53 PM] [INFO] [test_image_repo] [test_image_repo] [test_setup] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:19:54 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+
+Started TestImageRepo test_add_exists at 09:19:54 PM on 10/22/2023
+[10/22/2023 09:19:54 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+====================================================================================================
+[10/22/2023 09:19:54 PM] [ERROR] [ImageRepo] [image] [add] : Image d38382d4-fb99-4c3a-b2e2-e26a610e064e already exists.
+NoneType: None
+[10/22/2023 09:19:55 PM] [ERROR] [ImageRepo] [image] [add] : Image c6169f4c-cc30-45b2-9572-5a5d4d0b8404 already exists.
+NoneType: None
+[10/22/2023 09:19:56 PM] [ERROR] [ImageRepo] [image] [add] : Image c0d32d9a-f174-4bc9-ad4f-61bf41b3cad2 already exists.
+NoneType: None
+[10/22/2023 09:19:57 PM] [ERROR] [ImageRepo] [image] [add] : Image 12603446-b08a-4cbb-bb60-fd39d975cc69 already exists.
+NoneType: None
+[10/22/2023 09:19:59 PM] [ERROR] [ImageRepo] [image] [add] : Image 1d10a6c6-6ecb-448d-9cd8-b703e309aebe already exists.
+NoneType: None
+[10/22/2023 09:20:00 PM] [ERROR] [ImageRepo] [image] [add] : Image bcdf5678-f071-4aa6-80d9-086d2c289246 already exists.
+NoneType: None
+[10/22/2023 09:20:01 PM] [ERROR] [ImageRepo] [image] [add] : Image ee44f54a-cb6f-45fd-98de-e1dde7354036 already exists.
+NoneType: None
+[10/22/2023 09:20:02 PM] [ERROR] [ImageRepo] [image] [add] : Image 422a790e-4057-4644-b3c8-95acddd254e6 already exists.
+NoneType: None
+[10/22/2023 09:20:03 PM] [ERROR] [ImageRepo] [image] [add] : Image 7aaa3bbe-3b36-4dca-9bd3-e1ecce521b6c already exists.
+NoneType: None
+[10/22/2023 09:20:03 PM] [ERROR] [ImageRepo] [image] [add] : Image ccea59cc-f3c1-430c-b87a-35162384a89a already exists.
+NoneType: None
+[10/22/2023 09:20:03 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+Completed TestImageRepo test_add_exists in 9.7 seconds at 09:20:03 PM on 10/22/2023
+[10/22/2023 09:20:03 PM] [INFO] [test_image_repo] [test_image_repo] [test_add_exists] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:20:03 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+Started TestImageRepo test_get_image at 09:20:03 PM on 10/22/2023
+[10/22/2023 09:20:03 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+====================================================================================================
+[10/22/2023 09:20:04 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | d38382d4-fb99-4c3a-b2e2-e26a610e064e
+                         Case Id | Mass-Train_P_01304_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4496
+                           Width | 2936
+                            Size | 13200256
+                    Aspect Ratio | 0.653025
+                 Min Pixel Value | 0
+                 Max Pixel Value | 60613
+              Range Pixel Values | 60613
+                Mean Pixel Value | 15039.8
+              Median Pixel Value | 149
+                 Std Pixel Value | 18636.0
+                        Filepath | tests/data/images/d38382d4-fb99-4c3a-b2e2-e26a610e064e.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:04 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | c6169f4c-cc30-45b2-9572-5a5d4d0b8404
+                         Case Id | Calcification-Train_P_00020_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4720
+                           Width | 2416
+                            Size | 11403520
+                    Aspect Ratio | 0.511864
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 6372.57
+              Median Pixel Value | 0
+                 Std Pixel Value | 13426.7
+                        Filepath | tests/data/images/c6169f4c-cc30-45b2-9572-5a5d4d0b8404.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:04 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | c0d32d9a-f174-4bc9-ad4f-61bf41b3cad2
+                         Case Id | Mass-Train_P_01441_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 6076
+                           Width | 3436
+                            Size | 20877136
+                    Aspect Ratio | 0.565504
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 17937.3
+              Median Pixel Value | 48
+                 Std Pixel Value | 20627.9
+                        Filepath | tests/data/images/c0d32d9a-f174-4bc9-ad4f-61bf41b3cad2.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:04 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 12603446-b08a-4cbb-bb60-fd39d975cc69
+                         Case Id | Mass-Train_P_00978_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5896
+                           Width | 4040
+                            Size | 23819840
+                    Aspect Ratio | 0.68521
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 11862.7
+              Median Pixel Value | 0
+                 Std Pixel Value | 16874.0
+                        Filepath | tests/data/images/12603446-b08a-4cbb-bb60-fd39d975cc69.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:05 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 1d10a6c6-6ecb-448d-9cd8-b703e309aebe
+                         Case Id | Calcification-Train_P_01740_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5568
+                           Width | 4024
+                            Size | 22405632
+                    Aspect Ratio | 0.722701
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 11519.7
+              Median Pixel Value | 121
+                 Std Pixel Value | 14479.1
+                        Filepath | tests/data/images/1d10a6c6-6ecb-448d-9cd8-b703e309aebe.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:05 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | bcdf5678-f071-4aa6-80d9-086d2c289246
+                         Case Id | Mass-Train_P_01889_RIGHT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 5944
+                           Width | 3712
+                            Size | 22064128
+                    Aspect Ratio | 0.624495
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 9192.18
+              Median Pixel Value | 0
+                 Std Pixel Value | 12961.9
+                        Filepath | tests/data/images/bcdf5678-f071-4aa6-80d9-086d2c289246.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:05 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | ee44f54a-cb6f-45fd-98de-e1dde7354036
+                         Case Id | Mass-Train_P_01343_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4776
+                           Width | 3112
+                            Size | 14862912
+                    Aspect Ratio | 0.651591
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 18780.1
+              Median Pixel Value | 185
+                 Std Pixel Value | 20710.3
+                        Filepath | tests/data/images/ee44f54a-cb6f-45fd-98de-e1dde7354036.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:06 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 422a790e-4057-4644-b3c8-95acddd254e6
+                         Case Id | Calcification-Train_P_01072_LEFT_MLO_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 6316
+                           Width | 3151
+                            Size | 19901716
+                    Aspect Ratio | 0.498892
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 14836.0
+              Median Pixel Value | 234
+                 Std Pixel Value | 17196.0
+                        Filepath | tests/data/images/422a790e-4057-4644-b3c8-95acddd254e6.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:06 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | 7aaa3bbe-3b36-4dca-9bd3-e1ecce521b6c
+                         Case Id | Calcification-Train_P_00824_LEFT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4840
+                           Width | 2184
+                            Size | 10570560
+                    Aspect Ratio | 0.45124
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 9264.49
+              Median Pixel Value | 0
+                 Std Pixel Value | 15017.5
+                        Filepath | tests/data/images/7aaa3bbe-3b36-4dca-9bd3-e1ecce521b6c.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:06 PM] [DEBUG] [test_image_repo] [test_image_repo] [test_get_image] : 
+
+                             Image                              
+                              Id | ccea59cc-f3c1-430c-b87a-35162384a89a
+                         Case Id | Mass-Train_P_00891_RIGHT_CC_1
+                            Mode | test
+                        Stage Id | 0
+                           Stage | original
+                       Bit Depth | 16
+                          Height | 4728
+                           Width | 2480
+                            Size | 11725440
+                    Aspect Ratio | 0.524535
+                 Min Pixel Value | 0
+                 Max Pixel Value | 65535
+              Range Pixel Values | 65535
+                Mean Pixel Value | 13117.2
+              Median Pixel Value | 0
+                 Std Pixel Value | 15718.3
+                        Filepath | tests/data/images/ccea59cc-f3c1-430c-b87a-35162384a89a.png
+                         Fileset | train
+                            Task | TestAddExists
+                      Taskrun Id | some_taskrun_id
+
+
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+	Completed TestImageRepo test_get_image in 5.6 seconds at 09:20:09 PM on 10/22/2023
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_get_image] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+
+Started TestImageRepo test_count at 09:20:09 PM on 10/22/2023
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+====================================================================================================
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+	Completed TestImageRepo test_count in 0.0 seconds at 09:20:09 PM on 10/22/2023
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_count] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+
+Started TestImageRepo test_delete at 09:20:09 PM on 10/22/2023
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+====================================================================================================
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+	Completed TestImageRepo test_delete in 0.2 seconds at 09:20:09 PM on 10/22/2023
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_delete] : 
+----------------------------------------------------------------------------------------------------
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+
+Started TestImageRepo test_teardown at 09:20:09 PM on 10/22/2023
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+====================================================================================================
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+	Completed TestImageRepo test_teardown in 0.0 seconds at 09:20:09 PM on 10/22/2023
+[10/22/2023 09:20:09 PM] [INFO] [test_image_repo] [test_image_repo] [test_teardown] : 
+----------------------------------------------------------------------------------------------------

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 22nd 2023 01:20:19 pm                                                #
+# Modified   : Sunday October 22nd 2023 09:10:33 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,8 +21,11 @@ import logging
 from typing import Union, Callable
 
 import pandas as pd
+import pymysql
 import numpy as np
 from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT, TINYINT, BIGINT
+
+from bcd.manage_data.repo.base import Repo
 from bcd.manage_data.entity.image import Image, ImageFactory
 from bcd.manage_data.database.base import Database
 from bcd.manage_data.io.image import ImageIO
@@ -55,13 +58,18 @@ IMAGE_DTYPES = {
 
 
 # ------------------------------------------------------------------------------------------------ #
-class ImageRepo:
+class ImageRepo(Repo):
     __tablename = "image"
 
     def __init__(self, database: Database, image_factory: ImageFactory) -> None:
+        super().__init__()
         self._database = database
         self._image_factory = image_factory
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
+
+    @property
+    def database(self) -> Database:
+        return self._database
 
     def add(self, image: Image) -> None:
         """Adds an image to the repository
@@ -71,8 +79,7 @@ class ImageRepo:
                 containing image metadata.
 
         """
-        condition = lambda df: df["id"] == image.id  # noqa
-        if not self.exists(condition=condition):
+        if not self.exists(id=image.id):
             self._write_image(pixel_data=image.pixel_data, filepath=image.filepath)
             data = image.as_df()
             self._database.insert(
@@ -83,49 +90,7 @@ class ImageRepo:
             self._logger.exception(msg)
             raise FileExistsError(msg)
 
-    def exists(self, condition: Callable) -> bool:
-        """Returns True if one or more images matching the condition exist(s), False otherwise.
-
-        Args:
-            condition (Callable): A lambda expression used to subset the data.
-
-        Returns:
-            Boolean indicator of existence.
-        """
-        query = f"SELECT * FROM {self.__tablename};"
-        params = None
-        try:
-            image_meta = self._database.query(query=query, params=params)
-            image_meta = image_meta[condition]
-        except Exception:  # pragma: no cover
-            return False
-        else:
-            return len(image_meta) > 0
-
-    def get_image(self, id: str) -> Image:
-        """Obtains an image by identifier.
-
-        Args:
-            id (str): Image id
-
-        Returns:
-            Image object.
-        """
-        query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
-        params = {"id": id}
-        try:
-            image_meta = self._database.query(query=query, params=params)
-        except Exception as e:  # pragma: no cover
-            self._logger.exception(e)
-            raise
-        else:
-            if len(image_meta) == 0:
-                msg = f"Image id {id} does not exist."
-                self._logger.exception(msg)
-                raise FileNotFoundError(msg)
-            return self._image_factory.from_df(df=image_meta)
-
-    def get_images(
+    def get(
         self, condition: Callable = None, metadata_only: bool = False
     ) -> Union[pd.DataFrame, tuple]:
         """Returns case images and their metadata matching the condition
@@ -156,43 +121,56 @@ class ImageRepo:
                 return image_meta
             else:
                 for _, meta in image_meta.iterrows():
-                    image = self.get_image(id=meta["id"])
+                    image = self._get(id=meta["id"])
                     images[meta["id"]] = image
                 return (image_meta, images)
 
-    def delete_image(self, id: str, force: bool = False) -> None:
-        """Removes an image and its metadata from the repository.
+    def exists(self, id: str) -> bool:
+        """Evaluates existence of an image by identifier.
 
         Args:
-            id (str): Image identifier
-            force (bool): If True, stage 0, original images will be deleted.
+            id (str): Image UUID
+
+        Returns:
+            Boolean indicator of existence.
         """
-        query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
+        query = f"SELECT EXISTS(SELECT 1 FROM {self.__tablename} WHERE id = :id);"
         params = {"id": id}
-        image_meta = self._database.query(query=query, params=params)
-
-        if not force and image_meta["stage_id"].values[0] == 0:
-            msg = f"Image {id} is a stage 0, original image. Original images cannot be deleted."
-            self._logger.info(msg)
-
+        try:
+            exists = self._database.exists(query=query, params=params)
+        except pymysql.Error as e:
+            self._logger.exception(e)
+            raise
         else:
-            try:
-                os.remove(image_meta["filepath"].values[0])
-            except OSError:
-                msg = f"Image id: {id} does not exist at {image_meta['filepath'].values[0]}"
-                self._logger.info(msg)
+            return exists
 
-            finally:
-                query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
-                params = {"id": id}
-                self._database.delete(query=query, params=params)
+    def count(self, condition: Callable = None) -> int:
+        """Counts images matching the condition
 
-    def delete_images(self, condition: Callable, force: bool = False) -> None:
+        Args:
+            condition (Callable): A lambda expression used to subset the data.
+
+        Returns:
+            Integer count of images matching condition.
+        """
+        query = f"SELECT * FROM {self.__tablename};"
+        params = None
+        try:
+            image_meta = self._database.query(query=query, params=params)
+
+        except pymysql.Error as e:
+            self._logger.exception(e)
+            raise
+        else:
+            if condition is not None:
+                image_meta = image_meta[condition]
+            return len(image_meta)
+
+    def delete(self, condition: Callable) -> None:
         """Removes images matching the condition.
 
         Args:
             condition (Callable): Lambda expression subsetting the data.
-            force (bool): If True, stage 0, original images will be deleted.
         """
         query = f"SELECT * FROM {self.__tablename}"
         params = None
@@ -200,7 +178,50 @@ class ImageRepo:
         image_meta = image_meta[condition]
 
         for _, image in image_meta.iterrows():
-            self.delete_image(id=image["id"], force=force)
+            self._delete(id=image["id"])
+
+    def _get(self, id: str) -> Image:
+        """Obtains an image by identifier.
+
+        Args:
+            id (str): Image id
+
+        Returns:
+            Image object.
+        """
+        query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
+        params = {"id": id}
+        try:
+            image_meta = self._database.query(query=query, params=params)
+        except Exception as e:  # pragma: no cover
+            self._logger.exception(e)
+            raise
+        else:
+            if len(image_meta) == 0:
+                msg = f"Image id {id} does not exist."
+                self._logger.exception(msg)
+                raise FileNotFoundError(msg)
+            return self._image_factory.from_df(df=image_meta)
+
+    def _delete(self, id: str) -> None:
+        """Removes an image and its metadata from the repository.
+
+        Args:
+            id (str): Image identifier
+        """
+        query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
+        params = {"id": id}
+        image_meta = self._database.query(query=query, params=params)
+
+        try:
+            os.remove(image_meta["filepath"].values[0])
+        except OSError:
+            msg = f"Image id: {id} does not exist at {image_meta['filepath'].values[0]}"
+            self._logger.info(msg)
+        finally:
+            query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
+            params = {"id": id}
+            self._database.delete(query=query, params=params)
 
     def _write_image(self, pixel_data: np.ndarray, filepath: str) -> None:
         io = ImageIO()

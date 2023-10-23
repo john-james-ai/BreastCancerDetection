@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Sunday October 22nd 2023 12:27:24 pm                                                #
+# Modified   : Sunday October 22nd 2023 07:54:06 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -32,7 +32,7 @@ import matplotlib.pyplot as plt
 
 from bcd.manage_data import STAGES
 from bcd.manage_data.io.image import ImageIO
-from bcd.manage_data.structure.dataclass import DataClass
+from bcd.manage_data.entity.base import Entity
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -45,7 +45,7 @@ load_dotenv()
 
 
 @dataclass(eq=False)
-class Image(DataClass):
+class Image(Entity):
     id: str
     case_id: str
     mode: str

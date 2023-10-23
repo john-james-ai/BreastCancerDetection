@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Sunday October 22nd 2023 11:28:42 am                                                #
+# Modified   : Sunday October 22nd 2023 07:18:08 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -42,14 +42,14 @@ class LoggingContainer(containers.DeclarativeContainer):
 # ------------------------------------------------------------------------------------------------ #
 #                                        REPO                                                      #
 # ------------------------------------------------------------------------------------------------ #
-class ImagingContainer(containers.DeclarativeContainer):
+class RepoContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
 
     db = providers.Singleton(MySQLDatabase, config=DatabaseConfig)
 
     factory = providers.Singleton(ImageFactory, case_fp=config.image.factory.case_fp)
 
-    repo = providers.Singleton(ImageRepo, database=db, image_factory=factory)
+    image = providers.Singleton(ImageRepo, database=db, image_factory=factory)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -60,7 +60,7 @@ class BCDContainer(containers.DeclarativeContainer):
 
     logs = providers.Container(LoggingContainer, config=config)
 
-    image = providers.Container(ImagingContainer, config=config)
+    repo = providers.Container(RepoContainer, config=config)
 
 
 if __name__ == "__main__":

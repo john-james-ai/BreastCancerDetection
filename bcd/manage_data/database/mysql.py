@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.11                                                                             #
-# Filename   : /bcd/manage_data/storage/mysql.py                                                   #
+# Filename   : /bcd/manage_data/database/mysql.py                                                  #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday April 10th 2023 09:50:40 pm                                                  #
-# Modified   : Sunday October 22nd 2023 02:36:17 am                                                #
+# Modified   : Sunday October 22nd 2023 07:42:38 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -44,10 +44,11 @@ class MySQLDatabase(Database):
         super().__init__()
         self._config = config()
         self._name = self._config.name
+        self._autocommit = self._config.autocommit
         self._connection_string = self._get_connection_string()
         self.connect()
 
-    def connect(self, autocommit: bool = True) -> None:
+    def connect(self) -> None:
         attempts = 0
         max_attempts = 3
         database_started = False
@@ -56,7 +57,7 @@ class MySQLDatabase(Database):
             try:
                 self._engine = sqlalchemy.create_engine(self._connection_string)
                 self._connection = self._engine.connect()
-                if autocommit is True:
+                if self._autocommit is True:
                     self._connection.execution_options(isolation_level="AUTOCOMMIT")
                 else:
                     self._connection.execution_options(isolation_level="READ UNCOMMITTED")
