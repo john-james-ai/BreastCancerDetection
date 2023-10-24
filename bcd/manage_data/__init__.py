@@ -4,21 +4,21 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/__init__.py                                                               #
+# Filename   : /bcd/manage_data/__init__.py                                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:52 pm                                               #
-# Modified   : Saturday October 21st 2023 08:41:04 pm                                              #
+# Modified   : Tuesday October 24th 2023 12:14:52 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 # ------------------------------------------------------------------------------------------------ #
 STAGES = {
-    0: "original",
+    0: "converted",
     1: "denoise",
     2: "enhance",
     3: "artifact_removal",

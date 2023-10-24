@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 02:14:19 pm                                              #
-# Modified   : Sunday October 22nd 2023 07:17:14 pm                                                #
+# Modified   : Monday October 23rd 2023 02:56:55 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -59,10 +59,15 @@ class TestImageFactory:  # pragma: no cover
         factory = container.repo.factory()
         df = pd.read_csv(DICOM_FP)
         df = df.loc[df["case_id"] == CASE_ID]
+        io = ImageIO()
+        pixel_data = io.read(df["filepath"])
 
-        # Test From Case
-        image = factory.from_case(
-            case_id=CASE_ID, stage_id=0, task="TaskFromCase", taskrun_id=TASKRUN_ID
+        image = factory.create(
+            case_id=CASE_ID,
+            pixel_data=pixel_data,
+            stage_id=0,
+            task="TaskCreate",
+            taskrun_id=TASKRUN_ID,
         )
         io = ImageIO()
         io.write(pixel_data=image.pixel_data, filepath=image.filepath)
@@ -88,7 +93,7 @@ class TestImageFactory:  # pragma: no cover
         assert image.fileset == df["fileset"].values[0]
         assert image.mode == "test"
         assert image.stage_id == 0
-        assert image.task == "TaskFromCase"
+        assert image.task == "TaskCreate"
         assert image.taskrun_id == TASKRUN_ID
 
         # Test From DF
@@ -101,33 +106,6 @@ class TestImageFactory:  # pragma: no cover
         logger.debug(f"Shape image2: {image2.pixel_data.shape}")
 
         assert image == image2
-
-        # Test From Image
-        image3 = factory.from_image(
-            image=image2, stage_id=1, task="TaskFromImage", taskrun_id=TASKRUN_ID2
-        )
-
-        assert isinstance(image3, Image)
-        assert image2.id != image3.id
-        assert image2.case_id == image3.case_id
-        assert image2.cancer == image3.cancer
-        assert image2.bit_depth == image3.bit_depth
-        assert image2.height == image3.height
-        assert image2.width == image3.width
-        assert image2.size == image3.size
-        assert image2.aspect_ratio == image3.aspect_ratio
-        assert image2.min_pixel_value == image3.min_pixel_value
-        assert image2.max_pixel_value == image3.max_pixel_value
-        assert image2.range_pixel_values == image3.range_pixel_values
-        assert image2.mean_pixel_value == image3.mean_pixel_value
-        assert image2.median_pixel_value == image3.median_pixel_value
-        assert image2.std_pixel_value == image3.std_pixel_value
-        assert image2.filepath != image3.filepath
-        assert image2.fileset == image3.fileset
-        assert image2.mode == image3.mode
-        assert image2.stage_id != image3.stage_id
-        assert image2.task != image3.task
-        assert image2.taskrun_id != image3.taskrun_id
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -160,9 +138,17 @@ class TestImageFactory:  # pragma: no cover
         factory = container.repo.factory()
         df = pd.read_csv(DICOM_FP)
         df = df.loc[df["case_id"] == CASE_ID]
+        io = ImageIO()
+        pixel_data = io.read(df["filepath"])
 
         with pytest.raises(KeyError):
-            _ = factory.from_case(case_id=CASE_ID, stage_id=99, task=TASK, taskrun_id=TASKRUN_ID)
+            _ = factory.create(
+                case_id=CASE_ID,
+                pixel_data=pixel_data,
+                stage_id=99,
+                task=TASK,
+                taskrun_id=TASKRUN_ID,
+            )
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()

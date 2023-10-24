@@ -4,30 +4,31 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_data/test_repo/test_image_repo.py                                       #
+# Filename   : /tests/test_preprocess/test_filter.py                                               #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Monday October 23rd 2023 04:25:12 pm                                                #
+# Created    : Monday October 23rd 2023 01:56:06 am                                                #
+# Modified   : Monday October 23rd 2023 06:02:35 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-import os
 import inspect
 from datetime import datetime
 import pytest
 import logging
-import shutil
 
-import pandas as pd
+from bcd.preprocess.filter import (
+    MeanFilter,
+    MedianFilter,
+    GaussianFilter,
+)
 
-from bcd.manage_data.entity.image import Image
+FILEPATH = "tests/data/images"
 
-IMAGE_DIR = "tests/data/images"
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
@@ -35,11 +36,10 @@ double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
 
-@pytest.mark.repo
-@pytest.mark.image_repo
-class TestImageRepo:  # pragma: no cover
+@pytest.mark.filter
+class TestFilter:  # pragma: no cover
     # ============================================================================================ #
-    def test_setup(self, container, caplog):
+    def test_setup(self, case_ids, container, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -51,13 +51,20 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
+        # Delete Tasks
         repo = container.repo.image()
         condition = lambda df: df["mode"] == "test"  # noqa
-        try:
-            repo.delete(condition=condition)
-        except Exception:
-            pass
+        repo.delete(condition=condition)
 
+        # Add stage 0 images
+        factory = container.repo.factory()
+        for case_id in case_ids:
+            # Obtain image
+            image = factory.from_case(
+                case_id=case_id, stage_id=0, task="TestFilter", taskrun_id="some_taskrun_id"
+            )
+            # Add image to repository
+            repo.add(image=image)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -74,7 +81,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_add_exists(self, case_ids, container, caplog):
+    def test_mean_filter(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -86,24 +93,22 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        factory = container.repo.factory()
-        repo = container.repo.image()
-        for case_id in case_ids:
-            # Obtain image
-            image = factory.from_case(
-                case_id=case_id, stage_id=0, task="TestAddExists", taskrun_id="some_taskrun_id"
-            )
-            # Add image to repository
-            repo.add(image=image)
-            # Confirm image has been saved to disk
-            assert os.path.exists(image.filepath)
-            # Confirm image exists in repo.
-            assert repo.exists(id=image.id)
-            # Test adding image already exists
-            with pytest.raises(FileExistsError):
-                repo.add(image=image)
+        filter = MeanFilter()
+        filter.execute()
+        taskrun = filter.taskrun
 
-        assert not repo.exists(id="999")
+        logger.debug(taskrun)
+        assert taskrun.task == "MeanFilter"
+        assert taskrun.mode == "test"
+        assert taskrun.stage_id == 1
+        assert taskrun.stage == "denoise"
+        assert isinstance(taskrun.started, datetime)
+        assert isinstance(taskrun.ended, datetime)
+        assert isinstance(taskrun.duration, float)
+        assert isinstance(taskrun.images_processed, int)
+        assert isinstance(taskrun.image_processing_time, float)
+        assert taskrun.images_processed == 10
+        assert taskrun.success is True
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -121,7 +126,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_image(self, container, caplog):
+    def test_median_filter(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -133,29 +138,29 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image()
-        condition = lambda df: df["mode"] == "test"  # noqa
-        meta = repo.get_meta()
-        assert isinstance(meta, pd.DataFrame)
+        filter = MedianFilter()
+        filter.execute()
+        taskrun = filter.taskrun
 
-        images = repo.get(condition=condition)
-        for image in images:
-            assert isinstance(image, Image)
-
-        # Test sampling n images
-        images = repo.get(condition, n=5)
-        assert len(images) == 5
-
-        # Test sampling frac images
-        images = repo.get(condition, frac=0.5)
-        assert len(images) == 5
+        logger.debug(taskrun)
+        assert taskrun.task == "MedianFilter"
+        assert taskrun.mode == "test"
+        assert taskrun.stage_id == 1
+        assert taskrun.stage == "denoise"
+        assert isinstance(taskrun.started, datetime)
+        assert isinstance(taskrun.ended, datetime)
+        assert isinstance(taskrun.duration, float)
+        assert isinstance(taskrun.images_processed, int)
+        assert isinstance(taskrun.image_processing_time, float)
+        assert taskrun.images_processed == 10
+        assert taskrun.success is True
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
         logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
+            "\nCompleted {} {} in {} seconds at {} on {}".format(
                 self.__class__.__name__,
                 inspect.stack()[0][3],
                 duration,
@@ -166,7 +171,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_count(self, container, caplog):
+    def test_gaussian_filter(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -178,79 +183,29 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image()
-        condition = lambda df: df["mode"] == "test"  # noqa
-        assert repo.count(condition) == 10
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
+        filter = GaussianFilter()
+        filter.execute()
+        taskrun = filter.taskrun
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_delete(self, container, caplog):
-        start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image()
-        condition = lambda df: df["mode"] == "test"  # noqa
-        repo.delete(condition=condition)
-
-        assert repo.count() == 0
+        logger.debug(taskrun)
+        assert taskrun.task == "GaussianFilter"
+        assert taskrun.mode == "test"
+        assert taskrun.stage_id == 1
+        assert taskrun.stage == "denoise"
+        assert isinstance(taskrun.started, datetime)
+        assert isinstance(taskrun.ended, datetime)
+        assert isinstance(taskrun.duration, float)
+        assert isinstance(taskrun.images_processed, int)
+        assert isinstance(taskrun.image_processing_time, float)
+        assert taskrun.images_processed == 10
+        assert taskrun.success is True
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
         logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_teardown(self, caplog):
-        start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        shutil.rmtree(IMAGE_DIR, ignore_errors=True)
-
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
+            "\nCompleted {} {} in {} seconds at {} on {}".format(
                 self.__class__.__name__,
                 inspect.stack()[0][3],
                 duration,

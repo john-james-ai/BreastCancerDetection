@@ -12,6 +12,7 @@ __pycache__/
 
 # Logs
 /logs
+/log
 
 # Proprietary File Formats
 **/*.pptx

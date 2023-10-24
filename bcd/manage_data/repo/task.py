@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday October 23rd 2023 01:18:46 am                                                #
+# Modified   : Monday October 23rd 2023 11:32:54 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,11 +24,11 @@ import pymysql
 from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT, TINYINT, JSON
 
 from bcd.manage_data.repo.base import Repo
-from bcd.preprocess.base import TaskRun
+from bcd.preprocess.base import Task
 from bcd.manage_data.database.base import Database
 
 # ------------------------------------------------------------------------------------------------ #
-TASKRUN_DTYPES = {
+TASK_DTYPES = {
     "id": VARCHAR(length=64),
     "task": VARCHAR(length=64),
     "mode": VARCHAR(length=8),
@@ -37,18 +37,16 @@ TASKRUN_DTYPES = {
     "started": DATETIME(),
     "ended": DATETIME(),
     "duration": FLOAT(),
-    "taskruns_processed": INTEGER(),
-    "taskrun_processing_time": FLOAT(),
+    "tasks_processed": INTEGER(),
+    "task_processing_time": FLOAT(),
     "success": TINYINT(),
     "params": JSON(),
 }
 
-TASKRUN_DTYPES_PANDAS = {"id": str}
-
 
 # ------------------------------------------------------------------------------------------------ #
-class TaskRunRepo(Repo):
-    __tablename = "taskrun"
+class TaskRepo(Repo):
+    __tablename = "task"
 
     def __init__(self, database: Database) -> None:
         super().__init__()
@@ -59,27 +57,27 @@ class TaskRunRepo(Repo):
     def database(self) -> Database:
         return self._database
 
-    def add(self, taskrun: TaskRun) -> None:
-        """Adds a taskrun to the repository
+    def add(self, task: Task) -> None:
+        """Adds a task to the repository
 
         Args:
-            taskrun (TaskRun): A TaskRun instance.
+            task (Task): A Task instance.
 
         """
         try:
-            exists = self.exists(id=taskrun.id)
+            exists = self.exists(id=task.id)
         except Exception:
             exists = False
         finally:
             if exists:
-                msg = f"TaskRun {taskrun.id} already exists."
+                msg = f"Task {task.id} already exists."
                 self._logger.exception(msg)
                 raise FileExistsError(msg)
             else:
                 self._database.insert(
-                    data=taskrun.as_df(),
+                    data=task.as_df(),
                     tablename=self.__tablename,
-                    dtype=TASKRUN_DTYPES,
+                    dtype=TASK_DTYPES,
                     if_exists="append",
                 )
 
@@ -88,25 +86,25 @@ class TaskRunRepo(Repo):
 
         Args:
             condition (Callable): A lambda expression used to subset the data. If None,
-            all taskruns will be returned.
+            all tasks will be returned.
 
         Returns:
-            DataFrame containing the taskruns meeting the condition.
+            DataFrame containing the tasks meeting the condition.
         """
 
         query = f"SELECT * FROM {self.__tablename};"
         params = None
-        taskrun = self._database.query(query=query, params=params)
+        task = self._database.query(query=query, params=params)
 
         if condition is not None:
-            taskrun = taskrun[condition]
-        return taskrun
+            task = task[condition]
+        return task
 
     def exists(self, id: str) -> bool:
-        """Evaluates existence of a taskrun by identifier.
+        """Evaluates existence of a task by identifier.
 
         Args:
-            id (str): TaskRun UUID
+            id (str): Task UUID
 
         Returns:
             Boolean indicator of existence.
@@ -122,38 +120,38 @@ class TaskRunRepo(Repo):
             return exists
 
     def count(self, condition: Callable = None) -> int:
-        """Counts taskruns matching the condition
+        """Counts tasks matching the condition
 
         Args:
             condition (Callable): A lambda expression used to subset the data.
 
         Returns:
-            Integer count of taskruns matching condition.
+            Integer count of tasks matching condition.
         """
         query = f"SELECT * FROM {self.__tablename};"
         params = None
         try:
-            taskrun = self._database.query(query=query, params=params)
+            task = self._database.query(query=query, params=params)
 
         except pymysql.Error as e:
             self._logger.exception(e)
             raise
         else:
             if condition is not None:
-                taskrun = taskrun[condition]
-            return len(taskrun)
+                task = task[condition]
+            return len(task)
 
     def delete(self, condition: Callable) -> None:
-        """Removes taskruns matching the condition.
+        """Removes tasks matching the condition.
 
         Args:
             condition (Callable): Lambda expression subsetting the data.
         """
         query = f"SELECT * FROM {self.__tablename}"
         params = None
-        taskrun = self._database.query(query=query, params=params)
-        taskrun = taskrun[condition]
-        ids = tuple(taskrun["id"])
+        task = self._database.query(query=query, params=params)
+        task = task[condition]
+        ids = tuple(task["id"])
 
         query = f"DELETE FROM {self.__tablename} WHERE id IN {ids}"
         params = None

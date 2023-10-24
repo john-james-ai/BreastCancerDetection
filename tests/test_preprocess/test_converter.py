@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 01:56:06 am                                                #
-# Modified   : Monday October 23rd 2023 03:25:23 am                                                #
+# Modified   : Tuesday October 24th 2023 03:37:47 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,7 +22,7 @@ import pytest
 import logging
 import shutil
 
-from bcd.preprocess.convert import ImageConverter
+from bcd.preprocess.convert import ImageConverter, ImageConverterParams
 
 FILEPATH = "tests/data/images"
 
@@ -31,6 +31,8 @@ logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
+
+TASK_ID = "b3553242-a5a6-4cf3-bc2f-66d875806fc4"
 
 
 @pytest.mark.converter
@@ -65,7 +67,7 @@ class TestConverter:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_converter(self, caplog):
+    def test_converter(self, container, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -77,22 +79,19 @@ class TestConverter:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        conv = ImageConverter(frac=0.01)
-        conv.execute()
-        taskrun = conv.taskrun
+        params = ImageConverterParams()
+        conv = ImageConverter(params=params, task_id=TASK_ID)
+        assert conv.stage_id == 0
+        assert conv.stage == "converted"
+        assert conv.name == "ImageConverter"
+        assert conv.mode == "test"
 
-        logger.debug(taskrun)
-        assert taskrun.task == "ImageConverter"
-        assert taskrun.mode == "test"
-        assert taskrun.stage_id == 0
-        assert taskrun.stage == "original"
-        assert isinstance(taskrun.started, datetime)
-        assert isinstance(taskrun.ended, datetime)
-        assert isinstance(taskrun.duration, float)
-        assert isinstance(taskrun.images_processed, int)
-        assert isinstance(taskrun.image_processing_time, float)
-        assert taskrun.images_processed > 30
-        assert taskrun.success is True
+        conv.execute()
+        assert conv.images_processed == 36
+        logger.debug(conv.params)
+
+        repo = container.repo.image()
+        logger.debug(repo.get_meta())
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()

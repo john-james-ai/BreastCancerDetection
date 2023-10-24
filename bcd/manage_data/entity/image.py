@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Sunday October 22nd 2023 07:54:06 pm                                                #
+# Modified   : Tuesday October 24th 2023 05:42:47 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -30,7 +30,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-from bcd.manage_data import STAGES
 from bcd.manage_data.io.image import ImageIO
 from bcd.manage_data.entity.base import Entity
 
@@ -51,7 +50,11 @@ class Image(Entity):
     mode: str
     stage_id: int
     stage: str
-    cancer: bool
+    left_or_right_breast: str
+    image_view: str
+    abnormality_type: str
+    assessment: int
+    breast_density: int
     bit_depth: int
     pixel_data: np.ndarray
     height: int
@@ -66,9 +69,10 @@ class Image(Entity):
     std_pixel_value: float
     filepath: str
     fileset: str
+    cancer: bool
+    preprocessor: str
+    task_id: str
     created: datetime
-    task: str
-    taskrun_id: str
 
     def visualize(
         self, cmap: str = "jet", ax: plt.Axes = None, figsize: tuple = (8, 8)
@@ -87,6 +91,38 @@ class Image(Entity):
         ax.set_title(self.case_id)
         plt.show()
 
+    def as_df(self) -> pd.DataFrame:
+        d = {
+            "id": self.id,
+            "case_id": self.case_id,
+            "mode": self.mode,
+            "stage_id": self.stage_id,
+            "stage": self.stage,
+            "left_or_right_breast": self.left_or_right_breast,
+            "image_view": self.image_view,
+            "abnormality_type": self.abnormality_type,
+            "assessment": self.assessment,
+            "breast_density": self.breast_density,
+            "bit_depth": self.bit_depth,
+            "height": self.height,
+            "width": self.width,
+            "size": self.size,
+            "aspect_ratio": self.aspect_ratio,
+            "min_pixel_value": self.min_pixel_value,
+            "max_pixel_value": self.max_pixel_value,
+            "range_pixel_values": self.range_pixel_values,
+            "mean_pixel_value": self.mean_pixel_value,
+            "median_pixel_value": self.median_pixel_value,
+            "std_pixel_value": self.std_pixel_value,
+            "filepath": self.filepath,
+            "fileset": self.fileset,
+            "cancer": self.cancer,
+            "preprocessor": self.preprocessor,
+            "task_id": self.task_id,
+            "created": self.created,
+        }
+        return pd.DataFrame(data=d, index=[0])
+
 
 class ImageFactory:
     """Creates Image Objects"""
@@ -95,6 +131,7 @@ class ImageFactory:
         case_fp = os.path.abspath(case_fp)
         self._cases = pd.read_csv(case_fp)
         self._cases = self._cases.loc[self._cases["series_description"] == "full mammogram images"]
+        self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     def from_df(self, df: pd.DataFrame) -> Image:
         """Creates an image from a DataFrame
@@ -115,7 +152,11 @@ class ImageFactory:
             mode=df["mode"].values[0],
             stage_id=df["stage_id"].values[0],
             stage=df["stage"].values[0],
-            cancer=df["cancer"].values[0],
+            left_or_right_breast=df["left_or_right_breast"].values[0],
+            image_view=df["image_view"].values[0],
+            abnormality_type=df["abnormality_type"].values[0],
+            assessment=df["assessment"].values[0],
+            breast_density=df["breast_density"].values[0],
             bit_depth=df["bit_depth"].values[0],
             pixel_data=pixel_data,
             height=df["height"].values[0],
@@ -130,28 +171,28 @@ class ImageFactory:
             std_pixel_value=df["std_pixel_value"].values[0],
             filepath=df["filepath"].values[0],
             fileset=df["fileset"].values[0],
+            cancer=df["cancer"].values[0],
             created=df["created"].values[0],
-            task=df["task"].values[0],
-            taskrun_id=df["taskrun_id"].values[0],
+            preprocessor=df["preprocessor"].values[0],
+            task_id=df["task_id"].values[0],
         )
 
-    def from_case(
+    def create(
         self,
         case_id: str,
         stage_id: int,
-        task: str,
-        taskrun_id: str,
+        pixel_data: np.ndarray,
+        preprocessor: str,
+        task_id: str,
     ) -> Image:
-        """Creates an image from a DICOM case.
+        """Creates an image from pizel data.
 
         Args:
             case_id (str): Unique identifier for a case.
-            stage_id (int): The stage for which the image is created. Since
-                the ground truth case is input, the stage for which
-                 this image is created is likely the first step in the
-                  imaging pipeline. Default = 0.
-            task (str): The name of the task
-            taskrun_id (str): The UUID for the specific task run.
+            stage_id (int): The stage for which the image is created.
+            pixel_data (np.ndarray): Pixel data in numpy array format.
+            preprocessor (str): The name of the preprocessor
+            task_id (str): The UUID for the specific task.
 
         Returns
             Image Object.
@@ -166,7 +207,6 @@ class ImageFactory:
 
         io = ImageIO()
         filepath = io.get_filepath(id=id, mode=mode, format="png")
-        pixel_data = io.read(filepath=case["filepath"])
 
         return Image(
             id=id,
@@ -174,7 +214,11 @@ class ImageFactory:
             mode=mode,
             stage_id=stage_id,
             stage=stage,
-            cancer=case["cancer"].values[0],
+            left_or_right_breast=case["left_or_right_breast"].values[0],
+            image_view=case["image_view"].values[0],
+            abnormality_type=case["abnormality_type"].values[0],
+            assessment=case["assessment"].values[0],
+            breast_density=case["breast_density"].values[0],
             bit_depth=case["bit_depth"].values[0],
             pixel_data=pixel_data,
             height=pixel_data.shape[0],
@@ -189,61 +233,8 @@ class ImageFactory:
             std_pixel_value=np.std(pixel_data, axis=None),
             filepath=filepath,
             fileset=case["fileset"].values[0],
+            cancer=case["cancer"].values[0],
             created=datetime.now(),
-            task=task,
-            taskrun_id=taskrun_id,
+            preprocessor=preprocessor,
+            task_id=task_id,
         )
-
-    def from_image(self, image: Image, stage_id: int, task: str, taskrun_id: str) -> Image:
-        """Creates an image from an existing image
-
-        Args:
-            image (Image): An image object.
-            stage_id (int): The stage for which the image is created.
-            task (str): The name of the task
-            taskrun_id (str): The UUID for the specific task run.
-        """
-        stage = self._get_stage(stage_id=stage_id)
-
-        id = str(uuid4())
-        mode = os.getenv("MODE")
-
-        io = ImageIO()
-        filepath = io.get_filepath(id=id, mode=mode, format="png")
-        pixel_data = io.read(filepath=image.filepath)
-
-        return Image(
-            id=id,
-            case_id=image.case_id,
-            mode=mode,
-            stage_id=stage_id,
-            stage=stage,
-            cancer=image.cancer,
-            bit_depth=image.bit_depth,
-            pixel_data=pixel_data,
-            height=pixel_data.shape[0],
-            width=pixel_data.shape[1],
-            size=pixel_data.size,
-            aspect_ratio=pixel_data.shape[1] / pixel_data.shape[0],
-            min_pixel_value=np.min(pixel_data, axis=None),
-            max_pixel_value=np.max(pixel_data, axis=None),
-            range_pixel_values=pixel_data.max(axis=None) - pixel_data.min(axis=None),
-            mean_pixel_value=pixel_data.mean(axis=None),
-            median_pixel_value=np.median(pixel_data, axis=None),
-            std_pixel_value=np.std(pixel_data, axis=None),
-            filepath=filepath,
-            fileset=image.fileset,
-            created=datetime.now(),
-            task=task,
-            taskrun_id=taskrun_id,
-        )
-
-    def _get_stage(self, stage_id: int) -> str:
-        try:
-            stage = STAGES[stage_id]
-        except KeyError:
-            msg = f"Invalid stage_id. Valid values: {STAGES.keys()}"
-            logger.exception(msg)
-            raise
-        else:
-            return stage

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Sunday October 22nd 2023 03:37:50 am                                                #
+# Modified   : Monday October 23rd 2023 10:26:12 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -70,6 +70,37 @@ class DicomPrep(DataPrep):
         if result:
             return pd.read_csv(dicom_fp)
 
+    def merge_case_data(self, case_fp: str, dicom_fp: str, xref_fp: str, dicom_out_fp: str) -> None:
+        """Merges case data into the DICOM metadata
+
+        Args:
+            case_fp (str): Case data filepath
+            dicom_fp (str): DICOM input filepath
+            xref_fp (str): Filepath to the case/series x-ref data
+            dicom_out_fp (str): Filepath to the DICOM output file.
+        """
+        CASE_VARIABLES = [
+            "case_id",
+            "left_or_right_breast",
+            "image_view",
+            "abnormality_type",
+            "assessment",
+            "breast_density",
+            "calc_type",
+            "calc_distribution",
+            "mass_shape",
+            "mass_margins",
+            "fileset",
+            "cancer",
+        ]
+        df_case = pd.read_csv(case_fp, usecols=CASE_VARIABLES)
+        df_dicom = pd.read_csv(dicom_fp)
+        df_xref = pd.read_csv(xref_fp)
+
+        df_case = df_case.merge(df_xref, on="case_id")
+        df_dicom = df_dicom.merge(df_case, on=["series_uid", "series_description"])
+        df_dicom.to_csv(dicom_out_fp, index=False)
+
     def add_series_description(self, dicom_fp, series_fp: str) -> None:
         """Adds series description to the DICOM data
 
@@ -78,7 +109,7 @@ class DicomPrep(DataPrep):
             series_fp (str): Filepath to the series description data.
 
         Returns:
-            Dataset with series description added..
+            Dataset with series description added.
         """
         dicom = pd.read_csv(dicom_fp)
         if "series_description" not in dicom.columns:
@@ -120,9 +151,6 @@ class DicomPrep(DataPrep):
         dcm_data["id"] = str(uuid.uuid4())
         dcm_data["series_uid"] = dcm.SeriesInstanceUID
         dcm_data["filepath"] = os.path.relpath(filepath)
-        dcm_data["patient_id"] = self._extract_patient_id(str(dcm.PatientID))
-        dcm_data["side"] = self._extract_side(str(dcm.PatientID))
-        dcm_data["image_view"] = self._extract_image_view(str(dcm.PatientID))
         dcm_data["photometric_interpretation"] = dcm.PhotometricInterpretation
         dcm_data["samples_per_pixel"] = int(dcm.SamplesPerPixel)
         dcm_data["height"] = int(dcm.Rows)
@@ -149,30 +177,3 @@ class DicomPrep(DataPrep):
         dicom_data = pd.DataFrame(data=dicom_data)
 
         return dicom_data
-
-    def _extract_patient_id(self, s: str) -> str:
-        """Extracts patient_id from a string
-
-        Args:
-            s (str): String containing a patient_id in the form 'P_00000'
-        """
-        d = "P_"
-        return d + s[s.index(d) + len(d) :].split("_")[0]  # noqa
-
-    def _extract_side(self, s: str) -> str:
-        """Extracts left or right side from a string
-
-        Args:
-            s (str): String containing a patient_id in the form 'P_00000_<side>_<image_view>'
-        """
-        d = "P_"
-        return s[s.index(d) + len(d) :].split("_")[1]  # noqa
-
-    def _extract_image_view(self, s: str) -> str:
-        """Extracts image image_view from a string
-
-        Args:
-            s (str): String containing a patient_id in the form 'P_00000_<side>_<image_view>'
-        """
-        image_view = "MLO" if "MLO" in s else "CC"
-        return image_view

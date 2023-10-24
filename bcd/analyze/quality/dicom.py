@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Saturday October 21st 2023 04:16:46 pm                                              #
+# Modified   : Monday October 23rd 2023 10:41:03 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ import logging
 import pandas as pd
 import numpy as np
 
-from bcd.analyze.quality.base import DQA, Validator, DQAResult, Consistency
+from bcd.analyze.quality.base import DQA, Validator
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -47,9 +47,6 @@ class DicomDQA(DQA):
         if self._validation_mask is None:
             suid = self._validator.validate_series_uid(series_uid=self._df["series_uid"])
             filepath = self._validator.validate_filepath(filepath=self._df["filepath"])
-            pid = self._validator.validate_patient_id(patient_id=self._df["patient_id"])
-            side = self._validator.validate_side(side=self._df["side"])
-            image_view = self._validator.validate_image_view(image_view=self._df["image_view"])
             pi = self._validator.validate_photometric_interpretation(
                 photometric_interpretation=self._df["photometric_interpretation"]
             )
@@ -74,9 +71,6 @@ class DicomDQA(DQA):
                 [
                     suid,
                     filepath,
-                    pid,
-                    side,
-                    image_view,
                     pi,
                     spp,
                     height,
@@ -93,9 +87,6 @@ class DicomDQA(DQA):
             self._validation_mask.columns = [
                 "series_uid",
                 "filepath",
-                "patient_id",
-                "side",
-                "image_view",
                 "photometric_interpretation",
                 "samples_per_pixel",
                 "height",
@@ -109,43 +100,3 @@ class DicomDQA(DQA):
             ]
 
         return self._validation_mask
-
-    def analyze_consistency(self) -> DQAResult:
-        """Parse the case_id and confirm values match"""
-
-        # Join the with the case/series xref file.
-        df = self._df.merge(self._case_series_xref, on="series_uid", how="left")
-
-        pid = df["case_id"].str[:7]
-        cid_split = df["case_id"].str.split("_", expand=True)
-        side = cid_split[2]
-        image_view = cid_split[4]
-
-        pid = df["patient_id"] == pid
-        side = df["side"] == side
-        image_view = df["image_view"] == image_view
-
-        mask = pd.concat([pid, side, image_view], axis=1)
-
-        # Summary Consistency
-        nrows = df.shape[0]
-        nrows_consistent = mask.all(axis=1).sum(axis=0)
-        row_consistency = round(nrows_consistent / nrows, 3)
-
-        ncells = mask.shape[0] * mask.shape[1]
-        ncells_consistent = mask.sum().sum()
-        cell_consistency = round(ncells_consistent / ncells, 3)
-
-        sc = Consistency(
-            dataset=self._name,
-            filename=self._filename,
-            records=nrows,
-            consistent_records=nrows_consistent,
-            record_consistency=row_consistency,
-            data_values=ncells,
-            consistent_data_values=ncells_consistent,
-            data_value_consistency=cell_consistency,
-        )
-
-        result = DQAResult(summary=sc, detail=None)
-        return result

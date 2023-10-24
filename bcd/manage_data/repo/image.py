@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 22nd 2023 11:17:00 pm                                                #
+# Modified   : Tuesday October 24th 2023 05:41:46 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -35,10 +35,14 @@ IMAGE_DTYPES = {
     "id": VARCHAR(length=64),
     "case_id": VARCHAR(length=64),
     "mode": VARCHAR(length=8),
-    "stage_id": TINYINT(),
+    "stage_id": INTEGER(),
     "stage": VARCHAR(length=64),
-    "cancer": TINYINT(),
-    "bit_depth": TINYINT(),
+    "left_or_right_breast": VARCHAR(length=8),
+    "image_view": VARCHAR(4),
+    "abnormality_type": VARCHAR(24),
+    "assessment": INTEGER(),
+    "breast_density": INTEGER(),
+    "bit_depth": INTEGER(),
     "height": INTEGER(),
     "width": INTEGER(),
     "size": BIGINT(),
@@ -51,9 +55,10 @@ IMAGE_DTYPES = {
     "std_pixel_value": FLOAT(),
     "filepath": VARCHAR(length=256),
     "fileset": VARCHAR(length=8),
+    "cancer": TINYINT(),
+    "preprocessor": VARCHAR(length=64),
+    "task_id": VARCHAR(length=64),
     "created": DATETIME(),
-    "task": VARCHAR(length=64),
-    "taskrun_id": VARCHAR(length=64),
 }
 
 
@@ -78,51 +83,64 @@ class ImageRepo(Repo):
             image (Image): An Image object.
 
         """
-        if not self.exists(id=image.id):
-            self._write_image(pixel_data=image.pixel_data, filepath=image.filepath)
-            data = image.as_df()
-            self._database.insert(
-                data=data, tablename=self.__tablename, dtype=IMAGE_DTYPES, if_exists="append"
-            )
-        else:
-            msg = f"Image {image.id} already exists."
-            self._logger.exception(msg)
-            raise FileExistsError(msg)
+        try:
+            exists = self.exists(id=image.id)
+        except Exception:
+            exists = False
+        finally:
+            if not exists:
+                self._write_image(pixel_data=image.pixel_data, filepath=image.filepath)
+                data = image.as_df()
+
+                self._database.insert(
+                    data=data, tablename=self.__tablename, dtype=IMAGE_DTYPES, if_exists="append"
+                )
+            else:
+                msg = f"Image {image.id} already exists."
+                self._logger.exception(msg)
+                raise FileExistsError(msg)
 
     def get(
-        self, condition: Callable = None, metadata_only: bool = False
-    ) -> Union[pd.DataFrame, tuple]:
-        """Returns case images and their metadata matching the condition
-
-        If a condition is not specified, metadata only will be returned.
-        An example of a condition: condition = lambda df: df['stage_id'] > 0
+        self, condition: Callable, n: int = None, frac: float = None, random_state: int = None
+    ) -> Union[pd.DataFrame, list]:
+        """Returns case images matching condition
 
         Args:
             condition (Callable): A lambda expression used to subset the data.
-            metadata_only (bool): If True, only metadata are returned. If condition
-                is None, only metadata are returned.  Default is False.
+                An example of a condition: condition = lambda df: df['stage_id'] > 0
+            n (int): Number of images to return. Cannot be used with frac.
+            frac (float): Fraction of items matching condition to return. Cannot be used with n.
 
         Returns:
-            If metadata_only is True, a DataFrame is returned. Otherwise, a tuple containing
-                the metadata DataFrame and a dictionary of Image objects indexed by id is returned.
+            List of Images objects.
         """
-        images = {}
+        if n is not None and frac is not None:
+            msg = "n and frac cannot be used together. Either n or frac must be None."
+            self._logger.exception(msg)
+            raise ValueError(msg)
+
+        images = []
 
         query = f"SELECT * FROM {self.__tablename};"
         params = None
         image_meta = self._database.query(query=query, params=params)
+        image_meta = image_meta[condition]
 
-        if condition is None:
-            return image_meta
-        else:
-            image_meta = image_meta[condition]
-            if metadata_only:
-                return image_meta
-            else:
-                for _, meta in image_meta.iterrows():
-                    image = self._get(id=meta["id"])
-                    images[meta["id"]] = image
-                return (image_meta, images)
+        if n is not None:
+            image_meta = image_meta.sample(n=n)
+        elif frac is not None:
+            image_meta = image_meta.sample(frac=frac)
+
+        for _, meta in image_meta.iterrows():
+            image = self._get(id=meta["id"])
+            images.append(image)
+        return images
+
+    def get_meta(self) -> Union[pd.DataFrame, list]:
+        """Returns case images metadata"""
+        query = f"SELECT * FROM {self.__tablename};"
+        params = None
+        return self._database.query(query=query, params=params)
 
     def exists(self, id: str) -> bool:
         """Evaluates existence of an image by identifier.
@@ -216,7 +234,7 @@ class ImageRepo(Repo):
             os.remove(image_meta["filepath"].values[0])
         except OSError:
             msg = f"Image id: {id} does not exist at {image_meta['filepath'].values[0]}"
-            self._logger.info(msg)
+            self._logger.debug(msg)
         finally:
             query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
             params = {"id": id}
