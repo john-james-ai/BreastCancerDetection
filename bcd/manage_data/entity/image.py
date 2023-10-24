@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Tuesday October 24th 2023 05:42:47 am                                               #
+# Modified   : Tuesday October 24th 2023 04:34:32 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -181,6 +181,7 @@ class ImageFactory:
         self,
         case_id: str,
         stage_id: int,
+        stage: str,
         pixel_data: np.ndarray,
         preprocessor: str,
         task_id: str,
@@ -189,7 +190,8 @@ class ImageFactory:
 
         Args:
             case_id (str): Unique identifier for a case.
-            stage_id (int): The stage for which the image is created.
+            stage_id (int): The preprocessing stage identifier
+            stage (Stage): The preprocessing stage for which the image is created.
             pixel_data (np.ndarray): Pixel data in numpy array format.
             preprocessor (str): The name of the preprocessor
             task_id (str): The UUID for the specific task.
@@ -198,8 +200,6 @@ class ImageFactory:
             Image Object.
 
         """
-        stage = self._get_stage(stage_id=stage_id)
-
         id = str(uuid4())
         mode = os.getenv("MODE")
 
