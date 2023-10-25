@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:52 pm                                               #
-# Modified   : Tuesday October 24th 2023 12:14:52 am                                               #
+# Modified   : Wednesday October 25th 2023 04:16:34 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ STAGES = {
     5: "reshape",
     6: "augment",
 }
-MODES = ["dev", "final"]
+
 
 CORE_VARIABLES = [
     "patient_id",

@@ -4,22 +4,26 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_data/test_repo/test_taskrun_repo.py                                     #
+# Filename   : /tests/test_data/test_io/test_image_io.py                                           #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Sunday October 22nd 2023 11:34:02 pm                                                #
-# Modified   : Monday October 23rd 2023 12:24:53 am                                                #
+# Created    : Saturday October 21st 2023 01:30:49 pm                                              #
+# Modified   : Tuesday October 24th 2023 07:26:15 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+import os
 import inspect
 from datetime import datetime
 import pytest
 import logging
+
+import numpy as np
+from bcd.manage_data.io.image import ImageIO
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -28,12 +32,17 @@ logger = logging.getLogger(__name__)
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
+FP_IN = "tests/data/raw/Calc-Test_P_00038_LEFT_CC_1/08-29-2017-DDSM-94942/1.000000-ROI mask images-18515/1-1.dcm"
+FP_OUT = "tests/data/image/io/test_image.png"
+CASE_ID = "Calcification-Train_P_00005_RIGHT_CC_1"
+STATE = "test"
+FORMAT = "png"
 
-@pytest.mark.repo
-@pytest.mark.taskrun_repo
-class TestTaskRunRepo:  # pragma: no cover
+
+@pytest.mark.imageio
+class TestImageIO:  # pragma: no cover
     # ============================================================================================ #
-    def test_setup(self, container, caplog):
+    def test_read_dcm(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -45,51 +54,9 @@ class TestTaskRunRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.taskrun()
-        condition = lambda df: df["mode"] == "test"  # noqa
-        try:
-            repo.delete(condition=condition)
-        except Exception:
-            pass
-
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_add_exists(self, taskruns, container, caplog):
-        start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.taskrun()
-        for tr in taskruns:
-            logger.debug(tr)
-            repo.add(taskrun=tr)
-            assert repo.exists(id=tr.id)
-
-        with pytest.raises(FileExistsError):
-            for tr in taskruns:
-                repo.add(taskrun=tr)
-
+        io = ImageIO()
+        img = io.read(FP_IN)
+        assert isinstance(img, np.ndarray)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -106,7 +73,7 @@ class TestTaskRunRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get(self, container, caplog):
+    def test_write(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -118,14 +85,10 @@ class TestTaskRunRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.taskrun()
-        taskruns = repo.get()
-        logger.debug(taskruns)
-        assert len(taskruns) == 10
-
-        condition = lambda df: df["task"] == "TestTaskRunRepo1"  # noqa
-        taskruns = repo.get(condition=condition)
-        assert len(taskruns) == 5
+        io = ImageIO()
+        img = io.read(FP_IN)
+        io.write(pixel_data=img, filepath=FP_OUT)
+        assert os.path.exists(FP_OUT)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -143,7 +106,7 @@ class TestTaskRunRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_count(self, container, caplog):
+    def test_read_png(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -155,9 +118,10 @@ class TestTaskRunRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.taskrun()
-        condition = lambda df: df["mode"] == "test"  # noqa
-        assert repo.count(condition) == 10
+        io = ImageIO()
+        img = io.read(filepath=FP_OUT)
+        assert isinstance(img, np.ndarray)
+
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -174,7 +138,7 @@ class TestTaskRunRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_delete(self, container, caplog):
+    def test_get_filepath(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -186,12 +150,14 @@ class TestTaskRunRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.taskrun()
-        condition = lambda df: df["mode"] == "test"  # noqa
-        repo.delete(condition=condition)
+        io = ImageIO()
+        fp = io.get_filepath(id, format=FORMAT)
+        filename = CASE_ID + "." + FORMAT
+        fp_exp = os.path.join("data/image/1_dev", filename)
+        assert fp == fp_exp
 
-        assert repo.count() == 0
-
+        with pytest.raises(ValueError):
+            io.get_filepath(state="invalid", case_id=CASE_ID, format=FORMAT)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

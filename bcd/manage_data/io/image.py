@@ -11,21 +11,18 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Monday October 23rd 2023 03:29:26 pm                                                #
+# Modified   : Wednesday October 25th 2023 04:55:00 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import os
-from dotenv import load_dotenv
 import logging
 
 import pydicom
 import cv2
 import numpy as np
 import pandas as pd
-
-load_dotenv()
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -45,8 +42,7 @@ class ImageIO:
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         cv2.imwrite(filepath, pixel_data)
 
-    def get_filepath(self, id: str, mode: str, format: str) -> str:
-        basedir = os.getenv(mode, None)
+    def get_filepath(self, id: str, basedir: str, format: str) -> str:
         filename = id + "." + format
         return os.path.join(basedir, filename)
 

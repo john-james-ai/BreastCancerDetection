@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
-# Modified   : Tuesday October 24th 2023 05:43:14 am                                               #
+# Modified   : Tuesday October 24th 2023 07:11:50 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -41,6 +41,7 @@ class Stage0(Stage):
 
 
 # ------------------------------------------------------------------------------------------------ #
+@dataclass
 class ImageConverterParams(Params):
     frac: float = 0.01
     n_jobs: int = 6

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_data/test_explore/test_dataset.py                                       #
+# Filename   : /tests/test_data/test_database/test_database_config.py                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Wednesday October 18th 2023 06:37:38 pm                                             #
-# Modified   : Saturday October 21st 2023 02:06:42 pm                                              #
+# Created    : Tuesday October 24th 2023 10:26:11 pm                                               #
+# Modified   : Tuesday October 24th 2023 10:30:34 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,9 +21,7 @@ from datetime import datetime
 import pytest
 import logging
 
-import pandas as pd
-
-from bcd.analyze.explore.case import CaseExplorer
+from bcd.manage_data.database.config import DatabaseConfig
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -32,14 +30,11 @@ logger = logging.getLogger(__name__)
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
-CASES_FP = "tests/data/cooked/cases.csv"
 
-
-@pytest.mark.cases
-@pytest.mark.dataset
-class TestDataset:  # pragma: no cover
+@pytest.mark.dbconfig
+class TestDatabaseConfig:  # pragma: no cover
     # ============================================================================================ #
-    def test_model_data(self, caplog):
+    def test_db_config(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -51,19 +46,12 @@ class TestDataset:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        ds = CaseExplorer(filepath=CASES_FP)
-        X_train, y_train, X_test, y_test = ds.get_model_data()
-        assert isinstance(X_train, pd.DataFrame)
-        assert isinstance(y_train, pd.Series)
-        assert isinstance(X_test, pd.DataFrame)
-        assert isinstance(y_test, pd.Series)
-
-        XC_train, yc_train, XC_test, yc_test = ds.get_calc_model_data()
-        assert X_train.shape[1] > XC_train.shape[1]
-        assert X_test.shape[1] > XC_test.shape[1]
-        assert isinstance(yc_train, pd.Series)
-        assert isinstance(yc_test, pd.Series)
-
+        config = DatabaseConfig()
+        assert config.name == "bcd_test"
+        assert config.mode == "test"
+        assert config.username == "root"
+        assert config.autocommit is True
+        assert config.timeout == 30
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

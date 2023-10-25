@@ -11,16 +11,17 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 01:56:06 am                                                #
-# Modified   : Tuesday October 24th 2023 03:37:47 am                                               #
+# Modified   : Wednesday October 25th 2023 06:57:04 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+import os
 import inspect
 from datetime import datetime
 import pytest
 import logging
-import shutil
+
 
 from bcd.preprocess.convert import ImageConverter, ImageConverterParams
 
@@ -38,7 +39,7 @@ TASK_ID = "b3553242-a5a6-4cf3-bc2f-66d875806fc4"
 @pytest.mark.converter
 class TestConverter:  # pragma: no cover
     # ============================================================================================ #
-    def test_setup(self, caplog):
+    def test_setup(self, container, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -50,7 +51,11 @@ class TestConverter:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        shutil.rmtree(FILEPATH, ignore_errors=True)
+        repo = container.repo.image()
+        try:
+            repo.delete_by_mode()
+        except Exception:
+            pass
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -79,19 +84,19 @@ class TestConverter:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        params = ImageConverterParams()
+        params = ImageConverterParams(frac=0.005)
         conv = ImageConverter(params=params, task_id=TASK_ID)
         assert conv.stage_id == 0
         assert conv.stage == "converted"
         assert conv.name == "ImageConverter"
-        assert conv.mode == "test"
 
         conv.execute()
-        assert conv.images_processed == 36
+        assert conv.images_processed == 15
         logger.debug(conv.params)
 
         repo = container.repo.image()
-        logger.debug(repo.get_meta())
+        assert repo.count() == 15
+        assert len(os.listdir(FILEPATH)) == 15
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -99,6 +104,39 @@ class TestConverter:  # pragma: no cover
 
         logger.info(
             "\nCompleted {} {} in {} seconds at {} on {}".format(
+                self.__class__.__name__,
+                inspect.stack()[0][3],
+                duration,
+                end.strftime("%I:%M:%S %p"),
+                end.strftime("%m/%d/%Y"),
+            )
+        )
+        logger.info(single_line)
+
+    # ============================================================================================ #
+    def test_teardown(self, container, caplog):
+        start = datetime.now()
+        logger.info(
+            "\n\nStarted {} {} at {} on {}".format(
+                self.__class__.__name__,
+                inspect.stack()[0][3],
+                start.strftime("%I:%M:%S %p"),
+                start.strftime("%m/%d/%Y"),
+            )
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        repo = container.repo.image()
+        try:
+            repo.delete_by_mode()
+        except Exception:
+            pass
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
                 self.__class__.__name__,
                 inspect.stack()[0][3],
                 duration,

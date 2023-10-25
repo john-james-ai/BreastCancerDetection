@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 03:43:02 am                                                #
-# Modified   : Tuesday October 24th 2023 03:23:31 am                                               #
+# Modified   : Tuesday October 24th 2023 05:17:39 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -77,7 +77,7 @@ class Filter(Preprocessor):
 
         # Extract stage 0 images from repository
         condition = lambda df: df["stage_id"] == 0  # noqa
-        return self._image_repo.get(condition=condition)
+        return self._image_repo.get_meta(condition=condition)
 
     def process_images(self, image_metadata: pd.DataFrame) -> None:
         """Performs the filter operation on the images and stores in the repository.
@@ -85,9 +85,11 @@ class Filter(Preprocessor):
         Args:
             images (list): List of Image objects.
         """
-        for _, image in tqdm(image_metadata.iterrows()):
+        for _, image in tqdm(image_metadata.iterrows(), total=image_metadata.shape[0]):
+            image = self.read_image(id=image_metadata["id"].values[0])
             image = self.process_image(image)
             self.save_image(image=image)
+            self._images_processed += 1
 
     @abstractmethod
     def process_image(self, image: Image) -> Image:
@@ -96,14 +98,13 @@ class Filter(Preprocessor):
 
 # ------------------------------------------------------------------------------------------------ #
 class MeanFilter(Filter):
-    __STAGE_ID = 1
-
     def __init__(
         self,
-        kernel: int = 5,
+        params: Params,
+        task_id: str,
     ) -> None:
-        super().__init__()
-        self._kernel = kernel
+        super().__init__(params=params, task_id=task_id)
+        self._kernel = params.kernel
 
     def process_image(self, image: Image) -> Image:
         pixel_data = cv2.blur(image.pixel_data, (self._kernel, self._kernel))
@@ -112,14 +113,13 @@ class MeanFilter(Filter):
 
 # ------------------------------------------------------------------------------------------------ #
 class MedianFilter(Filter):
-    __STAGE_ID = 1
-
     def __init__(
         self,
-        kernel: int = 5,
+        params: Params,
+        task_id: str,
     ) -> None:
-        super().__init__()
-        self._kernel = kernel
+        super().__init__(params=params, task_id=task_id)
+        self._kernel = params.kernel
 
     def process_image(self, image: Image) -> Image:
         pixel_data = cv2.medianBlur(image.pixel_data, self._kernel)
@@ -128,14 +128,13 @@ class MedianFilter(Filter):
 
 # ------------------------------------------------------------------------------------------------ #
 class GaussianFilter(Filter):
-    __STAGE_ID = 1
-
     def __init__(
         self,
-        kernel: int = 5,
+        params: Params,
+        task_id: str,
     ) -> None:
-        super().__init__()
-        self._kernel = kernel
+        super().__init__(params=params, task_id=task_id)
+        self._kernel = params.kernel
 
     def process_image(self, image: Image) -> Image:
         pixel_data = cv2.GaussianBlur(image.pixel_data, (self._kernel, self._kernel), 0)

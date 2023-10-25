@@ -11,17 +11,16 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 07:44:00 pm                                                #
-# Modified   : Sunday October 22nd 2023 08:57:35 pm                                                #
+# Modified   : Wednesday October 25th 2023 02:53:04 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Module provides basic database interface"""
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 from typing import Callable, Any
 
 from bcd.manage_data.entity.base import Entity
-from bcd.manage_data.database.base import Database
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -33,10 +32,6 @@ class Repo(ABC):
         database(Database): Database containing data to access.
     """
 
-    @abstractproperty
-    def database(self) -> Database:
-        """Returns the underlying database."""
-
     @abstractmethod
     def add(self, entity: Entity) -> None:
         """Adds an entity to the repository
@@ -46,11 +41,11 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def get(self, condition: Callable, *args, **kwargs) -> Any:
-        """Gets the entities that match the given condition
+    def get(self, id: str) -> Any:
+        """Gets an an entity by its identifier.
 
         Args:
-            condition (Callable): A lambda conditional expression used to subset the data
+            id (str): Entity identifier.
         """
 
     @abstractmethod
@@ -76,10 +71,10 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def delete(self, condition: Callable) -> None:
+    def delete(self, id: str) -> None:
         """Deletes the entity or entities matching condition.
 
         Args:
-            condition (Callable): Lambda expression subsetting the data.
+            id (str): Entity identifier.
 
         """

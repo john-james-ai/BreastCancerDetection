@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 10:17:41 pm                                                #
-# Modified   : Tuesday October 24th 2023 04:34:53 pm                                               #
+# Modified   : Wednesday October 25th 2023 07:13:21 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -155,7 +155,6 @@ class Preprocessor(ABC):
         return self._image_factory.create(
             case_id=case_id,
             stage_id=self._stage.id,
-            stage=self._stage.name,
             pixel_data=pixel_data,
             preprocessor=self.name,
             task_id=self.task_id,
@@ -171,8 +170,7 @@ class Preprocessor(ABC):
 
     def read_image(self, id: str) -> Image:
         """Reads an image object from the repository."""
-        condition = lambda df: df["id"] == id  # noqa
-        self._image_repo.get(condition=condition)
+        return self._image_repo.get(id=id)
 
     def save_image(self, image: Image) -> None:
         """Saves an image object to the repository."""

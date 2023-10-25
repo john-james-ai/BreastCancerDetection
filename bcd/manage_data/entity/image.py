@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Tuesday October 24th 2023 04:34:32 pm                                               #
+# Modified   : Wednesday October 25th 2023 05:18:42 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,29 +20,23 @@
 from __future__ import annotations
 from dataclasses import dataclass
 import os
-import sys
 from datetime import datetime
 from uuid import uuid4
-from dotenv import load_dotenv
 import logging
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+from bcd.config import Config
+from bcd.manage_data import STAGES
 from bcd.manage_data.io.image import ImageIO
 from bcd.manage_data.entity.base import Entity
 
-# ------------------------------------------------------------------------------------------------ #
-logging.basicConfig(stream=sys.stdout)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 # ------------------------------------------------------------------------------------------------ #
-load_dotenv()
+#                                         IMAGE                                                    #
 # ------------------------------------------------------------------------------------------------ #
-
-
 @dataclass(eq=False)
 class Image(Entity):
     id: str
@@ -124,13 +118,17 @@ class Image(Entity):
         return pd.DataFrame(data=d, index=[0])
 
 
+# ------------------------------------------------------------------------------------------------ #
+#                                    IMAGE FACTORY                                                 #
+# ------------------------------------------------------------------------------------------------ #
 class ImageFactory:
     """Creates Image Objects"""
 
-    def __init__(self, case_fp: str) -> None:
+    def __init__(self, case_fp: str, config: Config) -> None:
         case_fp = os.path.abspath(case_fp)
         self._cases = pd.read_csv(case_fp)
         self._cases = self._cases.loc[self._cases["series_description"] == "full mammogram images"]
+        self._config = config()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     def from_df(self, df: pd.DataFrame) -> Image:
@@ -181,7 +179,6 @@ class ImageFactory:
         self,
         case_id: str,
         stage_id: int,
-        stage: str,
         pixel_data: np.ndarray,
         preprocessor: str,
         task_id: str,
@@ -191,7 +188,6 @@ class ImageFactory:
         Args:
             case_id (str): Unique identifier for a case.
             stage_id (int): The preprocessing stage identifier
-            stage (Stage): The preprocessing stage for which the image is created.
             pixel_data (np.ndarray): Pixel data in numpy array format.
             preprocessor (str): The name of the preprocessor
             task_id (str): The UUID for the specific task.
@@ -201,12 +197,18 @@ class ImageFactory:
 
         """
         id = str(uuid4())
-        mode = os.getenv("MODE")
+
+        stage = self._get_stage(stage_id=stage_id)
 
         case = self._cases.loc[self._cases["case_id"] == case_id]
 
+        mode = self._config.get_mode()
+
+        basedir = self._config.get_image_directory()
+
         io = ImageIO()
-        filepath = io.get_filepath(id=id, mode=mode, format="png")
+        filepath = io.get_filepath(id=id, basedir=basedir, format="png")
+        io.write(pixel_data=pixel_data, filepath=filepath)
 
         return Image(
             id=id,
@@ -238,3 +240,11 @@ class ImageFactory:
             preprocessor=preprocessor,
             task_id=task_id,
         )
+
+    def _get_stage(self, stage_id: int) -> None:
+        try:
+            return STAGES[stage_id]
+        except KeyError:
+            msg = f"Stage identifier = {stage_id} is invalid. Valid values are: {STAGES.keys()}"
+            self._logger.exception(msg)
+            raise ValueError(msg)

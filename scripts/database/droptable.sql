@@ -1,2 +1,2 @@
 use bcd;
-DROP TABLE image;
+DROP TABLE IF EXISTS image;
