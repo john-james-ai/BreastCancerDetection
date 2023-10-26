@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 03:43:02 am                                                #
-# Modified   : Thursday October 26th 2023 03:28:39 am                                              #
+# Modified   : Thursday October 26th 2023 12:35:30 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,10 +25,12 @@ import pandas as pd
 import cv2
 from dependency_injector.wiring import inject, Provide
 
+from bcd.core.base import Stage
 from bcd.core.image.entity import Image
 from bcd.core.image.factory import ImageFactory
-from bcd.preprocess.base import Preprocessor, Params, Stage
+from bcd.preprocess.base import Preprocessor, Params
 from bcd.core.image.repo import ImageRepo
+from bcd.core.task.entity import Task
 from bcd.container import BCDContainer
 
 
@@ -39,17 +41,9 @@ class FilterParams(Params):
 
 
 # ------------------------------------------------------------------------------------------------ #
-
-
-@dataclass()
-class Stage1(Stage):
-    id: int = 1
-
-
-# ------------------------------------------------------------------------------------------------ #
 class Filter(Preprocessor):
     MODULE = "bcd.preprocess.filter"
-    STAGE = Stage1()
+    STAGE = Stage(id=1)
 
     @inject
     def __init__(
@@ -141,3 +135,12 @@ class GaussianFilter(Filter):
     def process_image(self, image: Image) -> Image:
         pixel_data = cv2.GaussianBlur(image.pixel_data, (self._kernel, self._kernel), 0)
         return self.create_image(case_id=image.case_id, pixel_data=pixel_data)
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class FilterTask(Task):
+    @classmethod
+    def get_params(cls, params: str) -> Task:
+        """Creates a Task object from  a dataframe"""
+        return FilterParams.from_string(params=params)

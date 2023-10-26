@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Thursday October 26th 2023 01:31:46 am                                              #
+# Modified   : Thursday October 26th 2023 11:22:54 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,12 +19,14 @@
 import pandas as pd
 import pytest
 
-
 from bcd.config import Config
 from bcd.container import BCDContainer
 from bcd.infrastructure.io.image import ImageIO
 from bcd.core.image.factory import ImageFactory
+from bcd.preprocess.convert import ImageConverter, ImageConverterParams, ImageConverterTask
+from bcd.preprocess.filter import FilterParams, FilterTask, MeanFilter, MedianFilter, GaussianFilter
 from tqdm import tqdm
+
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*"]
@@ -111,3 +113,22 @@ def images():
         i += 1
         images.append(image)
     return images
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                            TASKS                                                 #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="module", autouse=False)
+def tasks():
+    tasks = []
+    tasks_ = [ImageConverterTask, FilterTask, FilterTask, FilterTask]
+    apps = [ImageConverter, MeanFilter, MedianFilter, GaussianFilter]
+    params_ = [ImageConverterParams(), FilterParams(), FilterParams(), FilterParams()]
+
+    for i in range(5):
+        params = params_[i % 4]
+        app = apps[i % 4]
+        task_ = tasks_[i % 4]
+        task = task_.create(application=app, params=params, config=Config)
+        tasks.append(task)
+    return tasks

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
-# Modified   : Thursday October 26th 2023 04:08:56 am                                              #
+# Modified   : Thursday October 26th 2023 12:35:13 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,15 +19,14 @@
 """Converts DICOM Data to PNG Format"""
 import os
 from dataclasses import dataclass
-from datetime import datetime
 from dotenv import load_dotenv
-import logging
 from tqdm import tqdm
 
 import pandas as pd
 from dependency_injector.wiring import inject, Provide
 
-from bcd.preprocess.base import Params, Preprocessor, Stage
+from bcd.core.base import Stage
+from bcd.preprocess.base import Params, Preprocessor
 from bcd.core.task.entity import Task
 from bcd.core.image.factory import ImageFactory
 from bcd.core.image.repo import ImageRepo
@@ -35,12 +34,6 @@ from bcd.container import BCDContainer
 
 # ------------------------------------------------------------------------------------------------ #
 load_dotenv()
-
-
-# ------------------------------------------------------------------------------------------------ #
-@dataclass()
-class Stage0(Stage):
-    id: int = 0
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -54,7 +47,7 @@ class ImageConverterParams(Params):
 # ------------------------------------------------------------------------------------------------ #
 class ImageConverter(Preprocessor):
     MODULE = "bcd.preprocess.convert"
-    STAGE = Stage0()
+    STAGE = Stage(id=0)
 
     @inject
     def __init__(
@@ -127,41 +120,6 @@ class ImageConverter(Preprocessor):
 @dataclass
 class ImageConverterTask(Task):
     @classmethod
-    def from_df(cls, df: pd.DataFrame) -> Task:
+    def get_params(cls, params: str) -> Params:
         """Creates a Task object from  a dataframe"""
-        application = cls._get_class(
-            module_name=df["module"].values[0], class_name=df["name"].values[0]
-        )
-
-        params = ImageConverterParams.from_string(df["params"].values[0])
-
-        return cls(
-            id=df["id"].values[0],
-            name=df["name"].values[0],
-            application=application,
-            mode=df["mode"].values[0],
-            stage_id=df["stage_id"].values[0],
-            stage=df["stage"].values[0],
-            module=df["module"].values[0],
-            params=params,
-            images_processed=df["images_processed"].values[0],
-            image_processing_time=df["image_processing_time"].values[0],
-            started=df["started"].values[0].astype(datetime),
-            ended=df["ended"].values[0].astype(datetime),
-            duration=df["duration"].values[0],
-            state=df["state"].values[0],
-        )
-
-    def run(self) -> None:
-        """Executes the preprocessor."""
-        self.start_task()
-        app = self.application(params=self.params, task_id=self.id)
-        try:
-            app.execute()
-            self.images_processed = app.images_processed
-        except Exception as e:
-            self.crash_task()
-            logging.exception(e)
-            raise
-        else:
-            self.end_task()
+        return ImageConverterParams.from_string(params=params)

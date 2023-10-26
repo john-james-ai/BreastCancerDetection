@@ -11,39 +11,23 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 10:17:41 pm                                                #
-# Modified   : Thursday October 26th 2023 03:55:31 am                                              #
+# Modified   : Thursday October 26th 2023 12:19:10 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Base module for the image preprocessing package."""
 from __future__ import annotations
-from dataclasses import dataclass
-from abc import ABC, abstractmethod, abstractproperty
+from abc import abstractmethod, abstractproperty
 import logging
 
 import pandas as pd
 import numpy as np
 
-from bcd.core.base import Repo, STAGES, Application, Params
+from bcd.core.base import Repo, Application, Params, Stage
 from bcd.infrastructure.io.image import ImageIO
 from bcd.core.image.entity import Image
 from bcd.core.image.factory import ImageFactory
-
-
-# ------------------------------------------------------------------------------------------------ #
-@dataclass()
-class Stage(ABC):
-    id: int
-    name: str = None
-
-    def __post_init__(self) -> None:
-        try:
-            self.name = STAGES[self.id]
-        except KeyError:
-            msg = f"{self.id} is an invalid stage id."
-            logging.exception(msg)
-            raise
 
 
 # ------------------------------------------------------------------------------------------------ #

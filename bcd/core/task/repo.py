@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Thursday October 26th 2023 01:12:51 am                                              #
+# Modified   : Thursday October 26th 2023 01:08:16 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -68,7 +68,7 @@ class TaskRepo(Repo):
         """
         try:
             exists = self.exists(id=task.id)
-        except Exception:
+        except Exception:  # pragma: no cover
             exists = False
         finally:
             if exists:
@@ -104,25 +104,43 @@ class TaskRepo(Repo):
                 msg = f"Task {id} does not exist."
                 self._logger.exception(msg)
                 raise FileNotFoundError(msg)
-            return Task.from_df(df=task)
+            class_ = Task.get_class(
+                module_name=task["module"].values[0], class_name=task["name"].values[0]
+            )
+            return class_.from_df(df=task)
 
     def get_by_stage(self, stage_id: int) -> pd.DataFrame:
         """Returns all task for a given stage."""
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
         params = {"mode": self.mode, "stage_id": stage_id}
-        return self._database.query(query=query, params=params)
+        tasks = self._database.query(query=query, params=params)
+        if len(tasks) == 0:
+            msg = f"No Tasks exist for Stage{stage_id}."
+            self._logger.exception(msg)
+            raise FileNotFoundError(msg)
+        return tasks
 
     def get_by_mode(self) -> pd.DataFrame:
         """Returns all task for current mode."""
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        return self._database.query(query=query, params=params)
+        tasks = self._database.query(query=query, params=params)
+        if len(tasks) == 0:  # pragma: no cover
+            msg = f"No Tasks exist for the {self.mode} mode."
+            self._logger.exception(msg)
+            raise FileNotFoundError(msg)
+        return tasks
 
     def get_by_name(self, name: str) -> pd.DataFrame:
         """Returns all task for a given name."""
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND name = :name;"
         params = {"mode": self.mode, "name": name}
-        return self._database.query(query=query, params=params)
+        tasks = self._database.query(query=query, params=params)
+        if len(tasks) == 0:
+            msg = f"No Tasks exist with name {name}."
+            self._logger.exception(msg)
+            raise FileNotFoundError(msg)
+        return tasks
 
     def exists(self, id: str) -> bool:
         """Evaluates existence of a task by identifier.
@@ -137,7 +155,7 @@ class TaskRepo(Repo):
         params = {"id": id}
         try:
             exists = self._database.exists(query=query, params=params)
-        except pymysql.Error as e:
+        except pymysql.Error as e:  # pragma: no cover
             self._logger.exception(e)
             raise
         else:
@@ -157,7 +175,7 @@ class TaskRepo(Repo):
         try:
             task = self._database.query(query=query, params=params)
 
-        except pymysql.Error as e:
+        except pymysql.Error as e:  # pragma: no cover
             self._logger.exception(e)
             raise
         else:
@@ -206,4 +224,10 @@ class TaskRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
+        self._database.delete(query=query, params=params)
+
+    def delete_all(self) -> None:
+        """Deletes all tasks"""
+        query = f"DELETE FROM {self.__tablename};"
+        params = None
         self._database.delete(query=query, params=params)

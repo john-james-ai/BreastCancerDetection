@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Thursday October 26th 2023 03:36:19 am                                              #
+# Modified   : Thursday October 26th 2023 12:16:26 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,6 +20,7 @@
 from __future__ import annotations
 import string
 from abc import ABC, abstractmethod
+import logging
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Callable
@@ -80,6 +81,22 @@ STAGES = {
     5: "reshape",
     6: "augment",
 }
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass()
+class Stage(ABC):
+    id: int
+    name: str = None
+
+    def __post_init__(self) -> None:
+        try:
+            self.name = STAGES[self.id]
+        except KeyError:
+            msg = f"{self.id} is an invalid stage id."
+            logging.exception(msg)
+            raise
+
 
 # ------------------------------------------------------------------------------------------------ #
 NON_NUMERIC_TYPES = ["category", "object"]
