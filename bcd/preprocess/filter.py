@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 03:43:02 am                                                #
-# Modified   : Tuesday October 24th 2023 05:17:39 pm                                               #
+# Modified   : Thursday October 26th 2023 03:28:39 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,9 +25,10 @@ import pandas as pd
 import cv2
 from dependency_injector.wiring import inject, Provide
 
-from bcd.manage_data.entity.image import Image, ImageFactory
+from bcd.core.image.entity import Image
+from bcd.core.image.factory import ImageFactory
 from bcd.preprocess.base import Preprocessor, Params, Stage
-from bcd.manage_data.repo.image import ImageRepo
+from bcd.core.image.repo import ImageRepo
 from bcd.container import BCDContainer
 
 
@@ -47,20 +48,21 @@ class Stage1(Stage):
 
 # ------------------------------------------------------------------------------------------------ #
 class Filter(Preprocessor):
-    __STAGE_ID = 1
+    MODULE = "bcd.preprocess.filter"
+    STAGE = Stage1()
 
     @inject
     def __init__(
         self,
         params: Params,
         task_id: str,
-        stage: Stage = Stage1(),
         image_repo: ImageRepo = Provide[BCDContainer.repo.image],
         image_factory: ImageFactory = Provide[BCDContainer.repo.factory],
     ) -> None:
         super().__init__(
             task_id=task_id,
-            stage=stage,
+            module=self.MODULE,
+            stage=self.STAGE,
             params=params,
             image_repo=image_repo,
             image_factory=image_factory,

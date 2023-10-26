@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Sunday October 22nd 2023 12:03:21 am                                                #
+# Modified   : Wednesday October 25th 2023 11:02:55 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ from typing import Union
 
 import pandas as pd
 
-from bcd.manage_data.structure.dataclass import DataClass
+from bcd.core.base import DataClass
 
 
 # ================================================================================================ #

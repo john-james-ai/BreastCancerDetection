@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.10                                                                             #
-# Filename   : /bcd/manage_data/structure/dataclass.py                                             #
+# Filename   : /bcd/core/base.py                                                                   #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Tuesday October 24th 2023 05:14:04 am                                               #
+# Modified   : Thursday October 26th 2023 03:36:19 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,13 +19,14 @@
 """Data Package Base Module"""
 from __future__ import annotations
 import string
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Callable
+import json
 
 import pandas as pd
 import numpy as np
-
 
 # ------------------------------------------------------------------------------------------------ #
 IMMUTABLE_TYPES: tuple = (
@@ -69,9 +70,24 @@ NUMERIC_TYPES = [
     float,
     complex,
 ]
+# ------------------------------------------------------------------------------------------------ #
+STAGES = {
+    0: "converted",
+    1: "denoise",
+    2: "enhance",
+    3: "artifact_removal",
+    4: "pectoral_removal",
+    5: "reshape",
+    6: "augment",
+}
 
 # ------------------------------------------------------------------------------------------------ #
 NON_NUMERIC_TYPES = ["category", "object"]
+
+
+# ------------------------------------------------------------------------------------------------ #
+class Application(ABC):
+    """base class for all application objects."""
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -145,3 +161,82 @@ class DataClass(ABC):
         """Returns the project in DataFrame format"""
         d = self.as_dict()
         return pd.DataFrame(data=d, index=[0])
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class Params(DataClass):
+    """Abstract base class for preprocessor parameters."""
+
+    def as_string(self) -> str:
+        d = self.as_dict()
+        return json.dumps(d)
+
+    @classmethod
+    def from_string(cls, params: str) -> Params:
+        d = json.loads(params)
+        return cls(**d)
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class Entity(DataClass):
+    id: str
+    name: str
+
+
+# ------------------------------------------------------------------------------------------------ #
+class Repo(ABC):
+    """Provides base class for all repositories classes.
+
+    Args:
+        name (str): Repository name. This will be the name of the underlying database table.
+        database(Database): Database containing data to access.
+    """
+
+    @abstractmethod
+    def add(self, entity: Entity) -> None:
+        """Adds an entity to the repository
+
+        Args:
+            entity (Entity): An entity object
+        """
+
+    @abstractmethod
+    def get(self, id: str) -> Entity:
+        """Gets an an entity by its identifier.
+
+        Args:
+            id (str): Entity identifier.
+        """
+
+    @abstractmethod
+    def exists(self, id: str) -> bool:
+        """Evaluates existence of an entity by identifier.
+
+        Args:
+            id (str): Entity UUID
+
+        Returns:
+            Boolean indicator of existence.
+        """
+
+    @abstractmethod
+    def count(self, condition: Callable = None) -> int:  # noqa
+        """Counts the entities matching the criteria. Counts all entities if id is None.
+
+        Args:
+            condition (Callable): A lambda expression used to subset the data.
+
+        Returns:
+            Integer number of rows matching criteria
+        """
+
+    @abstractmethod
+    def delete(self, id: str) -> None:
+        """Deletes the entity or entities matching condition.
+
+        Args:
+            id (str): Entity identifier.
+
+        """

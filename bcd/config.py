@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 04:01:35 pm                                             #
-# Modified   : Wednesday October 25th 2023 04:43:14 pm                                             #
+# Modified   : Thursday October 26th 2023 01:14:03 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,7 +21,7 @@ import os
 import logging
 from dotenv import load_dotenv
 
-from bcd.manage_data.io.file import IOService
+from bcd.infrastructure.io.file import IOService
 
 # ------------------------------------------------------------------------------------------------ #
 LOG_LEVELS = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]

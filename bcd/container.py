@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Wednesday October 25th 2023 04:36:02 pm                                             #
+# Modified   : Thursday October 26th 2023 01:31:58 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,13 +21,13 @@ import logging.config
 
 from dependency_injector import containers, providers
 
-from bcd.manage_data.database.mysql import MySQLDatabase
-from bcd.manage_data.database.config import DatabaseConfig
-from bcd.manage_data.repo.image import ImageRepo
+from bcd.infrastructure.database.mysql import MySQLDatabase
+from bcd.infrastructure.database.config import DatabaseConfig
+from bcd.core.image.repo import ImageRepo
 from bcd.config import Config
 
 # from bcd.manage_data.repo.task import TaskRepo
-from bcd.manage_data.entity.image import ImageFactory
+from bcd.core.image.factory import ImageFactory
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -71,4 +71,6 @@ class BCDContainer(containers.DeclarativeContainer):
 if __name__ == "__main__":
     container = BCDContainer()
     container.init_resources()
-    container.wire(packages=["bcd.manage_data.repo.image"])
+    container.wire(
+        packages=["bcd.core", "bcd.preprocess.convert", "bcd.preprocess.filter", "bcd.core"]
+    )

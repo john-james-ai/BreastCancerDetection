@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/manage_data/repo/image.py                                                      #
+# Filename   : /bcd/core/image/repo.py                                                             #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Wednesday October 25th 2023 06:40:48 pm                                             #
+# Modified   : Thursday October 26th 2023 01:12:59 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,9 +25,10 @@ import pymysql
 from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT, TINYINT, BIGINT
 
 from bcd.config import Config
-from bcd.manage_data.repo.base import Repo
-from bcd.manage_data.entity.image import Image, ImageFactory
-from bcd.manage_data.database.base import Database
+from bcd.core.base import Repo
+from bcd.core.image.entity import Image
+from bcd.core.image.factory import ImageFactory
+from bcd.infrastructure.database.base import Database
 
 # ------------------------------------------------------------------------------------------------ #
 IMAGE_DTYPES = {
@@ -70,12 +71,11 @@ class ImageRepo(Repo):
         self._database = database
         self._image_factory = image_factory
         self._config = config()
-        self._mode = self._config.get_mode()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     @property
     def mode(self) -> str:
-        return self._mode
+        return self._config.get_mode()
 
     def add(self, image: Image) -> None:
         """Adds an image to the repository
@@ -117,8 +117,6 @@ class ImageRepo(Repo):
             self._logger.exception(e)
             raise
         else:
-            # The images ids are extracted from the metadata before
-            # calling this method.
             if len(image_meta) == 0:  # pragma: no cover
                 msg = f"Image id {id} does not exist."
                 self._logger.exception(msg)
@@ -151,11 +149,11 @@ class ImageRepo(Repo):
         images = {}
 
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
-        params = {"mode": self._mode, "stage_id": stage_id}
+        params = {"mode": self.mode, "stage_id": stage_id}
         image_meta = self._database.query(query=query, params=params)
 
         if len(image_meta) == 0:
-            msg = f"No images exist for Stage {stage_id} in {self._mode} mode."
+            msg = f"No images exist for Stage {stage_id} in {self.mode} mode."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
@@ -203,11 +201,11 @@ class ImageRepo(Repo):
         images = {}
 
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
-        params = {"mode": self._mode}
+        params = {"mode": self.mode}
         image_meta = self._database.query(query=query, params=params)
 
         if len(image_meta) == 0:
-            msg = f"No images exist in {self._mode} mode."
+            msg = f"No images exist in {self.mode} mode."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
@@ -249,7 +247,7 @@ class ImageRepo(Repo):
         query = (
             f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND preprocessor = :preprocessor;"
         )
-        params = {"mode": self._mode, "preprocessor": preprocessor}
+        params = {"mode": self.mode, "preprocessor": preprocessor}
         image_meta = self._database.query(query=query, params=params)
 
         if n is not None:
@@ -258,7 +256,7 @@ class ImageRepo(Repo):
             image_meta = image_meta.sample(frac=frac, random_state=random_state)
 
         if len(image_meta) == 0:
-            msg = f"No images exist for the {preprocessor} preprocessor in {self._mode} mode."
+            msg = f"No images exist for the {preprocessor} preprocessor in {self.mode} mode."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
@@ -315,7 +313,7 @@ class ImageRepo(Repo):
             Integer count of images matching condition.
         """
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
-        params = {"mode": self._mode}
+        params = {"mode": self.mode}
         try:
             image_meta = self._database.query(query=query, params=params)
 
@@ -347,11 +345,11 @@ class ImageRepo(Repo):
         """
         if self._delete_permitted(stage_id=stage_id):
             query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode and stage_id = :stage_id;"
-            params = {"mode": self._mode, "stage_id": stage_id}
+            params = {"mode": self.mode, "stage_id": stage_id}
             image_meta = self._database.query(query=query, params=params)
 
             if len(image_meta) == 0:
-                msg = f"No images exist for stage {stage_id} in {self._mode} mode."
+                msg = f"No images exist for stage {stage_id} in {self.mode} mode."
                 self._logger.exception(msg)
                 raise FileNotFoundError(msg)
 
@@ -371,11 +369,11 @@ class ImageRepo(Repo):
         query = (
             f"SELECT * FROM {self.__tablename} WHERE mode = :mode and preprocessor = :preprocessor;"
         )
-        params = {"mode": self._mode, "preprocessor": preprocessor}
+        params = {"mode": self.mode, "preprocessor": preprocessor}
         image_meta = self._database.query(query=query, params=params)
 
         if len(image_meta) == 0:
-            msg = f"No images exist for {preprocessor} preprocessor in {self._mode} mode."
+            msg = f"No images exist for {preprocessor} preprocessor in {self.mode} mode."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
@@ -386,11 +384,11 @@ class ImageRepo(Repo):
         """Removes images for a current mode."""
 
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
-        params = {"mode": self._mode}
+        params = {"mode": self.mode}
         image_meta = self._database.query(query=query, params=params)
 
         if len(image_meta) == 0:
-            msg = f"No images exist in {self._mode} mode."
+            msg = f"No images exist in {self.mode} mode."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 

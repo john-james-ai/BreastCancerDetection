@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_manage_data/test_entity/test_image_factory.py                           #
+# Filename   : /tests/test_manage_data/test_io/test_image_io.py                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday October 21st 2023 02:14:19 pm                                              #
-# Modified   : Wednesday October 25th 2023 05:21:11 pm                                             #
+# Created    : Saturday October 21st 2023 01:30:49 pm                                              #
+# Modified   : Thursday October 26th 2023 01:13:12 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,30 +21,28 @@ import inspect
 from datetime import datetime
 import pytest
 import logging
-import math
 
-import pandas as pd
+import numpy as np
+from bcd.infrastructure.io.image import ImageIO
 
-from bcd.manage_data.entity.image import Image
-from bcd.manage_data.io.image import ImageIO
 
-DICOM_FP = "data/meta/2_clean/dicom.csv"
-CASE_ID = "Calcification-Test_P_01030_RIGHT_MLO_2"
-PREPROCESSOR = "TestCaseFactory"
-PREPROCESSOR2 = "TestCaseFactory2"
-TASK_ID = "some_task_id"
-TASK_ID2 = "some_task_id2"
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
+FP_IN = "tests/data/raw/Calc-Test_P_00038_LEFT_CC_1/08-29-2017-DDSM-94942/1.000000-ROI mask images-18515/1-1.dcm"
+FP_OUT = "tests/data/image/io/test_image.png"
+CASE_ID = "Calcification-Train_P_00005_RIGHT_CC_1"
+STATE = "test"
+FORMAT = "png"
 
-@pytest.mark.image_factory
-class TestImageFactory:  # pragma: no cover
+
+@pytest.mark.imageio
+class TestImageIO:  # pragma: no cover
     # ============================================================================================ #
-    def test_creation(self, container, caplog):
+    def test_read_dcm(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -56,59 +54,9 @@ class TestImageFactory:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        factory = container.repo.factory()
-        df = pd.read_csv(DICOM_FP)
-        df = df.loc[df["case_id"] == CASE_ID]
         io = ImageIO()
-        pixel_data = io.read(df["filepath"])
-
-        image = factory.create(
-            case_id=CASE_ID,
-            stage_id=0,
-            pixel_data=pixel_data,
-            preprocessor=PREPROCESSOR,
-            task_id=TASK_ID,
-        )
-        logger.debug(image)
-
-        assert isinstance(image, Image)
-        assert image.id != df["id"].values[0]
-        assert image.case_id == df["case_id"].values[0]
-        assert image.cancer == df["cancer"].values[0]
-        assert image.bit_depth == df["bit_depth"].values[0]
-        assert image.height == df["height"].values[0]
-        assert image.width == df["width"].values[0]
-        assert image.size == df["size"].values[0]
-        assert math.isclose(image.aspect_ratio, df["aspect_ratio"].values[0], rel_tol=1e-05)
-        assert image.min_pixel_value == df["min_pixel_value"].values[0]
-        assert image.max_pixel_value == df["max_pixel_value"].values[0]
-        assert image.range_pixel_values == df["range_pixel_values"].values[0]
-        assert image.mean_pixel_value == df["mean_pixel_value"].values[0]
-        assert image.median_pixel_value == df["median_pixel_value"].values[0]
-        assert math.isclose(image.std_pixel_value, df["std_pixel_value"].values[0], rel_tol=1e-5)
-        assert image.filepath != df["filepath"].values[0]
-        assert image.fileset == df["fileset"].values[0]
-        assert image.mode == "test"
-        assert image.stage_id == 0
-        assert image.stage == "converted"
-        assert image.preprocessor == PREPROCESSOR
-        assert image.task_id == TASK_ID
-
-        assert os.path.exists(image.filepath)
-
-        # Test From DF
-        image2 = image.as_df()
-        image2 = factory.from_df(df=image2)
-        assert isinstance(image2, Image)
-
-        logger.debug(image2)
-        logger.debug(f"Shape image: {image.pixel_data.shape}")
-        logger.debug(f"Shape image2: {image2.pixel_data.shape}")
-
-        assert image == image2
-
-        os.remove(image.filepath)
-
+        img = io.read(FP_IN)
+        assert isinstance(img, np.ndarray)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -125,7 +73,7 @@ class TestImageFactory:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_exception(self, container, caplog):
+    def test_write(self, caplog):
         start = datetime.now()
         logger.info(
             "\n\nStarted {} {} at {} on {}".format(
@@ -137,21 +85,79 @@ class TestImageFactory:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        factory = container.repo.factory()
-        df = pd.read_csv(DICOM_FP)
-        df = df.loc[df["case_id"] == CASE_ID]
         io = ImageIO()
-        pixel_data = io.read(df["filepath"])
+        img = io.read(FP_IN)
+        io.write(pixel_data=img, filepath=FP_OUT)
+        assert os.path.exists(FP_OUT)
+
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
+                self.__class__.__name__,
+                inspect.stack()[0][3],
+                duration,
+                end.strftime("%I:%M:%S %p"),
+                end.strftime("%m/%d/%Y"),
+            )
+        )
+        logger.info(single_line)
+
+    # ============================================================================================ #
+    def test_read_png(self, caplog):
+        start = datetime.now()
+        logger.info(
+            "\n\nStarted {} {} at {} on {}".format(
+                self.__class__.__name__,
+                inspect.stack()[0][3],
+                start.strftime("%I:%M:%S %p"),
+                start.strftime("%m/%d/%Y"),
+            )
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        io = ImageIO()
+        img = io.read(filepath=FP_OUT)
+        assert isinstance(img, np.ndarray)
+
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
+                self.__class__.__name__,
+                inspect.stack()[0][3],
+                duration,
+                end.strftime("%I:%M:%S %p"),
+                end.strftime("%m/%d/%Y"),
+            )
+        )
+        logger.info(single_line)
+
+    # ============================================================================================ #
+    def test_get_filepath(self, caplog):
+        start = datetime.now()
+        logger.info(
+            "\n\nStarted {} {} at {} on {}".format(
+                self.__class__.__name__,
+                inspect.stack()[0][3],
+                start.strftime("%I:%M:%S %p"),
+                start.strftime("%m/%d/%Y"),
+            )
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        io = ImageIO()
+        fp = io.get_filepath(id, format=FORMAT)
+        filename = CASE_ID + "." + FORMAT
+        fp_exp = os.path.join("data/image/1_dev", filename)
+        assert fp == fp_exp
 
         with pytest.raises(ValueError):
-            _ = factory.create(
-                case_id=CASE_ID,
-                pixel_data=pixel_data,
-                stage_id=99,
-                preprocessor=PREPROCESSOR,
-                task_id=TASK_ID,
-            )
-
+            io.get_filepath(state="invalid", case_id=CASE_ID, format=FORMAT)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/manage_data/repo/task.py                                                       #
+# Filename   : /bcd/core/task/repo.py                                                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday October 23rd 2023 11:32:54 pm                                                #
+# Modified   : Thursday October 26th 2023 01:12:51 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,26 +21,27 @@ from typing import Callable
 
 import pandas as pd
 import pymysql
-from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT, TINYINT, JSON
+from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT
 
-from bcd.manage_data.repo.base import Repo
-from bcd.preprocess.base import Task
-from bcd.manage_data.database.base import Database
+from bcd.config import Config
+from bcd.core.base import Repo
+from bcd.core.task.entity import Task
+from bcd.infrastructure.database.base import Database
 
 # ------------------------------------------------------------------------------------------------ #
 TASK_DTYPES = {
-    "id": VARCHAR(length=64),
-    "task": VARCHAR(length=64),
-    "mode": VARCHAR(length=8),
-    "stage_id": TINYINT(),
+    "id": VARCHAR(64),
+    "name": VARCHAR(64),
+    "mode": VARCHAR(8),
+    "stage_id": INTEGER(),
     "stage": VARCHAR(length=64),
     "started": DATETIME(),
     "ended": DATETIME(),
     "duration": FLOAT(),
-    "tasks_processed": INTEGER(),
-    "task_processing_time": FLOAT(),
-    "success": TINYINT(),
-    "params": JSON(),
+    "images_processed": INTEGER(),
+    "image_processing_time": FLOAT(),
+    "params": VARCHAR(128),
+    "state": VARCHAR(16),
 }
 
 
@@ -48,14 +49,15 @@ TASK_DTYPES = {
 class TaskRepo(Repo):
     __tablename = "task"
 
-    def __init__(self, database: Database) -> None:
+    def __init__(self, database: Database, config: Config) -> None:
         super().__init__()
         self._database = database
+        self._config = config()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     @property
-    def database(self) -> Database:
-        return self._database
+    def mode(self) -> str:
+        return self._config.get_mode()
 
     def add(self, task: Task) -> None:
         """Adds a task to the repository
@@ -81,24 +83,46 @@ class TaskRepo(Repo):
                     if_exists="append",
                 )
 
-    def get(self, condition: Callable = None) -> pd.DataFrame:
-        """Returns task runs matching the condition.
+    def get(self, id: str) -> Task:
+        """Obtains a task by identifier.
 
         Args:
-            condition (Callable): A lambda expression used to subset the data. If None,
-            all tasks will be returned.
+            id (str): Task id
 
         Returns:
-            DataFrame containing the tasks meeting the condition.
+            Task object.
         """
+        query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
+        params = {"id": id}
+        try:
+            task = self._database.query(query=query, params=params)
+        except Exception as e:  # pragma: no cover
+            self._logger.exception(e)
+            raise
+        else:
+            if len(task) == 0:
+                msg = f"Task {id} does not exist."
+                self._logger.exception(msg)
+                raise FileNotFoundError(msg)
+            return Task.from_df(df=task)
 
-        query = f"SELECT * FROM {self.__tablename};"
-        params = None
-        task = self._database.query(query=query, params=params)
+    def get_by_stage(self, stage_id: int) -> pd.DataFrame:
+        """Returns all task for a given stage."""
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
+        params = {"mode": self.mode, "stage_id": stage_id}
+        return self._database.query(query=query, params=params)
 
-        if condition is not None:
-            task = task[condition]
-        return task
+    def get_by_mode(self) -> pd.DataFrame:
+        """Returns all task for current mode."""
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
+        params = {"mode": self.mode}
+        return self._database.query(query=query, params=params)
+
+    def get_by_name(self, name: str) -> pd.DataFrame:
+        """Returns all task for a given name."""
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND name = :name;"
+        params = {"mode": self.mode, "name": name}
+        return self._database.query(query=query, params=params)
 
     def exists(self, id: str) -> bool:
         """Evaluates existence of a task by identifier.
@@ -141,18 +165,45 @@ class TaskRepo(Repo):
                 task = task[condition]
             return len(task)
 
-    def delete(self, condition: Callable) -> None:
-        """Removes tasks matching the condition.
+    def delete(self, id: str) -> None:
+        """Removes a task given the id.
 
         Args:
-            condition (Callable): Lambda expression subsetting the data.
+            id (str): Task UUID
         """
-        query = f"SELECT * FROM {self.__tablename}"
-        params = None
-        task = self._database.query(query=query, params=params)
-        task = task[condition]
-        ids = tuple(task["id"])
+        query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
+        params = {"id": id}
+        self._database.delete(query=query, params=params)
 
-        query = f"DELETE FROM {self.__tablename} WHERE id IN {ids}"
-        params = None
-        self._database.execute(query=query, params=params)
+    def delete_by_name(self, name: str) -> None:
+        """Deletes all tasks with the specified name
+
+        Args:
+            name (str): Name of the task.
+
+        """
+        query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND name = :name;"
+        params = {"mode": self.mode, "name": name}
+        self._database.delete(query=query, params=params)
+
+    def delete_by_stage(self, stage_id: int) -> None:
+        """Deletes all tasks with the stage_id
+
+        Args:
+            stage_id (int): Stage id
+
+        """
+        query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
+        params = {"mode": self.mode, "stage_id": stage_id}
+        self._database.delete(query=query, params=params)
+
+    def delete_by_mode(self) -> None:
+        """Deletes all tasks with the stage_id
+
+        Args:
+            stage_id (int): Stage id
+
+        """
+        query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"
+        params = {"mode": self.mode}
+        self._database.delete(query=query, params=params)
