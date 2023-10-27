@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_data/test_dicom/test_dicom_dqa.py                                       #
+# Filename   : /tests/test_analyze/test_quality/test_dicom_dqa.py                                  #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Saturday October 21st 2023 09:50:32 am                                              #
+# Modified   : Thursday October 26th 2023 08:07:06 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -40,14 +40,7 @@ class TestDicomDQA:  # pragma: no cover
     # ============================================================================================ #
     def test_completeness(self, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         dqa = DicomDQA(filepath=DICOM_FP)
@@ -87,14 +80,7 @@ class TestDicomDQA:  # pragma: no cover
     # ============================================================================================ #
     def test_unique(self, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         dqa = DicomDQA(filepath=DICOM_FP)
@@ -113,28 +99,13 @@ class TestDicomDQA:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
     def test_validity(self, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         dqa = DicomDQA(filepath=DICOM_FP)
@@ -153,13 +124,5 @@ class TestDicomDQA:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)

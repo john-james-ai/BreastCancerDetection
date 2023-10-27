@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.11                                                                             #
-# Filename   : /bcd/manage_data/database/mysql.py                                                  #
+# Filename   : /bcd/infrastructure/database/mysql.py                                               #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday April 10th 2023 09:50:40 pm                                                  #
-# Modified   : Monday October 23rd 2023 03:14:54 am                                                #
+# Modified   : Thursday October 26th 2023 03:33:15 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,8 +26,8 @@ import sqlalchemy
 import subprocess
 from time import sleep
 
-from .base import Database
-from .config import DatabaseConfig
+from bcd.infrastructure.database.base import Database
+from bcd.config import Config
 
 # ------------------------------------------------------------------------------------------------ #
 load_dotenv()
@@ -40,7 +40,7 @@ class MySQLDatabase(Database):
         name (str): Name of database
     """
 
-    def __init__(self, config: DatabaseConfig) -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__()
         self._config = config()
         self._name = self._config.name

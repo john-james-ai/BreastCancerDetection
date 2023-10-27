@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 01:56:06 am                                                #
-# Modified   : Wednesday October 25th 2023 07:14:17 pm                                             #
+# Modified   : Thursday October 26th 2023 09:12:47 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -43,25 +43,18 @@ class TestFilter:  # pragma: no cover
     # ============================================================================================ #
     def test_setup(self, case_ids, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         # Delete Existing Filter Images
         repo = container.repo.image()
         try:
-            repo.delete_by_stage(stage_id=1)
+            repo.delete_by_stage(uid=1)
         except Exception:
             pass
 
         # Add Stage 0 Images
-        condition = lambda df: df["stage_id"] == 0
+        condition = lambda df: df["stage_uid"] == 0
         count = repo.count(condition=condition)
         if count == 0:
             params = ImageConverterParams(frac=FRAC_IMAGES)
@@ -72,39 +65,24 @@ class TestFilter:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
     def test_mean_filter(self, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # --------------------------------------------------------------------------------------- #
         repo = container.repo.image()
         filter = MeanFilter(params=PARAMS, task_id=FILTER_TASK_ID)
-        assert filter.stage_id == STAGE
+        assert filter.stage_uid == STAGE
         assert filter.name == "MeanFilter"
         assert filter.task_id == FILTER_TASK_ID
 
         filter.execute()
         assert filter.images_processed == NUM_IMAGES
-        condition = lambda df: df["stage_id"] == 1
+        condition = lambda df: df["stage_uid"] == 1
         assert repo.count(condition) == 15
         condition = lambda df: df["preprocessor"] == "MeanFilter"
         assert repo.count(condition) == 15
@@ -127,25 +105,18 @@ class TestFilter:  # pragma: no cover
     # ============================================================================================ #
     def test_median_filter(self, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # --------------------------------------------------------------------------------------- #
         repo = container.repo.image()
         filter = MedianFilter(params=PARAMS, task_id=FILTER_TASK_ID)
-        assert filter.stage_id == STAGE
+        assert filter.stage_uid == STAGE
         assert filter.name == "MedianFilter"
         assert filter.task_id == FILTER_TASK_ID
 
         filter.execute()
         assert filter.images_processed == NUM_IMAGES
-        condition = lambda df: df["stage_id"] == 1
+        condition = lambda df: df["stage_uid"] == 1
         assert repo.count(condition) == 30
         condition = lambda df: df["preprocessor"] == "MedianFilter"
         assert repo.count(condition) == 15
@@ -168,25 +139,18 @@ class TestFilter:  # pragma: no cover
     # ============================================================================================ #
     def test_gaussian_filter(self, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # --------------------------------------------------------------------------------------- #
         repo = container.repo.image()
         filter = GaussianFilter(params=PARAMS, task_id=FILTER_TASK_ID)
-        assert filter.stage_id == STAGE
+        assert filter.stage_uid == STAGE
         assert filter.name == "GaussianFilter"
         assert filter.task_id == FILTER_TASK_ID
 
         filter.execute()
         assert filter.images_processed == NUM_IMAGES
-        condition = lambda df: df["stage_id"] == 1
+        condition = lambda df: df["stage_uid"] == 1
         assert repo.count(condition) == 45
         condition = lambda df: df["preprocessor"] == "GaussianFilter"
         assert repo.count(condition) == 15
@@ -209,30 +173,15 @@ class TestFilter:  # pragma: no cover
     # ============================================================================================ #
     def test_teardown(self, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
-        repo.delete_by_stage(stage_id=1)
+        repo.delete_by_stage(uid=1)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)

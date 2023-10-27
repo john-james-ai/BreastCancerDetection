@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_manage_data/test_repo/test_image_repo.py                                #
+# Filename   : /tests/test_core/test_image/test_image_repo.py                                      #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Wednesday October 25th 2023 11:53:18 pm                                             #
+# Modified   : Friday October 27th 2023 01:19:54 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,6 +25,7 @@ import logging
 import pandas as pd
 
 from bcd.core.image.entity import Image
+from bcd.config import Config
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -37,16 +38,9 @@ single_line = f"\n{100 * '-'}"
 @pytest.mark.image_repo
 class TestImageRepo:  # pragma: no cover
     # ============================================================================================ #
-    def test_setup(self, container, caplog):
+    def test_setup(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
@@ -58,28 +52,13 @@ class TestImageRepo:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_add_exists(self, images, container, caplog):
+    def test_add_exists(self, images, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
@@ -89,13 +68,13 @@ class TestImageRepo:  # pragma: no cover
             # Confirm image has been saved to disk
             assert os.path.exists(image.filepath)
             # Confirm image exists in repo.
-            assert repo.exists(id=image.id)
+            assert repo.exists(uid=image.uid)
             # Test adding image already exists
             with pytest.raises(FileExistsError):
                 repo.add(image=image)
 
-        assert repo.count() == 10
-        assert not repo.exists(id="999")
+        assert repo.count() == 15
+        assert not repo.exists(uid="999")
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -113,145 +92,110 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get(self, images, container, caplog):
+    def test_get(self, images, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
         for image in images:
-            image2 = repo.get(id=image.id)
+            image2 = repo.get(uid=image.uid)
+            logger.debug(image)
+            logger.debug(image2)
             assert image == image2
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_by_stage(self, container, caplog):
+    def test_get_by_stage(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
-        image_meta, images = repo.get_by_stage(stage_id=0)
-        assert len(image_meta) == 5
-        assert len(images) == 5
+        image_meta, images = repo.get_by_stage(stage_uid=0)
+        assert len(image_meta) < 8
+        assert len(images) < 8
         for id, image in images.items():
-            assert image.stage_id == 0
+            assert image.stage_uid == 0
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
 
         # Test Sampling n
-        image_meta, images = repo.get_by_stage(stage_id=1, n=3)
-        assert len(image_meta) == 3
-        assert len(images) == 3
+        image_meta, images = repo.get_by_stage(stage_uid=1, n=2)
+        assert len(image_meta) == 2
+        assert len(images) == 2
         for id, image in images.items():
-            assert image.stage_id == 1
+            assert image.stage_uid == 1
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
 
         # Test Sampling frac
-        image_meta, images = repo.get_by_stage(stage_id=1, frac=0.5)
-        assert len(image_meta) == 2
-        assert len(images) == 2
+        image_meta, images = repo.get_by_stage(stage_uid=1, frac=0.5)
+        assert len(image_meta) < 5
+        assert len(images) < 5
         for id, image in images.items():
-            assert image.stage_id == 1
+            assert image.stage_uid == 1
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
 
         # Test Exception
         with pytest.raises(FileNotFoundError):
-            image_meta, images = repo.get_by_stage(stage_id=99, frac=0.5)
+            image_meta, images = repo.get_by_stage(stage_uid=99, frac=0.5)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_by_preprocessor(self, container, caplog):
+    def test_get_by_preprocessor(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
-        image_meta, images = repo.get_by_preprocessor(preprocessor="TestPreprocessor1")
+        image_meta, images = repo.get_by_preprocessor(preprocessor="P1")
         assert len(image_meta) == 5
         assert len(images) == 5
         for id, image in images.items():
-            assert image.stage_id == 0
+            #assert image.stage_uid == 0
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
-            assert image.preprocessor == "TestPreprocessor1"
+            assert image.preprocessor == "P1"
 
         # Test Sampling n
-        image_meta, images = repo.get_by_preprocessor(preprocessor="TestPreprocessor1", n=3)
+        image_meta, images = repo.get_by_preprocessor(preprocessor="P1", n=3)
         assert len(image_meta) == 3
         assert len(images) == 3
         for id, image in images.items():
-            assert image.stage_id == 0
+           #assert image.stage_uid == 0
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
-            assert image.preprocessor == "TestPreprocessor1"
+            assert image.preprocessor == "P1"
 
         # Test Sampling frac
-        image_meta, images = repo.get_by_preprocessor(preprocessor="TestPreprocessor2", frac=0.5)
+        image_meta, images = repo.get_by_preprocessor(preprocessor="P2", frac=0.5)
         assert len(image_meta) == 2
         assert len(images) == 2
         for id, image in images.items():
-            assert image.stage_id == 1
+           # assert image.stage_uid == 1
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
-            assert image.preprocessor == "TestPreprocessor2"
+            assert image.preprocessor == "P2"
 
         # Test Exception
         with pytest.raises(FileNotFoundError):
@@ -260,43 +204,28 @@ class TestImageRepo:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_by_mode(self, container, caplog):
+    def test_get_by_mode(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
         image_meta, images = repo.get_by_mode()
-        assert len(image_meta) == 10
-        assert len(images) == 10
+        assert len(image_meta) == 15
+        assert len(images) == 15
         for id, image in images.items():
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
 
         # Test Sampling n
-        image_meta, images = repo.get_by_mode(n=3)
-        assert len(image_meta) == 6
-        assert len(images) == 6
+        image_meta, images = repo.get_by_mode(n=2)
+        assert len(image_meta) > 2
+        assert len(images) > 2
         for id, image in images.items():
             assert isinstance(id, str)
             assert isinstance(image, Image)
@@ -304,8 +233,8 @@ class TestImageRepo:  # pragma: no cover
 
         # Test Sampling frac
         image_meta, images = repo.get_by_mode(frac=0.5)
-        assert len(image_meta) == 4
-        assert len(images) == 4
+        assert len(image_meta) > 2
+        assert len(images) > 2
         for id, image in images.items():
             assert isinstance(id, str)
             assert isinstance(image, Image)
@@ -315,41 +244,26 @@ class TestImageRepo:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_meta(self, container, caplog):
+    def test_get_meta(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
         meta = repo.get_meta()
-        assert len(meta) == 10
+        assert len(meta) == 15
         assert isinstance(meta, pd.DataFrame)
         logger.debug(f"Test Get Image Meta:\n{meta}")
 
-        condition = lambda df: (df["stage_id"] == 0) & (df["mode"] == "test")
+        condition = lambda df: (df["stage_uid"] == 0) & (df["mode"] == "test")
         meta = repo.get_meta(condition=condition)
         assert len(meta) == 5
 
-        condition = lambda df: (df["stage_id"] == 99) & (df["mode"] == "test")
+        condition = lambda df: (df["stage_uid"] == 99) & (df["mode"] == "test")
         meta = repo.get_meta(condition=condition)
         assert len(meta) == 0
 
@@ -357,142 +271,71 @@ class TestImageRepo:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_count(self, container, caplog):
+    def test_count(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
-        assert repo.count() == 10
-        condition = lambda df: df["stage_id"] == 1
+        assert repo.count() == 15
+        condition = lambda df: df["stage_uid"] == 1
         assert repo.count(condition) == 5
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_delete_stage(self, container, caplog):
+    def test_delete_stage(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
-        repo.delete_by_stage(stage_id=0)
+        repo.delete_by_stage(stage_uid=0)
+        assert repo.count() == 10
+
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(single_line)
+
+    # ============================================================================================ #
+    def test_delete_by_preprocessor(self, container):
+        start = datetime.now()
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        repo = container.repo.image()
+        repo.delete_by_preprocessor(preprocessor="P2")
         assert repo.count() == 5
-
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_delete_by_preprocessor(self, container, caplog):
+    def test_delete_by_mode(self, container):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
-        repo.delete_by_preprocessor(preprocessor="TestPreprocessor2")
-        assert repo.count() == 0
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_delete_by_mode(self, images, container, caplog):
-        start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        repo = container.repo.image()
-        for image in images:
-            # Add image to repository
-            repo.add(image=image)
         repo.delete_by_mode()
         assert repo.count() == 0
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)

@@ -11,17 +11,20 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 03:43:02 am                                                #
-# Modified   : Thursday October 26th 2023 12:35:30 pm                                              #
+# Modified   : Thursday October 26th 2023 09:12:47 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Converts DICOM Data to PNG Format"""
+from __future__ import annotations
 from abc import abstractmethod
 from dataclasses import dataclass
+import math
 
 from tqdm import tqdm
 import pandas as pd
+import numpy as np
 import cv2
 from dependency_injector.wiring import inject, Provide
 
@@ -30,20 +33,49 @@ from bcd.core.image.entity import Image
 from bcd.core.image.factory import ImageFactory
 from bcd.preprocess.base import Preprocessor, Params
 from bcd.core.image.repo import ImageRepo
-from bcd.core.task.entity import Task
+from bcd.core.task.base import Task
 from bcd.container import BCDContainer
 
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class FilterParams(Params):
-    kernel: int = 5
+    """Kernel Size Parameter
+
+    For mean and median filters, valid values are in [3,5,7]. For the Gaussian Filter, we also
+    have the 'auto' value or None, which automatically computes the kernel size (s) as:
+
+        s = ceil(3 * sigma) + 1
+        where: sigma is the standard deviation of the pixel values in the image.
+
+    """
+
+    kernel: int = 3
+
+
+# ------------------------------------------------------------------------------------------------ #
+class FilterParamsSet:
+    def __init__(self, kernels: np.ndarray) -> None:
+        self._kernels = kernels
+
+    def get_params(self, kernels: np.ndarray) -> list[FilterParams]:
+        params = []
+        for kernel in self._kernels:
+            param = FilterParams(kernel=kernel)
+            params.append(param)
+        return params
+
+
+# ------------------------------------------------------------------------------------------------ #
+class FilterCommand:
+    param_set: FilterParamsSet
+    application: Filter
 
 
 # ------------------------------------------------------------------------------------------------ #
 class Filter(Preprocessor):
     MODULE = "bcd.preprocess.filter"
-    STAGE = Stage(id=1)
+    STAGE = Stage(uid=1)
 
     @inject
     def __init__(
@@ -72,7 +104,7 @@ class Filter(Preprocessor):
         """Obtains the original images from the repository."""
 
         # Extract stage 0 images from repository
-        condition = lambda df: df["stage_id"] == 0  # noqa
+        condition = lambda df: df["stage_uid"] == 0  # noqa
         return self._image_repo.get_meta(condition=condition)
 
     def process_images(self, image_metadata: pd.DataFrame) -> None:
@@ -82,7 +114,7 @@ class Filter(Preprocessor):
             images (list): List of Image objects.
         """
         for _, image in tqdm(image_metadata.iterrows(), total=image_metadata.shape[0]):
-            image = self.read_image(id=image_metadata["id"].values[0])
+            image = self.read_image(uid=image_metadata["uid"].values[0])
             image = self.process_image(image)
             self.save_image(image=image)
             self._images_processed += 1
@@ -133,8 +165,13 @@ class GaussianFilter(Filter):
         self._kernel = params.kernel
 
     def process_image(self, image: Image) -> Image:
+        self._compute_kernel(image=image.pixel_data)
         pixel_data = cv2.GaussianBlur(image.pixel_data, (self._kernel, self._kernel), 0)
         return self.create_image(case_id=image.case_id, pixel_data=pixel_data)
+
+    def _compute_kernel(self, image: np.ndarray) -> int:
+        if self.kernel == "auto" or self.kernel is None:
+            self.kernel = math.ceil(3 * np.std(image, axis=None)) + 1
 
 
 # ------------------------------------------------------------------------------------------------ #

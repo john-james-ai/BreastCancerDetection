@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Thursday October 26th 2023 01:08:16 pm                                              #
+# Modified   : Thursday October 26th 2023 09:09:17 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,15 +25,15 @@ from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT
 
 from bcd.config import Config
 from bcd.core.base import Repo
-from bcd.core.task.entity import Task
+from bcd.core.task.base import Task
 from bcd.infrastructure.database.base import Database
 
 # ------------------------------------------------------------------------------------------------ #
 TASK_DTYPES = {
-    "id": VARCHAR(64),
+    "uid": VARCHAR(64),
     "name": VARCHAR(64),
     "mode": VARCHAR(8),
-    "stage_id": INTEGER(),
+    "stage_uid": INTEGER(),
     "stage": VARCHAR(length=64),
     "started": DATETIME(),
     "ended": DATETIME(),
@@ -57,7 +57,7 @@ class TaskRepo(Repo):
 
     @property
     def mode(self) -> str:
-        return self._config.get_mode()
+        return self._config.mode
 
     def add(self, task: Task) -> None:
         """Adds a task to the repository
@@ -67,7 +67,7 @@ class TaskRepo(Repo):
 
         """
         try:
-            exists = self.exists(id=task.id)
+            exists = self.exists(uid=task.id)
         except Exception:  # pragma: no cover
             exists = False
         finally:
@@ -83,7 +83,7 @@ class TaskRepo(Repo):
                     if_exists="append",
                 )
 
-    def get(self, id: str) -> Task:
+    def get(self, uid: str) -> Task:
         """Obtains a task by identifier.
 
         Args:
@@ -93,7 +93,7 @@ class TaskRepo(Repo):
             Task object.
         """
         query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
-        params = {"id": id}
+        params = {"uid": id}
         try:
             task = self._database.query(query=query, params=params)
         except Exception as e:  # pragma: no cover
@@ -101,7 +101,7 @@ class TaskRepo(Repo):
             raise
         else:
             if len(task) == 0:
-                msg = f"Task {id} does not exist."
+                msg = f"Task {uid} does not exist."
                 self._logger.exception(msg)
                 raise FileNotFoundError(msg)
             class_ = Task.get_class(
@@ -109,13 +109,13 @@ class TaskRepo(Repo):
             )
             return class_.from_df(df=task)
 
-    def get_by_stage(self, stage_id: int) -> pd.DataFrame:
+    def get_by_stage(self, stage_uid: int) -> pd.DataFrame:
         """Returns all task for a given stage."""
-        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
-        params = {"mode": self.mode, "stage_id": stage_id}
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_uid = :stage_uid;"
+        params = {"mode": self.mode, "stage_uid": stage_uid}
         tasks = self._database.query(query=query, params=params)
         if len(tasks) == 0:
-            msg = f"No Tasks exist for Stage{stage_id}."
+            msg = f"No Tasks exist for Stage{stage_uid}."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
         return tasks
@@ -142,7 +142,7 @@ class TaskRepo(Repo):
             raise FileNotFoundError(msg)
         return tasks
 
-    def exists(self, id: str) -> bool:
+    def exists(self, uid: str) -> bool:
         """Evaluates existence of a task by identifier.
 
         Args:
@@ -152,7 +152,7 @@ class TaskRepo(Repo):
             Boolean indicator of existence.
         """
         query = f"SELECT EXISTS(SELECT 1 FROM {self.__tablename} WHERE id = :id);"
-        params = {"id": id}
+        params = {"uid": id}
         try:
             exists = self._database.exists(query=query, params=params)
         except pymysql.Error as e:  # pragma: no cover
@@ -183,14 +183,14 @@ class TaskRepo(Repo):
                 task = task[condition]
             return len(task)
 
-    def delete(self, id: str) -> None:
+    def delete(self, uid: str) -> None:
         """Removes a task given the id.
 
         Args:
             id (str): Task UUID
         """
         query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
-        params = {"id": id}
+        params = {"uid": id}
         self._database.delete(query=query, params=params)
 
     def delete_by_name(self, name: str) -> None:
@@ -204,22 +204,22 @@ class TaskRepo(Repo):
         params = {"mode": self.mode, "name": name}
         self._database.delete(query=query, params=params)
 
-    def delete_by_stage(self, stage_id: int) -> None:
-        """Deletes all tasks with the stage_id
+    def delete_by_stage(self, stage_uid: int) -> None:
+        """Deletes all tasks with the stage_uid
 
         Args:
-            stage_id (int): Stage id
+            stage_uid (int): Stage id
 
         """
-        query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
-        params = {"mode": self.mode, "stage_id": stage_id}
+        query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND stage_uid = :stage_uid;"
+        params = {"mode": self.mode, "stage_uid": stage_uid}
         self._database.delete(query=query, params=params)
 
     def delete_by_mode(self) -> None:
-        """Deletes all tasks with the stage_id
+        """Deletes all tasks with the stage_uid
 
         Args:
-            stage_id (int): Stage id
+            stage_uid (int): Stage id
 
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"
@@ -231,3 +231,7 @@ class TaskRepo(Repo):
         query = f"DELETE FROM {self.__tablename};"
         params = None
         self._database.delete(query=query, params=params)
+
+    def save(self) -> None:
+        """Commits changes to the database, and saves cache to file."""
+        self._database.commit()

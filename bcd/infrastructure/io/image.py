@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/manage_data/io/image.py                                                        #
+# Filename   : /bcd/infrastructure/io/image.py                                                     #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Wednesday October 25th 2023 04:55:00 pm                                             #
+# Modified   : Thursday October 26th 2023 09:20:32 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -42,8 +42,8 @@ class ImageIO:
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         cv2.imwrite(filepath, pixel_data)
 
-    def get_filepath(self, id: str, basedir: str, format: str) -> str:
-        filename = id + "." + format
+    def get_filepath(self, uid: str, basedir: str, format: str) -> str:
+        filename = uid + "." + format
         return os.path.join(basedir, filename)
 
     def _read_dicom(self, filepath: str) -> np.ndarray:

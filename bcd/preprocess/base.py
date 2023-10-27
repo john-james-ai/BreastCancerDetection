@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 10:17:41 pm                                                #
-# Modified   : Thursday October 26th 2023 12:19:10 pm                                              #
+# Modified   : Thursday October 26th 2023 09:10:21 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -46,7 +46,7 @@ class Preprocessor(Application):
     ) -> None:
         self._task_id = task_id
         self._module = module
-        self._stage_id = stage.id
+        self._stage_uid = stage.uid
         self._stage = stage.name
         self._params = params
         self._image_repo = image_repo
@@ -74,8 +74,8 @@ class Preprocessor(Application):
         return self._module
 
     @property
-    def stage_id(self) -> int:
-        return self._stage_id
+    def stage_uid(self) -> int:
+        return self._stage_uid
 
     @property
     def stage(self) -> str:
@@ -117,7 +117,7 @@ class Preprocessor(Application):
         """
         return self._image_factory.create(
             case_id=case_id,
-            stage_id=self.stage_id,
+            stage_uid=self.stage_uid,
             pixel_data=pixel_data,
             preprocessor=self.name,
             task_id=self.task_id,
@@ -131,9 +131,9 @@ class Preprocessor(Application):
         """
         return self._io.read(filepath=filepath)
 
-    def read_image(self, id: str) -> Image:
+    def read_image(self, uid: str) -> Image:
         """Reads an image object from the repository."""
-        return self._image_repo.get(id=id)
+        return self._image_repo.get(uid=uid)
 
     def save_image(self, image: Image) -> None:
         """Saves an image object to the repository."""

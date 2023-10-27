@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 01:16:09 am                                              #
-# Modified   : Thursday October 26th 2023 10:08:23 am                                              #
+# Modified   : Thursday October 26th 2023 09:12:47 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,14 +38,7 @@ class TestImageConverterTask:  # pragma: no cover
     # ============================================================================================ #
     def test_task(self, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         params = ImageConverterParams(frac=0.005)
@@ -55,7 +48,7 @@ class TestImageConverterTask:  # pragma: no cover
         assert task.application == ImageConverter
         assert isinstance(task.params, ImageConverterParams)
         assert task.mode == "test"
-        assert task.stage.id == 0
+        assert task.stage.uid == 0
         assert task.stage.name == "converted"
         assert task.module == "bcd.preprocess.convert"
 
@@ -74,7 +67,7 @@ class TestImageConverterTask:  # pragma: no cover
         assert task.application == ImageConverter
         assert isinstance(task.params, ImageConverterParams)
         assert task.mode == "test"
-        assert task.stage.id == 0
+        assert task.stage.uid == 0
         assert task.stage.name == "converted"
         assert task.images_processed == 15
         assert isinstance(task.image_processing_time, float)
@@ -87,43 +80,20 @@ class TestImageConverterTask:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)
 
     # ============================================================================================ #
     def test_teardown(self, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.repo.image()
-        repo.delete_by_stage(stage_id=0)
+        repo.delete_by_stage(uid=0)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)

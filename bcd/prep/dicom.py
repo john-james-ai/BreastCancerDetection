@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Monday October 23rd 2023 10:26:12 pm                                                #
+# Modified   : Thursday October 26th 2023 08:28:24 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -148,7 +148,7 @@ class DicomPrep(DataPrep):
         img = dcm.pixel_array
 
         dcm_data = {}
-        dcm_data["id"] = str(uuid.uuid4())
+        dcm_data["uid"] = str(uuid.uuid4())
         dcm_data["series_uid"] = dcm.SeriesInstanceUID
         dcm_data["filepath"] = os.path.relpath(filepath)
         dcm_data["photometric_interpretation"] = dcm.PhotometricInterpretation

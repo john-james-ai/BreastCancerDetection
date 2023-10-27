@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Thursday October 26th 2023 12:04:06 am                                              #
+# Modified   : Friday October 27th 2023 12:41:35 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -33,10 +33,10 @@ from bcd.core.base import DataClass
 # ------------------------------------------------------------------------------------------------ #
 @dataclass(eq=False)
 class Image(DataClass):
-    id: str
+    uid: str
     case_id: str
     mode: str
-    stage_id: int
+    stage_uid: int
     stage: str
     left_or_right_breast: str
     image_view: str
@@ -62,6 +62,37 @@ class Image(DataClass):
     task_id: str
     created: datetime
 
+    def __eq__(self, other: Image) -> bool:
+        return (
+            self.uid == other.uid and
+            self.case_id == other.case_id and
+            self.mode == other.mode and
+            self.stage_uid == other.stage_uid and
+            self.stage == other.stage and
+            self.left_or_right_breast == other.left_or_right_breast and
+            self.image_view == other.image_view and
+            self.abnormality_type == other.abnormality_type and
+            self.assessment == other.assessment and
+            self.breast_density == other.breast_density and
+            self.bit_depth == other.bit_depth and
+            (self.pixel_data == other.pixel_data).all() and
+            self.height == other.height and
+            self.width == other.width and
+            self.size == other.size and
+            int(self.aspect_ratio) == int(other.aspect_ratio) and
+            self.min_pixel_value == other.min_pixel_value and
+            self.max_pixel_value == other.max_pixel_value and
+            self.range_pixel_values == other.range_pixel_values and
+            int(self.mean_pixel_value) == int(other.mean_pixel_value) and
+            self.median_pixel_value == other.median_pixel_value and
+            int(self.std_pixel_value) == int(other.std_pixel_value) and
+            self.filepath == other.filepath and
+            self.fileset == other.fileset and
+            self.cancer == other.cancer and
+            self.preprocessor == other.preprocessor and
+            self.task_id == other.task_id
+        )
+
     def visualize(
         self, cmap: str = "jet", ax: plt.Axes = None, figsize: tuple = (8, 8)
     ) -> None:  # pragma: no cover
@@ -81,10 +112,10 @@ class Image(DataClass):
 
     def as_df(self) -> pd.DataFrame:
         d = {
-            "id": self.id,
+            "uid": self.uid,
             "case_id": self.case_id,
             "mode": self.mode,
-            "stage_id": self.stage_id,
+            "stage_uid": self.stage_uid,
             "stage": self.stage,
             "left_or_right_breast": self.left_or_right_breast,
             "image_view": self.image_view,

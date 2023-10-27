@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Thursday October 26th 2023 12:16:26 pm                                              #
+# Modified   : Friday October 27th 2023 12:26:49 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,6 +19,7 @@
 """Data Package Base Module"""
 from __future__ import annotations
 import string
+from datetime import datetime
 from abc import ABC, abstractmethod
 import logging
 from dataclasses import dataclass
@@ -45,6 +46,8 @@ IMMUTABLE_TYPES: tuple = (
     np.float32,
     np.float64,
     np.float128,
+    np.bool_,
+    datetime,
 )
 SEQUENCE_TYPES: tuple = (
     list,
@@ -86,14 +89,14 @@ STAGES = {
 # ------------------------------------------------------------------------------------------------ #
 @dataclass()
 class Stage(ABC):
-    id: int
+    uid: int
     name: str = None
 
     def __post_init__(self) -> None:
         try:
-            self.name = STAGES[self.id]
+            self.name = STAGES[self.uid]
         except KeyError:
-            msg = f"{self.id} is an invalid stage id."
+            msg = f"{self.uid} is an invalid stage id."
             logging.exception(msg)
             raise
 
@@ -198,7 +201,7 @@ class Params(DataClass):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Entity(DataClass):
-    id: str
+    uid: str
     name: str
 
 
@@ -212,7 +215,7 @@ class Repo(ABC):
     """
 
     @abstractmethod
-    def add(self, entity: Entity) -> None:
+    def add(self, *args, **kwargs) -> None:
         """Adds an entity to the repository
 
         Args:
@@ -220,7 +223,7 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def get(self, id: str) -> Entity:
+    def get(self, uid: str) -> Entity:
         """Gets an an entity by its identifier.
 
         Args:
@@ -228,7 +231,7 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def exists(self, id: str) -> bool:
+    def exists(self, uid: str) -> bool:
         """Evaluates existence of an entity by identifier.
 
         Args:
@@ -250,10 +253,14 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def delete(self, id: str) -> None:
+    def delete(self, uid: str, *args, **kwargs) -> None:
         """Deletes the entity or entities matching condition.
 
         Args:
             id (str): Entity identifier.
 
         """
+
+    @abstractmethod
+    def save(self) -> None:
+        """Saves changes to database."""

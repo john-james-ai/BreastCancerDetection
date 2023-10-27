@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 10:55:08 pm                                             #
-# Modified   : Thursday October 26th 2023 01:13:06 am                                              #
+# Modified   : Friday October 27th 2023 12:42:25 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -56,13 +56,18 @@ class ImageFactory:
         Returns:
             Image object
         """
+
+        # Convert numpy datetime64 to python datetime.
+        timestamp = ((df['created'].values[0] - np.datetime64('1970-01-01T00:00:00')) / np.timedelta64(1,'s'))
+        created = datetime.utcfromtimestamp(timestamp)
+
         io = ImageIO()
         pixel_data = io.read(filepath=df["filepath"])
         return Image(
-            id=df["id"].values[0],
+            uid=df["uid"].values[0],
             case_id=df["case_id"].values[0],
             mode=df["mode"].values[0],
-            stage_id=df["stage_id"].values[0],
+            stage_uid=df["stage_uid"].values[0],
             stage=df["stage"].values[0],
             left_or_right_breast=df["left_or_right_breast"].values[0],
             image_view=df["image_view"].values[0],
@@ -84,7 +89,7 @@ class ImageFactory:
             filepath=df["filepath"].values[0],
             fileset=df["fileset"].values[0],
             cancer=df["cancer"].values[0],
-            created=df["created"].values[0],
+            created=created,
             preprocessor=df["preprocessor"].values[0],
             task_id=df["task_id"].values[0],
         )
@@ -92,16 +97,22 @@ class ImageFactory:
     def create(
         self,
         case_id: str,
-        stage_id: int,
+        stage_uid: int,
         pixel_data: np.ndarray,
         preprocessor: str,
         task_id: str,
     ) -> Image:
         """Creates an image from pizel data.
 
+        Note: It does not save the image to disk. Persistence
+        functions are the domain of the repository. Though, this method
+        can read the pixel data from file, in order to reconstitute a
+        fully formed Image object, persistence of the image and
+        the metadata are controlled by the repository.
+
         Args:
             case_id (str): Unique identifier for a case.
-            stage_id (int): The preprocessing stage identifier
+            stage_uid (int): The preprocessing stage identifier
             pixel_data (np.ndarray): Pixel data in numpy array format.
             preprocessor (str): The name of the preprocessor
             task_id (str): The UUID for the specific task.
@@ -110,25 +121,24 @@ class ImageFactory:
             Image Object.
 
         """
-        id = str(uuid4())
+        uid = str(uuid4())
 
-        stage = self._get_stage(stage_id=stage_id)
+        stage = self._get_stage(uid=stage_uid)
 
         case = self._cases.loc[self._cases["case_id"] == case_id]
 
-        mode = self._config.get_mode()
+        mode = self._config.mode
 
-        basedir = self._config.get_image_directory()
+        basedir = self._config.image_directory
 
         io = ImageIO()
-        filepath = io.get_filepath(id=id, basedir=basedir, format="png")
-        io.write(pixel_data=pixel_data, filepath=filepath)
+        filepath = io.get_filepath(uid=uid, basedir=basedir, format="png")
 
         return Image(
-            id=id,
+            uid=uid,
             case_id=case_id,
             mode=mode,
-            stage_id=stage_id,
+            stage_uid=stage_uid,
             stage=stage,
             left_or_right_breast=case["left_or_right_breast"].values[0],
             image_view=case["image_view"].values[0],
@@ -155,10 +165,10 @@ class ImageFactory:
             task_id=task_id,
         )
 
-    def _get_stage(self, stage_id: int) -> None:
+    def _get_stage(self, uid: int) -> None:
         try:
-            return STAGES[stage_id]
+            return STAGES[uid]
         except KeyError:
-            msg = f"Stage identifier = {stage_id} is invalid. Valid values are: {STAGES.keys()}"
+            msg = f"Stage identifier = {uid} is invalid. Valid values are: {STAGES.keys()}"
             self._logger.exception(msg)
             raise ValueError(msg)

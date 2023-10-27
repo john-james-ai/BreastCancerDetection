@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
-# Modified   : Thursday October 26th 2023 12:35:13 pm                                              #
+# Modified   : Thursday October 26th 2023 09:12:47 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -27,7 +27,7 @@ from dependency_injector.wiring import inject, Provide
 
 from bcd.core.base import Stage
 from bcd.preprocess.base import Params, Preprocessor
-from bcd.core.task.entity import Task
+from bcd.core.task.base import Task
 from bcd.core.image.factory import ImageFactory
 from bcd.core.image.repo import ImageRepo
 from bcd.container import BCDContainer
@@ -47,7 +47,7 @@ class ImageConverterParams(Params):
 # ------------------------------------------------------------------------------------------------ #
 class ImageConverter(Preprocessor):
     MODULE = "bcd.preprocess.convert"
-    STAGE = Stage(id=0)
+    STAGE = Stage(uid=0)
 
     @inject
     def __init__(

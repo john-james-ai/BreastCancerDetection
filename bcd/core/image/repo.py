@@ -11,16 +11,18 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Thursday October 26th 2023 01:12:59 am                                              #
+# Modified   : Friday October 27th 2023 02:04:07 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import os
 import logging
+from datetime import datetime
 from typing import Union, Callable
 
 import pandas as pd
+import numpy as np
 import pymysql
 from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT, TINYINT, BIGINT
 
@@ -29,13 +31,14 @@ from bcd.core.base import Repo
 from bcd.core.image.entity import Image
 from bcd.core.image.factory import ImageFactory
 from bcd.infrastructure.database.base import Database
+from bcd.infrastructure.io.cache import ImageCache
 
 # ------------------------------------------------------------------------------------------------ #
-IMAGE_DTYPES = {
-    "id": VARCHAR(length=64),
+WRITE_IMAGE_DTYPES = {
+    "uid": VARCHAR(length=64),
     "case_id": VARCHAR(length=64),
     "mode": VARCHAR(length=8),
-    "stage_id": INTEGER(),
+    "stage_uid": INTEGER(),
     "stage": VARCHAR(length=64),
     "left_or_right_breast": VARCHAR(length=8),
     "image_view": VARCHAR(4),
@@ -55,27 +58,62 @@ IMAGE_DTYPES = {
     "std_pixel_value": FLOAT(),
     "filepath": VARCHAR(length=256),
     "fileset": VARCHAR(length=8),
-    "cancer": TINYINT(),
     "preprocessor": VARCHAR(length=64),
+    "cancer": TINYINT(),
     "task_id": VARCHAR(length=64),
     "created": DATETIME(),
 }
 
-
+# ------------------------------------------------------------------------------------------------ #
+READ_IMAGE_DTYPES = {
+    "uid": str,
+    "case_id": str,
+    "mode": str,
+    "stage_uid": np.int8,
+    "stage": str,
+    "left_or_right_breast": str,
+    "image_view": str,
+    "abnormality_type": str,
+    "assessment": np.int8,
+    "breast_density": np.int8,
+    "bit_depth": np.int8,
+    "height": np.int64,
+    "width": np.int64,
+    "size": np.int64,
+    "aspect_ratio": np.float64,
+    "min_pixel_value": np.int64,
+    "max_pixel_value": np.int64,
+    "range_pixel_values": np.int64,
+    "mean_pixel_value": np.float64,
+    "median_pixel_value": np.int64,
+    "std_pixel_value": np.float64,
+    "filepath": str,
+    "fileset": str,
+    "preprocessor": str,
+    "cancer": bool,
+    "task_id": str,
+}
+PARSE_DATES = {'created': {'errors': 'ignore', 'yearfirst': True, 'infer_datetime_format': True}}
 # ------------------------------------------------------------------------------------------------ #
 class ImageRepo(Repo):
+    """Image repository"""
     __tablename = "image"
 
-    def __init__(self, database: Database, image_factory: ImageFactory, config: Config) -> None:
+    def __init__(
+        self, database: Database, image_factory: ImageFactory, config: Config, cache: ImageCache
+    ) -> None:
         super().__init__()
         self._database = database
         self._image_factory = image_factory
         self._config = config()
+        self._autocommit = self._config.autocommit
+        self._cache = cache()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     @property
     def mode(self) -> str:
-        return self._config.get_mode()
+        """Returns the current mode."""
+        return self._config.mode
 
     def add(self, image: Image) -> None:
         """Adds an image to the repository
@@ -85,7 +123,7 @@ class ImageRepo(Repo):
 
         """
         try:
-            exists = self.exists(id=image.id)
+            exists = self.exists(uid=image.uid)
         except Exception:  # pragma: no cover
             exists = False
         finally:
@@ -93,14 +131,18 @@ class ImageRepo(Repo):
                 data = image.as_df()
 
                 self._database.insert(
-                    data=data, tablename=self.__tablename, dtype=IMAGE_DTYPES, if_exists="append"
+                    data=data, tablename=self.__tablename, dtype=WRITE_IMAGE_DTYPES, if_exists="append"
                 )
+                if self._autocommit:
+                    self._cache.put(entity=image, write_through=True)
+                else:
+                    self._cache.put(image)
             else:
-                msg = f"Image {image.id} already exists."
+                msg = f"Image {image.uid} already exists."
                 self._logger.exception(msg)
                 raise FileExistsError(msg)
 
-    def get(self, id: str) -> Image:
+    def get(self, uid: str) -> Image:
         """Obtains an image by identifier.
 
         Args:
@@ -109,23 +151,23 @@ class ImageRepo(Repo):
         Returns:
             Image object.
         """
-        query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
-        params = {"id": id}
+        query = f"SELECT * FROM {self.__tablename} WHERE uid = :uid;"
+        params = {"uid": uid}
         try:
-            image_meta = self._database.query(query=query, params=params)
+            image_meta = self._database.query(query=query,dtype=READ_IMAGE_DTYPES, params=params, parse_dates=PARSE_DATES)
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
             raise
         else:
             if len(image_meta) == 0:  # pragma: no cover
-                msg = f"Image id {id} does not exist."
-                self._logger.exception(msg)
+                msg = f"Image id {uid} does not exist."
+                self._logger.warning(msg)
                 raise FileNotFoundError(msg)
             return self._image_factory.from_df(df=image_meta)
 
     def get_by_stage(
         self,
-        stage_id: int,
+        stage_uid: int,
         n: int = None,
         frac: float = None,
         random_state: int = None,
@@ -133,7 +175,7 @@ class ImageRepo(Repo):
         """Returns images and metadata for the given stage.
 
         Args:
-            stage_id (int): The stage of the preprocessing cycle.
+            stage_uid (int): The stage of the preprocessing cycle.
             n (int): Number of images to return. Cannot be used with frac.
             frac (float): Fraction of items matching condition to return. Cannot be used with n.
             random_stage (int): Seed for pseudo randomizing
@@ -148,12 +190,12 @@ class ImageRepo(Repo):
 
         images = {}
 
-        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
-        params = {"mode": self.mode, "stage_id": stage_id}
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_uid = :stage_uid;"
+        params = {"mode": self.mode, "stage_uid": stage_uid}
         image_meta = self._database.query(query=query, params=params)
 
         if len(image_meta) == 0:
-            msg = f"No images exist for Stage {stage_id} in {self.mode} mode."
+            msg = f"No images exist for Stage {stage_uid} in {self.mode} mode."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
@@ -167,8 +209,8 @@ class ImageRepo(Repo):
             )
 
         for _, meta in image_meta.iterrows():
-            image = self.get(id=meta["id"])
-            images[meta["id"]] = image
+            image = self.get(uid=meta["uid"])
+            images[meta["uid"]] = image
         return (
             image_meta,
             images,
@@ -182,8 +224,8 @@ class ImageRepo(Repo):
     ) -> dict:
         """Returns images and metadata for the current mode.
 
-        Samples are stratified by stage_id and preprocessor. For instance, if
-        n = 3, 3 images will be sampled from each stage_id and preprocessor.
+        Samples are stratified by stage_uid and preprocessor. For instance, if
+        n = 3, 3 images will be sampled from each stage_uid and preprocessor.
 
         Args:
             n (int): Number of images to return. Cannot be used with frac.
@@ -210,17 +252,17 @@ class ImageRepo(Repo):
             raise FileNotFoundError(msg)
 
         if n is not None:
-            image_meta = image_meta.groupby(by=["stage_id", "preprocessor"]).sample(
+            image_meta = image_meta.groupby(by=["stage_uid", "preprocessor"]).sample(
                 n=n, replace=False, random_state=random_state
             )
         elif frac is not None:
-            image_meta = image_meta.groupby(by=["stage_id", "preprocessor"]).sample(
+            image_meta = image_meta.groupby(by=["stage_uid", "preprocessor"]).sample(
                 frac=frac, replace=False, random_state=random_state
             )
 
         for _, meta in image_meta.iterrows():
-            image = self.get(id=meta["id"])
-            images[meta["id"]] = image
+            image = self.get(uid=meta["uid"])
+            images[meta["uid"]] = image
         return (
             image_meta,
             images,
@@ -261,8 +303,8 @@ class ImageRepo(Repo):
             raise FileNotFoundError(msg)
 
         for _, meta in image_meta.iterrows():
-            image = self.get(id=meta["id"])
-            images[meta["id"]] = image
+            image = self.get(uid=meta["uid"])
+            images[meta["uid"]] = image
 
         return (
             image_meta,
@@ -273,18 +315,19 @@ class ImageRepo(Repo):
         """Returns case images metadata
         Args:
             condition (Callable): A lambda expression used to subset the data.
-                An example of a condition: condition = lambda df: df['stage_id'] > 0
+                An example of a condition: condition = lambda df: df['stage_uid'] > 0
 
         """
         query = f"SELECT * FROM {self.__tablename};"
         params = None
-        meta = self._database.query(query=query, params=params)
-        if condition is None:
-            return meta
-        else:
-            return meta[condition]
+        image_meta = self._database.query(query=query, params=params)
 
-    def exists(self, id: str) -> bool:
+        if condition is None:
+            return image_meta
+        else:
+            return image_meta[condition]
+
+    def exists(self, uid: str) -> bool:
         """Evaluates existence of an image by identifier.
 
         Args:
@@ -293,8 +336,8 @@ class ImageRepo(Repo):
         Returns:
             Boolean indicator of existence.
         """
-        query = f"SELECT EXISTS(SELECT 1 FROM {self.__tablename} WHERE id = :id);"
-        params = {"id": id}
+        query = f"SELECT EXISTS(SELECT 1 FROM {self.__tablename} WHERE uid = :uid);"
+        params = {"uid": uid}
         try:
             exists = self._database.exists(query=query, params=params)
         except pymysql.Error as e:  # pragma: no cover
@@ -325,38 +368,45 @@ class ImageRepo(Repo):
                 image_meta = image_meta[condition]
             return len(image_meta)
 
-    def delete(self, id: str, filepath: str) -> None:
-        """Removes an image and its metadata from the repository."""
+    def delete(self, uid: str, filepath: str) -> None:
+        """Removes an image and its metadata from the repository.
+
+        Args:
+            uid (str): The unique identifier for the image
+            filepath (str): The path to the images on disk.
+        """
+
         try:
             os.remove(filepath)
         except OSError:  # pragma: no cover
-            msg = f"Image id: {id} does not exist at {filepath}"
-            self._logger.warn(msg)
+            msg = f"Image id: {uid} does not exist at {filepath}"
+            self._logger.warning(msg)
         finally:
-            query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
-            params = {"id": id}
+            query = f"DELETE FROM {self.__tablename} WHERE uid = :uid;"
+            params = {"uid": uid}
             self._database.delete(query=query, params=params)
+            self._cache.remove(uid=uid)
 
-    def delete_by_stage(self, stage_id: int) -> None:
+    def delete_by_stage(self, stage_uid: int) -> None:
         """Removes images for a given stage
 
         Args:
-            stage_id (int): The stage
+            stage_uid (int): The stage
         """
-        if self._delete_permitted(stage_id=stage_id):
-            query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode and stage_id = :stage_id;"
-            params = {"mode": self.mode, "stage_id": stage_id}
+        if self._delete_permitted(stage_uid=stage_uid):
+            query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode and stage_uid = :stage_uid;"
+            params = {"mode": self.mode, "stage_uid": stage_uid}
             image_meta = self._database.query(query=query, params=params)
 
             if len(image_meta) == 0:
-                msg = f"No images exist for stage {stage_id} in {self.mode} mode."
-                self._logger.exception(msg)
-                raise FileNotFoundError(msg)
+                msg = f"No images exist for stage {stage_uid} in {self.mode} mode."
+                self._logger.warning(msg)
 
             for _, image in image_meta.iterrows():
-                self.delete(id=image["id"], filepath=image["filepath"])
+                self.delete(uid=image["uid"], filepath=image['filepath'])
+
         else:
-            msg = f"Delete of stage {stage_id} images not permitted without confirmation."
+            msg = f"Delete of stage {stage_uid} images not permitted without confirmation."
             self._logger.info(msg)
 
     def delete_by_preprocessor(self, preprocessor: str) -> None:
@@ -374,11 +424,11 @@ class ImageRepo(Repo):
 
         if len(image_meta) == 0:
             msg = f"No images exist for {preprocessor} preprocessor in {self.mode} mode."
-            self._logger.exception(msg)
-            raise FileNotFoundError(msg)
+            self._logger.warning(msg)
 
         for _, image in image_meta.iterrows():
-            self.delete(id=image["id"], filepath=image["filepath"])
+            self.delete(uid=image["uid"], filepath=image["filepath"])
+
 
     def delete_by_mode(self) -> None:
         """Removes images for a current mode."""
@@ -389,14 +439,26 @@ class ImageRepo(Repo):
 
         if len(image_meta) == 0:
             msg = f"No images exist in {self.mode} mode."
-            self._logger.exception(msg)
-            raise FileNotFoundError(msg)
+            self._logger.warning(msg)
 
         for _, image in image_meta.iterrows():
-            self.delete(id=image["id"], filepath=image["filepath"])
+            self.delete(uid=image["uid"], filepath=image["filepath"])
 
-    def _delete_permitted(self, stage_id: int) -> bool:
-        if stage_id == 0:
+
+    def begin(self) -> None:
+        """Begins a transaction."""
+        self._cache.reset()
+
+    def save(self) -> None:
+        """Commits changes to the database, and saves cache to file."""
+        self._cache.save()
+
+    def rollback(self) -> None:
+        """Commits changes to the database, and saves cache to file."""
+        self._cache.reset()
+
+    def _delete_permitted(self, stage_uid: int) -> bool:
+        if stage_uid == 0:
             go = input("Please confirm that you wish to delete Stage 0 images [Y/N]")
             if "y" in go.lower():
                 return True

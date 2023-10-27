@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Thursday October 26th 2023 11:18:10 am                                              #
+# Modified   : Thursday October 26th 2023 04:14:23 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,7 +22,7 @@ import logging.config
 from dependency_injector import containers, providers
 
 from bcd.infrastructure.database.mysql import MySQLDatabase
-from bcd.infrastructure.database.config import DatabaseConfig
+from bcd.infrastructure.io.cache import ImageCache
 from bcd.core.image.repo import ImageRepo
 from bcd.core.task.repo import TaskRepo
 from bcd.config import Config
@@ -49,11 +49,13 @@ class LoggingContainer(containers.DeclarativeContainer):
 class RepoContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
 
-    db = providers.Singleton(MySQLDatabase, config=DatabaseConfig)
+    db = providers.Singleton(MySQLDatabase, config=Config)
 
     factory = providers.Singleton(ImageFactory, case_fp=config.image.factory.case_fp, config=Config)
 
-    image = providers.Singleton(ImageRepo, database=db, image_factory=factory, config=Config)
+    image = providers.Singleton(
+        ImageRepo, database=db, image_factory=factory, config=Config, cache=ImageCache
+    )
 
     task = providers.Factory(TaskRepo, database=db, config=Config)
 

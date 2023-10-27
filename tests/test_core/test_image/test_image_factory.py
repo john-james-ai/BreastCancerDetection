@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_manage_data/test_entity/test_image_factory.py                           #
+# Filename   : /tests/test_core/test_image/test_image_factory.py                                   #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 02:14:19 pm                                              #
-# Modified   : Thursday October 26th 2023 01:13:21 am                                              #
+# Modified   : Thursday October 26th 2023 10:24:33 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -46,14 +46,7 @@ class TestImageFactory:  # pragma: no cover
     # ============================================================================================ #
     def test_creation(self, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         factory = container.repo.factory()
@@ -64,7 +57,7 @@ class TestImageFactory:  # pragma: no cover
 
         image = factory.create(
             case_id=CASE_ID,
-            stage_id=0,
+            stage_uid=0,
             pixel_data=pixel_data,
             preprocessor=PREPROCESSOR,
             task_id=TASK_ID,
@@ -72,7 +65,7 @@ class TestImageFactory:  # pragma: no cover
         logger.debug(image)
 
         assert isinstance(image, Image)
-        assert image.id != df["id"].values[0]
+        assert image.uid != df["uid"].values[0]
         assert image.case_id == df["case_id"].values[0]
         assert image.cancer == df["cancer"].values[0]
         assert image.bit_depth == df["bit_depth"].values[0]
@@ -89,7 +82,7 @@ class TestImageFactory:  # pragma: no cover
         assert image.filepath != df["filepath"].values[0]
         assert image.fileset == df["fileset"].values[0]
         assert image.mode == "test"
-        assert image.stage_id == 0
+        assert image.stage_uid == 0
         assert image.stage == "converted"
         assert image.preprocessor == PREPROCESSOR
         assert image.task_id == TASK_ID
@@ -127,14 +120,7 @@ class TestImageFactory:  # pragma: no cover
     # ============================================================================================ #
     def test_exception(self, container, caplog):
         start = datetime.now()
-        logger.info(
-            "\n\nStarted {} {} at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                start.strftime("%I:%M:%S %p"),
-                start.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         factory = container.repo.factory()
@@ -147,7 +133,7 @@ class TestImageFactory:  # pragma: no cover
             _ = factory.create(
                 case_id=CASE_ID,
                 pixel_data=pixel_data,
-                stage_id=99,
+                stage_uid=99,
                 preprocessor=PREPROCESSOR,
                 task_id=TASK_ID,
             )
@@ -156,13 +142,5 @@ class TestImageFactory:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(
-            "\n\tCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
-        )
+        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
         logger.info(single_line)

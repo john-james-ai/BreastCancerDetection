@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/database/base.py                                                          #
+# Filename   : /bcd/infrastructure/database/base.py                                                #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 09:56:27 am                                              #
-# Modified   : Saturday October 21st 2023 10:10:41 am                                              #
+# Modified   : Thursday October 26th 2023 11:15:38 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -189,13 +189,13 @@ class Database(ABC):
         return result.rowcount
 
     def query(
-        self, query: str, params: dict = (), dtypes: dict = None, parse_dates: dict = None
+        self, query: str, params: dict = (), dtype: dict = None, parse_dates: dict = None
     ) -> pd.DataFrame:
         """Fetches the next row of a query result set, returning a single sequence, or None if no more data
         Args:
             query (str): The SQL command
             params (dict): Parameters for the SQL command
-            dtypes (dict): Dictionary mapping of column to data types
+            dtype (dict): Dictionary mapping of column to data types
             parse_dates (dict): Dictionary of columns and keyword arguments for datetime parsing.
 
         Returns: Pandas DataFrame
@@ -205,7 +205,7 @@ class Database(ABC):
             sql=sqlalchemy.text(query),
             con=self._connection,
             params=params,
-            dtype=dtypes,
+            dtype=dtype,
             parse_dates=parse_dates,
         )
 
