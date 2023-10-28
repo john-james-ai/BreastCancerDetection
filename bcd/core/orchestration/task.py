@@ -4,29 +4,31 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/core/task/base.py                                                              #
+# Filename   : /bcd/core/orchestration/task.py                                                     #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Thursday October 26th 2023 09:25:43 pm                                              #
+# Modified   : Friday October 27th 2023 06:07:01 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 from __future__ import annotations
 from uuid import uuid4
-from abc import abstractclassmethod
+from abc import abstractmethod
 import importlib
 from dataclasses import dataclass
 from datetime import datetime
 import logging
 
 import pandas as pd
-from bcd.core.base import Entity, Application, Params
-from bcd.config import Config
+
+from bcd.core.base import Entity, Application, ParamSet
+from bcd.core.orchestration.job import Job
+from bcd.utils.date import to_datetime
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -36,12 +38,14 @@ class Task(Entity):
 
     uid: str
     name: str
-    application: Application
     mode: str
     stage_uid: int
     stage: str
-    module: str
-    params: str
+    application: Application
+    application_module: str
+    paramset: ParamSet
+    paramset_module: str
+    job_id: str
     images_processed: int = 0
     image_processing_time: int = 0
     started: datetime = None
@@ -50,20 +54,21 @@ class Task(Entity):
     state: str = "PENDING"
 
     @classmethod
-    def create(cls, application: type[Application], params: Params, config: type[Config]) -> Task:
+    def create(cls, job: Job, application: type[Application], paramset: ParamSet) -> Task:
         """Creates a Task object"""
         uid = str(uuid4())
-        config = config()
 
         return cls(
             uid=uid,
             name=cls.__name__,
-            application=application.__name__,
-            mode=config.mode,
-            stage_uid=application.STAGE.uid,
-            stage=application.STAGE.name,
-            module=application.MODULE,
-            params=params,
+            mode=job.mode,
+            stage_uid=application.stage.uid,
+            stage=application.stage.name,
+            application=application,
+            application_module=application.module,
+            paramset=paramset,
+            paramset_module=paramset.module,
+            job_id=job.uid,
             images_processed=0,
             image_processing_time=0,
             started=None,
@@ -76,11 +81,7 @@ class Task(Entity):
         """Executes the preprocessor."""
         self.start_task()
 
-        application = self.get_class(
-            module_name=self.module,
-            class_name=self.application,
-        )
-        app = application(params=self.params, task_id=self.uid)
+        app = self.application(params=self.params, task_id=self.uid)
         try:
             app.execute()
             self.images_processed = app.images_processed
@@ -116,16 +117,10 @@ class Task(Entity):
     @classmethod
     def from_df(cls, df: pd.DataFrame) -> Task:
         """Creates a Task object from  a dataframe"""
-        params = cls.get_params(df["params"].values[0])
+        paramset = cls.get_class(module_name=df['module'].values[0], class_name=df['application'].values[0])
 
-        started = (
-            df["started"].values[0].astype(datetime)
-            if df["started"].values[0] is not None
-            else None
-        )
-        ended = (
-            df["ended"].values[0].astype(datetime) if df["ended"].values[0] is not None else None
-        )
+        started = to_datetime(df['started'].values[0])
+        ended = to_datetime(df['ended'].values[0])
 
         return cls(
             uid=df["uid"].values[0],
@@ -135,7 +130,8 @@ class Task(Entity):
             stage_uid=df["stage_uid"].values[0],
             stage=df["stage"].values[0],
             module=df["module"].values[0],
-            params=params,
+            params=paramset,
+            job_id=df['job_id'].values[0],
             images_processed=df["images_processed"].values[0],
             image_processing_time=df["image_processing_time"].values[0],
             started=started,
@@ -158,10 +154,6 @@ class Task(Entity):
             logging.exception("Module does not exist")
             raise
         return class_ or None
-
-    @abstractclassmethod
-    def get_params(cls, params: str) -> Params:
-        """Returns a parameter object for the underlying task."""
 
     def as_df(self) -> pd.DataFrame:
         d = {

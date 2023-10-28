@@ -11,19 +11,20 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Friday October 27th 2023 12:26:49 am                                                #
+# Modified   : Friday October 27th 2023 06:05:31 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Data Package Base Module"""
 from __future__ import annotations
+import os
+import inspect
 import string
 from datetime import datetime
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractclassmethod
 import logging
 from dataclasses import dataclass
-from datetime import datetime
 from typing import Callable
 import json
 
@@ -76,19 +77,22 @@ NUMERIC_TYPES = [
 ]
 # ------------------------------------------------------------------------------------------------ #
 STAGES = {
-    0: "converted",
-    1: "denoise",
-    2: "enhance",
-    3: "artifact_removal",
-    4: "pectoral_removal",
-    5: "reshape",
-    6: "augment",
+    0: "Converted",
+    1: "Artifact Removal",
+    2: "Pectoral Removal",
+    3: "Denoise",
+    4: "Fuzziness",
+    5: "Enhance",
+    6: "ROI Segmentation",
+    7: "Augment",
+    8: "Reshape"
 }
 
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass()
-class Stage(ABC):
+class Stage:
+    """Encapsulates a stage in the preprocessing and modeling phases."""
     uid: int
     name: str = None
 
@@ -109,19 +113,36 @@ NON_NUMERIC_TYPES = ["category", "object"]
 class Application(ABC):
     """base class for all application objects."""
 
+    def __init__(self, paramset: ParamSet, task_id: str) -> None:
+        self._name = self.__class__.__name__
+        self._module = inspect.getmodule(self).__name__
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def module(self) -> str:
+        return self._module
+
+    @property
+    @abstractclassmethod
+    def stage(cls) -> Stage:
+        """Returns the Stage object corresponding to the application"""
 
 # ------------------------------------------------------------------------------------------------ #
-@dataclass
+@dataclass(eq=False)
 class DataClass(ABC):
+    """A dataclass with extensions for equality checks, string representation, and formatting."""
     def __eq__(self, other: DataClass) -> bool:
-        for key in self.__dict__:
-            if type(self.__dict__[key]) in IMMUTABLE_TYPES:
-                if self.__dict__[key] != other.__dict__[key]:
+        for key, value in self.__dict__.items():
+            if type(value) in IMMUTABLE_TYPES:
+                if value != other.__dict__[key]:
                     return False
-            elif isinstance(self.__dict__[key], np.ndarray):
-                if not np.array_equal(self.__dict__[key], other.__dict__[key]):
+            elif isinstance(value, np.ndarray):
+                if not np.array_equal(value, other.__dict__[key]):
                     return False
-            elif isinstance(self.__dict__[key], (pd.DataFrame, pd.Series)):
+            elif isinstance(value, (pd.DataFrame, pd.Series)):
                 if not self.__dict__[key].equals(other.__dict__[key]):
                     return False
 
@@ -174,8 +195,6 @@ class DataClass(ABC):
             return v
         elif hasattr(v, "as_dict"):
             return v.as_dict()
-        else:
-            """Else nothing. What do you want?"""
 
     def as_df(self) -> pd.DataFrame:
         """Returns the project in DataFrame format"""
@@ -188,19 +207,12 @@ class DataClass(ABC):
 class Params(DataClass):
     """Abstract base class for preprocessor parameters."""
 
-    def as_string(self) -> str:
-        d = self.as_dict()
-        return json.dumps(d)
-
-    @classmethod
-    def from_string(cls, params: str) -> Params:
-        d = json.loads(params)
-        return cls(**d)
 
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Entity(DataClass):
+    """Abstract base class for project entities, such as Image, Task and Job."""
     uid: str
     name: str
 
@@ -264,3 +276,23 @@ class Repo(ABC):
     @abstractmethod
     def save(self) -> None:
         """Saves changes to database."""
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class ParamSet(DataClass):
+    """Abstract base class containing parameters for an instance of an application."""
+    name: str = __qualname__
+    module: str = None
+
+    def __post_init__(self) -> None:
+        self.module = inspect.getmodule(self).__name__
+
+    def as_string(self) -> str:
+        d = self.as_dict()
+        return json.dumps(d)
+
+    @classmethod
+    def from_string(cls, params: str) -> Params:
+        d = json.loads(params)
+        return cls(**d)

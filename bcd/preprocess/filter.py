@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 23rd 2023 03:43:02 am                                                #
-# Modified   : Thursday October 26th 2023 09:12:47 pm                                              #
+# Modified   : Friday October 27th 2023 04:11:57 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -33,7 +33,8 @@ from bcd.core.image.entity import Image
 from bcd.core.image.factory import ImageFactory
 from bcd.preprocess.base import Preprocessor, Params
 from bcd.core.image.repo import ImageRepo
-from bcd.core.task.base import Task
+from bcd.core.orchestration.task import Task
+from bcd.core.orchestration.job import Job
 from bcd.container import BCDContainer
 
 
@@ -67,7 +68,7 @@ class FilterParamsSet:
 
 
 # ------------------------------------------------------------------------------------------------ #
-class FilterCommand:
+class FilterJob(Job):
     param_set: FilterParamsSet
     application: Filter
 

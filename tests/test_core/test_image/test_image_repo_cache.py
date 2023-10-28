@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Friday October 27th 2023 02:07:45 am                                                #
+# Modified   : Friday October 27th 2023 02:10:54 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -103,3 +103,28 @@ class TestImageRepo:  # pragma: no cover
             )
         )
         logger.info(single_line)
+    # ============================================================================================ #
+    def test_delete(self, images, container):
+        start = datetime.now()
+        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        repo = container.repo.image()
+        repo.delete_by_mode()
+        for image in images:
+            assert not os.path.exists(image.filepath)
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            "\nCompleted {} {} in {} seconds at {} on {}".format(
+                self.__class__.__name__,
+                inspect.stack()[0][3],
+                duration,
+                end.strftime("%I:%M:%S %p"),
+                end.strftime("%m/%d/%Y"),
+            )
+        )
+        logger.info(single_line)
+

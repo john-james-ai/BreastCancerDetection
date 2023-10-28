@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 10:55:08 pm                                             #
-# Modified   : Friday October 27th 2023 12:42:25 am                                                #
+# Modified   : Friday October 27th 2023 02:26:17 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -30,6 +30,7 @@ from bcd.config import Config
 from bcd.core.base import STAGES
 from bcd.infrastructure.io.image import ImageIO
 from bcd.core.image.entity import Image
+from bcd.utils.date import to_datetime
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -58,8 +59,7 @@ class ImageFactory:
         """
 
         # Convert numpy datetime64 to python datetime.
-        timestamp = ((df['created'].values[0] - np.datetime64('1970-01-01T00:00:00')) / np.timedelta64(1,'s'))
-        created = datetime.utcfromtimestamp(timestamp)
+        created = to_datetime(dt = df['created'].values[0])
 
         io = ImageIO()
         pixel_data = io.read(filepath=df["filepath"])
