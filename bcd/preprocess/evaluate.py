@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday October 27th 2023 03:24:36 am                                                #
-# Modified   : Friday October 27th 2023 04:46:38 am                                                #
+# Modified   : Saturday October 28th 2023 03:42:02 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,8 +23,8 @@ import numpy as np
 import pandas as pd
 from skimage.metrics import structural_similarity as ssidx
 
-from bcd.core.uow import UoW
-from bcd.infrastructure.io.image import ImageIO
+from bcd.dal.repo.uow import UoW
+from bcd.dal.io.image import ImageIO
 # ------------------------------------------------------------------------------------------------ #
 class Metric(ABC):
     """Base class for metrics for evaluating image quality"""

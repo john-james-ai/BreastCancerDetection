@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 02:14:19 pm                                              #
-# Modified   : Thursday October 26th 2023 10:24:33 pm                                              #
+# Modified   : Saturday October 28th 2023 03:39:53 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ import math
 import pandas as pd
 
 from bcd.core.image.entity import Image
-from bcd.infrastructure.io.image import ImageIO
+from bcd.dal.io.image import ImageIO
 
 DICOM_FP = "data/meta/2_clean/dicom.csv"
 CASE_ID = "Calcification-Test_P_01030_RIGHT_MLO_2"

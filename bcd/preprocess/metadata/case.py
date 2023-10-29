@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/prep/case.py                                                                   #
+# Filename   : /bcd/preprocess/metadata/case.py                                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Sunday October 22nd 2023 03:36:19 am                                                #
+# Modified   : Saturday October 28th 2023 02:23:59 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,14 +24,18 @@ from typing import Union
 import pandas as pd
 import numpy as np
 from studioai.preprocessing.encode import RankFrequencyEncoder
-from sklearn.experimental import enable_iterative_imputer  # noqa
+# pylint: disable=unused-import
+from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 
-from bcd.prep.base import DataPrep
+from bcd.preprocess.metadata.base import DataPrep
 
 
 # ------------------------------------------------------------------------------------------------ #
 class CasePrep(DataPrep):
+    """Performs Case metadata preparation."""
+    # pylint: disable=arguments-differ
+
     def prep(
         self,
         calc_train_fp: str,
@@ -170,21 +174,17 @@ class CasePrep(DataPrep):
 
         return df_cases, df_case_series
 
-    def _create_case_type_dataset(
-        self, df_cases: pd.DataFrame, casetype: str, vars: list
-    ) -> pd.DataFrame:
-        """Returns a subset of the cases for the designated case type."""
-        return df_cases.loc[df_cases["abnormality_type"] == casetype][vars]
-
 
 # ------------------------------------------------------------------------------------------------ #
 class CaseImputer:
     """Imputes the missing values in the case dataset using Multiple Imputation by Chained Equations
 
     Args:
-        max_iter (int): Maximum number of imputation rounds to perform before returning the imputations computed during the final round.
+        max_iter (int): Maximum number of imputation rounds to perform before returning
+        the imputations computed during the final round.
         initial_strategy (str): Which strategy to use to initialize the missing values.
-            Valid values include: {‘mean’, ‘median’, ‘most_frequent’, ‘constant’}, default=most_frequent’
+            Valid values include: {'mean', 'median', 'most_frequent', 'constant'},
+            default=most_frequent'
         random_state (int): The seed of the pseudo random number generator to use.
 
     """
@@ -250,6 +250,7 @@ class CaseImputer:
 
     def _map_imputed_values(self, df: pd.DataFrame) -> pd.DataFrame:
         """Maps values to valid values (used after imputation)"""
+        # pylint: disable=cell-var-from-loop
         for col in df.columns:
             values = np.array(sorted(self._encoded_values[col]))
             df[col] = df[col].apply(lambda x: values[np.argmin(np.abs(x - values))])
@@ -307,8 +308,9 @@ class CaseTransformer:
     combined. For instance, calcification type 'ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS' indicates
     three different types: 'ROUND_AND_REGULAR', 'PUNCTATE', and 'AMORPHOUS'. Segregating these
     compound categories into separate categories will drastically reduce the number of categories
-    to analyze. More importantly, it aligns our data and the analyses with the common morphological taxonomy.
-    So, task one is to extract the unary morphological categories from the compound classifications.
+    to analyze. More importantly, it aligns our data and the analyses with the common morphological
+    taxonomy. So, task one is to extract the unary morphological categories from the
+    compound classifications.
 
     Args:
         source_fp (str): Path to source file

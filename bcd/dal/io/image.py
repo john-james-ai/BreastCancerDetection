@@ -4,29 +4,31 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/infrastructure/io/image.py                                                     #
+# Filename   : /bcd/dal/io/image.py                                                                #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Thursday October 26th 2023 09:20:32 pm                                              #
+# Modified   : Sunday October 29th 2023 01:30:41 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-import os
 import logging
+import os
 
-import pydicom
 import cv2
 import numpy as np
 import pandas as pd
+import pydicom
 
 
 # ------------------------------------------------------------------------------------------------ #
 class ImageIO:
+    """Manages IO of Image objects."""
+
     def __init__(self) -> None:
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
@@ -37,13 +39,28 @@ class ImageIO:
         else:
             return self._read_image(filepath=filepath)
 
-    def write(self, pixel_data: np.ndarray, filepath: str) -> None:
+    def write(self, pixel_data: np.ndarray, filepath: str, force: bool = False) -> None:
         filepath = self._parse_filepath(filepath=filepath)
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        cv2.imwrite(filepath, pixel_data)
+        if force or not os.path.exists(filepath):
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
+            # pylint: disable=no-member
+            cv2.imwrite(filepath, pixel_data)
+        elif os.path.exists(filepath):
+            msg = f"Image filename {os.path.realpath(filepath)} \
+            already exists. If you wish to overwrite, set force = True"
+            self._logger.warning(msg)
 
-    def get_filepath(self, uid: str, basedir: str, format: str) -> str:
-        filename = uid + "." + format
+    def delete(self, filepath: str, silent: bool = False) -> None:
+        """Deletes an image"""
+        try:
+            os.remove(filepath)
+        except OSError:
+            if not silent:
+                msg = f"Delete warning! No image exists at {filepath}."
+                self._logger.warning(msg)
+
+    def get_filepath(self, uid: str, basedir: str, fileformat: str) -> str:
+        filename = uid + "." + fileformat
         return os.path.join(basedir, filename)
 
     def _read_dicom(self, filepath: str) -> np.ndarray:
@@ -57,6 +74,7 @@ class ImageIO:
 
     def _read_image(self, filepath: str) -> np.ndarray:
         try:
+            # pylint: disable=no-member
             image = cv2.imread(filepath, cv2.IMREAD_UNCHANGED)
         except FileNotFoundError as e:
             self._logger.exception(e)

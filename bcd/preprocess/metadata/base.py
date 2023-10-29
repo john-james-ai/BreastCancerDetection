@@ -4,29 +4,32 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/data/prep/base.py                                                              #
+# Filename   : /bcd/preprocess/metadata/base.py                                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:39 am                                            #
-# Modified   : Wednesday September 27th 2023 03:36:02 am                                           #
+# Modified   : Saturday October 28th 2023 02:42:38 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+
 """Base module for Data Preparation"""
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from typing import Union
 
 import pandas as pd
 
 
 # ------------------------------------------------------------------------------------------------ #
 class DataPrep(ABC):
+    """Defines the interface for metadata Data Preparation classes."""
     @abstractmethod
-    def prep(self, force: bool = False, result: bool = False, *args, **kwargs) -> None:
+    def prep(self, force: bool = False, result: bool = False, **kwargs) -> Union[None, pd.DataFrame]:
         """Performs the data preparation task."""
 
     def _format_column_names(self, df: pd.DataFrame) -> str:

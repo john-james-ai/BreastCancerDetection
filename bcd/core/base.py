@@ -11,25 +11,24 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Friday October 27th 2023 06:05:31 pm                                                #
+# Modified   : Saturday October 28th 2023 08:58:39 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Data Package Base Module"""
 from __future__ import annotations
-import os
-import inspect
-import string
-from datetime import datetime
-from abc import ABC, abstractmethod, abstractclassmethod
-import logging
-from dataclasses import dataclass
-from typing import Callable
-import json
 
-import pandas as pd
+import inspect
+import json
+import logging
+import string
+from abc import ABC
+from dataclasses import dataclass
+from datetime import datetime
+
 import numpy as np
+import pandas as pd
 
 # ------------------------------------------------------------------------------------------------ #
 IMMUTABLE_TYPES: tuple = (
@@ -85,7 +84,7 @@ STAGES = {
     5: "Enhance",
     6: "ROI Segmentation",
     7: "Augment",
-    8: "Reshape"
+    8: "Reshape",
 }
 
 
@@ -93,6 +92,7 @@ STAGES = {
 @dataclass()
 class Stage:
     """Encapsulates a stage in the preprocessing and modeling phases."""
+
     uid: int
     name: str = None
 
@@ -111,29 +111,20 @@ NON_NUMERIC_TYPES = ["category", "object"]
 
 # ------------------------------------------------------------------------------------------------ #
 class Application(ABC):
-    """base class for all application objects."""
+    """Abstract base class for all application objects.
 
-    def __init__(self, paramset: ParamSet, task_id: str) -> None:
-        self._name = self.__class__.__name__
-        self._module = inspect.getmodule(self).__name__
+    All subclasses must declare class variables as:
+    name = __qualname__
+    module = __name__
+    stage_id = <int>   # The stage identifier for the stage in the lifecycle
+    """
 
-    @property
-    def name(self) -> str:
-        return self._name
-
-    @property
-    def module(self) -> str:
-        return self._module
-
-    @property
-    @abstractclassmethod
-    def stage(cls) -> Stage:
-        """Returns the Stage object corresponding to the application"""
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass(eq=False)
 class DataClass(ABC):
     """A dataclass with extensions for equality checks, string representation, and formatting."""
+
     def __eq__(self, other: DataClass) -> bool:
         for key, value in self.__dict__.items():
             if type(value) in IMMUTABLE_TYPES:
@@ -205,83 +196,20 @@ class DataClass(ABC):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Params(DataClass):
-    """Abstract base class for preprocessor parameters."""
-
+    """Abstract base class for transformer parameters."""
 
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Entity(DataClass):
     """Abstract base class for project entities, such as Image, Task and Job."""
-    uid: str
-    name: str
-
-
-# ------------------------------------------------------------------------------------------------ #
-class Repo(ABC):
-    """Provides base class for all repositories classes.
-
-    Args:
-        name (str): Repository name. This will be the name of the underlying database table.
-        database(Database): Database containing data to access.
-    """
-
-    @abstractmethod
-    def add(self, *args, **kwargs) -> None:
-        """Adds an entity to the repository
-
-        Args:
-            entity (Entity): An entity object
-        """
-
-    @abstractmethod
-    def get(self, uid: str) -> Entity:
-        """Gets an an entity by its identifier.
-
-        Args:
-            id (str): Entity identifier.
-        """
-
-    @abstractmethod
-    def exists(self, uid: str) -> bool:
-        """Evaluates existence of an entity by identifier.
-
-        Args:
-            id (str): Entity UUID
-
-        Returns:
-            Boolean indicator of existence.
-        """
-
-    @abstractmethod
-    def count(self, condition: Callable = None) -> int:  # noqa
-        """Counts the entities matching the criteria. Counts all entities if id is None.
-
-        Args:
-            condition (Callable): A lambda expression used to subset the data.
-
-        Returns:
-            Integer number of rows matching criteria
-        """
-
-    @abstractmethod
-    def delete(self, uid: str, *args, **kwargs) -> None:
-        """Deletes the entity or entities matching condition.
-
-        Args:
-            id (str): Entity identifier.
-
-        """
-
-    @abstractmethod
-    def save(self) -> None:
-        """Saves changes to database."""
 
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class ParamSet(DataClass):
+class Param(DataClass):
     """Abstract base class containing parameters for an instance of an application."""
+
     name: str = __qualname__
     module: str = None
 

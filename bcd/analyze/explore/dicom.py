@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Saturday October 21st 2023 03:30:12 pm                                              #
+# Modified   : Saturday October 28th 2023 02:17:04 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,7 +38,7 @@ DICOM_DTYPES = {
     "series_uid": "str",
     "filepath": "str",
     "patient_id": "str",
-    "side": "category",
+    "left_or_right_breast": "category",
     "image_view": "category",
     "photometric_interpretation": "category",
     "samples_per_pixel": "int32",
@@ -60,7 +60,7 @@ DICOM_DTYPES = {
 MASS_FEATURES = [
     "cancer",
     "abnormality_type",
-    "side",
+    "left_or_right_breast",
     "image_view",
     "breast_density",
     "subtlety",
@@ -70,7 +70,7 @@ MASS_FEATURES = [
 CALC_FEATURES = [
     "cancer",
     "abnormality_type",
-    "side",
+    "left_or_right_breast",
     "image_view",
     "breast_density",
     "subtlety",
@@ -136,6 +136,7 @@ class DicomExplorer(Explorer):
         plt.tight_layout()
         plt.show()
 
+    @property
     def summary(self) -> pd.DataFrame:
         """Provides a summary of the DICOM Dataset"""
         df = self._df[

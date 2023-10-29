@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/core/orchestration/repo.py                                                     #
+# Filename   : /bcd/dal/repo/task.py                                                               #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Friday October 27th 2023 02:31:02 am                                                #
+# Modified   : Saturday October 28th 2023 10:27:00 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,13 +21,15 @@ from typing import Callable
 
 import pandas as pd
 import pymysql
-from sqlalchemy.dialects.mssql import VARCHAR, DATETIME, INTEGER, FLOAT
+from sqlalchemy.dialects.mssql import DATETIME, FLOAT, INTEGER, VARCHAR
 
 from bcd.config import Config
-from bcd.core.base import Repo
 from bcd.core.orchestration.task import Task
-from bcd.infrastructure.database.base import Database
+from bcd.dal.database.base import Database
+from bcd.dal.repo.base import Repo
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=arguments-renamed
 # ------------------------------------------------------------------------------------------------ #
 TASK_DTYPES = {
     "uid": VARCHAR(64),
@@ -47,6 +49,8 @@ TASK_DTYPES = {
 
 # ------------------------------------------------------------------------------------------------ #
 class TaskRepo(Repo):
+    """Repository of Tasks"""
+
     __tablename = "task"
 
     def __init__(self, database: Database, config: Config) -> None:
@@ -66,9 +70,10 @@ class TaskRepo(Repo):
             task (Task): A Task instance.
 
         """
+        exists = False
         try:
             exists = self.exists(uid=task.id)
-        except Exception:  # pragma: no cover
+        except pymysql.Error:  # pragma: no cover
             exists = False
         finally:
             if exists:
@@ -104,10 +109,8 @@ class TaskRepo(Repo):
                 msg = f"Task {uid} does not exist."
                 self._logger.exception(msg)
                 raise FileNotFoundError(msg)
-            class_ = Task.get_class(
-                module_name=task["module"].values[0], class_name=task["name"].values[0]
-            )
-            return class_.from_df(df=task)
+
+            return Task.from_df(df=task)
 
     def get_by_stage(self, stage_uid: int) -> pd.DataFrame:
         """Returns all task for a given stage."""
@@ -184,10 +187,10 @@ class TaskRepo(Repo):
             return len(task)
 
     def delete(self, uid: str) -> None:
-        """Removes a task given the id.
+        """Removes a task given the uid.
 
         Args:
-            id (str): Task UUID
+            uid (str): Task UUID
         """
         query = f"DELETE FROM {self.__tablename} WHERE id = :id;"
         params = {"uid": id}

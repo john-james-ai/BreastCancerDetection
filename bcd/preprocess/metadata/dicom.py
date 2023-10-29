@@ -4,36 +4,43 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/prep/dicom.py                                                                  #
+# Filename   : /bcd/preprocess/metadata/dicom.py                                                   #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Thursday October 26th 2023 08:28:24 pm                                              #
+# Modified   : Saturday October 28th 2023 10:57:31 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """DICOM Data Prep Module"""
-import os
 import logging
-from typing import Union
-from glob import glob
+import os
 import uuid
+from glob import glob
+from typing import Union
 
 import joblib
 import numpy as np
-from tqdm import tqdm
 import pandas as pd
 import pydicom
+from tqdm import tqdm
 
-from bcd.prep.base import DataPrep
+from bcd.preprocess.metadata.base import DataPrep
 
 
 # ------------------------------------------------------------------------------------------------ #
+# pylint: disable=arguments-renamed,arguments-differ
+# ------------------------------------------------------------------------------------------------ #
 class DicomPrep(DataPrep):
+    """Performs preprocessing of the DICOM data.
+
+    Reads the DICOM metadata, adds the series description and saves the file.
+    """
+
     def __init__(self) -> None:
         super().__init__()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
@@ -42,7 +49,7 @@ class DicomPrep(DataPrep):
         self,
         location: str,
         dicom_fp: str,
-        skip_list: list = [],
+        skip_list: list = None,
         force: bool = False,
         result: bool = False,
     ) -> Union[None, pd.DataFrame]:
@@ -79,7 +86,7 @@ class DicomPrep(DataPrep):
             xref_fp (str): Filepath to the case/series x-ref data
             dicom_out_fp (str): Filepath to the DICOM output file.
         """
-        CASE_VARIABLES = [
+        case_variables = [
             "case_id",
             "left_or_right_breast",
             "image_view",
@@ -93,7 +100,7 @@ class DicomPrep(DataPrep):
             "fileset",
             "cancer",
         ]
-        df_case = pd.read_csv(case_fp, usecols=CASE_VARIABLES)
+        df_case = pd.read_csv(case_fp, usecols=case_variables)
         df_dicom = pd.read_csv(dicom_fp)
         df_xref = pd.read_csv(xref_fp)
 
@@ -119,7 +126,7 @@ class DicomPrep(DataPrep):
             dicom.to_csv(dicom_fp, index=False)
         return dicom
 
-    def _get_filepaths(self, location: str, skip_list: list = []) -> list:
+    def _get_filepaths(self, location: str, skip_list: list = None) -> list:
         """Returns a filtered list of DICOM filepaths"""
         pattern = location + "/**/*.dcm"
         filepaths = glob(pattern, recursive=True)

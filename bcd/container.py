@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Friday October 27th 2023 02:30:09 am                                                #
+# Modified   : Sunday October 29th 2023 02:19:55 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,20 +21,25 @@ import logging.config
 
 from dependency_injector import containers, providers
 
-from bcd.infrastructure.database.mysql import MySQLDatabase
-from bcd.infrastructure.io.cache import ImageCache
-from bcd.core.image.repo import ImageRepo
-from bcd.core.orchestration.repo import TaskRepo
 from bcd.config import Config
-
-# from bcd.manage_data.repo.task import TaskRepo
 from bcd.core.image.factory import ImageFactory
+from bcd.dal.database.mysql import MySQLDatabase
+from bcd.dal.io.image import ImageIO
+from bcd.dal.repo.image import ImageRepo
+from bcd.dal.repo.task import TaskRepo
+from bcd.dal.repo.uow import UoW
+
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=c-extension-no-member
+# ------------------------------------------------------------------------------------------------ #
 
 
 # ------------------------------------------------------------------------------------------------ #
 #                                        LOGGING                                                   #
 # ------------------------------------------------------------------------------------------------ #
 class LoggingContainer(containers.DeclarativeContainer):
+    """Contains logging resource"""
+
     config = providers.Configuration()
 
     logging = providers.Resource(
@@ -46,34 +51,50 @@ class LoggingContainer(containers.DeclarativeContainer):
 # ------------------------------------------------------------------------------------------------ #
 #                                        REPO                                                      #
 # ------------------------------------------------------------------------------------------------ #
-class RepoContainer(containers.DeclarativeContainer):
+class DALContainer(containers.DeclarativeContainer):
+    """Contains the Data Access Layer"""
+
     config = providers.Configuration()
 
-    db = providers.Singleton(MySQLDatabase, config=Config)
+    db_config = providers.Singleton(Config)
 
-    factory = providers.Singleton(ImageFactory, case_fp=config.image.factory.case_fp, config=Config)
+    db = providers.Singleton(MySQLDatabase, config=db_config)
 
-    image = providers.Singleton(
-        ImageRepo, database=db, image_factory=factory, config=Config, cache=ImageCache
+    io = providers.Singleton(ImageIO)
+
+    image_factory = providers.Singleton(
+        ImageFactory,
+        metadata_filepath=config.data.metadata,
+        mode=config.mode,
+        directory=config.data[config.mode],
+        io=io,
     )
 
-    task = providers.Factory(TaskRepo, database=db, config=Config)
+    image_repo = providers.Singleton(
+        ImageRepo, database=db, image_factory=image_factory, io=io, mode=config.mode
+    )
+
+    task_repo = providers.Singleton(TaskRepo, database=db, mode=config.mode)
+
+    uow = providers.Singleton(
+        UoW,
+        database=db,
+        image_factory=image_factory,
+        image_repo=ImageRepo,
+        task_repo=TaskRepo,
+        io=io,
+        mode=config.mode,
+    )
 
 
 # ------------------------------------------------------------------------------------------------ #
 #                                       CONTAINER                                                  #
 # ------------------------------------------------------------------------------------------------ #
 class BCDContainer(containers.DeclarativeContainer):
+    """Dependency Injection Container"""
+
     config = providers.Configuration(yaml_files=["config.yml"])
 
     logs = providers.Container(LoggingContainer, config=config)
 
-    repo = providers.Container(RepoContainer, config=config)
-
-
-if __name__ == "__main__":
-    container = BCDContainer()
-    container.init_resources()
-    container.wire(
-        packages=["bcd.core", "bcd.preprocess.convert", "bcd.preprocess.filter", "bcd.core"]
-    )
+    dal = providers.Container(DALContainer, config=config)

@@ -4,26 +4,28 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_core/test_params.py                                                     #
+# Filename   : /tests/test_preprocess/test_params.py                                               #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 02:26:59 am                                              #
-# Modified   : Thursday October 26th 2023 08:05:55 pm                                              #
+# Modified   : Saturday October 28th 2023 10:34:02 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import inspect
-from datetime import datetime
-import pytest
 import logging
+from datetime import datetime
 
-from bcd.preprocess.convert import ImageConverterParams
+import pytest
 
+from bcd.preprocess.image.convert import ImageConverterParams
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=logging-format-interpolation
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
@@ -34,9 +36,11 @@ single_line = f"\n{100 * '-'}"
 @pytest.mark.params
 class TestParams:  # pragma: no cover
     # ============================================================================================ #
-    def test_setup(self, caplog):
+    def test_setup(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         params = ImageConverterParams()

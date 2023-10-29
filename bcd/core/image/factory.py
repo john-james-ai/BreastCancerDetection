@@ -11,26 +11,29 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 10:55:08 pm                                             #
-# Modified   : Friday October 27th 2023 02:26:17 am                                                #
+# Modified   : Sunday October 29th 2023 01:20:20 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Image Module"""
 from __future__ import annotations
+
+import logging
 import os
 from datetime import datetime
 from uuid import uuid4
-import logging
 
-import pandas as pd
 import numpy as np
+import pandas as pd
+from dotenv import load_dotenv
 
-from bcd.config import Config
-from bcd.core.base import STAGES
-from bcd.infrastructure.io.image import ImageIO
+from bcd.core.base import Stage
 from bcd.core.image.entity import Image
+from bcd.dal.io.image import ImageIO
 from bcd.utils.date import to_datetime
+
+load_dotenv()
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -39,11 +42,15 @@ from bcd.utils.date import to_datetime
 class ImageFactory:
     """Creates Image Objects"""
 
-    def __init__(self, case_fp: str, config: Config) -> None:
-        case_fp = os.path.abspath(case_fp)
-        self._cases = pd.read_csv(case_fp)
-        self._cases = self._cases.loc[self._cases["series_description"] == "full mammogram images"]
-        self._config = config()
+    def __init__(self, metadata_filepath: str, mode: str, directory: str, io: ImageIO) -> None:
+        metadata_filepath = os.path.abspath(metadata_filepath)
+        image_metadata = pd.read_csv(metadata_filepath)
+        self._image_metadata = image_metadata.loc[
+            image_metadata["series_description"] == "full mammogram images"
+        ]
+        self._mode = mode
+        self._directory = directory
+        self._io = io
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     def from_df(self, df: pd.DataFrame) -> Image:
@@ -59,15 +66,14 @@ class ImageFactory:
         """
 
         # Convert numpy datetime64 to python datetime.
-        created = to_datetime(dt = df['created'].values[0])
+        created = to_datetime(dt=df["created"].values[0])
 
-        io = ImageIO()
-        pixel_data = io.read(filepath=df["filepath"])
+        pixel_data = self._io.read(filepath=df["filepath"])
         return Image(
             uid=df["uid"].values[0],
             case_id=df["case_id"].values[0],
             mode=df["mode"].values[0],
-            stage_uid=df["stage_uid"].values[0],
+            stage_id=df["stage_id"].values[0],
             stage=df["stage"].values[0],
             left_or_right_breast=df["left_or_right_breast"].values[0],
             image_view=df["image_view"].values[0],
@@ -90,16 +96,16 @@ class ImageFactory:
             fileset=df["fileset"].values[0],
             cancer=df["cancer"].values[0],
             created=created,
-            preprocessor=df["preprocessor"].values[0],
+            transformer=df["transformer"].values[0],
             task_id=df["task_id"].values[0],
         )
 
     def create(
         self,
         case_id: str,
-        stage_uid: int,
+        stage_id: int,
         pixel_data: np.ndarray,
-        preprocessor: str,
+        transformer: str,
         task_id: str,
     ) -> Image:
         """Creates an image from pizel data.
@@ -112,9 +118,9 @@ class ImageFactory:
 
         Args:
             case_id (str): Unique identifier for a case.
-            stage_uid (int): The preprocessing stage identifier
+            stage_id (int): The preprocessing stage identifier
             pixel_data (np.ndarray): Pixel data in numpy array format.
-            preprocessor (str): The name of the preprocessor
+            transformer (str): The name of the transformer
             task_id (str): The UUID for the specific task.
 
         Returns
@@ -123,22 +129,17 @@ class ImageFactory:
         """
         uid = str(uuid4())
 
-        stage = self._get_stage(uid=stage_uid)
+        stage = Stage(uid=stage_id).name
 
-        case = self._cases.loc[self._cases["case_id"] == case_id]
+        case = self._image_metadata.loc[self._image_metadata["case_id"] == case_id]
 
-        mode = self._config.mode
-
-        basedir = self._config.image_directory
-
-        io = ImageIO()
-        filepath = io.get_filepath(uid=uid, basedir=basedir, format="png")
+        filepath = self._io.get_filepath(uid=uid, basedir=self._directory, fileformat="png")
 
         return Image(
             uid=uid,
             case_id=case_id,
-            mode=mode,
-            stage_uid=stage_uid,
+            mode=self._mode,
+            stage_id=stage_id,
             stage=stage,
             left_or_right_breast=case["left_or_right_breast"].values[0],
             image_view=case["image_view"].values[0],
@@ -161,14 +162,6 @@ class ImageFactory:
             fileset=case["fileset"].values[0],
             cancer=case["cancer"].values[0],
             created=datetime.now(),
-            preprocessor=preprocessor,
+            transformer=transformer,
             task_id=task_id,
         )
-
-    def _get_stage(self, uid: int) -> None:
-        try:
-            return STAGES[uid]
-        except KeyError:
-            msg = f"Stage identifier = {uid} is invalid. Valid values are: {STAGES.keys()}"
-            self._logger.exception(msg)
-            raise ValueError(msg)

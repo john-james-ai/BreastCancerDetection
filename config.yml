@@ -1,8 +1,8 @@
-database:
-  autocommit: false
-image:
-  factory:
-    case_fp: data/meta/2_clean/dicom.csv
+data:
+  dev: data/image/1_dev
+  metadata: data/meta/2_clean/dicom.csv
+  prod: data/image/2_prod
+  test: tests/data/images
 logging:
   disable_existing_loggers: false
   formatters:

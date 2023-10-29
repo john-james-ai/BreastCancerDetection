@@ -11,19 +11,20 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Friday October 27th 2023 12:41:35 am                                                #
+# Modified   : Sunday October 29th 2023 02:25:15 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Image Module"""
 from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import datetime
 
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 from bcd.core.base import DataClass
 
@@ -33,10 +34,12 @@ from bcd.core.base import DataClass
 # ------------------------------------------------------------------------------------------------ #
 @dataclass(eq=False)
 class Image(DataClass):
+    """Image Object"""
+
     uid: str
     case_id: str
     mode: str
-    stage_uid: int
+    stage_id: int
     stage: str
     left_or_right_breast: str
     image_view: str
@@ -58,39 +61,39 @@ class Image(DataClass):
     filepath: str
     fileset: str
     cancer: bool
-    preprocessor: str
+    transformer: str
     task_id: str
     created: datetime
 
     def __eq__(self, other: Image) -> bool:
         return (
-            self.uid == other.uid and
-            self.case_id == other.case_id and
-            self.mode == other.mode and
-            self.stage_uid == other.stage_uid and
-            self.stage == other.stage and
-            self.left_or_right_breast == other.left_or_right_breast and
-            self.image_view == other.image_view and
-            self.abnormality_type == other.abnormality_type and
-            self.assessment == other.assessment and
-            self.breast_density == other.breast_density and
-            self.bit_depth == other.bit_depth and
-            (self.pixel_data == other.pixel_data).all() and
-            self.height == other.height and
-            self.width == other.width and
-            self.size == other.size and
-            int(self.aspect_ratio) == int(other.aspect_ratio) and
-            self.min_pixel_value == other.min_pixel_value and
-            self.max_pixel_value == other.max_pixel_value and
-            self.range_pixel_values == other.range_pixel_values and
-            int(self.mean_pixel_value) == int(other.mean_pixel_value) and
-            self.median_pixel_value == other.median_pixel_value and
-            int(self.std_pixel_value) == int(other.std_pixel_value) and
-            self.filepath == other.filepath and
-            self.fileset == other.fileset and
-            self.cancer == other.cancer and
-            self.preprocessor == other.preprocessor and
-            self.task_id == other.task_id
+            self.uid == other.uid
+            and self.case_id == other.case_id
+            and self.mode == other.mode
+            and self.stage_id == other.stage_id
+            and self.stage == other.stage
+            and self.left_or_right_breast == other.left_or_right_breast
+            and self.image_view == other.image_view
+            and self.abnormality_type == other.abnormality_type
+            and self.assessment == other.assessment
+            and self.breast_density == other.breast_density
+            and self.bit_depth == other.bit_depth
+            and (self.pixel_data == other.pixel_data).all()
+            and self.height == other.height
+            and self.width == other.width
+            and self.size == other.size
+            and int(self.aspect_ratio) == int(other.aspect_ratio)
+            and self.min_pixel_value == other.min_pixel_value
+            and self.max_pixel_value == other.max_pixel_value
+            and self.range_pixel_values == other.range_pixel_values
+            and int(self.mean_pixel_value) == int(other.mean_pixel_value)
+            and self.median_pixel_value == other.median_pixel_value
+            and int(self.std_pixel_value) == int(other.std_pixel_value)
+            and self.filepath == other.filepath
+            and self.fileset == other.fileset
+            and self.cancer == other.cancer
+            and self.transformer == other.transformer
+            and self.task_id == other.task_id
         )
 
     def visualize(
@@ -115,7 +118,7 @@ class Image(DataClass):
             "uid": self.uid,
             "case_id": self.case_id,
             "mode": self.mode,
-            "stage_uid": self.stage_uid,
+            "stage_id": self.stage_id,
             "stage": self.stage,
             "left_or_right_breast": self.left_or_right_breast,
             "image_view": self.image_view,
@@ -136,7 +139,7 @@ class Image(DataClass):
             "filepath": self.filepath,
             "fileset": self.fileset,
             "cancer": self.cancer,
-            "preprocessor": self.preprocessor,
+            "transformer": self.transformer,
             "task_id": self.task_id,
             "created": self.created,
         }
