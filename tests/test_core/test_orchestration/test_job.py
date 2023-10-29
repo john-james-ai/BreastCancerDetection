@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_config/test_config.py                                                   #
+# Filename   : /tests/test_core/test_orchestration/test_job.py                                     #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Wednesday October 25th 2023 04:08:08 pm                                             #
-# Modified   : Sunday October 29th 2023 02:23:20 pm                                                #
+# Created    : Sunday October 29th 2023 02:44:19 pm                                                #
+# Modified   : Sunday October 29th 2023 03:10:21 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,8 +22,12 @@ from datetime import datetime
 
 import pytest
 
-from bcd.config import Config
+from bcd.core.orchestration.job import Job
+from bcd.core.orchestration.task import Task
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=missing-class-docstring, line-too-long
+# ------------------------------------------------------------------------------------------------ #
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
@@ -31,21 +35,19 @@ double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
 
-@pytest.mark.config
-class TestConfig:  # pragma: no cover
-    """Test Configuration"""
-
+@pytest.mark.job
+class TestJob:  # pragma: no cover
     # ============================================================================================ #
-    def test_get_mode(self):
-        """Testing Get Mode"""
+    def test_setup(self, container):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        config = Config
-        assert config.mode == "test"
+        uow = container.dal.uow()
+        uow.image_repo.delete_by_mode()
+        uow.task_repo.delete_all()
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -57,19 +59,19 @@ class TestConfig:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_set_mode(self):
+    def test_job(self, tasks):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        config = Config
-        config.mode = "dev"
-        assert config.mode == "dev"
-
-        with pytest.raises(ValueError):
-            config.mode = "invalid"
+        job = Job(name="test_job")
+        for task in tasks:
+            job.add_task(task)
+        assert job.n_tasks == 5
+        for task in job.tasks:
+            assert isinstance(task, Task)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -81,39 +83,17 @@ class TestConfig:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_log_level(self):
+    def test_teardown(self, container):
         start = datetime.now()
         logger.info(
-            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
+                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        config = Config
-        assert config.log_level == "DEBUG"
-
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_set_log_level(self):
-        start = datetime.now()
-        logger.info(
-            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        config = Config
-        config.log_level = "INFO"
-        assert config.log_level == "INFO"
-
-        with pytest.raises(ValueError):
-            config.log_level = "invalid"
+        uow = container.dal.uow()
+        uow.image_repo.delete_by_mode()
+        uow.task_repo.delete_all()
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()

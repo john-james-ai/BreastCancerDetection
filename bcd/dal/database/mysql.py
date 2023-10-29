@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 09:56:27 am                                              #
-# Modified   : Sunday October 29th 2023 02:21:10 am                                                #
+# Modified   : Sunday October 29th 2023 02:38:35 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -41,16 +41,16 @@ load_dotenv()
 class MySQLDatabase(Database):
     """Abstract base class for databases."""
 
-    def __init__(self, config: Config) -> None:
+    def __init__(self, config: type[Config] = Config) -> None:
         super().__init__()
-        self._name = config.name
-        self._user_name = config.username
-        self._pwd = config.password
-        self._startup_script = config.startup
-        self._backup_directory = config.backup_directory
-        self._autocommit = config.autocommit
-        self._timeout = config.timeout
-        self._max_attempts = config.max_attempts
+        self._name = config.get_name()
+        self._user_name = config.get_username()
+        self._pwd = config.get_password()
+        self._startup_script = config.get_startup()
+        self._backup_directory = config.get_backup_directory()
+        self._autocommit = config.get_autocommit()
+        self._timeout = config.get_timeout()
+        self._max_attempts = config.get_max_attempts()
         self._engine = None
         self._connection = None
         self._transaction = None

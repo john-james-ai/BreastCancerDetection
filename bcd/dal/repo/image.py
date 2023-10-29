@@ -11,13 +11,13 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 29th 2023 04:19:11 am                                                #
+# Modified   : Sunday October 29th 2023 05:06:29 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import logging
-from typing import Callable, Union
+from typing import Callable, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -62,7 +62,6 @@ WRITE_IMAGE_DTYPES = {
     "task_id": VARCHAR(length=64),
     "created": DATETIME(),
 }
-
 # ------------------------------------------------------------------------------------------------ #
 READ_IMAGE_DTYPES = {
     "uid": str,
@@ -172,25 +171,16 @@ class ImageRepo(Repo):
     def get_by_stage(
         self,
         stage_id: int,
-        n: int = None,
-        frac: float = None,
-        random_state: int = None,
-    ) -> dict:
+    ) -> Tuple[pd.DataFrame, dict]:
         """Returns images and metadata for the given stage.
 
         Args:
             stage_id (int): The stage of the preprocessing cycle.
-            n (int): Number of images to return. Cannot be used with frac.
-            frac (float): Fraction of items matching condition to return. Cannot be used with n.
             random_stage (int): Seed for pseudo randomizing
 
         Returns:
             Tuple containing the metadata and dictionary of images, keyed by image id.
         """
-        if n is not None and frac is not None:
-            msg = "n and frac cannot be used together. Either n or frac must be None."
-            self._logger.exception(msg)
-            raise ValueError(msg)
 
         images = {}
 
@@ -203,15 +193,6 @@ class ImageRepo(Repo):
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
-        if n is not None:
-            image_meta = image_meta.groupby(by="transformer").sample(
-                n=n, replace=False, random_state=random_state
-            )
-        elif frac is not None:
-            image_meta = image_meta.groupby(by="transformer").sample(
-                frac=frac, replace=False, random_state=random_state
-            )
-
         for _, meta in image_meta.iterrows():
             image = self.get(uid=meta["uid"])
             images[meta["uid"]] = image
@@ -222,27 +203,15 @@ class ImageRepo(Repo):
 
     def get_by_mode(
         self,
-        n: int = None,
-        frac: float = None,
-        random_state: int = None,
-    ) -> dict:
+    ) -> Tuple[pd.DataFrame, dict]:
         """Returns images and metadata for the current mode.
 
-        Samples are stratified by stage_id and transformer. For instance, if
-        n = 3, 3 images will be sampled from each stage_id and transformer.
-
         Args:
-            n (int): Number of images to return. Cannot be used with frac.
-            frac (float): Fraction of items matching condition to return. Cannot be used with n.
             random_stage (int): Seed for pseudo randomizing
 
         Returns:
             Tuple containing the metadata and dictionary of images, keyed by image id.
         """
-        if n is not None and frac is not None:
-            msg = "n and frac cannot be used together. Either n or frac must be None."
-            self._logger.exception(msg)
-            raise ValueError(msg)
 
         images = {}
 
@@ -255,15 +224,6 @@ class ImageRepo(Repo):
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
-        if n is not None:
-            image_meta = image_meta.groupby(by=["stage_id", "transformer"]).sample(
-                n=n, replace=False, random_state=random_state
-            )
-        elif frac is not None:
-            image_meta = image_meta.groupby(by=["stage_id", "transformer"]).sample(
-                frac=frac, replace=False, random_state=random_state
-            )
-
         for _, meta in image_meta.iterrows():
             image = self.get(uid=meta["uid"])
             images[meta["uid"]] = image
@@ -272,22 +232,14 @@ class ImageRepo(Repo):
             images,
         )
 
-    def get_by_transformer(
-        self, transformer: str, n: int = None, frac: float = None, random_state: int = None
-    ) -> list:
+    def get_by_transformer(self, transformer: str) -> Tuple[pd.DataFrame, dict]:
         """Returns a list of images for a given transformer.
 
         Args:
             transformer (str): The transformer that created the images
-            n (int): Number of images to return. Cannot be used with frac.
-            frac (float): Fraction of items matching condition to return. Cannot be used with n.
-            random_stage (int): Seed for pseudo randomizing
+        Returns:
+            Tuple containing the metadata and dictionary of images, keyed by image id.
         """
-        if n is not None and frac is not None:
-            msg = "n and frac cannot be used together. Either n or frac must be None."
-            self._logger.exception(msg)
-            raise ValueError(msg)
-
         images = {}
 
         query = (
@@ -295,11 +247,6 @@ class ImageRepo(Repo):
         )
         params = {"mode": self.mode, "transformer": transformer}
         image_meta = self._database.query(query=query, params=params)
-
-        if n is not None:
-            image_meta = image_meta.sample(n=n, random_state=random_state)
-        elif frac is not None:
-            image_meta = image_meta.sample(frac=frac, random_state=random_state)
 
         if len(image_meta) == 0:
             msg = f"No images exist for the {transformer} transformer in {self.mode} mode."

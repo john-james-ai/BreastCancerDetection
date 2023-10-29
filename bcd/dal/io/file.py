@@ -1,44 +1,46 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 # ================================================================================================ #
-# Project    : Appstore Ratings & Reviews Analysis                                                 #
-# Version    : 0.1.19                                                                              #
+# Project    : Deep Learning for Breast Cancer Detection                                           #
+# Version    : 0.1.0                                                                               #
 # Python     : 3.10.8                                                                              #
-# Filename   : /appstore/infrastructure/file/io.py                                                 #
+# Filename   : /bcd/dal/io/file.py                                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
-# URL        : https://github.com/john-james-ai/appstore                                           #
+# URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday April 4th 2023 08:46:04 pm                                                  #
-# Modified   : Sunday August 27th 2023 04:36:00 pm                                                 #
+# Modified   : Sunday October 29th 2023 01:44:18 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-from abc import ABC, abstractmethod
-import os
-import logging
 import codecs
-import yaml
+import json
+import logging
+import os
 import pickle
+from abc import ABC, abstractmethod
+from typing import Any, List, Union
+
 import pandas as pd
 import pyarrow as pa
-import json
 import pyarrow.parquet as pq
-from typing import Any, Union, List
-
+import yaml
 
 # ------------------------------------------------------------------------------------------------ #
 
 
 class IO(ABC):  # pragma: no cover
+    """Base class for IO Files"""
+
     _logger = logging.getLogger(
         f"{__module__}.{__name__}",
     )
 
     @classmethod
-    def read(cls, filepath: str, *args, **kwargs) -> Any:
+    def read(cls, filepath: str, **kwargs) -> Any:
         data = cls._read(filepath, **kwargs)
         return data
 
@@ -48,7 +50,7 @@ class IO(ABC):  # pragma: no cover
         pass
 
     @classmethod
-    def write(cls, filepath: str, data: Any, *args, **kwargs) -> None:
+    def write(cls, filepath: str, data: Any, **kwargs) -> None:
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         cls._write(filepath, data, **kwargs)
 
@@ -64,13 +66,14 @@ class IO(ABC):  # pragma: no cover
 
 
 class ExcelIO(IO):  # pragma: no cover
+    """Reads and writes Excel Files"""
+
     @classmethod
     def _read(
         cls,
         filepath: str,
         sheet_name: Union[str, int, list, None] = 0,
         header: Union[int, None] = 0,
-        names: list = None,
         index_col: Union[int, str] = None,
         usecols: List[str] = None,
         **kwargs,
@@ -111,6 +114,8 @@ class ExcelIO(IO):  # pragma: no cover
 
 
 class CSVIO(IO):  # pragma: no cover
+    """Reads and writes CSV Files"""
+
     @classmethod
     def _read(
         cls,
@@ -160,6 +165,8 @@ class CSVIO(IO):  # pragma: no cover
 
 
 class TSVIO(IO):  # pragma: no cover
+    """Reads and writes TSV files."""
+
     @classmethod
     def _read(
         cls,
@@ -209,25 +216,27 @@ class TSVIO(IO):  # pragma: no cover
 
 
 class YamlIO(IO):  # pragma: no cover
+    """Reads and writes YAML files."""
+
     @classmethod
     def _read(cls, filepath: str, **kwargs) -> dict:
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             try:
                 return yaml.safe_load(f)
             except yaml.YAMLError as e:  # pragma: no cover
                 cls._logger.exception(e)
-                raise IOError(e)
+                raise IOError() from e
             finally:
                 f.close()
 
     @classmethod
     def _write(cls, filepath: str, data: Any, **kwargs) -> None:
-        with open(filepath, "w") as f:
+        with open(filepath, "w", encoding="utf-8") as f:
             try:
                 yaml.dump(data, f)
             except yaml.YAMLError as e:  # pragma: no cover
                 cls._logger.exception(e)
-                raise IOError(e)
+                raise IOError() from e
             finally:
                 f.close()
 
@@ -238,6 +247,8 @@ class YamlIO(IO):  # pragma: no cover
 
 
 class PickleIO(IO):  # pragma: no cover
+    """Reads and writes Pickle data."""
+
     @classmethod
     def _read(cls, filepath: str, **kwargs) -> Any:
         with open(filepath, "rb") as f:
@@ -245,7 +256,7 @@ class PickleIO(IO):  # pragma: no cover
                 return pickle.load(f)
             except pickle.PickleError() as e:  # pragma: no cover
                 cls._logger.exception(e)
-                raise IOError(e)
+                raise IOError() from e
             finally:
                 f.close()
 
@@ -253,12 +264,12 @@ class PickleIO(IO):  # pragma: no cover
     def _write(cls, filepath: str, data: Any, write_mode: str = "wb", **kwargs) -> None:
         # Note, "a+" write_mode for append. If <TypeError: write() argument must be str, not bytes>
         # use "ab+"
-        with open(filepath, write_mode) as f:
+        with open(filepath, write_mode, encoding="utf-8") as f:
             try:
                 pickle.dump(data, f)
             except pickle.PickleError() as e:  # pragma: no cover
                 cls._logger.exception(e)
-                raise (e)
+                raise
             finally:
                 f.close()
 
@@ -269,6 +280,8 @@ class PickleIO(IO):  # pragma: no cover
 
 
 class ParquetIO(IO):  # pragma: no cover
+    """Reads and writes Parquet files."""
+
     @classmethod
     def _read(cls, filepath: str, **kwargs) -> Any:
         """Read the pyarrow table, then convert to pandas."""
@@ -288,6 +301,8 @@ class ParquetIO(IO):  # pragma: no cover
 
 
 class HtmlIO(IO):  # pragma: no cover
+    """Reads and writes HTML"""
+
     @classmethod
     def _read(cls, filepath: str, **kwargs) -> Any:
         """Read the raw html."""
@@ -306,16 +321,18 @@ class HtmlIO(IO):  # pragma: no cover
 
 
 class JsonIO(IO):  # pragma: no cover
+    """Reads and writes JSON files."""
+
     @classmethod
     def _read(cls, filepath: str, **kwargs) -> Any:
         """Read the parsed dictionary from a json file."""
-        with open(filepath) as json_file:
+        with open(filepath, "r", encoding="utf-8") as json_file:
             return json.load(json_file)
 
     @classmethod
     def _write(cls, filepath: str, data: dict, **kwargs) -> None:
         """Writes a dictionary to a json file."""
-        with open(filepath, "w") as json_file:
+        with open(filepath, "w", encoding="utf-8") as json_file:
             if isinstance(data, list):
                 for datum in data:
                     if isinstance(datum, dict):
@@ -336,6 +353,8 @@ class JsonIO(IO):  # pragma: no cover
 #                                       IO SERVICE                                                 #
 # ------------------------------------------------------------------------------------------------ #
 class IOService:  # pragma: no cover
+    """File I/O Service"""
+
     __io = {
         "html": HtmlIO,
         "dat": CSVIO,
@@ -370,12 +389,12 @@ class IOService:  # pragma: no cover
         try:
             file_format = os.path.splitext(filepath)[1].replace(".", "")
             return IOService.__io[file_format]
-        except TypeError:
+        except TypeError as exc:
             if filepath is None:
                 msg = "Filepath is None"
                 cls._logger.exception(msg)
-                raise ValueError(msg)
-        except KeyError:
+                raise ValueError(msg) from exc
+        except KeyError as exc:
             msg = "File type {} is not supported.".format(file_format)
             cls._logger.exception(msg)
-            raise ValueError(msg)
+            raise ValueError(msg) from exc

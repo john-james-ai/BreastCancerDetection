@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 28th 2023 07:12:51 pm                                              #
-# Modified   : Sunday October 29th 2023 02:23:40 am                                                #
+# Modified   : Sunday October 29th 2023 03:34:12 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -81,6 +81,19 @@ class Transformer(Application):
             filepath (str): The path to the image.
         """
         return self._io.read(filepath=filepath)
+
+    def read_images(self, stage_id: int, transformer: str = None) -> dict:
+        """Returns images for the given stage in a dict format, keyed by image uid.
+
+        Args:
+            stage_id (int): The stage identifier for which images are
+                to be returned.
+        """
+        if transformer is None:
+            _, images = self._uow.image_repo.get_by_stage(stage_id=stage_id)
+        else:
+            _, images = self._uow.image_repo.get_by_transformer(transformer=transformer)
+        return images
 
     def read_image(self, uid: str) -> Image:
         """Reads an image from the repository

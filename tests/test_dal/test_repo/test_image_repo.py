@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_dal/test_image_repo.py                                                  #
+# Filename   : /tests/test_dal/test_repo/test_image_repo.py                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Saturday October 28th 2023 08:56:21 pm                                              #
+# Modified   : Sunday October 29th 2023 06:19:22 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -84,7 +84,7 @@ class TestImageRepo:  # pragma: no cover
             with pytest.raises(FileExistsError):
                 repo.add(image=image)
 
-        assert repo.count() == 15
+        assert repo.count() == 10
         assert not repo.exists(uid="999")
 
         # ---------------------------------------------------------------------------------------- #
@@ -110,8 +110,7 @@ class TestImageRepo:  # pragma: no cover
         repo = container.dal.image_repo()
         for image in images:
             image2 = repo.get(uid=image.uid)
-            logger.debug(image)
-            logger.debug(image2)
+            assert isinstance(image2, Image)
             assert image == image2
 
         # ---------------------------------------------------------------------------------------- #
@@ -135,38 +134,18 @@ class TestImageRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        image_meta, images = repo.get_by_stage(stage_uid=0)
-        assert len(image_meta) < 8
-        assert len(images) < 8
+        image_meta, images = repo.get_by_stage(stage_id=0)
+        assert len(image_meta) == 5
+        assert len(images) == 5
         for id, image in images.items():
-            assert image.stage_uid == 0
-            assert isinstance(id, str)
-            assert isinstance(image, Image)
-            assert image.pixel_data is not None
-
-        # Test Sampling n
-        image_meta, images = repo.get_by_stage(stage_uid=1, n=2)
-        assert len(image_meta) == 2
-        assert len(images) == 2
-        for id, image in images.items():
-            assert image.stage_uid == 1
-            assert isinstance(id, str)
-            assert isinstance(image, Image)
-            assert image.pixel_data is not None
-
-        # Test Sampling frac
-        image_meta, images = repo.get_by_stage(stage_uid=1, frac=0.5)
-        assert len(image_meta) < 5
-        assert len(images) < 5
-        for id, image in images.items():
-            assert image.stage_uid == 1
+            assert image.stage_id == 0
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
 
         # Test Exception
         with pytest.raises(FileNotFoundError):
-            image_meta, images = repo.get_by_stage(stage_uid=99, frac=0.5)
+            image_meta, images = repo.get_by_stage(stage_id=99)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -189,41 +168,19 @@ class TestImageRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        image_meta, images = repo.get_by_transformer(preprocessor="P1")
+        image_meta, images = repo.get_by_transformer(transformer="P1")
         assert len(image_meta) == 5
         assert len(images) == 5
         for id, image in images.items():
-            # assert image.stage_uid == 0
+            # assert image.stage_id == 0
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
-            assert image.preprocessor == "P1"
-
-        # Test Sampling n
-        image_meta, images = repo.get_by_transformer(preprocessor="P1", n=3)
-        assert len(image_meta) == 3
-        assert len(images) == 3
-        for id, image in images.items():
-            # assert image.stage_uid == 0
-            assert isinstance(id, str)
-            assert isinstance(image, Image)
-            assert image.pixel_data is not None
-            assert image.preprocessor == "P1"
-
-        # Test Sampling frac
-        image_meta, images = repo.get_by_transformer(preprocessor="P2", frac=0.5)
-        assert len(image_meta) == 2
-        assert len(images) == 2
-        for id, image in images.items():
-            # assert image.stage_uid == 1
-            assert isinstance(id, str)
-            assert isinstance(image, Image)
-            assert image.pixel_data is not None
-            assert image.preprocessor == "P2"
+            assert image.transformer == "P1"
 
         # Test Exception
         with pytest.raises(FileNotFoundError):
-            image_meta, images = repo.get_by_transformer(preprocessor="Invalid")
+            image_meta, images = repo.get_by_transformer(transformer="Invalid")
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -246,26 +203,8 @@ class TestImageRepo:  # pragma: no cover
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
         image_meta, images = repo.get_by_mode()
-        assert len(image_meta) == 15
-        assert len(images) == 15
-        for id, image in images.items():
-            assert isinstance(id, str)
-            assert isinstance(image, Image)
-            assert image.pixel_data is not None
-
-        # Test Sampling n
-        image_meta, images = repo.get_by_mode(n=2)
-        assert len(image_meta) > 2
-        assert len(images) > 2
-        for id, image in images.items():
-            assert isinstance(id, str)
-            assert isinstance(image, Image)
-            assert image.pixel_data is not None
-
-        # Test Sampling frac
-        image_meta, images = repo.get_by_mode(frac=0.5)
-        assert len(image_meta) > 2
-        assert len(images) > 2
+        assert len(image_meta) == 10
+        assert len(images) == 10
         for id, image in images.items():
             assert isinstance(id, str)
             assert isinstance(image, Image)
@@ -293,15 +232,15 @@ class TestImageRepo:  # pragma: no cover
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
         meta = repo.get_meta()
-        assert len(meta) == 15
+        assert len(meta) == 10
         assert isinstance(meta, pd.DataFrame)
         logger.debug(f"Test Get Image Meta:\n{meta}")
 
-        condition = lambda df: (df["stage_uid"] == 0) & (df["mode"] == "test")
+        condition = lambda df: (df["stage_id"] == 0) & (df["mode"] == "test")
         meta = repo.get_meta(condition=condition)
         assert len(meta) == 5
 
-        condition = lambda df: (df["stage_uid"] == 99) & (df["mode"] == "test")
+        condition = lambda df: (df["stage_id"] == 99) & (df["mode"] == "test")
         meta = repo.get_meta(condition=condition)
         assert len(meta) == 0
 
@@ -326,8 +265,8 @@ class TestImageRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        assert repo.count() == 15
-        condition = lambda df: df["stage_uid"] == 1
+        assert repo.count() == 10
+        condition = lambda df: df["stage_id"] == 1
         assert repo.count(condition) == 5
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -350,8 +289,8 @@ class TestImageRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        repo.delete_by_stage(stage_uid=0)
-        assert repo.count() == 10
+        repo.delete_by_stage(stage_id=0)
+        assert repo.count() == 5
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -374,8 +313,8 @@ class TestImageRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        repo.delete_by_transformer(preprocessor="P2")
-        assert repo.count() == 5
+        repo.delete_by_transformer(transformer="P2")
+        assert repo.count() == 0
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -388,7 +327,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_delete_by_mode(self, container):
+    def test_delete_by_mode(self, images, container):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
@@ -396,6 +335,13 @@ class TestImageRepo:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
+        repo = container.dal.image_repo()
+        for image in images:
+            # Add image to repository
+            repo.add(image=image)
+
+        assert repo.count() == 10
+        assert not repo.exists(uid="999")
         repo = container.dal.image_repo()
         repo.delete_by_mode()
         assert repo.count() == 0

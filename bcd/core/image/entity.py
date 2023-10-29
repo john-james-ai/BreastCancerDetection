@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Sunday October 29th 2023 02:25:15 am                                                #
+# Modified   : Sunday October 29th 2023 06:18:15 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,7 +19,7 @@
 """Image Module"""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -63,7 +63,7 @@ class Image(DataClass):
     cancer: bool
     transformer: str
     task_id: str
-    created: datetime
+    created: datetime = field(compare=False)
 
     def __eq__(self, other: Image) -> bool:
         return (
@@ -82,19 +82,26 @@ class Image(DataClass):
             and self.height == other.height
             and self.width == other.width
             and self.size == other.size
-            and int(self.aspect_ratio) == int(other.aspect_ratio)
+            and round(self.aspect_ratio, 1) == round(other.aspect_ratio, 1)
             and self.min_pixel_value == other.min_pixel_value
             and self.max_pixel_value == other.max_pixel_value
             and self.range_pixel_values == other.range_pixel_values
-            and int(self.mean_pixel_value) == int(other.mean_pixel_value)
+            and round(self.mean_pixel_value, 0) == round(other.mean_pixel_value, 0)
             and self.median_pixel_value == other.median_pixel_value
-            and int(self.std_pixel_value) == int(other.std_pixel_value)
+            and round(self.std_pixel_value, 1) == round(other.std_pixel_value, 1)
             and self.filepath == other.filepath
             and self.fileset == other.fileset
             and self.cancer == other.cancer
             and self.transformer == other.transformer
             and self.task_id == other.task_id
         )
+
+    def difference(self, other: Image) -> dict:
+        dict1 = self.as_dict()
+        dict2 = other.as_dict()
+        set1 = set(dict1.items())
+        set2 = set(dict2.items())
+        return set1 ^ set2
 
     def visualize(
         self, cmap: str = "jet", ax: plt.Axes = None, figsize: tuple = (8, 8)

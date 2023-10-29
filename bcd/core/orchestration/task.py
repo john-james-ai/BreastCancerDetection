@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Sunday October 29th 2023 04:01:17 am                                                #
+# Modified   : Sunday October 29th 2023 02:34:02 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,6 +25,7 @@ from uuid import uuid4
 
 import pandas as pd
 
+from bcd.config import Config
 from bcd.core.base import Application, Entity, Param, Stage
 from bcd.utils.date import to_datetime
 from bcd.utils.get_class import get_class
@@ -55,44 +56,6 @@ class Task(Entity):
     state: str = "PENDING"
     job_id: str = None
 
-    @classmethod
-    def create(
-        cls,
-        application: type[Application],
-        params: Param,
-        mode: str,
-    ) -> Task:
-        """Creates a Task object"""
-        uid = str(uuid4())
-
-        if params is None:
-            params_name = None
-            params_module = None
-        else:
-            params_name = params.name
-            params_module = params.module
-
-        return cls(
-            uid=uid,
-            name=application.__name__,
-            mode=mode,
-            stage_id=application.stage_id,
-            stage=Stage(uid=application.stage_id).name,
-            application=application,
-            application_name=application.name,
-            application_module=application.module,
-            params=params,
-            params_string=params.as_string(),
-            params_name=params_name,
-            params_module=params_module,
-            images_processed=0,
-            image_processing_time=0,
-            started=None,
-            ended=None,
-            duration=0,
-            state="PENDING",
-        )
-
     def run(self) -> None:
         """Executes the transformer."""
         self.start_task()
@@ -116,6 +79,44 @@ class Task(Entity):
         self.duration = (self.ended - self.started).total_seconds()
         self.image_processing_time = self.images_processed / self.duration
         self.state = "EXCEPTION"
+
+    @classmethod
+    def create(
+        cls,
+        application: type[Application],
+        params: Param,
+        config: type[Config] = Config,
+    ) -> Task:
+        """Creates a Task object"""
+        uid = str(uuid4())
+
+        if params is None:
+            params_name = None
+            params_module = None
+        else:
+            params_name = params.name
+            params_module = params.module
+
+        return cls(
+            uid=uid,
+            name=application.__name__,
+            mode=config.get_mode(),
+            stage_id=application.stage_id,
+            stage=Stage(uid=application.stage_id).name,
+            application=application,
+            application_name=application.name,
+            application_module=application.module,
+            params=params,
+            params_string=params.as_string(),
+            params_name=params_name,
+            params_module=params_module,
+            images_processed=0,
+            image_processing_time=0,
+            started=None,
+            ended=None,
+            duration=0,
+            state="PENDING",
+        )
 
     @classmethod
     def from_df(cls, df: pd.DataFrame) -> Task:

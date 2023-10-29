@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 01:47:42 am                                                #
-# Modified   : Sunday October 29th 2023 02:22:03 am                                                #
+# Modified   : Sunday October 29th 2023 02:26:42 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -35,66 +35,75 @@ load_dotenv()
 class Config:
     """Configuration Manager."""
 
-    def __init__(self) -> None:
-        self._config_filepath = os.getenv("CONFIG_FILEPATH")
-        self._config = IOService.read(filepath=self._config_filepath)
-        self._logger = logging.getLogger(f"{self.__class__.__name__}")
+    @classmethod
+    def read_config(cls) -> dict:
+        filepath = os.path.abspath(os.getenv("CONFIG_FILEPATH"))
+        return IOService.read(filepath=filepath)
 
-    @property
-    def mode(self) -> str:
-        return self._config["mode"]
+    @classmethod
+    def write_config(cls, config: dict) -> None:
+        filepath = os.path.abspath(os.getenv("CONFIG_FILEPATH"))
+        IOService.write(filepath=filepath, data=config)
 
-    @mode.setter
-    def mode(self, mode) -> None:
+    @classmethod
+    def get_mode(cls) -> str:
+        config = cls.read_config()
+        return config["mode"]
+
+    @classmethod
+    def set_mode(cls, mode) -> None:
         if mode not in MODES:
             msg = f"{mode} is not valid. Valid values are: {MODES}"
-            self._logger.exception(msg)
+            logging.exception(msg)
             raise ValueError(msg)
-        self._config["mode"] = mode
-        IOService.write(filepath=self._config_filepath, data=self._config)
+        config = cls.read_config()
+        config["mode"] = mode
+        cls.write_config(config=config)
 
-    @property
-    def name(self) -> str:
+    @classmethod
+    def get_name(cls) -> str:
         return os.getenv("MYSQL_DBNAME")
 
-    @property
-    def username(self) -> str:
+    @classmethod
+    def get_username(cls) -> str:
         return os.getenv("MYSQL_USERNAME")
 
-    @property
-    def password(self) -> str:
+    @classmethod
+    def get_password(cls) -> str:
         return os.getenv("MYSQL_PWD")
 
-    @property
-    def startup(self) -> str:
+    @classmethod
+    def get_startup(cls) -> str:
         return os.getenv("MYSQL_STARTUP_SCRIPT")
 
-    @property
-    def backup_directory(self) -> str:
+    @classmethod
+    def get_backup_directory(cls) -> str:
         return os.getenv("MYSQL_BACKUP_DIRECTORY")
 
-    @property
-    def max_attempts(self) -> bool:
+    @classmethod
+    def get_max_attempts(cls) -> bool:
         return int(os.getenv("MYSQL_MAX_ATTEMPTS"))
 
-    @property
-    def autocommit(self) -> bool:
+    @classmethod
+    def get_autocommit(cls) -> bool:
         autocommit = os.getenv("MYSQL_AUTOCOMMIT")
         return "True" == autocommit
 
-    @property
-    def timeout(self) -> bool:
+    @classmethod
+    def get_timeout(cls) -> bool:
         return int(os.getenv("MYSQL_TIMEOUT"))
 
-    @property
-    def log_level(self) -> str:
-        return self._config["logging"]["handlers"]["console"]["level"]
+    @classmethod
+    def get_log_level(cls) -> str:
+        config = cls.read_config()
+        return config["logging"]["handlers"]["console"]["level"]
 
-    @log_level.setter
-    def log_level(self, level: str) -> None:
+    @classmethod
+    def set_log_level(cls, level: str) -> None:
         if level not in LOG_LEVELS:
             msg = f"{level} is not valid. Valid log levels are: {LOG_LEVELS}"
-            self._logger.exception(msg)
+            logging.exception(msg)
             raise ValueError(msg)
-        self._config["logging"]["handlers"]["console"]["level"] = level
-        IOService.write(filepath=self._config_filepath, data=self._config)
+        config = cls.read_config()
+        config["logging"]["handlers"]["console"]["level"] = level
+        cls.write_config(config=config)

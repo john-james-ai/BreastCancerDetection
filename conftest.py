@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Sunday October 29th 2023 04:41:39 am                                                #
+# Modified   : Sunday October 29th 2023 05:10:53 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,18 +19,23 @@
 import pandas as pd
 import pytest
 from dotenv import load_dotenv
+from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.container import BCDContainer
 from bcd.core.orchestration.task import Task
+from bcd.dal.io.image import ImageIO
 from bcd.preprocess.image.convert import ImageConverter, ImageConverterParams
 
 # ------------------------------------------------------------------------------------------------ #
-collect_ignore_glob = ["data/**/*.*", "bcd/core/**/*.*"]
+collect_ignore_glob = ["data/**/*.*"]
 # ------------------------------------------------------------------------------------------------ #
 load_dotenv()
 # ------------------------------------------------------------------------------------------------ #
 IMAGE_FP = "data/meta/2_clean/dicom.csv"
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=redefined-outer-name
+# ------------------------------------------------------------------------------------------------ #
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -39,11 +44,10 @@ IMAGE_FP = "data/meta/2_clean/dicom.csv"
 @pytest.fixture(scope="module", autouse=True)
 def mode():
     """Sets the mode to test"""
-    config = Config()
-    prior_mode = config.mode
-    config.mode = "test"
+    prior_mode = Config.get_mode()
+    Config.set_mode("test")
     yield
-    config.mode = prior_mode
+    Config.set_mode(prior_mode)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -52,11 +56,10 @@ def mode():
 @pytest.fixture(scope="module", autouse=True)
 def log_level():
     """Sets the log level to DEBUG"""
-    config = Config()
-    prior_level = config.log_level
-    config.log_level = "DEBUG"
+    prior_level = Config.get_log_level()
+    Config.set_log_level("DEBUG")
     yield
-    config.log_level = prior_level
+    Config.set_log_level(prior_level)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -97,6 +100,34 @@ def tasks():
     tasklist = []
     params = ImageConverterParams()
     for _ in range(5):
-        task = Task.create(application=ImageConverter, params=params, mode="test")
+        task = Task.create(application=ImageConverter, params=params)
         tasklist.append(task)
     return tasklist
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                            IMAGES                                                #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="module", autouse=False)
+def images(container):
+    image_list = []
+    transformer = ["P1", "P2"]
+    io = ImageIO()
+    factory = container.dal.image_factory()
+    df = pd.read_csv(IMAGE_FP)
+    df = df.loc[df["series_description"] == "full mammogram images"]
+    df = df.sample(n=10)
+    i = 0
+    for _, meta in tqdm(df.iterrows(), total=df.shape[0]):
+        pixel_data = io.read(filepath=meta["filepath"])
+        stage_id = i % 2
+        image = factory.create(
+            case_id=meta["case_id"],
+            stage_id=stage_id,
+            pixel_data=pixel_data,
+            transformer=transformer[stage_id],
+            task_id="standard_test_task_id" + str(stage_id),
+        )
+        i += 1
+        image_list.append(image)
+    return image_list

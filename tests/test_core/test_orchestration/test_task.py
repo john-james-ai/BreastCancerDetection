@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 09:56:35 am                                              #
-# Modified   : Sunday October 29th 2023 04:03:10 am                                                #
+# Modified   : Sunday October 29th 2023 02:37:33 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -47,7 +47,7 @@ class TestTask:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         params = ImageConverterParams(frac=0.005)
-        task = Task.create(application=ImageConverter, params=params, mode="test")
+        task = Task.create(application=ImageConverter, params=params)
         task.job_id = "some_job_id"
         assert task.uid is not None
         assert task.name == "ImageConverter"
