@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Saturday October 28th 2023 08:58:39 pm                                              #
+# Modified   : Sunday October 29th 2023 03:20:45 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -210,11 +210,13 @@ class Entity(DataClass):
 class Param(DataClass):
     """Abstract base class containing parameters for an instance of an application."""
 
-    name: str = __qualname__
-    module: str = None
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
 
-    def __post_init__(self) -> None:
-        self.module = inspect.getmodule(self).__name__
+    @property
+    def module(self) -> str:
+        return inspect.getmodule(self).__name__
 
     def as_string(self) -> str:
         d = self.as_dict()

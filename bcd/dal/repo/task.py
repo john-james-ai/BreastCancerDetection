@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Saturday October 28th 2023 10:27:00 pm                                              #
+# Modified   : Sunday October 29th 2023 03:52:45 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -35,15 +35,19 @@ TASK_DTYPES = {
     "uid": VARCHAR(64),
     "name": VARCHAR(64),
     "mode": VARCHAR(8),
-    "stage_uid": INTEGER(),
-    "stage": VARCHAR(length=64),
+    "stage_id": INTEGER(),
+    "stage": VARCHAR(32),
+    "application_name": VARCHAR(64),
+    "application_module": VARCHAR(128),
+    "params_name": VARCHAR(64),
+    "params_module": VARCHAR(128),
+    "images_processed": INTEGER(),
+    "image_processing_time": FLOAT(),
     "started": DATETIME(),
     "ended": DATETIME(),
     "duration": FLOAT(),
-    "images_processed": INTEGER(),
-    "image_processing_time": FLOAT(),
-    "params": VARCHAR(128),
     "state": VARCHAR(16),
+    "job_id": VARCHAR(64),
 }
 
 
@@ -97,8 +101,8 @@ class TaskRepo(Repo):
         Returns:
             Task object.
         """
-        query = f"SELECT * FROM {self.__tablename} WHERE id = :id;"
-        params = {"uid": id}
+        query = f"SELECT * FROM {self.__tablename} WHERE id = :uid;"
+        params = {"uid": uid}
         try:
             task = self._database.query(query=query, params=params)
         except Exception as e:  # pragma: no cover

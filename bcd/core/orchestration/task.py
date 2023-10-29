@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Saturday October 28th 2023 09:18:59 pm                                              #
+# Modified   : Sunday October 29th 2023 04:01:17 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,13 +25,11 @@ from uuid import uuid4
 
 import pandas as pd
 
-from bcd.config import Config
 from bcd.core.base import Application, Entity, Param, Stage
 from bcd.utils.date import to_datetime
 from bcd.utils.get_class import get_class
 
 
-# ------------------------------------------------------------------------------------------------ #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Task(Entity):
@@ -46,6 +44,7 @@ class Task(Entity):
     application_name: str
     application_module: str
     params: Param
+    params_string: str
     params_name: str
     params_module: str
     images_processed: int = 0
@@ -61,7 +60,7 @@ class Task(Entity):
         cls,
         application: type[Application],
         params: Param,
-        config: type[Config] = Config,
+        mode: str,
     ) -> Task:
         """Creates a Task object"""
         uid = str(uuid4())
@@ -75,14 +74,15 @@ class Task(Entity):
 
         return cls(
             uid=uid,
-            name=cls.__name__,
-            mode=config().mode,
-            stage_id=application.stage,
-            stage=Stage(uid=application.stage).name,
+            name=application.__name__,
+            mode=mode,
+            stage_id=application.stage_id,
+            stage=Stage(uid=application.stage_id).name,
             application=application,
             application_name=application.name,
             application_module=application.module,
             params=params,
+            params_string=params.as_string(),
             params_name=params_name,
             params_module=params_module,
             images_processed=0,
@@ -96,7 +96,9 @@ class Task(Entity):
     def run(self) -> None:
         """Executes the transformer."""
         self.start_task()
-        self.application(task_id=self.uid, params=self.params)
+        app = self.application(task_id=self.uid, params=self.params)
+        app.execute()
+        self.images_processed = app.images_processed
         self.end_task()
 
     def start_task(self) -> None:
@@ -126,6 +128,7 @@ class Task(Entity):
             params = get_class(
                 module_name=df["params_module"].values[0], class_name=df["params_name"].values[0]
             )
+            params = params.from_string(params=df["params_string"].values[0])
         else:
             params = None
 
@@ -142,12 +145,37 @@ class Task(Entity):
             application_name=df["application_name"].values[0],
             application_module=df["application_module"].values[0],
             params=params,
+            params_string=df["params_string"].values[0],
             params_name=df["params_name"].values[0],
             params_module=df["params_module"].values[0],
-            job_id=df["job_id"].values[0],
             images_processed=df["images_processed"].values[0],
             image_processing_time=df["image_processing_time"].values[0],
             started=started,
             ended=ended,
             duration=df["duration"].values[0],
+            state=df["state"].values[0],
+            job_id=df["job_id"].values[0],
         )
+
+    def as_df(self) -> pd.DataFrame:
+        """Returns the Task as a DataFrame object."""
+        d = {
+            "uid": self.uid,
+            "name": self.name,
+            "mode": self.mode,
+            "stage_id": self.stage_id,
+            "stage": self.stage,
+            "application_name": self.application_name,
+            "application_module": self.application_module,
+            "params_string": self.params_string,
+            "params_name": self.params_name,
+            "params_module": self.params_module,
+            "images_processed": self.images_processed,
+            "image_processing_time": self.image_processing_time,
+            "started": self.started,
+            "ended": self.ended,
+            "duration": self.duration,
+            "state": self.state,
+            "job_id": self.job_id,
+        }
+        return pd.DataFrame(data=d, index=[0])
