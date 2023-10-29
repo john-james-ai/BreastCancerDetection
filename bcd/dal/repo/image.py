@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 29th 2023 01:32:53 am                                                #
+# Modified   : Sunday October 29th 2023 04:19:11 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,7 +21,6 @@ from typing import Callable, Union
 
 import numpy as np
 import pandas as pd
-import pymysql
 import sqlalchemy
 from sqlalchemy.dialects.mssql import BIGINT, DATETIME, FLOAT, INTEGER, TINYINT, VARCHAR
 
@@ -365,7 +364,7 @@ class ImageRepo(Repo):
         try:
             image_meta = self._database.query(query=query, params=params)
 
-        except pymysql.Error as e:  # pragma: no cover
+        except Exception as e:  # pragma: no cover
             self._logger.exception(e)
             raise
         else:

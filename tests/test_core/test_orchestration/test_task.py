@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 09:56:35 am                                              #
-# Modified   : Sunday October 29th 2023 03:59:05 am                                                #
+# Modified   : Sunday October 29th 2023 04:03:10 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -75,6 +75,9 @@ class TestTask:  # pragma: no cover
         df = task.as_df()
         task2 = Task.from_df(df=df)
         assert task == task2
+        task2.run()
+
+        logging.debug(task2)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()

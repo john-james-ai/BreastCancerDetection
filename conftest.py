@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Sunday October 29th 2023 01:51:50 am                                                #
+# Modified   : Sunday October 29th 2023 04:41:39 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,6 +22,8 @@ from dotenv import load_dotenv
 
 from bcd.config import Config
 from bcd.container import BCDContainer
+from bcd.core.orchestration.task import Task
+from bcd.preprocess.image.convert import ImageConverter, ImageConverterParams
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*", "bcd/core/**/*.*"]
@@ -84,3 +86,17 @@ def case_ids():
     df = df.loc[df["series_description"] == "full mammogram images"]
     df = df.sample(n=10)
     return list(df["case_id"])
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                          TASKS                                                   #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="module", autouse=False)
+def tasks():
+    """Creates a series of Task objects"""
+    tasklist = []
+    params = ImageConverterParams()
+    for _ in range(5):
+        task = Task.create(application=ImageConverter, params=params, mode="test")
+        tasklist.append(task)
+    return tasklist
