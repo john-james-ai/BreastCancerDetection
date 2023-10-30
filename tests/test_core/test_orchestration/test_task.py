@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 09:56:35 am                                              #
-# Modified   : Sunday October 29th 2023 02:37:33 pm                                                #
+# Modified   : Monday October 30th 2023 04:46:58 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,6 +38,30 @@ single_line = f"\n{100 * '-'}"
 @pytest.mark.task
 class TestTask:  # pragma: no cover
     # ============================================================================================ #
+    def test_mode(self, mode):
+        start = datetime.now()
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
+                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        if mode != "test":
+            msg = "\nCHANGE MODE TO TEST BEFORE RUNNING PYTEST!\nExiting pytest!\n"
+            logger.exception(msg)
+            pytest.exit(msg)
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
+                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
+                    {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(single_line)
+
+    # ============================================================================================ #
     def test_task(self):
         start = datetime.now()
         logger.info(
@@ -47,15 +71,15 @@ class TestTask:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         params = ImageConverterParams(frac=0.005)
-        task = Task.create(application=ImageConverter, params=params)
+        task = Task.create(method=ImageConverter, params=params)
         task.job_id = "some_job_id"
         assert task.uid is not None
         assert task.name == "ImageConverter"
         assert task.stage_id == 0
         assert task.stage == "Converted"
-        assert task.application == ImageConverter
-        assert task.application_name == "ImageConverter"
-        assert task.application_module == "bcd.preprocess.image.convert"
+        assert task.method == ImageConverter
+        assert task.method_name == "ImageConverter"
+        assert task.method_module == "bcd.preprocess.image.convert"
         assert task.params == params
         assert isinstance(task.params_string, str)
         assert task.params_name == "ImageConverterParams"

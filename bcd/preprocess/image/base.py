@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 28th 2023 07:12:51 pm                                              #
-# Modified   : Sunday October 29th 2023 03:34:12 pm                                                #
+# Modified   : Monday October 30th 2023 04:45:36 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ import numpy as np
 from dependency_injector.wiring import Provide, inject
 
 from bcd.container import BCDContainer
-from bcd.core.base import Application
+from bcd.core.base import Method
 from bcd.core.image.entity import Image
 from bcd.core.image.factory import ImageFactory
 from bcd.dal.io.image import ImageIO
@@ -31,7 +31,7 @@ from bcd.dal.repo.uow import UoW
 
 
 # ------------------------------------------------------------------------------------------------ #
-class Transformer(Application):
+class Transformer(Method):
     """Base Class for Image Transformers"""
 
     stage_id = None  # Overridden in subclasses

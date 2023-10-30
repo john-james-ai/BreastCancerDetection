@@ -1,0 +1,31 @@
+use bcd;
+DROP TABLE IF EXISTS image;
+CREATE TABLE image (
+    uid VARCHAR(64),
+    case_id VARCHAR(64),
+    mode VARCHAR(8),
+    stage_id INTEGER,
+    stage VARCHAR(64),
+    left_or_right_breast VARCHAR(8),
+    image_view VARCHAR(4),
+    abnormality_type VARCHAR(24),
+    assessment INTEGER,
+    breast_density INTEGER,
+    bit_depth INTEGER,
+    height INTEGER,
+    width INTEGER,
+    size BIGINT,
+    aspect_ratio FLOAT,
+    min_pixel_value INTEGER,
+    max_pixel_value INTEGER,
+    range_pixel_values INTEGER,
+    mean_pixel_value FLOAT,
+    median_pixel_value INTEGER,
+    std_pixel_value FLOAT,
+    filepath VARCHAR(256),
+    fileset VARCHAR(8),
+    cancer TINYINT,
+    transformer VARCHAR(64),
+    task_id VARCHAR(64),
+    created datetime
+);

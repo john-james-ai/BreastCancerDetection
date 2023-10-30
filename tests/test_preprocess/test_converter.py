@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 28th 2023 10:07:43 pm                                              #
-# Modified   : Sunday October 29th 2023 03:00:13 am                                                #
+# Modified   : Monday October 30th 2023 11:17:41 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -41,6 +41,30 @@ IMAGE_FP = "tests/data/images"
 # ------------------------------------------------------------------------------------------------ #
 @pytest.mark.converter
 class TestConverter:  # pragma: no cover
+    # ============================================================================================ #
+    def test_mode(self, mode):
+        start = datetime.now()
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
+                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        if mode != "test":
+            msg = "\nCHANGE MODE TO TEST BEFORE RUNNING PYTEST!\nExiting pytest!\n"
+            logger.exception(msg)
+            pytest.exit(msg)
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
+                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
+                    {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(single_line)
+
     # ============================================================================================ #
     def test_setup(self):
         start = datetime.now()
@@ -75,7 +99,7 @@ class TestConverter:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        params = ImageConverterParams()
+        params = ImageConverterParams(frac=0.005)
         assert ImageConverter.name == "ImageConverter"
         assert ImageConverter.module == "bcd.preprocess.image.convert"
         assert ImageConverter.stage_id == 0

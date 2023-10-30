@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 03:17:29 pm                                                #
-# Modified   : Sunday October 29th 2023 06:19:50 pm                                                #
+# Modified   : Sunday October 29th 2023 06:56:40 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,27 +19,29 @@
 """Removes artifacts from mammogram."""
 from dataclasses import dataclass
 
+import cv2
+import numpy as np
 import pandas as pd
-from dependency_injector.wiring import Provide, inject
-from dotenv import load_dotenv
 from joblib import Parallel, delayed
 from tqdm import tqdm
 
-from bcd.container import BCDContainer
 from bcd.core.base import Param
+from bcd.core.image.entity import Image
 from bcd.preprocess.image.base import Transformer
 
+
 # ------------------------------------------------------------------------------------------------ #
-load_dotenv()
-
-
+# pylint: disable=no-member
+# ------------------------------------------------------------------------------------------------ #
+#                        ARTIFACT REMOVER - LARGEST CONTOUR                                        #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class ArtifactRemoverLargestContourParams(Param):
     """Defines the parameters for the ArtifactRemoverLargestContour Task"""
 
-    image_threshold: int = 20
+    image_threshold: int = 128
     otsu_threshold: bool = False
+    n_jobs: int = 6
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -50,7 +52,6 @@ class ArtifactRemoverLargestContour(Transformer):
     module = __name__
     stage_id = 1
 
-    @inject
     def __init__(
         self,
         task_id: str,
@@ -68,35 +69,61 @@ class ArtifactRemoverLargestContour(Transformer):
         """Converts DICOM images to PNG format."""
         images = self.read_images(stage_id=0)
 
-        self._process_images(image_metadata=source_image_metadata)
-
-    def _get_source_image_metadata(self) -> pd.DataFrame:
-        """Performs multivariate stratified sampling to obtain a fraction of the raw images."""
-
-        # Read the raw DICOM metadata
-        df = pd.read_csv(self._metadata_filepath)
-
-        # Extract full mammogram images.
-        image_metadata = df.loc[df["series_description"] == "full mammogram images"]
-
-        # Define the stratum for stratified sampling
-        stratum = ["image_view", "abnormality_type", "cancer", "assessment"]
-
-        # Execute the sampling and obtain the case_ids
-        df = image_metadata.groupby(by=stratum).sample(
-            frac=self._params.frac, random_state=self._params.random_state
+        Parallel(n_jobs=self._params.n_jobs)(
+            delayed(self._process_image)(image) for image in tqdm(images, total=len(images))
         )
 
-        return df
-
-    def _process_images(self, image_metadata: pd.DataFrame) -> None:
+    def _process_image(self, image: Image) -> None:
         """Convert the images to PNG format and store in the repository.
 
         Args:
             image_metadata (pd.DataFrame): DataFrame containing image metadata.
         """
-        for _, metadata in tqdm(image_metadata.iterrows(), total=image_metadata.shape[0]):
-            pixel_data = self.read_pixel_data(filepath=metadata["filepath"])
-            image = self.create_image(case_id=metadata["case_id"], pixel_data=pixel_data)
-            self.save_image(image=image)
-            self._images_processed += 1
+        img_gray = cv2.cvtColor(image.pixel_data, cv2.COLOR_BGR2GRAY)
+        img_bin = self._binarize(pixel_data=img_gray)
+        img_contour = self._extract_contour(pixel_data=img_bin)
+        img_output = self._erase_background()
+
+    def _to_grayscale(self, pixel_data: np.array) -> np.array:
+        # Convert to float to avoid overflow or underflow.
+        img = img.astype(float)
+        # Rescale to gray scale values between 0-255
+        img_gray = (img - img.min()) / (img.max() - img.min()) * 255.0
+        # Convert to uint
+        img_gray = np.uint8(img_gray)
+        return img_gray
+    
+    def _binarize(self, pixel_data: np.ndarray) -> np.ndarray:
+        """Creates a binary image.
+
+        This method supports threshold binarization as well as OTSU threshold
+        binarization. Threshold binarization converts all pixel values less than
+        or equal to the threshold to 0, all other pixels are converted to one.
+
+        Otsu's Threshold is an automatic image thresholding method that returns
+        a single threshold that separates the pixels into foreground and background
+        classes.
+
+        """
+        if self._params.otsu_threshold:
+            _, img_bin = cv2.threshold(pixel_data, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+        else:
+            _, img_bin = cv2.threshold(
+                pixel_data, thresh=self._params.image_threshold, maxval=255, type=cv2.THRESH_BINARY
+            )
+        return img_bin
+
+    def _extract_contour(self, img: np.array) -> np.array:
+        """Extracts the largest contour 
+        
+
+        """
+        contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contour = max(contours, key=cv2.contourArea)
+        return contour
+    
+    def _erase_background(self, img: np.array, contour: np.array) -> np.array:
+        mask = np.zeros(img.shape, np.uint8)
+        cv2.drawContours(mask, [contour], -1, 255, cv2.FILLED)
+        output = cv2.bitwise_and(img, mask)
+        return output    

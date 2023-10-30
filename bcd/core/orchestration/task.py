@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Sunday October 29th 2023 02:34:02 pm                                                #
+# Modified   : Monday October 30th 2023 04:46:59 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ from uuid import uuid4
 import pandas as pd
 
 from bcd.config import Config
-from bcd.core.base import Application, Entity, Param, Stage
+from bcd.core.base import Entity, Method, Param, Stage
 from bcd.utils.date import to_datetime
 from bcd.utils.get_class import get_class
 
@@ -41,9 +41,9 @@ class Task(Entity):
     mode: str
     stage_id: int
     stage: str
-    application: type[Application]
-    application_name: str
-    application_module: str
+    method: type[Method]
+    method_name: str
+    method_module: str
     params: Param
     params_string: str
     params_name: str
@@ -59,7 +59,7 @@ class Task(Entity):
     def run(self) -> None:
         """Executes the transformer."""
         self.start_task()
-        app = self.application(task_id=self.uid, params=self.params)
+        app = self.method(task_id=self.uid, params=self.params)
         app.execute()
         self.images_processed = app.images_processed
         self.end_task()
@@ -83,7 +83,7 @@ class Task(Entity):
     @classmethod
     def create(
         cls,
-        application: type[Application],
+        method: type[Method],
         params: Param,
         config: type[Config] = Config,
     ) -> Task:
@@ -99,13 +99,13 @@ class Task(Entity):
 
         return cls(
             uid=uid,
-            name=application.__name__,
+            name=method.__name__,
             mode=config.get_mode(),
-            stage_id=application.stage_id,
-            stage=Stage(uid=application.stage_id).name,
-            application=application,
-            application_name=application.name,
-            application_module=application.module,
+            stage_id=method.stage_id,
+            stage=Stage(uid=method.stage_id).name,
+            method=method,
+            method_name=method.name,
+            method_module=method.module,
             params=params,
             params_string=params.as_string(),
             params_name=params_name,
@@ -121,9 +121,9 @@ class Task(Entity):
     @classmethod
     def from_df(cls, df: pd.DataFrame) -> Task:
         """Creates a Task object from  a dataframe"""
-        application = get_class(
-            module_name=df["application_module"].values[0],
-            class_name=df["application_name"].values[0],
+        method = get_class(
+            module_name=df["method_module"].values[0],
+            class_name=df["method_name"].values[0],
         )
         if df["params_module"].values[0] is not None:
             params = get_class(
@@ -142,9 +142,9 @@ class Task(Entity):
             mode=df["mode"].values[0],
             stage_id=df["stage_id"].values[0],
             stage=df["stage"].values[0],
-            application=application,
-            application_name=df["application_name"].values[0],
-            application_module=df["application_module"].values[0],
+            method=method,
+            method_name=df["method_name"].values[0],
+            method_module=df["method_module"].values[0],
             params=params,
             params_string=df["params_string"].values[0],
             params_name=df["params_name"].values[0],
@@ -166,8 +166,8 @@ class Task(Entity):
             "mode": self.mode,
             "stage_id": self.stage_id,
             "stage": self.stage,
-            "application_name": self.application_name,
-            "application_module": self.application_module,
+            "method_name": self.method_name,
+            "method_module": self.method_module,
             "params_string": self.params_string,
             "params_name": self.params_name,
             "params_module": self.params_module,

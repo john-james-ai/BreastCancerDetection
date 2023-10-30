@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Sunday October 29th 2023 06:19:22 pm                                                #
+# Modified   : Monday October 30th 2023 11:15:41 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,6 +38,30 @@ single_line = f"\n{100 * '-'}"
 @pytest.mark.repo
 @pytest.mark.image_repo
 class TestImageRepo:  # pragma: no cover
+    # ============================================================================================ #
+    def test_mode(self, mode):
+        start = datetime.now()
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
+                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        if mode != "test":
+            msg = "\nCHANGE MODE TO TEST BEFORE RUNNING PYTEST!\nExiting pytest!\n"
+            logger.exception(msg)
+            pytest.exit(msg)
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
+                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
+                    {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(single_line)
+
     # ============================================================================================ #
     def test_setup(self, container):
         start = datetime.now()
@@ -111,6 +135,7 @@ class TestImageRepo:  # pragma: no cover
         for image in images:
             image2 = repo.get(uid=image.uid)
             assert isinstance(image2, Image)
+            logger.debug(f"\nImage Difference: \n{image.difference(image2)}")
             assert image == image2
 
         # ---------------------------------------------------------------------------------------- #
@@ -268,6 +293,55 @@ class TestImageRepo:  # pragma: no cover
         assert repo.count() == 10
         condition = lambda df: df["stage_id"] == 1
         assert repo.count(condition) == 5
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
+                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
+                    {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(single_line)
+
+    # ============================================================================================ #
+    def test_sample(self, container):
+        start = datetime.now()
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
+                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        repo = container.dal.image_repo()
+        metadata, images = repo.sample(n=5)
+        assert len(metadata) == 5
+        assert isinstance(metadata, pd.DataFrame)
+        assert isinstance(images, dict)
+        for _, image in images.items():
+            assert isinstance(image, Image)
+
+        metadata, images = repo.sample(frac=0.5)
+        assert len(metadata) == 5
+        assert isinstance(metadata, pd.DataFrame)
+        assert isinstance(images, dict)
+        for _, image in images.items():
+            assert isinstance(image, Image)
+
+        metadata, images = repo.sample(n=2, groupby="transformer")
+        assert len(metadata) == 4
+        assert isinstance(metadata, pd.DataFrame)
+        assert isinstance(images, dict)
+        for _, image in images.items():
+            assert isinstance(image, Image)
+
+        metadata, images = repo.sample(frac=0.5, groupby="transformer")
+        assert len(metadata) == 4
+        assert isinstance(metadata, pd.DataFrame)
+        assert isinstance(images, dict)
+        for _, image in images.items():
+            assert isinstance(image, Image)
+
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

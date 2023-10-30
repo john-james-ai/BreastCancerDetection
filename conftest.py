@@ -11,11 +11,15 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Sunday October 29th 2023 05:10:53 pm                                                #
+# Modified   : Monday October 30th 2023 07:01:28 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+from datetime import datetime
+from uuid import uuid4
+
+import numpy as np
 import pandas as pd
 import pytest
 from dotenv import load_dotenv
@@ -23,9 +27,11 @@ from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.container import BCDContainer
+from bcd.core.base import Stage
 from bcd.core.orchestration.task import Task
 from bcd.dal.io.image import ImageIO
 from bcd.preprocess.image.convert import ImageConverter, ImageConverterParams
+from bcd.preprocess.image.evaluate import Evaluation
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*"]
@@ -44,10 +50,7 @@ IMAGE_FP = "data/meta/2_clean/dicom.csv"
 @pytest.fixture(scope="module", autouse=True)
 def mode():
     """Sets the mode to test"""
-    prior_mode = Config.get_mode()
-    Config.set_mode("test")
-    yield
-    Config.set_mode(prior_mode)
+    return Config.get_mode()
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -100,7 +103,7 @@ def tasks():
     tasklist = []
     params = ImageConverterParams()
     for _ in range(5):
-        task = Task.create(application=ImageConverter, params=params)
+        task = Task.create(method=ImageConverter, params=params)
         tasklist.append(task)
     return tasklist
 
@@ -131,3 +134,35 @@ def images(container):
         i += 1
         image_list.append(image)
     return image_list
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                            IMAGES                                                #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="module", autouse=False)
+def evals():
+    rng = np.random.default_rng()
+    eval_list = []
+    stage_ids = [1, 2]
+    method_names = ["MeanFilter", "MedianFilter", "GaussianFilter", "LintFilter", "Hairnet"]
+    steps = ["Binarize", "LargestContour"]
+    diag = [True, False]
+    for i in range(50):
+        e = Evaluation(
+            image_uid=str(uuid4()),
+            mode="test",
+            stage_id=stage_ids[i % 2],
+            stage=Stage(uid=stage_ids[i % 2]).name,
+            step=steps[i % 2],
+            method=method_names[i % 5],
+            mse=rng.random() * 50,
+            psnr=rng.random() * 20,
+            ssim=rng.random(),
+            image_view="CC",
+            abnormality_type="mass",
+            assessment=np.random.randint(6, size=1)[0],
+            cancer=diag[i % 2],
+            evaluated=datetime.now(),
+        )
+        eval_list.append(e)
+    return eval_list

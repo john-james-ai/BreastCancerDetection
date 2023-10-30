@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Sunday October 29th 2023 02:08:47 pm                                                #
+# Modified   : Monday October 30th 2023 04:46:59 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -79,12 +79,10 @@ STAGES = {
     0: "Converted",
     1: "Artifact Removal",
     2: "Pectoral Removal",
-    3: "Denoise",
-    4: "Fuzziness",
-    5: "Enhance",
-    6: "ROI Segmentation",
-    7: "Augment",
-    8: "Reshape",
+    3: "Enhance",
+    4: "ROI Segmentation",
+    5: "Augment",
+    6: "Reshape",
 }
 
 
@@ -110,8 +108,8 @@ NON_NUMERIC_TYPES = ["category", "object"]
 
 
 # ------------------------------------------------------------------------------------------------ #
-class Application(ABC):
-    """Abstract base class for all application objects.
+class Method(ABC):
+    """Abstract base class for all method objects.
 
     All subclasses must declare class variables as:
     name = __qualname__
@@ -208,7 +206,7 @@ class Entity(DataClass):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Param(DataClass):
-    """Abstract base class containing parameters for an instance of an application."""
+    """Abstract base class containing parameters for an instance of an method."""
 
     @property
     def name(self) -> str:

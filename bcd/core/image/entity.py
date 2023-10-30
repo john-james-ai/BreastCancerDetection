@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Sunday October 29th 2023 06:18:15 pm                                                #
+# Modified   : Monday October 30th 2023 07:25:24 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,21 +19,29 @@
 """Image Module"""
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass, field
 from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
-from bcd.core.base import DataClass
+from bcd.core.base import Entity
+
+# ------------------------------------------------------------------------------------------------ #
+sns.set_style("whitegrid")
+sns.set_palette(palette="Blues_r")
+
+warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 # ------------------------------------------------------------------------------------------------ #
 #                                         IMAGE                                                    #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass(eq=False)
-class Image(DataClass):
+class Image(Entity):
     """Image Object"""
 
     uid: str
@@ -104,7 +112,11 @@ class Image(DataClass):
         return set1 ^ set2
 
     def visualize(
-        self, cmap: str = "jet", ax: plt.Axes = None, figsize: tuple = (8, 8)
+        self,
+        cmap: str = "gray",
+        ax: plt.Axes = None,
+        figsize: tuple = (8, 8),
+        actual_size: bool = True,
     ) -> None:  # pragma: no cover
         """Plots the image on an axis
 
@@ -113,12 +125,51 @@ class Image(DataClass):
             ax (plt.Axes): Matplotlib Axes object. Optional.
             figsize (tuple): Size of the image if a plt.Axes object is not provided.
                 Default = (8,8)
+            actual_size (bool): If True, the image is rendered at actual size
+        """
+        if actual_size:
+            self._visualize_actual_size(cmap)
+        else:
+            if ax is None:
+                _, ax = plt.subplots(figsize=figsize)
+            ax.imshow(self.pixel_data, cmap=cmap)
+            ax.set_title(self.case_id)
+            plt.show()
+
+    def _visualize_actual_size(self, cmap: str) -> None:  # pragma: no cover
+        """Renders image at actual size"""
+        dpi = 80
+        height, width = self.pixel_data.shape
+
+        # Computes the figure size to render the plot at actual size.
+        figsize = width / float(dpi), height / float(dpi)
+
+        # Create a figure of the right size with one axes that takes up the full figure
+        fig = plt.figure(figsize=figsize)
+        ax = fig.add_axes([0, 0, 1, 1])
+
+        # Hide spines, ticks, etc.
+        ax.axis("off")
+
+        # Display the image.
+        ax.imshow(self.pixel_data, cmap=cmap)
+
+        plt.show()
+
+    def histogram(self, ax: plt.Axes = None, figsize: tuple = (8, 8)) -> None:
+        """Plots a histogram of image pixel values.
+
+        Args:
+            ax (plt.Axes): Matplotlib Axes object. Optional.
+            figsize (tuple): Size of the image if a plt.Axes object is not provided.
+                Default = (8,8)
+
         """
         if ax is None:
             _, ax = plt.subplots(figsize=figsize)
-        ax.imshow(self.pixel_data, cmap=cmap)
-        ax.set_title(self.case_id)
-        plt.show()
+
+        _ = ax.set_xlabel("Pixel Values")
+        _ = sns.histplot(data=self.pixel_data.flatten(), ax=ax)
 
     def as_df(self) -> pd.DataFrame:
         d = {

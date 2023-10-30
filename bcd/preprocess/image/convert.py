@@ -11,27 +11,27 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
-# Modified   : Sunday October 29th 2023 03:14:15 am                                                #
+# Modified   : Monday October 30th 2023 03:01:37 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Converts DICOM Data to PNG Format"""
+import os
 from dataclasses import dataclass
 
+import numpy as np
 import pandas as pd
 from dependency_injector.wiring import Provide, inject
-from dotenv import load_dotenv
 from tqdm import tqdm
 
 from bcd.container import BCDContainer
 from bcd.core.base import Param
 from bcd.preprocess.image.base import Transformer
 
+
 # ------------------------------------------------------------------------------------------------ #
-load_dotenv()
-
-
+# pylint: disable=no-member
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class ImageConverterParams(Param):
@@ -58,7 +58,7 @@ class ImageConverter(Transformer):
     ) -> None:
         super().__init__(task_id=task_id)
         self._params = params
-        self._metadata_filepath = metadata_filepath
+        self._metadata_filepath = os.path.abspath(metadata_filepath)
         self._images_processed = 0
 
     @property
@@ -97,6 +97,16 @@ class ImageConverter(Transformer):
         """
         for _, metadata in tqdm(image_metadata.iterrows(), total=image_metadata.shape[0]):
             pixel_data = self.read_pixel_data(filepath=metadata["filepath"])
+            pixel_data = self._to_grayscale(pixel_data=pixel_data)
             image = self.create_image(case_id=metadata["case_id"], pixel_data=pixel_data)
             self.save_image(image=image)
             self._images_processed += 1
+
+    def _to_grayscale(self, pixel_data: np.array) -> np.array:
+        # Convert to float to avoid overflow or underflow.
+        pixel_data = pixel_data.astype(float)
+        # Rescale to gray scale values between 0-255
+        img_gray = (pixel_data - pixel_data.min()) / (pixel_data.max() - pixel_data.min()) * 255.0
+        # Convert to uint
+        img_gray = np.uint8(img_gray)
+        return img_gray

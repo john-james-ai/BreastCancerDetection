@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 28th 2023 08:24:06 pm                                              #
-# Modified   : Sunday October 29th 2023 02:22:35 am                                                #
+# Modified   : Monday October 30th 2023 06:16:57 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -41,7 +41,7 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def get(self, uid: str) -> Entity:
+    def get(self, **kwargs) -> Entity:
         """Gets an an entity by its identifier.
 
         Args:
@@ -49,7 +49,7 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def exists(self, uid: str) -> bool:
+    def exists(self, **kwargs) -> bool:
         """Evaluates existence of an entity by identifier.
 
         Args:
@@ -71,7 +71,7 @@ class Repo(ABC):
         """
 
     @abstractmethod
-    def delete(self, uid: str) -> None:
+    def delete(self, **kwargs) -> None:
         """Deletes the entity or entities matching condition.
 
         Args:

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday October 29th 2023 05:06:29 pm                                                #
+# Modified   : Monday October 30th 2023 05:38:45 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -91,7 +91,7 @@ READ_IMAGE_DTYPES = {
     "cancer": bool,
     "task_id": str,
 }
-PARSE_DATES = {"created": {"errors": "ignore", "yearfirst": True, "infer_datetime_format": True}}
+PARSE_DATES = {"created": {"errors": "ignore", "yearfirst": True}}
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -262,7 +262,7 @@ class ImageRepo(Repo):
             images,
         )
 
-    def get_meta(self, condition: Callable = None) -> Union[pd.DataFrame, list]:
+    def get_meta(self, condition: Callable = None) -> pd.DataFrame:
         """Returns case images metadata
         Args:
             condition (Callable): A lambda expression used to subset the data.
@@ -277,6 +277,59 @@ class ImageRepo(Repo):
             return image_meta
         else:
             return image_meta[condition]
+
+    def sample(
+        self, n: int = None, frac: float = None, groupby: Union[str, list] = None
+    ) -> Tuple[pd.DataFrame, dict]:
+        """Returns a sample of the images.
+
+        Returns a sample of the images by count (n) or by proportion (frac).
+        Samples can also be obtained using a grouping variables; whereby, each
+        group is sampled according to n or frac.
+
+        Args:
+            n (int): Number of images to return. If groupby is not None, this is the
+                number of images to be returned by group. Cannot be used with frac.
+            frac (float): Fraction of existing images to return. If groupby is not None, this is
+                the fraction of images to be returned by group. Cannot be used with n.
+            groupby (Union[str,list]): Grouping variables.
+
+        Raises:
+            ValueError if n and frac are both not None
+
+        Returns:
+        """
+        images = {}
+        if n is not None and frac is not None:
+            msg = "Either n or frac must be None."
+            self._logger.exception(msg)
+            raise ValueError(msg)
+
+        if n is None and frac is None:
+            msg = "n or frac must be provided."
+            self._logger.exception(msg)
+            raise ValueError(msg)
+
+        # Extract all metadata
+        image_meta = self.get_meta()
+
+        # Sample from the metadata.
+        if n is not None:
+            if groupby is None:
+                image_meta = image_meta.sample(n=n, replace=False)
+            else:
+                image_meta = image_meta.groupby(by=groupby).sample(n=n, replace=False)
+        else:
+            if groupby is None:
+                image_meta = image_meta.sample(frac=frac, replace=False)
+            else:
+                image_meta = image_meta.groupby(by=groupby).sample(frac=frac, replace=False)
+
+        # Obtain the images
+        for _, meta in image_meta.iterrows():
+            images[meta["uid"]] = self.get(uid=meta["uid"])
+
+        return (image_meta, images)
 
     def exists(self, uid: str) -> bool:
         """Evaluates existence of an image by identifier.
@@ -331,8 +384,13 @@ class ImageRepo(Repo):
 
         query = f"DELETE FROM {self.__tablename} WHERE uid = :uid;"
         params = {"uid": uid}
-        self._database.delete(query=query, params=params)
-        self._io.delete(filepath=filepath, silent=silent)
+        try:
+            self._database.delete(query=query, params=params)
+        except Exception as e:
+            self._logger.exception(e)
+            raise
+        else:
+            self._io.delete(filepath=filepath, silent=silent)
 
     def delete_by_stage(self, stage_id: int) -> None:
         """Removes images for a given stage
