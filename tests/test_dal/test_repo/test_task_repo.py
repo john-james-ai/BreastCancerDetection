@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 04:19:38 am                                                #
-# Modified   : Monday October 30th 2023 11:17:01 am                                                #
+# Modified   : Monday October 30th 2023 11:07:36 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -34,30 +34,6 @@ single_line = f"\n{100 * '-'}"
 
 @pytest.mark.task_repo
 class TestTaskRepo:  # pragma: no cover
-    # ============================================================================================ #
-    def test_mode(self, mode):
-        start = datetime.now()
-        logger.info(
-            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
-                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        if mode != "test":
-            msg = "\nCHANGE MODE TO TEST BEFORE RUNNING PYTEST!\nExiting pytest!\n"
-            logger.exception(msg)
-            pytest.exit(msg)
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
-                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
-                    {start.strftime('%m/%d/%Y')}"
-        )
-        logger.info(single_line)
-
     # ============================================================================================ #
     def test_setup(self, container):
         start = datetime.now()

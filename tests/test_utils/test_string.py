@@ -11,15 +11,16 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 1st 2023 01:06:01 pm                                                 #
-# Modified   : Thursday October 26th 2023 08:07:06 pm                                              #
+# Modified   : Monday October 30th 2023 11:50:44 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import inspect
-from datetime import datetime
-import pytest
 import logging
+from datetime import datetime
+
+import pytest
 
 from bcd.utils.string import proper
 
@@ -36,9 +37,11 @@ single_line = f"\n{100 * '-'}"
 @pytest.mark.string
 class TestString:  # pragma: no cover
     # ============================================================================================ #
-    def test_string(self, caplog):
+    def test_string(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         s = "calc_type is a word-too"
@@ -60,9 +63,11 @@ class TestString:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_something(self, caplog):
+    def test_something(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
 
@@ -70,13 +75,17 @@ class TestString:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_teardown(self, caplog):
+    def test_teardown(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
 
@@ -84,5 +93,7 @@ class TestString:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(single_line)

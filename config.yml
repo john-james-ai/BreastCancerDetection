@@ -1,4 +1,4 @@
-data:
+data_dir:
   dev: data/image/1_dev
   metadata: data/meta/2_clean/dicom.csv
   prod: data/image/2_prod
@@ -17,7 +17,7 @@ logging:
     console:
       class: logging.StreamHandler
       formatter: console
-      level: DEBUG
+      level: INFO
       stream: ext://sys.stderr
     file:
       backupCount: 0
@@ -33,4 +33,3 @@ logging:
     - file
     level: DEBUG
   version: 1
-mode: test

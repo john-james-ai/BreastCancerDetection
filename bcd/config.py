@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 01:47:42 am                                                #
-# Modified   : Sunday October 29th 2023 02:26:42 pm                                                #
+# Modified   : Monday October 30th 2023 11:05:46 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,7 @@
 import logging
 import os
 
-from dotenv import load_dotenv
+import dotenv
 
 from bcd.dal.io.file import IOService
 
@@ -28,7 +28,6 @@ from bcd.dal.io.file import IOService
 LOG_LEVELS = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 MODES = ["test", "dev", "prod"]
 # ------------------------------------------------------------------------------------------------ #
-load_dotenv()
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -47,8 +46,8 @@ class Config:
 
     @classmethod
     def get_mode(cls) -> str:
-        config = cls.read_config()
-        return config["mode"]
+        dotenv_file = dotenv.find_dotenv()
+        return dotenv.get_key(dotenv_file, key_to_get="MODE")
 
     @classmethod
     def set_mode(cls, mode) -> None:
@@ -56,9 +55,10 @@ class Config:
             msg = f"{mode} is not valid. Valid values are: {MODES}"
             logging.exception(msg)
             raise ValueError(msg)
-        config = cls.read_config()
-        config["mode"] = mode
-        cls.write_config(config=config)
+        dotenv_file = dotenv.find_dotenv()
+        dotenv.load_dotenv(dotenv_file)
+        os.environ["MODE"] = mode
+        dotenv.set_key(str(dotenv_file), key_to_set="MODE", value_to_set=mode, export=True)
 
     @classmethod
     def get_name(cls) -> str:
@@ -107,3 +107,24 @@ class Config:
         config = cls.read_config()
         config["logging"]["handlers"]["console"]["level"] = level
         cls.write_config(config=config)
+
+    @classmethod
+    def get_autoconnect(cls) -> bool:
+        autoconnect = os.getenv("MYSQL_AUTOCONNECT")
+        return "True" == autoconnect
+
+    @classmethod
+    def set_autoconnect(cls) -> bool:
+        autoconnect = os.getenv("MYSQL_AUTOCONNECT")
+        return "True" == autoconnect
+
+    @classmethod
+    def get_data_dir(cls) -> str:
+        config = cls.read_config()
+        mode = cls.get_mode()
+        return os.path.abspath(config["data_dir"][mode])
+
+    @classmethod
+    def get_metadata_filepath(cls) -> str:
+        config = cls.read_config()
+        return os.path.abspath(config["data_dir"]["metadata"])

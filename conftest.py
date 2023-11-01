@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Monday October 30th 2023 07:01:28 pm                                                #
+# Modified   : Wednesday November 1st 2023 03:59:37 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,21 +22,16 @@ from uuid import uuid4
 import numpy as np
 import pandas as pd
 import pytest
-from dotenv import load_dotenv
 from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.container import BCDContainer
-from bcd.core.base import Stage
-from bcd.core.orchestration.task import Task
 from bcd.dal.io.image import ImageIO
-from bcd.preprocess.image.convert import ImageConverter, ImageConverterParams
 from bcd.preprocess.image.evaluate import Evaluation
+from bcd.preprocess.image.flow.state import Stage
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*"]
-# ------------------------------------------------------------------------------------------------ #
-load_dotenv()
 # ------------------------------------------------------------------------------------------------ #
 IMAGE_FP = "data/meta/2_clean/dicom.csv"
 # ------------------------------------------------------------------------------------------------ #
@@ -45,18 +40,28 @@ IMAGE_FP = "data/meta/2_clean/dicom.csv"
 
 
 # ------------------------------------------------------------------------------------------------ #
+#                                    CURRENT MODE                                                  #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="module", autouse=False)
+def current_mode():
+    return Config.get_mode()
+
+
+# ------------------------------------------------------------------------------------------------ #
 #                                  SET MODE TO TEST                                                #
 # ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def mode():
-    """Sets the mode to test"""
-    return Config.get_mode()
+    prior_mode = Config.get_mode()
+    Config.set_mode(mode="test")
+    yield
+    Config.set_mode(mode=prior_mode)
 
 
 # ------------------------------------------------------------------------------------------------ #
 #                             SET LOGGING LEVEL TO DEBUG                                           #
 # ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def log_level():
     """Sets the log level to DEBUG"""
     prior_level = Config.get_log_level()
@@ -68,16 +73,12 @@ def log_level():
 # ------------------------------------------------------------------------------------------------ #
 #                                DEPENDENCY INJECTION                                              #
 # ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(scope="module", autouse=False)
 def container():
     """Wires the container."""
     ctr = BCDContainer()
     ctr.init_resources()
-    ctr.wire(
-        packages=[
-            "bcd.preprocess.image",
-        ]
-    )
+    ctr.wire(modules=["bcd.dal.io.image"])
 
     return ctr
 
@@ -92,20 +93,6 @@ def case_ids():
     df = df.loc[df["series_description"] == "full mammogram images"]
     df = df.sample(n=10)
     return list(df["case_id"])
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                          TASKS                                                   #
-# ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="module", autouse=False)
-def tasks():
-    """Creates a series of Task objects"""
-    tasklist = []
-    params = ImageConverterParams()
-    for _ in range(5):
-        task = Task.create(method=ImageConverter, params=params)
-        tasklist.append(task)
-    return tasklist
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -137,7 +124,7 @@ def images(container):
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                            IMAGES                                                #
+#                                            EVALS                                                 #
 # ------------------------------------------------------------------------------------------------ #
 @pytest.fixture(scope="module", autouse=False)
 def evals():
@@ -155,6 +142,7 @@ def evals():
             stage=Stage(uid=stage_ids[i % 2]).name,
             step=steps[i % 2],
             method=method_names[i % 5],
+            params="some_parameters",
             mse=rng.random() * 50,
             psnr=rng.random() * 20,
             ssim=rng.random(),

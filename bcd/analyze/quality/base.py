@@ -11,13 +11,14 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Wednesday October 25th 2023 11:02:55 pm                                             #
+# Modified   : Monday October 30th 2023 11:49:29 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Package base module for Data Quality Analysis"""
 from __future__ import annotations
+
 import os
 import string
 from abc import ABC, abstractmethod
@@ -34,6 +35,8 @@ from bcd.core.base import DataClass
 # ================================================================================================ #
 @dataclass
 class DQAResult:
+    """Encapsulates the result of a data quality analysis"""
+
     summary: DQASummary
     detail: pd.DataFrame
 
@@ -47,6 +50,8 @@ class DQASummary(DataClass):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Completeness(DQASummary):
+    """Encapsulates a summary of data completeness."""
+
     dataset: str
     filename: str
     records: int
@@ -60,6 +65,8 @@ class Completeness(DQASummary):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Uniqueness(DQASummary):
+    """Encapsulates a summary of data uniqueness"""
+
     dataset: str
     filename: str
     records: int
@@ -73,6 +80,8 @@ class Uniqueness(DQASummary):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Validity(DQASummary):
+    """Encapsulates a summary of data validity"""
+
     dataset: str
     filename: str
     records: int
@@ -86,6 +95,8 @@ class Validity(DQASummary):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class Consistency(DQASummary):
+    """Encapsulates a summary of data consistency"""
+
     dataset: str
     filename: str
     records: int
@@ -106,6 +117,7 @@ class DQA(ABC):
         self._name = name or string.capwords(
             os.path.splitext(os.path.basename(self._filepath))[0].replace("_", " ")
         )
+        self._df = None
 
     @abstractmethod
     def validate(self) -> None:
@@ -412,7 +424,8 @@ class Validator:
         """Evaluates validity of pathology data.
 
         Args:
-            pathology (pd.Series): Validates pathology is in ['BENIGN', 'MALIGNANT', 'BENIGN_WITHOUT_CALLBACK']
+            pathology (pd.Series): Validates pathology is in
+                ['BENIGN', 'MALIGNANT', 'BENIGN_WITHOUT_CALLBACK']
 
         Returns: Boolean mask in Series format.
 
@@ -630,6 +643,7 @@ class Validator:
         Returns: Boolean mask in Series format.
 
         """
+        # pylint: disable=unnecessary-lambda
         return filepath.apply(lambda x: os.path.exists(x))
 
     def validate_bit_depth(self, bit_depth: pd.Series) -> pd.Series:

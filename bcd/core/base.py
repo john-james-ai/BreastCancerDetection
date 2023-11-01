@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:36:47 pm                                               #
-# Modified   : Monday October 30th 2023 04:46:59 pm                                                #
+# Modified   : Wednesday November 1st 2023 01:20:24 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,7 +21,6 @@ from __future__ import annotations
 
 import inspect
 import json
-import logging
 import string
 from abc import ABC
 from dataclasses import dataclass
@@ -74,48 +73,10 @@ NUMERIC_TYPES = [
     float,
     complex,
 ]
-# ------------------------------------------------------------------------------------------------ #
-STAGES = {
-    0: "Converted",
-    1: "Artifact Removal",
-    2: "Pectoral Removal",
-    3: "Enhance",
-    4: "ROI Segmentation",
-    5: "Augment",
-    6: "Reshape",
-}
-
-
-# ------------------------------------------------------------------------------------------------ #
-@dataclass()
-class Stage:
-    """Encapsulates a stage in the preprocessing and modeling phases."""
-
-    uid: int
-    name: str = None
-
-    def __post_init__(self) -> None:
-        try:
-            self.name = STAGES[self.uid]
-        except KeyError:
-            msg = f"{self.uid} is an invalid stage id."
-            logging.exception(msg)
-            raise
 
 
 # ------------------------------------------------------------------------------------------------ #
 NON_NUMERIC_TYPES = ["category", "object"]
-
-
-# ------------------------------------------------------------------------------------------------ #
-class Method(ABC):
-    """Abstract base class for all method objects.
-
-    All subclasses must declare class variables as:
-    name = __qualname__
-    module = __name__
-    stage_id = <int>   # The stage identifier for the stage in the lifecycle
-    """
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -193,12 +154,6 @@ class DataClass(ABC):
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class Params(DataClass):
-    """Abstract base class for transformer parameters."""
-
-
-# ------------------------------------------------------------------------------------------------ #
-@dataclass
 class Entity(DataClass):
     """Abstract base class for project entities, such as Image, Task and Job."""
 
@@ -221,6 +176,6 @@ class Param(DataClass):
         return json.dumps(d)
 
     @classmethod
-    def from_string(cls, params: str) -> Params:
+    def from_string(cls, params: str) -> Param:
         d = json.loads(params)
         return cls(**d)

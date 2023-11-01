@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday October 30th 2023 06:31:11 pm                                                #
+# Modified   : Tuesday October 31st 2023 12:03:29 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,6 +22,7 @@ from typing import Callable
 import pandas as pd
 from sqlalchemy.dialects.mssql import DATETIME, FLOAT, INTEGER, TINYINT, VARCHAR
 
+from bcd.config import Config
 from bcd.dal.database.base import Database
 from bcd.dal.repo.base import Repo
 from bcd.preprocess.image.evaluate import Evaluation
@@ -36,6 +37,7 @@ EVAL_DTYPES = {
     "stage": VARCHAR(32),
     "step": VARCHAR(64),
     "method": VARCHAR(64),
+    "params": VARCHAR(128),
     "mse": FLOAT,
     "psnr": FLOAT,
     "ssim": FLOAT,
@@ -53,10 +55,10 @@ class EvalRepo(Repo):
 
     __tablename = "eval"
 
-    def __init__(self, database: Database, mode: str) -> None:
+    def __init__(self, database: Database, config: Config = Config) -> None:
         super().__init__()
         self._database = database
-        self._mode = mode
+        self._mode = config.get_mode()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     @property
@@ -178,7 +180,7 @@ class EvalRepo(Repo):
         self._database.delete(query=query, params=params)
 
     def delete_by_stage(self, stage_id: int) -> None:
-        """Deletes all evaluations for a given stage_uid
+        """Deletes all evaluations for a given stage_id
 
         Args:
             stage_id (int): Stage id
@@ -203,7 +205,7 @@ class EvalRepo(Repo):
         """Deletes all evaluations for the current mode.
 
         Args:
-            stage_uid (int): Stage id
+            stage_id (int): Stage id
 
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"

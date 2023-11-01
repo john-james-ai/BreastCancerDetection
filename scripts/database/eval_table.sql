@@ -7,6 +7,7 @@ CREATE TABLE eval (
     stage VARCHAR(32),
     step VARCHAR(64),
     method VARCHAR(64),
+    params VARCHAR(128),
     mse FLOAT,
     psnr FLOAT,
     ssim FLOAT,

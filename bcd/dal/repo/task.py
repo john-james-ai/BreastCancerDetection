@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday October 30th 2023 04:46:59 pm                                                #
+# Modified   : Wednesday November 1st 2023 05:08:21 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,9 +23,10 @@ import pandas as pd
 import pymysql
 from sqlalchemy.dialects.mssql import DATETIME, FLOAT, INTEGER, VARCHAR
 
-from bcd.core.orchestration.task import Task
+from bcd.config import Config
 from bcd.dal.database.base import Database
 from bcd.dal.repo.base import Repo
+from bcd.preprocess.image.flow.basetask import Task
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=arguments-renamed, arguments-differ, broad-exception-caught
@@ -43,7 +44,7 @@ TASK_DTYPES = {
     "images_processed": INTEGER(),
     "image_processing_time": FLOAT(),
     "started": DATETIME(),
-    "ended": DATETIME(),
+    "stopped": DATETIME(),
     "duration": FLOAT(),
     "state": VARCHAR(16),
     "job_id": VARCHAR(64),
@@ -56,10 +57,10 @@ class TaskRepo(Repo):
 
     __tablename = "task"
 
-    def __init__(self, database: Database, mode: str) -> None:
+    def __init__(self, database: Database, config: Config = Config) -> None:
         super().__init__()
         self._database = database
-        self._mode = mode
+        self._mode = config.get_mode()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     @property
@@ -115,14 +116,14 @@ class TaskRepo(Repo):
 
             return Task.from_df(df=task)
 
-    def get_by_stage(self, stage_uid: int) -> pd.DataFrame:
+    def get_by_stage(self, stage_id: int) -> pd.DataFrame:
         """Returns all task for a given stage."""
         tasks = {}
-        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_uid = :stage_uid;"
-        params = {"mode": self.mode, "stage_uid": stage_uid}
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
+        params = {"mode": self.mode, "stage_id": stage_id}
         task_meta = self._database.query(query=query, params=params)
         if len(task_meta) == 0:
-            msg = f"No Tasks exist for Stage{stage_uid}."
+            msg = f"No Tasks exist for Stage{stage_id}."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
         else:
@@ -242,7 +243,7 @@ class TaskRepo(Repo):
         self._database.delete(query=query, params=params)
 
     def delete_by_stage(self, stage_id: int) -> None:
-        """Deletes all tasks with the stage_uid
+        """Deletes all tasks with the stage_id
 
         Args:
             stage_id (int): Stage id
@@ -253,10 +254,10 @@ class TaskRepo(Repo):
         self._database.delete(query=query, params=params)
 
     def delete_by_mode(self) -> None:
-        """Deletes all tasks with the stage_uid
+        """Deletes all tasks with the stage_id
 
         Args:
-            stage_uid (int): Stage id
+            stage_id (int): Stage id
 
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"

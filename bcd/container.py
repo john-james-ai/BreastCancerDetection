@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Monday October 30th 2023 06:32:48 pm                                                #
+# Modified   : Tuesday October 31st 2023 04:57:53 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,13 +21,13 @@ import logging.config
 
 from dependency_injector import containers, providers
 
-from bcd.core.image.factory import ImageFactory
+from bcd.core.factory import ImageFactory
 from bcd.dal.database.mysql import MySQLDatabase
-from bcd.dal.io.image import ImageIO
 from bcd.dal.repo.evaluation import EvalRepo
 from bcd.dal.repo.image import ImageRepo
 from bcd.dal.repo.task import TaskRepo
 from bcd.dal.repo.uow import UoW
+from bcd.preprocess.image.evaluate import Evaluator
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=c-extension-no-member
@@ -58,23 +58,13 @@ class DALContainer(containers.DeclarativeContainer):
 
     db = providers.Singleton(MySQLDatabase)
 
-    io = providers.Singleton(ImageIO)
+    image_factory = providers.Singleton(ImageFactory)
 
-    image_factory = providers.Singleton(
-        ImageFactory,
-        metadata_filepath=config.data.metadata,
-        mode=config.mode,
-        directory=config.data[config.mode],
-        io=io,
-    )
+    image_repo = providers.Singleton(ImageRepo, database=db, image_factory=image_factory)
 
-    image_repo = providers.Singleton(
-        ImageRepo, database=db, image_factory=image_factory, io=io, mode=config.mode
-    )
+    task_repo = providers.Singleton(TaskRepo, database=db)
 
-    task_repo = providers.Singleton(TaskRepo, database=db, mode=config.mode)
-
-    eval_repo = providers.Singleton(EvalRepo, database=db, mode=config.mode)
+    eval_repo = providers.Singleton(EvalRepo, database=db)
 
     uow = providers.Singleton(
         UoW,
@@ -82,9 +72,19 @@ class DALContainer(containers.DeclarativeContainer):
         image_factory=image_factory,
         image_repo=ImageRepo,
         task_repo=TaskRepo,
-        io=io,
-        mode=config.mode,
+        eval_repo=EvalRepo,
     )
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                      PREPROCESS                                                  #
+# ------------------------------------------------------------------------------------------------ #
+class PrepContainer(containers.DeclarativeContainer):
+    """Preprocess dependencies."""
+
+    uow = providers.DependenciesContainer()
+
+    evaluator = providers.Factory(Evaluator, uo=uow)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -98,3 +98,5 @@ class BCDContainer(containers.DeclarativeContainer):
     logs = providers.Container(LoggingContainer, config=config)
 
     dal = providers.Container(DALContainer, config=config)
+
+    prep = providers.Container(PrepContainer, uow=dal.uow)

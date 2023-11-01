@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/core/image/factory.py                                                          #
+# Filename   : /bcd/core/factory.py                                                                #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 10:55:08 pm                                             #
-# Modified   : Monday October 30th 2023 06:50:27 am                                                #
+# Modified   : Tuesday October 31st 2023 04:58:39 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,20 +20,17 @@
 from __future__ import annotations
 
 import logging
-import os
 from datetime import datetime
 from uuid import uuid4
 
 import numpy as np
 import pandas as pd
-from dotenv import load_dotenv
 
+from bcd.config import Config
 from bcd.core.base import Stage
-from bcd.core.image.entity import Image
+from bcd.core.image import Image
 from bcd.dal.io.image import ImageIO
 from bcd.utils.date import to_datetime
-
-load_dotenv()
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -42,14 +39,14 @@ load_dotenv()
 class ImageFactory:
     """Creates Image Objects"""
 
-    def __init__(self, metadata_filepath: str, mode: str, directory: str, io: ImageIO) -> None:
-        metadata_filepath = os.path.abspath(metadata_filepath)
+    def __init__(self, config: Config = Config, io: ImageIO = ImageIO) -> None:
+        metadata_filepath = config.get_metadata_filepath()
         image_metadata = pd.read_csv(metadata_filepath)
         self._image_metadata = image_metadata.loc[
             image_metadata["series_description"] == "full mammogram images"
         ]
-        self._mode = mode
-        self._directory = directory
+        self._mode = config.get_mode()
+        self._directory = config.get_data_dir()
         self._io = io
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 

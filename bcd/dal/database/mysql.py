@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 09:56:27 am                                              #
-# Modified   : Monday October 30th 2023 07:32:55 am                                                #
+# Modified   : Tuesday October 31st 2023 01:15:53 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -49,6 +49,7 @@ class MySQLDatabase(Database):
         self._startup_script = config.get_startup()
         self._backup_directory = config.get_backup_directory()
         self._autocommit = config.get_autocommit()
+        self._autoconnect = config.get_autoconnect()
         self._timeout = config.get_timeout()
         self._max_attempts = config.get_max_attempts()
         self._engine = None
@@ -58,7 +59,8 @@ class MySQLDatabase(Database):
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
         self._connection_string = self._get_connection_string()
-        self.connect()
+        if self._autocommit:
+            self.connect()
 
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 

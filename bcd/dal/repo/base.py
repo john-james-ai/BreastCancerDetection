@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 28th 2023 08:24:06 pm                                              #
-# Modified   : Monday October 30th 2023 06:16:57 pm                                                #
+# Modified   : Tuesday October 31st 2023 01:33:38 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,6 +21,7 @@ from abc import ABC, abstractmethod
 from typing import Callable
 
 from bcd.core.base import Entity
+from bcd.dal.database.base import Database
 
 
 # ------------------------------------------------------------------------------------------------ #

@@ -4,28 +4,25 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/convert.py                                                    #
+# Filename   : /bcd/preprocess/image/flow/convert.py                                               #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
-# Modified   : Tuesday October 31st 2023 12:24:13 am                                               #
+# Created    : Tuesday October 31st 2023 04:45:05 am                                               #
+# Modified   : Wednesday November 1st 2023 01:49:36 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Converts DICOM Data to PNG Format"""
 from dataclasses import dataclass
 
-import numpy as np
 import pandas as pd
-from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.core.base import Param
-from bcd.preprocess.image.base import Transformer
+from bcd.preprocess.image.flow.basetask import Task
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -40,33 +37,22 @@ class ImageConverterParams(Param):
 
 
 # ------------------------------------------------------------------------------------------------ #
-class ImageConverter(Transformer):
-    """Converts the DICOM images to PNG format."""
+@dataclass
+class Converter(Task):
+    """Converts DICOM images to PNG Format"""
 
-    name = __qualname__
-    module = __name__
-    stage_id = 0
+    params: ImageConverterParams
 
-    def __init__(self, task_id: str, params: Param, config: Config = Config) -> None:
-        super().__init__(task_id=task_id)
-        self._params = params
-        self._metadata_filepath = config.get_metadata_filepath()
-        self._images_processed = 0
+    def run(self) -> None:
+        self.images_processed = 0
 
-    @property
-    def images_processed(self) -> int:
-        return self._images_processed
-
-    def execute(self) -> None:
-        """Converts DICOM images to PNG format."""
         source_image_metadata = self._get_source_image_metadata()
-        self._process_images(image_metadata=source_image_metadata)
 
     def _get_source_image_metadata(self) -> pd.DataFrame:
         """Performs multivariate stratified sampling to obtain a fraction of the raw images."""
 
         # Read the raw DICOM metadata
-        df = pd.read_csv(self._metadata_filepath)
+        df = pd.read_csv(Config.get_metadata_filepath())
 
         # Extract full mammogram images.
         image_metadata = df.loc[df["series_description"] == "full mammogram images"]
@@ -76,7 +62,7 @@ class ImageConverter(Transformer):
 
         # Execute the sampling and obtain the case_ids
         df = image_metadata.groupby(by=stratum).sample(
-            frac=self._params.frac, random_state=self._params.random_state
+            frac=self.params.frac, random_state=self.params.random_state
         )
 
         return df
@@ -93,12 +79,3 @@ class ImageConverter(Transformer):
             image = self.create_image(case_id=metadata["case_id"], pixel_data=pixel_data)
             self.save_image(image=image)
             self._images_processed += 1
-
-    def _to_grayscale(self, pixel_data: np.array) -> np.array:
-        # Convert to float to avoid overflow or underflow.
-        pixel_data = pixel_data.astype(float)
-        # Rescale to gray scale values between 0-255
-        img_gray = (pixel_data - pixel_data.min()) / (pixel_data.max() - pixel_data.min()) * 255.0
-        # Convert to uint
-        img_gray = np.uint8(img_gray)
-        return img_gray

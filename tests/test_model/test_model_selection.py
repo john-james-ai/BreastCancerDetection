@@ -11,53 +11,99 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 2nd 2023 08:22:42 am                                                 #
-# Modified   : Thursday October 26th 2023 08:05:56 pm                                              #
+# Modified   : Tuesday October 31st 2023 01:05:01 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-import os
 import inspect
-from datetime import datetime
-import pytest
 import logging
+import os
+from datetime import datetime
 
-import pandas as pd
 import numpy as np
-from sklearn.svm import SVC
-from sklearn.model_selection import GridSearchCV
+import pandas as pd
+import pytest
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
 
-from bcd.model.selection import ModelSelector
 from bcd.model.pipeline import PipelineBuilder
+from bcd.model.selection import ModelSelector
 
-CALC_TRAIN_FP = os.path.abspath("data/cooked/calc_train.csv")
-CALC_TEST_FP = os.path.abspath("data/cooked/calc_test.csv")
-MASS_TRAIN_FP = os.path.abspath("data/cooked/mass_train.csv")
-MASS_TEST_FP = os.path.abspath("data/cooked/mass_test.csv")
-
+CASE_FP = os.path.abspath("data/meta/3_cooked/cases.csv")
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=missing-class-docstring, line-too-long, no-member, logging-format-interpolation
+# ------------------------------------------------------------------------------------------------ #
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
+FEATURES = [
+    "breast_density",
+    "abnormality_id",
+    "assessment",
+    "subtlety",
+    "AT_calcification",
+    "AT_mass",
+    "LR_LEFT",
+    "LR_RIGHT",
+    "IV_CC",
+    "IV_MLO",
+    "CT_AMORPHOUS",
+    "CT_COARSE",
+    "CT_DYSTROPHIC",
+    "CT_EGGSHELL",
+    "CT_FINE_LINEAR_BRANCHING",
+    "CT_LARGE_RODLIKE",
+    "CT_LUCENT_CENTERED",
+    "CT_MILK_OF_CALCIUM",
+    "CT_PLEOMORPHIC",
+    "CT_PUNCTATE",
+    "CT_ROUND_AND_REGULAR",
+    "CT_SKIN",
+    "CT_VASCULAR",
+    "CD_CLUSTERED",
+    "CD_LINEAR",
+    "CD_REGIONAL",
+    "CD_DIFFUSELY_SCATTERED",
+    "CD_SEGMENTAL",
+    "MS_IRREGULAR",
+    "MS_ARCHITECTURAL_DISTORTION",
+    "MS_OVAL",
+    "MS_LYMPH_NODE",
+    "MS_LOBULATED",
+    "MS_FOCAL_ASYMMETRIC_DENSITY",
+    "MS_ROUND",
+    "MS_ASYMMETRIC_BREAST_TISSUE",
+    "MM_SPICULATED",
+    "MM_ILL_DEFINED",
+    "MM_CIRCUMSCRIBED",
+    "MM_OBSCURED",
+    "MM_MICROLOBULATED",
+]
+
 
 @pytest.mark.model
 class TestModelSelector:  # pragma: no cover
     # ============================================================================================ #
-    def test_pipelinebuilder(self, caplog):
+    def test_pipelinebuilder(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         # Load data
-        train = pd.read_csv(CALC_TRAIN_FP)
-        X_train = train.loc[:, train.columns != "cancer"]
+        cases = pd.read_csv(CASE_FP)
+        train = cases.loc[cases["fileset"] == "train"]
+        X_train = train.loc[:, train.columns != "cancer"][FEATURES]
         y_train = train["cancer"]
 
-        test = pd.read_csv(CALC_TEST_FP)
-        X_test = test.loc[:, test.columns != "cancer"]
+        test = cases.loc[cases["fileset"] == "test"]
+        X_test = test.loc[:, test.columns != "cancer"][FEATURES]
         y_test = test["cancer"]
         X = pd.concat([X_train, X_test], axis=0)
         y = pd.concat([y_train, y_test], axis=0)
@@ -72,7 +118,7 @@ class TestModelSelector:  # pragma: no cover
         params = [{"clf__penalty": ["l1", "l2"], "clf__C": c, "clf__solver": ["liblinear"]}]
         pb.set_classifier(classifier=classifier, params=params)
         pb.set_scorer(scorer="accuracy")
-        pb.create_gridsearch_cv()
+        pb.build_gridsearch_cv()
         lr = pb.pipeline
 
         # Create SVC Pipeline
@@ -82,10 +128,10 @@ class TestModelSelector:  # pragma: no cover
 
         c = [1, 2, 3, 4, 5]
         clf = SVC(random_state=5)
-        params = [{"clf__kernel": ["linear", "rbf"], "clf__C": c}]
+        params = [{"clf__kernel": ["linear"], "clf__C": c}]
         pb.set_classifier(classifier=clf, params=params)
         pb.set_scorer("accuracy")
-        pb.create_gridsearch_cv()
+        pb.build_gridsearch_cv()
         svc = pb.pipeline
 
         assert isinstance(lr, GridSearchCV)

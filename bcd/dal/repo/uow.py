@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 01:10:10 am                                              #
-# Modified   : Sunday October 29th 2023 02:23:08 am                                                #
+# Modified   : Tuesday October 31st 2023 04:57:52 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,9 +19,9 @@
 """Unit of Work Module"""
 import logging
 
-from bcd.core.image.factory import ImageFactory
+from bcd.core.factory import ImageFactory
 from bcd.dal.database.base import Database
-from bcd.dal.io.image import ImageIO
+from bcd.dal.repo.evaluation import EvalRepo
 from bcd.dal.repo.image import ImageRepo
 from bcd.dal.repo.task import TaskRepo
 
@@ -43,17 +43,15 @@ class UoW:
         self,
         database: Database,
         image_factory: ImageFactory,
-        image_repo: type[ImageRepo],
-        task_repo: type[TaskRepo],
-        io: ImageIO,
-        mode: str,
+        image_repo: ImageRepo,
+        task_repo: TaskRepo,
+        eval_repo: EvalRepo,
     ) -> None:
         self._database = database
         self._image_factory = image_factory
         self._image_repo = image_repo
         self._task_repo = task_repo
-        self._io = io
-        self._mode = mode
+        self._eval_repo = eval_repo
 
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
@@ -66,13 +64,15 @@ class UoW:
         return self._image_repo(
             database=self._database,
             image_factory=self._image_factory,
-            io=self._io,
-            mode=self._mode,
         )
 
     @property
     def task_repo(self) -> TaskRepo:
-        return self._task_repo(database=self._database, mode=self._mode)
+        return self._task_repo(database=self._database)
+
+    @property
+    def eval_repo(self) -> EvalRepo:
+        return self._eval_repo(database=self._database)
 
     def connect(self) -> None:
         """Connects the database"""

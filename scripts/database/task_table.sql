@@ -16,6 +16,6 @@ CREATE TABLE task (
     started DATETIME,
     ended DATETIME,
     duration FLOAT,
-    state VARCHAR(16),
+    status VARCHAR(16),
     job_id VARCHAR(64)
 );

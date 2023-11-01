@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Monday October 30th 2023 07:25:24 am                                                #
+# Modified   : Monday October 30th 2023 11:38:02 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,7 @@
 from __future__ import annotations
 
 import warnings
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -71,7 +71,7 @@ class Image(Entity):
     cancer: bool
     transformer: str
     task_id: str
-    created: datetime = field(compare=False)
+    created: datetime
 
     def __eq__(self, other: Image) -> bool:
         return (

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 03:17:29 pm                                                #
-# Modified   : Sunday October 29th 2023 06:56:40 pm                                                #
+# Modified   : Tuesday October 31st 2023 04:58:38 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ from joblib import Parallel, delayed
 from tqdm import tqdm
 
 from bcd.core.base import Param
-from bcd.core.image.entity import Image
+from bcd.core.image import Image
 from bcd.preprocess.image.base import Transformer
 
 
@@ -92,7 +92,7 @@ class ArtifactRemoverLargestContour(Transformer):
         # Convert to uint
         img_gray = np.uint8(img_gray)
         return img_gray
-    
+
     def _binarize(self, pixel_data: np.ndarray) -> np.ndarray:
         """Creates a binary image.
 
@@ -114,16 +114,13 @@ class ArtifactRemoverLargestContour(Transformer):
         return img_bin
 
     def _extract_contour(self, img: np.array) -> np.array:
-        """Extracts the largest contour 
-        
-
-        """
+        """Extracts the largest contour"""
         contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contour = max(contours, key=cv2.contourArea)
         return contour
-    
+
     def _erase_background(self, img: np.array, contour: np.array) -> np.array:
         mask = np.zeros(img.shape, np.uint8)
         cv2.drawContours(mask, [contour], -1, 255, cv2.FILLED)
         output = cv2.bitwise_and(img, mask)
-        return output    
+        return output

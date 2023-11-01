@@ -11,20 +11,23 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Thursday October 26th 2023 08:07:06 pm                                              #
+# Modified   : Monday October 30th 2023 11:56:47 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import inspect
-from datetime import datetime
-import pytest
 import logging
+from datetime import datetime
 
 import pandas as pd
+import pytest
 
 from bcd.analyze.quality.dicom import DicomDQA
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=missing-class-docstring, line-too-long, no-member, logging-format-interpolation
+# ------------------------------------------------------------------------------------------------ #
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
@@ -38,9 +41,11 @@ DICOM_FP = "data/meta/1_staged/dicom.csv"
 @pytest.mark.dicomdqa
 class TestDicomDQA:  # pragma: no cover
     # ============================================================================================ #
-    def test_completeness(self, caplog):
+    def test_completeness(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         dqa = DicomDQA(filepath=DICOM_FP)
@@ -52,11 +57,11 @@ class TestDicomDQA:  # pragma: no cover
 
         # Complete Rows
         df = dqa.get_complete_data()
-        assert df.shape[0] == result.summary.rows_complete
+        assert df.shape[0] == result.summary.complete_records
 
         # Incomplete Rows
         df = dqa.get_incomplete_data()
-        assert df.shape[0] == result.summary.rows - result.summary.rows_complete
+        assert df.shape[0] == result.summary.records - result.summary.complete_records
 
         # Incomplete rows by mass shape
         df = dqa.get_incomplete_data()
@@ -78,9 +83,11 @@ class TestDicomDQA:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_unique(self, caplog):
+    def test_unique(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         dqa = DicomDQA(filepath=DICOM_FP)
@@ -91,7 +98,7 @@ class TestDicomDQA:  # pragma: no cover
         logger.debug(f"Uniqueness Detail\n{result.detail}")
 
         df = dqa.get_unique_data()
-        assert df.shape[0] == result.summary.unique_rows
+        assert df.shape[0] == result.summary.unique_records
 
         df = dqa.get_duplicate_data()
         assert df.shape[0] == 0
@@ -99,13 +106,17 @@ class TestDicomDQA:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_validity(self, caplog):
+    def test_validity(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         dqa = DicomDQA(filepath=DICOM_FP)
@@ -116,13 +127,15 @@ class TestDicomDQA:  # pragma: no cover
         logger.debug(f"Validity Detail\n{result.detail}")
 
         df = dqa.get_valid_data()
-        assert df.shape[0] == result.summary.rows_valid
+        assert df.shape[0] == result.summary.valid_records
 
         df = dqa.get_invalid_data()
-        assert df.shape[0] == result.summary.rows - result.summary.rows_valid
+        assert df.shape[0] == result.summary.records - result.summary.valid_records
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(single_line)

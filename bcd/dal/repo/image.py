@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday October 30th 2023 05:38:45 pm                                                #
+# Modified   : Wednesday November 1st 2023 03:08:11 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,8 +24,9 @@ import pandas as pd
 import sqlalchemy
 from sqlalchemy.dialects.mssql import BIGINT, DATETIME, FLOAT, INTEGER, TINYINT, VARCHAR
 
-from bcd.core.image.entity import Image
-from bcd.core.image.factory import ImageFactory
+from bcd.config import Config
+from bcd.core.factory import ImageFactory
+from bcd.core.image import Image
 from bcd.dal.database.base import Database
 from bcd.dal.io.image import ImageIO
 from bcd.dal.repo.base import Repo
@@ -95,19 +96,25 @@ PARSE_DATES = {"created": {"errors": "ignore", "yearfirst": True}}
 
 
 # ------------------------------------------------------------------------------------------------ #
+#                                     IMAGE REPO                                                   #
+# ------------------------------------------------------------------------------------------------ #
 class ImageRepo(Repo):
     """Image repository"""
 
     __tablename = "image"
 
     def __init__(
-        self, database: Database, image_factory: ImageFactory, io: ImageIO, mode: str
+        self,
+        database: Database,
+        image_factory: ImageFactory,
+        io: ImageIO = ImageIO,
+        config: Config = Config,
     ) -> None:
         super().__init__()
         self._database = database
         self._image_factory = image_factory
         self._io = io
-        self._mode = mode
+        self._mode = config.get_mode()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     @property
@@ -269,8 +276,8 @@ class ImageRepo(Repo):
                 An example of a condition: condition = lambda df: df['stage_id'] > 0
 
         """
-        query = f"SELECT * FROM {self.__tablename};"
-        params = None
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
+        params = {"mode": self.mode}
         image_meta = self._database.query(query=query, params=params)
 
         if condition is None:

@@ -4,27 +4,28 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_infrastructure/test_io/test_image_io.py                                 #
+# Filename   : /tests/test_dal/test_io/test_image_io.py                                            #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 01:30:49 pm                                              #
-# Modified   : Saturday October 28th 2023 03:39:52 pm                                              #
+# Modified   : Tuesday October 31st 2023 12:35:59 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-import os
 import inspect
-from datetime import datetime
-import pytest
 import logging
+import os
+from datetime import datetime
 
 import numpy as np
-from bcd.dal.io.image import ImageIO
+import pytest
 
+from bcd.config import Config
+from bcd.dal.io.image import ImageIO
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -37,14 +38,19 @@ FP_OUT = "tests/data/image/io/test_image.png"
 CASE_ID = "Calcification-Train_P_00005_RIGHT_CC_1"
 STATE = "test"
 FORMAT = "png"
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=missing-class-docstring, line-too-long, no-member, logging-format-interpolation
+# ------------------------------------------------------------------------------------------------ #
 
 
 @pytest.mark.imageio
 class TestImageIO:  # pragma: no cover
     # ============================================================================================ #
-    def test_read_dcm(self, caplog):
+    def test_read_dcm(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         io = ImageIO()
@@ -66,9 +72,11 @@ class TestImageIO:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_write(self, caplog):
+    def test_write(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         io = ImageIO()
@@ -80,13 +88,17 @@ class TestImageIO:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_read_png(self, caplog):
+    def test_read_png(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         io = ImageIO()
@@ -97,26 +109,30 @@ class TestImageIO:  # pragma: no cover
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_filepath(self, caplog):
+    def test_get_filepath(self):
         start = datetime.now()
-        logger.info(f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         io = ImageIO()
-        fp = io.get_filepath(id, format=FORMAT)
+        fp = io.get_filepath(id, basedir=Config.get_data_dir(), fileformat=FORMAT)
         filename = CASE_ID + "." + FORMAT
         fp_exp = os.path.join("data/image/1_dev", filename)
         assert fp == fp_exp
 
-        with pytest.raises(ValueError):
-            io.get_filepath(state="invalid", case_id=CASE_ID, format=FORMAT)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
-        logger.info(f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}")
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
         logger.info(single_line)

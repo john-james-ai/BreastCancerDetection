@@ -4,24 +4,27 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/denoise.py                                                    #
+# Filename   : /bcd/preprocess/image/method/denoise.py                                             #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 30th 2023 04:50:27 pm                                                #
-# Modified   : Monday October 30th 2023 06:33:59 pm                                                #
+# Modified   : Wednesday November 1st 2023 04:32:57 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+from abc import abstractmethod
 from dataclasses import dataclass
 
 import cv2
 import numpy as np
 
-from bcd.core.base import Method, Param
+from bcd.core.base import Param
+from bcd.preprocess.image.flow.state import Stage
+from bcd.preprocess.image.method.basemethod import Method
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -35,32 +38,47 @@ class FilterParams(Param):
 
 
 # ------------------------------------------------------------------------------------------------ #
-class MeanFilter(Method):
+class Filter(Method):
+    """Abstract base class for Filters."""
+
+    name = __qualname__
+    stage = Stage(uid=1)
+    step = "Denoise"
+
+    @classmethod
+    @abstractmethod
+    def execute(cls, image: np.ndarray, params: FilterParams) -> np.ndarray:
+        """Executes the method"""
+
+
+# ------------------------------------------------------------------------------------------------ #
+class MeanFilter(Filter):
     """Performs Mean Filtering"""
 
+    name = __qualname__
+
     @classmethod
-    def execute(cls, image: np.ndarray, kernel: int = 5) -> np.ndarray:
-        return cv2.blur(image.pixel_data, (kernel, kernel))
+    def execute(cls, image: np.ndarray, params: FilterParams) -> np.ndarray:
+        return cv2.blur(image.pixel_data, (params.kernel, params.kernel))
 
 
 # ------------------------------------------------------------------------------------------------ #
-class MedianFilter(Method):
+class MedianFilter(Filter):
     """Performs Median Filtering"""
 
+    name = __qualname__
+
     @classmethod
-    def execute(cls, image: np.ndarray, kernel: int = 5) -> np.ndarray:
-        return cv2.medianBlur(image.pixel_data, kernel)
+    def execute(cls, image: np.ndarray, params: FilterParams) -> np.ndarray:
+        return cv2.medianBlur(image.pixel_data, params.kernel)
 
 
 # ------------------------------------------------------------------------------------------------ #
-class GaussianFilter(Method):
+class GaussianFilter(Filter):
     """Performs Gaussian Filtering"""
 
-    def __init__(
-        self,
-        params: FilterParams,
-    ) -> None:
-        self._kernel = params.kernel
+    name = __qualname__
 
-    def execute(self, image: np.ndarray) -> np.ndarray:
-        return cv2.GaussianBlur(image.pixel_data, (self._kernel, self._kernel), 0)
+    @classmethod
+    def execute(self, image: np.ndarray, params: FilterParams) -> np.ndarray:
+        return cv2.GaussianBlur(image.pixel_data, (params.kernel, params.kernel), 0)
