@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Wednesday November 1st 2023 06:27:30 pm                                             #
+# Modified   : Wednesday November 1st 2023 07:21:39 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -56,10 +56,7 @@ class Task(ABC):
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
     def __eq__(self, other: Task) -> bool:
-        for key, value in self.__dict__.items():
-            if value != other.__dict__[key]:
-                return False
-        return True
+        return self.uid == other.uid
 
     def __repr__(self) -> str:  # pragma: no cover tested, but missing in coverage
         s = "{}({})".format(
@@ -83,6 +80,10 @@ class Task(ABC):
             s += f"\n{k.rjust(width,' ')} | {v}"
         s += "\n\n"
         return s
+
+    @property
+    def uid(self) -> str:
+        return self._uid
 
     @property
     def uow(self) -> str:
@@ -191,18 +192,22 @@ class Task(ABC):
         task._method = get_class(
             class_name=df["method"].values[0], module_name=df["method_module"].values[0]
         )
-        method_params = get_class(
-            class_name=df["method_params"].values[0],
-            module_name=df["method_params_module"].values[0],
-        )
-        task._method_params = method_params.from_string(df["method_params_string"].values[0])
+        task.method_params = None
+        if df["method_params"].values[0] is not None:
+            method_params = get_class(
+                class_name=df["method_params"].values[0],
+                module_name=df["method_params_module"].values[0],
+            )
+            task.method_params = method_params.from_string(df["method_params_string"].values[0])
 
-        task_params = get_class(
-            class_name=df["task_params"].values[0],
-            module_name=df["task_params_module"].values[0],
-        )
+        task.task_params = None
+        if df["task_params"].values[0] is not None:
+            task_params = get_class(
+                class_name=df["task_params"].values[0],
+                module_name=df["task_params_module"].values[0],
+            )
 
-        task._task_params = task_params.from_string(df["task_params_string"].values[0])
+            task.task_params = task_params.from_string(df["task_params_string"].values[0])
 
         task._state = State(
             images_processed=df["images_processed"].values[0],

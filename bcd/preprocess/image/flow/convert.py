@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 04:45:05 am                                               #
-# Modified   : Wednesday November 1st 2023 05:55:43 pm                                             #
+# Modified   : Wednesday November 1st 2023 07:07:51 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -44,7 +44,9 @@ class ConverterTaskParams(Param):
     random_state: int = None
 
     def __post_init__(self) -> None:
-        if self.n is not None and self.frac is not None:
+        if (self.n is not None and self.n != "NoneType") and (
+            self.frac is not None and self.frac != "NoneType"
+        ):
             msg = "Cannot provide both n and frac. One, the other or both must be None"
             logging.exception(msg)
             raise ValueError(msg)
