@@ -20,6 +20,7 @@ __pycache__/
 # Notes and Research
 /notes
 /research
+/dendron
 
 # Distribution / packaging
 .Python
@@ -92,3 +93,4 @@ venv.bak/
 
 # IDEs
 .idea/
+dendron/notes/daily.journal.2023.11.01.md
