@@ -4,40 +4,41 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/flow/job.py                                                   #
+# Filename   : /bcd/preprocess/image/method/convert.py                                             #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Tuesday October 31st 2023 05:13:14 am                                               #
+# Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
+# Modified   : Wednesday November 1st 2023 08:43:33 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Defines the Interface for Task classes."""
-from __future__ import annotations
+"""Image converter method module."""
+import numpy as np
 
-from dataclasses import dataclass
-from uuid import uuid4
-
-from bcd.config import Config
-from bcd.core.base import DataClass
+from bcd.preprocess.image.flow.state import Stage
+from bcd.preprocess.image.method.basemethod import Method, Param
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                          JOB                                                     #
+# pylint: disable=no-member
 # ------------------------------------------------------------------------------------------------ #
-@dataclass
-class JobDTO(DataClass):
-    """Encapsulates the command for a pipeline job, providing iteration over Task objects."""
+class Converter(Method):
+    """Converts a 16-Bit image to 8-bit representation."""
 
-    name: str
-    uid: str = None
-    mode: str = None
-    n_tasks: int = 0
+    name = __qualname__
+    stage = Stage(uid=0)
+    step = "Convert"
 
-    def __post_init__(self) -> None:
-        self.uid = str(uuid4())
-        self.mode = Config.get_mode()
+    @classmethod
+    def execute(cls, image: np.array, params: Param = None) -> np.array:
+        # Convert to float to avoid overflow or underflow.
+        image = image.astype(float)
+        # Rescale to gray scale values between 0-255
+        img_gray = (image - image.min()) / (image.max() - image.min()) * 255.0
+        # Convert to uint
+        img_gray = np.uint8(img_gray)
+        return img_gray

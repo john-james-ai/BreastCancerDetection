@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 01:10:10 am                                              #
-# Modified   : Tuesday October 31st 2023 04:57:52 am                                               #
+# Modified   : Wednesday November 1st 2023 08:50:26 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,11 +19,11 @@
 """Unit of Work Module"""
 import logging
 
-from bcd.core.factory import ImageFactory
 from bcd.dal.database.base import Database
 from bcd.dal.repo.evaluation import EvalRepo
 from bcd.dal.repo.image import ImageRepo
 from bcd.dal.repo.task import TaskRepo
+from bcd.preprocess.image.image import ImageFactory
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -42,10 +42,10 @@ class UoW:
     def __init__(
         self,
         database: Database,
-        image_factory: ImageFactory,
         image_repo: ImageRepo,
         task_repo: TaskRepo,
         eval_repo: EvalRepo,
+        image_factory: type[ImageFactory] = ImageFactory,
     ) -> None:
         self._database = database
         self._image_factory = image_factory

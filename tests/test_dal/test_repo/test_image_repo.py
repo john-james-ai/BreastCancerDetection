@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Tuesday October 31st 2023 04:58:39 am                                               #
+# Modified   : Wednesday November 1st 2023 07:54:33 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,7 @@ from datetime import datetime
 import pandas as pd
 import pytest
 
-from bcd.core.image import Image
+from bcd.preprocess.image.image import Image
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=missing-class-docstring, redefined-builtin, broad-exception-caught
@@ -182,7 +182,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_by_transformer(self, container):
+    def test_get_by_method(self, container):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
@@ -191,7 +191,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        image_meta, images = repo.get_by_transformer(transformer="P1")
+        image_meta, images = repo.get_by_method(method="P1")
         assert len(image_meta) == 5
         assert len(images) == 5
         for id, image in images.items():
@@ -199,11 +199,11 @@ class TestImageRepo:  # pragma: no cover
             assert isinstance(id, str)
             assert isinstance(image, Image)
             assert image.pixel_data is not None
-            assert image.transformer == "P1"
+            assert image.method == "P1"
 
         # Test Exception
         with pytest.raises(FileNotFoundError):
-            image_meta, images = repo.get_by_transformer(transformer="Invalid")
+            image_meta, images = repo.get_by_method(method="Invalid")
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -326,14 +326,14 @@ class TestImageRepo:  # pragma: no cover
         for _, image in images.items():
             assert isinstance(image, Image)
 
-        metadata, images = repo.sample(n=2, groupby="transformer")
+        metadata, images = repo.sample(n=2, groupby="method")
         assert len(metadata) == 4
         assert isinstance(metadata, pd.DataFrame)
         assert isinstance(images, dict)
         for _, image in images.items():
             assert isinstance(image, Image)
 
-        metadata, images = repo.sample(frac=0.5, groupby="transformer")
+        metadata, images = repo.sample(frac=0.5, groupby="method")
         assert len(metadata) == 4
         assert isinstance(metadata, pd.DataFrame)
         assert isinstance(images, dict)
@@ -376,7 +376,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_delete_by_transformer(self, container):
+    def test_delete_by_method(self, container):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
@@ -385,7 +385,7 @@ class TestImageRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        repo.delete_by_transformer(transformer="P2")
+        repo.delete_by_method(method="P2")
         assert repo.count() == 0
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()

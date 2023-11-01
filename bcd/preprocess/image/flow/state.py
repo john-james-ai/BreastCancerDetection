@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 05:16:39 am                                               #
-# Modified   : Wednesday November 1st 2023 05:11:51 am                                             #
+# Modified   : Wednesday November 1st 2023 12:31:35 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -37,6 +37,8 @@ STAGES = {
 class State:
     """A value object encapsulating the state of a Task or Job object."""
 
+    images_processed: int = 0
+    image_processing_time: float = 0
     started: datetime = None
     stopped: datetime = None
     duration: float = 0
@@ -46,9 +48,13 @@ class State:
         self.started = datetime.now()
         self.status = "IN-PROGRESS"
 
+    def count(self) -> None:
+        self.images_processed += 1
+
     def stop(self) -> None:
         self.stopped = datetime.now()
         self.duration = (self.stopped - self.started).total_seconds()
+        self.image_processing_time = self.images_processed / self.duration
         self.status = "COMPLETED"
 
 

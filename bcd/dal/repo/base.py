@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 28th 2023 08:24:06 pm                                              #
-# Modified   : Tuesday October 31st 2023 01:33:38 am                                               #
+# Modified   : Wednesday November 1st 2023 01:49:19 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,7 @@
 from abc import ABC, abstractmethod
 from typing import Callable
 
-from bcd.core.base import Entity
+from bcd import Entity
 from bcd.dal.database.base import Database
 
 
@@ -29,9 +29,15 @@ class Repo(ABC):
     """Provides base class for all repositories classes.
 
     Args:
-        name (str): Repository name. This will be the name of the underlying database table.
         database(Database): Database containing data to access.
     """
+
+    def __init__(self, database: Database) -> None:
+        self._database = database
+
+    @property
+    def database(self) -> Database:
+        return self._database
 
     @abstractmethod
     def add(self, entity: Entity) -> None:
@@ -79,3 +85,9 @@ class Repo(ABC):
             uid (str): Entity identifier.
 
         """
+
+    def connect(self) -> None:
+        self._database.connect()
+
+    def close(self) -> None:
+        self._database.close()

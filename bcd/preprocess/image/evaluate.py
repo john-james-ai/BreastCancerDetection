@@ -11,29 +11,26 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday October 27th 2023 03:24:36 am                                                #
-# Modified   : Tuesday October 31st 2023 04:58:39 am                                               #
+# Modified   : Wednesday November 1st 2023 01:39:32 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 from __future__ import annotations
 
-import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
 from math import log10
-from typing import List
 
 import numpy as np
 import pandas as pd
-from joblib import Parallel, delayed
 from skimage.metrics import structural_similarity as ssidx
 
+from bcd import Entity
 from bcd.config import Config
-from bcd.core.base import Entity, Method, Param, Stage
-from bcd.core.image import Image
-from bcd.dal.repo.uow import UoW
+from bcd.preprocess.image.flow.state import Stage
+from bcd.preprocess.image.image import Image
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -185,77 +182,9 @@ class Evaluation(Entity):
             mse=mse.compute(a=image.pixel_data, b=other),
             psnr=psnr.compute(a=image.pixel_data, b=other),
             ssim=ssim.compute(a=image.pixel_data, b=other),
-            image_view=image_view,
+            image_view=image.image_view,
             abnormality_type=image.abnormality_type,
             assessment=image.assessment,
             cancer=image.cancer,
             evaluated=datetime.now(),
         )
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                    EVALUATION                                                    #
-# ------------------------------------------------------------------------------------------------ #
-class Evaluator:
-    """Encapsulates the execution and evaluation of method on a single parameter set."""
-
-    def __init__(self, uow: UoW) -> None:
-        self._uow = uow
-        self._methods = []
-        self._images = []
-        self._logger = logging.getLogger(f"{self.__class__.__name__}")
-
-    def load_images(self, n: int = None, frac: float = None) -> None:
-        """Loads a sample of the images from the repository.
-
-        Args:
-            n (int): Number of images to select. Can't be used with frac.
-            frac (float): Proportion of images to select. Can't be used with n.
-        """
-        self._uow.connect()
-        _, images = self._uow.image_repo.sample(n=n, frac=frac)
-        self._uow.close()
-        for image in images.values():
-            self._images.append(image)
-
-    def add_method(self, method: Method, params: List[Param]) -> None:
-        """Adds a method and a parameter list to the Evaluator
-
-        Args:
-            method (type[Method]): A Method class.
-            params (List[Param]): A list of parameter sets to apply to the method.
-
-        Note: A method can only be added once. A second instance of the method class will
-        overwrite the existing method and its parameters.
-        """
-
-        d = {"method": method, "params": params}
-        self._methods.append(d)
-
-    def run(self) -> None:
-        """Runs the method packages on the images, evaluates the transformation and records it."""
-        for method_dict in self._methods:
-            method = method_dict["method"]
-            for params in method_dict["params"]:
-                for image in self._images:
-                    with Parallel(n_jobs=6) as parallel:
-                        parallel(
-                            delayed(self._process_image)(method=method, image=image, params=params)
-                        )
-
-    def _process_image(self, method: Method, image: Image, params: Param) -> None:
-        """Transforms the image, evaluates it, and persists the results."""
-
-        image_transformed = method.execute(image=image.pixel_data, params=params)
-        ev = Evaluation.evaluate(
-            image=image,
-            other=image_transformed,
-            stage_id=method.stage_id,
-            step=method.step,
-            method=method.__name__,
-            params=params.to_string(),
-        )
-        self._logger.debug(ev)
-        self._uow.connect()
-        self._uow.eval_repo.add(evaluation=ev)
-        self._uow.close()

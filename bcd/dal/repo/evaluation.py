@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Tuesday October 31st 2023 12:03:29 am                                               #
+# Modified   : Wednesday November 1st 2023 01:50:23 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -56,8 +56,8 @@ class EvalRepo(Repo):
     __tablename = "eval"
 
     def __init__(self, database: Database, config: Config = Config) -> None:
-        super().__init__()
-        self._database = database
+        super().__init__(database=database)
+
         self._mode = config.get_mode()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
@@ -72,7 +72,7 @@ class EvalRepo(Repo):
             evaluation (Evaluation): An Evaluation Instance.
 
         """
-        self._database.insert(
+        self.database.insert(
             data=evaluation.as_df(),
             tablename=self.__tablename,
             dtype=EVAL_DTYPES,
@@ -93,7 +93,7 @@ class EvalRepo(Repo):
         query = f"SELECT * FROM {self.__tablename};"
         params = {}
         try:
-            evals = self._database.query(query=query, params=params)
+            evals = self.database.query(query=query, params=params)
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
             raise
@@ -118,7 +118,7 @@ class EvalRepo(Repo):
         query = f"SELECT * FROM {self.__tablename};"
         params = {}
         try:
-            evals = self._database.query(query=query, params=params)
+            evals = self.database.query(query=query, params=params)
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
             raise
@@ -144,7 +144,7 @@ class EvalRepo(Repo):
         query = f"SELECT * FROM {self.__tablename};"
         params = None
         try:
-            evals = self._database.query(query=query, params=params)
+            evals = self.database.query(query=query, params=params)
 
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
@@ -177,7 +177,7 @@ class EvalRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND method = :method;"
         params = {"mode": self.mode, "method": method}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)
 
     def delete_by_stage(self, stage_id: int) -> None:
         """Deletes all evaluations for a given stage_id
@@ -188,7 +188,7 @@ class EvalRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
         params = {"mode": self.mode, "stage_id": stage_id}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)
 
     def delete_by_step(self, step: str) -> None:
         """Deletes all evaluations for a given step
@@ -199,7 +199,7 @@ class EvalRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND step = :step;"
         params = {"mode": self.mode, "step": step}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)
 
     def delete_by_mode(self) -> None:
         """Deletes all evaluations for the current mode.
@@ -210,4 +210,4 @@ class EvalRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)

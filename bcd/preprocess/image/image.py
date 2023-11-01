@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/core/image/entity.py                                                           #
+# Filename   : /bcd/preprocess/image/image.py                                                      #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Monday October 30th 2023 11:38:02 pm                                                #
+# Modified   : Wednesday November 1st 2023 08:46:51 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,13 +22,18 @@ from __future__ import annotations
 import warnings
 from dataclasses import dataclass
 from datetime import datetime
+from uuid import uuid4
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from bcd.core.base import Entity
+from bcd.config import Config
+from bcd.dal.io.image import ImageIO
+from bcd.preprocess.image.entity import Entity
+from bcd.preprocess.image.flow.state import Stage
+from bcd.utils.date import to_datetime
 
 # ------------------------------------------------------------------------------------------------ #
 sns.set_style("whitegrid")
@@ -69,7 +74,7 @@ class Image(Entity):
     filepath: str
     fileset: str
     cancer: bool
-    transformer: str
+    method: str
     task_id: str
     created: datetime
 
@@ -100,7 +105,7 @@ class Image(Entity):
             and self.filepath == other.filepath
             and self.fileset == other.fileset
             and self.cancer == other.cancer
-            and self.transformer == other.transformer
+            and self.method == other.method
             and self.task_id == other.task_id
         )
 
@@ -197,8 +202,140 @@ class Image(Entity):
             "filepath": self.filepath,
             "fileset": self.fileset,
             "cancer": self.cancer,
-            "transformer": self.transformer,
+            "method": self.method,
             "task_id": self.task_id,
             "created": self.created,
         }
         return pd.DataFrame(data=d, index=[0])
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                    IMAGE FACTORY                                                 #
+# ------------------------------------------------------------------------------------------------ #
+class ImageFactory:
+    """Creates Image Objects"""
+
+    @classmethod
+    def from_df(cls, df: pd.DataFrame) -> Image:
+        """Creates an image from a DataFrame
+
+        This method is called to reconstitute an image from the database.
+
+        Args:
+            df (pd.DataFrame): Dataframe containing image metadata.
+
+        Returns:
+            Image object
+        """
+
+        # Convert numpy datetime64 to python datetime.
+        created = to_datetime(dt=df["created"].values[0])
+
+        pixel_data = ImageIO.read(filepath=df["filepath"])
+        return Image(
+            uid=df["uid"].values[0],
+            case_id=df["case_id"].values[0],
+            mode=df["mode"].values[0],
+            stage_id=df["stage_id"].values[0],
+            stage=df["stage"].values[0],
+            left_or_right_breast=df["left_or_right_breast"].values[0],
+            image_view=df["image_view"].values[0],
+            abnormality_type=df["abnormality_type"].values[0],
+            assessment=df["assessment"].values[0],
+            breast_density=df["breast_density"].values[0],
+            bit_depth=df["bit_depth"].values[0],
+            pixel_data=pixel_data,
+            height=df["height"].values[0],
+            width=df["width"].values[0],
+            size=df["size"].values[0],
+            aspect_ratio=df["aspect_ratio"].values[0],
+            min_pixel_value=df["min_pixel_value"].values[0],
+            max_pixel_value=df["max_pixel_value"].values[0],
+            range_pixel_values=df["range_pixel_values"].values[0],
+            mean_pixel_value=df["mean_pixel_value"].values[0],
+            median_pixel_value=df["median_pixel_value"].values[0],
+            std_pixel_value=df["std_pixel_value"].values[0],
+            filepath=df["filepath"].values[0],
+            fileset=df["fileset"].values[0],
+            cancer=df["cancer"].values[0],
+            created=created,
+            method=df["method"].values[0],
+            task_id=df["task_id"].values[0],
+        )
+
+    @classmethod
+    def create(
+        cls,
+        case_id: str,
+        stage_id: int,
+        pixel_data: np.ndarray,
+        method: str,
+        task_id: str,
+    ) -> Image:
+        """Creates an image from pizel data.
+
+        Note: It does not save the image to disk. Persistence
+        functions are the domain of the repository. Though, this method
+        can read the pixel data from file, in order to reconstitute a
+        fully formed Image object, persistence of the image and
+        the metadata are controlled by the repository.
+
+        Args:
+            case_id (str): Unique identifier for a case.
+            stage_id (int): The preprocessing stage identifier
+            pixel_data (np.ndarray): Pixel data in numpy array format.
+            method (str): The name of the method
+            task_id (str): The UUID for the specific task.
+
+        Returns
+            Image Object.
+
+        """
+        uid = str(uuid4())
+
+        stage = Stage(uid=stage_id).name
+
+        image_metadata = cls.get_image_metadata()
+
+        case = image_metadata.loc[image_metadata["case_id"] == case_id]
+
+        directory = Config.get_data_dir()
+
+        filepath = ImageIO.get_filepath(uid=uid, basedir=directory, fileformat="png")
+
+        return Image(
+            uid=uid,
+            case_id=case_id,
+            mode=Config.get_mode(),
+            stage_id=stage_id,
+            stage=stage,
+            left_or_right_breast=case["left_or_right_breast"].values[0],
+            image_view=case["image_view"].values[0],
+            abnormality_type=case["abnormality_type"].values[0],
+            assessment=case["assessment"].values[0],
+            breast_density=case["breast_density"].values[0],
+            bit_depth=case["bit_depth"].values[0],
+            pixel_data=pixel_data,
+            height=pixel_data.shape[0],
+            width=pixel_data.shape[1],
+            size=pixel_data.size,
+            aspect_ratio=pixel_data.shape[1] / pixel_data.shape[0],
+            min_pixel_value=np.min(pixel_data, axis=None),
+            max_pixel_value=np.max(pixel_data, axis=None),
+            range_pixel_values=pixel_data.max(axis=None) - pixel_data.min(axis=None),
+            mean_pixel_value=pixel_data.mean(axis=None),
+            median_pixel_value=np.median(pixel_data, axis=None).astype(np.uint8),
+            std_pixel_value=np.std(pixel_data, axis=None),
+            filepath=filepath,
+            fileset=case["fileset"].values[0],
+            cancer=case["cancer"].values[0],
+            created=datetime.now(),
+            method=method,
+            task_id=task_id,
+        )
+
+    @classmethod
+    def get_image_metadata(cls) -> pd.DataFrame:
+        metadata_filepath = Config.get_metadata_filepath()
+        image_metadata = pd.read_csv(metadata_filepath)
+        return image_metadata.loc[image_metadata["series_description"] == "full mammogram images"]

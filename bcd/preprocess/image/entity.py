@@ -4,32 +4,24 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/utils/get_class.py                                                             #
+# Filename   : /bcd/preprocess/image/base.py                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday October 28th 2023 03:15:26 pm                                              #
-# Modified   : Saturday October 28th 2023 03:16:19 pm                                              #
+# Created    : Wednesday November 1st 2023 08:35:22 am                                             #
+# Modified   : Wednesday November 1st 2023 08:39:51 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-import importlib
-from typing import Callable
-import logging
+from dataclasses import dataclass
+
+from bcd import DataClass
+
+
 # ------------------------------------------------------------------------------------------------ #
-def get_class(module_name: str, class_name: str) -> type[Callable]:
-    """Converts a string to a class instance."""
-    try:
-        module = importlib.import_module(module_name)
-        try:
-            class_ = getattr(module, class_name)
-        except AttributeError:
-            logging.exception("Class does not exist")
-            raise
-    except ImportError:
-        logging.exception("Module does not exist")
-        raise
-    return class_ or None
+@dataclass
+class Entity(DataClass):
+    """Abstract base class for project entities, such as Image, Task and Job."""

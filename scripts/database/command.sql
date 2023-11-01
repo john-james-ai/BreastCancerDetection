@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS bcd_test;
-DROP DATABASE IF EXISTS bcd_dev;
+use bcd;
+ALTER TABLE image RENAME COLUMN transformer to method;

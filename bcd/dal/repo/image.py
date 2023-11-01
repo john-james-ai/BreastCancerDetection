@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Wednesday November 1st 2023 03:08:11 am                                             #
+# Modified   : Wednesday November 1st 2023 01:51:02 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,11 +25,10 @@ import sqlalchemy
 from sqlalchemy.dialects.mssql import BIGINT, DATETIME, FLOAT, INTEGER, TINYINT, VARCHAR
 
 from bcd.config import Config
-from bcd.core.factory import ImageFactory
-from bcd.core.image import Image
 from bcd.dal.database.base import Database
 from bcd.dal.io.image import ImageIO
 from bcd.dal.repo.base import Repo
+from bcd.preprocess.image.image import Image, ImageFactory
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=arguments-renamed, arguments-differ, broad-exception-caught
@@ -58,7 +57,7 @@ WRITE_IMAGE_DTYPES = {
     "std_pixel_value": FLOAT(),
     "filepath": VARCHAR(length=256),
     "fileset": VARCHAR(length=8),
-    "transformer": VARCHAR(length=64),
+    "method": VARCHAR(length=64),
     "cancer": TINYINT(),
     "task_id": VARCHAR(length=64),
     "created": DATETIME(),
@@ -88,7 +87,7 @@ READ_IMAGE_DTYPES = {
     "std_pixel_value": np.float64,
     "filepath": str,
     "fileset": str,
-    "transformer": str,
+    "method": str,
     "cancer": bool,
     "task_id": str,
 }
@@ -106,12 +105,11 @@ class ImageRepo(Repo):
     def __init__(
         self,
         database: Database,
-        image_factory: ImageFactory,
+        image_factory: type[ImageFactory] = ImageFactory,
         io: ImageIO = ImageIO,
         config: Config = Config,
     ) -> None:
-        super().__init__()
-        self._database = database
+        super().__init__(database=database)
         self._image_factory = image_factory
         self._io = io
         self._mode = config.get_mode()
@@ -138,7 +136,7 @@ class ImageRepo(Repo):
             if not exists:
                 data = image.as_df()
 
-                self._database.insert(
+                self.database.insert(
                     data=data,
                     tablename=self.__tablename,
                     dtype=WRITE_IMAGE_DTYPES,
@@ -162,7 +160,7 @@ class ImageRepo(Repo):
         query = f"SELECT * FROM {self.__tablename} WHERE uid = :uid;"
         params = {"uid": uid}
         try:
-            image_meta = self._database.query(
+            image_meta = self.database.query(
                 query=query, dtype=READ_IMAGE_DTYPES, params=params, parse_dates=PARSE_DATES
             )
         except sqlalchemy.exc.ProgrammingError as e:  # pragma: no cover
@@ -193,7 +191,7 @@ class ImageRepo(Repo):
 
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
         params = {"mode": self.mode, "stage_id": stage_id}
-        image_meta = self._database.query(query=query, params=params)
+        image_meta = self.database.query(query=query, params=params)
 
         if len(image_meta) == 0:
             msg = f"No images exist for Stage {stage_id} in {self.mode} mode."
@@ -224,7 +222,7 @@ class ImageRepo(Repo):
 
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        image_meta = self._database.query(query=query, params=params)
+        image_meta = self.database.query(query=query, params=params)
 
         if len(image_meta) == 0:
             msg = f"No images exist in {self.mode} mode."
@@ -239,24 +237,22 @@ class ImageRepo(Repo):
             images,
         )
 
-    def get_by_transformer(self, transformer: str) -> Tuple[pd.DataFrame, dict]:
-        """Returns a list of images for a given transformer.
+    def get_by_method(self, method: str) -> Tuple[pd.DataFrame, dict]:
+        """Returns a list of images for a given method.
 
         Args:
-            transformer (str): The transformer that created the images
+            method (str): The method that created the images
         Returns:
             Tuple containing the metadata and dictionary of images, keyed by image id.
         """
         images = {}
 
-        query = (
-            f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND transformer = :transformer;"
-        )
-        params = {"mode": self.mode, "transformer": transformer}
-        image_meta = self._database.query(query=query, params=params)
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND method = :method;"
+        params = {"mode": self.mode, "method": method}
+        image_meta = self.database.query(query=query, params=params)
 
         if len(image_meta) == 0:
-            msg = f"No images exist for the {transformer} transformer in {self.mode} mode."
+            msg = f"No images exist for the {method} method in {self.mode} mode."
             self._logger.exception(msg)
             raise FileNotFoundError(msg)
 
@@ -278,7 +274,7 @@ class ImageRepo(Repo):
         """
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        image_meta = self._database.query(query=query, params=params)
+        image_meta = self.database.query(query=query, params=params)
 
         if condition is None:
             return image_meta
@@ -350,7 +346,7 @@ class ImageRepo(Repo):
         query = f"SELECT EXISTS(SELECT 1 FROM {self.__tablename} WHERE uid = :uid);"
         params = {"uid": uid}
         try:
-            exists = self._database.exists(query=query, params=params)
+            exists = self.database.exists(query=query, params=params)
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
             raise
@@ -369,7 +365,7 @@ class ImageRepo(Repo):
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
         try:
-            image_meta = self._database.query(query=query, params=params)
+            image_meta = self.database.query(query=query, params=params)
 
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
@@ -392,7 +388,7 @@ class ImageRepo(Repo):
         query = f"DELETE FROM {self.__tablename} WHERE uid = :uid;"
         params = {"uid": uid}
         try:
-            self._database.delete(query=query, params=params)
+            self.database.delete(query=query, params=params)
         except Exception as e:
             self._logger.exception(e)
             raise
@@ -408,7 +404,7 @@ class ImageRepo(Repo):
         if self._delete_permitted(stage_id=stage_id):
             query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode and stage_id = :stage_id;"
             params = {"mode": self.mode, "stage_id": stage_id}
-            image_meta = self._database.query(query=query, params=params)
+            image_meta = self.database.query(query=query, params=params)
 
             if len(image_meta) == 0:
                 msg = f"No images exist for stage {stage_id} in {self.mode} mode."
@@ -421,21 +417,19 @@ class ImageRepo(Repo):
             msg = f"Delete of stage {stage_id} images not permitted without confirmation."
             self._logger.info(msg)
 
-    def delete_by_transformer(self, transformer: str) -> None:
-        """Removes images for a given transformer.
+    def delete_by_method(self, method: str) -> None:
+        """Removes images for a given method.
 
         Args:
-            transformer (str): The transformer that created the image.
+            method (str): The method that created the image.
         """
 
-        query = (
-            f"SELECT * FROM {self.__tablename} WHERE mode = :mode and transformer = :transformer;"
-        )
-        params = {"mode": self.mode, "transformer": transformer}
-        image_meta = self._database.query(query=query, params=params)
+        query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode and method = :method;"
+        params = {"mode": self.mode, "method": method}
+        image_meta = self.database.query(query=query, params=params)
 
         if len(image_meta) == 0:
-            msg = f"No images exist for {transformer} transformer in {self.mode} mode."
+            msg = f"No images exist for {method} method in {self.mode} mode."
             self._logger.warning(msg)
 
         for _, image in image_meta.iterrows():
@@ -446,7 +440,7 @@ class ImageRepo(Repo):
 
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        image_meta = self._database.query(query=query, params=params)
+        image_meta = self.database.query(query=query, params=params)
 
         if len(image_meta) == 0:
             msg = f"No images exist in {self.mode} mode."

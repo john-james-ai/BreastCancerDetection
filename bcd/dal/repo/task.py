@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Wednesday November 1st 2023 05:08:21 am                                             #
+# Modified   : Wednesday November 1st 2023 01:51:38 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -58,8 +58,7 @@ class TaskRepo(Repo):
     __tablename = "task"
 
     def __init__(self, database: Database, config: Config = Config) -> None:
-        super().__init__()
-        self._database = database
+        super().__init__(database=database)
         self._mode = config.get_mode()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
@@ -85,7 +84,7 @@ class TaskRepo(Repo):
                 self._logger.exception(msg)
                 raise FileExistsError(msg)
             else:
-                self._database.insert(
+                self.database.insert(
                     data=task.as_df(),
                     tablename=self.__tablename,
                     dtype=TASK_DTYPES,
@@ -104,7 +103,7 @@ class TaskRepo(Repo):
         query = f"SELECT * FROM {self.__tablename} WHERE uid = :uid;"
         params = {"uid": uid}
         try:
-            task = self._database.query(query=query, params=params)
+            task = self.database.query(query=query, params=params)
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
             raise
@@ -121,7 +120,7 @@ class TaskRepo(Repo):
         tasks = {}
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
         params = {"mode": self.mode, "stage_id": stage_id}
-        task_meta = self._database.query(query=query, params=params)
+        task_meta = self.database.query(query=query, params=params)
         if len(task_meta) == 0:
             msg = f"No Tasks exist for Stage{stage_id}."
             self._logger.exception(msg)
@@ -137,7 +136,7 @@ class TaskRepo(Repo):
         tasks = {}
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        task_meta = self._database.query(query=query, params=params)
+        task_meta = self.database.query(query=query, params=params)
         if len(task_meta) == 0:
             msg = f"No Tasks exist for mode {self.mode}."
             self._logger.exception(msg)
@@ -153,7 +152,7 @@ class TaskRepo(Repo):
         tasks = {}
         query = f"SELECT * FROM {self.__tablename} WHERE mode = :mode AND name = :name;"
         params = {"mode": self.mode, "name": name}
-        task_meta = self._database.query(query=query, params=params)
+        task_meta = self.database.query(query=query, params=params)
         if len(task_meta) == 0:
             msg = f"No Tasks exist for Name {name}."
             self._logger.exception(msg)
@@ -173,7 +172,7 @@ class TaskRepo(Repo):
         """
         query = f"SELECT * FROM {self.__tablename};"
         params = None
-        task_meta = self._database.query(query=query, params=params)
+        task_meta = self.database.query(query=query, params=params)
 
         if condition is None:
             return task_meta
@@ -192,7 +191,7 @@ class TaskRepo(Repo):
         query = f"SELECT EXISTS(SELECT 1 FROM {self.__tablename} WHERE uid = :uid);"
         params = {"uid": uid}
         try:
-            exists = self._database.exists(query=query, params=params)
+            exists = self.database.exists(query=query, params=params)
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
             raise
@@ -211,7 +210,7 @@ class TaskRepo(Repo):
         query = f"SELECT * FROM {self.__tablename};"
         params = None
         try:
-            task = self._database.query(query=query, params=params)
+            task = self.database.query(query=query, params=params)
 
         except Exception as e:  # pragma: no cover
             self._logger.exception(e)
@@ -229,7 +228,7 @@ class TaskRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE uid = :uid;"
         params = {"uid": uid}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)
 
     def delete_by_name(self, name: str) -> None:
         """Deletes all tasks with the specified name
@@ -240,7 +239,7 @@ class TaskRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND name = :name;"
         params = {"mode": self.mode, "name": name}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)
 
     def delete_by_stage(self, stage_id: int) -> None:
         """Deletes all tasks with the stage_id
@@ -251,7 +250,7 @@ class TaskRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
         params = {"mode": self.mode, "stage_id": stage_id}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)
 
     def delete_by_mode(self) -> None:
         """Deletes all tasks with the stage_id
@@ -262,10 +261,10 @@ class TaskRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)
 
     def delete_all(self) -> None:
         """Deletes all tasks"""
         query = f"DELETE FROM {self.__tablename};"
         params = None
-        self._database.delete(query=query, params=params)
+        self.database.delete(query=query, params=params)

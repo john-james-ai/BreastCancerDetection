@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Wednesday November 1st 2023 03:59:37 am                                             #
+# Modified   : Wednesday November 1st 2023 03:15:29 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -31,7 +31,7 @@ from bcd.preprocess.image.evaluate import Evaluation
 from bcd.preprocess.image.flow.state import Stage
 
 # ------------------------------------------------------------------------------------------------ #
-collect_ignore_glob = ["data/**/*.*"]
+collect_ignore_glob = ["data/**/*.*", "bcd/preprocess/**/*.*"]
 # ------------------------------------------------------------------------------------------------ #
 IMAGE_FP = "data/meta/2_clean/dicom.csv"
 # ------------------------------------------------------------------------------------------------ #
@@ -78,7 +78,7 @@ def container():
     """Wires the container."""
     ctr = BCDContainer()
     ctr.init_resources()
-    ctr.wire(modules=["bcd.dal.io.image"])
+    ctr.wire(modules=["bcd.preprocess.image.flow.convert"])
 
     return ctr
 
@@ -101,7 +101,7 @@ def case_ids():
 @pytest.fixture(scope="module", autouse=False)
 def images(container):
     image_list = []
-    transformer = ["P1", "P2"]
+    method = ["P1", "P2"]
     io = ImageIO()
     factory = container.dal.image_factory()
     df = pd.read_csv(IMAGE_FP)
@@ -115,7 +115,7 @@ def images(container):
             case_id=meta["case_id"],
             stage_id=stage_id,
             pixel_data=pixel_data,
-            transformer=transformer[stage_id],
+            method=method[stage_id],
             task_id="standard_test_task_id" + str(stage_id),
         )
         i += 1

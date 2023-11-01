@@ -4,41 +4,35 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/infrastructure/io/base.py                                                      #
+# Filename   : /bcd/utils/object.py                                                                #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Thursday October 26th 2023 03:57:11 pm                                              #
-# Modified   : Friday October 27th 2023 02:04:54 am                                                #
+# Created    : Saturday October 28th 2023 03:15:26 pm                                              #
+# Modified   : Wednesday November 1st 2023 11:20:07 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Cache Module for Delayed Writing in Repositories"""
-from abc import ABC, abstractmethod
-from bcd.core.base import Entity
+import importlib
+import logging
+from typing import Callable
 
 
 # ------------------------------------------------------------------------------------------------ #
-class Cache(ABC):
-    """Abstract base dlass for cache objects."""
+def get_class(class_name: str, module_name: str) -> type[Callable]:
+    """Converts a string to a class instance."""
 
-    @abstractmethod
-    def put(self, entity: Entity) -> None:
-        """Puts an entity in cache.
-
-        Args
-            entity (Entity): An entity to write to cache.
-        """
-
-    @abstractmethod
-    def save(self) -> None:
-        """Saves all entities to file."""
-
-
-    @abstractmethod
-    def reset(self) -> None:
-        """Disposes / resets the cache"""
-
+    try:
+        module = importlib.import_module(module_name)
+        try:
+            class_ = getattr(module, class_name)
+        except AttributeError:
+            logging.exception("Class does not exist")
+            raise
+    except ImportError:
+        logging.exception("Module does not exist")
+        raise
+    return class_ or None
