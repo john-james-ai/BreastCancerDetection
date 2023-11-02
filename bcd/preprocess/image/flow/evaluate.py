@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday November 1st 2023 07:40:20 pm                                             #
-# Modified   : Wednesday November 1st 2023 09:02:13 pm                                             #
+# Modified   : Thursday November 2nd 2023 12:35:56 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -34,6 +34,7 @@ from bcd.preprocess.image.image import Image
 from bcd.preprocess.image.method.basemethod import Param
 
 # ------------------------------------------------------------------------------------------------ #
+# set_loky_pickler("dill")
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -86,7 +87,8 @@ class EvaluatorTask(Task):
     def run(self) -> None:
         self.start()
         source_image_metadata = self._get_source_image_metadata()
-        self._process_images(image_metadata=source_image_metadata)
+        evals = self._process_images(image_metadata=source_image_metadata)
+        self.uow.eval_repo.add_many(evals=evals)
         self.stop()
 
     def _get_source_image_metadata(self) -> pd.DataFrame:
@@ -113,14 +115,20 @@ class EvaluatorTask(Task):
 
         return df
 
-    def _process_images(self, image_metadata: pd.DataFrame) -> None:
+    def _process_images(self, image_metadata: pd.DataFrame) -> list:
         """Convert the images to PNG format and store in the repository.
 
         Args:
             image_metadata (pd.DataFrame): DataFrame containing image metadata.
+        Returns:
+            List of Evaluation objects.
         """
+        evals = []
         for _, metadata in tqdm(image_metadata.iterrows(), total=image_metadata.shape[0]):
-            self._process_image(metadata=metadata)
+            ev = self._process_image(metadata=metadata)
+            evals.append(ev)
+
+        return evals
 
     @counter
     def _process_image(self, metadata: pd.Series) -> None:
@@ -130,8 +138,7 @@ class EvaluatorTask(Task):
         pixel_data = self._method.execute(image=image.pixel_data, params=self.method_params)
         # Perform the evaluation
         ev = self._evaluate(image=image, pixel_data=pixel_data)
-        # Persist
-        self.uow.eval_repo.add(evaluation=ev)
+        return ev
 
     def _evaluate(self, image: Image, pixel_data: np.ndarray) -> Evaluation:
         """Obtains the ground truth image if necessary and performs the evaluation."""

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/dal/repo/evaluation.py                                                         #
+# Filename   : /bcd/dal/repo/evaluate.py                                                           #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Wednesday November 1st 2023 01:50:23 pm                                             #
+# Modified   : Wednesday November 1st 2023 09:28:17 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -77,6 +77,19 @@ class EvalRepo(Repo):
             tablename=self.__tablename,
             dtype=EVAL_DTYPES,
             if_exists="append",
+        )
+
+    def add_many(self, evals: list) -> None:
+        """Adds a list of evaluations to the repository
+
+        Args:
+            evals (list): List of Evaluation objects.
+        """
+        eval_df = pd.DataFrame()
+        for ev in evals:
+            eval_df = pd.concat([eval_df, ev.as_df()], axis=0)
+        self.database.insert(
+            data=eval_df, tablename=self.__tablename, dtype=EVAL_DTYPES, if_exists="append"
         )
 
     def get(self, condition: Callable = None) -> pd.DataFrame:

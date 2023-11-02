@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Wednesday November 1st 2023 01:55:01 pm                                             #
+# Modified   : Wednesday November 1st 2023 09:24:46 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,7 +22,7 @@ import logging.config
 from dependency_injector import containers, providers
 
 from bcd.dal.database.mysql import MySQLDatabase
-from bcd.dal.repo.evaluation import EvalRepo
+from bcd.dal.repo.evaluate import EvalRepo
 from bcd.dal.repo.image import ImageRepo
 from bcd.dal.repo.task import TaskRepo
 from bcd.dal.repo.uow import UoW
