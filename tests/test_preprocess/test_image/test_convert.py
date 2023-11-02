@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday November 1st 2023 01:20:59 pm                                             #
-# Modified   : Wednesday November 1st 2023 06:54:36 pm                                             #
+# Modified   : Wednesday November 1st 2023 08:21:22 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -92,7 +92,7 @@ class TestConverter:  # pragma: no cover
         task = ConverterTask()
         task.task_params = task_params
         task.uow = uow
-        task.method = Converter
+        task.method = Converter()
         task.run()
 
         assert isinstance(task.as_dict(), dict)

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 30th 2023 04:50:27 pm                                                #
-# Modified   : Wednesday November 1st 2023 09:06:03 am                                             #
+# Modified   : Wednesday November 1st 2023 09:05:41 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -58,7 +58,7 @@ class MeanFilter(Filter):
 
     @classmethod
     def execute(cls, image: np.ndarray, params: FilterParams) -> np.ndarray:
-        return cv2.blur(image.pixel_data, (params.kernel, params.kernel))
+        return cv2.blur(image, (params.kernel, params.kernel))
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -69,7 +69,7 @@ class MedianFilter(Filter):
 
     @classmethod
     def execute(cls, image: np.ndarray, params: FilterParams) -> np.ndarray:
-        return cv2.medianBlur(image.pixel_data, params.kernel)
+        return cv2.medianBlur(image, params.kernel)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -79,5 +79,5 @@ class GaussianFilter(Filter):
     name = __qualname__
 
     @classmethod
-    def execute(self, image: np.ndarray, params: FilterParams) -> np.ndarray:
-        return cv2.GaussianBlur(image.pixel_data, (params.kernel, params.kernel), 0)
+    def execute(cls, image: np.ndarray, params: FilterParams) -> np.ndarray:
+        return cv2.GaussianBlur(image, (params.kernel, params.kernel), 0)

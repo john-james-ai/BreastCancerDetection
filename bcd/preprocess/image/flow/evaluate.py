@@ -4,42 +4,49 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/flow/convert.py                                               #
+# Filename   : /bcd/preprocess/image/flow/evaluate.py                                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Tuesday October 31st 2023 04:45:05 am                                               #
-# Modified   : Wednesday November 1st 2023 08:23:40 pm                                             #
+# Created    : Wednesday November 1st 2023 07:40:20 pm                                             #
+# Modified   : Wednesday November 1st 2023 09:02:13 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Converter Task Module"""
+"""Evaluator Task Module"""
 import logging
 from dataclasses import dataclass
+from typing import Union
 
+import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.dal.io.image import ImageIO
+from bcd.preprocess.image.evaluate import Evaluation
 from bcd.preprocess.image.flow.basetask import Task
 from bcd.preprocess.image.flow.decorator import counter, timer
-from bcd.preprocess.image.image import ImageFactory
+from bcd.preprocess.image.image import Image
 from bcd.preprocess.image.method.basemethod import Param
+
+# ------------------------------------------------------------------------------------------------ #
 
 
 # ------------------------------------------------------------------------------------------------ #
 #                                   CONVERTER TASK PARAMS                                          #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class ConverterTaskParams(Param):
+class EvaluatorTaskParams(Param):
     """Encapsulates the parameters for the ConverterTask."""
 
+    input_stage_id: int
     n: int = None
     frac: float = None
+    groupby: Union[str, list] = None
     n_jobs: int = 6
     random_state: int = None
 
@@ -53,10 +60,10 @@ class ConverterTaskParams(Param):
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                CONVERTER TASK                                                    #
+#                                   EVALUATOR TASK                                                 #
 # ------------------------------------------------------------------------------------------------ #
-class ConverterTask(Task):
-    """Converts DICOM images to PNG Format
+class EvaluatorTask(Task):
+    """Evaluates a preprocessing method by comparing output image quality with ground truth image.
 
     Args:
         task_params (ConverterTaskParams): Parameters that control the task behavior.
@@ -77,27 +84,32 @@ class ConverterTask(Task):
 
     @timer
     def run(self) -> None:
+        self.start()
         source_image_metadata = self._get_source_image_metadata()
         self._process_images(image_metadata=source_image_metadata)
+        self.stop()
 
     def _get_source_image_metadata(self) -> pd.DataFrame:
         """Performs multivariate stratified sampling to obtain a fraction of the raw images."""
 
-        # Read the raw DICOM metadata
-        df = pd.read_csv(self._config.get_metadata_filepath())
-
-        # Extract full mammogram images.
-        image_metadata = df.loc[df["series_description"] == "full mammogram images"]
-
-        # Define the stratum for stratified sampling
-        stratum = ["image_view", "abnormality_type", "cancer", "assessment"]
+        # Read the metadata from image repository
+        source_image_metadata, _ = self.uow.image_repo.get_by_stage(
+            stage_id=self.task_params.input_stage_id
+        )
 
         # Execute the sampling and obtain the case_ids
-        df = image_metadata.groupby(by=stratum).sample(
-            n=self.task_params.n,
-            frac=self.task_params.frac,
-            random_state=self.task_params.random_state,
-        )
+        if self.task_params.groupby is None:
+            df = source_image_metadata.sample(
+                n=self.task_params.n,
+                frac=self.task_params.frac,
+                random_state=self.task_params.random_state,
+            )
+        else:
+            df = source_image_metadata.groupby(by=self.task_params.groupby).sample(
+                n=self.task_params.n,
+                frac=self.task_params.frac,
+                random_state=self.task_params.random_state,
+            )
 
         return df
 
@@ -112,17 +124,42 @@ class ConverterTask(Task):
 
     @counter
     def _process_image(self, metadata: pd.Series) -> None:
-        # Read the pixel data from DICOM files
-        pixel_data = self._io.read(filepath=metadata["filepath"])
-        # Execute the method to convert the data to 8-bit grayscale
-        pixel_data = self._method.execute(image=pixel_data)
-        # Create an image object
-        image = ImageFactory.create(
-            case_id=metadata["case_id"],
-            stage_id=self._stage.uid,
-            pixel_data=pixel_data,
-            method=self._method.__class__.__name__,
-            task_id=self._uid,
-        )
+        # Get the image from the repository
+        image = self.uow.image_repo.get(uid=metadata["uid"])
+        # Execute the method being evaluated
+        pixel_data = self._method.execute(image=image.pixel_data, params=self.method_params)
+        # Perform the evaluation
+        ev = self._evaluate(image=image, pixel_data=pixel_data)
         # Persist
-        self.uow.image_repo.add(image=image)
+        self.uow.eval_repo.add(evaluation=ev)
+
+    def _evaluate(self, image: Image, pixel_data: np.ndarray) -> Evaluation:
+        """Obtains the ground truth image if necessary and performs the evaluation."""
+        ground_truth = self._get_ground_truth(image=image)
+        ev = Evaluation.evaluate(
+            image=ground_truth,
+            other=pixel_data,
+            method=self.method.__class__.__name__,
+            stage_id=self.method.stage.uid,
+            step=self.method.step,
+            params=self.method_params.as_string(),
+        )
+        return ev
+
+    def _get_ground_truth(self, image: Image) -> Image:
+        """Returns the ground truth image, if necessary"""
+        if image.stage_id == 0:
+            return image
+        else:
+            metadata = self.uow.image_repo.get_by_stage(stage_id=0)
+            image_meta = metadata.loc[metadata["case_id"] == image.case_id]
+            if len(image_meta) == 0:
+                msg = f"There is no ground truth image for case_id: {image.case_id}."
+                self._logger.exception(msg)
+                raise FileNotFoundError(msg)
+            elif len(image_meta) > 1:
+                msg = f"There is more than one ground truth image for case_id: {image.case_id}."
+                self._logger.exception(msg)
+                raise RuntimeError(msg)
+            else:
+                return self.uow.image_repo.get(image_meta["uid"].values[0])

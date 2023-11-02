@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday November 1st 2023 02:00:57 am                                             #
-# Modified   : Wednesday November 1st 2023 06:18:19 pm                                             #
+# Modified   : Wednesday November 1st 2023 08:20:55 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -70,13 +70,13 @@ class TaskBuilder:
             raise TypeError(msg)
         self._task.task_params = params
 
-    def add_method(self, method: type[Method]) -> None:
+    def add_method(self, method: Method) -> None:
         """Adds the underlying method to the object.
 
         Args:
-            method (type[Method]): A Method type
+            method (Method): A Method instance.
         """
-        if not isinstance(method(), Method):
+        if not isinstance(method, Method):
             msg = "method is not a valid Method object."
             self._logger.exception(msg)
             raise TypeError(msg)

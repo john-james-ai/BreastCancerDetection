@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Wednesday November 1st 2023 07:21:39 pm                                             #
+# Modified   : Wednesday November 1st 2023 08:24:41 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -148,7 +148,7 @@ class Task(ABC):
             "mode": self._mode,
             "stage_id": self._stage.uid,
             "stage": self._stage.name,
-            "method": self._method.__name__,
+            "method": self._method.__class__.__name__,
             "method_module": inspect.getmodule(self._method).__name__,
             "method_params": self._method_params.__class__.__name__
             if self._method_params is not None
