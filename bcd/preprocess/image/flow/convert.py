@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 04:45:05 am                                               #
-# Modified   : Wednesday November 1st 2023 08:23:40 pm                                             #
+# Modified   : Sunday November 5th 2023 01:54:28 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,10 +24,10 @@ import pandas as pd
 from tqdm import tqdm
 
 from bcd.config import Config
-from bcd.dal.io.image import ImageIO
+from bcd.dal.io.image_io import ImageIO
+from bcd.image import ImageFactory
 from bcd.preprocess.image.flow.basetask import Task
 from bcd.preprocess.image.flow.decorator import counter, timer
-from bcd.preprocess.image.image import ImageFactory
 from bcd.preprocess.image.method.basemethod import Param
 
 
@@ -40,6 +40,7 @@ class ConverterTaskParams(Param):
 
     n: int = None
     frac: float = None
+    groupby: list = None
     n_jobs: int = 6
     random_state: int = None
 
@@ -77,23 +78,33 @@ class ConverterTask(Task):
 
     @timer
     def run(self) -> None:
-        source_image_metadata = self._get_source_image_metadata()
-        self._process_images(image_metadata=source_image_metadata)
+        proceed = self._check_for_existing_images()
+        if proceed:
+            source_image_metadata = self._get_source_image_metadata()
+            self._process_images(image_metadata=source_image_metadata)
+        else:
+            msg = "Task aborted by user."
+            self._logger.info(msg)
 
     def _get_source_image_metadata(self) -> pd.DataFrame:
         """Performs multivariate stratified sampling to obtain a fraction of the raw images."""
 
         # Read the raw DICOM metadata
-        df = pd.read_csv(self._config.get_metadata_filepath())
+        df = pd.read_csv(self._config.get_dicom_metadata_filepath())
 
         # Extract full mammogram images.
         image_metadata = df.loc[df["series_description"] == "full mammogram images"]
 
         # Define the stratum for stratified sampling
-        stratum = ["image_view", "abnormality_type", "cancer", "assessment"]
+        groupby = self.task_params.groupby or [
+            "image_view",
+            "abnormality_type",
+            "cancer",
+            "assessment",
+        ]
 
         # Execute the sampling and obtain the case_ids
-        df = image_metadata.groupby(by=stratum).sample(
+        df = image_metadata.groupby(by=groupby).sample(
             n=self.task_params.n,
             frac=self.task_params.frac,
             random_state=self.task_params.random_state,
@@ -126,3 +137,13 @@ class ConverterTask(Task):
         )
         # Persist
         self.uow.image_repo.add(image=image)
+
+    def _check_for_existing_images(self) -> bool:
+        """Returns True if no existing images or approved to append"""
+        proceed = True
+        condition = lambda df: df["stage_id"] == self.method.stage.uid
+        count = self.uow.image_repo.count(condition)
+        if count > 0:
+            msg = f"There are already {count} images at the {self.method.stage.name} stage. Do you want to append? [Y/N]"
+            proceed = "y" in input(msg).lower()
+        return proceed

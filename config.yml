@@ -1,8 +1,10 @@
 data_dir:
   dev: data/image/1_dev
+  exp: data/image/2_exp
   metadata: data/meta/2_clean/dicom.csv
-  prod: data/image/2_prod
+  prod: data/image/3_prod
   test: tests/data/images
+id_vault: data/id/vault
 logging:
   disable_existing_loggers: false
   formatters:
@@ -17,7 +19,7 @@ logging:
     console:
       class: logging.StreamHandler
       formatter: console
-      level: DEBUG
+      level: INFO
       stream: ext://sys.stderr
     file:
       backupCount: 0

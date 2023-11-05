@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Wednesday November 1st 2023 01:51:02 pm                                             #
+# Modified   : Sunday November 5th 2023 01:54:27 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,9 +26,9 @@ from sqlalchemy.dialects.mssql import BIGINT, DATETIME, FLOAT, INTEGER, TINYINT,
 
 from bcd.config import Config
 from bcd.dal.database.base import Database
-from bcd.dal.io.image import ImageIO
+from bcd.dal.io.image_io import ImageIO
 from bcd.dal.repo.base import Repo
-from bcd.preprocess.image.image import Image, ImageFactory
+from bcd.image import Image, ImageFactory
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=arguments-renamed, arguments-differ, broad-exception-caught
@@ -112,6 +112,7 @@ class ImageRepo(Repo):
         super().__init__(database=database)
         self._image_factory = image_factory
         self._io = io
+        self._config = config
         self._mode = config.get_mode()
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
@@ -148,11 +149,12 @@ class ImageRepo(Repo):
                 self._logger.exception(msg)
                 raise FileExistsError(msg)
 
-    def get(self, uid: str) -> Image:
+    def get(self, uid: str, channels: int = 2) -> Image:
         """Obtains an image by identifier.
 
         Args:
             id (str): Image id
+            channels (int): Number of channels in the image representation.
 
         Returns:
             Image object.
@@ -171,7 +173,7 @@ class ImageRepo(Repo):
                 msg = f"Image id {uid} does not exist."
                 self._logger.warning(msg)
                 raise FileNotFoundError(msg)
-            return self._image_factory.from_df(df=image_meta)
+            return self._image_factory.from_df(df=image_meta, channels=channels)
 
     def get_by_stage(
         self,

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Wednesday November 1st 2023 08:24:41 pm                                             #
+# Modified   : Saturday November 4th 2023 05:59:48 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -84,6 +84,18 @@ class Task(ABC):
     @property
     def uid(self) -> str:
         return self._uid
+
+    @property
+    def stage_id(self) -> int:
+        return self._stage.uid
+
+    @property
+    def stage(self) -> str:
+        return self._stage.mame
+
+    @property
+    def state(self) -> str:
+        return self._state
 
     @property
     def uow(self) -> str:

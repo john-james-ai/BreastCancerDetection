@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday October 27th 2023 03:24:36 am                                                #
-# Modified   : Wednesday November 1st 2023 01:39:32 pm                                             #
+# Modified   : Sunday November 5th 2023 12:54:00 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -29,8 +29,9 @@ from skimage.metrics import structural_similarity as ssidx
 
 from bcd import Entity
 from bcd.config import Config
+from bcd.image import Image
 from bcd.preprocess.image.flow.state import Stage
-from bcd.preprocess.image.image import Image
+from bcd.utils.date import to_datetime
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -84,20 +85,24 @@ class SSIM(Metric):
 class Evaluation(Entity):
     """Evaluation of Preprocessing Methods"""
 
-    image_uid: str
+    test_no: int
+    source_image_uid: str
+    source_image_filepath: str
+    test_image_uid: str
+    test_image_filepath: str
     mode: str
     stage_id: int
     stage: str
-    step: str
-    method: str
-    params: str
-    mse: float
-    psnr: float
-    ssim: float
     image_view: str
     abnormality_type: str
     assessment: int
     cancer: bool
+    method: str
+    params: str
+    comp_time: float = 0
+    mse: float = 0
+    psnr: float = 0
+    ssim: float = 0
     evaluated: datetime = None
 
     def __eq__(self, other: Evaluation) -> bool:
@@ -108,20 +113,20 @@ class Evaluation(Entity):
 
         """
         return (
-            self.image_uid == other.image_uid
+            self.test_no == other.test_no
+            and self.source_image_uid == other.source_image_uid
+            and self.source_image_filepath == other.source_image_filepath
+            and self.test_image_uid == other.test_image_uid
+            and self.test_image_filepath == other.test_image_filepath
             and self.mode == other.mode
             and self.stage_id == other.stage_id
             and self.stage == other.stage
-            and self.step == other.step
-            and self.method == other.method
-            and self.params == other.params
-            and round(self.mse, 1) == round(other.mse, 1)
-            and round(self.psnr, 1) == round(other.psnr, 1)
-            and round(self.ssim, 1) == round(other.ssim, 1)
             and self.image_view == other.image_view
             and self.abnormality_type == other.abnormality_type
             and self.assessment == other.assessment
             and self.cancer == other.cancer
+            and self.method == other.method
+            and self.params == other.params
         )
 
     @classmethod
@@ -131,33 +136,39 @@ class Evaluation(Entity):
         Args:
             df (pd.DataFrame): DataFrame containing the evaluation data.
         """
+        evaluated = to_datetime(dt=df["evaluated"].values[0])
         return cls(
-            image_uid=df["image_uid"].values[0],
+            test_no=df["test_no"].values[0],
+            source_image_uid=df["source_image_uid"].values[0],
+            source_image_filepath=df["source_image_filepath"].values[0],
+            test_image_uid=df["test_image_uid"].values[0],
+            test_image_filepath=df["test_image_filepath"].values[0],
             mode=df["mode"].values[0],
             stage_id=df["stage_id"].values[0],
             stage=df["stage"].values[0],
-            step=df["step"].values[0],
-            method=df["method"].values[0],
-            params=df["params"].values[0],
-            mse=df["mse"].values[0],
-            psnr=df["psnr"].values[0],
-            ssim=df["ssim"].values[0],
             image_view=df["image_view"].values[0],
             abnormality_type=df["abnormality_type"].values[0],
             assessment=df["assessment"].values[0],
             cancer=df["cancer"].values[0],
-            evaluated=df["evaluated"].values[0],
+            method=df["method"].values[0],
+            params=df["params"].values[0],
+            comp_time=df["comp_time"].values[0],
+            mse=df["mse"].values[0],
+            psnr=df["psnr"].values[0],
+            ssim=df["ssim"].values[0],
+            evaluated=evaluated,
         )
 
     @classmethod
     def evaluate(
         cls,
-        image: Image,
-        other: np.ndarray,
+        test_data: pd.Series,
+        orig_image: Image,
+        test_image: Image,
         stage_id: int,
-        step: str,
         method: str,
         params: str,
+        comp_time: float,
         mse: type[MSE] = MSE,
         psnr: type[PSNR] = PSNR,
         ssim: type(SSIM) = SSIM,
@@ -165,26 +176,37 @@ class Evaluation(Entity):
         """Creates an evaluation object
 
         Args:
-            image (Image): Ground truth image
-            other (np.ndarray): The pixel data created by the method
+            test_data (pd.Series): Metadata associated with the image tested.
+            orig_image (Image): Ground truth image object.
+            test_image (Image): The test image object
             stage_id (int): The stage within the preprocessing cycle
-            step (str): The step within the preprocessing stage
             method (str): The name of the method being evaluated.
+            params (str): Parameters of the method in string format.
+            comp_time (float): Time taken to execute the transformation.
+            mse (type[MSE]): The MSE computation class
+            psnr (type[PSNR]): The PSNR computation class
+            ssim (type[SSIM]): The SSIM computation class
+
         """
+
         return cls(
-            image_uid=image.uid,
+            test_no=test_data["test_no"],
+            source_image_uid=orig_image.uid,
+            source_image_filepath=orig_image.filepath,
+            test_image_uid=test_image.uid,
+            test_image_filepath=test_image.filepath,
             mode=Config.get_mode(),
             stage_id=stage_id,
             stage=Stage(uid=stage_id).name,
-            step=step,
+            image_view=orig_image.image_view,
+            abnormality_type=orig_image.abnormality_type,
+            assessment=orig_image.assessment,
+            cancer=orig_image.cancer,
             method=method,
             params=params,
-            mse=mse.compute(a=image.pixel_data, b=other),
-            psnr=psnr.compute(a=image.pixel_data, b=other),
-            ssim=ssim.compute(a=image.pixel_data, b=other),
-            image_view=image.image_view,
-            abnormality_type=image.abnormality_type,
-            assessment=image.assessment,
-            cancer=image.cancer,
+            comp_time=comp_time,
+            mse=mse.compute(a=orig_image.pixel_data, b=test_image.pixel_data),
+            psnr=psnr.compute(a=orig_image.pixel_data, b=test_image.pixel_data),
+            ssim=ssim.compute(a=orig_image.pixel_data, b=test_image.pixel_data),
             evaluated=datetime.now(),
         )

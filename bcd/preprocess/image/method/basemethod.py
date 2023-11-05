@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 05:30:31 am                                               #
-# Modified   : Wednesday November 1st 2023 08:41:26 am                                             #
+# Modified   : Saturday November 4th 2023 05:55:07 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -64,7 +64,6 @@ class Method(ABC):
 
     name = None  # To be overridden by subclasses.
     stage = None  # To be overridden by subclasses.
-    step = None  # To be overridden by subclasses.
 
     @classmethod
     @abstractmethod

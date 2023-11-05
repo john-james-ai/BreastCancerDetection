@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 05:16:39 am                                               #
-# Modified   : Wednesday November 1st 2023 12:31:35 pm                                             #
+# Modified   : Saturday November 4th 2023 05:53:16 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,13 +22,14 @@ from datetime import datetime
 
 # ------------------------------------------------------------------------------------------------ #
 STAGES = {
-    0: "Converted",
-    1: "Artifact Removal",
-    2: "Pectoral Removal",
-    3: "Enhance",
-    4: "ROI Segmentation",
-    5: "Augment",
-    6: "Reshape",
+    0: "Convert",
+    1: "Denoise",
+    2: "Artifact Removed",
+    3: "Pectoral Removed",
+    4: "Enhanced",
+    5: "ROI Segmented",
+    6: "Augmented",
+    7: "Reshaped",
 }
 
 

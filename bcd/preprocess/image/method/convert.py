@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 09:59:41 pm                                                #
-# Modified   : Wednesday November 1st 2023 08:43:33 am                                             #
+# Modified   : Saturday November 4th 2023 05:15:56 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -31,7 +31,6 @@ class Converter(Method):
 
     name = __qualname__
     stage = Stage(uid=0)
-    step = "Convert"
 
     @classmethod
     def execute(cls, image: np.array, params: Param = None) -> np.array:

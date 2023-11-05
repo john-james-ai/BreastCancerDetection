@@ -11,31 +11,27 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Wednesday November 1st 2023 03:15:29 pm                                             #
+# Modified   : Sunday November 5th 2023 12:53:55 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-from datetime import datetime
-from uuid import uuid4
-
-import numpy as np
+import cv2
 import pandas as pd
 import pytest
 from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.container import BCDContainer
-from bcd.dal.io.image import ImageIO
-from bcd.preprocess.image.evaluate import Evaluation
-from bcd.preprocess.image.flow.state import Stage
+from bcd.image import ImageFactory
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*", "bcd/preprocess/**/*.*"]
 # ------------------------------------------------------------------------------------------------ #
 IMAGE_FP = "data/meta/2_clean/dicom.csv"
+EVALUATION_FP = "tests/data/3_denoise/results.csv"
 # ------------------------------------------------------------------------------------------------ #
-# pylint: disable=redefined-outer-name
+# pylint: disable=redefined-outer-name, no-member
 # ------------------------------------------------------------------------------------------------ #
 
 
@@ -78,7 +74,7 @@ def container():
     """Wires the container."""
     ctr = BCDContainer()
     ctr.init_resources()
-    ctr.wire(modules=["bcd.preprocess.image.flow.convert"])
+    ctr.wire(modules=["bcd.preprocess.image.flow.convert"], packages=["bcd.dal"])
 
     return ctr
 
@@ -99,17 +95,16 @@ def case_ids():
 #                                            IMAGES                                                #
 # ------------------------------------------------------------------------------------------------ #
 @pytest.fixture(scope="module", autouse=False)
-def images(container):
+def images():
     image_list = []
     method = ["P1", "P2"]
-    io = ImageIO()
-    factory = container.dal.image_factory()
+    factory = ImageFactory()
     df = pd.read_csv(IMAGE_FP)
     df = df.loc[df["series_description"] == "full mammogram images"]
     df = df.sample(n=10)
     i = 0
     for _, meta in tqdm(df.iterrows(), total=df.shape[0]):
-        pixel_data = io.read(filepath=meta["filepath"])
+        pixel_data = cv2.imread(meta["filepath"], cv2.IMREAD_UNCHANGED)
         stage_id = i % 2
         image = factory.create(
             case_id=meta["case_id"],
@@ -128,29 +123,4 @@ def images(container):
 # ------------------------------------------------------------------------------------------------ #
 @pytest.fixture(scope="module", autouse=False)
 def evals():
-    rng = np.random.default_rng()
-    eval_list = []
-    stage_ids = [1, 2]
-    method_names = ["MeanFilter", "MedianFilter", "GaussianFilter", "LintFilter", "Hairnet"]
-    steps = ["Binarize", "LargestContour"]
-    diag = [True, False]
-    for i in range(50):
-        e = Evaluation(
-            image_uid=str(uuid4()),
-            mode="test",
-            stage_id=stage_ids[i % 2],
-            stage=Stage(uid=stage_ids[i % 2]).name,
-            step=steps[i % 2],
-            method=method_names[i % 5],
-            params="some_parameters",
-            mse=rng.random() * 50,
-            psnr=rng.random() * 20,
-            ssim=rng.random(),
-            image_view="CC",
-            abnormality_type="mass",
-            assessment=np.random.randint(6, size=1)[0],
-            cancer=diag[i % 2],
-            evaluated=datetime.now(),
-        )
-        eval_list.append(e)
-    return eval_list
+    return pd.read_csv(EVALUATION_FP)

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 01:47:42 am                                                #
-# Modified   : Monday October 30th 2023 11:05:46 pm                                                #
+# Modified   : Saturday November 4th 2023 04:18:35 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ from bcd.dal.io.file import IOService
 
 # ------------------------------------------------------------------------------------------------ #
 LOG_LEVELS = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
-MODES = ["test", "dev", "prod"]
+MODES = ["test", "dev", "prod", "exp"]
 # ------------------------------------------------------------------------------------------------ #
 
 
@@ -125,6 +125,6 @@ class Config:
         return os.path.abspath(config["data_dir"][mode])
 
     @classmethod
-    def get_metadata_filepath(cls) -> str:
+    def get_dicom_metadata_filepath(cls) -> str:
         config = cls.read_config()
         return os.path.abspath(config["data_dir"]["metadata"])

@@ -4,85 +4,110 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_dal/test_io/test_image_io.py                                            #
+# Filename   : /tests/test_dal/test_io/test_image_reader.py                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday October 21st 2023 01:30:49 pm                                              #
-# Modified   : Sunday November 5th 2023 01:54:31 am                                                #
+# Created    : Sunday November 5th 2023 01:32:37 am                                                #
+# Modified   : Sunday November 5th 2023 01:12:34 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import inspect
 import logging
-import os
+import math
 from datetime import datetime
 
-import numpy as np
 import pytest
 
-from bcd.config import Config
-from bcd.dal.io.image_io import ImageIO
+from bcd.dal.io.image_reader import ImageReader
+from bcd.image import Image
+from bcd.preprocess.image.flow.convert import ConverterTask, ConverterTaskParams
+from bcd.preprocess.image.method.convert import Converter
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=missing-class-docstring, line-too-long
+# ------------------------------------------------------------------------------------------------ #
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
-FP_IN = "tests/data/raw/Calc-Test_P_00038_LEFT_CC_1/08-29-2017-DDSM-94942/1.000000-ROI mask images-18515/1-1.dcm"
-FP_OUT = "tests/data/image/io/test_image.png"
-CASE_ID = "Calcification-Train_P_00005_RIGHT_CC_1"
-STATE = "test"
-FORMAT = "png"
-# ------------------------------------------------------------------------------------------------ #
-# pylint: disable=missing-class-docstring, line-too-long, no-member, logging-format-interpolation
-# ------------------------------------------------------------------------------------------------ #
 
-
-@pytest.mark.imageio
-class TestImageIO:  # pragma: no cover
+@pytest.mark.image_reader
+class TestImageReader:  # pragma: no cover
     # ============================================================================================ #
-    def test_read_dcm(self):
+    def test_mode(self, current_mode):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        io = ImageIO()
-        img = io.read(FP_IN)
-        assert isinstance(img, np.ndarray)
+        if current_mode != "test":
+            msg = "\nCHANGE MODE TO TEST BEFORE RUNNING PYTEST!\nExiting pytest!\n"
+            logger.exception(msg)
+            pytest.exit(msg)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
 
         logger.info(
-            "\nCompleted {} {} in {} seconds at {} on {}".format(
-                self.__class__.__name__,
-                inspect.stack()[0][3],
-                duration,
-                end.strftime("%I:%M:%S %p"),
-                end.strftime("%m/%d/%Y"),
-            )
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_write(self):
+    def test_setup(self, container):
+        start = datetime.now()
+        logger.info(
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
+                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(double_line)
+        # ---------------------------------------------------------------------------------------- #
+        repo = container.dal.image_repo()
+        if repo.count() == 0:
+            uow = container.dal.uow()
+            task_params = ConverterTaskParams(frac=0.005, n_jobs=6)
+            task = ConverterTask()
+            task.task_params = task_params
+            task.uow = uow
+            task.method = Converter()
+            task.run()
+        assert repo.count() == 15
+
+        # ---------------------------------------------------------------------------------------- #
+        end = datetime.now()
+        duration = round((end - start).total_seconds(), 1)
+
+        logger.info(
+            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
+                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
+                    {start.strftime('%m/%d/%Y')}"
+        )
+        logger.info(single_line)
+
+    # ============================================================================================ #
+    def test_reader(self, container):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        io = ImageIO()
-        img = io.read(FP_IN)
-        io.write(pixel_data=img, filepath=FP_OUT)
-        assert os.path.exists(FP_OUT)
+        repo = container.dal.image_repo()
+        reader = ImageReader()
+        n_images = 0
+        for image in reader:
+            n_images += 1
+            assert isinstance(image, Image)
+
+        assert n_images == repo.count()
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -94,17 +119,22 @@ class TestImageIO:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_read_png(self):
+    def test_reader_condition(self, container):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        io = ImageIO()
-        img = io.read(filepath=FP_OUT)
-        assert isinstance(img, np.ndarray)
+        repo = container.dal.image_repo()
+        condition = lambda df: df["abnormality_type"] == "calc"
+        reader = ImageReader(condition=condition)
+        n_images = 0
+        for image in reader:
+            n_images += 1
+            assert isinstance(image, Image)
 
+        assert n_images == repo.count(condition=condition)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -115,19 +145,28 @@ class TestImageIO:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_get_filepath(self):
+    def test_reader_batch(self, container):
         start = datetime.now()
         logger.info(
-            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
+            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
+                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        io = ImageIO()
-        fp = io.get_filepath(id, basedir=Config.get_data_dir(), fileformat=FORMAT)
-        filename = CASE_ID + "." + FORMAT
-        fp_exp = os.path.join("data/image/1_dev", filename)
-        assert fp == fp_exp
+        repo = container.dal.image_repo()
+        batchsize = 5
+        reader = ImageReader(batchsize=batchsize)
+        n_batches = 0
+        n_images = 0
+        for batch in reader:
+            assert len(batch) == 3
+            n_batches += 1
+            for image in batch:
+                n_images += 1
+                assert isinstance(image, Image)
 
+        assert n_images == repo.count()
+        assert n_batches == math.ceil(n_images / batchsize)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

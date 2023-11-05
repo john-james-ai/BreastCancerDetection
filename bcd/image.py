@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/image.py                                                      #
+# Filename   : /bcd/image.py                                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Wednesday November 1st 2023 08:46:51 am                                             #
+# Modified   : Sunday November 5th 2023 02:02:51 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -30,7 +30,7 @@ import pandas as pd
 import seaborn as sns
 
 from bcd.config import Config
-from bcd.dal.io.image import ImageIO
+from bcd.dal.io.image_io import ImageIO
 from bcd.preprocess.image.entity import Entity
 from bcd.preprocess.image.flow.state import Stage
 from bcd.utils.date import to_datetime
@@ -216,13 +216,14 @@ class ImageFactory:
     """Creates Image Objects"""
 
     @classmethod
-    def from_df(cls, df: pd.DataFrame) -> Image:
+    def from_df(cls, df: pd.DataFrame, channels: int = 2) -> Image:
         """Creates an image from a DataFrame
 
         This method is called to reconstitute an image from the database.
 
         Args:
             df (pd.DataFrame): Dataframe containing image metadata.
+            channels (int): Number of channels in the image representation.
 
         Returns:
             Image object
@@ -231,7 +232,7 @@ class ImageFactory:
         # Convert numpy datetime64 to python datetime.
         created = to_datetime(dt=df["created"].values[0])
 
-        pixel_data = ImageIO.read(filepath=df["filepath"])
+        pixel_data = ImageIO.read(filepath=df["filepath"], channels=channels)
         return Image(
             uid=df["uid"].values[0],
             case_id=df["case_id"].values[0],
@@ -299,9 +300,12 @@ class ImageFactory:
 
         case = image_metadata.loc[image_metadata["case_id"] == case_id]
 
-        directory = Config.get_data_dir()
-
-        filepath = ImageIO.get_filepath(uid=uid, basedir=directory, fileformat="png")
+        filepath = ImageIO.get_filepath(
+            uid=uid,
+            fileset=case["fileset"].values[0],
+            label=case["cancer"].values[0],
+            fileformat="png",
+        )
 
         return Image(
             uid=uid,
@@ -336,6 +340,6 @@ class ImageFactory:
 
     @classmethod
     def get_image_metadata(cls) -> pd.DataFrame:
-        metadata_filepath = Config.get_metadata_filepath()
+        metadata_filepath = Config.get_dicom_metadata_filepath()
         image_metadata = pd.read_csv(metadata_filepath)
         return image_metadata.loc[image_metadata["series_description"] == "full mammogram images"]

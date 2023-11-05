@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 22nd 2023 02:26:44 am                                                #
-# Modified   : Wednesday November 1st 2023 07:54:33 am                                             #
+# Modified   : Sunday November 5th 2023 12:54:06 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,8 @@ from datetime import datetime
 import pandas as pd
 import pytest
 
-from bcd.preprocess.image.image import Image
+from bcd.config import Config
+from bcd.image import Image
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=missing-class-docstring, redefined-builtin, broad-exception-caught
@@ -33,6 +34,7 @@ logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
+# ------------------------------------------------------------------------------------------------ #
 
 
 @pytest.mark.repo
@@ -73,6 +75,11 @@ class TestImageRepo:  # pragma: no cover
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
         repo.delete_by_mode()
+        registry_filepath = os.path.join(Config.get_data_dir(), "registry.csv")
+        try:
+            os.remove(registry_filepath)
+        except Exception:
+            pass
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -108,6 +115,11 @@ class TestImageRepo:  # pragma: no cover
 
         assert repo.count() == 10
         assert not repo.exists(uid="999")
+
+        registry_filepath = os.path.join(Config.get_data_dir(), "registry.csv")
+        assert os.path.exists(registry_filepath)
+        registry = pd.read_csv(registry_filepath)
+        assert len(registry) == 10
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -364,6 +376,11 @@ class TestImageRepo:  # pragma: no cover
         repo.delete_by_stage(stage_id=0)
         assert repo.count() == 5
 
+        registry_filepath = os.path.join(Config.get_data_dir(), "registry.csv")
+        assert os.path.exists(registry_filepath)
+        registry = pd.read_csv(registry_filepath)
+        assert len(registry) == 5
+
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -387,6 +404,10 @@ class TestImageRepo:  # pragma: no cover
         repo = container.dal.image_repo()
         repo.delete_by_method(method="P2")
         assert repo.count() == 0
+        registry_filepath = os.path.join(Config.get_data_dir(), "registry.csv")
+        assert os.path.exists(registry_filepath)
+        registry = pd.read_csv(registry_filepath)
+        assert len(registry) == 0
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -413,10 +434,16 @@ class TestImageRepo:  # pragma: no cover
             repo.add(image=image)
 
         assert repo.count() == 10
+        registry_filepath = os.path.join(Config.get_data_dir(), "registry.csv")
+        assert os.path.exists(registry_filepath)
+        registry = pd.read_csv(registry_filepath)
+        assert len(registry) == 10
         assert not repo.exists(uid="999")
         repo = container.dal.image_repo()
         repo.delete_by_mode()
         assert repo.count() == 0
+        registry = pd.read_csv(registry_filepath)
+        assert len(registry) == 0
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

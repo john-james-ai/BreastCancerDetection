@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 04:19:38 am                                                #
-# Modified   : Monday October 30th 2023 11:07:27 pm                                                #
+# Modified   : Saturday November 4th 2023 05:57:29 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -93,8 +93,8 @@ class TestEvalRepo:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.eval_repo()
-        condition1 = lambda df: df["step"] == "Binarize"
-        condition2 = lambda df: df["step"] == "Invalid"
+        condition1 = lambda df: df["stage_id"] == 0
+        condition2 = lambda df: df["stage_id"] == 99
 
         evals = repo.get(condition=condition1)
         assert len(evals) == 25
@@ -163,29 +163,6 @@ class TestEvalRepo:  # pragma: no cover
                 end.strftime("%I:%M:%S %p"),
                 end.strftime("%m/%d/%Y"),
             )
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_delete_by_step(self, container):
-        start = datetime.now()
-        logger.info(
-            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
-                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        repo = container.dal.eval_repo()
-        repo.delete_by_step(step="LargestContour")
-        assert repo.count() < 25
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
-                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
-                    {start.strftime('%m/%d/%Y')}"
         )
         logger.info(single_line)
 

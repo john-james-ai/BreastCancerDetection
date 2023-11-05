@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/threshold.py                                                  #
+# Filename   : /bcd/preprocess/image/method/threshold.py                                           #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 30th 2023 04:50:27 pm                                                #
-# Modified   : Wednesday November 1st 2023 01:49:44 am                                             #
+# Modified   : Saturday November 4th 2023 05:18:41 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -36,7 +36,7 @@ from bcd.preprocess.image.method.basemethod import Method
 
 
 # ------------------------------------------------------------------------------------------------ #
-# pylint: disable=no-member
+# pylint: disable=no-member, unused-argument
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class ThresholdParams(Param):
@@ -55,8 +55,8 @@ class ThresholdParams(Param):
 class Threshold(Method):
     """Abstract base class for Threshold methods."""
 
-    stage = Stage(uid=1)
-    step = "Threshold"
+    name = __qualname__
+    stage = Stage(uid=2)
 
     @classmethod
     @abstractmethod
@@ -68,6 +68,8 @@ class Threshold(Method):
 class ThresholdISOData(Threshold):
     """Performs ISO Data Thresholding"""
 
+    name = __qualname__
+
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
         return threshold_isodata(image.pixel_data, nbins=params.nbins, return_all=params.return_all)
@@ -76,6 +78,8 @@ class ThresholdISOData(Threshold):
 # ------------------------------------------------------------------------------------------------ #
 class ThresholdLi(Threshold):
     """Performs Li Thresholding"""
+
+    name = __qualname__
 
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
@@ -86,7 +90,8 @@ class ThresholdLi(Threshold):
 class ThresholdMean(Threshold):
     """Performs Mean Thresholding"""
 
-    # pylint: disable=unused-argument
+    name = __qualname__
+
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
         return threshold_mean(image.pixel_data)
@@ -95,6 +100,8 @@ class ThresholdMean(Threshold):
 # ------------------------------------------------------------------------------------------------ #
 class ThresholdNiblack(Threshold):
     """Performs Niblack Thresholding"""
+
+    name = __qualname__
 
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
@@ -105,6 +112,8 @@ class ThresholdNiblack(Threshold):
 class ThresholdOtsu(Threshold):
     """Performs Otsu's Thresholding"""
 
+    name = __qualname__
+
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
         return threshold_otsu(image.pixel_data, nbins=params.nbins)
@@ -114,6 +123,8 @@ class ThresholdOtsu(Threshold):
 class ThresholdSauvola(Threshold):
     """Performs Sauvola Thresholding"""
 
+    name = __qualname__
+
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
         return threshold_sauvola(image.pixel_data, window_size=params.window_size, k=params.k)
@@ -122,6 +133,8 @@ class ThresholdSauvola(Threshold):
 # ------------------------------------------------------------------------------------------------ #
 class ThresholdTriangle(Threshold):
     """Performs Triangle Thresholding"""
+
+    name = __qualname__
 
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:

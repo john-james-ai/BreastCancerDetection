@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Wednesday November 1st 2023 09:28:17 pm                                             #
+# Modified   : Saturday November 4th 2023 06:38:29 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -31,20 +31,24 @@ from bcd.preprocess.image.evaluate import Evaluation
 # pylint: disable=arguments-renamed, arguments-differ, broad-exception-caught
 # ------------------------------------------------------------------------------------------------ #
 EVAL_DTYPES = {
-    "image_uid": VARCHAR(64),
+    "test_no": INTEGER,
+    "source_image_uid": VARCHAR(64),
+    "source_image_filepath": VARCHAR(64),
+    "test_image_uid": VARCHAR(64),
+    "test_image_filepath": VARCHAR(64),
     "mode": VARCHAR(8),
     "stage_id": INTEGER,
     "stage": VARCHAR(32),
-    "step": VARCHAR(64),
-    "method": VARCHAR(64),
-    "params": VARCHAR(128),
-    "mse": FLOAT,
-    "psnr": FLOAT,
-    "ssim": FLOAT,
     "image_view": VARCHAR(4),
     "abnormality_type": VARCHAR(24),
     "assessment": INTEGER,
     "cancer": TINYINT,
+    "method": VARCHAR(64),
+    "params": VARCHAR(128),
+    "comp_time": FLOAT,
+    "mse": FLOAT,
+    "psnr": FLOAT,
+    "ssim": FLOAT,
     "evaluated": DATETIME,
 }
 
@@ -201,17 +205,6 @@ class EvalRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND stage_id = :stage_id;"
         params = {"mode": self.mode, "stage_id": stage_id}
-        self.database.delete(query=query, params=params)
-
-    def delete_by_step(self, step: str) -> None:
-        """Deletes all evaluations for a given step
-
-        Args:
-            step (str): Step name
-
-        """
-        query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND step = :step;"
-        params = {"mode": self.mode, "step": step}
         self.database.delete(query=query, params=params)
 
     def delete_by_mode(self) -> None:
