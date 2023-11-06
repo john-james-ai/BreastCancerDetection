@@ -3,7 +3,7 @@
 # ================================================================================================ #
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
-# Python     : 3.10.12                                                                             #
+# Python     : 3.10.10                                                                             #
 # Filename   : /bcd/image.py                                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Sunday November 5th 2023 08:16:34 pm                                                #
+# Modified   : Monday November 6th 2023 12:45:20 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -29,10 +29,10 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from bcd import Stage
 from bcd.config import Config
 from bcd.dal.io.image_io import ImageIO
 from bcd.preprocess.image.entity import Entity
-from bcd.preprocess.image.flow.state import Stage
 from bcd.utils.date import to_datetime
 
 # ------------------------------------------------------------------------------------------------ #
@@ -75,7 +75,7 @@ class Image(Entity):
     fileset: str
     cancer: bool
     method: str
-    task_id: str
+    build_time: float
     created: datetime
 
     def __eq__(self, other: Image) -> bool:
@@ -106,7 +106,6 @@ class Image(Entity):
             and self.fileset == other.fileset
             and self.cancer == other.cancer
             and self.method == other.method
-            and self.task_id == other.task_id
         )
 
     def difference(self, other: Image) -> dict:
@@ -203,7 +202,7 @@ class Image(Entity):
             "fileset": self.fileset,
             "cancer": self.cancer,
             "method": self.method,
-            "task_id": self.task_id,
+            "build_time": self.build_time,
             "created": self.created,
         }
         return pd.DataFrame(data=d, index=[0])
@@ -259,9 +258,9 @@ class ImageFactory:
             filepath=df["filepath"].values[0],
             fileset=df["fileset"].values[0],
             cancer=df["cancer"].values[0],
-            created=created,
             method=df["method"].values[0],
-            task_id=df["task_id"].values[0],
+            build_time=df["build_time"].values[0],
+            created=created,
         )
 
     @classmethod
@@ -271,7 +270,7 @@ class ImageFactory:
         stage_id: int,
         pixel_data: np.ndarray,
         method: str,
-        task_id: str,
+        build_time: float,
     ) -> Image:
         """Creates an image from pizel data.
 
@@ -286,7 +285,7 @@ class ImageFactory:
             stage_id (int): The preprocessing stage identifier
             pixel_data (np.ndarray): Pixel data in numpy array format.
             method (str): The name of the method
-            task_id (str): The UUID for the specific task.
+            build_time (float): Duration of the image build process.
 
         Returns
             Image Object.
@@ -333,9 +332,9 @@ class ImageFactory:
             filepath=filepath,
             fileset=case["fileset"].values[0],
             cancer=case["cancer"].values[0],
-            created=datetime.now(),
             method=method,
-            task_id=task_id,
+            build_time=build_time,
+            created=datetime.now(),
         )
 
     @classmethod

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Wednesday November 1st 2023 09:24:46 pm                                             #
+# Modified   : Sunday November 5th 2023 10:12:55 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,6 @@ from dependency_injector import containers, providers
 from bcd.dal.database.mysql import MySQLDatabase
 from bcd.dal.repo.evaluate import EvalRepo
 from bcd.dal.repo.image import ImageRepo
-from bcd.dal.repo.task import TaskRepo
 from bcd.dal.repo.uow import UoW
 
 # ------------------------------------------------------------------------------------------------ #
@@ -58,15 +57,12 @@ class DALContainer(containers.DeclarativeContainer):
 
     image_repo = providers.Singleton(ImageRepo, database=db)
 
-    task_repo = providers.Singleton(TaskRepo, database=db)
-
     eval_repo = providers.Singleton(EvalRepo, database=db)
 
     uow = providers.Singleton(
         UoW,
         database=db,
         image_repo=ImageRepo,
-        task_repo=TaskRepo,
         eval_repo=EvalRepo,
     )
 

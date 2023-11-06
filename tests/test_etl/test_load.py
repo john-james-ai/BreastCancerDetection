@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_preprocess/test_image/test_task_builder.py                              #
+# Filename   : /tests/test_etl/test_load.py                                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Wednesday November 1st 2023 05:35:33 pm                                             #
-# Modified   : Wednesday November 1st 2023 08:22:07 pm                                             #
+# Created    : Wednesday November 1st 2023 01:20:59 pm                                             #
+# Modified   : Monday November 6th 2023 01:24:19 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,9 +22,7 @@ from datetime import datetime
 
 import pytest
 
-from bcd.preprocess.image.flow.builder import TaskBuilder
-from bcd.preprocess.image.flow.convert import ConverterTask, ConverterTaskParams
-from bcd.preprocess.image.method.convert import Converter
+from bcd.etl.load import Loader
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=missing-class-docstring, line-too-long
@@ -36,8 +34,8 @@ double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
 
-@pytest.mark.builder
-class TestTaskBuilder:  # pragma: no cover
+@pytest.mark.loader
+class TestLoader:  # pragma: no cover
     # ============================================================================================ #
     def test_mode(self, current_mode):
         start = datetime.now()
@@ -68,7 +66,8 @@ class TestTaskBuilder:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        repo.delete_by_mode()
+        repo.delete_by_stage(stage_id=0)
+
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)
@@ -79,7 +78,7 @@ class TestTaskBuilder:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_builder(self, container):
+    def test_loader(self, container):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
@@ -87,17 +86,14 @@ class TestTaskBuilder:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         uow = container.dal.uow()
-        task_params = ConverterTaskParams(frac=0.005, n_jobs=6)
-        builder = TaskBuilder(uow=uow)
-        builder.set_task(task=ConverterTask)
-        builder.add_task_params(params=task_params)
-        builder.add_method(method=Converter())
-        task = builder.task
-        task.run()
+        loader = Loader(frac=0.005, force=True)
+        loader.run()
+        assert uow.image_repo.count() == 15
 
-        repo = container.dal.image_repo()
-        assert repo.count() == 15
-        logger.debug(task)
+        logger.debug(uow.image_repo.get_meta())
+
+        with pytest.raises(ValueError):
+            _ = Loader(frac=0.005, n=5)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -105,52 +101,6 @@ class TestTaskBuilder:  # pragma: no cover
 
         logger.info(
             f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in {duration} seconds at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
-        )
-        logger.info(single_line)
-
-    # ============================================================================================ #
-    def test_invalid(self, container):
-        start = datetime.now()
-        logger.info(
-            f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at \
-                {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
-        )
-        logger.info(double_line)
-        # ---------------------------------------------------------------------------------------- #
-        uow = container.dal.uow()
-        builder = TaskBuilder(uow=uow)
-        with pytest.raises(TypeError):  # Task is None
-            _ = builder.task
-
-        with pytest.raises(TypeError):  # Invalid Task
-            builder.set_task(task=2)
-
-        builder.set_task(task=ConverterTask)  # Correct Task
-
-        with pytest.raises(TypeError):  # Invalid task params
-            builder.add_task_params(params=2)
-
-        builder.add_task_params(params=ConverterTaskParams())  # Correct task params
-
-        with pytest.raises(TypeError):  # Method is none
-            _ = builder.task
-
-        with pytest.raises(TypeError):  # Invalid method
-            builder.add_method(method=2)
-
-        builder.add_method(method=Converter())  # Correct Method
-
-        with pytest.raises(TypeError):  # Invalid method params
-            builder.add_method_params(params=2)
-
-        # ---------------------------------------------------------------------------------------- #
-        end = datetime.now()
-        duration = round((end - start).total_seconds(), 1)
-
-        logger.info(
-            f"\n\nCompleted {self.__class__.__name__} {inspect.stack()[0][3]} in \
-                {duration} seconds at {start.strftime('%I:%M:%S %p')} on \
-                    {start.strftime('%m/%d/%Y')}"
         )
         logger.info(single_line)
 
@@ -163,7 +113,7 @@ class TestTaskBuilder:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        repo.delete_by_mode()
+        repo.delete_by_stage(stage_id=0)
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
         duration = round((end - start).total_seconds(), 1)

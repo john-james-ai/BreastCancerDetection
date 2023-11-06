@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Sunday November 5th 2023 01:10:26 am                                                #
+# Modified   : Monday November 6th 2023 01:34:07 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -55,16 +55,16 @@ class ImageReader:
         self._condition = condition
         self._repo = repo
         self._index = 0
-        self._image_metadata = None
         self._image_metadata_batches = None
+        self._num_batches = 0
         self._image_batch = []
+        self._image_metadata = self._repo.get_meta(condition=self._condition).reset_index()
+        if self._batchsize:
+            self._num_batches = math.ceil(len(self._image_metadata) / self._batchsize)
+            self._image_metadata_batches = np.array_split(self._image_metadata, self._num_batches)
 
     def __iter__(self) -> ImageReader:
         self._index = 0
-        self._image_metadata = self._repo.get_meta(condition=self._condition).reset_index()
-        if self._batchsize:
-            n_batches = math.ceil(len(self._image_metadata) / self._batchsize)
-            self._image_metadata_batches = np.array_split(self._image_metadata, n_batches)
         return self
 
     def __next__(self) -> Union[Image, List[Image]]:
@@ -76,6 +76,14 @@ class ImageReader:
             if self._index == len(self._image_metadata):
                 raise StopIteration
             return self._get_next_image()
+
+    @property
+    def batchsize(self) -> int:
+        return self._batchsize
+
+    @property
+    def num_batches(self) -> int:
+        return self._num_batches
 
     def _get_next_batch(self) -> List[Image]:
         images = []

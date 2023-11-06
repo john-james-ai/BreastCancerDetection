@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 # ================================================================================================ #
-# Project    : Deep Learning for Breast Cancer Detection                                           #
-# Version    : 0.1.0                                                                               #
+# Project    : Enter Project Name in Workspace Settings                                            #
+# Version    : 0.1.19                                                                              #
 # Python     : 3.10.12                                                                             #
 # Filename   : /bcd/preprocess/image/method/basemethod.py                                          #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
-# URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
+# URL        : Enter URL in Workspace Settings                                                     #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 05:30:31 am                                               #
-# Modified   : Saturday November 4th 2023 05:55:07 am                                              #
+# Modified   : Sunday November 5th 2023 11:03:58 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -67,5 +67,5 @@ class Method(ABC):
 
     @classmethod
     @abstractmethod
-    def execute(cls, image: np.ndarray, params: Param) -> np.ndarray:
+    def execute(cls, image: np.ndarray, **kwargs) -> np.ndarray:
         """Executes the method"""

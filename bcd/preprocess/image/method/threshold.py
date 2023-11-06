@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 30th 2023 04:50:27 pm                                                #
-# Modified   : Saturday November 4th 2023 05:18:41 am                                              #
+# Modified   : Monday November 6th 2023 12:45:20 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -30,8 +30,8 @@ from skimage.filters import (
     threshold_triangle,
 )
 
+from bcd import Stage
 from bcd.core.base import Param
-from bcd.preprocess.image.flow.stage import Stage
 from bcd.preprocess.image.method.basemethod import Method
 
 

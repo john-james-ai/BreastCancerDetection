@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Wednesday November 1st 2023 01:04:35 pm                                             #
+# Modified   : Sunday November 5th 2023 10:10:25 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -31,7 +31,7 @@ from bcd import DataClass
 from bcd.config import Config
 from bcd.dal.repo.uow import UoW
 from bcd.preprocess.image.flow.basetask import Task
-from bcd.preprocess.image.flow.state import State
+from bcd.preprocess.image.flow.stage import State
 from bcd.utils.date import to_datetime
 
 

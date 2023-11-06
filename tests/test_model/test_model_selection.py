@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 2nd 2023 08:22:42 am                                                 #
-# Modified   : Tuesday October 31st 2023 01:05:01 am                                               #
+# Modified   : Monday November 6th 2023 12:16:14 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -28,8 +28,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 
-from bcd.model.pipeline import PipelineBuilder
-from bcd.model.selection import ModelSelector
+from bcd.analyze.explore.multivariate.pipeline import PipelineBuilder
+from bcd.analyze.explore.multivariate.selection import ModelSelector
 
 CASE_FP = os.path.abspath("data/meta/3_cooked/cases.csv")
 # ------------------------------------------------------------------------------------------------ #

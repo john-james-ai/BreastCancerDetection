@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday November 5th 2023 01:32:37 am                                                #
-# Modified   : Sunday November 5th 2023 01:12:34 am                                                #
+# Modified   : Monday November 6th 2023 01:36:41 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,9 +24,8 @@ from datetime import datetime
 import pytest
 
 from bcd.dal.io.image_reader import ImageReader
+from bcd.etl.load import Loader
 from bcd.image import Image
-from bcd.preprocess.image.flow.convert import ConverterTask, ConverterTaskParams
-from bcd.preprocess.image.method.convert import Converter
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=missing-class-docstring, line-too-long
@@ -71,14 +70,8 @@ class TestImageReader:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        if repo.count() == 0:
-            uow = container.dal.uow()
-            task_params = ConverterTaskParams(frac=0.005, n_jobs=6)
-            task = ConverterTask()
-            task.task_params = task_params
-            task.uow = uow
-            task.method = Converter()
-            task.run()
+        loader = Loader(frac=0.005, force=True)
+        loader.run()
         assert repo.count() == 15
 
         # ---------------------------------------------------------------------------------------- #
@@ -158,8 +151,9 @@ class TestImageReader:  # pragma: no cover
         reader = ImageReader(batchsize=batchsize)
         n_batches = 0
         n_images = 0
+        assert reader.num_batches == 3
         for batch in reader:
-            assert len(batch) == 3
+            assert len(batch) == 5
             n_batches += 1
             for image in batch:
                 n_images += 1

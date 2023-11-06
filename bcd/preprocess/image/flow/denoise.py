@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 04:45:05 am                                               #
-# Modified   : Sunday November 5th 2023 01:54:30 am                                                #
+# Modified   : Sunday November 5th 2023 10:10:26 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -145,7 +145,7 @@ class DenoiserTask(Task):
             stage_id=self.stage_id,
             method=self.method,
             params=self.method_params,
-            comp_time=self.state.duration,
+            comp_time=self.stage.duration,
         )
 
         return (xformed_image, ev)

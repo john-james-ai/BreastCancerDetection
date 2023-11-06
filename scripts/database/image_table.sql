@@ -2,7 +2,6 @@ use bcd;
 DROP TABLE IF EXISTS image;
 CREATE TABLE image (
     uid VARCHAR(64) PRIMARY KEY,
-    image_no INT,
     case_id VARCHAR(64),
     mode VARCHAR(8),
     stage_id INT,
@@ -27,6 +26,6 @@ CREATE TABLE image (
     fileset VARCHAR(8),
     cancer TINYINT,
     method VARCHAR(64),
-    task_id VARCHAR(64),
+    build_time FLOAT,
     created DATETIME
 );
