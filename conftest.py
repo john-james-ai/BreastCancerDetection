@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Monday November 6th 2023 01:22:35 am                                                #
+# Modified   : Monday November 6th 2023 03:23:09 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -74,7 +74,7 @@ def container():
     """Wires the container."""
     ctr = BCDContainer()
     ctr.init_resources()
-    ctr.wire(modules=["bcd.etl.load"], packages=["bcd.dal"])
+    ctr.wire(modules=["bcd.etl.load"], packages=["bcd.dal", "bcd.preprocess.image.flow"])
 
     return ctr
 

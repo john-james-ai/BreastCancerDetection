@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Sunday November 5th 2023 11:30:52 pm                                                #
+# Modified   : Monday November 6th 2023 02:57:54 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,6 +25,7 @@ from datetime import datetime
 
 from dependency_injector.wiring import Provide, inject
 from sklearn.model_selection import ParameterGrid
+from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.container import BCDContainer
@@ -43,7 +44,7 @@ class Task(ABC):
         self,
         instage_id: int,
         outstage_id: int,
-        method: Method,
+        method: type[Method],
         params: dict,
         batchsize: int = 16,
         uow: UoW = Provide[BCDContainer.dal.uow],
@@ -71,9 +72,9 @@ class Task(ABC):
 
         param_grid = self._get_paramgrid()
 
-        for batch in reader:
-            for image_in in batch:
-                for params in param_grid:
+        for batch in tqdm(reader, desc="batch", total=reader.num_batches):
+            for image_in in tqdm(batch, desc="image", total=len(batch)):
+                for params in tqdm(param_grid, desc="param", total=len(param_grid)):
                     start = datetime.now()
                     pixel_data = self._method.execute(image_in.pixel_data, **params)
                     stop = datetime.now()
