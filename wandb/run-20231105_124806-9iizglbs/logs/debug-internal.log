@@ -1,0 +1,315 @@
+2023-11-05 12:48:06,628 INFO    StreamThr :32599 [internal.py:wandb_internal():86] W&B internal server running at pid: 32599, started at: 2023-11-05 12:48:06.627374
+2023-11-05 12:48:06,631 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status
+2023-11-05 12:48:06,643 INFO    WriterThread:32599 [datastore.py:open_for_write():85] open: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/run-9iizglbs.wandb
+2023-11-05 12:48:06,643 DEBUG   SenderThread:32599 [sender.py:send():380] send: header
+2023-11-05 12:48:06,822 DEBUG   SenderThread:32599 [sender.py:send():380] send: run
+2023-11-05 12:48:07,265 INFO    SenderThread:32599 [dir_watcher.py:__init__():211] watching files in: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files
+2023-11-05 12:48:07,265 INFO    SenderThread:32599 [sender.py:_start_run_threads():1122] run started: 9iizglbs with start time 1699206486.626905
+2023-11-05 12:48:07,273 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: check_version
+2023-11-05 12:48:07,273 DEBUG   SenderThread:32599 [sender.py:send_request():407] send_request: check_version
+2023-11-05 12:48:07,630 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: run_start
+2023-11-05 12:48:07,719 DEBUG   HandlerThread:32599 [system_info.py:__init__():32] System info init
+2023-11-05 12:48:07,719 DEBUG   HandlerThread:32599 [system_info.py:__init__():47] System info init done
+2023-11-05 12:48:07,719 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:07,720 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:07,720 INFO    HandlerThread:32599 [system_monitor.py:probe():214] Collecting system info
+2023-11-05 12:48:07,722 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:07,723 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:07,724 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:07,725 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:07,728 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:07,748 DEBUG   HandlerThread:32599 [system_info.py:probe():196] Probing system
+2023-11-05 12:48:07,771 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:07,772 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:07,926 DEBUG   HandlerThread:32599 [system_info.py:_probe_git():181] Probing git
+2023-11-05 12:48:07,934 DEBUG   HandlerThread:32599 [system_info.py:_probe_git():189] Probing git done
+2023-11-05 12:48:07,934 DEBUG   HandlerThread:32599 [system_info.py:probe():244] Probing system done
+2023-11-05 12:48:07,935 DEBUG   HandlerThread:32599 [system_monitor.py:probe():223] {'os': 'Linux-5.15.90.1-microsoft-standard-WSL2-x86_64-with-glibc2.35', 'python': '3.10.12', 'heartbeatAt': '2023-11-05T17:48:07.749015', 'startedAt': '2023-11-05T17:48:06.617738', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '<python with no main file>', 'codePathLocal': None, 'git': {'remote': 'https://github.com/john-james-ai/BreastCancerDetection', 'commit': '66361e0232cdd42f246b7ad31a1cbda771735f6b'}, 'email': 'john.james.ai.studio@gmail.com', 'root': '/home/john/projects/bcd', 'host': 'Leviathan', 'username': 'john', 'executable': '/home/john/anaconda3/envs/bcd/bin/python', 'cpu_count': 12, 'cpu_count_logical': 24, 'cpu_freq': {'current': 2659.995000000001, 'min': 0.0, 'max': 0.0}, 'cpu_freq_per_core': [{'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}], 'disk': {'/': {'total': 491.0844039916992, 'used': 325.0033988952637}}, 'gpu': 'Quadro P400', 'gpu_count': 1, 'gpu_devices': [{'name': 'Quadro P400', 'memory_total': 2147483648}], 'memory': {'total': 62.79635238647461}}
+2023-11-05 12:48:07,935 INFO    HandlerThread:32599 [system_monitor.py:probe():224] Finished collecting system info
+2023-11-05 12:48:07,935 INFO    HandlerThread:32599 [system_monitor.py:probe():227] Publishing system info
+2023-11-05 12:48:07,935 DEBUG   HandlerThread:32599 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2023-11-05 12:48:07,935 DEBUG   HandlerThread:32599 [system_info.py:_save_pip():68] Saving pip packages done
+2023-11-05 12:48:07,935 DEBUG   HandlerThread:32599 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2023-11-05 12:48:08,267 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/requirements.txt
+2023-11-05 12:48:08,267 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/conda-environment.yaml
+2023-11-05 12:48:09,775 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:09,776 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:11,779 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:11,780 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:13,784 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:13,784 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:15,788 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:15,789 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:17,269 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/conda-environment.yaml
+2023-11-05 12:48:17,513 DEBUG   HandlerThread:32599 [system_info.py:_save_conda():87] Saving conda packages done
+2023-11-05 12:48:17,514 INFO    HandlerThread:32599 [system_monitor.py:probe():229] Finished publishing system info
+2023-11-05 12:48:17,520 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:17,521 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: keepalive
+2023-11-05 12:48:17,522 DEBUG   SenderThread:32599 [sender.py:send():380] send: files
+2023-11-05 12:48:17,522 INFO    SenderThread:32599 [sender.py:_save_file():1378] saving file wandb-metadata.json with policy now
+2023-11-05 12:48:17,550 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 12:48:17,550 DEBUG   SenderThread:32599 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 12:48:17,554 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 12:48:17,559 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:17,559 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:17,559 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:17,559 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:17,560 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:17,560 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:17,561 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:17,561 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:17,574 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:17,574 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:17,574 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:17,574 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:17,769 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:17,770 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:17,770 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:17,770 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:17,771 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:17,772 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:17,772 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:17,772 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:17,773 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:17,774 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:17,774 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:17,774 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:17,776 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:17,777 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:17,906 DEBUG   SenderThread:32599 [sender.py:send():380] send: telemetry
+2023-11-05 12:48:17,906 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:17,907 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:17,909 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:17,985 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:17,986 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:17,986 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:17,986 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:17,987 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:17,988 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:17,990 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:17,990 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:17,991 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:17,992 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:17,994 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:17,995 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:17,996 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:17,996 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:17,997 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:17,998 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:18,000 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:18,001 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:18,004 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:18,013 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:18,014 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:18,014 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:18,014 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:18,015 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:18,140 INFO    wandb-upload_0:32599 [upload_job.py:push():131] Uploaded file /tmp/tmpui_optf7wandb/69euipj8-wandb-metadata.json
+2023-11-05 12:48:18,176 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:18,176 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:18,176 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:18,176 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:18,177 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:18,178 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:18,181 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:18,183 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:18,185 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:18,187 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:18,188 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:18,234 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:18,234 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:18,235 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:18,236 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:18,237 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:18,237 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:18,237 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:18,237 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:18,249 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:18,249 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:18,250 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:18,250 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:18,251 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:18,269 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/wandb-metadata.json
+2023-11-05 12:48:18,270 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/output.log
+2023-11-05 12:48:18,387 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:18,387 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:18,387 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:18,388 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:18,388 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:18,391 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:18,391 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:18,393 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:18,395 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:18,399 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:18,399 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:18,700 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:18,701 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:18,701 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:18,701 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:18,702 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:18,703 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:18,703 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:18,703 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:18,716 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:18,716 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:18,717 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:18,717 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:18,718 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:18,786 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:18,786 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:18,786 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:18,786 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:18,787 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:18,789 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:18,790 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:18,792 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:18,794 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:18,798 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:18,799 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:19,052 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:19,052 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:19,052 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:19,053 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:19,054 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:19,055 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:19,055 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:19,056 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:19,068 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:19,068 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:19,068 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:19,069 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:19,070 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:19,124 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:19,124 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:19,124 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:19,124 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:19,125 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:19,126 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:19,128 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:19,130 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:19,131 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:19,133 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:19,134 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:20,271 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/output.log
+2023-11-05 12:48:21,140 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:21,141 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:21,272 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/output.log
+2023-11-05 12:48:21,864 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:21,865 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:21,865 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:21,865 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:21,866 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:21,866 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:21,866 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:21,867 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:21,880 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:21,881 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:21,881 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:21,881 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:21,883 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:22,565 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:22,565 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:22,565 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:22,565 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:22,566 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:22,567 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:22,569 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:22,571 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:22,572 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:22,572 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:22,574 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:22,574 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:22,576 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:22,577 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:22,578 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:22,578 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:22,579 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:22,580 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:22,583 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:22,594 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:22,594 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:22,594 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:22,594 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:22,595 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:23,164 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:23,164 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:23,164 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:23,164 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:23,165 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:23,166 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:23,167 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:23,169 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:23,171 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:23,175 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:23,176 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:23,596 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:25,183 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:25,183 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:27,146 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:27,146 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:27,146 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:27,147 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:27,148 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:27,148 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:27,149 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:27,149 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:27,162 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:27,162 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:27,162 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:27,163 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:27,164 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:27,262 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 12:48:27,263 INFO    HandlerThread:32599 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 12:48:27,263 INFO    HandlerThread:32599 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 12:48:27,263 INFO    SystemMonitor:32599 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 12:48:27,264 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 12:48:27,265 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 12:48:27,268 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 12:48:27,269 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 12:48:27,271 INFO    SystemMonitor:32599 [interfaces.py:start():190] Started network monitoring
+2023-11-05 12:48:27,275 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:27,275 ERROR   gpu       :32599 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 12:48:27,278 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/output.log
+2023-11-05 12:48:27,887 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 12:48:27,887 INFO    HandlerThread:32599 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 12:48:27,887 INFO    HandlerThread:32599 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 12:48:27,888 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 12:48:27,889 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 12:48:27,889 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 12:48:27,890 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 12:48:27,890 DEBUG   SystemMonitor:32599 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 12:48:27,902 ERROR   gpu       :32599 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 12:48:27,902 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 12:48:27,903 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 12:48:27,903 INFO    HandlerThread:32599 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 12:48:27,904 DEBUG   SenderThread:32599 [sender.py:send():380] send: stats
+2023-11-05 12:48:28,905 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:32,547 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 12:48:32,549 DEBUG   SenderThread:32599 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 12:48:32,549 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 12:48:34,647 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:39,655 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:40,285 INFO    Thread-12 :32599 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_124806-9iizglbs/files/config.yaml
+2023-11-05 12:48:45,071 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:47,548 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 12:48:47,549 DEBUG   SenderThread:32599 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 12:48:47,594 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 12:48:50,683 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:48:55,685 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:00,686 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:02,548 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 12:49:02,549 DEBUG   SenderThread:32599 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 12:49:02,594 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 12:49:05,691 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:10,693 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:15,694 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:17,548 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 12:49:17,549 DEBUG   SenderThread:32599 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 12:49:17,594 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 12:49:20,697 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:25,699 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:30,701 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 12:49:32,548 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 12:49:32,549 DEBUG   SenderThread:32599 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 12:49:32,594 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 12:49:36,652 DEBUG   HandlerThread:32599 [handler.py:handle_request():146] handle_request: status_report

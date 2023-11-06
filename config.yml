@@ -1,10 +1,9 @@
 data_dir:
-  dev: data/image/1_dev
-  exp: data/image/2_exp
+  dev: data/image/1_dev/
+  exp: data/image/2_exp/
   metadata: data/meta/2_clean/dicom.csv
-  prod: data/image/3_prod
-  test: tests/data/images
-id_vault: data/id/vault
+  prod: data/image/3_prod/
+  test: tests/data/images/
 logging:
   disable_existing_loggers: false
   formatters:
@@ -35,3 +34,7 @@ logging:
     - file
     level: DEBUG
   version: 1
+models:
+  dev: models/1_dev/
+  exp: models/2_exp/
+  prod: models/3_prod/

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/pipeline.py                                                              #
+# Filename   : /bcd/analyze/explore/multivariate/pipeline.py                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 2nd 2023 07:24:02 am                                                 #
-# Modified   : Monday October 2nd 2023 04:26:26 pm                                                 #
+# Modified   : Sunday November 5th 2023 09:19:45 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,7 +22,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from bcd.model.base import BasePipelineBuilder
+from bcd.analyze.explore.multivariate.base import BasePipelineBuilder
 
 # ------------------------------------------------------------------------------------------------ #
 
@@ -67,7 +67,7 @@ class PipelineBuilder(BasePipelineBuilder):
     def set_scorer(self, scorer: str) -> None:
         self._scorer = scorer
 
-    def build_gridsearch_cv(self, cv: int = 10, *args, **kwargs) -> None:
+    def build_gridsearch_cv(self, cv: int = 10, **kwargs) -> None:
         """Creates the GridSearchCV object"""
         self._pipeline = Pipeline([self._scaler, self._classifier])
         self._gridsearch_cv = GridSearchCV(

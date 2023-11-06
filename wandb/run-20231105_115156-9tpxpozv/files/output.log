@@ -1,0 +1,9 @@
+Image Count
+Training Images:
+	Benign:		1680
+	Malignant:	1181
+	Total Train:	2861
+Test Images:
+	Benign:		428
+	Malignant:	276
+	Total Test:	704

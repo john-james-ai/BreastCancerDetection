@@ -4,31 +4,30 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/selection.py                                                             #
+# Filename   : /bcd/analyze/explore/multivariate/selection.py                                      #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 2nd 2023 06:55:34 am                                                 #
-# Modified   : Monday October 2nd 2023 07:04:57 pm                                                 #
+# Modified   : Sunday November 5th 2023 09:18:51 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-import sys
+import logging
 import os
 import pickle
-import logging
+import sys
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
-
 from sklearn.base import BaseEstimator
-from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import GridSearchCV
 
 # ------------------------------------------------------------------------------------------------ #
 sns.set_style("whitegrid")
@@ -142,7 +141,7 @@ class ModelSelector:
             raise
 
     def plot_feature_importance(
-        self, title: str = None, ax: plt.Axes = None, palette: str = "Blues_r", *args, **kwargs
+        self, title: str = None, ax: plt.Axes = None, palette: str = "Blues_r", **kwargs
     ) -> None:
         sns.barplot(
             data=self._feature_importance,
@@ -150,7 +149,6 @@ class ModelSelector:
             y="Feature",
             ax=ax,
             palette=palette,
-            *args,
             **kwargs,
         )
         if title is not None:

@@ -10,79 +10,42 @@
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Monday October 2nd 2023 07:08:15 am                                                 #
-# Modified   : Monday October 2nd 2023 04:49:18 pm                                                 #
+# Created    : Sunday November 5th 2023 11:02:05 am                                                #
+# Modified   : Sunday November 5th 2023 04:18:54 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-from abc import ABC, abstractmethod, abstractproperty
+import os
+from datetime import datetime
 
-import pandas as pd
-import numpy as np
-from sklearn.pipeline import Pipeline
-from sklearn.base import BaseEstimator
+from keras import Model
 
-
-# ------------------------------------------------------------------------------------------------ #
-class BaseModelSelector(ABC):
-    @abstractproperty
-    def best_model(self) -> BaseEstimator:
-        """Returns the best model."""
-
-    @abstractmethod
-    def reset(self) -> None:
-        """Resets the model selector."""
-
-    @abstractmethod
-    def set_jobs(self, jobs: int = 6) -> None:
-        """Set scoring function."""
-
-    @abstractmethod
-    def add_pipeline(self, pipeline: Pipeline, *args, **kwargs) -> None:
-        """Adds a pipeline to the selector"""
-
-    @abstractmethod
-    def run(self, *args, **kwargs) -> None:
-        """Run the pipeline"""
-
-    @abstractmethod
-    def predict(self, X: pd.DataFrame) -> np.ndarray:
-        """Renders predictions using best model."""
-
-    @abstractmethod
-    def score(self, y_true, y_pred) -> None:
-        """Renders accuracy and classification report."""
-
-    @abstractmethod
-    def save(self, filepath: str) -> None:
-        """Saves the best model to the designated filepath"""
-
-    @abstractmethod
-    def load(self) -> None:
-        """Loads the best model to the designated filepath"""
+from bcd.config import Config
 
 
 # ------------------------------------------------------------------------------------------------ #
+class BCDModel(Model):
+    """Base Model extending keras.Model definition."""
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        now = datetime.now()
+        self._name = self.__class__.__name__.lower() + "_" + now.strftime("%Y-%m-%d_%H-%M-%S")
 
-class BasePipelineBuilder(ABC):
-    @abstractproperty
-    def pipeline(self) -> Pipeline:
-        """Returns a GridSearchCV Pipeline"""
+    @property
+    def name(self) -> str:
+        return self._name
 
-    @abstractmethod
-    def set_standard_scaler(self) -> None:
-        """Sets the standard scaler in the Pipeline"""
+    def call(self, inputs, training=None, mask=None):
+        """Calls the model on the new inputs and returns the outputs as tensors."""
 
-    @abstractmethod
-    def set_classifier(self, *args, **kwargs) -> None:
-        """Sets the classifier and the parameters"""
+    def get_config(self):
+        """Returns the config of the `Model`."""
 
-    @abstractmethod
-    def set_scorer(self, scorer: str) -> None:
-        """Set scoring function."""
-
-    @abstractmethod
-    def build_gridsearch_cv(self, *args, **kwargs) -> None:
-        """Creates the GridSearchCV object"""
+    def save_model(self, overwrite: bool = True, **kwargs) -> None:
+        directory = Config.get_model_dir()
+        os.makedirs(directory, exist_ok=True)
+        filename = self.name + ".keras"
+        filepath = os.path.join(directory, filename)
+        self.save(filepath=filepath, overwrite=overwrite, save_format="tf", **kwargs)

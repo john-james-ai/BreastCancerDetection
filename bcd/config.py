@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 01:47:42 am                                                #
-# Modified   : Saturday November 4th 2023 04:18:35 am                                              #
+# Modified   : Sunday November 5th 2023 11:05:57 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -128,3 +128,9 @@ class Config:
     def get_dicom_metadata_filepath(cls) -> str:
         config = cls.read_config()
         return os.path.abspath(config["data_dir"]["metadata"])
+
+    @classmethod
+    def get_model_dir(cls) -> str:
+        config = cls.read_config()
+        mode = cls.get_mode()
+        return os.path.abspath(config["models"][mode])
