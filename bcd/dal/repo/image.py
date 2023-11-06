@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 # ================================================================================================ #
-# Project    : Enter Project Name in Workspace Settings                                            #
-# Version    : 0.1.19                                                                              #
+# Project    : Deep Learning for Breast Cancer Detection                                           #
+# Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
 # Filename   : /bcd/dal/repo/image.py                                                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
-# URL        : Enter URL in Workspace Settings                                                     #
+# URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Sunday November 5th 2023 11:17:04 pm                                                #
+# Modified   : Monday November 6th 2023 04:53:56 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -60,6 +60,7 @@ WRITE_IMAGE_DTYPES = {
     "cancer": TINYINT(),
     "method": VARCHAR(length=64),
     "build_time": FLOAT(),
+    "task_id": VARCHAR(64),
     "created": DATETIME(),
 }
 # ------------------------------------------------------------------------------------------------ #
@@ -90,6 +91,7 @@ READ_IMAGE_DTYPES = {
     "cancer": bool,
     "method": str,
     "build_time": np.float64,
+    "task_id": str,
 }
 PARSE_DATES = {"created": {"errors": "ignore", "yearfirst": True}}
 

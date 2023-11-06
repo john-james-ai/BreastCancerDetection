@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/flow/basetask.py                                              #
+# Filename   : /bcd/preprocess/image/experiment/base.py                                            #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Monday November 6th 2023 02:57:54 am                                                #
+# Modified   : Monday November 6th 2023 05:50:33 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,22 +22,38 @@ from __future__ import annotations
 import logging
 from abc import ABC, abstractmethod
 from datetime import datetime
+from uuid import uuid4
 
 from dependency_injector.wiring import Provide, inject
 from sklearn.model_selection import ParameterGrid
 from tqdm import tqdm
 
+from bcd import Stage
 from bcd.config import Config
 from bcd.container import BCDContainer
 from bcd.dal.io.image_reader import ImageReader
 from bcd.dal.repo.uow import UoW
 from bcd.image import ImageFactory
+from bcd.preprocess.image.flow.task import Task
 from bcd.preprocess.image.method.basemethod import Method
 
 
 # ------------------------------------------------------------------------------------------------ #
-class Task(ABC):
-    """Abstract base class for task objects."""
+class Experiment(ABC):
+    """Abstract base class for task objects.
+
+    Args:
+        instage_id (int): Stage of the input data for the experiment
+        outstage_id (int): Stage of the output data for the experiment
+        method (type[Method]): Method class
+        params (dict): The parameter grid for the method.
+        batchsize (int): Size of batch for reading input.
+        uow (UoW): Unit of work class containing repositories.
+        config (type[Config]): App config class
+        reader (type[ImageReader]): Imagereader class
+        factory (type[ImageFactory]): Image Factory class
+
+    """
 
     @inject
     def __init__(
@@ -67,31 +83,56 @@ class Task(ABC):
     @abstractmethod
     def run(self) -> None:
         """Runs the Task"""
+        # Obtain an iterator for the input stage images
         condition = lambda df: df["stage_id"] == self._instage_id
         reader = self._reader(batchsize=self._batchsize, condition=condition)
 
-        param_grid = self._get_paramgrid()
+        # Construct a task for each parameter set
+        tasks = self._get_tasks()
 
+        # Obtain a batch from the reader
         for batch in tqdm(reader, desc="batch", total=reader.num_batches):
+            # Extract an image from the batch
             for image_in in tqdm(batch, desc="image", total=len(batch)):
-                for params in tqdm(param_grid, desc="param", total=len(param_grid)):
+                # Iterate through each task, which contains method parameters
+                for task in tqdm(tasks, desc="task", total=len(tasks)):
+                    task.images_processed += 1
+                    # Capture the time
                     start = datetime.now()
-                    pixel_data = self._method.execute(image_in.pixel_data, **params)
+                    # Execute the method, passing the task.params
+                    pixel_data = self._method.execute(image_in.pixel_data, **task.params)
+                    # Compute build time
                     stop = datetime.now()
                     build_time = (stop - start).total_seconds()
+                    # Create the output image
                     image_out = self._factory.create(
                         case_id=image_in.case_id,
                         stage_id=self._outstage_id,
                         pixel_data=pixel_data,
                         method=self._method.__name__,
                         build_time=build_time,
+                        task_id=task.uid,
                     )
+                    # Persist the image to the repository
                     self._uow.image_repo.add(image=image_out)
+        # Persist the tasks
+        task_repo = self._uow.task_repo
+        for task in tasks:
+            task_repo.add(task=task)
 
-    def _get_paramgrid(self) -> list:
+    def _get_tasks(self) -> list:
         """Returns a list of parameter sets based upon the param(grid)"""
-        param_list = []
+        task_list = []
         param_grid = ParameterGrid(self._params)
         for param_set in param_grid:
-            param_list.append(param_set)
-        return param_list
+            task = Task(
+                uid=str(uuid4()),
+                mode=self._config.get_mode(),
+                stage_id=self._outstage_id,
+                stage=Stage(uid=self._outstage_id).name,
+                method=self._method.__name__,
+                params=param_set,
+                created=datetime.now(),
+            )
+            task_list.append(task)
+        return task_list

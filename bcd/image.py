@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Monday November 6th 2023 12:45:20 am                                                #
+# Modified   : Monday November 6th 2023 04:57:08 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -29,10 +29,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from bcd import Stage
+from bcd import Entity, Stage
 from bcd.config import Config
 from bcd.dal.io.image_io import ImageIO
-from bcd.preprocess.image.entity import Entity
 from bcd.utils.date import to_datetime
 
 # ------------------------------------------------------------------------------------------------ #
@@ -76,6 +75,7 @@ class Image(Entity):
     cancer: bool
     method: str
     build_time: float
+    task_id: str
     created: datetime
 
     def __eq__(self, other: Image) -> bool:
@@ -106,6 +106,7 @@ class Image(Entity):
             and self.fileset == other.fileset
             and self.cancer == other.cancer
             and self.method == other.method
+            and self.task_id == other.task_id
         )
 
     def difference(self, other: Image) -> dict:
@@ -203,6 +204,7 @@ class Image(Entity):
             "cancer": self.cancer,
             "method": self.method,
             "build_time": self.build_time,
+            "task_id": self.task_id,
             "created": self.created,
         }
         return pd.DataFrame(data=d, index=[0])
@@ -260,6 +262,7 @@ class ImageFactory:
             cancer=df["cancer"].values[0],
             method=df["method"].values[0],
             build_time=df["build_time"].values[0],
+            task_id=df["task_id"].values[0],
             created=created,
         )
 
@@ -271,6 +274,7 @@ class ImageFactory:
         pixel_data: np.ndarray,
         method: str,
         build_time: float,
+        task_id: str,
     ) -> Image:
         """Creates an image from pizel data.
 
@@ -286,6 +290,7 @@ class ImageFactory:
             pixel_data (np.ndarray): Pixel data in numpy array format.
             method (str): The name of the method
             build_time (float): Duration of the image build process.
+            task_id (str): The task identifier.
 
         Returns
             Image Object.
@@ -334,6 +339,7 @@ class ImageFactory:
             cancer=case["cancer"].values[0],
             method=method,
             build_time=build_time,
+            task_id=task_id,
             created=datetime.now(),
         )
 

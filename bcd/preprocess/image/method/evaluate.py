@@ -4,21 +4,20 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/image/evaluate.py                                                   #
+# Filename   : /bcd/preprocess/image/method/evaluate.py                                            #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday October 27th 2023 03:24:36 am                                                #
-# Modified   : Monday November 6th 2023 12:45:20 am                                                #
+# Modified   : Monday November 6th 2023 06:32:41 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 from __future__ import annotations
 
-import json
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
@@ -28,10 +27,8 @@ import numpy as np
 import pandas as pd
 from skimage.metrics import structural_similarity as ssidx
 
-from bcd import DataClass, Stage
-from bcd.config import Config
+from bcd import DataClass
 from bcd.image import Image
-from bcd.preprocess.image.method.basemethod import Method
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -87,10 +84,7 @@ class Evaluation(DataClass):
 
     orig: Image
     test: Image
-    mode: str
-    stage: Stage
-    method: type[Method]
-    params: dict
+    method: str
     build_time: float
     mse: float
     psnr: float
@@ -101,12 +95,16 @@ class Evaluation(DataClass):
         return {
             "orig_uid": self.orig.uid,
             "test_uid": self.test.uid,
-            "mode": self.mode,
-            "stage_id": self.stage.uid,
-            "stage": self.stage.name,
-            "method": self.method.__name__,
-            "params": json.dumps(self.params),
+            "mode": self.test.mode,
+            "stage_id": self.test.stage_id,
+            "stage": self.test.stage,
+            "method": self.method,
+            "image_view": self.test.image_view,
+            "abnormality_type": self.test.abnormality_type,
+            "assessment": self.test.assessment,
+            "cancer": self.test.cancer,
             "build_time": self.build_time,
+            "task_id": self.test.task_id,
             "mse": self.mse,
             "psnr": self.psnr,
             "ssim": self.ssim,
@@ -114,37 +112,24 @@ class Evaluation(DataClass):
         }
 
     def as_df(self) -> pd.DataFrame:
-        return pd.DataFrame(data=self.as_dict())
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                    EVALUATOR                                                     #
-# ------------------------------------------------------------------------------------------------ #
-class Evaluator:
-    """Evaluates images"""
+        return pd.DataFrame(data=self.as_dict(), index=[0])
 
     @classmethod
     def evaluate(
         cls,
         orig: Image,
         test: Image,
-        stage: Stage,
         method: str,
-        params: str,
         mse: type[MSE] = MSE,
         psnr: type[PSNR] = PSNR,
         ssim: type[SSIM] = SSIM,
-        config: type[Config] = Config,
     ) -> Evaluation:
         """Creates an evaluation object
 
         Args:
             orig (Image): Ground truth image object.
             test (Image): The test image object
-            stage (Stage): A Stage object encapsulating the stage for which the evaluation
-                is being conducted.
             method (str): The name of the method being evaluated.
-            params (str): Parameters of the method in string format.
             mse (type[MSE]): The MSE computation class
             psnr (type[PSNR]): The PSNR computation class
             ssim (type[SSIM]): The SSIM computation class
@@ -152,13 +137,10 @@ class Evaluator:
 
         """
 
-        return Evaluation(
+        return cls(
             orig=orig,
             test=test,
-            mode=config.mode,
-            stage=stage,
             method=method,
-            params=params,
             build_time=test.build_time,
             mse=mse.compute(orig=orig.pixel_data, test=test.pixel_data),
             psnr=psnr.compute(orig=orig.pixel_data, test=test.pixel_data),

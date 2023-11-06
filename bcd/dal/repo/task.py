@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Wednesday November 1st 2023 01:51:38 pm                                             #
+# Modified   : Monday November 6th 2023 05:47:17 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,33 +21,25 @@ from typing import Callable, Union
 
 import pandas as pd
 import pymysql
-from sqlalchemy.dialects.mssql import DATETIME, FLOAT, INTEGER, VARCHAR
+from sqlalchemy.dialects.mssql import DATETIME, INTEGER, VARCHAR
 
 from bcd.config import Config
 from bcd.dal.database.base import Database
 from bcd.dal.repo.base import Repo
-from bcd.preprocess.image.flow.basetask import Task
+from bcd.preprocess.image.flow.task import Task
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=arguments-renamed, arguments-differ, broad-exception-caught
 # ------------------------------------------------------------------------------------------------ #
 TASK_DTYPES = {
     "uid": VARCHAR(64),
-    "name": VARCHAR(64),
     "mode": VARCHAR(8),
     "stage_id": INTEGER(),
     "stage": VARCHAR(32),
-    "method_name": VARCHAR(64),
-    "method_module": VARCHAR(128),
-    "params_name": VARCHAR(64),
-    "params_module": VARCHAR(128),
+    "method": VARCHAR(64),
+    "params": VARCHAR(128),
     "images_processed": INTEGER(),
-    "image_processing_time": FLOAT(),
-    "started": DATETIME(),
-    "stopped": DATETIME(),
-    "duration": FLOAT(),
-    "state": VARCHAR(16),
-    "job_id": VARCHAR(64),
+    "created": DATETIME(),
 }
 
 

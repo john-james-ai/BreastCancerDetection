@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 01:10:10 am                                              #
-# Modified   : Sunday November 5th 2023 10:13:39 pm                                                #
+# Modified   : Monday November 6th 2023 06:17:01 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,6 +22,7 @@ import logging
 from bcd.dal.database.base import Database
 from bcd.dal.repo.evaluate import EvalRepo
 from bcd.dal.repo.image import ImageRepo
+from bcd.dal.repo.task import TaskRepo
 from bcd.image import ImageFactory
 
 
@@ -43,12 +44,14 @@ class UoW:
         database: Database,
         image_repo: ImageRepo,
         eval_repo: EvalRepo,
+        task_repo: TaskRepo,
         image_factory: type[ImageFactory] = ImageFactory,
     ) -> None:
         self._database = database
         self._image_factory = image_factory
         self._image_repo = image_repo
         self._eval_repo = eval_repo
+        self._task_repo = task_repo
 
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
 
@@ -62,6 +65,10 @@ class UoW:
             database=self._database,
             image_factory=self._image_factory,
         )
+
+    @property
+    def task_repo(self) -> TaskRepo:
+        return self._task_repo(database=self._database)
 
     @property
     def eval_repo(self) -> EvalRepo:

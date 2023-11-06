@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Saturday November 4th 2023 06:38:29 am                                              #
+# Modified   : Monday November 6th 2023 06:10:26 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,27 +25,24 @@ from sqlalchemy.dialects.mssql import DATETIME, FLOAT, INTEGER, TINYINT, VARCHAR
 from bcd.config import Config
 from bcd.dal.database.base import Database
 from bcd.dal.repo.base import Repo
-from bcd.preprocess.image.evaluate import Evaluation
+from bcd.preprocess.image.method.evaluate import Evaluation
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=arguments-renamed, arguments-differ, broad-exception-caught
 # ------------------------------------------------------------------------------------------------ #
 EVAL_DTYPES = {
-    "test_no": INTEGER,
-    "source_image_uid": VARCHAR(64),
-    "source_image_filepath": VARCHAR(64),
-    "test_image_uid": VARCHAR(64),
-    "test_image_filepath": VARCHAR(64),
+    "orig_uid": VARCHAR(64),
+    "test_uid": VARCHAR(64),
     "mode": VARCHAR(8),
     "stage_id": INTEGER,
     "stage": VARCHAR(32),
+    "method": VARCHAR(64),
+    "params": VARCHAR(128),
     "image_view": VARCHAR(4),
     "abnormality_type": VARCHAR(24),
     "assessment": INTEGER,
     "cancer": TINYINT,
-    "method": VARCHAR(64),
-    "params": VARCHAR(128),
-    "comp_time": FLOAT,
+    "build_time": FLOAT,
     "mse": FLOAT,
     "psnr": FLOAT,
     "ssim": FLOAT,

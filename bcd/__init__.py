@@ -11,13 +11,14 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:35:50 pm                                               #
-# Modified   : Monday November 6th 2023 12:45:53 am                                                #
+# Modified   : Monday November 6th 2023 04:43:19 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 from __future__ import annotations
 
+import json
 import logging
 import string
 from abc import ABC
@@ -171,7 +172,7 @@ class DataClass(ABC):
         elif isinstance(v, datetime):
             return v
         elif isinstance(v, dict):
-            return v
+            return json.dumps(v)
         elif hasattr(v, "as_dict"):
             return v.as_dict()
         elif isinstance(v, Callable):
