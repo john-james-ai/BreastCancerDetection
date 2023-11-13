@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday October 27th 2023 03:24:36 am                                                #
-# Modified   : Monday November 6th 2023 06:30:38 am                                                #
+# Modified   : Monday November 13th 2023 09:57:21 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ from bcd.preprocess.image.method.evaluate import Evaluation
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                   EVALUATOR                                                      #
+#                                         EVALUATOR                                                #
 # ------------------------------------------------------------------------------------------------ #
 class Evaluator:
     """Conducts Evaluations of Experiments"""
@@ -37,7 +37,7 @@ class Evaluator:
         image_repo = self._uow.image_repo
         eval_repo = self._uow.eval_repo
 
-        # Extract the stage 0 image metadata
+        # Extract the 'stage 0', i.e. raw image metadata
         condition_orig = lambda df: df["stage_id"] == 0
         orig_meta = image_repo.get_meta(condition=condition_orig)
 
@@ -53,10 +53,12 @@ class Evaluator:
             orig_image = image_repo.get(uid=orig_uid)
             # Iterate through the tests of various methods performed
             # on the origin image.
-            for _, image_meta in tqdm(group.iterrows(), desc="tests", total=(len(group))):
+            for _, image_meta in tqdm(group.iterrows(), desc="tests", total=len(group)):
                 # Obtain the test image
                 test_image = image_repo.get(uid=image_meta["uid"])
                 # Evaluate the test image vis-a-vis the original.
-                ev = Evaluation.evaluate(orig=orig_image, test=test_image, method=test_image.method)
+                ev = Evaluation.evaluate(
+                    orig=orig_image, test=test_image, method=test_image.method
+                )
                 # Persist the evaluation.
                 eval_repo.add(evaluation=ev)
