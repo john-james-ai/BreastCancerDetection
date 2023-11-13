@@ -549,7 +549,7 @@ document.write(`
 <h2>The Datasets<a class="headerlink" href="#the-datasets" title="Permalink to this heading">#</a></h2>
 <p>This analysis will involve the following datasets:</p>
 <ul class="simple">
-<li><p>Case Datasets: Calcification and mass datasets containing patient, abnormality, BI-RADS assessment, image view, breast density, subtlety, and pathology (diagnosis) information.</p></li>
+<li><p>Case Datasets: Calcification and mass datasets containing patient, abnormality, BI-RADS assessment, image image_view, breast density, subtlety, and pathology (diagnosis) information.</p></li>
 <li><p>DICOM Dataset: Contains image properties, such as image size, shape, bit-depth, aspect ratio, and photometric interpretation.</p></li>
 <li><p>DICOM Images: The mammography, ROI masks, and cropped images in DICOM format.</p></li>
 </ul>
@@ -586,7 +586,7 @@ document.write(`
 <tr class="row-odd"><td><p>4</p></td>
 <td><p>image_view</p></td>
 <td><p>Dichotomous</p></td>
-<td><p>Either cranialcaudal or mediolateral oblique view.</p></td>
+<td><p>Either cranialcaudal or mediolateral oblique image_view.</p></td>
 <td><p>CC or MLO</p></td>
 </tr>
 <tr class="row-even"><td><p>5</p></td>
@@ -698,7 +698,7 @@ document.write(`
 <tr class="row-even"><td><p>5</p></td>
 <td><p>image_view</p></td>
 <td><p>Dichotomous</p></td>
-<td><p>Either cranialcaudal or mediolateral oblique view.</p></td>
+<td><p>Either cranialcaudal or mediolateral oblique image_view.</p></td>
 </tr>
 <tr class="row-odd"><td><p>6</p></td>
 <td><p>photometric_interpretation</p></td>
@@ -731,12 +731,12 @@ document.write(`
 <td><p>Ratio of vertical and horizontal size.</p></td>
 </tr>
 <tr class="row-odd"><td><p>12</p></td>
-<td><p>bits</p></td>
+<td><p>bit_depth</p></td>
 <td><p>Discrete</p></td>
-<td><p>Number of bits stored for each pixel sample.</p></td>
+<td><p>Number of bit_depth stored for each pixel sample.</p></td>
 </tr>
 <tr class="row-even"><td><p>13</p></td>
-<td><p>smallest_image_pixel</p></td>
+<td><p>min_pixel_value</p></td>
 <td><p>Discrete</p></td>
 <td><p>The minimum actual pixel value encountered in the image.</p></td>
 </tr>
@@ -746,7 +746,7 @@ document.write(`
 <td><p>The maximum actual pixel value encountered in the image.</p></td>
 </tr>
 <tr class="row-even"><td><p>15</p></td>
-<td><p>image_pixel_range</p></td>
+<td><p>range_pixel_values</p></td>
 <td><p>Discrete</p></td>
 <td><p>Difference between largest and smallest image pixel.</p></td>
 </tr>
@@ -843,8 +843,8 @@ The section has the following python package dependencies:</p>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
-<span class="kn">from</span> <span class="nn">bcd.data.dataset.case</span> <span class="kn">import</span> <span class="n">CaseDataset</span>
-<span class="kn">from</span> <span class="nn">bcd.data.dataset.dicom</span> <span class="kn">import</span> <span class="n">DicomDataset</span>
+<span class="kn">from</span> <span class="nn">bcd.data.dataset.case</span> <span class="kn">import</span> <span class="n">CaseExplorer</span>
+<span class="kn">from</span> <span class="nn">bcd.data.dataset.dicom</span> <span class="kn">import</span> <span class="n">DicomExplorer</span>
 <span class="kn">from</span> <span class="nn">bcd.model.pipeline</span> <span class="kn">import</span> <span class="n">PipelineBuilder</span>
 <span class="kn">from</span> <span class="nn">bcd.model.selection</span> <span class="kn">import</span> <span class="n">ModelSelector</span>
 
@@ -855,12 +855,26 @@ The section has the following python package dependencies:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">13</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">bcd.data.dataset.case</span> <span class="kn">import</span> <span class="n">CaseExplorer</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">bcd.data.dataset.dicom</span> <span class="kn">import</span> <span class="n">DicomExplorer</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">bcd.model.pipeline</span> <span class="kn">import</span> <span class="n">PipelineBuilder</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;bcd.data&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cases</span> <span class="o">=</span> <span class="n">CaseDataset</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">CASE_FP</span><span class="p">)</span>
-<span class="n">calc</span> <span class="o">=</span> <span class="n">CaseDataset</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">cases</span><span class="o">.</span><span class="n">get_calc_data</span><span class="p">())</span>
-<span class="n">mass</span> <span class="o">=</span> <span class="n">CaseDataset</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">cases</span><span class="o">.</span><span class="n">get_mass_data</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cases</span> <span class="o">=</span> <span class="n">CaseExplorer</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">CASE_FP</span><span class="p">)</span>
+<span class="n">calc</span> <span class="o">=</span> <span class="n">CaseExplorer</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">cases</span><span class="o">.</span><span class="n">get_calc_data</span><span class="p">())</span>
+<span class="n">mass</span> <span class="o">=</span> <span class="n">CaseExplorer</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">cases</span><span class="o">.</span><span class="n">get_mass_data</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1020,83 +1034,83 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>1589</th>
-      <td>P_00214_RIGHT_calcification_MLO_1</td>
-      <td>P_00214</td>
-      <td>1</td>
-      <td>RIGHT</td>
+      <th>642</th>
+      <td>P_00806_LEFT_calcification_MLO_1</td>
+      <td>P_00806</td>
+      <td>4</td>
+      <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>LUCENT_CENTERED</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>2</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1549</th>
+      <td>P_00038_RIGHT_calcification_CC_2</td>
+      <td>P_00038</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>VASCULAR</td>
       <td>SEGMENTAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>3</td>
+      <td>5</td>
       <td>test</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>904</th>
-      <td>P_01159_LEFT_calcification_MLO_1</td>
-      <td>P_01159</td>
-      <td>4</td>
-      <td>LEFT</td>
+      <th>1293</th>
+      <td>P_01679_RIGHT_calcification_MLO_1</td>
+      <td>P_01679</td>
+      <td>3</td>
+      <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS</td>
-      <td>REGIONAL</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>3</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>803</th>
-      <td>P_01034_LEFT_calcification_CC_1</td>
-      <td>P_01034</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
       <td>PLEOMORPHIC</td>
-      <td>REGIONAL</td>
+      <td>LINEAR</td>
       <td>4</td>
-      <td>BENIGN</td>
-      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>1</td>
       <td>train</td>
-      <td>False</td>
+      <td>True</td>
     </tr>
     <tr>
-      <th>535</th>
-      <td>P_00666_RIGHT_calcification_CC_3</td>
-      <td>P_00666</td>
-      <td>2</td>
+      <th>248</th>
+      <td>P_00360_RIGHT_calcification_MLO_1</td>
+      <td>P_00360</td>
+      <td>4</td>
       <td>RIGHT</td>
-      <td>CC</td>
-      <td>3</td>
+      <td>MLO</td>
+      <td>1</td>
       <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
+      <td>LINEAR</td>
       <td>4</td>
       <td>BENIGN</td>
-      <td>5</td>
+      <td>3</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>1842</th>
-      <td>P_01882_LEFT_calcification_CC_1</td>
-      <td>P_01882</td>
-      <td>2</td>
+      <th>546</th>
+      <td>P_00680_LEFT_calcification_CC_1</td>
+      <td>P_00680</td>
+      <td>4</td>
       <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
+      <td>PUNCTATE</td>
+      <td>DIFFUSELY_SCATTERED</td>
+      <td>2</td>
       <td>BENIGN</td>
-      <td>3</td>
-      <td>test</td>
+      <td>4</td>
+      <td>train</td>
       <td>False</td>
     </tr>
   </tbody>
@@ -1136,84 +1150,84 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>1955</th>
-      <td>P_00106_LEFT_mass_MLO_3</td>
-      <td>P_00106</td>
-      <td>1</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>3</td>
-      <td>LYMPH_NODE</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <th>3007</th>
+      <td>P_01638_RIGHT_mass_MLO_1</td>
+      <td>P_01638</td>
       <td>4</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2816</th>
-      <td>P_01356_LEFT_mass_MLO_1</td>
-      <td>P_01356</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>IRREGULAR</td>
-      <td>SPICULATED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2848</th>
-      <td>P_01394_RIGHT_mass_CC_1</td>
-      <td>P_01394</td>
-      <td>2</td>
       <td>RIGHT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>IRREGULAR</td>
-      <td>SPICULATED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2290</th>
-      <td>P_00596_LEFT_mass_CC_1</td>
-      <td>P_00596</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>CC</td>
+      <td>MLO</td>
       <td>1</td>
       <td>LOBULATED</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>4</td>
+      <td>OBSCURED</td>
+      <td>0</td>
       <td>BENIGN</td>
+      <td>3</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2108</th>
+      <td>P_00342_RIGHT_mass_MLO_3</td>
+      <td>P_00342</td>
+      <td>1</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>OVAL</td>
+      <td>CIRCUMSCRIBED</td>
+      <td>3</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>5</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>2009</th>
-      <td>P_00205_RIGHT_mass_MLO_1</td>
-      <td>P_00205</td>
-      <td>2</td>
+      <th>2321</th>
+      <td>P_00651_RIGHT_mass_MLO_1</td>
+      <td>P_00651</td>
+      <td>3</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>OVAL</td>
-      <td>CIRCUMSCRIBED</td>
+      <td>IRREGULAR</td>
+      <td>ILL_DEFINED</td>
       <td>4</td>
       <td>BENIGN</td>
-      <td>5</td>
+      <td>4</td>
       <td>train</td>
       <td>False</td>
+    </tr>
+    <tr>
+      <th>3519</th>
+      <td>P_01645_RIGHT_mass_CC_1</td>
+      <td>P_01645</td>
+      <td>4</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>OVAL</td>
+      <td>CIRCUMSCRIBED-OBSCURED-ILL_DEFINED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>3</td>
+      <td>test</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2385</th>
+      <td>P_00732_LEFT_mass_MLO_1</td>
+      <td>P_00732</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
+      <td>SPICULATED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
     </tr>
   </tbody>
 </table>
@@ -1255,7 +1269,7 @@ The section has the following python package dependencies:</p>
 <p>{figure}
 :name: density_ref
 Breast Density Categories <span id="id1">[<a class="reference internal" href="99_references.html#id297" title="WHAT ARE DENSE BREASTS? URL: https://www.radiology.ca/article/what-are-dense-breasts/ (visited on 2023-09-04).">1</a>]</span></p>
-<p>The following exhibits the counts by breast density category in the CBIS-DDSM dataset vis-a-vis a sample from the US of the same size.</p>
+<p>The following exhibit_depth the counts by breast density category in the CBIS-DDSM dataset vis-a-vis a sample from the US of the same size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
@@ -1298,7 +1312,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </section>
 <section id="image-view">
 <h4>Image View<a class="headerlink" href="#image-view" title="Permalink to this heading">#</a></h4>
-<p>CBIS-DDSM contains digital mammography images in two different views: cranial caudal (CC) and mediolateral oblique (MLO). The CC view is taken from above the breast; whereas, the MLO view is taken from the center of the breast outward.</p>
+<p>CBIS-DDSM contains digital mammography images in two different image_views: cranial caudal (CC) and mediolateral oblique (MLO). The CC image_view is taken from above the breast; whereas, the MLO image_view is taken from the center of the breast outward.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
@@ -1310,7 +1324,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <img alt="../_images/26706d69c8daebad1ea751370477d9b6e2a459c8cb5da67b8d87126132213bdc.png" src="../_images/26706d69c8daebad1ea751370477d9b6e2a459c8cb5da67b8d87126132213bdc.png" />
 </div>
 </div>
-<p>Slightly greater number of MLO views; however, the dataset has a reasonable balance of image views.</p>
+<p>Slightly greater number of MLO image_views; however, the dataset has a reasonable balance of image image_views.</p>
 </section>
 <section id="abnormality-id">
 <h4>Abnormality Id<a class="headerlink" href="#abnormality-id" title="Permalink to this heading">#</a></h4>
@@ -1713,7 +1727,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </section>
 <section id="cancer-by-image-view">
 <h5>Cancer by Image View<a class="headerlink" href="#cancer-by-image-view" title="Permalink to this heading">#</a></h5>
-<p>A study published in RSNA Journals <span id="id4">[<a class="reference internal" href="99_references.html#id309" title="Katrina E. Korhonen, Emily F. Conant, Eric A. Cohen, Marie Synnestvedt, Elizabeth S. McDonald, and Susan P. Weinstein. Breast Cancer Conspicuity on Simultaneously Acquired Digital Mammographic Images versus Digital Breast Tomosynthesis Images. Radiology, 292(1):69–76, July 2019. URL: http://pubs.rsna.org/doi/10.1148/radiol.2019182027 (visited on 2023-09-29), doi:10.1148/radiol.2019182027.">4</a>]</span> analyzed breast cancer conspicuity by view and determined that cancers were more likely to be high conspicuity in the craniocaudal (CC) than the mediolateral oblique (MLO) view.  Let’s see what our data suggest.</p>
+<p>A study published in RSNA Journals <span id="id4">[<a class="reference internal" href="99_references.html#id309" title="Katrina E. Korhonen, Emily F. Conant, Eric A. Cohen, Marie Synnestvedt, Elizabeth S. McDonald, and Susan P. Weinstein. Breast Cancer Conspicuity on Simultaneously Acquired Digital Mammographic Images versus Digital Breast Tomosynthesis Images. Radiology, 292(1):69–76, July 2019. URL: http://pubs.rsna.org/doi/10.1148/radiol.2019182027 (visited on 2023-09-29), doi:10.1148/radiol.2019182027.">4</a>]</span> analyzed breast cancer conspicuity by image_view and determined that cancers were more likely to be high conspicuity in the craniocaudal (CC) than the mediolateral oblique (MLO) image_view.  Let’s see what our data suggest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">Plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;image_view&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cancer&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">Bar</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Count</span><span class="p">(),</span> <span class="n">so</span><span class="o">.</span><span class="n">Stack</span><span class="p">())</span><span class="o">.</span><span class="n">theme</span><span class="p">({</span><span class="o">**</span><span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">),</span> <span class="s2">&quot;grid.linestyle&quot;</span><span class="p">:</span> <span class="s2">&quot;:&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Diagnosis by Image View&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
@@ -1781,7 +1795,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </table>
 </div></div></div>
 </div>
-<p>Both views have the same proportion of malignancies suggesting no association between image view and the diagnosis.</p>
+<p>Both image_views have the same proportion of malignancies suggesting no association between image image_view and the diagnosis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">cases</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">cramersv</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="s1">&#39;image_view&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="s1">&#39;cancer&#39;</span><span class="p">)</span>
@@ -1807,7 +1821,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 </div>
-<p>The chi-square test above, indicates a non-significant association of negligible effect between image view and diagnosis, (<span class="math notranslate nohighlight">\(X^2\)</span> (1,n=3566)=0.007 p=0.93, <span class="math notranslate nohighlight">\(\phi\)</span>=.002).</p>
+<p>The chi-square test above, indicates a non-significant association of negligible effect between image image_view and diagnosis, (<span class="math notranslate nohighlight">\(X^2\)</span> (1,n=3566)=0.007 p=0.93, <span class="math notranslate nohighlight">\(\phi\)</span>=.002).</p>
 </section>
 <section id="cancer-by-abnormality-type">
 <h5>Cancer by Abnormality Type<a class="headerlink" href="#cancer-by-abnormality-type" title="Permalink to this heading">#</a></h5>
@@ -1977,13 +1991,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_fc6ef" style='display:inline; margin-right:220px;'>
+<table id="T_65d4d" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by BI-RADS Assessment</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_fc6ef_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_65d4d_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -1993,70 +2007,70 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_fc6ef_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_fc6ef_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_fc6ef_row0_col0" class="data row0 col0" >177</td>
+      <th id="T_65d4d_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_65d4d_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_65d4d_row0_col0" class="data row0 col0" >177</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_fc6ef_row1_col0" class="data row1 col0" >59</td>
+      <th id="T_65d4d_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_65d4d_row1_col0" class="data row1 col0" >59</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_fc6ef_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_fc6ef_row2_col0" class="data row2 col0" >0</td>
+      <th id="T_65d4d_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_65d4d_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_65d4d_row2_col0" class="data row2 col0" >0</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_fc6ef_row3_col0" class="data row3 col0" >3</td>
+      <th id="T_65d4d_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_65d4d_row3_col0" class="data row3 col0" >3</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_fc6ef_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_fc6ef_row4_col0" class="data row4 col0" >642</td>
+      <th id="T_65d4d_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_65d4d_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_65d4d_row4_col0" class="data row4 col0" >642</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_fc6ef_row5_col0" class="data row5 col0" >2</td>
+      <th id="T_65d4d_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_65d4d_row5_col0" class="data row5 col0" >2</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_fc6ef_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_fc6ef_row6_col0" class="data row6 col0" >375</td>
+      <th id="T_65d4d_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_65d4d_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_65d4d_row6_col0" class="data row6 col0" >375</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_fc6ef_row7_col0" class="data row7 col0" >102</td>
+      <th id="T_65d4d_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_65d4d_row7_col0" class="data row7 col0" >102</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_fc6ef_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_fc6ef_row8_col0" class="data row8 col0" >902</td>
+      <th id="T_65d4d_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_65d4d_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_65d4d_row8_col0" class="data row8 col0" >902</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_fc6ef_row9_col0" class="data row9 col0" >731</td>
+      <th id="T_65d4d_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_65d4d_row9_col0" class="data row9 col0" >731</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_fc6ef_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_fc6ef_row10_col0" class="data row10 col0" >13</td>
+      <th id="T_65d4d_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_65d4d_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_65d4d_row10_col0" class="data row10 col0" >13</td>
     </tr>
     <tr>
-      <th id="T_fc6ef_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_fc6ef_row11_col0" class="data row11 col0" >560</td>
+      <th id="T_65d4d_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_65d4d_row11_col0" class="data row11 col0" >560</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_1cc98" style='display:inline; margin-right:120px'>
+<table id="T_d01eb" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by BI-RADS Assessment (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_1cc98_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_d01eb_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2066,58 +2080,58 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_1cc98_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_1cc98_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_1cc98_row0_col0" class="data row0 col0" >0.750000</td>
+      <th id="T_d01eb_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_d01eb_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_d01eb_row0_col0" class="data row0 col0" >0.750000</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_1cc98_row1_col0" class="data row1 col0" >0.250000</td>
+      <th id="T_d01eb_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_d01eb_row1_col0" class="data row1 col0" >0.250000</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_1cc98_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_1cc98_row2_col0" class="data row2 col0" >0.000000</td>
+      <th id="T_d01eb_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_d01eb_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_d01eb_row2_col0" class="data row2 col0" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_1cc98_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_d01eb_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_d01eb_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_1cc98_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_1cc98_row4_col0" class="data row4 col0" >0.996894</td>
+      <th id="T_d01eb_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_d01eb_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_d01eb_row4_col0" class="data row4 col0" >0.996894</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_1cc98_row5_col0" class="data row5 col0" >0.003106</td>
+      <th id="T_d01eb_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_d01eb_row5_col0" class="data row5 col0" >0.003106</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_1cc98_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_1cc98_row6_col0" class="data row6 col0" >0.786164</td>
+      <th id="T_d01eb_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_d01eb_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_d01eb_row6_col0" class="data row6 col0" >0.786164</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_1cc98_row7_col0" class="data row7 col0" >0.213836</td>
+      <th id="T_d01eb_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_d01eb_row7_col0" class="data row7 col0" >0.213836</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_1cc98_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_1cc98_row8_col0" class="data row8 col0" >0.552358</td>
+      <th id="T_d01eb_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_d01eb_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_d01eb_row8_col0" class="data row8 col0" >0.552358</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_1cc98_row9_col0" class="data row9 col0" >0.447642</td>
+      <th id="T_d01eb_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_d01eb_row9_col0" class="data row9 col0" >0.447642</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_1cc98_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_1cc98_row10_col0" class="data row10 col0" >0.022688</td>
+      <th id="T_d01eb_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_d01eb_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_d01eb_row10_col0" class="data row10 col0" >0.022688</td>
     </tr>
     <tr>
-      <th id="T_1cc98_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_1cc98_row11_col0" class="data row11 col0" >0.977312</td>
+      <th id="T_d01eb_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_d01eb_row11_col0" class="data row11 col0" >0.977312</td>
     </tr>
   </tbody>
 </table>
@@ -2195,13 +2209,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_dbb19" style='display:inline; margin-right:220px;'>
+<table id="T_c8d4f" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by Subtlety</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_dbb19_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_c8d4f_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2211,61 +2225,61 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_dbb19_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_dbb19_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_dbb19_row0_col0" class="data row0 col0" >78</td>
+      <th id="T_c8d4f_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_c8d4f_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_c8d4f_row0_col0" class="data row0 col0" >78</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_dbb19_row1_col0" class="data row1 col0" >96</td>
+      <th id="T_c8d4f_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_c8d4f_row1_col0" class="data row1 col0" >96</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_dbb19_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_dbb19_row2_col0" class="data row2 col0" >232</td>
+      <th id="T_c8d4f_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_c8d4f_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_c8d4f_row2_col0" class="data row2 col0" >232</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_dbb19_row3_col0" class="data row3 col0" >207</td>
+      <th id="T_c8d4f_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_c8d4f_row3_col0" class="data row3 col0" >207</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_dbb19_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_dbb19_row4_col0" class="data row4 col0" >627</td>
+      <th id="T_c8d4f_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_c8d4f_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_c8d4f_row4_col0" class="data row4 col0" >627</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_dbb19_row5_col0" class="data row5 col0" >337</td>
+      <th id="T_c8d4f_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_c8d4f_row5_col0" class="data row5 col0" >337</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_dbb19_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_dbb19_row6_col0" class="data row6 col0" >559</td>
+      <th id="T_c8d4f_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_c8d4f_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_c8d4f_row6_col0" class="data row6 col0" >559</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_dbb19_row7_col0" class="data row7 col0" >316</td>
+      <th id="T_c8d4f_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_c8d4f_row7_col0" class="data row7 col0" >316</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_dbb19_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_dbb19_row8_col0" class="data row8 col0" >613</td>
+      <th id="T_c8d4f_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_c8d4f_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_c8d4f_row8_col0" class="data row8 col0" >613</td>
     </tr>
     <tr>
-      <th id="T_dbb19_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_dbb19_row9_col0" class="data row9 col0" >501</td>
+      <th id="T_c8d4f_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_c8d4f_row9_col0" class="data row9 col0" >501</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_8f6ef" style='display:inline; margin-right:120px'>
+<table id="T_abca3" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by Subtlety (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_8f6ef_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_abca3_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2275,49 +2289,49 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_8f6ef_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_8f6ef_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_8f6ef_row0_col0" class="data row0 col0" >0.448276</td>
+      <th id="T_abca3_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_abca3_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_abca3_row0_col0" class="data row0 col0" >0.448276</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_8f6ef_row1_col0" class="data row1 col0" >0.551724</td>
+      <th id="T_abca3_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_abca3_row1_col0" class="data row1 col0" >0.551724</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_8f6ef_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_8f6ef_row2_col0" class="data row2 col0" >0.528474</td>
+      <th id="T_abca3_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_abca3_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_abca3_row2_col0" class="data row2 col0" >0.528474</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_8f6ef_row3_col0" class="data row3 col0" >0.471526</td>
+      <th id="T_abca3_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_abca3_row3_col0" class="data row3 col0" >0.471526</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_8f6ef_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_8f6ef_row4_col0" class="data row4 col0" >0.650415</td>
+      <th id="T_abca3_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_abca3_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_abca3_row4_col0" class="data row4 col0" >0.650415</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_8f6ef_row5_col0" class="data row5 col0" >0.349585</td>
+      <th id="T_abca3_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_abca3_row5_col0" class="data row5 col0" >0.349585</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_8f6ef_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_8f6ef_row6_col0" class="data row6 col0" >0.638857</td>
+      <th id="T_abca3_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_abca3_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_abca3_row6_col0" class="data row6 col0" >0.638857</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_8f6ef_row7_col0" class="data row7 col0" >0.361143</td>
+      <th id="T_abca3_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_abca3_row7_col0" class="data row7 col0" >0.361143</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_8f6ef_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_8f6ef_row8_col0" class="data row8 col0" >0.550269</td>
+      <th id="T_abca3_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_abca3_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_abca3_row8_col0" class="data row8 col0" >0.550269</td>
     </tr>
     <tr>
-      <th id="T_8f6ef_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_8f6ef_row9_col0" class="data row9 col0" >0.449731</td>
+      <th id="T_abca3_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_abca3_row9_col0" class="data row9 col0" >0.449731</td>
     </tr>
   </tbody>
 </table>
@@ -2826,7 +2840,7 @@ Indeed, 100% of the above cases were malignant.</p></li>
 <li><p>Calcification type was also strongly associated with pathology (<span class="math notranslate nohighlight">\(X^2\)</span>(1,n=1872)=539.69 p&lt;0.01, <span class="math notranslate nohighlight">\(V\)</span>=0.54). Punctate fine linear branching, punctate amorphous pleomorphic, and amorphous round and regular had malignancy rates of 100% in the dataset. Pleomorphic fine linear branching, fine linear branching, amorphous pleomorphic, and pleomorphic all had malignancy rates exceeding 50%.</p></li>
 <li><p>Mass shape had a large and significant effect on pathology in the dataset (<span class="math notranslate nohighlight">\(X^2\)</span>(1,n=1694)=440.92 p&lt;0.01, <span class="math notranslate nohighlight">\(V\)</span>=0.51). Lobulated, round irregular, and irregular architectural distortion were associated with malignancy rates exceeding 80%.</p></li>
 <li><p>Calcification distribution had a moderate effect on pathology.  (<span class="math notranslate nohighlight">\(X^2\)</span>(1,n=1872)=198.56 p&lt;0.01, <span class="math notranslate nohighlight">\(V\)</span>=0.33). Linear segmental, clustered linear, and linear calcification distributions were associated with malignancy rates above 50%.</p></li>
-<li><p>Subtlety, abnormality type, breast, breast density, and image view were all weakly associated with pathology.</p></li>
+<li><p>Subtlety, abnormality type, breast, breast density, and image image_view were all weakly associated with pathology.</p></li>
 </ol>
 </section>
 <section id="bivariate-feature-association-analysis-summary">
@@ -3114,7 +3128,7 @@ weighted avg       0.79      0.79      0.79      1694
 <p>Let’s summarize the available DICOM metadata.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">DicomDataset</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">DicomExplorer</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3290,7 +3304,7 @@ weighted avg       0.79      0.79      0.79      1694
     </tr>
     <tr>
       <th>11</th>
-      <td>bits</td>
+      <td>bit_depth</td>
       <td>category</td>
       <td>10703</td>
       <td>0</td>
@@ -3302,7 +3316,7 @@ weighted avg       0.79      0.79      0.79      1694
     </tr>
     <tr>
       <th>12</th>
-      <td>smallest_image_pixel</td>
+      <td>min_pixel_value</td>
       <td>int64</td>
       <td>10703</td>
       <td>0</td>
@@ -3326,7 +3340,7 @@ weighted avg       0.79      0.79      0.79      1694
     </tr>
     <tr>
       <th>14</th>
-      <td>image_pixel_range</td>
+      <td>range_pixel_values</td>
       <td>int64</td>
       <td>10703</td>
       <td>0</td>
@@ -3523,7 +3537,7 @@ weighted avg       0.79      0.79      0.79      1694
 <p>The DICOM metadata contains 30 variables which can be categorized as:</p>
 <ul class="simple">
 <li><p>Series metadata: Series UID and description</p></li>
-<li><p>Case metadata: Patient ID, side, image view, case id, abnormality and morphology information</p></li>
+<li><p>Case metadata: Patient ID, side, image image_view, case id, abnormality and morphology information</p></li>
 <li><p>Image metadata: Image height, width, size, aspect ratio, bit depth, pixel ranges, and image quality</p></li>
 </ul>
 <p>Series and case metadata are cross-referenced from the series and case data examined above. Our focus here will be the following <em>image</em> metadata:</p>
@@ -3541,7 +3555,7 @@ weighted avg       0.79      0.79      0.79      1694
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All images are of the </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;photometric_interpretation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> representation.&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All images have </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;samples_per_pixel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> sample(s) per pixel.&quot;</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;bits&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;series_description&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;CBIS-DDSM Image Bit Depth&quot;</span><span class="p">,</span> <span class="n">plot_counts</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;bit_depth&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;series_description&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span><span class="s2">&quot;CBIS-DDSM Image Bit Depth&quot;</span><span class="p">,</span> <span class="n">plot_counts</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3553,7 +3567,7 @@ All images have 1 sample(s) per pixel.
 <img alt="../_images/d639f67a45b9209b67a02578f90341d35ebd9f78413692e92b943f7406e506c5.png" src="../_images/d639f67a45b9209b67a02578f90341d35ebd9f78413692e92b943f7406e506c5.png" />
 </div>
 </div>
-<p>The full mammogram images have a bit depth of 16. The ROI masks appear to be evenly distributed between 8 and 16 bits, and cropped images have a depth of 16 bits.</p>
+<p>The full mammogram images have a bit depth of 16. The ROI masks appear to be evenly distributed between 8 and 16 bit_depth, and cropped images have a depth of 16 bit_depth.</p>
 </section>
 <section id="dicom-image-height-width-size-and-aspect-ratio">
 <h3>DICOM Image Height, Width, Size, and Aspect Ratio<a class="headerlink" href="#dicom-image-height-width-size-and-aspect-ratio" title="Permalink to this heading">#</a></h3>
@@ -3583,9 +3597,9 @@ All images have 1 sample(s) per pixel.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as_df</span><span class="p">()</span>
 <span class="n">df_full</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;series_description&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;full mammogram images&#39;</span><span class="p">]</span>
 <span class="n">df_full_desc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;smallest_pixel_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;smallest_image_pixel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;smallest_pixel_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;min_pixel_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
 <span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;largest_pixel_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;largest_image_pixel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
-<span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;image_pixel_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;image_pixel_range&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_full_desc</span><span class="p">[</span><span class="s1">&#39;range_pixel_values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_full</span><span class="p">[</span><span class="s1">&#39;range_pixel_values&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
 <span class="n">df_full_desc</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
@@ -3643,7 +3657,7 @@ All images have 1 sample(s) per pixel.
       <td>65,535.00</td>
     </tr>
     <tr>
-      <th>image_pixel_range</th>
+      <th>range_pixel_values</th>
       <td>3,567.00</td>
       <td>64,926.59</td>
       <td>1,946.28</td>
@@ -3657,7 +3671,7 @@ All images have 1 sample(s) per pixel.
 </table>
 </div></div></div>
 </div>
-<p>Full mammogram image pixels range from zero to 65,535, which comports with a depth of 16 bits.</p>
+<p>Full mammogram image pixels range from zero to 65,535, which comports with a depth of 16 bit_depth.</p>
 </section>
 <section id="dicom-image-quality">
 <h3>DICOM Image Quality<a class="headerlink" href="#dicom-image-quality" title="Permalink to this heading">#</a></h3>
@@ -3763,7 +3777,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9983e13f7e82ece361af93d75a18c8cf8834456c3314630fde60f977fe6159ba.png" src="../_images/9983e13f7e82ece361af93d75a18c8cf8834456c3314630fde60f977fe6159ba.png" />
+<img alt="../_images/66333b96f27080e1c976450e6da43f1d33a7812230266dcbb7f843a8ffa5d39e.png" src="../_images/66333b96f27080e1c976450e6da43f1d33a7812230266dcbb7f843a8ffa5d39e.png" />
 </div>
 </div>
 </section>
@@ -3778,7 +3792,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c28e0e7b93df470e7f233623a852f30b3ddc56f895ecb92b9594b59e9ded9663.png" src="../_images/c28e0e7b93df470e7f233623a852f30b3ddc56f895ecb92b9594b59e9ded9663.png" />
+<img alt="../_images/4483efc9eada6468740c2a2288b48e4d9bb9d1756027796f0ccf7eaa8abd5b2d.png" src="../_images/4483efc9eada6468740c2a2288b48e4d9bb9d1756027796f0ccf7eaa8abd5b2d.png" />
 </div>
 </div>
 </section>
@@ -3793,7 +3807,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e2f71e44a8365d1527926a0ac550cce8d7c5eff02ffa5c4816d41c783f74ffec.png" src="../_images/e2f71e44a8365d1527926a0ac550cce8d7c5eff02ffa5c4816d41c783f74ffec.png" />
+<img alt="../_images/ac502fbb79e7ec7e4143b7688ebd274fd5b2aa2eab44a1ae38f98216a294cec1.png" src="../_images/ac502fbb79e7ec7e4143b7688ebd274fd5b2aa2eab44a1ae38f98216a294cec1.png" />
 </div>
 </div>
 </section>
@@ -3808,7 +3822,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e3d0767ead7013b87810b719ed298672203e7aa0eed77ecaed0aa359a37b2a6e.png" src="../_images/e3d0767ead7013b87810b719ed298672203e7aa0eed77ecaed0aa359a37b2a6e.png" />
+<img alt="../_images/f2786293b931d4ad93a4b80daf8ceb4b723a7bcc32426b9d6746dcb84409fa3b.png" src="../_images/f2786293b931d4ad93a4b80daf8ceb4b723a7bcc32426b9d6746dcb84409fa3b.png" />
 </div>
 </div>
 </section>
@@ -3826,7 +3840,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8070d06067b2c95d179a909fb5635306a01f095bb0501c43d45293b301f1dd89.png" src="../_images/8070d06067b2c95d179a909fb5635306a01f095bb0501c43d45293b301f1dd89.png" />
+<img alt="../_images/8908ea7a9501434ea7a7a6df5e9007857644570f5c2b68f3b79202f52a9a7ab2.png" src="../_images/8908ea7a9501434ea7a7a6df5e9007857644570f5c2b68f3b79202f52a9a7ab2.png" />
 </div>
 </div>
 </section>
@@ -3841,7 +3855,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/9fe70625145c11c1f3ad69e9d16b619825c2fc840edc6ea689a1e450d612d113.png" src="../_images/9fe70625145c11c1f3ad69e9d16b619825c2fc840edc6ea689a1e450d612d113.png" />
+<img alt="../_images/d4153f43ae1ab64a26a1eb975b55a0309cd4d38b9c6ab12528dc07e7d87bb792.png" src="../_images/d4153f43ae1ab64a26a1eb975b55a0309cd4d38b9c6ab12528dc07e7d87bb792.png" />
 </div>
 </div>
 </section>
@@ -3856,7 +3870,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6553c5460f359e789a45c4b61cec6f4763a791f864276fabd52cf4a6eed3e875.png" src="../_images/6553c5460f359e789a45c4b61cec6f4763a791f864276fabd52cf4a6eed3e875.png" />
+<img alt="../_images/efc7862026d7902989660bdf96b3c63df6aaa7afda587eee46665e266d3ef2bd.png" src="../_images/efc7862026d7902989660bdf96b3c63df6aaa7afda587eee46665e266d3ef2bd.png" />
 </div>
 </div>
 </section>
@@ -3869,9 +3883,6 @@ All images have 1 sample(s) per pixel.
 <span class="n">ds</span><span class="o">.</span><span class="n">plot_images</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/1baccdceb4e6b3c28bb7376906aa8d2dace3fe9c772be10da029a644d9f5fa98.png" src="../_images/1baccdceb4e6b3c28bb7376906aa8d2dace3fe9c772be10da029a644d9f5fa98.png" />
 </div>
 </div>
 </section>
