@@ -864,80 +864,6 @@ The section has the following python package dependencies:</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">cases</span> <span class="o">=</span> <span class="n">CaseExplorer</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">CASE_FP</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">calc</span> <span class="o">=</span> <span class="n">CaseExplorer</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">cases</span><span class="o">.</span><span class="n">get_calc_data</span><span class="p">())</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">mass</span> <span class="o">=</span> <span class="n">CaseExplorer</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">cases</span><span class="o">.</span><span class="n">get_mass_data</span><span class="p">())</span>
-
-<span class="nn">File ~/projects/bcd/bcd/analyze/explore/case.py:239,</span> in <span class="ni">CaseExplorer.__init__</span><span class="nt">(self, df, filepath, canvas)</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">238</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">239</span>     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">CASE_DTYPES</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">240</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">241</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canvas</span> <span class="o">=</span> <span class="n">canvas</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:948,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
-<span class="g g-Whitespace">    </span><span class="mi">935</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">936</span>     <span class="n">dialect</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">937</span>     <span class="n">delimiter</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">944</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">945</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">946</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">948</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:611,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">608</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">610</span> <span class="c1"># Create the parser.</span>
-<span class="ne">--&gt; </span><span class="mi">611</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">613</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">614</span>     <span class="k">return</span> <span class="n">parser</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:1448,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1445</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1447</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="ne">-&gt; </span><span class="mi">1448</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:1705,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1703</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1704</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1705</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1706</span>     <span class="n">f</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1707</span>     <span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1708</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1709</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1710</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1711</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1712</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1713</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1714</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1715</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1716</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/common.py:863,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">858</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">859</span>     <span class="c1"># Check whether the filename is to be opened in binary mode.</span>
-<span class="g g-Whitespace">    </span><span class="mi">860</span>     <span class="c1"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
-<span class="g g-Whitespace">    </span><span class="mi">861</span>     <span class="k">if</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">and</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">862</span>         <span class="c1"># Encoding</span>
-<span class="ne">--&gt; </span><span class="mi">863</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">864</span>             <span class="n">handle</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">865</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">866</span>             <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">867</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">868</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">869</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">870</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">871</span>         <span class="c1"># Binary mode</span>
-<span class="g g-Whitespace">    </span><span class="mi">872</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/home/john/projects/bcd/data/preprocessed/cases.csv&#39;
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
@@ -1094,81 +1020,81 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>642</th>
-      <td>P_00806_LEFT_calcification_MLO_1</td>
-      <td>P_00806</td>
-      <td>4</td>
+      <th>1628</th>
+      <td>Calcification-Test_P_00485_LEFT_CC_5</td>
+      <td>P_00485</td>
+      <td>3</td>
       <td>LEFT</td>
-      <td>MLO</td>
+      <td>CC</td>
+      <td>5</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>test</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Calcification-Train_P_00029_LEFT_CC_1</td>
+      <td>P_00029</td>
+      <td>3</td>
+      <td>LEFT</td>
+      <td>CC</td>
       <td>1</td>
       <td>PLEOMORPHIC</td>
       <td>CLUSTERED</td>
       <td>4</td>
-      <td>BENIGN</td>
-      <td>2</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1549</th>
-      <td>P_00038_RIGHT_calcification_CC_2</td>
-      <td>P_00038</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>CC</td>
-      <td>2</td>
-      <td>VASCULAR</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>5</td>
-      <td>test</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1293</th>
-      <td>P_01679_RIGHT_calcification_MLO_1</td>
-      <td>P_01679</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>LINEAR</td>
-      <td>4</td>
       <td>MALIGNANT</td>
-      <td>1</td>
+      <td>2</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>248</th>
-      <td>P_00360_RIGHT_calcification_MLO_1</td>
-      <td>P_00360</td>
-      <td>4</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>LINEAR</td>
-      <td>4</td>
-      <td>BENIGN</td>
+      <th>1631</th>
+      <td>Calcification-Test_P_00495_RIGHT_CC_3</td>
+      <td>P_00495</td>
       <td>3</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>3</td>
+      <td>COARSE</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>test</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>444</th>
+      <td>Calcification-Train_P_00557_RIGHT_CC_4</td>
+      <td>P_00557</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>4</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>4</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>546</th>
-      <td>P_00680_LEFT_calcification_CC_1</td>
-      <td>P_00680</td>
-      <td>4</td>
-      <td>LEFT</td>
-      <td>CC</td>
+      <th>1150</th>
+      <td>Calcification-Train_P_01440_RIGHT_MLO_1</td>
+      <td>P_01440</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
       <td>1</td>
-      <td>PUNCTATE</td>
-      <td>DIFFUSELY_SCATTERED</td>
+      <td>COARSE</td>
+      <td>SEGMENTAL</td>
       <td>2</td>
-      <td>BENIGN</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>4</td>
       <td>train</td>
       <td>False</td>
@@ -1210,84 +1136,84 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>3007</th>
-      <td>P_01638_RIGHT_mass_MLO_1</td>
-      <td>P_01638</td>
-      <td>4</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>LOBULATED</td>
-      <td>OBSCURED</td>
-      <td>0</td>
-      <td>BENIGN</td>
-      <td>3</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2108</th>
-      <td>P_00342_RIGHT_mass_MLO_3</td>
-      <td>P_00342</td>
-      <td>1</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>3</td>
-      <td>OVAL</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>3</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>5</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2321</th>
-      <td>P_00651_RIGHT_mass_MLO_1</td>
-      <td>P_00651</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>IRREGULAR</td>
-      <td>ILL_DEFINED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>4</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3519</th>
-      <td>P_01645_RIGHT_mass_CC_1</td>
-      <td>P_01645</td>
-      <td>4</td>
+      <th>2663</th>
+      <td>Mass-Train_P_01151_RIGHT_CC_1</td>
+      <td>P_01151</td>
+      <td>2</td>
       <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
-      <td>OVAL</td>
-      <td>CIRCUMSCRIBED-OBSCURED-ILL_DEFINED</td>
+      <td>LOBULATED</td>
+      <td>OBSCURED-ILL_DEFINED</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3551</th>
+      <td>Mass-Test_P_01796_LEFT_MLO_1</td>
+      <td>P_01796</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>ARCHITECTURAL_DISTORTION</td>
+      <td>SPICULATED</td>
       <td>4</td>
       <td>BENIGN</td>
-      <td>3</td>
+      <td>1</td>
       <td>test</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>2385</th>
-      <td>P_00732_LEFT_mass_MLO_1</td>
-      <td>P_00732</td>
+      <th>2293</th>
+      <td>Mass-Train_P_00596_RIGHT_MLO_1</td>
+      <td>P_00596</td>
       <td>2</td>
-      <td>LEFT</td>
+      <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>IRREGULAR</td>
+      <td>OVAL</td>
       <td>SPICULATED</td>
       <td>5</td>
       <td>MALIGNANT</td>
-      <td>5</td>
+      <td>4</td>
       <td>train</td>
       <td>True</td>
+    </tr>
+    <tr>
+      <th>1974</th>
+      <td>Mass-Train_P_00120_LEFT_CC_1</td>
+      <td>P_00120</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>ROUND</td>
+      <td>OBSCURED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3556</th>
+      <td>Mass-Test_P_01800_RIGHT_CC_1</td>
+      <td>P_01800</td>
+      <td>4</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>IRREGULAR-ARCHITECTURAL_DISTORTION</td>
+      <td>SPICULATED</td>
+      <td>3</td>
+      <td>BENIGN</td>
+      <td>3</td>
+      <td>test</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -1585,7 +1511,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2a77539cd0993d870f4e47c3eee8a21d67752aeb56bcbb6e82f02243fd02f338.png" src="../_images/2a77539cd0993d870f4e47c3eee8a21d67752aeb56bcbb6e82f02243fd02f338.png" />
+<img alt="../_images/54bb46086057d9b8785a2873205ea564d9cac86b3ce89d230b870e991fbf357d.png" src="../_images/54bb46086057d9b8785a2873205ea564d9cac86b3ce89d230b870e991fbf357d.png" />
 </div>
 </div>
 </section>
@@ -2051,13 +1977,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_65d4d" style='display:inline; margin-right:220px;'>
+<table id="T_1284e" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by BI-RADS Assessment</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_65d4d_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_1284e_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2067,70 +1993,70 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_65d4d_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_65d4d_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_65d4d_row0_col0" class="data row0 col0" >177</td>
+      <th id="T_1284e_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_1284e_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_1284e_row0_col0" class="data row0 col0" >177</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_65d4d_row1_col0" class="data row1 col0" >59</td>
+      <th id="T_1284e_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_1284e_row1_col0" class="data row1 col0" >59</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_65d4d_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_65d4d_row2_col0" class="data row2 col0" >0</td>
+      <th id="T_1284e_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_1284e_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_1284e_row2_col0" class="data row2 col0" >0</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_65d4d_row3_col0" class="data row3 col0" >3</td>
+      <th id="T_1284e_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_1284e_row3_col0" class="data row3 col0" >3</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_65d4d_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_65d4d_row4_col0" class="data row4 col0" >642</td>
+      <th id="T_1284e_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_1284e_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_1284e_row4_col0" class="data row4 col0" >642</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_65d4d_row5_col0" class="data row5 col0" >2</td>
+      <th id="T_1284e_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_1284e_row5_col0" class="data row5 col0" >2</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_65d4d_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_65d4d_row6_col0" class="data row6 col0" >375</td>
+      <th id="T_1284e_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_1284e_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_1284e_row6_col0" class="data row6 col0" >375</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_65d4d_row7_col0" class="data row7 col0" >102</td>
+      <th id="T_1284e_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_1284e_row7_col0" class="data row7 col0" >102</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_65d4d_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_65d4d_row8_col0" class="data row8 col0" >902</td>
+      <th id="T_1284e_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_1284e_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_1284e_row8_col0" class="data row8 col0" >902</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_65d4d_row9_col0" class="data row9 col0" >731</td>
+      <th id="T_1284e_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_1284e_row9_col0" class="data row9 col0" >731</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_65d4d_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_65d4d_row10_col0" class="data row10 col0" >13</td>
+      <th id="T_1284e_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_1284e_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_1284e_row10_col0" class="data row10 col0" >13</td>
     </tr>
     <tr>
-      <th id="T_65d4d_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_65d4d_row11_col0" class="data row11 col0" >560</td>
+      <th id="T_1284e_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_1284e_row11_col0" class="data row11 col0" >560</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_d01eb" style='display:inline; margin-right:120px'>
+<table id="T_5dd22" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by BI-RADS Assessment (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_d01eb_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_5dd22_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >assessment</th>
@@ -2140,58 +2066,58 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_d01eb_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
-      <th id="T_d01eb_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_d01eb_row0_col0" class="data row0 col0" >0.750000</td>
+      <th id="T_5dd22_level0_row0" class="row_heading level0 row0" rowspan="2">0</th>
+      <th id="T_5dd22_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_5dd22_row0_col0" class="data row0 col0" >0.750000</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_d01eb_row1_col0" class="data row1 col0" >0.250000</td>
+      <th id="T_5dd22_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_5dd22_row1_col0" class="data row1 col0" >0.250000</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
-      <th id="T_d01eb_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_d01eb_row2_col0" class="data row2 col0" >0.000000</td>
+      <th id="T_5dd22_level0_row2" class="row_heading level0 row2" rowspan="2">1</th>
+      <th id="T_5dd22_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_5dd22_row2_col0" class="data row2 col0" >0.000000</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_d01eb_row3_col0" class="data row3 col0" >1.000000</td>
+      <th id="T_5dd22_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_5dd22_row3_col0" class="data row3 col0" >1.000000</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
-      <th id="T_d01eb_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_d01eb_row4_col0" class="data row4 col0" >0.996894</td>
+      <th id="T_5dd22_level0_row4" class="row_heading level0 row4" rowspan="2">2</th>
+      <th id="T_5dd22_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_5dd22_row4_col0" class="data row4 col0" >0.996894</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_d01eb_row5_col0" class="data row5 col0" >0.003106</td>
+      <th id="T_5dd22_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_5dd22_row5_col0" class="data row5 col0" >0.003106</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
-      <th id="T_d01eb_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_d01eb_row6_col0" class="data row6 col0" >0.786164</td>
+      <th id="T_5dd22_level0_row6" class="row_heading level0 row6" rowspan="2">3</th>
+      <th id="T_5dd22_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_5dd22_row6_col0" class="data row6 col0" >0.786164</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_d01eb_row7_col0" class="data row7 col0" >0.213836</td>
+      <th id="T_5dd22_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_5dd22_row7_col0" class="data row7 col0" >0.213836</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
-      <th id="T_d01eb_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_d01eb_row8_col0" class="data row8 col0" >0.552358</td>
+      <th id="T_5dd22_level0_row8" class="row_heading level0 row8" rowspan="2">4</th>
+      <th id="T_5dd22_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_5dd22_row8_col0" class="data row8 col0" >0.552358</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_d01eb_row9_col0" class="data row9 col0" >0.447642</td>
+      <th id="T_5dd22_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_5dd22_row9_col0" class="data row9 col0" >0.447642</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
-      <th id="T_d01eb_level1_row10" class="row_heading level1 row10" >False</th>
-      <td id="T_d01eb_row10_col0" class="data row10 col0" >0.022688</td>
+      <th id="T_5dd22_level0_row10" class="row_heading level0 row10" rowspan="2">5</th>
+      <th id="T_5dd22_level1_row10" class="row_heading level1 row10" >False</th>
+      <td id="T_5dd22_row10_col0" class="data row10 col0" >0.022688</td>
     </tr>
     <tr>
-      <th id="T_d01eb_level1_row11" class="row_heading level1 row11" >True</th>
-      <td id="T_d01eb_row11_col0" class="data row11 col0" >0.977312</td>
+      <th id="T_5dd22_level1_row11" class="row_heading level1 row11" >True</th>
+      <td id="T_5dd22_row11_col0" class="data row11 col0" >0.977312</td>
     </tr>
   </tbody>
 </table>
@@ -2269,13 +2195,13 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_c8d4f" style='display:inline; margin-right:220px;'>
+<table id="T_2a1ba" style='display:inline; margin-right:220px;'>
   <caption>Cancer Diagnosis by Subtlety</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_c8d4f_level0_col0" class="col_heading level0 col0" >count</th>
+      <th id="T_2a1ba_level0_col0" class="col_heading level0 col0" >count</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2285,61 +2211,61 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_c8d4f_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_c8d4f_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_c8d4f_row0_col0" class="data row0 col0" >78</td>
+      <th id="T_2a1ba_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_2a1ba_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_2a1ba_row0_col0" class="data row0 col0" >78</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_c8d4f_row1_col0" class="data row1 col0" >96</td>
+      <th id="T_2a1ba_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_2a1ba_row1_col0" class="data row1 col0" >96</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_c8d4f_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_c8d4f_row2_col0" class="data row2 col0" >232</td>
+      <th id="T_2a1ba_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_2a1ba_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_2a1ba_row2_col0" class="data row2 col0" >232</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_c8d4f_row3_col0" class="data row3 col0" >207</td>
+      <th id="T_2a1ba_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_2a1ba_row3_col0" class="data row3 col0" >207</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_c8d4f_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_c8d4f_row4_col0" class="data row4 col0" >627</td>
+      <th id="T_2a1ba_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_2a1ba_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_2a1ba_row4_col0" class="data row4 col0" >627</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_c8d4f_row5_col0" class="data row5 col0" >337</td>
+      <th id="T_2a1ba_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_2a1ba_row5_col0" class="data row5 col0" >337</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_c8d4f_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_c8d4f_row6_col0" class="data row6 col0" >559</td>
+      <th id="T_2a1ba_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_2a1ba_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_2a1ba_row6_col0" class="data row6 col0" >559</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_c8d4f_row7_col0" class="data row7 col0" >316</td>
+      <th id="T_2a1ba_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_2a1ba_row7_col0" class="data row7 col0" >316</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_c8d4f_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_c8d4f_row8_col0" class="data row8 col0" >613</td>
+      <th id="T_2a1ba_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_2a1ba_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_2a1ba_row8_col0" class="data row8 col0" >613</td>
     </tr>
     <tr>
-      <th id="T_c8d4f_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_c8d4f_row9_col0" class="data row9 col0" >501</td>
+      <th id="T_2a1ba_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_2a1ba_row9_col0" class="data row9 col0" >501</td>
     </tr>
   </tbody>
 </table>
 <style type="text/css">
 </style>
-<table id="T_abca3" style='display:inline; margin-right:120px'>
+<table id="T_1b9a6" style='display:inline; margin-right:120px'>
   <caption>Cancer Diagnosis by Subtlety (Proportions)</caption>
   <thead>
     <tr>
       <th class="blank" >&nbsp;</th>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_abca3_level0_col0" class="col_heading level0 col0" >proportion</th>
+      <th id="T_1b9a6_level0_col0" class="col_heading level0 col0" >proportion</th>
     </tr>
     <tr>
       <th class="index_name level0" >subtlety</th>
@@ -2349,49 +2275,49 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
   </thead>
   <tbody>
     <tr>
-      <th id="T_abca3_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
-      <th id="T_abca3_level1_row0" class="row_heading level1 row0" >False</th>
-      <td id="T_abca3_row0_col0" class="data row0 col0" >0.448276</td>
+      <th id="T_1b9a6_level0_row0" class="row_heading level0 row0" rowspan="2">1</th>
+      <th id="T_1b9a6_level1_row0" class="row_heading level1 row0" >False</th>
+      <td id="T_1b9a6_row0_col0" class="data row0 col0" >0.448276</td>
     </tr>
     <tr>
-      <th id="T_abca3_level1_row1" class="row_heading level1 row1" >True</th>
-      <td id="T_abca3_row1_col0" class="data row1 col0" >0.551724</td>
+      <th id="T_1b9a6_level1_row1" class="row_heading level1 row1" >True</th>
+      <td id="T_1b9a6_row1_col0" class="data row1 col0" >0.551724</td>
     </tr>
     <tr>
-      <th id="T_abca3_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
-      <th id="T_abca3_level1_row2" class="row_heading level1 row2" >False</th>
-      <td id="T_abca3_row2_col0" class="data row2 col0" >0.528474</td>
+      <th id="T_1b9a6_level0_row2" class="row_heading level0 row2" rowspan="2">2</th>
+      <th id="T_1b9a6_level1_row2" class="row_heading level1 row2" >False</th>
+      <td id="T_1b9a6_row2_col0" class="data row2 col0" >0.528474</td>
     </tr>
     <tr>
-      <th id="T_abca3_level1_row3" class="row_heading level1 row3" >True</th>
-      <td id="T_abca3_row3_col0" class="data row3 col0" >0.471526</td>
+      <th id="T_1b9a6_level1_row3" class="row_heading level1 row3" >True</th>
+      <td id="T_1b9a6_row3_col0" class="data row3 col0" >0.471526</td>
     </tr>
     <tr>
-      <th id="T_abca3_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
-      <th id="T_abca3_level1_row4" class="row_heading level1 row4" >False</th>
-      <td id="T_abca3_row4_col0" class="data row4 col0" >0.650415</td>
+      <th id="T_1b9a6_level0_row4" class="row_heading level0 row4" rowspan="2">3</th>
+      <th id="T_1b9a6_level1_row4" class="row_heading level1 row4" >False</th>
+      <td id="T_1b9a6_row4_col0" class="data row4 col0" >0.650415</td>
     </tr>
     <tr>
-      <th id="T_abca3_level1_row5" class="row_heading level1 row5" >True</th>
-      <td id="T_abca3_row5_col0" class="data row5 col0" >0.349585</td>
+      <th id="T_1b9a6_level1_row5" class="row_heading level1 row5" >True</th>
+      <td id="T_1b9a6_row5_col0" class="data row5 col0" >0.349585</td>
     </tr>
     <tr>
-      <th id="T_abca3_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
-      <th id="T_abca3_level1_row6" class="row_heading level1 row6" >False</th>
-      <td id="T_abca3_row6_col0" class="data row6 col0" >0.638857</td>
+      <th id="T_1b9a6_level0_row6" class="row_heading level0 row6" rowspan="2">4</th>
+      <th id="T_1b9a6_level1_row6" class="row_heading level1 row6" >False</th>
+      <td id="T_1b9a6_row6_col0" class="data row6 col0" >0.638857</td>
     </tr>
     <tr>
-      <th id="T_abca3_level1_row7" class="row_heading level1 row7" >True</th>
-      <td id="T_abca3_row7_col0" class="data row7 col0" >0.361143</td>
+      <th id="T_1b9a6_level1_row7" class="row_heading level1 row7" >True</th>
+      <td id="T_1b9a6_row7_col0" class="data row7 col0" >0.361143</td>
     </tr>
     <tr>
-      <th id="T_abca3_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
-      <th id="T_abca3_level1_row8" class="row_heading level1 row8" >False</th>
-      <td id="T_abca3_row8_col0" class="data row8 col0" >0.550269</td>
+      <th id="T_1b9a6_level0_row8" class="row_heading level0 row8" rowspan="2">5</th>
+      <th id="T_1b9a6_level1_row8" class="row_heading level1 row8" >False</th>
+      <td id="T_1b9a6_row8_col0" class="data row8 col0" >0.550269</td>
     </tr>
     <tr>
-      <th id="T_abca3_level1_row9" class="row_heading level1 row9" >True</th>
-      <td id="T_abca3_row9_col0" class="data row9 col0" >0.449731</td>
+      <th id="T_1b9a6_level1_row9" class="row_heading level1 row9" >True</th>
+      <td id="T_1b9a6_row9_col0" class="data row9 col0" >0.449731</td>
     </tr>
   </tbody>
 </table>
@@ -2488,7 +2414,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4812570db4fa06168d8b1db413e7a290c661ecedaddc3939dac34bec720d5f5d.png" src="../_images/4812570db4fa06168d8b1db413e7a290c661ecedaddc3939dac34bec720d5f5d.png" />
+<img alt="../_images/1d48b809fc77ac713324b588cac0951a3548a54adfc08cf2a6e01ad7a58dcc30.png" src="../_images/1d48b809fc77ac713324b588cac0951a3548a54adfc08cf2a6e01ad7a58dcc30.png" />
 </div>
 </div>
 <p>Again, we see an association between calcification distribution and malignancy.  Let’s check the most malignant calcification distributions.</p>
@@ -2501,7 +2427,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/96caa65e39c3601439bb3f14970783981c9c1014a9af80bea462ab56800631e2.png" src="../_images/96caa65e39c3601439bb3f14970783981c9c1014a9af80bea462ab56800631e2.png" />
+<img alt="../_images/1cc63df3db3dfb16e7546d391d8bcad15854fee28735fee64569343e699c1109.png" src="../_images/1cc63df3db3dfb16e7546d391d8bcad15854fee28735fee64569343e699c1109.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2514,8 +2440,8 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            CramersV                            
                             Name | Cramer&#39;s V
-                           Value | 0.32568564870672534
-                          Pvalue | 2.310406740502804e-39
+                           Value | 0.32634130163729136
+                          Pvalue | 8.693260459198279e-39
                            Alpha | 0.05
                         Strength | Moderate
                                A | calc_distribution
@@ -2523,8 +2449,8 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
                                N | 1872
                              Dof | 1
                          X2alpha | 0.05
-                              X2 | 198.5651774000304
-                           X2dof | 7
+                              X2 | 199.36546372889003
+                           X2dof | 8
 </pre></div>
 </div>
 </div>
@@ -2675,7 +2601,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6db569c7214808438d611050a6aed84e9bb593e576ac85ad12169871562b4995.png" src="../_images/6db569c7214808438d611050a6aed84e9bb593e576ac85ad12169871562b4995.png" />
+<img alt="../_images/e108846992c46dfb8ccd0b24f30d4ce3c7b1529da57318bd457a46ce83664e84.png" src="../_images/e108846992c46dfb8ccd0b24f30d4ce3c7b1529da57318bd457a46ce83664e84.png" />
 </div>
 </div>
 <p>We’ll ignore abnormality type and the morphology associationss for now. Calcification and mass morphology associations will be analyzed separately. That said, several observations can be made:</p>
@@ -2708,7 +2634,7 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2d9b3eb2cca4e161f8cd0d614c79f82f610708442871fe5d8e60ce4a47f2e633.png" src="../_images/2d9b3eb2cca4e161f8cd0d614c79f82f610708442871fe5d8e60ce4a47f2e633.png" />
+<img alt="../_images/102ad1c1cfd84182b4954ca8a772b6647b310e6ce2f0fd4a81362c037f8b9331.png" src="../_images/102ad1c1cfd84182b4954ca8a772b6647b310e6ce2f0fd4a81362c037f8b9331.png" />
 </div>
 </div>
 <section id="calcification-variables-with-large-effect">
@@ -2749,7 +2675,63 @@ Breast Density Categories <span id="id1">[<a class="reference internal" href="99
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a1276f9ca031a64570b7c7b62de10d35dbfd6007e71a83a2a477aa1be19d83d4.png" src="../_images/a1276f9ca031a64570b7c7b62de10d35dbfd6007e71a83a2a477aa1be19d83d4.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">58</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cases</span><span class="o">.</span><span class="n">summarize_morphology_by_feature</span><span class="p">(</span><span class="n">morphology</span><span class="o">=</span><span class="s1">&#39;calc_type&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;assessment&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+
+<span class="nn">File ~/projects/bcd/bcd/analyze/explore/case.py:372,</span> in <span class="ni">CaseExplorer.summarize_morphology_by_feature</span><span class="nt">(self, morphology, by, figsize)</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span>     <span class="n">dfm_summary</span><span class="p">[</span><span class="n">morphology</span><span class="p">]</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">370</span>     <span class="n">summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">summary</span><span class="p">,</span> <span class="n">dfm_summary</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">371</span> <span class="n">summary</span> <span class="o">=</span> <span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">372</span>     <span class="n">summary</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="n">morphology</span><span class="p">,</span> <span class="n">by</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">373</span>     <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">374</span>     <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="n">morphology</span><span class="p">,</span> <span class="s2">&quot;proportion&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">375</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">376</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plot_morphology_by_feature</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">summary</span><span class="p">,</span> <span class="n">morphology</span><span class="o">=</span><span class="n">morphology</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="n">by</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">378</span> <span class="k">return</span> <span class="n">summary</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/core/frame.py:8872,</span> in <span class="ni">DataFrame.groupby</span><span class="nt">(self, by, axis, level, as_index, sort, group_keys, observed, dropna)</span>
+<span class="g g-Whitespace">   </span><span class="mi">8869</span> <span class="k">if</span> <span class="n">level</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">by</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">8870</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;You have to supply one of &#39;by&#39; and &#39;level&#39;&quot;</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">8872</span> <span class="k">return</span> <span class="n">DataFrameGroupBy</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">8873</span>     <span class="n">obj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8874</span>     <span class="n">keys</span><span class="o">=</span><span class="n">by</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8875</span>     <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8876</span>     <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8877</span>     <span class="n">as_index</span><span class="o">=</span><span class="n">as_index</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8878</span>     <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8879</span>     <span class="n">group_keys</span><span class="o">=</span><span class="n">group_keys</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8880</span>     <span class="n">observed</span><span class="o">=</span><span class="n">observed</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8881</span>     <span class="n">dropna</span><span class="o">=</span><span class="n">dropna</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">8882</span> <span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/core/groupby/groupby.py:1274,</span> in <span class="ni">GroupBy.__init__</span><span class="nt">(self, obj, keys, axis, level, grouper, exclusions, selection, as_index, sort, group_keys, observed, dropna)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1271</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropna</span> <span class="o">=</span> <span class="n">dropna</span>
+<span class="g g-Whitespace">   </span><span class="mi">1273</span> <span class="k">if</span> <span class="n">grouper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1274</span>     <span class="n">grouper</span><span class="p">,</span> <span class="n">exclusions</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">get_grouper</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1275</span>         <span class="n">obj</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1276</span>         <span class="n">keys</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1277</span>         <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1278</span>         <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1279</span>         <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1280</span>         <span class="n">observed</span><span class="o">=</span><span class="kc">False</span> <span class="k">if</span> <span class="n">observed</span> <span class="ow">is</span> <span class="n">lib</span><span class="o">.</span><span class="n">no_default</span> <span class="k">else</span> <span class="n">observed</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1281</span>         <span class="n">dropna</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dropna</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1282</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1284</span> <span class="k">if</span> <span class="n">observed</span> <span class="ow">is</span> <span class="n">lib</span><span class="o">.</span><span class="n">no_default</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1285</span>     <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">ping</span><span class="o">.</span><span class="n">_passed_categorical</span> <span class="k">for</span> <span class="n">ping</span> <span class="ow">in</span> <span class="n">grouper</span><span class="o">.</span><span class="n">groupings</span><span class="p">):</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/core/groupby/grouper.py:1009,</span> in <span class="ni">get_grouper</span><span class="nt">(obj, key, axis, level, sort, observed, validate, dropna)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1007</span>         <span class="n">in_axis</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">gpr</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">gpr</span><span class="p">,</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1008</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1009</span>         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">gpr</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1010</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gpr</span><span class="p">,</span> <span class="n">Grouper</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gpr</span><span class="o">.</span><span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1011</span>     <span class="c1"># Add key to exclusions</span>
+<span class="g g-Whitespace">   </span><span class="mi">1012</span>     <span class="n">exclusions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gpr</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;calc_type&#39;
+</pre></div>
+</div>
 </div>
 </div>
 <p>Above, we show the proportion of BI-RADS assessments for each calcification type. Pleomorphic, fine linear branching and amorphous calcifications appear to render the highest levels of suspicion with BI-RADS 4 and 5 assessments. Those of intermediate concern are dystrophic and punctate. The remaining are associated with generally benign classifications.</p>

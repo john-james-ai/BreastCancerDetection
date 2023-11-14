@@ -17,80 +17,63 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-cases = CaseExplorer(filepath=CASE_FP)
-calc = CaseExplorer(df=cases.get_calc_data())
-mass = CaseExplorer(df=cases.get_mass_data())
+_ = cases.summarize_morphology_by_feature(morphology='calc_type', by='assessment', figsize=(12,12))
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Cell [0;32mIn[4], line 1[0m
-[0;32m----> 1[0m cases [38;5;241m=[39m [43mCaseExplorer[49m[43m([49m[43mfilepath[49m[38;5;241;43m=[39;49m[43mCASE_FP[49m[43m)[49m
-[1;32m      2[0m calc [38;5;241m=[39m CaseExplorer(df[38;5;241m=[39mcases[38;5;241m.[39mget_calc_data())
-[1;32m      3[0m mass [38;5;241m=[39m CaseExplorer(df[38;5;241m=[39mcases[38;5;241m.[39mget_mass_data())
+[0;31mKeyError[0m                                  Traceback (most recent call last)
+Cell [0;32mIn[58], line 1[0m
+[0;32m----> 1[0m _ [38;5;241m=[39m [43mcases[49m[38;5;241;43m.[39;49m[43msummarize_morphology_by_feature[49m[43m([49m[43mmorphology[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mcalc_type[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mby[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43massessment[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mfigsize[49m[38;5;241;43m=[39;49m[43m([49m[38;5;241;43m12[39;49m[43m,[49m[38;5;241;43m12[39;49m[43m)[49m[43m)[49m
 
-File [0;32m~/projects/bcd/bcd/analyze/explore/case.py:239[0m, in [0;36mCaseExplorer.__init__[0;34m(self, df, filepath, canvas)[0m
-[1;32m    237[0m [38;5;28;01mif[39;00m df [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-[1;32m    238[0m     [38;5;28mself[39m[38;5;241m.[39m_filepath [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mabspath(filepath)
-[0;32m--> 239[0m     df [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_filepath[49m[43m,[49m[43m [49m[43mdtype[49m[38;5;241;43m=[39;49m[43mCASE_DTYPES[49m[43m)[49m
-[1;32m    240[0m [38;5;28msuper[39m()[38;5;241m.[39m[38;5;21m__init__[39m(df[38;5;241m=[39mdf)
-[1;32m    241[0m [38;5;28mself[39m[38;5;241m.[39m_canvas [38;5;241m=[39m canvas
+File [0;32m~/projects/bcd/bcd/analyze/explore/case.py:372[0m, in [0;36mCaseExplorer.summarize_morphology_by_feature[0;34m(self, morphology, by, figsize)[0m
+[1;32m    369[0m     dfm_summary[morphology] [38;5;241m=[39m col[38;5;241m.[39mreplace(prefix, [38;5;124m"[39m[38;5;124m"[39m)
+[1;32m    370[0m     summary [38;5;241m=[39m pd[38;5;241m.[39mconcat([summary, dfm_summary], axis[38;5;241m=[39m[38;5;241m0[39m)
+[1;32m    371[0m summary [38;5;241m=[39m (
+[0;32m--> 372[0m     [43msummary[49m[38;5;241;43m.[39;49m[43mgroupby[49m[43m([49m[43mby[49m[38;5;241;43m=[39;49m[43m[[49m[43mmorphology[49m[43m,[49m[43m [49m[43mby[49m[43m][49m[43m)[49m
+[1;32m    373[0m     [38;5;241m.[39msum()
+[1;32m    374[0m     [38;5;241m.[39msort_values(by[38;5;241m=[39m[morphology, [38;5;124m"[39m[38;5;124mproportion[39m[38;5;124m"[39m], ascending[38;5;241m=[39m[[38;5;28;01mTrue[39;00m, [38;5;28;01mFalse[39;00m])
+[1;32m    375[0m )
+[1;32m    376[0m [38;5;28mself[39m[38;5;241m.[39m_plot_morphology_by_feature(df[38;5;241m=[39msummary, morphology[38;5;241m=[39mmorphology, by[38;5;241m=[39mby, figsize[38;5;241m=[39mfigsize)
+[1;32m    378[0m [38;5;28;01mreturn[39;00m summary
 
-File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:948[0m, in [0;36mread_csv[0;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)[0m
-[1;32m    935[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
-[1;32m    936[0m     dialect,
-[1;32m    937[0m     delimiter,
-[0;32m   (...)[0m
-[1;32m    944[0m     dtype_backend[38;5;241m=[39mdtype_backend,
-[1;32m    945[0m )
-[1;32m    946[0m kwds[38;5;241m.[39mupdate(kwds_defaults)
-[0;32m--> 948[0m [38;5;28;01mreturn[39;00m [43m_read[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[43mkwds[49m[43m)[49m
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/core/frame.py:8872[0m, in [0;36mDataFrame.groupby[0;34m(self, by, axis, level, as_index, sort, group_keys, observed, dropna)[0m
+[1;32m   8869[0m [38;5;28;01mif[39;00m level [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m by [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m   8870[0m     [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m([38;5;124m"[39m[38;5;124mYou have to supply one of [39m[38;5;124m'[39m[38;5;124mby[39m[38;5;124m'[39m[38;5;124m and [39m[38;5;124m'[39m[38;5;124mlevel[39m[38;5;124m'[39m[38;5;124m"[39m)
+[0;32m-> 8872[0m [38;5;28;01mreturn[39;00m [43mDataFrameGroupBy[49m[43m([49m
+[1;32m   8873[0m [43m    [49m[43mobj[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[43m,[49m
+[1;32m   8874[0m [43m    [49m[43mkeys[49m[38;5;241;43m=[39;49m[43mby[49m[43m,[49m
+[1;32m   8875[0m [43m    [49m[43maxis[49m[38;5;241;43m=[39;49m[43maxis[49m[43m,[49m
+[1;32m   8876[0m [43m    [49m[43mlevel[49m[38;5;241;43m=[39;49m[43mlevel[49m[43m,[49m
+[1;32m   8877[0m [43m    [49m[43mas_index[49m[38;5;241;43m=[39;49m[43mas_index[49m[43m,[49m
+[1;32m   8878[0m [43m    [49m[43msort[49m[38;5;241;43m=[39;49m[43msort[49m[43m,[49m
+[1;32m   8879[0m [43m    [49m[43mgroup_keys[49m[38;5;241;43m=[39;49m[43mgroup_keys[49m[43m,[49m
+[1;32m   8880[0m [43m    [49m[43mobserved[49m[38;5;241;43m=[39;49m[43mobserved[49m[43m,[49m
+[1;32m   8881[0m [43m    [49m[43mdropna[49m[38;5;241;43m=[39;49m[43mdropna[49m[43m,[49m
+[1;32m   8882[0m [43m[49m[43m)[49m
 
-File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:611[0m, in [0;36m_read[0;34m(filepath_or_buffer, kwds)[0m
-[1;32m    608[0m _validate_names(kwds[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mnames[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m))
-[1;32m    610[0m [38;5;66;03m# Create the parser.[39;00m
-[0;32m--> 611[0m parser [38;5;241m=[39m [43mTextFileReader[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwds[49m[43m)[49m
-[1;32m    613[0m [38;5;28;01mif[39;00m chunksize [38;5;129;01mor[39;00m iterator:
-[1;32m    614[0m     [38;5;28;01mreturn[39;00m parser
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/core/groupby/groupby.py:1274[0m, in [0;36mGroupBy.__init__[0;34m(self, obj, keys, axis, level, grouper, exclusions, selection, as_index, sort, group_keys, observed, dropna)[0m
+[1;32m   1271[0m [38;5;28mself[39m[38;5;241m.[39mdropna [38;5;241m=[39m dropna
+[1;32m   1273[0m [38;5;28;01mif[39;00m grouper [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m-> 1274[0m     grouper, exclusions, obj [38;5;241m=[39m [43mget_grouper[49m[43m([49m
+[1;32m   1275[0m [43m        [49m[43mobj[49m[43m,[49m
+[1;32m   1276[0m [43m        [49m[43mkeys[49m[43m,[49m
+[1;32m   1277[0m [43m        [49m[43maxis[49m[38;5;241;43m=[39;49m[43maxis[49m[43m,[49m
+[1;32m   1278[0m [43m        [49m[43mlevel[49m[38;5;241;43m=[39;49m[43mlevel[49m[43m,[49m
+[1;32m   1279[0m [43m        [49m[43msort[49m[38;5;241;43m=[39;49m[43msort[49m[43m,[49m
+[1;32m   1280[0m [43m        [49m[43mobserved[49m[38;5;241;43m=[39;49m[38;5;28;43;01mFalse[39;49;00m[43m [49m[38;5;28;43;01mif[39;49;00m[43m [49m[43mobserved[49m[43m [49m[38;5;129;43;01mis[39;49;00m[43m [49m[43mlib[49m[38;5;241;43m.[39;49m[43mno_default[49m[43m [49m[38;5;28;43;01melse[39;49;00m[43m [49m[43mobserved[49m[43m,[49m
+[1;32m   1281[0m [43m        [49m[43mdropna[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mdropna[49m[43m,[49m
+[1;32m   1282[0m [43m    [49m[43m)[49m
+[1;32m   1284[0m [38;5;28;01mif[39;00m observed [38;5;129;01mis[39;00m lib[38;5;241m.[39mno_default:
+[1;32m   1285[0m     [38;5;28;01mif[39;00m [38;5;28many[39m(ping[38;5;241m.[39m_passed_categorical [38;5;28;01mfor[39;00m ping [38;5;129;01min[39;00m grouper[38;5;241m.[39mgroupings):
 
-File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:1448[0m, in [0;36mTextFileReader.__init__[0;34m(self, f, engine, **kwds)[0m
-[1;32m   1445[0m     [38;5;28mself[39m[38;5;241m.[39moptions[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m] [38;5;241m=[39m kwds[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m]
-[1;32m   1447[0m [38;5;28mself[39m[38;5;241m.[39mhandles: IOHandles [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m
-[0;32m-> 1448[0m [38;5;28mself[39m[38;5;241m.[39m_engine [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_make_engine[49m[43m([49m[43mf[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mengine[49m[43m)[49m
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/core/groupby/grouper.py:1009[0m, in [0;36mget_grouper[0;34m(obj, key, axis, level, sort, observed, validate, dropna)[0m
+[1;32m   1007[0m         in_axis, level, gpr [38;5;241m=[39m [38;5;28;01mFalse[39;00m, gpr, [38;5;28;01mNone[39;00m
+[1;32m   1008[0m     [38;5;28;01melse[39;00m:
+[0;32m-> 1009[0m         [38;5;28;01mraise[39;00m [38;5;167;01mKeyError[39;00m(gpr)
+[1;32m   1010[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(gpr, Grouper) [38;5;129;01mand[39;00m gpr[38;5;241m.[39mkey [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[1;32m   1011[0m     [38;5;66;03m# Add key to exclusions[39;00m
+[1;32m   1012[0m     exclusions[38;5;241m.[39madd(gpr[38;5;241m.[39mkey)
 
-File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/parsers/readers.py:1705[0m, in [0;36mTextFileReader._make_engine[0;34m(self, f, engine)[0m
-[1;32m   1703[0m     [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m mode:
-[1;32m   1704[0m         mode [38;5;241m+[39m[38;5;241m=[39m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m
-[0;32m-> 1705[0m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;241m=[39m [43mget_handle[49m[43m([49m
-[1;32m   1706[0m [43m    [49m[43mf[49m[43m,[49m
-[1;32m   1707[0m [43m    [49m[43mmode[49m[43m,[49m
-[1;32m   1708[0m [43m    [49m[43mencoding[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1709[0m [43m    [49m[43mcompression[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mcompression[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1710[0m [43m    [49m[43mmemory_map[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mmemory_map[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1711[0m [43m    [49m[43mis_text[49m[38;5;241;43m=[39;49m[43mis_text[49m[43m,[49m
-[1;32m   1712[0m [43m    [49m[43merrors[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding_errors[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mstrict[39;49m[38;5;124;43m"[39;49m[43m)[49m[43m,[49m
-[1;32m   1713[0m [43m    [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mstorage_options[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1714[0m [43m[49m[43m)[49m
-[1;32m   1715[0m [38;5;28;01massert[39;00m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m
-[1;32m   1716[0m f [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mhandles[38;5;241m.[39mhandle
-
-File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/pandas/io/common.py:863[0m, in [0;36mget_handle[0;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
-[1;32m    858[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(handle, [38;5;28mstr[39m):
-[1;32m    859[0m     [38;5;66;03m# Check whether the filename is to be opened in binary mode.[39;00m
-[1;32m    860[0m     [38;5;66;03m# Binary mode does not support 'encoding' and 'newline'.[39;00m
-[1;32m    861[0m     [38;5;28;01mif[39;00m ioargs[38;5;241m.[39mencoding [38;5;129;01mand[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m ioargs[38;5;241m.[39mmode:
-[1;32m    862[0m         [38;5;66;03m# Encoding[39;00m
-[0;32m--> 863[0m         handle [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m
-[1;32m    864[0m [43m            [49m[43mhandle[49m[43m,[49m
-[1;32m    865[0m [43m            [49m[43mioargs[49m[38;5;241;43m.[39;49m[43mmode[49m[43m,[49m
-[1;32m    866[0m [43m            [49m[43mencoding[49m[38;5;241;43m=[39;49m[43mioargs[49m[38;5;241;43m.[39;49m[43mencoding[49m[43m,[49m
-[1;32m    867[0m [43m            [49m[43merrors[49m[38;5;241;43m=[39;49m[43merrors[49m[43m,[49m
-[1;32m    868[0m [43m            [49m[43mnewline[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[1;32m    869[0m [43m        [49m[43m)[49m
-[1;32m    870[0m     [38;5;28;01melse[39;00m:
-[1;32m    871[0m         [38;5;66;03m# Binary mode[39;00m
-[1;32m    872[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(handle, ioargs[38;5;241m.[39mmode)
-
-[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: '/home/john/projects/bcd/data/preprocessed/cases.csv'
-FileNotFoundError: [Errno 2] No such file or directory: '/home/john/projects/bcd/data/preprocessed/cases.csv'
+[0;31mKeyError[0m: 'calc_type'
+KeyError: 'calc_type'
 
