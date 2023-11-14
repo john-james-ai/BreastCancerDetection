@@ -446,14 +446,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-problem-statement">Image Denoising Problem Statement</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-methods">Spatial Domain Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-filtering">Spatial Domain Filtering</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#meanfilter">MeanFilter</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-problem-statement">Image Denoising Problem Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-methods">Image Denoising Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#meanfilter">MeanFilter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guassianfilter">GuassianFilter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">Normalization</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cascading-property">Cascading Property</a></li>
@@ -462,7 +457,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#denoising-methods">Denoising Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">MeanFilter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">MeanFilter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussianfilter">GaussianFilter</a></li>
 </ul>
 </li>
@@ -604,7 +599,7 @@ document.write(`
 \[
 y = x + n
 \]</div>
-<p>where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation <span class="math notranslate nohighlight">\(\sigma_n\)</span>. Mammography is inherently noisy and usually contains low-contrast regions. Our challenges; therefore are to:</p>
+<p>where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation <span class="math notranslate nohighlight">\(\sigma_n\)</span>. Since there is no single unique solution x to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating <span class="math notranslate nohighlight">\(\hat{x}\)</span>.  A survey of such techniques is well beyond the scope of this effort; yet we’ll introduce a few of the most commonly used methods. As mammography is inherently noisy and usually contains low-contrast regions, our denoising challenges; therefore are to:</p>
 <ul class="simple">
 <li><p>ensure flat areas are smooth,</p></li>
 <li><p>protect edges from blurring,</p></li>
@@ -612,27 +607,19 @@ y = x + n
 <li><p>generate no new artifacts</p></li>
 </ul>
 <p>An additional challenge that we’ll introduce relates to the computational efficiency of the denoising technique. Given the volume of images to preprocess, our focus will be the methods that have linear time complexity or better.</p>
-<p>Since there is no single unique solution x to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating <span class="math notranslate nohighlight">\(\hat{x}\)</span>. We’ll introduce a few of the most commonly used, and
-computationally efficient, techniques, which are roughly classified as spatial domain methods and transform domain methods.</p>
-<section id="spatial-domain-methods">
-<h4>Spatial Domain Methods<a class="headerlink" href="#spatial-domain-methods" title="Permalink to this heading">#</a></h4>
-<p>Spatial domain methods remove noise by replacing image pixels with values derived from the pixel values in neighboring pixels. These are further classified into spatial domain filtering and variational denoising
-methods.</p>
-<section id="spatial-domain-filtering">
-<h5>Spatial Domain Filtering<a class="headerlink" href="#spatial-domain-filtering" title="Permalink to this heading">#</a></h5>
-<p>The vast range of spatial domain filters is further classified into linear and non-linear filters. The original linear filters, MeanFilter and GaussianFilter are simple, computationally efficient, and intuitive. Non-linear filters such as the MedianFilter and Non-Local Means Filter reduce noise while preserving edges and textures from the original image.</p>
+</section>
+<section id="image-denoising-methods">
+<h3>Image Denoising Methods<a class="headerlink" href="#image-denoising-methods" title="Permalink to this heading">#</a></h3>
+<p>Image denoising is roughly classified into two categories: spatial domain methods and transform domain methods. Spatial domain methods remove noise by replacing image pixels with values derived from the pixel values in neighboring pixels. These are further classified into spatial domain filtering and variational denoising. The vast range of spatial domain filters is further classified into linear and non-linear filters. The original linear filters, MeanFilter and GaussianFilter are simple, computationally efficient, and intuitive. Non-linear filters such as the MedianFilter and Non-Local Means Filter reduce noise while preserving edges and textures from the original image.</p>
 <section id="meanfilter">
-<h6>MeanFilter<a class="headerlink" href="#meanfilter" title="Permalink to this heading">#</a></h6>
+<h4>MeanFilter<a class="headerlink" href="#meanfilter" title="Permalink to this heading">#</a></h4>
 <p>The MeanFilter, commonly used to reduce Gaussian noise, simply replaces each pixel value in an image with the mean value of its neighbors, including itself. A kernel specifies the shape and size of the neighborhood to
 be sampled when computing the mean and must be a positive and odd integer. Typical kernel sizes of 3,5, or 7 are used and represent square kernels of 3,5, or 7 pixels in the horizontal and vertical directions. The larger the kernel, the greater the blurring or smoothing effect in the image.</p>
 <p>The filter works by convolving the kernel over the image, estimating the local average intensities at each output pixel position. While, simple, and easy to implement, the MeanFilter has two drawbacks, namely:</p>
 <ul class="simple">
-<li><p>A single outlier pixel value can significantly affect the mean value of all the
-pixels in its neighborhood, and</p></li>
+<li><p>A single outlier pixel value can significantly affect the mean value of all the pixels in its neighborhood, and</p></li>
 <li><p>Edges are blurred, which can be problematic if sharp edges are required in the output.</p></li>
 </ul>
-</section>
-</section>
 </section>
 <section id="guassianfilter">
 <h4>GuassianFilter<a class="headerlink" href="#guassianfilter" title="Permalink to this heading">#</a></h4>
@@ -648,11 +635,11 @@ G(x,y,\sigma) = \frac{1}{2\pi\sigma^2}e^-{\frac{x^2+y^2}{2\sigma^2}}
 </section>
 <section id="normalization">
 <h4>Normalization<a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h4>
-<p>The <span class="math notranslate nohighlight">\(\frac{1}{2\pi\sigma^2}\)</span> term in the Gaussian distribution is a normalization constant that ensures that its integral over its full domain is unity for every <span class="math notranslate nohighlight">\(\sigma\)</span> and that the grey level of the image remains the same when we blur the image with this kernel. This means that increasing the <span class="math notranslate nohighlight">\(\sigma\)</span> of the kernel substantially reduces the amplitude This property is known as average grey level invariance.</p>
+<p>The <span class="math notranslate nohighlight">\(\frac{1}{2\pi\sigma^2}\)</span> term in the Gaussian distribution is a normalization constant that ensures that its integral over its full domain is unity for every <span class="math notranslate nohighlight">\(\sigma\)</span> and that the grey level of the image remains the same when we blur the image with this kernel. This means that increasing the <span class="math notranslate nohighlight">\(\sigma\)</span> of the kernel substantially reduces the amplitude of the impulse response of the Gaussian filter. This property is known as average grey level invariance.</p>
 </section>
 <section id="cascading-property">
 <h4>Cascading Property<a class="headerlink" href="#cascading-property" title="Permalink to this heading">#</a></h4>
-<p>The shape of the Gaussian kernel is scale-invariant. When we convolve two Gaussian kernels we get a new wider Gaussian with a variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>, which is the sum of the variances of the constituting Gaussians. In this way, the Gaussian is known to be a self-similar function. As such, we can concatenate Gaussians to create larger blurring Gaussian analogous to a cascade of waterfalls spanning the same height as the total waterfall.</p>
+<p>The shape of the Gaussian kernel is scale-invariant. When we convolve two Gaussian kernels we get a new wider Gaussian with a variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>, which is the sum of the variances of the constituting Gaussians. In this way, the Gaussian is known to be a self-similar function. As such, we can concatenate Gaussians to create a larger blurring Gaussian analogous to a cascade of waterfalls spanning the same height as the total waterfall.</p>
 </section>
 <section id="separability">
 <h4>Separability<a class="headerlink" href="#separability" title="Permalink to this heading">#</a></h4>
@@ -666,7 +653,7 @@ g_{1D}(x,\sigma_2^2)
 </section>
 <section id="discrete-gaussian-kernel">
 <h4>Discrete Gaussian Kernel<a class="headerlink" href="#discrete-gaussian-kernel" title="Permalink to this heading">#</a></h4>
-<p>Now, we move to the task of estimating the discrete Gaussian kernel. One popular approach is to convolve the original image with the discrete Gaussian kernel <span class="math notranslate nohighlight">\(T(n,t)\)</span> {cite <code class="docutils literal notranslate"><span class="pre">}</span></code> lindebergScalespaceDiscreteSignals1990`</p>
+<p>Now, we move to the task of estimating the discrete Gaussian kernel. One popular approach is to convolve the original image with the discrete Gaussian kernel <span class="math notranslate nohighlight">\(T(n,t)\)</span> <span id="id1">[]</span></p>
 <div class="math notranslate nohighlight">
 \[
 L(x,t)=\displaystyle\sum_{n=-\infty}^\infty f(x-n)T(n,t)
@@ -676,21 +663,28 @@ L(x,t)=\displaystyle\sum_{n=-\infty}^\infty f(x-n)T(n,t)
 \[
 T(n,t)=e^{-t}I_n(t)
 \]</div>
-<p>and <span class="math notranslate nohighlight">\(I_n(t)\)</span> denotes the modified Bessel functions of integer order, n. This discrete counterpart to the continuous Gaussian kernel is also the solution to the discrete diffusion equation in discrete space, continuous time.</p>
-<p>In theory, the Gaussian function is for <span class="math notranslate nohighlight">\(x\in (-\infty,\infty)\)</span> and is non-zero for every point on the image., requiring an infinitely wide kernel. In practice, however, values at a distance beyond three standard deviations
+<p>and <span class="math notranslate nohighlight">\(I_n(t)\)</span> denotes the modified Bessel function, a generalization of the sine function.  This discrete counterpart to the continuous Gaussian kernel is also the solution to the discrete diffusion equation in discrete space, continuous time, a characteristic we will revisit.</p>
+<p>In theory, the Gaussian function is for <span class="math notranslate nohighlight">\(x\in (-\infty,\infty)\)</span> and is non-zero for every point on the image, requiring an infinitely wide kernel. In practice, however, values at a distance beyond three standard deviations
 from the mean are small enough to be considered effectively zero.  Hence, this filter can be truncated in the spatial domain as follows:</p>
 <div class="math notranslate nohighlight">
 \[
 L(x,t)=\displaystyle\sum_{n=-M}^M f(x-n)T(n,t)
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(M=C\sigma+1\)</span>, where <span class="math notranslate nohighlight">\(C\)</span> is often chosen to be somewhere between 3 and 6.</p>
+<p>Alternatively, the discrete Gaussian can be implemented using a frequency-domain approach, leveraging the closed-form expression for its discrete-time Fourier transform:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{T}(\theta,t)=\displaystyle\sum_{n=-\infty}^\infty T(n,t)e^{-i\theta n}=e^{t(\text{cos }\theta-1)}.
+\]</div>
+<div class="math notranslate nohighlight">
+\[\]</div>
 </section>
 </section>
 <section id="denoising-methods">
 <h3>Denoising Methods<a class="headerlink" href="#denoising-methods" title="Permalink to this heading">#</a></h3>
 <p>These experiments will focus on linear (MeanFilter, GaussianFilter) and non-linear (MedianFilter) spatial domain filters for noise reduction. The literature is replete with</p>
-<section id="id1">
-<h4>MeanFilter<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<section id="id2">
+<h4>MeanFilter<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
 <p>The MeanFilter simply replaces each pixel value in an image with the mean value of its neighbors, including itself. A kernel specifies the shape and size of the neighborhood to be sampled when computing the mean and must be a positive and odd integer. Typical kernel sizes of 3,5, or 7 are used and represent square kernels of 3,5, or 7 pixels in the horizontal and vertical directions. The larger the kernel, the greater the blurring or smoothing effect in the image.
 MeanFilter is simple, intuitive, and easy to implement; however, it has two drawbacks, namely:</p>
 <ul class="simple">
@@ -824,14 +818,9 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-{\frac{x^2+y^2}{2\sigma^2}}}
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-problem-statement">Image Denoising Problem Statement</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-methods">Spatial Domain Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-filtering">Spatial Domain Filtering</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#meanfilter">MeanFilter</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-problem-statement">Image Denoising Problem Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-methods">Image Denoising Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#meanfilter">MeanFilter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guassianfilter">GuassianFilter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">Normalization</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cascading-property">Cascading Property</a></li>
@@ -840,7 +829,7 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-{\frac{x^2+y^2}{2\sigma^2}}}
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#denoising-methods">Denoising Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">MeanFilter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">MeanFilter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussianfilter">GaussianFilter</a></li>
 </ul>
 </li>

@@ -101,7 +101,7 @@ $$
 y = x + n
 $$
 
-where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation $\sigma_n$. Mammography is inherently noisy and usually contains low-contrast regions. Our challenges; therefore are to:
+where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation $\sigma_n$. Since there is no single unique solution x to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating $\hat{x}$.  A survey of such techniques is well beyond the scope of this effort; yet we'll introduce a few of the most commonly used methods. As mammography is inherently noisy and usually contains low-contrast regions, our denoising challenges; therefore are to:
 
 - ensure flat areas are smooth,
 - protect edges from blurring,
@@ -110,17 +110,9 @@ where y is the observed noisy image, x is the unknown clean image and n represen
 
 An additional challenge that we'll introduce relates to the computational efficiency of the denoising technique. Given the volume of images to preprocess, our focus will be the methods that have linear time complexity or better.
 
-Since there is no single unique solution x to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating $\hat{x}$. We'll introduce a few of the most commonly used, and
-computationally efficient, techniques, which are roughly classified as spatial domain methods and transform domain methods.
+### Image Denoising Methods
 
-#### Spatial Domain Methods
-
-Spatial domain methods remove noise by replacing image pixels with values derived from the pixel values in neighboring pixels. These are further classified into spatial domain filtering and variational denoising
-methods.
-
-##### Spatial Domain Filtering
-
-The vast range of spatial domain filters is further classified into linear and non-linear filters. The original linear filters, MeanFilter and GaussianFilter are simple, computationally efficient, and intuitive. Non-linear filters such as the MedianFilter and Non-Local Means Filter reduce noise while preserving edges and textures from the original image.
+Image denoising is roughly classified into two categories: spatial domain methods and transform domain methods. Spatial domain methods remove noise by replacing image pixels with values derived from the pixel values in neighboring pixels. These are further classified into spatial domain filtering and variational denoising. The vast range of spatial domain filters is further classified into linear and non-linear filters. The original linear filters, MeanFilter and GaussianFilter are simple, computationally efficient, and intuitive. Non-linear filters such as the MedianFilter and Non-Local Means Filter reduce noise while preserving edges and textures from the original image.
 
 ###### MeanFilter
 
@@ -129,8 +121,7 @@ be sampled when computing the mean and must be a positive and odd integer. Typic
 
 The filter works by convolving the kernel over the image, estimating the local average intensities at each output pixel position. While, simple, and easy to implement, the MeanFilter has two drawbacks, namely:
 
-- A single outlier pixel value can significantly affect the mean value of all the
-  pixels in its neighborhood, and
+- A single outlier pixel value can significantly affect the mean value of all the pixels in its neighborhood, and
 - Edges are blurred, which can be problematic if sharp edges are required in the output.
 
 #### GuassianFilter
@@ -151,11 +142,11 @@ The GaussianFilter works by convolving this 2-D distribution as a point-spread f
 
 #### Normalization
 
-The $\frac{1}{2\pi\sigma^2}$ term in the Gaussian distribution is a normalization constant that ensures that its integral over its full domain is unity for every $\sigma$ and that the grey level of the image remains the same when we blur the image with this kernel. This means that increasing the $\sigma$ of the kernel substantially reduces the amplitude This property is known as average grey level invariance.
+The $\frac{1}{2\pi\sigma^2}$ term in the Gaussian distribution is a normalization constant that ensures that its integral over its full domain is unity for every $\sigma$ and that the grey level of the image remains the same when we blur the image with this kernel. This means that increasing the $\sigma$ of the kernel substantially reduces the amplitude of the impulse response of the Gaussian filter. This property is known as average grey level invariance.
 
 #### Cascading Property
 
-The shape of the Gaussian kernel is scale-invariant. When we convolve two Gaussian kernels we get a new wider Gaussian with a variance $\sigma^2$, which is the sum of the variances of the constituting Gaussians. In this way, the Gaussian is known to be a self-similar function. As such, we can concatenate Gaussians to create larger blurring Gaussian analogous to a cascade of waterfalls spanning the same height as the total waterfall.
+The shape of the Gaussian kernel is scale-invariant. When we convolve two Gaussian kernels we get a new wider Gaussian with a variance $\sigma^2$, which is the sum of the variances of the constituting Gaussians. In this way, the Gaussian is known to be a self-similar function. As such, we can concatenate Gaussians to create a larger blurring Gaussian analogous to a cascade of waterfalls spanning the same height as the total waterfall.
 
 #### Separability
 
@@ -170,7 +161,7 @@ Since higher dimensional Gaussian kernels can be described in terms of separate 
 
 #### Discrete Gaussian Kernel
 
-Now, we move to the task of estimating the discrete Gaussian kernel. One popular approach is to convolve the original image with the discrete Gaussian kernel $T(n,t)$ {cite `}` lindebergScalespaceDiscreteSignals1990`
+Now, we move to the task of estimating the discrete Gaussian kernel. One popular approach is to convolve the original image with the discrete Gaussian kernel $T(n,t)$ {cite}`lindebergScalespaceDiscreteSignals1990`
 
 $$
 L(x,t)=\displaystyle\sum_{n=-\infty}^\infty f(x-n)T(n,t)
@@ -182,9 +173,9 @@ $$
 T(n,t)=e^{-t}I_n(t)
 $$
 
-and $I_n(t)$ denotes the modified Bessel functions of integer order, n. This discrete counterpart to the continuous Gaussian kernel is also the solution to the discrete diffusion equation in discrete space, continuous time.
+and $I_n(t)$ denotes the modified Bessel function, a generalization of the sine function.  This discrete counterpart to the continuous Gaussian kernel is also the solution to the discrete diffusion equation in discrete space, continuous time, a characteristic we will revisit. 
 
-In theory, the Gaussian function is for $x\in (-\infty,\infty)$ and is non-zero for every point on the image., requiring an infinitely wide kernel. In practice, however, values at a distance beyond three standard deviations
+In theory, the Gaussian function is for $x\in (-\infty,\infty)$ and is non-zero for every point on the image, requiring an infinitely wide kernel. In practice, however, values at a distance beyond three standard deviations
 from the mean are small enough to be considered effectively zero.  Hence, this filter can be truncated in the spatial domain as follows:
 
 $$
@@ -193,6 +184,16 @@ $$
 
 where $M=C\sigma+1$, where $C$ is often chosen to be somewhere between 3 and 6.
 
+Alternatively, the discrete Gaussian can be implemented using a frequency-domain approach, leveraging the closed-form expression for its discrete-time Fourier transform:
+
+$$
+\hat{T}(\theta,t)=\displaystyle\sum_{n=-\infty}^\infty T(n,t)e^{-i\theta n}=e^{t(\text{cos }\theta-1)}.
+$$
+
+$$
+
+
+$$
 
 ### Denoising Methods
 
