@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 30th 2023 04:50:27 pm                                                #
-# Modified   : Monday November 6th 2023 02:59:56 am                                                #
+# Modified   : Monday November 13th 2023 01:58:47 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,14 +22,15 @@ from dataclasses import dataclass
 import cv2
 import numpy as np
 
-from bcd.preprocess.image.method.basemethod import Method, Param
+from bcd import DataClass
+from bcd.preprocess.image.method.base import Method
 
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=no-member, arguments-differ
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class FilterParams(Param):
+class FilterParams(DataClass):
     """Parameter object for Filter methods."""
 
     kernel: int = 5
@@ -93,8 +94,12 @@ class BilateralFilter(Filter):
     def execute(
         cls, image: np.ndarray, sigma_color_factor: float, sigma_space_factor: float
     ) -> np.ndarray:
-        sigma_color = cls._est_sigma_color(image=image, sigma_color_factor=sigma_color_factor)
-        sigma_space = cls._est_sigma_space(image=image, sigma_space_factor=sigma_space_factor)
+        sigma_color = cls._est_sigma_color(
+            image=image, sigma_color_factor=sigma_color_factor
+        )
+        sigma_space = cls._est_sigma_space(
+            image=image, sigma_space_factor=sigma_space_factor
+        )
 
         return cv2.bilateralFilter(
             image,

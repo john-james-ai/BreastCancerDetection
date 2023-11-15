@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 11:03:59 pm                                             #
-# Modified   : Monday November 6th 2023 05:50:33 am                                                #
+# Modified   : Monday November 13th 2023 10:28:58 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,6 +19,7 @@
 """Defines the Interface for Task classes."""
 from __future__ import annotations
 
+import json
 import logging
 from abc import ABC, abstractmethod
 from datetime import datetime
@@ -34,8 +35,9 @@ from bcd.container import BCDContainer
 from bcd.dal.io.image_reader import ImageReader
 from bcd.dal.repo.uow import UoW
 from bcd.image import ImageFactory
+from bcd.preprocess.image.experiment.evaluate import Evaluation
 from bcd.preprocess.image.flow.task import Task
-from bcd.preprocess.image.method.basemethod import Method
+from bcd.preprocess.image.method.base import Method
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -87,7 +89,7 @@ class Experiment(ABC):
         condition = lambda df: df["stage_id"] == self._instage_id
         reader = self._reader(batchsize=self._batchsize, condition=condition)
 
-        # Construct a task for each parameter set
+        # Construct a task list, one task for each parameter set
         tasks = self._get_tasks()
 
         # Obtain a batch from the reader
@@ -100,7 +102,9 @@ class Experiment(ABC):
                     # Capture the time
                     start = datetime.now()
                     # Execute the method, passing the task.params
-                    pixel_data = self._method.execute(image_in.pixel_data, **task.params)
+                    pixel_data = self._method.execute(
+                        image_in.pixel_data, **task.params
+                    )
                     # Compute build time
                     stop = datetime.now()
                     build_time = (stop - start).total_seconds()
@@ -115,10 +119,17 @@ class Experiment(ABC):
                     )
                     # Persist the image to the repository
                     self._uow.image_repo.add(image=image_out)
-        # Persist the tasks
-        task_repo = self._uow.task_repo
-        for task in tasks:
-            task_repo.add(task=task)
+                    # Evaluate image quality of image_out vis-a-vis image_in
+                    ev = Evaluation.evaluate(
+                        orig=image_in,
+                        test=image_out,
+                        method=self._method.__name__,
+                        params=json.dumps(self._params),
+                    )
+                    # Persist the evaluation.
+                    self._uow.eval_repo.add(evaluation=ev)
+                    # Persist the task
+                    self._uow.task_repo.add(task=task)
 
     def _get_tasks(self) -> list:
         """Returns a list of parameter sets based upon the param(grid)"""

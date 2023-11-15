@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday October 31st 2023 04:45:05 am                                               #
-# Modified   : Monday November 6th 2023 04:33:21 am                                                #
+# Modified   : Monday November 13th 2023 01:59:11 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,7 @@
 import logging
 
 from bcd.preprocess.image.experiment.base import Experiment
-from bcd.preprocess.image.method.basemethod import Method
+from bcd.preprocess.image.method.base import Method
 
 
 # pylint: disable=useless-parent-delegation

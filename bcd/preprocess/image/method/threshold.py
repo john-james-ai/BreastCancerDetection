@@ -11,11 +11,15 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 30th 2023 04:50:27 pm                                                #
-# Modified   : Monday November 6th 2023 12:45:20 am                                                #
+# Modified   : Monday November 13th 2023 01:58:10 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+"""Threshold Methods Module"""
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=no-name-in-module, arguments-differ
+# ------------------------------------------------------------------------------------------------ #
 from abc import abstractmethod
 from dataclasses import dataclass
 
@@ -30,16 +34,15 @@ from skimage.filters import (
     threshold_triangle,
 )
 
-from bcd import Stage
-from bcd.core.base import Param
-from bcd.preprocess.image.method.basemethod import Method
+from bcd import DataClass, Stage
+from bcd.preprocess.image.method.base import Method
 
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=no-member, unused-argument
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class ThresholdParams(Param):
+class ThresholdParams(DataClass):
     """Parameter object for Threshold methods."""
 
     nbins: int = 256
@@ -72,7 +75,9 @@ class ThresholdISOData(Threshold):
 
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
-        return threshold_isodata(image.pixel_data, nbins=params.nbins, return_all=params.return_all)
+        return threshold_isodata(
+            image.pixel_data, nbins=params.nbins, return_all=params.return_all
+        )
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -105,7 +110,9 @@ class ThresholdNiblack(Threshold):
 
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
-        return threshold_niblack(image.pixel_data, window_size=params.window_size, k=params.k)
+        return threshold_niblack(
+            image.pixel_data, window_size=params.window_size, k=params.k
+        )
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -127,7 +134,9 @@ class ThresholdSauvola(Threshold):
 
     @classmethod
     def execute(cls, image: np.ndarray, params: ThresholdParams) -> np.ndarray:
-        return threshold_sauvola(image.pixel_data, window_size=params.window_size, k=params.k)
+        return threshold_sauvola(
+            image.pixel_data, window_size=params.window_size, k=params.k
+        )
 
 
 # ------------------------------------------------------------------------------------------------ #

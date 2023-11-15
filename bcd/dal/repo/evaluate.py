@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday November 6th 2023 06:10:26 am                                                #
+# Modified   : Monday November 13th 2023 02:11:01 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -25,7 +25,7 @@ from sqlalchemy.dialects.mssql import DATETIME, FLOAT, INTEGER, TINYINT, VARCHAR
 from bcd.config import Config
 from bcd.dal.database.base import Database
 from bcd.dal.repo.base import Repo
-from bcd.preprocess.image.method.evaluate import Evaluation
+from bcd.preprocess.image.experiment.evaluate import Evaluation
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=arguments-renamed, arguments-differ, broad-exception-caught
@@ -90,7 +90,10 @@ class EvalRepo(Repo):
         for ev in evals:
             eval_df = pd.concat([eval_df, ev.as_df()], axis=0)
         self.database.insert(
-            data=eval_df, tablename=self.__tablename, dtype=EVAL_DTYPES, if_exists="append"
+            data=eval_df,
+            tablename=self.__tablename,
+            dtype=EVAL_DTYPES,
+            if_exists="append",
         )
 
     def get(self, condition: Callable = None) -> pd.DataFrame:
@@ -189,7 +192,9 @@ class EvalRepo(Repo):
             method (str): Name of a method
 
         """
-        query = f"DELETE FROM {self.__tablename} WHERE mode = :mode AND method = :method;"
+        query = (
+            f"DELETE FROM {self.__tablename} WHERE mode = :mode AND method = :method;"
+        )
         params = {"mode": self.mode, "method": method}
         self.database.delete(query=query, params=params)
 

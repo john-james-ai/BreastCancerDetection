@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday October 26th 2023 01:10:10 am                                              #
-# Modified   : Monday November 6th 2023 06:17:01 am                                                #
+# Modified   : Monday November 13th 2023 03:13:11 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -93,3 +93,12 @@ class UoW:
     def close(self) -> None:
         """Closes the sqlite connection."""
         self._database.close()
+
+    def reset(self) -> None:
+        """Resets all repositories for the current mode."""
+        msg = "This will restore all repositories in the current mode to their initial state. Proceed? [Y/N]"
+        proceed = input(msg)
+        if "y" in proceed.lower():
+            self.image_repo.delete_by_mode()
+            self.eval_repo.delete_by_mode()
+            self.task_repo.delete_by_mode()
