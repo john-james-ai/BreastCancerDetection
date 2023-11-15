@@ -25,8 +25,14 @@ The available literature on machine learning and deep learning as applied to com
 
 ```
 ```{figure} ../figures/ImagePrep.png
+---
 :name: image_prep
+---
 Image Preprocessing Approach
+```
+
+```
+
 ```
 
 ```
