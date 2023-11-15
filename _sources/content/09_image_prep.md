@@ -43,7 +43,11 @@ Mathematically, additive noise is given by:
 f(x,y)=s(x,y)+n(x,y)
 ```
 
-where $f(x,y)$ is the noisy image $s(x,y)$ is the noise-free image, and $n(x,y)$ is the signal-independent, often zero-mean, random noise with variance $\sigma^2_n$, added to the original noise-free image.
+where:
+
+- $f(x,y)$ is the noisy image
+- $s(x,y)$ is the noise-free image, and
+- $n(x,y)$ is the signal-independent, often zero-mean, random noise with variance $\sigma^2_n$, added to the original noise-free image.
 
 The multiplicative noise model is given by:
 
@@ -87,9 +91,15 @@ where:
 In {numref}`gaussian_noise` we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.
 
 ```
-{figure} ../figures/gaussian_noise.jpg
+```{figure} ../figures/gaussian_noise.jpg
+---
 :name: gaussian_noise
+---
 Guassian Noise
+```
+
+```
+
 ```
 
 ### Filters

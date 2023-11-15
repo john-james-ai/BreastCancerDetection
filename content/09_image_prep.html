@@ -476,7 +476,12 @@ document.write(`
 <p>Mathematically, additive noise is given by:</p>
 <div class="math notranslate nohighlight" id="equation-additive-noise-model">
 <span class="eqno">(1)<a class="headerlink" href="#equation-additive-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)+n(x,y)\]</div>
-<p>where <span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image <span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image, and <span class="math notranslate nohighlight">\(n(x,y)\)</span> is the signal-independent, often zero-mean, random noise with variance <span class="math notranslate nohighlight">\(\sigma^2_n\)</span>, added to the original noise-free image.</p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> is the signal-independent, often zero-mean, random noise with variance <span class="math notranslate nohighlight">\(\sigma^2_n\)</span>, added to the original noise-free image.</p></li>
+</ul>
 <p>The multiplicative noise model is given by:</p>
 <div class="math notranslate nohighlight" id="equation-multiplicative-noise-model">
 <span class="eqno">(2)<a class="headerlink" href="#equation-multiplicative-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)\times n(x,y)\]</div>
@@ -516,9 +521,14 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\sigma_x\)</span> and <span class="math notranslate nohighlight">\(\sigma_y\)</span> are the standard deviations in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively.</p></li>
 </ul>
 <p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">gaussian_noise</span></code> we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">figure</span><span class="p">}</span> <span class="o">../</span><span class="n">figures</span><span class="o">/</span><span class="n">gaussian_noise</span><span class="o">.</span><span class="n">jpg</span>
-<span class="p">:</span><span class="n">name</span><span class="p">:</span> <span class="n">gaussian_noise</span>
-<span class="n">Guassian</span> <span class="n">Noise</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{figure} ../figures/gaussian_noise.jpg
+---
+:name: gaussian_noise
+---
+Guassian Noise
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </section>
