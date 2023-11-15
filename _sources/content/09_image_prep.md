@@ -34,23 +34,27 @@ We begin with an evaluation of various denoising algorithms. Once a denoising me
 
 ## Denoise
 
-Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances of the image capture and/or transmission processes. Broadly speaking, two types of noise models are extant in mammography: additive and multiplicative noise. Mathematically, additive noise is given by:
+Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, two types of noise models are extant in mammography: additive and multiplicative noise.
+
+Mathematically, additive noise is given by:
 
 ```{math}
 :label: additive_noise_model
-N(x,y)=I(x,y)+J(x,y)
+f(x,y)=s(x,y)+n(x,y)
 ```
+
+where $f(x,y)$ is the noisy image $s(x,y)$ is the noise-free image, and $n(x,y)$ is the signal-independent random noise added to the original noise-free image. Additive noise is often zero-mean and described by its variance $\sigma^2$. Whereas an image contains mostly low-frequency information, additive noise, in many cases, is evenly distributed over the frequency domain (i.e. white noise). Hence, the noise is dominant for high frequencies and its effects can be reduced by the application of a low-pass, linear filter of some sort.
 
 The multiplicative noise model is given by:
 
 ```{math}
 :label: multiplicative_noise_model
-N(x,y)=I(x,y)\times J(x,y)
+f(x,y)=s(x,y)\times n(x,y)
 ```
 
-where $N(x,y)$ is the noisy image $I(x,y)$ is the noise-free image, and $J(x,y)$ is the noise added to the original noise-free image.
+where $f(x,y)$ is the noisy image $s(x,y)$ is the noise-free image, and $n(x,y)$ refers to signal-dependent, random noise that is multiplied into $s(x,y)$ during image capture, transmission, storage or other processing.
 
-In mammography, four classifications or types of noise are extant.
+The types of additive and multiplicative noise inherent to mammography are specified in {ref}`noise_types`
 
 ```{table} Types of Noise in Mammogram Images
 :name: noise_types
@@ -63,12 +67,6 @@ In mammography, four classifications or types of noise are extant.
 | Speckle          | Multiplicative |
 ```
 
-1. **Salt and Pepper Noise**: Also known as spike noise, impulse noise or flat-tail distribution noise.
-2. **Speckle Noise**:
-
-noise in mammography  These fluctuations are largely characterized as salt and pepper noise, speckle noise, Gaussian noise, and Poisson noise. Salt and pepper noise, also known as spike noise, impulsive noise or flat-tail distributed noise will appear as black and white dots on the image. Speckle noise is mainly found in radar images whereby the return signal from an object causes random fluctuations within the image. Gaussian noise is additive in nature and tends to follow a Gaussian distribution. Finally, Poisson noise or shot noise appears when there is statistical variation in image brightness, primarily due to characteristics of the capturing device, such as the number of photons used in low-dose X-ray mammography.
-
-And so, denoising aims to decrease
 
 ### Filters
 Image filtering techniques have broad applicability in biomedical image analysis and processing. In fact, most biomedical image analysis involves the application of image filtering at stages prerequisite to analysis. Fields such as signal processing, statistics, information theory, and computer vision have produced a considerable and growing body of research devoted to the design, development, and testing of filtering methods to improve the signal-to-noise ratio (SNR) in audio, video, and imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used filtering techniques used in denoising biomedical images, with a focus on applications in mammography.
