@@ -59,9 +59,10 @@ where $x$ and $y$ are the coordinates of the pixel to which the noise is applied
 
 Broadly speaking, additive and multiplicative noise types inherent to mammography
 
-The types of additive and multiplicative noise inherent to mammography are specified in {numref}`noise_types`
+The types of additive and multiplicative noise inherent to mammography are specified below.
 
 ```{table}
+
 :name: noise_types
 
 | Noise Type       | Noise Model    |
@@ -74,7 +75,7 @@ The types of additive and multiplicative noise inherent to mammography are speci
 
 ### Gaussian Noise
 
-Gaussian noise, also called white noise, arises during data acquisition, and can be caused by poor illumination, temperature variation and/or noise in the electronic signal.  It is additive in nature, independent at each pixel,  and independent of signal intensity. Mathematically, Gaussian noise may be expressed by the bivariate isotropic (circular) Gaussian function {numref}`gaussian_pdf`.
+Gaussian noise, also called white noise, arises during data acquisition, and can be caused by poor illumination, temperature variation and/or noise in the electronic signal.  It is additive in nature, independent at each pixel,  and independent of signal intensity. Mathematically, Gaussian noise may be expressed by the following bivariate isotropic (circular) Gaussian function.
 
 ```{math}
 :label: gaussian_pdf
@@ -87,7 +88,7 @@ where:
 - $\mu_x$ and $\mu_y$ are the means in the $x$ and $y$ dimensions, respectively;
 - $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ dimensions, respectively.
 
-In {numref}`gaussian_noise` we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.
+Here, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.
 
 ```
 ```{figure} ../figures/gaussian_noise.jpg

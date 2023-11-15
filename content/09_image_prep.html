@@ -494,31 +494,10 @@ document.write(`
 <span class="eqno">(2)<a class="headerlink" href="#equation-multiplicative-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)\times n(x,y)\]</div>
 <p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied, <span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image <span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image, and <span class="math notranslate nohighlight">\(n(x,y)\)</span> refers to signal-dependent, random noise that is multiplied into <span class="math notranslate nohighlight">\(s(x,y)\)</span> during image capture, transmission, storage or other processing.</p>
 <p>Broadly speaking, additive and multiplicative noise types inherent to mammography</p>
-<p>The types of additive and multiplicative noise inherent to mammography are specified in <code class="xref std std-numref docutils literal notranslate"><span class="pre">noise_types</span></code></p>
-<table class="table" id="noise-types">
-<thead>
-<tr class="row-odd"><th class="head"><p>Noise Type</p></th>
-<th class="head"><p>Noise Model</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Gaussian</p></td>
-<td><p>Additive</p></td>
-</tr>
-<tr class="row-odd"><td><p>Poisson</p></td>
-<td><p>Additive</p></td>
-</tr>
-<tr class="row-even"><td><p>Salt and Pepper</p></td>
-<td><p>Additive</p></td>
-</tr>
-<tr class="row-odd"><td><p>Speckle</p></td>
-<td><p>Multiplicative</p></td>
-</tr>
-</tbody>
-</table>
+<p>The types of additive and multiplicative noise inherent to mammography are specified below.</p>
 <section id="gaussian-noise">
 <h3>Gaussian Noise<a class="headerlink" href="#gaussian-noise" title="Permalink to this heading">#</a></h3>
-<p>Gaussian noise, also called white noise, arises during data acquisition, and can be caused by poor illumination, temperature variation and/or noise in the electronic signal.  It is additive in nature, independent at each pixel,  and independent of signal intensity. Mathematically, Gaussian noise may be expressed by the bivariate isotropic (circular) Gaussian function <code class="xref std std-numref docutils literal notranslate"><span class="pre">gaussian_pdf</span></code>.</p>
+<p>Gaussian noise, also called white noise, arises during data acquisition, and can be caused by poor illumination, temperature variation and/or noise in the electronic signal.  It is additive in nature, independent at each pixel,  and independent of signal intensity. Mathematically, Gaussian noise may be expressed by the following bivariate isotropic (circular) Gaussian function.</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-pdf">
 <span class="eqno">(3)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[g(x,y)=\frac{1}{2\pi\sigma_x\sigma_y}e^-\frac{[(x-\mu_x)^2+(y-\mu_y)^2]}{2\sigma_x\sigma_y}\]</div>
 <p>where:</p>
@@ -527,7 +506,7 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\mu_x\)</span> and <span class="math notranslate nohighlight">\(\mu_y\)</span> are the means in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively;</p></li>
 <li><p><span class="math notranslate nohighlight">\(\sigma_x\)</span> and <span class="math notranslate nohighlight">\(\sigma_y\)</span> are the standard deviations in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively.</p></li>
 </ul>
-<p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">gaussian_noise</span></code> we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.</p>
+<p>Here, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{figure} ../figures/gaussian_noise.jpg
 ---
 :name: gaussian_noise
