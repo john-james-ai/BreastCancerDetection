@@ -62,7 +62,6 @@ Broadly speaking, additive and multiplicative noise types inherent to mammograph
 The types of additive and multiplicative noise inherent to mammography are specified below.
 
 ```{table}
-
 :name: noise_types
 
 | Noise Type       | Noise Model    |
