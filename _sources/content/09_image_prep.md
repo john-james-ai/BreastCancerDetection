@@ -98,6 +98,10 @@ In {numref}`gaussian_noise` we have f(x,y), the noisy image, s(x,y), the noise-f
 Guassian Noise
 ```
 
+```
+
+```
+
 
 
 ## Filters
