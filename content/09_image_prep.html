@@ -480,6 +480,23 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="image-preprocessing">
 <h1>Image Preprocessing<a class="headerlink" href="#image-preprocessing" title="Permalink to this heading">#</a></h1>
+<p>Discriminating between benign and malignant lesions in mammograms involves the detection and analysis of different structural changes in the breast tissue. Deep learning algorithms, specifically, convolutional neural networks, can extract features from regions of interest (ROIs) based on pixel intensity; however, this task is complicated by:</p>
+<ul class="simple">
+<li><p>the structural complexity of ROIs,</p></li>
+<li><p>presence of artifacts (large texts and annotations) in the mammograms which resemble the pixel intensity of the ROI,</p></li>
+<li><p>noise in the form of random variations in pixel intensity that may have been produced during image capture,</p></li>
+<li><p>poor brightness and contrast levels in some mammograms,</p></li>
+<li><p>dense breast tissue with pixel intensities similar to that of cancerous tissue, and</p></li>
+<li><p>the limited number of mammogram images available for model training.</p></li>
+</ul>
+<p>The performance of a breast cancer detection and classification model rests upon the degree to which these issues are addressed during the image preprocessing stage.  This section describes the image preprocessing approach for the CBIS-DDSM dataset in terms of the methods employed and their comparative performance evaluation experiments. The following figure depicts the image preprocessing procedure.</p>
+<figure class="align-default" id="image-prep">
+<img alt="../_images/ImagePrep.png" src="../_images/ImagePrep.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Image preprocessing procedure of this study.</span><a class="headerlink" href="#image-prep" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Mammograms contain complex regions of interest (ROI)</p>
 <p>Optimizing mammography for deep learning will comprise a series of image preprocessing steps. Denoising, artifact removal, pectoral muscle removal, and image enhancement are among the most essential steps in medical image preprocessing, and determining the optimal methods for these steps will be to a degree, an exercise in experimentation.  In this section, we conduct experiments that will determine the image preprocessing methods that will ultimately be applied to each image before model training.</p>
 <p>This section will be organized as follows:</p>
 <ol class="arabic simple">
@@ -544,6 +561,24 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[11/14/2023 10:50:45 PM] [INFO] [MySQLDatabase] [connect] : Database is not started. Starting database...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[sudo] password for john: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>\nStarting MySQL...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> * Starting MySQL database server mysqld
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>su: warning: cannot change directory to /nonexistent: No such file or directory
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ...done.
+</pre></div>
+</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">StdinNotImplementedError</span><span class="g g-Whitespace">                  </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
@@ -599,14 +634,15 @@ document.write(`
 \[
 y = x + n
 \]</div>
-<p>where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation <span class="math notranslate nohighlight">\(\sigma_n\)</span>. Since there is no single unique solution x to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating <span class="math notranslate nohighlight">\(\hat{x}\)</span>.  A survey of such techniques is well beyond the scope of this effort; yet we’ll introduce a few of the most commonly used methods. As mammography is inherently noisy and usually contains low-contrast regions, our denoising challenges; therefore are to:</p>
+<p>where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation <span class="math notranslate nohighlight">\(\sigma_n\)</span>. Mammography is inherently noisy, with regions of low-contrast which challenge breast cancer detection and classification tasks. Our denoising challenges; therefore are to:</p>
 <ul class="simple">
 <li><p>ensure flat areas are smooth,</p></li>
 <li><p>protect edges from blurring,</p></li>
 <li><p>preserve textures in the mammography, and</p></li>
 <li><p>generate no new artifacts</p></li>
 </ul>
-<p>An additional challenge that we’ll introduce relates to the computational efficiency of the denoising technique. Given the volume of images to preprocess, our focus will be the methods that have linear time complexity or better.</p>
+<p>An additional challenge that we’ll introduce now relates to the computational efficiency of the denoising technique. Given the volume of images to preprocess, our initial focus will be on denoising methods that have linear time complexity or better.</p>
+<p>Since there is no single unique solution <span class="math notranslate nohighlight">\(x\)</span> to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating <span class="math notranslate nohighlight">\(\hat{x}\)</span>. However, a systematic survey of such techniques is well beyond the scope of this effort. ; still, we’ll introduce a few of the most commonly used methods.</p>
 </section>
 <section id="image-denoising-methods">
 <h3>Image Denoising Methods<a class="headerlink" href="#image-denoising-methods" title="Permalink to this heading">#</a></h3>

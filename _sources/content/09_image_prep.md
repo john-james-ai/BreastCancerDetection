@@ -12,13 +12,32 @@ kernelspec:
 ---
 # Image Preprocessing
 
+Discriminating between benign and malignant lesions in mammograms involves the detection and analysis of different structural changes in the breast tissue. Deep learning algorithms, specifically, convolutional neural networks, can extract features from regions of interest (ROIs) based on pixel intensity; however, this task is complicated by:
+
+- the structural complexity of ROIs,
+- presence of artifacts (large texts and annotations) in the mammograms which resemble the pixel intensity of the ROI,
+- noise in the form of random variations in pixel intensity that may have been produced during image capture,
+- poor brightness and contrast levels in some mammograms,
+- dense breast tissue with pixel intensities similar to that of cancerous tissue, and
+- the limited number of mammogram images available for model training.
+
+The performance of a breast cancer detection and classification model rests upon the degree to which these issues are addressed during the image preprocessing stage.  This section describes the image preprocessing approach for the CBIS-DDSM dataset in terms of the methods employed and their comparative performance evaluation experiments. The following figure depicts the image preprocessing procedure.
+
+```{figure} ../figures/ImagePrep.png
+---
+name: image_prep
+---
+Image preprocessing procedure of this study.
+```
+
+Mammograms contain complex regions of interest (ROI)
+
 Optimizing mammography for deep learning will comprise a series of image preprocessing steps. Denoising, artifact removal, pectoral muscle removal, and image enhancement are among the most essential steps in medical image preprocessing, and determining the optimal methods for these steps will be to a degree, an exercise in experimentation.  In this section, we conduct experiments that will determine the image preprocessing methods that will ultimately be applied to each image before model training.
 
 This section will be organized as follows:
 
 1. **Setup**: Initialize the repositories that will contain the images, preprocessing tasks, and image quality evaluations and extract a multivariate stratified sample of the images for experimentation.
 2. **Denoise**: Conduct our first experiments with denoising methods
-
 
 Import modules
 
@@ -92,7 +111,6 @@ if not SETUP_COMPLETE:
 
 Noise in mammography is random variations in image brightness, color, or contrast that may have been produced during the image capture process. These fluctuations are largely categorized as salt and pepper noise, speckle noise, Gaussian noise, and Poisson noise. Salt and pepper noise, also known as spike noise, impulsive noise or flat-tail distributed noise will appear as black and white dots on the image.  Speckle noise is mainly found in radar images whereby the return signal from an object causes random fluctuations within the image. Gaussian noise is additive in nature and follows a Gaussian distribution. Finally, Poisson noise or shot noise appears when there is statistical variation in image brightness, primarily due to characteristics of the capturing device, such as the number of photons used in low-dose X-ray mammography.
 
-
 ### Image Denoising Problem Statement
 
 Mathematically, the problem of image denoising can be modeled as:
@@ -101,14 +119,16 @@ $$
 y = x + n
 $$
 
-where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation $\sigma_n$. Since there is no single unique solution x to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating $\hat{x}$.  A survey of such techniques is well beyond the scope of this effort; yet we'll introduce a few of the most commonly used methods. As mammography is inherently noisy and usually contains low-contrast regions, our denoising challenges; therefore are to:
+where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation $\sigma_n$. Mammography is inherently noisy, with regions of low-contrast which challenge breast cancer detection and classification tasks. Our denoising challenges; therefore are to:
 
 - ensure flat areas are smooth,
 - protect edges from blurring,
 - preserve textures in the mammography, and
 - generate no new artifacts
 
-An additional challenge that we'll introduce relates to the computational efficiency of the denoising technique. Given the volume of images to preprocess, our focus will be the methods that have linear time complexity or better.
+An additional challenge that we'll introduce now relates to the computational efficiency of the denoising technique. Given the volume of images to preprocess, our initial focus will be on denoising methods that have linear time complexity or better.
+
+Since there is no single unique solution $x$ to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating $\hat{x}$. However, a systematic survey of such techniques is well beyond the scope of this effort. ; still, we'll introduce a few of the most commonly used methods.
 
 ### Image Denoising Methods
 
@@ -173,7 +193,7 @@ $$
 T(n,t)=e^{-t}I_n(t)
 $$
 
-and $I_n(t)$ denotes the modified Bessel function, a generalization of the sine function.  This discrete counterpart to the continuous Gaussian kernel is also the solution to the discrete diffusion equation in discrete space, continuous time, a characteristic we will revisit. 
+and $I_n(t)$ denotes the modified Bessel function, a generalization of the sine function.  This discrete counterpart to the continuous Gaussian kernel is also the solution to the discrete diffusion equation in discrete space, continuous time, a characteristic we will revisit.
 
 In theory, the Gaussian function is for $x\in (-\infty,\infty)$ and is non-zero for every point on the image, requiring an infinitely wide kernel. In practice, however, values at a distance beyond three standard deviations
 from the mean are small enough to be considered effectively zero.  Hence, this filter can be truncated in the spatial domain as follows:
@@ -197,7 +217,7 @@ $$
 
 ### Denoising Methods
 
-These experiments will focus on linear (MeanFilter, GaussianFilter) and non-linear (MedianFilter) spatial domain filters for noise reduction. The literature is replete with 
+These experiments will focus on linear (MeanFilter, GaussianFilter) and non-linear (MedianFilter) spatial domain filters for noise reduction. The literature is replete with
 
 #### MeanFilter
 
