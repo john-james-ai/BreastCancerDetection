@@ -23,10 +23,8 @@ Discriminating between benign and malignant lesions in mammograms involves the d
 
 The available literature on machine learning and deep learning as applied to computer-aided detection (CADe) and diagnosis (CADx) systems has established the positive correlation between model performance and the degree to which the above-listed challenges have been addressed via principled and systematic image analysis and preprocessing. In this section, we describe our approach to image preprocessing for the CBIS-DDSM dataset, graphically depicted as follows.
 
-```{figure}
----
-name: image_prep
----
+```{figure} ../figures/ImagePrep.png
+:name: image_prep
 Image preprocessing procedure of this study.
 ```
 
