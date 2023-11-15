@@ -442,7 +442,9 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-noise">Gaussian Noise</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a></li>
 </ul>
 </li>
@@ -528,12 +530,10 @@ document.write(`
 Guassian Noise
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
+</section>
 </section>
 <section id="filters">
-<h3>Filters<a class="headerlink" href="#filters" title="Permalink to this heading">#</a></h3>
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this heading">#</a></h2>
 <p>Image filtering techniques have broad applicability in biomedical image analysis and processing. In fact, most biomedical image analysis involves the application of image filtering at stages prerequisite to analysis. Fields such as signal processing, statistics, information theory, and computer vision have produced a considerable and growing body of research devoted to the design, development, and testing of filtering methods to improve the signal-to-noise ratio (SNR) in audio, video, and imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used filtering techniques used in denoising biomedical images, with a focus on applications in mammography.</p>
 <p>For this effort, we focus on five classes of filters commonly applied to the task of biomedical image noise reduction:</p>
 <ol class="arabic simple">
@@ -543,7 +543,6 @@ Guassian Noise
 <li><p><strong>Adaptive Median Filter</strong>: Median filter with variable window size <span id="id3">[<a class="reference internal" href="99_references.html#id324" title="H. Hwang and R.A. Haddad. Adaptive median filters: new algorithms and results. IEEE Transactions on Image Processing, 4(4):499–502, April 1995. URL: http://ieeexplore.ieee.org/document/370679/ (visited on 2023-11-15), doi:10.1109/83.370679.">14</a>]</span>, and</p></li>
 <li><p><strong>Non-Local Means Filter</strong>: Filtering based upon non-local averaging of all pixels in the image <span id="id4">[<a class="reference internal" href="99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">15</a>]</span>.</p></li>
 </ol>
-</section>
 <section id="mean-filter">
 <h3>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h3>
 <p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, low-pass filter of the linear class. Low-pass filters, also known as smoothing or blurring filters, are The most basic of filtering operations is called “low-pass”
@@ -622,7 +621,9 @@ A kernel specifies the shape and size of the neighborhood to be sampled when com
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-noise">Gaussian Noise</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a></li>
 </ul>
 </li>

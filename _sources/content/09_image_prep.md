@@ -98,11 +98,9 @@ In {numref}`gaussian_noise` we have f(x,y), the noisy image, s(x,y), the noise-f
 Guassian Noise
 ```
 
-```
 
-```
 
-### Filters
+## Filters
 
 Image filtering techniques have broad applicability in biomedical image analysis and processing. In fact, most biomedical image analysis involves the application of image filtering at stages prerequisite to analysis. Fields such as signal processing, statistics, information theory, and computer vision have produced a considerable and growing body of research devoted to the design, development, and testing of filtering methods to improve the signal-to-noise ratio (SNR) in audio, video, and imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used filtering techniques used in denoising biomedical images, with a focus on applications in mammography.
 
