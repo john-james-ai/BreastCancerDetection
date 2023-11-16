@@ -12,16 +12,18 @@ kernelspec:
 ---
 # Image Preprocessing
 
-Discriminating between benign and malignant lesions in mammograms involves the detection and analysis of structural abnormalities in the breast tissue. Deep learning algorithms, specifically, convolutional neural networks, can extract features from regions of interest (ROIs) based on pixel intensity; however, this task is complicated by:
+The precise and accurate diagnosis of breast cancer, rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion of AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp and free of noise and artifacts.
 
-- the structural complexity of ROIs,
-- the presence of artifacts (large texts and annotations) in the mammograms which resemble the pixel intensity of the ROI,
-- noise in the form of random variations in pixel intensity that may have been produced during image capture,
-- poor brightness and contrast levels in some mammograms,
-- dense breast tissue with pixel intensities similar to that of cancerous tissue, and
-- the limited number of mammogram images available for model training.
+However, an exploratory analysis of the CBIS-DDSM dataset exposed several image quality concerns requiring attention. that must be addressed prior to the modeling stage.
 
-The available literature on machine learning and deep learning as applied to computer-aided detection (CADe) and diagnosis (CADx) systems has established the positive correlation between model performance and the degree to which the above-listed challenges have been addressed via principled and systematic image analysis and preprocessing. In this section, we describe our approach to image preprocessing for the CBIS-DDSM dataset, graphically depicted as follows.
+- Various artifacts (large texts and annotations) are present within the mammography which resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.
+- Noise of various types in the images are obstacles to effective feature extraction, image detection, recognition and classification.
+- Poor brightness and contrast levels in some mammograms may increase the influence of noise, and/or conceal important and subtle features.
+- Malignant tumors are characterized by irregular shape and ambiguous or blurred edges that complicate the ROI segmentation task.
+- Dense breast tissue with pixel intensities similar to that of cancerous tissue, may conceal subtle structures of diagnostic importance.
+- There is a limited number of mammogram images available for model training.
+
+In this regard, the purpose of this section is to describe the image preprocessing approach, and methods summarized in {numref}`image_prep`.
 
 ```{figure} ../figures/ImagePrep.png
 ---
@@ -35,9 +37,7 @@ We begin with an evaluation of various denoising algorithms. Once a denoising me
 
 ## Denoise
 
-Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, two types of noise models are extant in mammography: additive and multiplicative noise.
-
-Mathematically, additive noise is given by:
+Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, image noise can be described as being additive or multiplicative. Additive noise is the undesired signal that arises during data acquisition that gets added to an image. Signal processing theory defines an additive noise *model*; whereby, an observed *noisy* image, $f$ is really the sum of an unobserved, noise-free signal $s$ and random, zero-mean, signal independent, independent and identically distributed noise, $n$. Concretely, the additive noise model is given by:
 
 ```{math}
 :label: additive_noise_model
@@ -47,11 +47,11 @@ f(x,y)=s(x,y)+n(x,y)
 where:
 
 - $x$ and $y$ are the coordinates of the pixel to which the noise is applied;
-- $f(x,y)$ is the noisy image;
-- $s(x,y)$ is the noise-free image, and;
-- $n(x,y)$ is the signal-independent, often zero-mean, random noise with variance $\sigma^2_n$, added to the original noise-free image.
+- $f(x,y)$ is the observed noisy image;
+- $s(x,y)$ is an unobserved, but deterministic, noise-free image signal which has been corrupted a noise process;
+- $n(x,y)$ is the signal-independent, often zero-mean, random noise with variance $\sigma^2_n$, that is added to the original noise-free image.
 
-The multiplicative noise model is given by:
+Multiplicative noise, by contrast, refers to the unwanted random signal that gets *multiplied* into an image during signal capture, transmission, or other processing. Mathematically, we can define the multiplicative noise model as follows:
 
 ```{math}
 :label: multiplicative_noise_model
@@ -65,22 +65,22 @@ where:
 - $s(x,y)$ is the noise-free image;
 - $n(x,y)$ refers to signal-dependent, random noise that is multiplied into $s(x,y)$ during image capture, transmission, storage or other processing.
 
-The types of additive and multiplicative noise inherent to mammography are specified below.
+Whereas additive noise is signal independent, multiplicative noise is based on the value of the image pixel; whereby, the amount of noise multiplied into an image pixel is proportional to its value.
 
-```{table}
-:name: noise_types
-
-| Noise Type       | Noise Model    |
-|------------------|----------------|
-| Gaussian         | Additive       |
-| Poisson          | Additive       |
-| Salt and Pepper  | Additive       |
-| Speckle          | Multiplicative |
-```
+With that, let's review the types of additive and multiplicative noise most inherent in mammography.
 
 ### Gaussian Noise
 
-Gaussian noise, also called white noise, arises during data acquisition, and can be caused by poor illumination, temperature variation and/or noise in the electronic signal.  It is additive in nature, independent at each pixel,  and independent of signal intensity. Mathematically, Gaussian noise may be expressed by the following bivariate isotropic (circular) Gaussian function.
+Gaussian noise is ubiquitous in signal processing, telecommunications systems, computer networks, statistical modeling and digital biomedical imaging. Principally, sources of Gaussian noise in digital imagery arise during data acquisition, and may derive from:
+
+- poor illumination during image capture;
+- image sensors subject to overheating or other disturbances caused by external factors;
+- interference in the transmission channel; or
+- random variations in the electrical signal.
+
+Gaussian noise is additive in nature, signal independent, and assumed to be zero-mean. Yet, the defining characteristic of Gaussian noise is that it has a probability density function equal to that of the normal distribution, first introduced by French mathematician Abraham de Moivre in the second edition (1718) of his Doctrine of Chances {cite}`grattan-guinnessLandmarkWritingsWestern2005`, and later attributed to Karl Friedrich Gauss, a German mathematician, for his work connecting the method of least squares to the normal distribution {cite}`stiglerGaussInventionLeast1981`.
+
+Mathematically, Gaussian noise may be expressed by the following bivariate isotropic (circular) Gaussian function.
 
 ```{math}
 :label: gaussian_pdf
@@ -93,6 +93,7 @@ where:
 - $\mu_x$ and $\mu_y$ are the means in the $x$ and $y$ dimensions, respectively;
 - $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ dimensions, respectively.
 
+As a result of the X-ray system or the digitization hardware, mammograms can be affected by additive white Gaussian noise (AWGN), which has the additional property that the noise
 As an illustration, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.
 
 ```{figure} ../figures/gaussian_noise.jpg
