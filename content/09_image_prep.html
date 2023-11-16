@@ -471,6 +471,12 @@ document.write(`
 <li><p>the limited number of mammogram images available for model training.</p></li>
 </ul>
 <p>The available literature on machine learning and deep learning as applied to computer-aided detection (CADe) and diagnosis (CADx) systems has established the positive correlation between model performance and the degree to which the above-listed challenges have been addressed via principled and systematic image analysis and preprocessing. In this section, we describe our approach to image preprocessing for the CBIS-DDSM dataset, graphically depicted as follows.</p>
+<figure class="align-default" id="image-prep">
+<img alt="../_images/ImagePrep.png" src="../_images/ImagePrep.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Image Preprocessing Approach</span><a class="headerlink" href="#image-prep" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>We begin with an evaluation of various denoising algorithms. Once a denoising method and its parameters are selected, we move to the artifact removal stage. Here, we analyze and evaluate several binary masking and thresholding techniques. Once a suitable binary mask is selected, morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast using image enhancement methods such as Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Gaussian noise is also added to improve the generalized performance of the neural network and mitigate model overfitting. Our penultimate task addresses the limited number of model training samples by augmenting the data with images that have been rotated and/or flipped along the vertical and horizontal dimensions. Finally, ROI segmentation will apply a pixel intensity threshold to create a binary mask of the lesion ROIs. Denoising, artifact removal, and related image enhancement methods are evaluated in terms of the quality of the images produced. To this end, image quality assessment metrics such as mean squared error (MSE), peak signal-to-noise ratio (PSNR), and structural similarity (SSIM) are applied to processed images during algorithm evaluation and selection stages.</p>
 <section id="denoise">
 <h2>Denoise<a class="headerlink" href="#denoise" title="Permalink to this heading">#</a></h2>
@@ -529,6 +535,12 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\sigma_x\)</span> and <span class="math notranslate nohighlight">\(\sigma_y\)</span> are the standard deviations in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively.</p></li>
 </ul>
 <p>As an illustration, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.</p>
+<figure class="align-default" id="id1">
+<img alt="../_images/gaussian_noise.jpg" src="../_images/gaussian_noise.jpg" />
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Guassian Noise</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 <section id="filters">
@@ -537,10 +549,10 @@ document.write(`
 <p>For this effort, we focus on five classes of filters commonly applied to the task of biomedical image noise reduction:</p>
 <ol class="arabic simple">
 <li><p><strong>Mean Filter</strong>: Also known as the average filter,</p></li>
-<li><p><strong>Median Filter</strong>: A non-linear noise reduction technique <span id="id1">[<a class="reference internal" href="99_references.html#id322" title="Gonzalo R. Arce. Nonlinear signal processing: a statistical approach. Wiley-Interscience, Hoboken, N.J, 2005. ISBN 978-0-471-67624-9.">12</a>]</span>,</p></li>
-<li><p><strong>Gaussian Filter</strong>: A linear noise reduction method based upon a Gaussian kernel <span id="id2">[<a class="reference internal" href="99_references.html#id323" title="J. Klapper and C. Harris. On the response and approximation of Gaussian filters. IRE Transactions on Audio, AU-7(3):80–87, May 1959. URL: http://ieeexplore.ieee.org/document/1166198/ (visited on 2023-11-15), doi:10.1109/TAU.1959.1166198.">13</a>]</span>,</p></li>
-<li><p><strong>Adaptive Median Filter</strong>: Median filter with variable window size <span id="id3">[<a class="reference internal" href="99_references.html#id324" title="H. Hwang and R.A. Haddad. Adaptive median filters: new algorithms and results. IEEE Transactions on Image Processing, 4(4):499–502, April 1995. URL: http://ieeexplore.ieee.org/document/370679/ (visited on 2023-11-15), doi:10.1109/83.370679.">14</a>]</span>, and</p></li>
-<li><p><strong>Non-Local Means Filter</strong>: Filtering based upon non-local averaging of all pixels in the image <span id="id4">[<a class="reference internal" href="99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">15</a>]</span>.</p></li>
+<li><p><strong>Median Filter</strong>: A non-linear noise reduction technique <span id="id2">[<a class="reference internal" href="99_references.html#id322" title="Gonzalo R. Arce. Nonlinear signal processing: a statistical approach. Wiley-Interscience, Hoboken, N.J, 2005. ISBN 978-0-471-67624-9.">12</a>]</span>,</p></li>
+<li><p><strong>Gaussian Filter</strong>: A linear noise reduction method based upon a Gaussian kernel <span id="id3">[<a class="reference internal" href="99_references.html#id323" title="J. Klapper and C. Harris. On the response and approximation of Gaussian filters. IRE Transactions on Audio, AU-7(3):80–87, May 1959. URL: http://ieeexplore.ieee.org/document/1166198/ (visited on 2023-11-15), doi:10.1109/TAU.1959.1166198.">13</a>]</span>,</p></li>
+<li><p><strong>Adaptive Median Filter</strong>: Median filter with variable window size <span id="id4">[<a class="reference internal" href="99_references.html#id324" title="H. Hwang and R.A. Haddad. Adaptive median filters: new algorithms and results. IEEE Transactions on Image Processing, 4(4):499–502, April 1995. URL: http://ieeexplore.ieee.org/document/370679/ (visited on 2023-11-15), doi:10.1109/83.370679.">14</a>]</span>, and</p></li>
+<li><p><strong>Non-Local Means Filter</strong>: Filtering based upon non-local averaging of all pixels in the image <span id="id5">[<a class="reference internal" href="99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">15</a>]</span>.</p></li>
 </ol>
 <section id="mean-filter">
 <h3>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h3>
