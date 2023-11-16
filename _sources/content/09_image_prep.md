@@ -23,14 +23,13 @@ Discriminating between benign and malignant lesions in mammograms involves the d
 
 The available literature on machine learning and deep learning as applied to computer-aided detection (CADe) and diagnosis (CADx) systems has established the positive correlation between model performance and the degree to which the above-listed challenges have been addressed via principled and systematic image analysis and preprocessing. In this section, we describe our approach to image preprocessing for the CBIS-DDSM dataset, graphically depicted as follows.
 
-```{figure} ../figures/ImagePrep.png
+```{figure}
 ---
 name: image_prep
 ---
 Image Preprocessing Approach
 
 ```
-
 
 We begin with an evaluation of various denoising algorithms. Once a denoising method and its parameters are selected, we move to the artifact removal stage. Here, we analyze and evaluate several binary masking and thresholding techniques. Once a suitable binary mask is selected, morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast using image enhancement methods such as Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Gaussian noise is also added to improve the generalized performance of the neural network and mitigate model overfitting. Our penultimate task addresses the limited number of model training samples by augmenting the data with images that have been rotated and/or flipped along the vertical and horizontal dimensions. Finally, ROI segmentation will apply a pixel intensity threshold to create a binary mask of the lesion ROIs. Denoising, artifact removal, and related image enhancement methods are evaluated in terms of the quality of the images produced. To this end, image quality assessment metrics such as mean squared error (MSE), peak signal-to-noise ratio (PSNR), and structural similarity (SSIM) are applied to processed images during algorithm evaluation and selection stages.
 
@@ -47,8 +46,9 @@ f(x,y)=s(x,y)+n(x,y)
 
 where:
 
-- $f(x,y)$ is the noisy image
-- $s(x,y)$ is the noise-free image, and
+- $x$ and $y$ are the coordinates of the pixel to which the noise is applied;
+- $f(x,y)$ is the noisy image;
+- $s(x,y)$ is the noise-free image, and;
 - $n(x,y)$ is the signal-independent, often zero-mean, random noise with variance $\sigma^2_n$, added to the original noise-free image.
 
 The multiplicative noise model is given by:
@@ -58,9 +58,12 @@ The multiplicative noise model is given by:
 f(x,y)=s(x,y)\times n(x,y)
 ```
 
-where $x$ and $y$ are the coordinates of the pixel to which the noise is applied, $f(x,y)$ is the noisy image $s(x,y)$ is the noise-free image, and $n(x,y)$ refers to signal-dependent, random noise that is multiplied into $s(x,y)$ during image capture, transmission, storage or other processing.
+where:
 
-Broadly speaking, additive and multiplicative noise types inherent to mammography
+- $x$ and $y$ are the coordinates of the pixel to which the noise is applied;
+- $f(x,y)$ is the noisy image;
+- $s(x,y)$ is the noise-free image;
+- $n(x,y)$ refers to signal-dependent, random noise that is multiplied into $s(x,y)$ during image capture, transmission, storage or other processing.
 
 The types of additive and multiplicative noise inherent to mammography are specified below.
 
@@ -90,20 +93,14 @@ where:
 - $\mu_x$ and $\mu_y$ are the means in the $x$ and $y$ dimensions, respectively;
 - $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ dimensions, respectively.
 
-Here, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.
+As an illustration, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.
 
-```
 ```{figure} ../figures/gaussian_noise.jpg
 ---
 :name: gaussian_noise
 ---
 Guassian Noise
 ```
-
-```
-
-```
-
 
 
 ## Filters

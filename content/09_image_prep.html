@@ -471,12 +471,6 @@ document.write(`
 <li><p>the limited number of mammogram images available for model training.</p></li>
 </ul>
 <p>The available literature on machine learning and deep learning as applied to computer-aided detection (CADe) and diagnosis (CADx) systems has established the positive correlation between model performance and the degree to which the above-listed challenges have been addressed via principled and systematic image analysis and preprocessing. In this section, we describe our approach to image preprocessing for the CBIS-DDSM dataset, graphically depicted as follows.</p>
-<figure class="align-default" id="image-prep">
-<img alt="../_images/ImagePrep.png" src="../_images/ImagePrep.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Image Preprocessing Approach</span><a class="headerlink" href="#image-prep" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 <p>We begin with an evaluation of various denoising algorithms. Once a denoising method and its parameters are selected, we move to the artifact removal stage. Here, we analyze and evaluate several binary masking and thresholding techniques. Once a suitable binary mask is selected, morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast using image enhancement methods such as Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Gaussian noise is also added to improve the generalized performance of the neural network and mitigate model overfitting. Our penultimate task addresses the limited number of model training samples by augmenting the data with images that have been rotated and/or flipped along the vertical and horizontal dimensions. Finally, ROI segmentation will apply a pixel intensity threshold to create a binary mask of the lesion ROIs. Denoising, artifact removal, and related image enhancement methods are evaluated in terms of the quality of the images produced. To this end, image quality assessment metrics such as mean squared error (MSE), peak signal-to-noise ratio (PSNR), and structural similarity (SSIM) are applied to processed images during algorithm evaluation and selection stages.</p>
 <section id="denoise">
 <h2>Denoise<a class="headerlink" href="#denoise" title="Permalink to this heading">#</a></h2>
@@ -486,15 +480,21 @@ document.write(`
 <span class="eqno">(1)<a class="headerlink" href="#equation-additive-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)+n(x,y)\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image</p></li>
-<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied;</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image, and;</p></li>
 <li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> is the signal-independent, often zero-mean, random noise with variance <span class="math notranslate nohighlight">\(\sigma^2_n\)</span>, added to the original noise-free image.</p></li>
 </ul>
 <p>The multiplicative noise model is given by:</p>
 <div class="math notranslate nohighlight" id="equation-multiplicative-noise-model">
 <span class="eqno">(2)<a class="headerlink" href="#equation-multiplicative-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)\times n(x,y)\]</div>
-<p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied, <span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image <span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image, and <span class="math notranslate nohighlight">\(n(x,y)\)</span> refers to signal-dependent, random noise that is multiplied into <span class="math notranslate nohighlight">\(s(x,y)\)</span> during image capture, transmission, storage or other processing.</p>
-<p>Broadly speaking, additive and multiplicative noise types inherent to mammography</p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied;</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> refers to signal-dependent, random noise that is multiplied into <span class="math notranslate nohighlight">\(s(x,y)\)</span> during image capture, transmission, storage or other processing.</p></li>
+</ul>
 <p>The types of additive and multiplicative noise inherent to mammography are specified below.</p>
 <table class="table" id="noise-types">
 <thead>
@@ -528,17 +528,7 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\mu_x\)</span> and <span class="math notranslate nohighlight">\(\mu_y\)</span> are the means in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively;</p></li>
 <li><p><span class="math notranslate nohighlight">\(\sigma_x\)</span> and <span class="math notranslate nohighlight">\(\sigma_y\)</span> are the standard deviations in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively.</p></li>
 </ul>
-<p>Here, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{figure} ../figures/gaussian_noise.jpg
----
-:name: gaussian_noise
----
-Guassian Noise
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
+<p>As an illustration, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.</p>
 </section>
 </section>
 <section id="filters">
