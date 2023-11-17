@@ -12,18 +12,22 @@ kernelspec:
 ---
 # Image Preprocessing
 
-The precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.
+Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.
 
-However, an exploratory analysis of the CBIS-DDSM dataset exposed several image quality concerns requiring attention.
+Exploratory analysis of the CBIS-DDSM mammograph illuminated several issues that compromise the discriminatory power of image detection and recognition models.
 
 - Various artifacts (large texts and annotations) are present within the mammography that resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.
 - Noise of various types in the images is an obstacle to effective feature extraction, image detection, recognition, and classification.
 - Poor brightness and contrast levels in some mammograms may increase the influence of noise, and/or conceal important and subtle features.
 - Malignant tumors are characterized by irregular shapes and ambiguous or blurred edges that complicate the ROI segmentation task.
 - Dense breast tissue with pixel intensities similar to that of cancerous tissue, may conceal subtle structures of diagnostic importance.
-- There is a limited number of mammogram images available for model training.
+- Deep learning models for computer vision require large datasets. The CBIS-DDSM has just over 3500 full mammogram images, a relatively small dataset for model training.
 
-In this regard, the purpose of this section is to describe the image preprocessing approach, and methods summarized in {numref}`image_prep`.
+Addressing these challenges is fundamentally important to model detection, recognition, and classification performance.
+
+## Image Preprocessing Overview
+
+In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, optimize image contrast and brightness, and produce a collection of images for maximally effective computer vision model training and classification.
 
 ```{figure} ../figures/ImagePrep.png
 ---
@@ -33,13 +37,24 @@ Image Preprocessing Approach
 
 ```
 
-We begin with an evaluation of various denoising algorithms. Once a denoising method and its parameters are selected, we move to the artifact removal stage. Here, we analyze and evaluate several binary masking and thresholding techniques. Once a suitable binary mask is selected, morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast using image enhancement methods such as Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Gaussian noise is also added to improve the generalized performance of the neural network and mitigate model overfitting. Our penultimate task addresses the limited number of model training samples by augmenting the data with images that have been rotated and/or flipped along the vertical and horizontal dimensions. Finally, ROI segmentation will apply a pixel intensity threshold to create a binary mask of the lesion ROIs. Denoising, artifact removal, and related image enhancement methods are evaluated in terms of the quality of the images produced. To this end, image quality assessment metrics such as mean squared error (MSE), peak signal-to-noise ratio (PSNR), and structural similarity (SSIM) are applied to processed images during algorithm evaluation and selection stages.
+We begin with an evaluation of various denoising methods commonly applied to mammography. Once a denoising method and its (hyper) parameters are selected, we move to the artifact removal stage. Image binarizing and thresholding methods are evaluated, then morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast with Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Additive White Gaussian Noise (AWGN) is also added to improve the generalized performance of the neural network and mitigate model overfitting. Our penultimate task addresses the limited number of model training samples by augmenting the data with images that have been rotated and/or flipped along the vertical and horizontal dimensions. Finally, ROI segmentation will apply a pixel intensity threshold to create a binary mask of the lesion ROIs that will be applied to. Denoising, artifact removal, and related image enhancement methods are evaluated in terms of the quality of the images produced. To this end, image quality assessment metrics such as mean squared error (MSE), peak signal-to-noise ratio (PSNR), and structural similarity (SSIM) are applied to processed images during algorithm evaluation and selection stages.
 
 ## Denoise
+Mammography is inherently noisy. Image acquisition and transmission processes can inject unwanted and random signals (noise) into the image, which must be eliminated or minimized before downstream image processing. Here, noise is considered as the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$. This subsection aims to evaluate and select a function $f(x) \approx s$ that takes a noisy image as input and returns an approximation of the true clean image as output.
 
-Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, image noise can be described as additive or multiplicative.
+Evaluation and selection of a denoising method $f(x)$ is critically informed by:
 
-Additive noise is the undesired signal that arises during data acquisition that gets added to an image. Signal processing theory defines an additive noise *model* given by:
+- Knowledge of the types of noises that may be encountered and the methods by which they manifests into the image.
+- Knowledge of the noise distribution within an image. We can use it to assess how likely a potential solution $s$ would give rise to $x$.
+- Knowledge of what clean images generally look like. For instance, we might expect an image to be smooth, and formally constrain the possible denoised outcome to have a certain "smoothness" probability distribution, called the *prior*
+
+Any denoising method
+
+- - Knowledge of the
+
+### Noise Models
+Broadly speaking, biomedical image noise can be described as additive or multiplicative. Additive noise is the undesired signal that arises during data acquisition that gets added to an image.
+Signal processing theory defines an additive noise *model* given by:
 
 ```{math}
 :label: additive_noise_model
@@ -53,7 +68,7 @@ where:
 - $s(x,y)$ is an unobserved, but deterministic, noise-free image signal which has been corrupted by a noise process;
 - $n(x,y)$ is the signal-independent, identically distributed, often zero-mean, random noise with variance $\sigma^2_n$, that is added to the original noise-free image.
 
-In short, the additive model describes an image as the pixel wise sum of an unobserved image and random noise signal of the same shape.
+In short, the additive model describes an image as the pixel wise sum of an unobserved, noise-free image and random noise signal of the same shape.
 
 Multiplicative noise, by contrast, refers to the unwanted random signal that gets *multiplied* into an image during signal capture, transmission, or other processing. Similarly, we can define the multiplicative noise model as follows:
 
@@ -70,6 +85,8 @@ where:
 - $n(x,y)$ refers to signal-dependent, random noise that is multiplied into $s(x,y)$ during image capture, transmission, storage or other processing.
 
 Whereas additive noise is signal independent, multiplicative noise is based on the value of the image pixel; whereby, the amount of noise multiplied into an image pixel is proportional to its value.
+
+Reducing additive noise often involves some linear transformation into a space that separates the signal from the noise.
 
 The various additive and multiplicative noise types extant in mammography include Gaussian Noise, Quantization Noise, Poisson Noise, and Impulse Noise.
 
