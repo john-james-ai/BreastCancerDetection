@@ -12,14 +12,14 @@ kernelspec:
 ---
 # Image Preprocessing
 
-The precise and accurate diagnosis of breast cancer, rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion of AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp and free of noise and artifacts.
+The precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.
 
-However, an exploratory analysis of the CBIS-DDSM dataset exposed several image quality concerns requiring attention. that must be addressed prior to the modeling stage.
+However, an exploratory analysis of the CBIS-DDSM dataset exposed several image quality concerns requiring attention.
 
-- Various artifacts (large texts and annotations) are present within the mammography which resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.
-- Noise of various types in the images are obstacles to effective feature extraction, image detection, recognition and classification.
+- Various artifacts (large texts and annotations) are present within the mammography that resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.
+- Noise of various types in the images is an obstacle to effective feature extraction, image detection, recognition, and classification.
 - Poor brightness and contrast levels in some mammograms may increase the influence of noise, and/or conceal important and subtle features.
-- Malignant tumors are characterized by irregular shape and ambiguous or blurred edges that complicate the ROI segmentation task.
+- Malignant tumors are characterized by irregular shapes and ambiguous or blurred edges that complicate the ROI segmentation task.
 - Dense breast tissue with pixel intensities similar to that of cancerous tissue, may conceal subtle structures of diagnostic importance.
 - There is a limited number of mammogram images available for model training.
 
@@ -37,7 +37,9 @@ We begin with an evaluation of various denoising algorithms. Once a denoising me
 
 ## Denoise
 
-Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, image noise can be described as being additive or multiplicative. Additive noise is the undesired signal that arises during data acquisition that gets added to an image. Signal processing theory defines an additive noise *model*; whereby, an observed *noisy* image, $f$ is really the sum of an unobserved, noise-free signal $s$ and random, zero-mean, signal independent, independent and identically distributed noise, $n$. Concretely, the additive noise model is given by:
+Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, image noise can be described as additive or multiplicative.
+
+Additive noise is the undesired signal that arises during data acquisition that gets added to an image. Signal processing theory defines an additive noise *model* given by:
 
 ```{math}
 :label: additive_noise_model
@@ -48,10 +50,12 @@ where:
 
 - $x$ and $y$ are the coordinates of the pixel to which the noise is applied;
 - $f(x,y)$ is the observed noisy image;
-- $s(x,y)$ is an unobserved, but deterministic, noise-free image signal which has been corrupted a noise process;
-- $n(x,y)$ is the signal-independent, often zero-mean, random noise with variance $\sigma^2_n$, that is added to the original noise-free image.
+- $s(x,y)$ is an unobserved, but deterministic, noise-free image signal which has been corrupted by a noise process;
+- $n(x,y)$ is the signal-independent, identically distributed, often zero-mean, random noise with variance $\sigma^2_n$, that is added to the original noise-free image.
 
-Multiplicative noise, by contrast, refers to the unwanted random signal that gets *multiplied* into an image during signal capture, transmission, or other processing. Mathematically, we can define the multiplicative noise model as follows:
+In short, the additive model describes an image as the pixel wise sum of an unobserved image and random noise signal of the same shape.
+
+Multiplicative noise, by contrast, refers to the unwanted random signal that gets *multiplied* into an image during signal capture, transmission, or other processing. Similarly, we can define the multiplicative noise model as follows:
 
 ```{math}
 :label: multiplicative_noise_model
@@ -67,7 +71,7 @@ where:
 
 Whereas additive noise is signal independent, multiplicative noise is based on the value of the image pixel; whereby, the amount of noise multiplied into an image pixel is proportional to its value.
 
-With that, let's review the types of additive and multiplicative noise most inherent in mammography.
+The various additive and multiplicative noise types extant in mammography include Gaussian Noise, Quantization Noise, Poisson Noise, and Impulse Noise.
 
 ### Gaussian Noise
 
@@ -93,8 +97,7 @@ where:
 - $\mu_x$ and $\mu_y$ are the means in the $x$ and $y$ dimensions, respectively;
 - $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ dimensions, respectively.
 
-As a result of the X-ray system or the digitization hardware, mammograms can be affected by additive white Gaussian noise (AWGN), which has the additional property that the noise
-As an illustration, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.
+{numref}`gaussian_noise` illustrates the additive model in the Gaussian context.
 
 ```{figure} ../figures/gaussian_noise.jpg
 ---
@@ -102,6 +105,25 @@ name: gaussian_noise
 ---
 Guassian Noise
 ```
+
+### Quantization Noise
+
+Quantization noise arises out of the Analog to Digital Conversion (ADC) process. ADC consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, $x$, and $y$, which defines the spatial resolution, or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values and determines the number of grey levels that each pixel can take.
+
+Quantization noise is an unavoidable aspect of ADC. An analog signal is continuous, with infinite accuracy, while the digital signal's accuracy depends upon the quantization resolution, or number of bits in the ADC. A common assumption is that quantization noise is additive, uniformly distributed and signal dependent, unless other noise sources are large enough to cause dithering, the addition of random noise to the pre-quantized signal.
+
+### Poisson Noise
+
+Image sensors measure scene irradiance by counting the number of discrete photons incident on the sensor over a given time interval. Since the detection of individual photons can be treated as independent events that follow a random temporal distribution, photon counting can be modeled as a Poisson process and the number of photons $N$ measured by given sensor element over some time interval $t$ can be described by the standard Poisson distribution:
+
+```{math}
+:label: poisson_pdf
+Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}
+```
+
+where $\lambda$ is he expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise, or Poisson noise.
+
+Since the photon count follows a Poisson distribution, it has the property that the variance, $Var[N]$ is equal to the expectation, $E[N]$. This shows that photon noise is signal dependent and that the standard deviation grows with the square root of the signal.
 
 
 ## Filters

@@ -442,6 +442,8 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-noise">Gaussian Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-noise">Quantization Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-noise">Poisson Noise</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a><ul class="nav section-nav flex-column">
@@ -461,13 +463,13 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="image-preprocessing">
 <h1>Image Preprocessing<a class="headerlink" href="#image-preprocessing" title="Permalink to this heading">#</a></h1>
-<p>The precise and accurate diagnosis of breast cancer, rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion of AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp and free of noise and artifacts.</p>
-<p>However, an exploratory analysis of the CBIS-DDSM dataset exposed several image quality concerns requiring attention. that must be addressed prior to the modeling stage.</p>
+<p>The precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.</p>
+<p>However, an exploratory analysis of the CBIS-DDSM dataset exposed several image quality concerns requiring attention.</p>
 <ul class="simple">
-<li><p>Various artifacts (large texts and annotations) are present within the mammography which resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.</p></li>
-<li><p>Noise of various types in the images are obstacles to effective feature extraction, image detection, recognition and classification.</p></li>
+<li><p>Various artifacts (large texts and annotations) are present within the mammography that resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.</p></li>
+<li><p>Noise of various types in the images is an obstacle to effective feature extraction, image detection, recognition, and classification.</p></li>
 <li><p>Poor brightness and contrast levels in some mammograms may increase the influence of noise, and/or conceal important and subtle features.</p></li>
-<li><p>Malignant tumors are characterized by irregular shape and ambiguous or blurred edges that complicate the ROI segmentation task.</p></li>
+<li><p>Malignant tumors are characterized by irregular shapes and ambiguous or blurred edges that complicate the ROI segmentation task.</p></li>
 <li><p>Dense breast tissue with pixel intensities similar to that of cancerous tissue, may conceal subtle structures of diagnostic importance.</p></li>
 <li><p>There is a limited number of mammogram images available for model training.</p></li>
 </ul>
@@ -481,17 +483,19 @@ document.write(`
 <p>We begin with an evaluation of various denoising algorithms. Once a denoising method and its parameters are selected, we move to the artifact removal stage. Here, we analyze and evaluate several binary masking and thresholding techniques. Once a suitable binary mask is selected, morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast using image enhancement methods such as Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Gaussian noise is also added to improve the generalized performance of the neural network and mitigate model overfitting. Our penultimate task addresses the limited number of model training samples by augmenting the data with images that have been rotated and/or flipped along the vertical and horizontal dimensions. Finally, ROI segmentation will apply a pixel intensity threshold to create a binary mask of the lesion ROIs. Denoising, artifact removal, and related image enhancement methods are evaluated in terms of the quality of the images produced. To this end, image quality assessment metrics such as mean squared error (MSE), peak signal-to-noise ratio (PSNR), and structural similarity (SSIM) are applied to processed images during algorithm evaluation and selection stages.</p>
 <section id="denoise">
 <h2>Denoise<a class="headerlink" href="#denoise" title="Permalink to this heading">#</a></h2>
-<p>Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, image noise can be described as being additive or multiplicative. Additive noise is the undesired signal that arises during data acquisition that gets added to an image. Signal processing theory defines an additive noise <em>model</em>; whereby, an observed <em>noisy</em> image, <span class="math notranslate nohighlight">\(f\)</span> is really the sum of an unobserved, noise-free signal <span class="math notranslate nohighlight">\(s\)</span> and random, zero-mean, signal independent, independent and identically distributed noise, <span class="math notranslate nohighlight">\(n\)</span>. Concretely, the additive noise model is given by:</p>
+<p>Mammograms are inherently noisy, comprising random variations in image intensity and contrast caused by external disturbances within the image capture and/or transmission processes. Broadly speaking, image noise can be described as additive or multiplicative.</p>
+<p>Additive noise is the undesired signal that arises during data acquisition that gets added to an image. Signal processing theory defines an additive noise <em>model</em> given by:</p>
 <div class="math notranslate nohighlight" id="equation-additive-noise-model">
 <span class="eqno">(1)<a class="headerlink" href="#equation-additive-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)+n(x,y)\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied;</p></li>
 <li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the observed noisy image;</p></li>
-<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is an unobserved, but deterministic, noise-free image signal which has been corrupted a noise process;</p></li>
-<li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> is the signal-independent, often zero-mean, random noise with variance <span class="math notranslate nohighlight">\(\sigma^2_n\)</span>, that is added to the original noise-free image.</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is an unobserved, but deterministic, noise-free image signal which has been corrupted by a noise process;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> is the signal-independent, identically distributed, often zero-mean, random noise with variance <span class="math notranslate nohighlight">\(\sigma^2_n\)</span>, that is added to the original noise-free image.</p></li>
 </ul>
-<p>Multiplicative noise, by contrast, refers to the unwanted random signal that gets <em>multiplied</em> into an image during signal capture, transmission, or other processing. Mathematically, we can define the multiplicative noise model as follows:</p>
+<p>In short, the additive model describes an image as the pixel wise sum of an unobserved image and random noise signal of the same shape.</p>
+<p>Multiplicative noise, by contrast, refers to the unwanted random signal that gets <em>multiplied</em> into an image during signal capture, transmission, or other processing. Similarly, we can define the multiplicative noise model as follows:</p>
 <div class="math notranslate nohighlight" id="equation-multiplicative-noise-model">
 <span class="eqno">(2)<a class="headerlink" href="#equation-multiplicative-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)\times n(x,y)\]</div>
 <p>where:</p>
@@ -502,7 +506,7 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> refers to signal-dependent, random noise that is multiplied into <span class="math notranslate nohighlight">\(s(x,y)\)</span> during image capture, transmission, storage or other processing.</p></li>
 </ul>
 <p>Whereas additive noise is signal independent, multiplicative noise is based on the value of the image pixel; whereby, the amount of noise multiplied into an image pixel is proportional to its value.</p>
-<p>With that, let’s review the types of additive and multiplicative noise most inherent in mammography.</p>
+<p>The various additive and multiplicative noise types extant in mammography include Gaussian Noise, Quantization Noise, Poisson Noise, and Impulse Noise.</p>
 <section id="gaussian-noise">
 <h3>Gaussian Noise<a class="headerlink" href="#gaussian-noise" title="Permalink to this heading">#</a></h3>
 <p>Gaussian noise is ubiquitous in signal processing, telecommunications systems, computer networks, statistical modeling and digital biomedical imaging. Principally, sources of Gaussian noise in digital imagery arise during data acquisition, and may derive from:</p>
@@ -512,7 +516,7 @@ document.write(`
 <li><p>interference in the transmission channel; or</p></li>
 <li><p>random variations in the electrical signal.</p></li>
 </ul>
-<p>Gaussian noise is additive in nature, signal independent, and assumed to be zero-mean. Yet, the defining characteristic of Gaussian noise is that it has a probability density function equal to that of the normal distribution, first introduced by French mathematician Abraham de Moivre in the second edition (1718) of his Doctrine of Chances <span id="id1">[]</span>, and later attributed to Karl Friedrich Gauss, a German mathematician, for his work connecting the method of least squares to the normal distribution <span id="id2">[]</span>.</p>
+<p>Gaussian noise is additive in nature, signal independent, and assumed to be zero-mean. Yet, the defining characteristic of Gaussian noise is that it has a probability density function equal to that of the normal distribution, first introduced by French mathematician Abraham de Moivre in the second edition (1718) of his Doctrine of Chances <span id="id1">[<a class="reference internal" href="99_references.html#id327" title="I. Grattan-Guinness and Roger Cooke, editors. Landmark writings in Western mathematics 1640-1940. Elsevier, Amsterdam ; Boston, 1st ed edition, 2005. ISBN 9786610633739. Medium: electronic resource. URL: https://ebookcentral.proquest.com/lib/loc/detail.action?docID=269620 (visited on 2023-11-16).">12</a>]</span>, and later attributed to Karl Friedrich Gauss, a German mathematician, for his work connecting the method of least squares to the normal distribution <span id="id2">[<a class="reference internal" href="99_references.html#id328" title="Stephen M. Stigler. Gauss and the Invention of Least Squares. The Annals of Statistics, May 1981. URL: https://projecteuclid.org/journals/annals-of-statistics/volume-9/issue-3/Gauss-and-the-Invention-of-Least-Squares/10.1214/aos/1176345451.full (visited on 2023-11-16), doi:10.1214/aos/1176345451.">13</a>]</span>.</p>
 <p>Mathematically, Gaussian noise may be expressed by the following bivariate isotropic (circular) Gaussian function.</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-pdf">
 <span class="eqno">(3)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[g(x,y)=\frac{1}{2\pi\sigma_x\sigma_y}e^-\frac{[(x-\mu_x)^2+(y-\mu_y)^2]}{2\sigma_x\sigma_y}\]</div>
@@ -522,14 +526,26 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\mu_x\)</span> and <span class="math notranslate nohighlight">\(\mu_y\)</span> are the means in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively;</p></li>
 <li><p><span class="math notranslate nohighlight">\(\sigma_x\)</span> and <span class="math notranslate nohighlight">\(\sigma_y\)</span> are the standard deviations in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> dimensions, respectively.</p></li>
 </ul>
-<p>As a result of the X-ray system or the digitization hardware, mammograms can be affected by additive white Gaussian noise (AWGN), which has the additional property that the noise
-As an illustration, we have f(x,y), the noisy image, s(x,y), the noise-free image and n(x,y) is the signal-independent, random, zero-mean Gaussian noise.</p>
+<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 2</span></a> illustrates the additive model in the Gaussian context.</p>
 <figure class="align-default" id="id3">
 <img alt="../_images/gaussian_noise.jpg" src="../_images/gaussian_noise.jpg" />
 <figcaption>
 <p><span class="caption-number">Fig. 2 </span><span class="caption-text">Guassian Noise</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+</section>
+<section id="quantization-noise">
+<h3>Quantization Noise<a class="headerlink" href="#quantization-noise" title="Permalink to this heading">#</a></h3>
+<p>Quantization noise arises out of the Analog to Digital Conversion (ADC) process. ADC consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(y\)</span>, which defines the spatial resolution, or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values and determines the number of grey levels that each pixel can take.</p>
+<p>Quantization noise is an unavoidable aspect of ADC. An analog signal is continuous, with infinite accuracy, while the digital signal’s accuracy depends upon the quantization resolution, or number of bits in the ADC. A common assumption is that quantization noise is additive, uniformly distributed and signal dependent, unless other noise sources are large enough to cause dithering, the addition of random noise to the pre-quantized signal.</p>
+</section>
+<section id="poisson-noise">
+<h3>Poisson Noise<a class="headerlink" href="#poisson-noise" title="Permalink to this heading">#</a></h3>
+<p>Image sensors measure scene irradiance by counting the number of discrete photons incident on the sensor over a given time interval. Since the detection of individual photons can be treated as independent events that follow a random temporal distribution, photon counting can be modeled as a Poisson process and the number of photons <span class="math notranslate nohighlight">\(N\)</span> measured by given sensor element over some time interval <span class="math notranslate nohighlight">\(t\)</span> can be described by the standard Poisson distribution:</p>
+<div class="math notranslate nohighlight" id="equation-poisson-pdf">
+<span class="eqno">(4)<a class="headerlink" href="#equation-poisson-pdf" title="Permalink to this equation">#</a></span>\[Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is he expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise, or Poisson noise.</p>
+<p>Since the photon count follows a Poisson distribution, it has the property that the variance, <span class="math notranslate nohighlight">\(Var[N]\)</span> is equal to the expectation, <span class="math notranslate nohighlight">\(E[N]\)</span>. This shows that photon noise is signal dependent and that the standard deviation grows with the square root of the signal.</p>
 </section>
 </section>
 <section id="filters">
@@ -538,10 +554,10 @@ As an illustration, we have f(x,y), the noisy image, s(x,y), the noise-free imag
 <p>For this effort, we focus on five classes of filters commonly applied to the task of biomedical image noise reduction:</p>
 <ol class="arabic simple">
 <li><p><strong>Mean Filter</strong>: Also known as the average filter,</p></li>
-<li><p><strong>Median Filter</strong>: A non-linear noise reduction technique <span id="id4">[<a class="reference internal" href="99_references.html#id322" title="Gonzalo R. Arce. Nonlinear signal processing: a statistical approach. Wiley-Interscience, Hoboken, N.J, 2005. ISBN 978-0-471-67624-9.">12</a>]</span>,</p></li>
-<li><p><strong>Gaussian Filter</strong>: A linear noise reduction method based upon a Gaussian kernel <span id="id5">[<a class="reference internal" href="99_references.html#id323" title="J. Klapper and C. Harris. On the response and approximation of Gaussian filters. IRE Transactions on Audio, AU-7(3):80–87, May 1959. URL: http://ieeexplore.ieee.org/document/1166198/ (visited on 2023-11-15), doi:10.1109/TAU.1959.1166198.">13</a>]</span>,</p></li>
-<li><p><strong>Adaptive Median Filter</strong>: Median filter with variable window size <span id="id6">[<a class="reference internal" href="99_references.html#id324" title="H. Hwang and R.A. Haddad. Adaptive median filters: new algorithms and results. IEEE Transactions on Image Processing, 4(4):499–502, April 1995. URL: http://ieeexplore.ieee.org/document/370679/ (visited on 2023-11-15), doi:10.1109/83.370679.">14</a>]</span>, and</p></li>
-<li><p><strong>Non-Local Means Filter</strong>: Filtering based upon non-local averaging of all pixels in the image <span id="id7">[<a class="reference internal" href="99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">15</a>]</span>.</p></li>
+<li><p><strong>Median Filter</strong>: A non-linear noise reduction technique <span id="id4">[<a class="reference internal" href="99_references.html#id322" title="Gonzalo R. Arce. Nonlinear signal processing: a statistical approach. Wiley-Interscience, Hoboken, N.J, 2005. ISBN 978-0-471-67624-9.">14</a>]</span>,</p></li>
+<li><p><strong>Gaussian Filter</strong>: A linear noise reduction method based upon a Gaussian kernel <span id="id5">[<a class="reference internal" href="99_references.html#id323" title="J. Klapper and C. Harris. On the response and approximation of Gaussian filters. IRE Transactions on Audio, AU-7(3):80–87, May 1959. URL: http://ieeexplore.ieee.org/document/1166198/ (visited on 2023-11-15), doi:10.1109/TAU.1959.1166198.">15</a>]</span>,</p></li>
+<li><p><strong>Adaptive Median Filter</strong>: Median filter with variable window size <span id="id6">[<a class="reference internal" href="99_references.html#id324" title="H. Hwang and R.A. Haddad. Adaptive median filters: new algorithms and results. IEEE Transactions on Image Processing, 4(4):499–502, April 1995. URL: http://ieeexplore.ieee.org/document/370679/ (visited on 2023-11-15), doi:10.1109/83.370679.">16</a>]</span>, and</p></li>
+<li><p><strong>Non-Local Means Filter</strong>: Filtering based upon non-local averaging of all pixels in the image <span id="id7">[<a class="reference internal" href="99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">17</a>]</span>.</p></li>
 </ol>
 <section id="mean-filter">
 <h3>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h3>
@@ -621,6 +637,8 @@ A kernel specifies the shape and size of the neighborhood to be sampled when com
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-noise">Gaussian Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-noise">Quantization Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-noise">Poisson Noise</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a><ul class="nav section-nav flex-column">
