@@ -489,14 +489,14 @@ document.write(`
 </section>
 <section id="denoise">
 <h2>Denoise<a class="headerlink" href="#denoise" title="Permalink to this heading">#</a></h2>
-<p>Mammography is inherently noisy. Image acquisition and transmission processes can inject unwanted and random signals (noise) into the image, which must be eliminated or minimized before downstream image processing. Here, noise is considered as the discrepancy between the true amount of light <span class="math notranslate nohighlight">\(s_i\)</span> being measured at pixel <span class="math notranslate nohighlight">\(i\)</span>, and the corresponding measured pixel value <span class="math notranslate nohighlight">\(x_i\)</span>. This subsection aims to evaluate and select a function <span class="math notranslate nohighlight">\(f(x) \approx s\)</span> that takes a noisy image as input and returns an approximation of the true clean image as output.</p>
-<p>Evaluation and selection of a denoising method <span class="math notranslate nohighlight">\(f(x)\)</span> is critically informed by:</p>
+<p>Mammography is inherently noisy. Image acquisition and transmission processes can inject unwanted and random signals (noise) into the image, which must be removed or minimized before downstream image processing. Formally, we define noise as the discrepancy between the true amount of light <span class="math notranslate nohighlight">\(s_i\)</span> being measured at pixel <span class="math notranslate nohighlight">\(i\)</span>, and the corresponding measured pixel value <span class="math notranslate nohighlight">\(x_i\)</span>. The aim of this subsection is to select a function <span class="math notranslate nohighlight">\(f(x) \approx s\)</span> that takes <span class="math notranslate nohighlight">\(x\)</span>, a noisy image as input and returns an approximation of the true clean image <span class="math notranslate nohighlight">\(s\)</span>, as output.</p>
+<p>Choosing <span class="math notranslate nohighlight">\(f\)</span> is a process based upon certain assumptions, and informed by:</p>
 <ul class="simple">
-<li><p>Knowledge of the types of noises that may be encountered and the methods by which they manifests into the image.</p></li>
-<li><p>Knowledge of the noise distribution within an image. We can use it to assess how likely a potential solution <span class="math notranslate nohighlight">\(s\)</span> would give rise to <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+<li><p>Knowledge of the types of noises that may be encountered and the methods by which they manifest into the image.</p></li>
+<li><p>Knowledge of the noise distribution within an image. For example, we can use it to assess how likely a potential solution <span class="math notranslate nohighlight">\(s\)</span> would give rise to <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
 <li><p>Knowledge of what clean images generally look like. For instance, we might expect an image to be smooth, and formally constrain the possible denoised outcome to have a certain “smoothness” probability distribution, called the <em>prior</em></p></li>
 </ul>
-<p>Any denoising method</p>
+<p>In this regard, we begin the denoising stage with a review of the noise models ex</p>
 <ul class="simple">
 <li><ul>
 <li><p>Knowledge of the</p></li>

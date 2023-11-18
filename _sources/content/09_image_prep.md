@@ -27,7 +27,7 @@ Addressing these challenges is fundamentally important to model detection, recog
 
 ## Image Preprocessing Overview
 
-In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, optimize image contrast and brightness, and produce a collection of images for maximally effective computer vision model training and classification.
+In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.
 
 ```{figure} ../figures/ImagePrep.png
 ---
@@ -39,21 +39,43 @@ Image Preprocessing Approach
 
 We begin with an evaluation of various denoising methods commonly applied to mammography. Once a denoising method and its (hyper) parameters are selected, we move to the artifact removal stage. Image binarizing and thresholding methods are evaluated, then morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast with Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Additive White Gaussian Noise (AWGN) is also added to improve the generalized performance of the neural network and mitigate model overfitting. Finally, we extract the ROIs using automated pixel intensity thresholding to create a binary mask which is applied to the enhanced images.
 
+Next, we set the context with a brief overview of screen-film mammography, and the process by which the analog images are converted from film to the digital format. Then, we explore the image preprocessing steps in detail.
+
+## Screen-Film Mammography, in Brief
+Screen-film mammography (SFM) is the gold standard for breast cancer detection, and has been standard practice as a screening device since the 1970's. The technology has been perfected over the years, and its quality protocols for breast cancer detection and screening are well established. It boasts high spatial resolution, which enables detection of fine structures. Since receiving Food and Drug Administration (FDA) approval in 2000, digital mammography has seen rapid adoption in the United States. Digital mammography (DM) generates radiographic X-ray images in digital format  Like screen-film mammography, digital mammography   the first full-field digital mammography unit Digital mammography, since achieving FDA approval in 2000
+Since Digital mammography Recent  SFM is a specialized type medical imaging that uses low-dose X-ray system to see inside the breasts. Images are rendered on film, then converted to a digital format for transmission, storage, and
+
 ## Denoise
-Mammography is inherently noisy. Image acquisition and transmission processes can inject unwanted and random signals (noise) into the image, which must be eliminated or minimized before downstream image processing. Here, noise is considered as the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$. This subsection aims to evaluate and select a function $f(x) \approx s$ that takes a noisy image as input and returns an approximation of the true clean image as output.
 
-Evaluation and selection of a denoising method $f(x)$ is critically informed by:
+Mammography is inherently noisy. Unwanted random signals
+This subsection aims to explore three overarching questions with respect to denoising screen-film mammography:
 
-- Knowledge of the types of noises that may be encountered and the methods by which they manifests into the image.
-- Knowledge of the noise distribution within an image. We can use it to assess how likely a potential solution $s$ would give rise to $x$.
-- Knowledge of what clean images generally look like. For instance, we might expect an image to be smooth, and formally constrain the possible denoised outcome to have a certain "smoothness" probability distribution, called the *prior*
+1. What is noise?
+What is noise, really? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. But, all biomedical images are imperfect representations of the underlying structure that is being imaged.
+Mammography is inherently noisy.
 
-Any denoising method
+Image acquisition processes can inject unwanted and random signals (noise) into the image, which must be removed or minimized before downstream image processing can take place. So, the primary goal of denoising the image is to remove the unwanted signal or noise, which we denote as $n$, while preserving the details of the original, uncorrupted, signal $s$. More precisely, we aim to find a denoising function $f(x) \approx s$ that takes $x$, a noisy image as input, and returns an approximation of the *true* clean image $s$, as output.
 
-- - Knowledge of the
+### Noise: An Overview
 
-### Noise Models
-Broadly speaking, biomedical image noise can be described as additive or multiplicative. Additive noise is the undesired signal that arises during data acquisition that gets added to an image.
+So, what is image noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. But, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. Noise is a variation, but not all variations are noise.
+
+Let's *'describe'* image noise within the context of screen-film mammography, the modality of our CBIS-DDSM dataset, and see if a more precise *'definition'* emerges.
+
+#### Screen-Film Mammography
+
+In screen-film mammography, low-dose ionizing radiation (X-rays) are directed through compressed breast tissue. Compression allows radiologists to achieve high quality imaging, at lower doses of radiation. The X-rays are attenuated by tissues of varying radiographic opacity and are collected by rare-earth phosphor screens. When the X-ray is absorbed at the screen, a process called light scintillation converts high-energy X-rays to photons of visible light. A light-sensitive film emulsion in direct contact with the screen produces a latent image, which is subsequently rendered visible by chemical processing. The result is a 2-dimensional, gray-scale image, in which brightness corresponds to X-ray attenuation probability. We will call this, our true light source $s$.
+
+Next, the continous, analog image is converted into a 2-dimensional digital image by an Analog-to-Digital Converter (ADC). We can think of a digital image as a 2-dimensional function $f(x,y)$, where $x$ and $y$ indcate the location of a pixel within the image, and $f(x,y)$ is a discrete value called the pixel intensity value. The ADC produces this digitized image via a two step process: sampling and quantization. Sampling refers to the digitization of the coordinate values $x$ and $y$; whereas, quantization describes the process of converting the amplitudes to pixel values.
+
+
+
+  source $s$. Film in close proximity to the screen captures the light photons, and a grey-scaled image is obtained by exposing the film.  . This .
+
+The types of noise we may encounter in digital mammography can be modeled as additive or multiplicative.
+
+#### Additive Noise Model
+ Additive noise is the undesired signal that arises during image acquisition that gets added to an image. Multiplicative noise
 Signal processing theory defines an additive noise *model* given by:
 
 ```{math}
