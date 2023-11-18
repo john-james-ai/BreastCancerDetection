@@ -29,7 +29,7 @@ Addressing these challenges is fundamentally important to model detection, recog
 
 In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.
 
-```{figure}
+```{figure} ../figures/ImagePrep.png
 ---
 name: image_prep
 ---
@@ -43,13 +43,15 @@ Let's dive in.
 
 ## Denoise
 
-What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. But, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For the purposes of denoising, we distinguish noise from other imperfections, with the following definition:
+What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. Yet, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For denoising, we distinguish noise from other imperfections, with the following definition:
 
-> Noise is the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$ {cite}`laineImagingFocusIntroduction2021`
+> Noise is the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$.
 
-With that, the denoising problem can be stated as follows:
+With that, we can state the denoising problem as follows:
 
-> Image denoising aims to provide a function $f(x) \approx s$ that takes a noisy image $x$ as input and returns an approximation of the true clean image  $s$ as output.
+> Image denoising aims to provide a function $d(x) \approx s$ that takes a noisy image $x$ as input and returns an approximation of the true clean image  $s$ as output.
+
+Here, we've implicitly decomposed an image, $f$ into a desired or uncorrupted signal $s$ and a noise component $n$. How are $s$ and $n$ related? Are they independent? Can we eliminate $n$ with denoising? Next, we review how noise is modeled in screen-film mammography.
 
 ### Noise Models
 
@@ -107,11 +109,11 @@ Similarly, {numref}`additive_noise_model` becomes:
 e^f = e^{s_n} = e^f e^n.
 ```
 
-A common strategy for multiplicative noise removal is to convert the noise in the image to additive noise, then apply an appropriate filter.
+A common strategy for addressing multiplicative noise is to convert the noise in the image to additive noise, then apply an appropriate spatial domain filter.
 
 #### Impulse Noise Model
 
-Lastly, we have the impulse noise model, which represents a separate mathematic model, neither additive or multiplicative. Impulse noise arises in the image as a consequence of signal transmission errors. Mathematically, we can describe impulse noise by the following equation.
+Lastly, we have the impulse noise model, which represents a separate mathematical model, neither additive nor multiplicative. Impulse noise arises in the image as a consequence of signal transmission errors. Mathematically, we can describe impulse noise by the following equation.
 
 ```{math}
 :label: impulse
@@ -141,12 +143,26 @@ A simplification of {numref}`impulse` for the case in which $n(x,y)$ replaces $s
     n(x,y) \text{ with probability P}
 \end{cases}\]
 ```
-Impulse nows can be static or dynamic. In the case of static impulse noise, its pixel values get modified by only two values: either the low or high value in the range of pixel values. For instance, a 8-bit gray scale image with values ranging from 0 (black) to 255 (white), dark pixel corrupted by impulse noise would be replaced by 255, white pixels would be replaced by 0. In the case of dynamic impulse noise, pixels are modified independently, with random values between 0 and 255.
+
+Impulse noise can be static or dynamic. In the case of static impulse noise, its pixel values get modified by only two values: either the low or high value in the range of pixel values. For instance, in an 8-bit grayscale image with values ranging from 0 (black) to 255 (white), dark pixels corrupted by impulse noise would be replaced by 255, and white pixels would be replaced by 0. In the case of dynamic impulse noise, pixels are modified independently, with random values between 0 and 255.
+
+Next, we review the types of noise we may encounter.
 
 ### Types of Noise in Screen-Film Mammography
 
 The types of noise most inherent in screen-film mammography are summarized in {numref}`noise_types`.
 
+```{table} Noise Types in Screen-Film Mammography
+:name: noise_types
+
+| Noise                         | Model          | Signal Dependence | Source                            |
+|-------------------------------|----------------|-------------------|-----------------------------------|
+| Gaussian Noise                | Additive Model | Independent       | Signal Acquisition / Transmission |
+| Salt & Pepper Noise           | Impulse Noise  | Independent       | Signal Transmission               |
+| Poisson Photon Counting Noise | Neither        | Dependent         | Signal Detection                  |
+| Speckle Noise                 | Multiplicative | Dependent         | Signal Detection                  |
+| Quantization Noise            | Additive Model | Dependent         | Digitization                      |
+```
 
 ### Gaussian Noise
 
