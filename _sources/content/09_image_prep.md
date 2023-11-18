@@ -77,7 +77,7 @@ Additive noise, the most common decomposition, can arise from numerous sources, 
 
 #### Multiplicative Noise Model
 
-Multiplicative noise ({numref}`multiplicative_noise_model`), by contrast, refers to the unwanted random signal that gets *multiplied* into an image during signal capture, transmission, or other processing.
+Multiplicative noise ({eq}`multiplicative_noise_model`), by contrast, refers to the unwanted random signal that gets *multiplied* into an image during signal capture, transmission, or other processing.
 
 ```{math}
 :label: multiplicative_noise_model
@@ -95,14 +95,14 @@ Whereas additive noise is signal independent, multiplicative noise is based on t
 
 Note that we can transform a multiplicative noise model to an additive noise model by taking the logarithm of both sides of the multiplication model. The additive model becomes multiplicative by exponentiation.
 
-For instance, {numref}`multiplicative_noise_model` becomes:
+For instance, {eq}`multiplicative_noise_model` becomes:
 
 ```{math}
 :label: log_mult_model
 log f = log(sn) = log (s) + log (n)
 ```
 
-Similarly, {numref}`additive_noise_model` becomes:
+Similarly, {eq}`additive_noise_model` becomes:
 
 ```{math}
 :label: exp_add_model
@@ -133,8 +133,7 @@ where:
 
 Higher values of $P$ correspond to greater levels of corruption.
 
-A simplification of {numref}`impulse` for the case in which $n(x,y)$ replaces $s(x,y)$
-
+A simplification of {eq}`impulse` for the case in which $n(x,y)$ replaces $s(x,y)$
 
 ```{math}
 :label: impulse_2

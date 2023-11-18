@@ -524,7 +524,7 @@ document.write(`
 </section>
 <section id="multiplicative-noise-model">
 <h4>Multiplicative Noise Model<a class="headerlink" href="#multiplicative-noise-model" title="Permalink to this heading">#</a></h4>
-<p>Multiplicative noise (<code class="xref std std-numref docutils literal notranslate"><span class="pre">multiplicative_noise_model</span></code>), by contrast, refers to the unwanted random signal that gets <em>multiplied</em> into an image during signal capture, transmission, or other processing.</p>
+<p>Multiplicative noise (<a class="reference internal" href="#equation-multiplicative-noise-model">(2)</a>), by contrast, refers to the unwanted random signal that gets <em>multiplied</em> into an image during signal capture, transmission, or other processing.</p>
 <div class="math notranslate nohighlight" id="equation-multiplicative-noise-model">
 <span class="eqno">(2)<a class="headerlink" href="#equation-multiplicative-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)\times n(x,y)\]</div>
 <p>where:</p>
@@ -536,10 +536,10 @@ document.write(`
 </ul>
 <p>Whereas additive noise is signal independent, multiplicative noise is based on the value of the image pixel; whereby, the amount of noise multiplied into an image pixel is proportional to its intensity.</p>
 <p>Note that we can transform a multiplicative noise model to an additive noise model by taking the logarithm of both sides of the multiplication model. The additive model becomes multiplicative by exponentiation.</p>
-<p>For instance, <code class="xref std std-numref docutils literal notranslate"><span class="pre">multiplicative_noise_model</span></code> becomes:</p>
+<p>For instance, <a class="reference internal" href="#equation-multiplicative-noise-model">(2)</a> becomes:</p>
 <div class="math notranslate nohighlight" id="equation-log-mult-model">
 <span class="eqno">(3)<a class="headerlink" href="#equation-log-mult-model" title="Permalink to this equation">#</a></span>\[log f = log(sn) = log (s) + log (n)\]</div>
-<p>Similarly, <code class="xref std std-numref docutils literal notranslate"><span class="pre">additive_noise_model</span></code> becomes:</p>
+<p>Similarly, <a class="reference internal" href="#equation-additive-noise-model">(1)</a> becomes:</p>
 <div class="math notranslate nohighlight" id="equation-exp-add-model">
 <span class="eqno">(4)<a class="headerlink" href="#equation-exp-add-model" title="Permalink to this equation">#</a></span>\[e^f = e^{s_n} = e^f e^n.\]</div>
 <p>A common strategy for addressing multiplicative noise is to convert the noise in the image to additive noise, then apply an appropriate spatial domain filter.</p>
@@ -561,7 +561,7 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> refers random noise</p></li>
 </ul>
 <p>Higher values of <span class="math notranslate nohighlight">\(P\)</span> correspond to greater levels of corruption.</p>
-<p>A simplification of <code class="xref std std-numref docutils literal notranslate"><span class="pre">impulse</span></code> for the case in which <span class="math notranslate nohighlight">\(n(x,y)\)</span> replaces <span class="math notranslate nohighlight">\(s(x,y)\)</span></p>
+<p>A simplification of <a class="reference internal" href="#equation-impulse">(5)</a> for the case in which <span class="math notranslate nohighlight">\(n(x,y)\)</span> replaces <span class="math notranslate nohighlight">\(s(x,y)\)</span></p>
 <div class="math notranslate nohighlight" id="equation-impulse-2">
 <span class="eqno">(6)<a class="headerlink" href="#equation-impulse-2" title="Permalink to this equation">#</a></span>\[\begin{split}\[{f(x,y)} = \begin{cases}
     s(x,y)\text{ with probability 1-P} \\
