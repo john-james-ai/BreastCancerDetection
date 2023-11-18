@@ -158,10 +158,12 @@ The types of noise most inherent in screen-film mammography are summarized in {n
 | Noise                         | Model          | Signal Dependence | Source                            |
 |-------------------------------|----------------|-------------------|-----------------------------------|
 | Gaussian Noise                | Additive Model | Independent       | Signal Acquisition / Transmission |
+| Quantization Noise            | Additive Model | Dependent         | Digitization                      |
+| Speckle Noise                 | Multiplicative | Dependent         | Signal Detection                  |
 | Salt & Pepper Noise           | Impulse Noise  | Independent       | Signal Transmission               |
 | Poisson Photon Counting Noise | Neither        | Dependent         | Signal Detection                  |
-| Speckle Noise                 | Multiplicative | Dependent         | Signal Detection                  |
-| Quantization Noise            | Additive Model | Dependent         | Digitization                      |
+
+
 ```
 
 ### Gaussian Noise
