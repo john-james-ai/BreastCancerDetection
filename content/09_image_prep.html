@@ -616,7 +616,7 @@ document.write(`
 <h3>Gaussian Noise<a class="headerlink" href="#gaussian-noise" title="Permalink to this heading">#</a></h3>
 <p>Gaussian noise is characterized as a random variable with a probability density function equal to that of the isotropic, multivariate, Gaussian distribution <span id="id2">[<a class="reference internal" href="99_references.html#id327" title="I. Grattan-Guinness and Roger Cooke, editors. Landmark writings in Western mathematics 1640-1940. Elsevier, Amsterdam ; Boston, 1st ed edition, 2005. ISBN 9786610633739. Medium: electronic resource. URL: https://ebookcentral.proquest.com/lib/loc/detail.action?docID=269620 (visited on 2023-11-16).">13</a>]</span>, defined as follows:</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-pdf">
-<span class="eqno">(7)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[p(x|\mu, \Sigma) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^\Bigg(-\frac{1}{2}(x-\mu)^T\Sigma^-1(x-\mu)\Bigg),\]</div>
+<span class="eqno">(7)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[p(x|\mu, \Sigma) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{\Bigg(-\frac{1}{2}(x-\mu)^T\Sigma^-1(x-\mu)\Bigg)},\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mu\)</span> is an <span class="math notranslate nohighlight">\(n x 1\)</span> vector,</p></li>
@@ -633,6 +633,7 @@ document.write(`
 <blockquote>
 <div><p>“Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along.” (Sir Francis Galton, 1889)</p>
 </div></blockquote>
+<p>The Gaussian distribution has a number of mathematical properties that</p>
 <p>Gaussian noise is ubiquitous in signal processing, telecommunications systems, computer networks, and, of course, biomedical imaging. Widely
 Principally, sources of Gaussian noise in digital imagery arise during data acquisition, and may be caused by:</p>
 <ul class="simple">

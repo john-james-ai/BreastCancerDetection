@@ -171,7 +171,7 @@ Gaussian noise is characterized as a random variable with a probability density 
 
 ```{math}
 :label: gaussian_pdf
-p(x|\mu, \Sigma) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^\Bigg(-\frac{1}{2}(x-\mu)^T\Sigma^-1(x-\mu)\Bigg),
+p(x|\mu, \Sigma) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{\Bigg(-\frac{1}{2}(x-\mu)^T\Sigma^-1(x-\mu)\Bigg)},
 ```
 
 where:
@@ -190,6 +190,8 @@ Guassian Noise
 ```
 
 > "Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along." (Sir Francis Galton, 1889)
+
+The Gaussian distribution has a number of mathematical properties that
 
 Gaussian noise is ubiquitous in signal processing, telecommunications systems, computer networks, and, of course, biomedical imaging. Widely
 Principally, sources of Gaussian noise in digital imagery arise during data acquisition, and may be caused by:
