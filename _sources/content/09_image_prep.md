@@ -167,36 +167,42 @@ The types of noise most inherent in screen-film mammography are summarized in {n
 
 ### Gaussian Noise
 
-Gaussian noise is ubiquitous in signal processing, telecommunications systems, computer networks, statistical modeling and digital biomedical imaging. Principally, sources of Gaussian noise in digital imagery arise during data acquisition, and may derive from:
+Gaussian noise is characterized as a random variable with a probability density function equal to that of the isotropic, multivariate, Gaussian distribution {cite}`grattan-guinnessLandmarkWritingsWestern2005`, defined as follows:
+
+```{math}
+:label: gaussian_pdf
+p(x|\mu, \Sigma) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^\Bigg(-\frac{1}{2}(x-\mu)^T\Sigma^-1(x-\mu)\Bigg),
+```
+
+where:
+
+- $\mu$ is an $n x 1$ vector,
+- $\Sigma$ is an $n x n$ symmetric matrix covariance matrix, and
+- $x$ is a vector in $\mathbb{R^n}
+
+Gaussian noise is additive in nature, signal independent, with zero-mean and finite variance, denoted as $\mathbb{N(0,\sigma^2)}. Consider the bivariate Gaussian with $\mu = [0,0] and diagonal covariance matrix $\Sigma=diag(\sigma^2_1, \sigma_2^2)$ in {numref}`gaussian_noise`.
+
+```{figure} ../figures/gaussian.png
+---
+name: gaussian_noise
+---
+Guassian Noise
+```
+
+> "Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along." (Sir Francis Galton, 1889)
+
+Gaussian noise is ubiquitous in signal processing, telecommunications systems, computer networks, and, of course, biomedical imaging. Widely
+Principally, sources of Gaussian noise in digital imagery arise during data acquisition, and may be caused by:
 
 - poor illumination during image capture;
 - image sensors subject to overheating or other disturbances caused by external factors;
 - interference in the transmission channel; or
 - random variations in the electrical signal.
 
-Gaussian noise is additive in nature, signal independent, and assumed to be zero-mean. Yet, the defining characteristic of Gaussian noise is that it has a probability density function equal to that of the normal distribution, first introduced by French mathematician Abraham de Moivre in the second edition (1718) of his Doctrine of Chances {cite}`grattan-guinnessLandmarkWritingsWestern2005`, and later attributed to Karl Friedrich Gauss, a German mathematician, for his work connecting the method of least squares to the normal distribution {cite}`stiglerGaussInventionLeast1981`.
+Gaussian noise is additive in nature, signal independent, and assumed to be zero-mean. It's probability density function is equal to that of the normal distribution {cite}`grattan-guinnessLandmarkWritingsWestern2005`.
 
-Mathematically, Gaussian noise may be expressed by the following bivariate isotropic (circular) Gaussian function.
+Mathematically, Gaussian noise may be expressed in terms of the following bivariate isotropic (circular) Gaussian function.
 
-```{math}
-:label: gaussian_pdf
-g(x,y)=\frac{1}{2\pi\sigma_x\sigma_y}e^-\frac{[(x-\mu_x)^2+(y-\mu_y)^2]}{2\sigma_x\sigma_y}
-```
-
-where:
-
-- $x$ and $y$ are the coordinates of the pixel to which the noise is applied;
-- $\mu_x$ and $\mu_y$ are the means in the $x$ and $y$ dimensions, respectively;
-- $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ dimensions, respectively.
-
-{numref}`gaussian_noise` illustrates the additive model in the Gaussian context.
-
-```{figure}
----
-name: gaussian_noise
----
-Guassian Noise
-```
 
 ### Quantization Noise
 
