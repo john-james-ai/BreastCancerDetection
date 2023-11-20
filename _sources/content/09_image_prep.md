@@ -10,6 +10,8 @@ kernelspec:
   language: python
   name: python3
 ---
+
+
 # Image Preprocessing
 
 Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.
@@ -156,55 +158,44 @@ The types of noise most inherent in screen-film mammography are summarized in {n
 
 | Noise                         | Model          | Signal Dependence | Source                            |
 |-------------------------------|----------------|-------------------|-----------------------------------|
-| Gaussian Noise                | Additive Model | Independent       | Signal Acquisition / Transmission |
-| Quantization Noise            | Additive Model | Dependent         | Digitization                      |
+| Gaussian Noise                | Additive | Independent       | Signal Acquisition / Transmission |
+| Quantization Noise            | Additive | Dependent         | Digitization                      |
 | Speckle Noise                 | Multiplicative | Dependent         | Signal Detection                  |
-| Salt & Pepper Noise           | Impulse Noise  | Independent       | Signal Transmission               |
-| Poisson Photon Counting Noise | Neither        | Dependent         | Signal Detection                  |
+| Salt & Pepper Noise           | Impulse   | Independent       | Signal Transmission               |
+| Poisson Photon Counting Noise | Neither / Both       | Dependent         | Signal Detection                  |
 
 
 ```
 
 ### Gaussian Noise
 
-Gaussian noise is characterized as a random variable with a probability density function equal to that of the isotropic, multivariate, Gaussian distribution {cite}`grattan-guinnessLandmarkWritingsWestern2005`, defined as follows:
+> "Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along." (Sir Francis Galton, 1889)
+
+One of the most significant discoveries in probability theory is the **central limit theorem**, which simply states that the sum of a large number of small independent random variables, under fairly mild conditions, is normally distributed.  This holds even when the underlying random variables are not normally distributed and when the random variables do not have the same distribution.
+
+Gaussian noise arises during data acquisition and is caused by many small, independent random contributions of factors such as:
+
+- thermal vibration of atoms,
+- heat variations in image sensors
+- random variations in electronic signal, e.g. electronic circuit noise
+
+It is additive in nature, independent at each pixel, independent of signal, and has a probability density {eq}`gaussian_pdf` equal to that of the Gaussian distribution.
 
 ```{math}
 :label: gaussian_pdf
-p(x|\mu, \Sigma) = \frac{1}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}}e^{\Bigg(-\frac{1}{2}(x-\mu)^T\Sigma^-1(x-\mu)\Bigg)},
+P(x|\mu, \sigma) = \frac{1}{sqrt\{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 ```
 
-where:
+where $\mu$ is the mean gray value, and $\sigma$ is the standard deviation.
 
-- $\mu$ is an $n x 1$ vector,
-- $\Sigma$ is an $n x n$ symmetric matrix covariance matrix, and
-- $x$ is a vector in $\mathbb{R^n}
-
-Gaussian noise is additive in nature, signal independent, with zero-mean and finite variance, denoted as $\mathbb{N(0,\sigma^2)}. Consider the bivariate Gaussian with $\mu = [0,0] and diagonal covariance matrix $\Sigma=diag(\sigma^2_1, \sigma_2^2)$ in {numref}`gaussian_noise`.
-
-```{figure} ../figures/gaussian.png
+```{figure} ../figures/mammogram_gaussian.png
 ---
-name: gaussian_noise
+name: mmg_gaussian
 ---
-Guassian Noise
+Mammogram Gaussian Noise
+
 ```
-
-> "Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along." (Sir Francis Galton, 1889)
-
-The Gaussian distribution has a number of mathematical properties that
-
-Gaussian noise is ubiquitous in signal processing, telecommunications systems, computer networks, and, of course, biomedical imaging. Widely
-Principally, sources of Gaussian noise in digital imagery arise during data acquisition, and may be caused by:
-
-- poor illumination during image capture;
-- image sensors subject to overheating or other disturbances caused by external factors;
-- interference in the transmission channel; or
-- random variations in the electrical signal.
-
-Gaussian noise is additive in nature, signal independent, and assumed to be zero-mean. It's probability density function is equal to that of the normal distribution {cite}`grattan-guinnessLandmarkWritingsWestern2005`.
-
-Mathematically, Gaussian noise may be expressed in terms of the following bivariate isotropic (circular) Gaussian function.
-
+In {numref}{mmg_gaussian} we see the effects of various levels of Gaussian noise.
 
 ### Quantization Noise
 
