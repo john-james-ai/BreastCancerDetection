@@ -119,10 +119,10 @@ Lastly, we have the impulse noise model, which represents a separate mathematica
 
 ```{math}
 :label: impulse
-\[{f(x,y)} = \begin{cases}
+{f(x,y)} = \begin{cases}
     s(x,y)\text{ with probability 1-P} \\
     s(x,y) + n(x,y) \text{ with probability P}
-\end{cases}\]
+\end{cases}
 ```
 
 where:
@@ -139,10 +139,10 @@ A simplification of {eq}`impulse` for the case in which $n(x,y)$ replaces $s(x,y
 
 ```{math}
 :label: impulse_2
-\[{f(x,y)} = \begin{cases}
+{f(x,y)} = \begin{cases}
     s(x,y)\text{ with probability 1-P} \\
     n(x,y) \text{ with probability P}
-\end{cases}\]
+\end{cases}
 ```
 
 Impulse noise can be static or dynamic. In the case of static impulse noise, its pixel values get modified by only two values: either the low or high value in the range of pixel values. For instance, in an 8-bit grayscale image with values ranging from 0 (black) to 255 (white), dark pixels corrupted by impulse noise would be replaced by 255, and white pixels would be replaced by 0. In the case of dynamic impulse noise, pixels are modified independently, with random values between 0 and 255.
@@ -183,7 +183,7 @@ It is additive in nature, independent at each pixel, independent of signal, and 
 
 ```{math}
 :label: gaussian_pdf
-P(x|\mu, \sigma) = \frac{1}{sqrt\{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 ```
 
 where $\mu$ is the mean gray value, and $\sigma$ is the standard deviation.

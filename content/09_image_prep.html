@@ -548,10 +548,10 @@ document.write(`
 <h4>Impulse Noise Model<a class="headerlink" href="#impulse-noise-model" title="Permalink to this heading">#</a></h4>
 <p>Lastly, we have the impulse noise model, which represents a separate mathematical model, neither additive nor multiplicative. Impulse noise arises in the image as a consequence of signal transmission errors. Mathematically, we can describe impulse noise by the following equation.</p>
 <div class="math notranslate nohighlight" id="equation-impulse">
-<span class="eqno">(5)<a class="headerlink" href="#equation-impulse" title="Permalink to this equation">#</a></span>\[\begin{split}\[{f(x,y)} = \begin{cases}
+<span class="eqno">(5)<a class="headerlink" href="#equation-impulse" title="Permalink to this equation">#</a></span>\[\begin{split}{f(x,y)} = \begin{cases}
     s(x,y)\text{ with probability 1-P} \\
     s(x,y) + n(x,y) \text{ with probability P}
-\end{cases}\]\end{split}\]</div>
+\end{cases}\end{split}\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p>0 \le P \le 1</p></li>
@@ -563,10 +563,10 @@ document.write(`
 <p>Higher values of <span class="math notranslate nohighlight">\(P\)</span> correspond to greater levels of corruption.</p>
 <p>A simplification of <a class="reference internal" href="#equation-impulse">(5)</a> for the case in which <span class="math notranslate nohighlight">\(n(x,y)\)</span> replaces <span class="math notranslate nohighlight">\(s(x,y)\)</span></p>
 <div class="math notranslate nohighlight" id="equation-impulse-2">
-<span class="eqno">(6)<a class="headerlink" href="#equation-impulse-2" title="Permalink to this equation">#</a></span>\[\begin{split}\[{f(x,y)} = \begin{cases}
+<span class="eqno">(6)<a class="headerlink" href="#equation-impulse-2" title="Permalink to this equation">#</a></span>\[\begin{split}{f(x,y)} = \begin{cases}
     s(x,y)\text{ with probability 1-P} \\
     n(x,y) \text{ with probability P}
-\end{cases}\]\end{split}\]</div>
+\end{cases}\end{split}\]</div>
 <p>Impulse noise can be static or dynamic. In the case of static impulse noise, its pixel values get modified by only two values: either the low or high value in the range of pixel values. For instance, in an 8-bit grayscale image with values ranging from 0 (black) to 255 (white), dark pixels corrupted by impulse noise would be replaced by 255, and white pixels would be replaced by 0. In the case of dynamic impulse noise, pixels are modified independently, with random values between 0 and 255.</p>
 <p>Next, we review the types of noise we may encounter.</p>
 </section>
@@ -626,7 +626,7 @@ document.write(`
 </ul>
 <p>It is additive in nature, independent at each pixel, independent of signal, and has a probability density <a class="reference internal" href="#equation-gaussian-pdf">(7)</a> equal to that of the Gaussian distribution.</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-pdf">
-<span class="eqno">(7)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[P(x|\mu, \sigma) = \frac{1}{sqrt\{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</div>
+<span class="eqno">(7)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean gray value, and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
 <figure class="align-default" id="mmg-gaussian">
 <img alt="../_images/mammogram_gaussian.png" src="../_images/mammogram_gaussian.png" />
