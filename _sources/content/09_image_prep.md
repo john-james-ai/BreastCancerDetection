@@ -260,7 +260,7 @@ Pr(f=\text{max}) = \frac{\alpha}{2}
 Pr(f=\text{min}) = \frac{\alpha}{2}
 ```
 
-For instance, {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.2$. Approximately 80%  ($1-\alpha$) of the image is unaltered, and 20% ($\alpha$) of the pixels have been changed to black or white.
+For instance, {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.3$. Approximately 70%  ($1-\alpha$) of the image is unaltered, and 30% ($\alpha$) of the pixels have been changed to black or white.
 
 ```{figure} ../figures/mammogram_snp.png
 ---
