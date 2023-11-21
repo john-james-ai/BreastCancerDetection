@@ -198,6 +198,9 @@ Mammogram Gaussian Noise
 
 In {numref}`mmg_gaussian` (b) we see the effect of a small amount of noise ($\sigma^2$ = 0.01). In {numref}`mmg_gaussian` (c), the noise has been increased by a factor of 10 ($\sigma^2 = 0.1$). Notice the overall 'fuzziness'. Increasing the noise by another factor of ten ({numref}`mmg_gaussian` (d)), the noise is much more objectionable.
 
+
+
+
 ### Quantization Noise
 
 Quantization noise arises out of the process of converting a continuous analog image to a discrete digital representation. This Analog to Digital Conversion (ADC) consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, $x$, and $y$. It defines the spatial resolution or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values. This process defines the number of gray levels that each pixel can take.
@@ -218,7 +221,56 @@ The image in {numref}`mmg_quantize` has been quantized to only one bit. Note tha
 
 ### Speckle Noise
 
-Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial dependent which makes it one of the more complex image noise models. When X-ray
+Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.
+
+```{figure} ../figures/mammogram_speckle.png
+---
+name: mmg_speckle
+---
+Mammogram Speckle Noise
+
+```
+
+Figure {numref}`mmg_speckle` illustrates several distributions of speckle degradation.
+
+### Salt and Pepper Noise
+
+Salt and pepper noise arises during Analog to Digital Conversion (ADC) and image transmission due to bit errors. An image degraded by salt and pepper noise has dark pixels in light areas and light pixels in dark backgrounds, giving the image a “salt and pepper” appearance.
+
+Salt and pepper noise is an example of impulse noise and is modeled as follows. Let
+
+- $s(x,y)$ be the original 8-bit image, with minimum and maximum pixels of 0, and 255 respectively,
+- $f(x,y)$ be the image after it has been altered by salt and pepper noise, and
+- $\alpha$ is the probability that a pixel is affected by salt and pepper noise, typically less than 0.1.
+
+A simple model is as follows:
+
+```{math}
+:label:snp
+Pr(f=s) = 1 - \alpha
+```
+
+```{math}
+:label: snp_salt
+Pr(f=\text{max}) = \frac{\alpha}{2}
+```
+
+```{math}
+:label: snp_pepper
+Pr(f=\text{min}) = \frac{\alpha}{2}
+```
+
+For instance, figure {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.2$. Approximately 80% of the image is unaltered, and 20% of the pixels have been changed to black or white.
+
+```{figure} ../figures/mammogram_snp.png
+---
+name: mmg_snp
+---
+Mammogram Salt and Pepper Noise
+```
+
+Salt and pepper noise is easily removed with various order statistic filters such as the weighted median or lower-upper-middle (LUM) filters.
+
 
 ### Poisson Noise
 
