@@ -167,7 +167,7 @@ The types of noise most inherent in screen-film mammography are summarized in {n
 
 ```
 
-### Gaussian Noise
+#### Gaussian Noise
 
 > "Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along." (Sir Francis Galton, 1889)
 
@@ -198,10 +198,7 @@ Mammogram Gaussian Noise
 
 In {numref}`mmg_gaussian` (b) we see the effect of a small amount of noise ($\sigma^2$ = 0.01). In {numref}`mmg_gaussian` (c), the noise has been increased by a factor of 10 ($\sigma^2 = 0.1$). Notice the overall 'fuzziness'. Increasing the noise by another factor of ten ({numref}`mmg_gaussian` (d)), the noise is much more objectionable.
 
-
-
-
-### Quantization Noise
+#### Quantization Noise
 
 Quantization noise arises out of the process of converting a continuous analog image to a discrete digital representation. This Analog to Digital Conversion (ADC) consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, $x$, and $y$. It defines the spatial resolution or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values. This process defines the number of gray levels that each pixel can take.
 
@@ -219,7 +216,7 @@ Mammogram Quantization Noise
 
 The image in {numref}`mmg_quantize` has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as "scalloped".
 
-### Speckle Noise
+#### Speckle Noise
 
 Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.
 
@@ -233,7 +230,7 @@ Mammogram Speckle Noise
 
 {numref}`mmg_speckle` illustrates several distributions of speckle degradation.
 
-### Salt and Pepper Noise
+#### Salt and Pepper Noise
 
 Salt and pepper noise arises during Analog to Digital Conversion (ADC) and image transmission due to bit errors. An image degraded by salt and pepper noise has dark pixels in light areas and light pixels in dark backgrounds, giving the image a “salt and pepper” appearance.
 
@@ -269,9 +266,7 @@ name: mmg_snp
 Mammogram Salt and Pepper Noise
 ```
 
-
-
-### Poisson Noise
+#### Poisson Noise
 
 Image sensors measure scene irradiance by counting the number of discrete photons incident on the sensor over a given time interval. Since the detection of individual photons can be treated as independent events that follow a random temporal distribution, photon counting can be modeled as a Poisson process. The number of photons $N$ measured by a given sensor element over some time interval $t$ can be described by the standard Poisson distribution:
 
@@ -294,7 +289,7 @@ Mammogram Poisson Noise
 
 The image in {numref}`mmg_poisson` shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.
 
-## Filters
+### Denoiser Methods
 
 Image filtering techniques have broad applicability in biomedical image analysis and processing. In fact, most biomedical image analysis involves the application of image filtering at stages prerequisite to analysis. Fields such as signal processing, statistics, information theory, and computer vision have produced a considerable and growing body of research devoted to the design, development, and testing of filtering methods to improve the signal-to-noise ratio (SNR) in audio, video, and imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used filtering techniques used in denoising biomedical images, with a focus on applications in mammography.
 
@@ -306,7 +301,7 @@ For this effort, we focus on five classes of filters commonly applied to the tas
 4. **Adaptive Median Filter**: Median filter with variable window size {cite}`hwangAdaptiveMedianFilters1995`, and
 5. **Non-Local Means Filter**: Filtering based upon non-local averaging of all pixels in the image {cite}`buadesNonLocalAlgorithmImage2005`.
 
-### Mean Filter
+#### Mean Filter
 
 Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, low-pass filter of the linear class. Low-pass filters, also known as smoothing or blurring filters, are The most basic of filtering operations is called "low-pass"
 Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a *convolutional filter*, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
