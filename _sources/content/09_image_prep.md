@@ -195,26 +195,105 @@ name: mmg_gaussian
 Mammogram Gaussian Noise
 
 ```
-In {numref}{mmg_gaussian} we see the effects of various levels of Gaussian noise.
+
+In {numref}`mmg_gaussian` (b) we see the effect of a small amount of noise ($\sigma^2$ = 0.01). In {numref}`mmg_gaussian` (c), the noise has been increased by a factor of 10 ($\sigma^2 = 0.1$). Notice the overall 'fuzziness'. Increasing the noise by another factor of ten ({numref}`mmg_gaussian` (d)), the noise is much more objectionable.
+
+
+
 
 ### Quantization Noise
 
-Quantization noise arises out of the Analog to Digital Conversion (ADC) process. ADC consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, $x$, and $y$, which defines the spatial resolution, or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values and determines the number of grey levels that each pixel can take.
+Quantization noise arises out of the process of converting a continuous analog image to a discrete digital representation. This Analog to Digital Conversion (ADC) consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, $x$, and $y$. It defines the spatial resolution or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values. This process defines the number of gray levels that each pixel can take.
 
-Quantization noise is an unavoidable aspect of ADC. An analog signal is continuous, with infinite accuracy, while the digital signal's accuracy depends upon the quantization resolution, or number of bits in the ADC. A common assumption is that quantization noise is additive, uniformly distributed and signal dependent, unless other noise sources are large enough to cause dithering, the addition of random noise to the pre-quantized signal.
+Quantization noise is an unavoidable aspect of ADC. An analog signal is continuous, with (almost) infinite accuracy, while the digital signal's accuracy depends upon the quantization resolution or number of bits in the ADC. A common assumption is that quantization noise is additive, uniformly distributed, and signal-independent unless the number of quantization levels are small. In which case, the noise is correlated on a pixel-by-pixel basis, and is not uniformly distributed {cite}`bovikHandbookImageVideo2000`.
+
+Let $\triangle$ be the step size, then quantization noise, $q$, is modeled as being mean-centered and uniform between $\frac{-\triangle}{2}$ and $\frac{\triangle}{2}$. The variance is $\frac{\triangle^2}{12}$.
+
+```{figure} ../figures/mammogram_quantize.png
+---
+name: mmg_quantize
+---
+Mammogram Quantization Noise
+
+```
+
+The image in {numref}`mmg_quantize` has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as "scalloped".
+
+### Speckle Noise
+
+Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.
+
+```{figure} ../figures/mammogram_speckle.png
+---
+name: mmg_speckle
+---
+Mammogram Speckle Noise
+
+```
+
+Figure {numref}`mmg_speckle` illustrates several distributions of speckle degradation.
+
+### Salt and Pepper Noise
+
+Salt and pepper noise arises during Analog to Digital Conversion (ADC) and image transmission due to bit errors. An image degraded by salt and pepper noise has dark pixels in light areas and light pixels in dark backgrounds, giving the image a “salt and pepper” appearance.
+
+Salt and pepper noise is an example of impulse noise and is modeled as follows. Let
+
+- $s(x,y)$ be the original 8-bit image, with minimum and maximum pixels of 0, and 255 respectively,
+- $f(x,y)$ be the image after it has been altered by salt and pepper noise, and
+- $\alpha$ is the probability that a pixel is affected by salt and pepper noise, typically less than 0.1.
+
+A simple model is as follows:
+
+```{math}
+:label:snp
+Pr(f=s) = 1 - \alpha
+```
+
+```{math}
+:label: snp_salt
+Pr(f=\text{max}) = \frac{\alpha}{2}
+```
+
+```{math}
+:label: snp_pepper
+Pr(f=\text{min}) = \frac{\alpha}{2}
+```
+
+For instance, figure {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.2$. Approximately 80% of the image is unaltered, and 20% of the pixels have been changed to black or white.
+
+```{figure} ../figures/mammogram_snp.png
+---
+name: mmg_snp
+---
+Mammogram Salt and Pepper Noise
+```
+
+Salt and pepper noise is easily removed with various order statistic filters such as the weighted median or lower-upper-middle (LUM) filters.
+
 
 ### Poisson Noise
 
-Image sensors measure scene irradiance by counting the number of discrete photons incident on the sensor over a given time interval. Since the detection of individual photons can be treated as independent events that follow a random temporal distribution, photon counting can be modeled as a Poisson process and the number of photons $N$ measured by given sensor element over some time interval $t$ can be described by the standard Poisson distribution:
+Image sensors measure scene irradiance by counting the number of discrete photons incident on the sensor over a given time interval. Since the detection of individual photons can be treated as independent events that follow a random temporal distribution, photon counting can be modeled as a Poisson process. The number of photons $N$ measured by a given sensor element over some time interval $t$ can be described by the standard Poisson distribution:
 
 ```{math}
 :label: poisson_pdf
 Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}
 ```
 
-where $\lambda$ is he expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise, or Poisson noise.
+where $\lambda$ is the expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise or Poisson noise.
 
-Since the photon count follows a Poisson distribution, it has the property that the variance, $Var[N]$ is equal to the expectation, $E[N]$. This shows that photon noise is signal dependent and that the standard deviation grows with the square root of the signal.
+Since the photon count follows a Poisson distribution, it has the property that the variance, $Var[N]$ is equal to the expectation, $E[N]$. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.
+
+```{figure} ../figures/mammogram_poisson.png
+---
+name: mmg_poisson
+---
+Mammogram Poisson Noise
+
+```
+
+The image in {numref}`mmg_poisson` shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.
 
 ## Filters
 
