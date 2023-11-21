@@ -440,33 +440,24 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-repositories">Initialize Repositories</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-overview">Image Preprocessing Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-problem-statement">Image Denoising Problem Statement</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-methods">Image Denoising Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#meanfilter">MeanFilter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guassianfilter">GuassianFilter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">Normalization</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cascading-property">Cascading Property</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#separability">Separability</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-gaussian-kernel">Discrete Gaussian Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noise-models">Noise Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additive-noise-model">Additive Noise Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplicative-noise-model">Multiplicative Noise Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#impulse-noise-model">Impulse Noise Model</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#denoising-methods">Denoising Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">MeanFilter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussianfilter">GaussianFilter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-noise-in-screen-film-mammography">Types of Noise in Screen-Film Mammography</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-noise">Gaussian Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-noise">Quantization Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-noise">Poisson Noise</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median Filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bilateral-filter">Bilateral Filter</a></li>
 </ul>
             </nav>
         </div>
@@ -480,268 +471,202 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="image-preprocessing">
 <h1>Image Preprocessing<a class="headerlink" href="#image-preprocessing" title="Permalink to this heading">#</a></h1>
-<p>Optimizing mammography for deep learning will comprise a series of image preprocessing steps. Denoising, artifact removal, pectoral muscle removal, and image enhancement are among the most essential steps in medical image preprocessing, and determining the optimal methods for these steps will be to a degree, an exercise in experimentation.  In this section, we conduct experiments that will determine the image preprocessing methods that will ultimately be applied to each image before model training.</p>
-<p>This section will be organized as follows:</p>
-<ol class="arabic simple">
-<li><p><strong>Setup</strong>: Initialize the repositories that will contain the images, preprocessing tasks, and image quality evaluations and extract a multivariate stratified sample of the images for experimentation.</p></li>
-<li><p><strong>Denoise</strong>: Conduct our first experiments with denoising methods</p></li>
-</ol>
-<p>Import modules</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../..&quot;</span><span class="p">)))</span>
-<span class="kn">from</span> <span class="nn">bcd.config</span> <span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span> <span class="nn">bcd.container</span> <span class="kn">import</span> <span class="n">BCDContainer</span>
-<span class="kn">from</span> <span class="nn">bcd.etl.load</span> <span class="kn">import</span> <span class="n">Loader</span>
-<span class="kn">from</span> <span class="nn">bcd.preprocess.image.experiment.denoise</span> <span class="kn">import</span> <span class="n">DenoiseExperiment</span>
-<span class="kn">from</span> <span class="nn">bcd.preprocess.image.method.denoise</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">BilateralFilter</span><span class="p">,</span>
-    <span class="n">GaussianFilter</span><span class="p">,</span>
-    <span class="n">MeanFilter</span><span class="p">,</span>
-    <span class="n">MedianFilter</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Wire our dependencies.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">container</span> <span class="o">=</span> <span class="n">BCDContainer</span><span class="p">()</span>
-<span class="n">container</span><span class="o">.</span><span class="n">init_resources</span><span class="p">()</span>
-<span class="n">container</span><span class="o">.</span><span class="n">wire</span><span class="p">(</span>
-    <span class="n">packages</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;bcd.dal.repo&quot;</span><span class="p">,</span> <span class="s2">&quot;bcd.preprocess.image.experiment&quot;</span><span class="p">,</span> <span class="s2">&quot;bcd.dal.io&quot;</span><span class="p">,</span> <span class="s2">&quot;bcd.etl&quot;</span>
-    <span class="p">]</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_parameters docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Section parameters</span>
-<span class="n">SETUP_COMPLETE</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">DENOISE_COMPLETE</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">BATCHSIZE</span> <span class="o">=</span> <span class="mi">16</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
-<section id="initialize-repositories">
-<h3>Initialize Repositories<a class="headerlink" href="#initialize-repositories" title="Permalink to this heading">#</a></h3>
-<p>Experiment repositories are reset.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">SETUP_COMPLETE</span><span class="p">:</span>
-    <span class="n">uow</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">dal</span><span class="o">.</span><span class="n">uow</span><span class="p">()</span>
-    <span class="n">uow</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">StdinNotImplementedError</span><span class="g g-Whitespace">                  </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">SETUP_COMPLETE</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">uow</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">dal</span><span class="o">.</span><span class="n">uow</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="n">uow</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-
-<span class="nn">File ~/projects/bcd/bcd/dal/repo/uow.py:100,</span> in <span class="ni">UoW.reset</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Resets all repositories for the current mode.&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span> <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;This will restore all repositories in the current mode to their initial state. Proceed? [Y/N]&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">100</span> <span class="n">proceed</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">101</span> <span class="k">if</span> <span class="s2">&quot;y&quot;</span> <span class="ow">in</span> <span class="n">proceed</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="bp">self</span><span class="o">.</span><span class="n">image_repo</span><span class="o">.</span><span class="n">delete_by_mode</span><span class="p">()</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/ipykernel/kernelbase.py:1201,</span> in <span class="ni">Kernel.raw_input</span><span class="nt">(self, prompt)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1199</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allow_stdin</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1200</span>     <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;raw_input was called, but this frontend does not support input requests.&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1201</span>     <span class="k">raise</span> <span class="n">StdinNotImplementedError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1202</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_request</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1203</span>     <span class="nb">str</span><span class="p">(</span><span class="n">prompt</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1204</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_parent_ident</span><span class="p">[</span><span class="s2">&quot;shell&quot;</span><span class="p">],</span>
-<span class="g g-Whitespace">   </span><span class="mi">1205</span>     <span class="bp">self</span><span class="o">.</span><span class="n">get_parent</span><span class="p">(</span><span class="s2">&quot;shell&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1206</span>     <span class="n">password</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1207</span> <span class="p">)</span>
-
-<span class="ne">StdinNotImplementedError</span>: raw_input was called, but this frontend does not support input requests.
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="load-data">
-<h3>Load Data<a class="headerlink" href="#load-data" title="Permalink to this heading">#</a></h3>
-<p>We will load 5% of the data, stratified by abnormality type, image view, BI-RADS assessment and cancer diagnosis.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">SETUP_COMPLETE</span><span class="p">:</span>
-    <span class="n">loader</span> <span class="o">=</span> <span class="n">Loader</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;abnormality_type&#39;</span><span class="p">,</span> <span class="s1">&#39;image_view&#39;</span><span class="p">,</span> <span class="s1">&#39;assessment&#39;</span><span class="p">,</span> <span class="s1">&#39;cancer&#39;</span><span class="p">])</span>
-    <span class="n">loader</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
+<p>Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.</p>
+<p>Exploratory analysis of the CBIS-DDSM mammograph illuminated several issues that compromise the discriminatory power of image detection and recognition models.</p>
+<ul class="simple">
+<li><p>Various artifacts (large texts and annotations) are present within the mammography that resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.</p></li>
+<li><p>Noise of various types in the images is an obstacle to effective feature extraction, image detection, recognition, and classification.</p></li>
+<li><p>Poor brightness and contrast levels in some mammograms may increase the influence of noise, and/or conceal important and subtle features.</p></li>
+<li><p>Malignant tumors are characterized by irregular shapes and ambiguous or blurred edges that complicate the ROI segmentation task.</p></li>
+<li><p>Dense breast tissue with pixel intensities similar to that of cancerous tissue, may conceal subtle structures of diagnostic importance.</p></li>
+<li><p>Deep learning models for computer vision require large datasets. The CBIS-DDSM has just over 3500 full mammogram images, a relatively small dataset for model training.</p></li>
+</ul>
+<p>Addressing these challenges is fundamentally important to model detection, recognition, and classification performance.</p>
+<section id="image-preprocessing-overview">
+<h2>Image Preprocessing Overview<a class="headerlink" href="#image-preprocessing-overview" title="Permalink to this heading">#</a></h2>
+<p>In this regard, a five-stage image preprocessing approach (<a class="reference internal" href="#image-prep"><span class="std std-numref">Fig. 1</span></a>) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.</p>
+<figure class="align-default" id="image-prep">
+<img alt="../_images/ImagePrep.png" src="../_images/ImagePrep.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Image Preprocessing Approach</span><a class="headerlink" href="#image-prep" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>We begin with an evaluation of various denoising methods commonly applied to mammography. Once a denoising method and its (hyper) parameters are selected, we move to the artifact removal stage. Image binarizing and thresholding methods are evaluated, then morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast with Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Additive White Gaussian Noise (AWGN) is also added to improve the generalized performance of the neural network and mitigate model overfitting. Finally, we extract the ROIs using automated pixel intensity thresholding to create a binary mask which is applied to the enhanced images.</p>
+<p>Let’s dive in.</p>
 </section>
 <section id="denoise">
 <h2>Denoise<a class="headerlink" href="#denoise" title="Permalink to this heading">#</a></h2>
-<p>Noise in mammography is random variations in image brightness, color, or contrast that may have been produced during the image capture process. These fluctuations are largely categorized as salt and pepper noise, speckle noise, Gaussian noise, and Poisson noise. Salt and pepper noise, also known as spike noise, impulsive noise or flat-tail distributed noise will appear as black and white dots on the image.  Speckle noise is mainly found in radar images whereby the return signal from an object causes random fluctuations within the image. Gaussian noise is additive in nature and follows a Gaussian distribution. Finally, Poisson noise or shot noise appears when there is statistical variation in image brightness, primarily due to characteristics of the capturing device, such as the number of photons used in low-dose X-ray mammography.</p>
-<section id="image-denoising-problem-statement">
-<h3>Image Denoising Problem Statement<a class="headerlink" href="#image-denoising-problem-statement" title="Permalink to this heading">#</a></h3>
-<p>Mathematically, the problem of image denoising can be modeled as:</p>
-<div class="math notranslate nohighlight">
-\[
-y = x + n
-\]</div>
-<p>where y is the observed noisy image, x is the unknown clean image and n represents additive white Gaussian noise (AWGN) with a standard deviation <span class="math notranslate nohighlight">\(\sigma_n\)</span>. Since there is no single unique solution x to the denoising model above, our problem is ill-posed. Yet, the literature is replete with techniques for estimating <span class="math notranslate nohighlight">\(\hat{x}\)</span>.  A survey of such techniques is well beyond the scope of this effort; yet we’ll introduce a few of the most commonly used methods. As mammography is inherently noisy and usually contains low-contrast regions, our denoising challenges; therefore are to:</p>
+<p>What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. Yet, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For denoising, we distinguish noise from other imperfections, with the following definition:</p>
+<blockquote>
+<div><p>Noise is the discrepancy between the true amount of light <span class="math notranslate nohighlight">\(s_i\)</span> being measured at pixel <span class="math notranslate nohighlight">\(i\)</span>, and the corresponding measured pixel value <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
+</div></blockquote>
+<p>With that, we can state the denoising problem as follows:</p>
+<blockquote>
+<div><p>Image denoising aims to provide a function <span class="math notranslate nohighlight">\(d(x) \approx s\)</span> that takes a noisy image <span class="math notranslate nohighlight">\(x\)</span> as input and returns an approximation of the true clean image  <span class="math notranslate nohighlight">\(s\)</span> as output.</p>
+</div></blockquote>
+<p>Here, we’ve implicitly decomposed an image, <span class="math notranslate nohighlight">\(f\)</span> into a desired or uncorrupted signal <span class="math notranslate nohighlight">\(s\)</span> and a noise component <span class="math notranslate nohighlight">\(n\)</span>. How are <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(n\)</span> related? Are they independent? Can we eliminate <span class="math notranslate nohighlight">\(n\)</span> with denoising? Next, we review how noise is modeled in screen-film mammography.</p>
+<section id="noise-models">
+<h3>Noise Models<a class="headerlink" href="#noise-models" title="Permalink to this heading">#</a></h3>
+<p>Broadly speaking, noise can be modeled as additive, multiplicative, or impulse.</p>
+<section id="additive-noise-model">
+<h4>Additive Noise Model<a class="headerlink" href="#additive-noise-model" title="Permalink to this heading">#</a></h4>
+<p>The additive noise model describes the abrupt, and undesired signal that gets added to an image, and is given by:</p>
+<div class="math notranslate nohighlight" id="equation-additive-noise-model">
+<span class="eqno">(1)<a class="headerlink" href="#equation-additive-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)+n(x,y)\]</div>
+<p>where:</p>
 <ul class="simple">
-<li><p>ensure flat areas are smooth,</p></li>
-<li><p>protect edges from blurring,</p></li>
-<li><p>preserve textures in the mammography, and</p></li>
-<li><p>generate no new artifacts</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied;</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the observed noisy image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image signal which has been corrupted by a noise process;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> is the signal-independent, random noise that is added to the original noise-free image.</p></li>
 </ul>
-<p>An additional challenge that we’ll introduce relates to the computational efficiency of the denoising technique. Given the volume of images to preprocess, our focus will be the methods that have linear time complexity or better.</p>
+<p>Additive noise, the most common decomposition, can arise from numerous sources, including radiation scatter from the surface before the image is sensed; electrical noise in image sensors, random charge fluctuations induced by thermal noise, environmental electromagnetic interference, and noise associated with the acquisition system. However, dominant source of additive noise in X-ray mammography is the digitization process <span id="id1">[<a class="reference internal" href="99_references.html#id332" title="Alan C. Bovik, editor. Handbook of image and video processing. Academic Press series in communications, networking and multimedia. Academic Press, San Diego, 2000. ISBN 978-0-12-119790-2.">12</a>]</span>.</p>
 </section>
-<section id="image-denoising-methods">
-<h3>Image Denoising Methods<a class="headerlink" href="#image-denoising-methods" title="Permalink to this heading">#</a></h3>
-<p>Image denoising is roughly classified into two categories: spatial domain methods and transform domain methods. Spatial domain methods remove noise by replacing image pixels with values derived from the pixel values in neighboring pixels. These are further classified into spatial domain filtering and variational denoising. The vast range of spatial domain filters is further classified into linear and non-linear filters. The original linear filters, MeanFilter and GaussianFilter are simple, computationally efficient, and intuitive. Non-linear filters such as the MedianFilter and Non-Local Means Filter reduce noise while preserving edges and textures from the original image.</p>
-<section id="meanfilter">
-<h4>MeanFilter<a class="headerlink" href="#meanfilter" title="Permalink to this heading">#</a></h4>
-<p>The MeanFilter, commonly used to reduce Gaussian noise, simply replaces each pixel value in an image with the mean value of its neighbors, including itself. A kernel specifies the shape and size of the neighborhood to
-be sampled when computing the mean and must be a positive and odd integer. Typical kernel sizes of 3,5, or 7 are used and represent square kernels of 3,5, or 7 pixels in the horizontal and vertical directions. The larger the kernel, the greater the blurring or smoothing effect in the image.</p>
-<p>The filter works by convolving the kernel over the image, estimating the local average intensities at each output pixel position. While, simple, and easy to implement, the MeanFilter has two drawbacks, namely:</p>
+<section id="multiplicative-noise-model">
+<h4>Multiplicative Noise Model<a class="headerlink" href="#multiplicative-noise-model" title="Permalink to this heading">#</a></h4>
+<p>Multiplicative noise (<a class="reference internal" href="#equation-multiplicative-noise-model">(2)</a>), by contrast, refers to the unwanted random signal that gets <em>multiplied</em> into an image during signal capture, transmission, or other processing.</p>
+<div class="math notranslate nohighlight" id="equation-multiplicative-noise-model">
+<span class="eqno">(2)<a class="headerlink" href="#equation-multiplicative-noise-model" title="Permalink to this equation">#</a></span>\[f(x,y)=s(x,y)\times n(x,y)\]</div>
+<p>where:</p>
 <ul class="simple">
-<li><p>A single outlier pixel value can significantly affect the mean value of all the pixels in its neighborhood, and</p></li>
-<li><p>Edges are blurred, which can be problematic if sharp edges are required in the output.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied;</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> refers to signal-dependent, random noise that is multiplied into <span class="math notranslate nohighlight">\(s(x,y)\)</span> during image capture, transmission, storage or other processing.</p></li>
 </ul>
+<p>Whereas additive noise is signal independent, multiplicative noise is based on the value of the image pixel; whereby, the amount of noise multiplied into an image pixel is proportional to its intensity.</p>
+<p>Note that we can transform a multiplicative noise model to an additive noise model by taking the logarithm of both sides of the multiplication model. The additive model becomes multiplicative by exponentiation.</p>
+<p>For instance, <a class="reference internal" href="#equation-multiplicative-noise-model">(2)</a> becomes:</p>
+<div class="math notranslate nohighlight" id="equation-log-mult-model">
+<span class="eqno">(3)<a class="headerlink" href="#equation-log-mult-model" title="Permalink to this equation">#</a></span>\[log f = log(sn) = log (s) + log (n)\]</div>
+<p>Similarly, <a class="reference internal" href="#equation-additive-noise-model">(1)</a> becomes:</p>
+<div class="math notranslate nohighlight" id="equation-exp-add-model">
+<span class="eqno">(4)<a class="headerlink" href="#equation-exp-add-model" title="Permalink to this equation">#</a></span>\[e^f = e^{s_n} = e^f e^n.\]</div>
+<p>A common strategy for addressing multiplicative noise is to convert the noise in the image to additive noise, then apply an appropriate spatial domain filter.</p>
 </section>
-<section id="guassianfilter">
-<h4>GuassianFilter<a class="headerlink" href="#guassianfilter" title="Permalink to this heading">#</a></h4>
-<p>Like the MeanFilter, the GaussianFilter is a 2-D convolution operator that is used to remove noise. By contrast; however, the GaussianFilter uses a different kernel that represents the shape of an isotropic (i.e. circularly symmetric) Gaussian distribution with the following form:</p>
-<div class="math notranslate nohighlight">
-\[
-G(x,y,\sigma) = \frac{1}{2\pi\sigma^2}e^-{\frac{x^2+y^2}{2\sigma^2}}
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(x\)</span> is the distance from the origin in the horizontal axis, <span class="math notranslate nohighlight">\(y\)</span> is the distance from the origin in the vertical axis, and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation of the distribution, which is assumed to have a zero mean. The standard deviation, or scale of the Gaussian determines the amount of smoothing.</p>
-<p>The distribution is illustrated as follows:</p>
-<p><img alt="2D Gaussian Distribution" src="home/john/projects/bcd/jbook/figures/gaussian.png" /></p>
-<p>The GaussianFilter works by convolving this 2-D distribution as a point-spread function, giving more weight to the central pixels, having the highest Gaussian value, and lesser weights to the neighbors as the distances from the original pixel increase.  Since the image is stored as a collection of discrete pixels, we need to compute a discrete approximation of the Gaussian function before we can perform the convolution. We’ll explore an approach to the problem of discretizing the Gaussian function, but first, let’s review some of the properties of the Gaussian kernel.</p>
-</section>
-<section id="normalization">
-<h4>Normalization<a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h4>
-<p>The <span class="math notranslate nohighlight">\(\frac{1}{2\pi\sigma^2}\)</span> term in the Gaussian distribution is a normalization constant that ensures that its integral over its full domain is unity for every <span class="math notranslate nohighlight">\(\sigma\)</span> and that the grey level of the image remains the same when we blur the image with this kernel. This means that increasing the <span class="math notranslate nohighlight">\(\sigma\)</span> of the kernel substantially reduces the amplitude of the impulse response of the Gaussian filter. This property is known as average grey level invariance.</p>
-</section>
-<section id="cascading-property">
-<h4>Cascading Property<a class="headerlink" href="#cascading-property" title="Permalink to this heading">#</a></h4>
-<p>The shape of the Gaussian kernel is scale-invariant. When we convolve two Gaussian kernels we get a new wider Gaussian with a variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>, which is the sum of the variances of the constituting Gaussians. In this way, the Gaussian is known to be a self-similar function. As such, we can concatenate Gaussians to create a larger blurring Gaussian analogous to a cascade of waterfalls spanning the same height as the total waterfall.</p>
-</section>
-<section id="separability">
-<h4>Separability<a class="headerlink" href="#separability" title="Permalink to this heading">#</a></h4>
-<p>An N-dimensional Gaussian kernel can be described in terms of a regular product of N one-dimensional kernels. For instance:</p>
-<div class="math notranslate nohighlight">
-\[
-g_{2D}(x, y, \sigma^2_1+\sigma^2_2=g_{1D}(x,\sigma_1^2)\otimes
-g_{1D}(x,\sigma_2^2)
-\]</div>
-<p>Since higher dimensional Gaussian kernels can be described in terms of separate 1D kernels, they are called separable. The property of separability is elemental to discrete Gaussian kernel estimation.</p>
-</section>
-<section id="discrete-gaussian-kernel">
-<h4>Discrete Gaussian Kernel<a class="headerlink" href="#discrete-gaussian-kernel" title="Permalink to this heading">#</a></h4>
-<p>Now, we move to the task of estimating the discrete Gaussian kernel. One popular approach is to convolve the original image with the discrete Gaussian kernel <span class="math notranslate nohighlight">\(T(n,t)\)</span> <span id="id1">[]</span></p>
-<div class="math notranslate nohighlight">
-\[
-L(x,t)=\displaystyle\sum_{n=-\infty}^\infty f(x-n)T(n,t)
-\]</div>
-<p>where</p>
-<div class="math notranslate nohighlight">
-\[
-T(n,t)=e^{-t}I_n(t)
-\]</div>
-<p>and <span class="math notranslate nohighlight">\(I_n(t)\)</span> denotes the modified Bessel function, a generalization of the sine function.  This discrete counterpart to the continuous Gaussian kernel is also the solution to the discrete diffusion equation in discrete space, continuous time, a characteristic we will revisit.</p>
-<p>In theory, the Gaussian function is for <span class="math notranslate nohighlight">\(x\in (-\infty,\infty)\)</span> and is non-zero for every point on the image, requiring an infinitely wide kernel. In practice, however, values at a distance beyond three standard deviations
-from the mean are small enough to be considered effectively zero.  Hence, this filter can be truncated in the spatial domain as follows:</p>
-<div class="math notranslate nohighlight">
-\[
-L(x,t)=\displaystyle\sum_{n=-M}^M f(x-n)T(n,t)
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(M=C\sigma+1\)</span>, where <span class="math notranslate nohighlight">\(C\)</span> is often chosen to be somewhere between 3 and 6.</p>
-<p>Alternatively, the discrete Gaussian can be implemented using a frequency-domain approach, leveraging the closed-form expression for its discrete-time Fourier transform:</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{T}(\theta,t)=\displaystyle\sum_{n=-\infty}^\infty T(n,t)e^{-i\theta n}=e^{t(\text{cos }\theta-1)}.
-\]</div>
-<div class="math notranslate nohighlight">
-\[\]</div>
-</section>
-</section>
-<section id="denoising-methods">
-<h3>Denoising Methods<a class="headerlink" href="#denoising-methods" title="Permalink to this heading">#</a></h3>
-<p>These experiments will focus on linear (MeanFilter, GaussianFilter) and non-linear (MedianFilter) spatial domain filters for noise reduction. The literature is replete with</p>
-<section id="id2">
-<h4>MeanFilter<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
-<p>The MeanFilter simply replaces each pixel value in an image with the mean value of its neighbors, including itself. A kernel specifies the shape and size of the neighborhood to be sampled when computing the mean and must be a positive and odd integer. Typical kernel sizes of 3,5, or 7 are used and represent square kernels of 3,5, or 7 pixels in the horizontal and vertical directions. The larger the kernel, the greater the blurring or smoothing effect in the image.
-MeanFilter is simple, intuitive, and easy to implement; however, it has two drawbacks, namely:</p>
+<section id="impulse-noise-model">
+<h4>Impulse Noise Model<a class="headerlink" href="#impulse-noise-model" title="Permalink to this heading">#</a></h4>
+<p>Lastly, we have the impulse noise model, which represents a separate mathematical model, neither additive nor multiplicative. Impulse noise arises in the image as a consequence of signal transmission errors. Mathematically, we can describe impulse noise by the following equation.</p>
+<div class="math notranslate nohighlight" id="equation-impulse">
+<span class="eqno">(5)<a class="headerlink" href="#equation-impulse" title="Permalink to this equation">#</a></span>\[\begin{split}{f(x,y)} = \begin{cases}
+    s(x,y)\text{ with probability 1-P} \\
+    s(x,y) + n(x,y) \text{ with probability P}
+\end{cases}\end{split}\]</div>
+<p>where:</p>
 <ul class="simple">
-<li><p>A single outlier pixel value can significantly affect the mean value of all the pixels in its neighborhood, and</p></li>
-<li><p>Edges are blurred, which can be problematic if sharp edges are required in the output.</p></li>
+<li><p>0 \le P \le 1</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied;</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> refers random noise</p></li>
 </ul>
+<p>Higher values of <span class="math notranslate nohighlight">\(P\)</span> correspond to greater levels of corruption.</p>
+<p>A simplification of <a class="reference internal" href="#equation-impulse">(5)</a> for the case in which <span class="math notranslate nohighlight">\(n(x,y)\)</span> replaces <span class="math notranslate nohighlight">\(s(x,y)\)</span></p>
+<div class="math notranslate nohighlight" id="equation-impulse-2">
+<span class="eqno">(6)<a class="headerlink" href="#equation-impulse-2" title="Permalink to this equation">#</a></span>\[\begin{split}{f(x,y)} = \begin{cases}
+    s(x,y)\text{ with probability 1-P} \\
+    n(x,y) \text{ with probability P}
+\end{cases}\end{split}\]</div>
+<p>Impulse noise can be static or dynamic. In the case of static impulse noise, its pixel values get modified by only two values: either the low or high value in the range of pixel values. For instance, in an 8-bit grayscale image with values ranging from 0 (black) to 255 (white), dark pixels corrupted by impulse noise would be replaced by 255, and white pixels would be replaced by 0. In the case of dynamic impulse noise, pixels are modified independently, with random values between 0 and 255.</p>
+<p>Next, we review the types of noise we may encounter.</p>
 </section>
-<section id="gaussianfilter">
-<h4>GaussianFilter<a class="headerlink" href="#gaussianfilter" title="Permalink to this heading">#</a></h4>
-<p>Like the MeanFilter, the GaussianFilter is a 2-D convolution operator that is used to remove noise. By contrast, the GaussianFilter uses a different kernel that represents the shape of an isotropic (i.e. circularly symmetric) Gaussian distribution with the following form:</p>
-<div class="math notranslate nohighlight">
-\[
-G(x,y) = \frac{1}{2\pi\sigma^2}e^{-{\frac{x^2+y^2}{2\sigma^2}}}
-\]</div>
-<hr class="docutils" />
-<p>The distribution is shown in <span class="xref std std-ref">gaussian</span></p>
+</section>
+<section id="types-of-noise-in-screen-film-mammography">
+<h3>Types of Noise in Screen-Film Mammography<a class="headerlink" href="#types-of-noise-in-screen-film-mammography" title="Permalink to this heading">#</a></h3>
+<p>The types of noise most inherent in screen-film mammography are summarized in <a class="reference internal" href="#noise-types"><span class="std std-numref">Table 1</span></a>.</p>
+<table class="table" id="noise-types">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Noise Types in Screen-Film Mammography</span><a class="headerlink" href="#noise-types" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Noise</p></th>
+<th class="head"><p>Model</p></th>
+<th class="head"><p>Signal Dependence</p></th>
+<th class="head"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Gaussian Noise</p></td>
+<td><p>Additive</p></td>
+<td><p>Independent</p></td>
+<td><p>Signal Acquisition / Transmission</p></td>
+</tr>
+<tr class="row-odd"><td><p>Quantization Noise</p></td>
+<td><p>Additive</p></td>
+<td><p>Dependent</p></td>
+<td><p>Digitization</p></td>
+</tr>
+<tr class="row-even"><td><p>Speckle Noise</p></td>
+<td><p>Multiplicative</p></td>
+<td><p>Dependent</p></td>
+<td><p>Signal Detection</p></td>
+</tr>
+<tr class="row-odd"><td><p>Salt &amp; Pepper Noise</p></td>
+<td><p>Impulse</p></td>
+<td><p>Independent</p></td>
+<td><p>Signal Transmission</p></td>
+</tr>
+<tr class="row-even"><td><p>Poisson Photon Counting Noise</p></td>
+<td><p>Neither / Both</p></td>
+<td><p>Dependent</p></td>
+<td><p>Signal Detection</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gaussian-noise">
+<h3>Gaussian Noise<a class="headerlink" href="#gaussian-noise" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>“Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along.” (Sir Francis Galton, 1889)</p>
+</div></blockquote>
+<p>One of the most significant discoveries in probability theory is the <strong>central limit theorem</strong>, which simply states that the sum of a large number of small independent random variables, under fairly mild conditions, is normally distributed.  This holds even when the underlying random variables are not normally distributed and when the random variables do not have the same distribution.</p>
+<p>Gaussian noise arises during data acquisition and is caused by many small, independent random contributions of factors such as:</p>
+<ul class="simple">
+<li><p>thermal vibration of atoms,</p></li>
+<li><p>heat variations in image sensors</p></li>
+<li><p>random variations in electronic signal, e.g. electronic circuit noise</p></li>
+</ul>
+<p>It is additive in nature, independent at each pixel, independent of signal, and has a probability density <a class="reference internal" href="#equation-gaussian-pdf">(7)</a> equal to that of the Gaussian distribution.</p>
+<div class="math notranslate nohighlight" id="equation-gaussian-pdf">
+<span class="eqno">(7)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean gray value, and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
+<figure class="align-default" id="mmg-gaussian">
+<img alt="../_images/mammogram_gaussian.png" src="../_images/mammogram_gaussian.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Mammogram Gaussian Noise</span><a class="headerlink" href="#mmg-gaussian" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In {numref}{mmg_gaussian} we see the effects of various levels of Gaussian noise.</p>
+</section>
+<section id="quantization-noise">
+<h3>Quantization Noise<a class="headerlink" href="#quantization-noise" title="Permalink to this heading">#</a></h3>
+<p>Quantization noise arises out of the Analog to Digital Conversion (ADC) process. ADC consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(y\)</span>, which defines the spatial resolution, or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values and determines the number of grey levels that each pixel can take.</p>
+<p>Quantization noise is an unavoidable aspect of ADC. An analog signal is continuous, with infinite accuracy, while the digital signal’s accuracy depends upon the quantization resolution, or number of bits in the ADC. A common assumption is that quantization noise is additive, uniformly distributed and signal dependent, unless other noise sources are large enough to cause dithering, the addition of random noise to the pre-quantized signal.</p>
+</section>
+<section id="poisson-noise">
+<h3>Poisson Noise<a class="headerlink" href="#poisson-noise" title="Permalink to this heading">#</a></h3>
+<p>Image sensors measure scene irradiance by counting the number of discrete photons incident on the sensor over a given time interval. Since the detection of individual photons can be treated as independent events that follow a random temporal distribution, photon counting can be modeled as a Poisson process and the number of photons <span class="math notranslate nohighlight">\(N\)</span> measured by given sensor element over some time interval <span class="math notranslate nohighlight">\(t\)</span> can be described by the standard Poisson distribution:</p>
+<div class="math notranslate nohighlight" id="equation-poisson-pdf">
+<span class="eqno">(8)<a class="headerlink" href="#equation-poisson-pdf" title="Permalink to this equation">#</a></span>\[Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is he expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise, or Poisson noise.</p>
+<p>Since the photon count follows a Poisson distribution, it has the property that the variance, <span class="math notranslate nohighlight">\(Var[N]\)</span> is equal to the expectation, <span class="math notranslate nohighlight">\(E[N]\)</span>. This shows that photon noise is signal dependent and that the standard deviation grows with the square root of the signal.</p>
 </section>
 </section>
+<section id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this heading">#</a></h2>
+<p>Image filtering techniques have broad applicability in biomedical image analysis and processing. In fact, most biomedical image analysis involves the application of image filtering at stages prerequisite to analysis. Fields such as signal processing, statistics, information theory, and computer vision have produced a considerable and growing body of research devoted to the design, development, and testing of filtering methods to improve the signal-to-noise ratio (SNR) in audio, video, and imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used filtering techniques used in denoising biomedical images, with a focus on applications in mammography.</p>
+<p>For this effort, we focus on five classes of filters commonly applied to the task of biomedical image noise reduction:</p>
+<ol class="arabic simple">
+<li><p><strong>Mean Filter</strong>: Also known as the average filter,</p></li>
+<li><p><strong>Median Filter</strong>: A non-linear noise reduction technique <span id="id2">[<a class="reference internal" href="99_references.html#id322" title="Gonzalo R. Arce. Nonlinear signal processing: a statistical approach. Wiley-Interscience, Hoboken, N.J, 2005. ISBN 978-0-471-67624-9.">13</a>]</span>,</p></li>
+<li><p><strong>Gaussian Filter</strong>: A linear noise reduction method based upon a Gaussian kernel <span id="id3">[<a class="reference internal" href="99_references.html#id323" title="J. Klapper and C. Harris. On the response and approximation of Gaussian filters. IRE Transactions on Audio, AU-7(3):80–87, May 1959. URL: http://ieeexplore.ieee.org/document/1166198/ (visited on 2023-11-15), doi:10.1109/TAU.1959.1166198.">14</a>]</span>,</p></li>
+<li><p><strong>Adaptive Median Filter</strong>: Median filter with variable window size <span id="id4">[<a class="reference internal" href="99_references.html#id324" title="H. Hwang and R.A. Haddad. Adaptive median filters: new algorithms and results. IEEE Transactions on Image Processing, 4(4):499–502, April 1995. URL: http://ieeexplore.ieee.org/document/370679/ (visited on 2023-11-15), doi:10.1109/83.370679.">15</a>]</span>, and</p></li>
+<li><p><strong>Non-Local Means Filter</strong>: Filtering based upon non-local averaging of all pixels in the image <span id="id5">[<a class="reference internal" href="99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">16</a>]</span>.</p></li>
+</ol>
 <section id="mean-filter">
 <h3>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]}</span>
-<span class="n">task</span> <span class="o">=</span> <span class="n">DenoiseExperiment</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">MeanFilter</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">batchsize</span><span class="o">=</span><span class="n">BATCHSIZE</span><span class="p">)</span>
-<span class="n">task</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, low-pass filter of the linear class. Low-pass filters, also known as smoothing or blurring filters, are The most basic of filtering operations is called “low-pass”
+Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a <em>convolutional filter</em>, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
+A kernel specifies the shape and size of the neighborhood to be sampled when computing the mean. Typically     Gaussian</p>
 </section>
-</section>
-<section id="median-filter">
-<h2>Median Filter<a class="headerlink" href="#median-filter" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]}</span>
-<span class="n">task</span> <span class="o">=</span> <span class="n">DenoiseExperiment</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">MedianFilter</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">batchsize</span><span class="o">=</span><span class="n">BATCHSIZE</span><span class="p">)</span>
-<span class="n">task</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="gaussian-filter">
-<h2>Gaussian Filter<a class="headerlink" href="#gaussian-filter" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kernel&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]}</span>
-<span class="n">task</span> <span class="o">=</span> <span class="n">DenoiseExperiment</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">GaussianFilter</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">batchsize</span><span class="o">=</span><span class="n">BATCHSIZE</span><span class="p">)</span>
-<span class="n">task</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="bilateral-filter">
-<h2>Bilateral Filter<a class="headerlink" href="#bilateral-filter" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -812,33 +737,24 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-{\frac{x^2+y^2}{2\sigma^2}}}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-repositories">Initialize Repositories</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-overview">Image Preprocessing Overview</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoise">Denoise</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-problem-statement">Image Denoising Problem Statement</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising-methods">Image Denoising Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#meanfilter">MeanFilter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guassianfilter">GuassianFilter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">Normalization</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cascading-property">Cascading Property</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#separability">Separability</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-gaussian-kernel">Discrete Gaussian Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#noise-models">Noise Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additive-noise-model">Additive Noise Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplicative-noise-model">Multiplicative Noise Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#impulse-noise-model">Impulse Noise Model</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#denoising-methods">Denoising Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">MeanFilter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussianfilter">GaussianFilter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-noise-in-screen-film-mammography">Types of Noise in Screen-Film Mammography</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-noise">Gaussian Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-noise">Quantization Noise</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-noise">Poisson Noise</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filters">Filters</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median Filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bilateral-filter">Bilateral Filter</a></li>
 </ul>
   </nav></div>
 

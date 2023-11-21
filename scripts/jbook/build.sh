@@ -11,12 +11,12 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 04:13:27 pm                                               #
-# Modified   : Thursday August 31st 2023 10:33:56 pm                                               #
+# Modified   : Friday November 17th 2023 08:08:08 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 echo $'\nPublishing jbook...'
-jb clean jbook/
+# jb clean jbook/
 jb build -W -n --keep-going jbook/
 ghp-import -n -p -f jbook/_build/html
