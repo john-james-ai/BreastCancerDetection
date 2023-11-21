@@ -672,10 +672,12 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\alpha\)</span> is the probability that a pixel is affected by salt and pepper noise, typically less than 0.1.</p></li>
 </ul>
 <p>A simple model is as follows:</p>
+<div class="math notranslate nohighlight" id="equation-snp">
+<span class="eqno">(8)<a class="headerlink" href="#equation-snp" title="Permalink to this equation">#</a></span>\[Pr(f=s) = 1 - \alpha\]</div>
 <div class="math notranslate nohighlight" id="equation-snp-salt">
-<span class="eqno">(8)<a class="headerlink" href="#equation-snp-salt" title="Permalink to this equation">#</a></span>\[Pr(f=\text{max}) = \frac{\alpha}{2}\]</div>
+<span class="eqno">(9)<a class="headerlink" href="#equation-snp-salt" title="Permalink to this equation">#</a></span>\[Pr(f=\text{max}) = \frac{\alpha}{2}\]</div>
 <div class="math notranslate nohighlight" id="equation-snp-pepper">
-<span class="eqno">(9)<a class="headerlink" href="#equation-snp-pepper" title="Permalink to this equation">#</a></span>\[Pr(f=\text{min}) = \frac{\alpha}{2}\]</div>
+<span class="eqno">(10)<a class="headerlink" href="#equation-snp-pepper" title="Permalink to this equation">#</a></span>\[Pr(f=\text{min}) = \frac{\alpha}{2}\]</div>
 <p>For instance, figure <a class="reference internal" href="#mmg-snp"><span class="std std-numref">Fig. 5</span></a> shows an 8-bit image with <span class="math notranslate nohighlight">\(\alpha=0.2\)</span>. Approximately 80% of the image is unaltered, and 20% of the pixels have been changed to black or white.</p>
 <figure class="align-default" id="mmg-snp">
 <img alt="../_images/mammogram_snp.png" src="../_images/mammogram_snp.png" />
@@ -689,7 +691,7 @@ document.write(`
 <h3>Poisson Noise<a class="headerlink" href="#poisson-noise" title="Permalink to this heading">#</a></h3>
 <p>Image sensors measure scene irradiance by counting the number of discrete photons incident on the sensor over a given time interval. Since the detection of individual photons can be treated as independent events that follow a random temporal distribution, photon counting can be modeled as a Poisson process. The number of photons <span class="math notranslate nohighlight">\(N\)</span> measured by a given sensor element over some time interval <span class="math notranslate nohighlight">\(t\)</span> can be described by the standard Poisson distribution:</p>
 <div class="math notranslate nohighlight" id="equation-poisson-pdf">
-<span class="eqno">(10)<a class="headerlink" href="#equation-poisson-pdf" title="Permalink to this equation">#</a></span>\[Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}\]</div>
+<span class="eqno">(11)<a class="headerlink" href="#equation-poisson-pdf" title="Permalink to this equation">#</a></span>\[Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is the expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise or Poisson noise.</p>
 <p>Since the photon count follows a Poisson distribution, it has the property that the variance, <span class="math notranslate nohighlight">\(Var[N]\)</span> is equal to the expectation, <span class="math notranslate nohighlight">\(E[N]\)</span>. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.</p>
 <figure class="align-default" id="mmg-poisson">

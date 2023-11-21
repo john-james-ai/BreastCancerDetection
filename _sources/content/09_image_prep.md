@@ -246,7 +246,7 @@ Salt and pepper noise is an example of impulse noise and is modeled as follows. 
 A simple model is as follows:
 
 ```{math}
-:label:snp
+:label: snp
 Pr(f=s) = 1 - \alpha
 ```
 
