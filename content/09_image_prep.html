@@ -660,7 +660,7 @@ document.write(`
 <p><span class="caption-number">Fig. 4 </span><span class="caption-text">Mammogram Speckle Noise</span><a class="headerlink" href="#mmg-speckle" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Figure <a class="reference internal" href="#mmg-speckle"><span class="std std-numref">Fig. 4</span></a> illustrates several distributions of speckle degradation.</p>
+<p><a class="reference internal" href="#mmg-speckle"><span class="std std-numref">Fig. 4</span></a> illustrates several distributions of speckle degradation.</p>
 </section>
 <section id="salt-and-pepper-noise">
 <h3>Salt and Pepper Noise<a class="headerlink" href="#salt-and-pepper-noise" title="Permalink to this heading">#</a></h3>
@@ -678,14 +678,13 @@ document.write(`
 <span class="eqno">(9)<a class="headerlink" href="#equation-snp-salt" title="Permalink to this equation">#</a></span>\[Pr(f=\text{max}) = \frac{\alpha}{2}\]</div>
 <div class="math notranslate nohighlight" id="equation-snp-pepper">
 <span class="eqno">(10)<a class="headerlink" href="#equation-snp-pepper" title="Permalink to this equation">#</a></span>\[Pr(f=\text{min}) = \frac{\alpha}{2}\]</div>
-<p>For instance, figure <a class="reference internal" href="#mmg-snp"><span class="std std-numref">Fig. 5</span></a> shows an 8-bit image with <span class="math notranslate nohighlight">\(\alpha=0.2\)</span>. Approximately 80% of the image is unaltered, and 20% of the pixels have been changed to black or white.</p>
+<p>For instance, <a class="reference internal" href="#mmg-snp"><span class="std std-numref">Fig. 5</span></a> shows an 8-bit image with <span class="math notranslate nohighlight">\(\alpha=0.2\)</span>. Approximately 80%  (<span class="math notranslate nohighlight">\(1-\alpha\)</span>) of the image is unaltered, and 20% (<span class="math notranslate nohighlight">\(\alpha\)</span>) of the pixels have been changed to black or white.</p>
 <figure class="align-default" id="mmg-snp">
-<img alt="../_images/mammogram_snp.png" src="../_images/mammogram_snp.png" />
+<img alt="figures/mammogram_snp" src="figures/mammogram_snp" />
 <figcaption>
 <p><span class="caption-number">Fig. 5 </span><span class="caption-text">Mammogram Salt and Pepper Noise</span><a class="headerlink" href="#mmg-snp" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Salt and pepper noise is easily removed with various order statistic filters such as the weighted median or lower-upper-middle (LUM) filters.</p>
 </section>
 <section id="poisson-noise">
 <h3>Poisson Noise<a class="headerlink" href="#poisson-noise" title="Permalink to this heading">#</a></h3>

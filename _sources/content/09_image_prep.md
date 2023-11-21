@@ -231,7 +231,7 @@ Mammogram Speckle Noise
 
 ```
 
-Figure {numref}`mmg_speckle` illustrates several distributions of speckle degradation.
+{numref}`mmg_speckle` illustrates several distributions of speckle degradation.
 
 ### Salt and Pepper Noise
 
@@ -260,16 +260,15 @@ Pr(f=\text{max}) = \frac{\alpha}{2}
 Pr(f=\text{min}) = \frac{\alpha}{2}
 ```
 
-For instance, figure {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.2$. Approximately 80% of the image is unaltered, and 20% of the pixels have been changed to black or white.
+For instance, {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.2$. Approximately 80%  ($1-\alpha$) of the image is unaltered, and 20% ($\alpha$) of the pixels have been changed to black or white.
 
-```{figure} ../figures/mammogram_snp.png
+```{figure} ../figures/mammogram_snp
 ---
 name: mmg_snp
 ---
 Mammogram Salt and Pepper Noise
 ```
 
-Salt and pepper noise is easily removed with various order statistic filters such as the weighted median or lower-upper-middle (LUM) filters.
 
 
 ### Poisson Noise
