@@ -114,7 +114,7 @@ Next, we review the types of noise we may encounter.
 
 ## Types of Noise in Digital Mammography
 
-The types of noise most inherent in digital mammography are summarized in {numref}`noise_types`.
+The types of noise most inherent in digital mammography are summarized below.
 
 ```{table}
 :name: noise_types
@@ -277,4 +277,9 @@ For this effort, we focus on five classes of filters commonly applied to the tas
 
 ### Mean Filter
 
-Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a *convolutional filter*, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
+Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. This has the effect of eliminating pixel values which are unrepresentative of their surroundings.
+Usually thought of as a *convolutional filter*, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities.
+
+Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
+
+The following

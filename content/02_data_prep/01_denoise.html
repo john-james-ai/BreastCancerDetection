@@ -559,7 +559,7 @@ document.write(`
 </section>
 <section id="types-of-noise-in-digital-mammography">
 <h2><span class="section-number">7.2.2. </span>Types of Noise in Digital Mammography<a class="headerlink" href="#types-of-noise-in-digital-mammography" title="Permalink to this heading">#</a></h2>
-<p>The types of noise most inherent in digital mammography are summarized in <code class="xref std std-numref docutils literal notranslate"><span class="pre">noise_types</span></code>.</p>
+<p>The types of noise most inherent in digital mammography are summarized below.</p>
 <table class="table" id="noise-types">
 <thead>
 <tr class="row-odd"><th class="head"><p>Noise</p></th>
@@ -708,7 +708,10 @@ document.write(`
 </ol>
 <section id="mean-filter">
 <h3><span class="section-number">7.2.3.1. </span>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h3>
-<p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a <em>convolutional filter</em>, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.</p>
+<p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. This has the effect of eliminating pixel values which are unrepresentative of their surroundings.
+Usually thought of as a <em>convolutional filter</em>, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities.</p>
+<p>Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.</p>
+<p>The following</p>
 </section>
 </section>
 </section>
