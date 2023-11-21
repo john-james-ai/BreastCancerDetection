@@ -612,37 +612,37 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-gaussian-pdf">
 <span class="eqno">(7.7)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean gray value, and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
-<figure class="align-default" id="mmg-gaussian">
-<img alt="figures/mmg_gaussian.png" src="figures/mmg_gaussian.png" />
+<figure class="align-default" id="mammogram-gaussian">
+<img alt="../../_images/mammogram_gaussian.png" src="../../_images/mammogram_gaussian.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7.2 </span><span class="caption-text">Mammogram Gaussian Noise</span><a class="headerlink" href="#mmg-gaussian" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7.2 </span><span class="caption-text">Mammogram Gaussian Noise</span><a class="headerlink" href="#mammogram-gaussian" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In <a class="reference internal" href="#mmg-gaussian"><span class="std std-numref">Fig. 7.2</span></a> (b) we see the effect of a small amount of noise (<span class="math notranslate nohighlight">\(\sigma^2\)</span> = 0.01). In <a class="reference internal" href="#mmg-gaussian"><span class="std std-numref">Fig. 7.2</span></a> (c), the noise has been increased by a factor of 10 (<span class="math notranslate nohighlight">\(\sigma^2 = 0.1\)</span>). Notice the overall ‘fuzziness’. Increasing the noise by another factor of ten (<a class="reference internal" href="#mmg-gaussian"><span class="std std-numref">Fig. 7.2</span></a> (d)), the noise is much more objectionable.</p>
+<p>In <a class="reference internal" href="#mammogram-gaussian"><span class="std std-numref">Fig. 7.2</span></a> (b) we see the effect of a small amount of noise (<span class="math notranslate nohighlight">\(\sigma^2\)</span> = 0.01). In <a class="reference internal" href="#mammogram-gaussian"><span class="std std-numref">Fig. 7.2</span></a> (c), the noise has been increased by a factor of 10 (<span class="math notranslate nohighlight">\(\sigma^2 = 0.1\)</span>). Notice the overall ‘fuzziness’. Increasing the noise by another factor of ten (<a class="reference internal" href="#mammogram-gaussian"><span class="std std-numref">Fig. 7.2</span></a> (d)), the noise is much more objectionable.</p>
 </section>
 <section id="quantization-noise">
 <h3><span class="section-number">7.2.2.2. </span>Quantization Noise<a class="headerlink" href="#quantization-noise" title="Permalink to this heading">#</a></h3>
 <p>Quantization noise arises out of the process of converting a continuous analog image to a discrete digital representation. This Analog to Digital Conversion (ADC) consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(y\)</span>. It defines the spatial resolution or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values. This process defines the number of gray levels that each pixel can take.</p>
 <p>Quantization noise is an unavoidable aspect of ADC. An analog signal is continuous, with (almost) infinite accuracy, while the digital signal’s accuracy depends upon the quantization resolution or number of bits in the ADC. A common assumption is that quantization noise is additive, uniformly distributed, and signal-independent unless the number of quantization levels are small. In which case, the noise is correlated on a pixel-by-pixel basis, and is not uniformly distributed <span id="id2">[<a class="reference internal" href="../99_references.html#id332" title="Alan C. Bovik, editor. Handbook of image and video processing. Academic Press series in communications, networking and multimedia. Academic Press, San Diego, 2000. ISBN 978-0-12-119790-2.">14</a>]</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(\triangle\)</span> be the step size, then quantization noise, <span class="math notranslate nohighlight">\(q\)</span>, is modeled as being mean-centered and uniform between <span class="math notranslate nohighlight">\(\frac{-\triangle}{2}\)</span> and <span class="math notranslate nohighlight">\(\frac{\triangle}{2}\)</span>. The variance is <span class="math notranslate nohighlight">\(\frac{\triangle^2}{12}\)</span>.</p>
-<figure class="align-default" id="mmg-quantize">
-<img alt="figures/mmg_quantize.png" src="figures/mmg_quantize.png" />
+<figure class="align-default" id="mammogram-quantize">
+<img alt="../../_images/mammogram_quantize.png" src="../../_images/mammogram_quantize.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7.3 </span><span class="caption-text">Mammogram Quantization Noise</span><a class="headerlink" href="#mmg-quantize" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7.3 </span><span class="caption-text">Mammogram Quantization Noise</span><a class="headerlink" href="#mammogram-quantize" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The image in <a class="reference internal" href="#mmg-quantize"><span class="std std-numref">Fig. 7.3</span></a> has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as “scalloped”.</p>
+<p>The image in <a class="reference internal" href="#mammogram-quantize"><span class="std std-numref">Fig. 7.3</span></a> has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as “scalloped”.</p>
 </section>
 <section id="speckle-noise">
 <h3><span class="section-number">7.2.2.3. </span>Speckle Noise<a class="headerlink" href="#speckle-noise" title="Permalink to this heading">#</a></h3>
 <p>Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.</p>
-<figure class="align-default" id="mmg-speckle">
-<img alt="figures/mmg_speckle.png" src="figures/mmg_speckle.png" />
+<figure class="align-default" id="mammogram-speckle">
+<img alt="../../_images/mammogram_speckle.png" src="../../_images/mammogram_speckle.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7.4 </span><span class="caption-text">Mammogram Speckle Noise</span><a class="headerlink" href="#mmg-speckle" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7.4 </span><span class="caption-text">Mammogram Speckle Noise</span><a class="headerlink" href="#mammogram-speckle" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#mmg-speckle"><span class="std std-numref">Fig. 7.4</span></a> illustrates several distributions of speckle degradation.</p>
+<p><a class="reference internal" href="#mammogram-speckle"><span class="std std-numref">Fig. 7.4</span></a> illustrates several distributions of speckle degradation.</p>
 </section>
 <section id="salt-and-pepper-noise">
 <h3><span class="section-number">7.2.2.4. </span>Salt and Pepper Noise<a class="headerlink" href="#salt-and-pepper-noise" title="Permalink to this heading">#</a></h3>
@@ -660,11 +660,11 @@ document.write(`
 <span class="eqno">(7.9)<a class="headerlink" href="#equation-snp-salt" title="Permalink to this equation">#</a></span>\[Pr(f=\text{max}) = \frac{\alpha}{2}\]</div>
 <div class="math notranslate nohighlight" id="equation-snp-pepper">
 <span class="eqno">(7.10)<a class="headerlink" href="#equation-snp-pepper" title="Permalink to this equation">#</a></span>\[Pr(f=\text{min}) = \frac{\alpha}{2}\]</div>
-<p>For instance, <a class="reference internal" href="#mmg-snp"><span class="std std-numref">Fig. 7.5</span></a> shows an 8-bit image with <span class="math notranslate nohighlight">\(\alpha=0.3\)</span>. Approximately 70%  (<span class="math notranslate nohighlight">\(1-\alpha\)</span>) of the image is unaltered, and 30% (<span class="math notranslate nohighlight">\(\alpha\)</span>) of the pixels have been changed to black or white.</p>
-<figure class="align-default" id="mmg-snp">
-<img alt="figures/mmg_snp.png" src="figures/mmg_snp.png" />
+<p>For instance, <a class="reference internal" href="#mammogram-snp"><span class="std std-numref">Fig. 7.5</span></a> shows an 8-bit image with <span class="math notranslate nohighlight">\(\alpha=0.3\)</span>. Approximately 70%  (<span class="math notranslate nohighlight">\(1-\alpha\)</span>) of the image is unaltered, and 30% (<span class="math notranslate nohighlight">\(\alpha\)</span>) of the pixels have been changed to black or white.</p>
+<figure class="align-default" id="mammogram-snp">
+<img alt="../../_images/mammogram_snp.png" src="../../_images/mammogram_snp.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7.5 </span><span class="caption-text">Mammogram Salt and Pepper Noise</span><a class="headerlink" href="#mmg-snp" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7.5 </span><span class="caption-text">Mammogram Salt and Pepper Noise</span><a class="headerlink" href="#mammogram-snp" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -675,13 +675,13 @@ document.write(`
 <span class="eqno">(7.11)<a class="headerlink" href="#equation-poisson-pdf" title="Permalink to this equation">#</a></span>\[Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is the expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise or Poisson noise.</p>
 <p>Since the photon count follows a Poisson distribution, it has the property that the variance, <span class="math notranslate nohighlight">\(Var[N]\)</span> is equal to the expectation, <span class="math notranslate nohighlight">\(E[N]\)</span>. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.</p>
-<figure class="align-default" id="mmg-poisson">
-<img alt="figures/mmg_poisson.png" src="figures/mmg_poisson.png" />
+<figure class="align-default" id="mammogram-poisson">
+<img alt="../../_images/mammogram_poisson.png" src="../../_images/mammogram_poisson.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7.6 </span><span class="caption-text">Mammogram Poisson Noise</span><a class="headerlink" href="#mmg-poisson" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7.6 </span><span class="caption-text">Mammogram Poisson Noise</span><a class="headerlink" href="#mammogram-poisson" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The image in <a class="reference internal" href="#mmg-poisson"><span class="std std-numref">Fig. 7.6</span></a> shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.</p>
+<p>The image in <a class="reference internal" href="#mammogram-poisson"><span class="std std-numref">Fig. 7.6</span></a> shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.</p>
 </section>
 </section>
 <section id="denoiser-methods">

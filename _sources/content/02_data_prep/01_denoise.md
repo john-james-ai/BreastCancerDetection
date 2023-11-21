@@ -151,15 +151,15 @@ P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 
 where $\mu$ is the mean gray value, and $\sigma$ is the standard deviation.
 
-```{figure} ../../figures/mmg_gaussian.png
+```{figure} ../../figures/mammogram_gaussian.png
 ---
-name: mmg_gaussian
+name: mammogram_gaussian
 ---
 Mammogram Gaussian Noise
 
 ```
 
-In {numref}`mmg_gaussian` (b) we see the effect of a small amount of noise ($\sigma^2$ = 0.01). In {numref}`mmg_gaussian` (c), the noise has been increased by a factor of 10 ($\sigma^2 = 0.1$). Notice the overall 'fuzziness'. Increasing the noise by another factor of ten ({numref}`mmg_gaussian` (d)), the noise is much more objectionable.
+In {numref}`mammogram_gaussian` (b) we see the effect of a small amount of noise ($\sigma^2$ = 0.01). In {numref}`mammogram_gaussian` (c), the noise has been increased by a factor of 10 ($\sigma^2 = 0.1$). Notice the overall 'fuzziness'. Increasing the noise by another factor of ten ({numref}`mammogram_gaussian` (d)), the noise is much more objectionable.
 
 ### Quantization Noise
 
@@ -169,29 +169,29 @@ Quantization noise is an unavoidable aspect of ADC. An analog signal is continuo
 
 Let $\triangle$ be the step size, then quantization noise, $q$, is modeled as being mean-centered and uniform between $\frac{-\triangle}{2}$ and $\frac{\triangle}{2}$. The variance is $\frac{\triangle^2}{12}$.
 
-```{figure} ../../figures/mmg_quantize.png
+```{figure} ../../figures/mammogram_quantize.png
 ---
-name: mmg_quantize
+name: mammogram_quantize
 ---
 Mammogram Quantization Noise
 
 ```
 
-The image in {numref}`mmg_quantize` has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as "scalloped".
+The image in {numref}`mammogram_quantize` has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as "scalloped".
 
 ### Speckle Noise
 
 Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.
 
-```{figure} ../../figures/mmg_speckle.png
+```{figure} ../../figures/mammogram_speckle.png
 ---
-name: mmg_speckle
+name: mammogram_speckle
 ---
 Mammogram Speckle Noise
 
 ```
 
-{numref}`mmg_speckle` illustrates several distributions of speckle degradation.
+{numref}`mammogram_speckle` illustrates several distributions of speckle degradation.
 
 ### Salt and Pepper Noise
 
@@ -220,11 +220,11 @@ Pr(f=\text{max}) = \frac{\alpha}{2}
 Pr(f=\text{min}) = \frac{\alpha}{2}
 ```
 
-For instance, {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.3$. Approximately 70%  ($1-\alpha$) of the image is unaltered, and 30% ($\alpha$) of the pixels have been changed to black or white.
+For instance, {numref}`mammogram_snp` shows an 8-bit image with $\alpha=0.3$. Approximately 70%  ($1-\alpha$) of the image is unaltered, and 30% ($\alpha$) of the pixels have been changed to black or white.
 
-```{figure} ../../figures/mmg_snp.png
+```{figure} ../../figures/mammogram_snp.png
 ---
-name: mmg_snp
+name: mammogram_snp
 ---
 Mammogram Salt and Pepper Noise
 ```
@@ -242,15 +242,15 @@ where $\lambda$ is the expected number of photons per unit time interval. The un
 
 Since the photon count follows a Poisson distribution, it has the property that the variance, $Var[N]$ is equal to the expectation, $E[N]$. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.
 
-```{figure} ../../figures/mmg_poisson.png
+```{figure} ../../figures/mammogram_poisson.png
 ---
-name: mmg_poisson
+name: mammogram_poisson
 ---
 Mammogram Poisson Noise
 
 ```
 
-The image in {numref}`mmg_poisson` shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.
+The image in {numref}`mammogram_poisson` shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.
 
 ## Denoiser Methods
 

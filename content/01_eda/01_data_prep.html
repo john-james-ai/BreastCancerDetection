@@ -512,7 +512,7 @@ This Our tasks are as follows:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../..&quot;</span><span class="p">)))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../..&quot;</span><span class="p">)))</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span>  <span class="nn">pd</span>
 
@@ -522,19 +522,6 @@ This Our tasks are as follows:</p>
 </div>
 </div>
 </details>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../..&quot;</span><span class="p">)))</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span>  <span class="nn">pd</span>
-<span class="ne">----&gt; </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">bcd.preprocess.metadata.case</span> <span class="kn">import</span> <span class="n">CasePrep</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">bcd.preprocess.metadata.dicom</span> <span class="kn">import</span> <span class="n">DicomPrep</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;bcd&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <section id="build-case-dataset">
 <h2><span class="section-number">5.1. </span>Build Case Dataset<a class="headerlink" href="#build-case-dataset" title="Permalink to this heading">#</a></h2>
@@ -568,6 +555,12 @@ This Our tasks are as follows:</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The Case Dataset has been created with 3568 rows and 16 columns.
+The Case/Series XRef Dataset has been created with 7240 rows and 3 columns.
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="build-dicom-dataset">
@@ -588,6 +581,254 @@ This Our tasks are as follows:</p>
 <span class="n">dfd</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">prep</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">LOCATION</span><span class="p">,</span> <span class="n">dicom_fp</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">,</span> <span class="n">skip_list</span><span class="o">=</span><span class="n">SKIP_LIST</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dfd</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">add_series_description</span><span class="p">(</span><span class="n">dicom_fp</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">,</span> <span class="n">series_fp</span><span class="o">=</span><span class="n">CASE_SERIES_XREF_FP</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The DICOM Dataset has been created with </span><span class="si">{</span><span class="n">dfd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows and </span><span class="si">{</span><span class="n">dfd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                                                                   | 0/10238 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                                                           | 6/10238 [00:00&lt;05:43, 29.75it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                                                          | 12/10238 [00:01&lt;16:50, 10.12it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|▏                                                                         | 18/10238 [00:01&lt;14:25, 11.81it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|▏                                                                         | 24/10238 [00:01&lt;12:14, 13.90it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|▏                                                                         | 30/10238 [00:02&lt;12:13, 13.92it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|▎                                                                         | 36/10238 [00:02&lt;09:53, 17.18it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|▎                                                                         | 42/10238 [00:02&lt;11:45, 14.45it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|▎                                                                         | 48/10238 [00:03&lt;10:19, 16.45it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▍                                                                         | 54/10238 [00:03&lt;09:30, 17.84it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▍                                                                         | 60/10238 [00:03&lt;09:06, 18.61it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▍                                                                         | 66/10238 [00:03&lt;07:55, 21.37it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▌                                                                         | 72/10238 [00:04&lt;08:25, 20.10it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▌                                                                         | 78/10238 [00:04&lt;07:45, 21.85it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▌                                                                         | 84/10238 [00:04&lt;09:16, 18.25it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▋                                                                         | 90/10238 [00:05&lt;09:09, 18.46it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▋                                                                         | 96/10238 [00:05&lt;08:41, 19.46it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▋                                                                        | 102/10238 [00:05&lt;09:40, 17.46it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▊                                                                        | 108/10238 [00:06&lt;14:20, 11.77it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▊                                                                        | 114/10238 [00:08&lt;24:36,  6.86it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▊                                                                        | 120/10238 [00:10&lt;30:34,  5.51it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▉                                                                        | 126/10238 [00:11&lt;28:43,  5.87it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▉                                                                        | 132/10238 [00:12&lt;33:20,  5.05it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▉                                                                        | 138/10238 [00:13&lt;27:47,  6.06it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|█                                                                        | 144/10238 [00:14&lt;31:39,  5.32it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|█                                                                        | 150/10238 [00:14&lt;24:48,  6.78it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█                                                                        | 156/10238 [00:15&lt;19:56,  8.42it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▏                                                                       | 162/10238 [00:15&lt;15:37, 10.75it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▏                                                                       | 168/10238 [00:15&lt;13:16, 12.64it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▏                                                                       | 174/10238 [00:16&lt;12:35, 13.32it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▎                                                                       | 180/10238 [00:16&lt;10:15, 16.33it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▎                                                                       | 186/10238 [00:16&lt;08:37, 19.42it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▎                                                                       | 192/10238 [00:16&lt;07:32, 22.19it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▍                                                                       | 198/10238 [00:17&lt;09:02, 18.52it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▍                                                                       | 204/10238 [00:17&lt;08:12, 20.37it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▍                                                                       | 210/10238 [00:17&lt;08:12, 20.35it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▌                                                                       | 216/10238 [00:17&lt;07:42, 21.68it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▌                                                                       | 222/10238 [00:18&lt;08:02, 20.76it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▋                                                                       | 228/10238 [00:18&lt;08:48, 18.94it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▋                                                                       | 234/10238 [00:20&lt;25:43,  6.48it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▋                                                                       | 240/10238 [00:21&lt;26:42,  6.24it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▊                                                                       | 246/10238 [00:22&lt;21:35,  7.71it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|█▊                                                                       | 252/10238 [00:22&lt;17:55,  9.29it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|█▊                                                                       | 258/10238 [00:22&lt;13:58, 11.91it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|█▉                                                                       | 264/10238 [00:23&lt;11:53, 13.97it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|█▉                                                                       | 270/10238 [00:23&lt;09:41, 17.15it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|█▉                                                                       | 276/10238 [00:23&lt;09:45, 17.00it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██                                                                       | 282/10238 [00:23&lt;09:10, 18.09it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██                                                                       | 288/10238 [00:24&lt;08:59, 18.43it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██                                                                       | 294/10238 [00:24&lt;07:36, 21.79it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▏                                                                      | 300/10238 [00:24&lt;08:09, 20.30it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▏                                                                      | 306/10238 [00:25&lt;08:38, 19.16it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▏                                                                      | 312/10238 [00:25&lt;07:46, 21.28it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▎                                                                      | 318/10238 [00:25&lt;07:21, 22.49it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▎                                                                      | 324/10238 [00:26&lt;09:28, 17.43it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▎                                                                      | 330/10238 [00:26&lt;09:59, 16.52it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▍                                                                      | 336/10238 [00:26&lt;10:15, 16.08it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▍                                                                      | 342/10238 [00:27&lt;10:07, 16.28it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▍                                                                      | 348/10238 [00:27&lt;08:14, 20.01it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|██▌                                                                      | 354/10238 [00:27&lt;08:45, 18.81it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  4%|██▌                                                                      | 360/10238 [00:27&lt;08:23, 19.61it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  4%|██▌                                                                      | 366/10238 [00:28&lt;09:17, 17.70it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  4%|██▋                                                                      | 372/10238 [00:28&lt;08:57, 18.37it/s]
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">dicom</span> <span class="o">=</span> <span class="n">DicomPrep</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">dfd</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">prep</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">LOCATION</span><span class="p">,</span> <span class="n">dicom_fp</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">,</span> <span class="n">skip_list</span><span class="o">=</span><span class="n">SKIP_LIST</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">dfd</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">add_series_description</span><span class="p">(</span><span class="n">dicom_fp</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">,</span> <span class="n">series_fp</span><span class="o">=</span><span class="n">CASE_SERIES_XREF_FP</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The DICOM Dataset has been created with </span><span class="si">{</span><span class="n">dfd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows and </span><span class="si">{</span><span class="n">dfd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns.&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/projects/bcd/bcd/preprocess/metadata/dicom.py:72,</span> in <span class="ni">DicomPrep.prep</span><span class="nt">(self, location, dicom_fp, skip_list, force, result)</span>
+<span class="g g-Whitespace">     </span><span class="mi">70</span> <span class="k">if</span> <span class="n">force</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dicom_fp</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span>     <span class="n">filepaths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filepaths</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">skip_list</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">72</span>     <span class="n">dicom_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_dicom_data</span><span class="p">(</span><span class="n">filepaths</span><span class="o">=</span><span class="n">filepaths</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="n">dicom_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">dicom_fp</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span>     <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Shape of DICOM Data: </span><span class="si">{</span><span class="n">dicom_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nn">File ~/projects/bcd/bcd/preprocess/metadata/dicom.py:181,</span> in <span class="ni">DicomPrep._extract_dicom_data</span><span class="nt">(self, filepaths, n_jobs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">179</span> <span class="k">def</span> <span class="nf">_extract_dicom_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepaths</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">180</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Extracts dicom data and returns a DataFrame.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">181</span>     <span class="n">dicom_data</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)(</span>
+<span class="nn">    182         joblib.delayed(self._read_dicom_data)(filepath) for filepath</span> in <span class="ni">tqdm</span><span class="nt">(filepaths)</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">184</span>     <span class="n">dicom_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dicom_data</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="k">return</span> <span class="n">dicom_data</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/joblib/parallel.py:1952,</span> in <span class="ni">Parallel.__call__</span><span class="nt">(self, iterable)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1946</span> <span class="c1"># The first item from the output is blank, but it makes the interpreter</span>
+<span class="g g-Whitespace">   </span><span class="mi">1947</span> <span class="c1"># progress until it enters the Try/Except block of the generator and</span>
+<span class="g g-Whitespace">   </span><span class="mi">1948</span> <span class="c1"># reach the first `yield` statement. This starts the aynchronous</span>
+<span class="g g-Whitespace">   </span><span class="mi">1949</span> <span class="c1"># dispatch of the tasks to the workers.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1950</span> <span class="nb">next</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1952</span> <span class="k">return</span> <span class="n">output</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_generator</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/joblib/parallel.py:1595,</span> in <span class="ni">Parallel._get_outputs</span><span class="nt">(self, iterator, pre_dispatch)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1592</span>     <span class="k">yield</span>
+<span class="g g-Whitespace">   </span><span class="mi">1594</span>     <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">retrieval_context</span><span class="p">():</span>
+<span class="ne">-&gt; </span><span class="mi">1595</span>         <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1597</span> <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1598</span>     <span class="c1"># The generator has been garbage collected before being fully</span>
+<span class="g g-Whitespace">   </span><span class="mi">1599</span>     <span class="c1"># consumed. This aborts the remaining tasks if possible and warn</span>
+<span class="g g-Whitespace">   </span><span class="mi">1600</span>     <span class="c1"># the user if necessary.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1601</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/joblib/parallel.py:1707,</span> in <span class="ni">Parallel._retrieve</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1702</span> <span class="c1"># If the next job is not ready for retrieval yet, we just wait for</span>
+<span class="g g-Whitespace">   </span><span class="mi">1703</span> <span class="c1"># async callbacks to progress.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1704</span> <span class="k">if</span> <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jobs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span>
+<span class="g g-Whitespace">   </span><span class="mi">1705</span>     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_jobs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_status</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1706</span>         <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span> <span class="o">==</span> <span class="n">TASK_PENDING</span><span class="p">)):</span>
+<span class="ne">-&gt; </span><span class="mi">1707</span>     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1708</span>     <span class="k">continue</span>
+<span class="g g-Whitespace">   </span><span class="mi">1710</span> <span class="c1"># We need to be careful: the job list can be filling up as</span>
+<span class="g g-Whitespace">   </span><span class="mi">1711</span> <span class="c1"># we empty it and Python list are not thread-safe by</span>
+<span class="g g-Whitespace">   </span><span class="mi">1712</span> <span class="c1"># default hence the use of the lock</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
