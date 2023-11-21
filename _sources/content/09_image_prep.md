@@ -49,11 +49,9 @@ What is noise? Somewhat imprecisely, we might say that noise is any variation in
 
 > Noise is the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$.
 
-With that, we can state the denoising problem as follows:
+In the following subsections, we expand on this definition with a review of the most common noise models in screen-film mammograph. Next, we describe the predominate types of noises encountered. Finally, we briefly survey the most frequently applied denoising methods in low-dose X-ray mammography.
 
-> Image denoising aims to provide a function $d(x) \approx s$ that takes a noisy image $x$ as input and returns an approximation of the true clean image  $s$ as output.
 
-Here, we've implicitly decomposed an image, $f$ into a desired or uncorrupted signal $s$ and a noise component $n$. How are $s$ and $n$ related? Are they independent? Can we eliminate $n$ with denoising? Next, we review how noise is modeled in screen-film mammography.
 
 ### Noise Models
 
@@ -291,7 +289,18 @@ The image in {numref}`mmg_poisson` shows the effect of poisson noise. Careful ex
 
 ### Denoiser Methods
 
-Image filtering techniques have broad applicability in biomedical image analysis and processing. In fact, most biomedical image analysis involves the application of image filtering at stages prerequisite to analysis. Fields such as signal processing, statistics, information theory, and computer vision have produced a considerable and growing body of research devoted to the design, development, and testing of filtering methods to improve the signal-to-noise ratio (SNR) in audio, video, and imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used filtering techniques used in denoising biomedical images, with a focus on applications in mammography.
+Having defined an image $f(x,y)$ as a function of an original image $s(x,y)$ and a noise component $n(x,y)$ ({eq}`additive_noise_model`, and {eq}`multiplicative_noise_model`), we can define the denoising task as follows:
+
+> Image denoising aims to provide a function $d(x) \approx s$ that takes a noisy image $f$ as input and returns an approximation of the true clean image $\hat{s}$ as output.
+
+Our objective is to create an approximation of the original image, $\hat{s}$ in which:
+
+- flat areas are smooth,
+- edges are protected without blurring
+- textures are preserved, and
+- no new artifacts are generated.
+
+Over the past two decades, a considerable body of research has been devoted to the design, development, and testing of denoising methods for biomedical imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used techniques used in denoising biomedical images, with a focus on applications in mammography.
 
 For this effort, we focus on five classes of filters commonly applied to the task of biomedical image noise reduction:
 
@@ -303,6 +312,5 @@ For this effort, we focus on five classes of filters commonly applied to the tas
 
 #### Mean Filter
 
-Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, low-pass filter of the linear class. Low-pass filters, also known as smoothing or blurring filters, are The most basic of filtering operations is called "low-pass"
-Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a *convolutional filter*, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
-A kernel specifies the shape and size of the neighborhood to be sampled when computing the mean. Typically     Gaussian
+Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a *convolutional filter*, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
+

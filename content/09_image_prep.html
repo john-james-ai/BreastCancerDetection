@@ -504,11 +504,7 @@ document.write(`
 <blockquote>
 <div><p>Noise is the discrepancy between the true amount of light <span class="math notranslate nohighlight">\(s_i\)</span> being measured at pixel <span class="math notranslate nohighlight">\(i\)</span>, and the corresponding measured pixel value <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
 </div></blockquote>
-<p>With that, we can state the denoising problem as follows:</p>
-<blockquote>
-<div><p>Image denoising aims to provide a function <span class="math notranslate nohighlight">\(d(x) \approx s\)</span> that takes a noisy image <span class="math notranslate nohighlight">\(x\)</span> as input and returns an approximation of the true clean image  <span class="math notranslate nohighlight">\(s\)</span> as output.</p>
-</div></blockquote>
-<p>Here, we’ve implicitly decomposed an image, <span class="math notranslate nohighlight">\(f\)</span> into a desired or uncorrupted signal <span class="math notranslate nohighlight">\(s\)</span> and a noise component <span class="math notranslate nohighlight">\(n\)</span>. How are <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(n\)</span> related? Are they independent? Can we eliminate <span class="math notranslate nohighlight">\(n\)</span> with denoising? Next, we review how noise is modeled in screen-film mammography.</p>
+<p>In the following subsections, we expand on this definition with a review of the most common noise models in screen-film mammograph. Next, we describe the predominate types of noises encountered. Finally, we briefly survey the most frequently applied denoising methods in low-dose X-ray mammography.</p>
 <section id="noise-models">
 <h3>Noise Models<a class="headerlink" href="#noise-models" title="Permalink to this heading">#</a></h3>
 <p>Broadly speaking, noise can be modeled as additive, multiplicative, or impulse.</p>
@@ -705,7 +701,18 @@ document.write(`
 </section>
 <section id="denoiser-methods">
 <h3>Denoiser Methods<a class="headerlink" href="#denoiser-methods" title="Permalink to this heading">#</a></h3>
-<p>Image filtering techniques have broad applicability in biomedical image analysis and processing. In fact, most biomedical image analysis involves the application of image filtering at stages prerequisite to analysis. Fields such as signal processing, statistics, information theory, and computer vision have produced a considerable and growing body of research devoted to the design, development, and testing of filtering methods to improve the signal-to-noise ratio (SNR) in audio, video, and imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used filtering techniques used in denoising biomedical images, with a focus on applications in mammography.</p>
+<p>Having defined an image <span class="math notranslate nohighlight">\(f(x,y)\)</span> as a function of an original image <span class="math notranslate nohighlight">\(s(x,y)\)</span> and a noise component <span class="math notranslate nohighlight">\(n(x,y)\)</span> (<a class="reference internal" href="#equation-additive-noise-model">(1)</a>, and <a class="reference internal" href="#equation-multiplicative-noise-model">(2)</a>), we can define the denoising task as follows:</p>
+<blockquote>
+<div><p>Image denoising aims to provide a function <span class="math notranslate nohighlight">\(d(x) \approx s\)</span> that takes a noisy image <span class="math notranslate nohighlight">\(f\)</span> as input and returns an approximation of the true clean image <span class="math notranslate nohighlight">\(\hat{s}\)</span> as output.</p>
+</div></blockquote>
+<p>Our objective is to create an approximation of the original image, <span class="math notranslate nohighlight">\(\hat{s}\)</span> in which:</p>
+<ul class="simple">
+<li><p>flat areas are smooth,</p></li>
+<li><p>edges are protected without blurring</p></li>
+<li><p>textures are preserved, and</p></li>
+<li><p>no new artifacts are generated.</p></li>
+</ul>
+<p>Over the past two decades, a considerable body of research has been devoted to the design, development, and testing of denoising methods for biomedical imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used techniques used in denoising biomedical images, with a focus on applications in mammography.</p>
 <p>For this effort, we focus on five classes of filters commonly applied to the task of biomedical image noise reduction:</p>
 <ol class="arabic simple">
 <li><p><strong>Mean Filter</strong>: Also known as the average filter,</p></li>
@@ -716,9 +723,7 @@ document.write(`
 </ol>
 <section id="mean-filter">
 <h4>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h4>
-<p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, low-pass filter of the linear class. Low-pass filters, also known as smoothing or blurring filters, are The most basic of filtering operations is called “low-pass”
-Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a <em>convolutional filter</em>, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
-A kernel specifies the shape and size of the neighborhood to be sampled when computing the mean. Typically     Gaussian</p>
+<p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a <em>convolutional filter</em>, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.</p>
 </section>
 </section>
 </section>
