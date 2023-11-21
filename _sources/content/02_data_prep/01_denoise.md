@@ -12,6 +12,20 @@ kernelspec:
 ---
 # Denoise
 
+```{code-cell} ipython3
+:tags: [hide-cell]
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../..")))
+import cv2
+from matplotlib import pyplot as plt
+from myst_nb import glue
+import numpy as np
+from skimage.util import random_noise
+
+from bcd.utils.image import convert_uint8
+```
+
 What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. Yet, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For denoising, we distinguish noise from other imperfections, with the following definition:
 
 > Noise is the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$.
@@ -277,9 +291,87 @@ For this effort, we focus on five classes of filters commonly applied to the tas
 
 ### Mean Filter
 
-Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. This has the effect of eliminating pixel values which are unrepresentative of their surroundings.
-Usually thought of as a *convolutional filter*, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities.
+Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. It’s based on the idea that random noise consists of “sharp” transitions in the intensity of the signal. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. By doing so, the “sharp” transitions in the intensities are reduced.
+The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
 
-Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
+```{figure} ../../figures/kernel.png
+---
+name: kernel
+---
+3 x 3 Mean Filter Kernel
+```
 
-The following
+The mean filter works by convolving the kernel over the image as follows. Let w(x,y) represent a set of coordinates in a  m x n rectangular window in the image, centered at point (x,y). The mean filtering process computes the average value of the corrupted image g(x,y) in the area defined by w(x,y). The value of the restored image at any point (x,y) is:
+
+```{math}
+:label: mean_filter
+^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)
+```
+
+```{admonition} Kernel Coefficients
+Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the entire image is normalized by the normalization constant $\frac{1}{mn}$.
+```
+
+The process of convolving with a 3x3 mean filter is as follows:
+![MeanFilter](../../figures/gif/02_mean_filter.gif)
+
+{numref}`mean_filter_figure` illustrates the results of a 3x3 mean filter kernel on a mammogram image.
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
+FP_ORIG = "jbook/figures/mammogram.png"
+CMAP = 'gray'
+
+# Obtain the source image
+orig = cv2.imread(FP_ORIG)
+
+# Add random Gaussian noise with zero mean and variance of 0.1
+img_gaussian = random_noise(orig, mode='gaussian', mean=0,var=0.1)
+img_gaussian = convert_uint8(img_gaussian)
+
+# Apply the 3x3 mean filter kernel
+img_filtered = cv2.blur(img_gaussian, (3,3))
+
+# Subtract the filtered
+img_noise = img_gaussian - img_filtered
+
+# Compute histograms
+img_gaussian_hist = cv2.calcHist([img_gaussian], [0], None, [256], [0,256])
+img_filtered_hist = cv2.calcHist([img_filtered], [0], None, [256], [0,256])
+img_noise_hist = cv2.calcHist([img_noise], [0], None, [256], [0,256])
+
+# Create Figure object
+fig, ax = plt.subplots(nrows=2, ncols=3, figsize=(12,6), dpi=200)
+
+# Show images
+_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
+_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
+
+_ = ax[0,1].imshow(img_filtered, cmap=CMAP)
+_ = ax[0,1].set_xlabel('(b) Mean Filtered Image', fontsize=10)
+
+_ = ax[0,2].imshow(img_noise, cmap=CMAP)
+_ = ax[0,2].set_xlabel('(c) Image Noise', fontsize=10)
+
+# Show histograms
+_ = ax[1,0].plot(img_gaussian_hist)
+_ = ax[1,0].set_xlabel("(d) Original Image Histogram", fontsize=10)
+
+_ = ax[1,1].plot(img_filtered_hist)
+_ = ax[1,1].set_xlabel("(e) Mean Filtered Image Histogram", fontsize=10)
+
+_ = ax[1,2].plot(img_noise_hist)
+_ = ax[1,2].set_xlabel("(f) Image Noise Histogram", fontsize=10)
+
+plt.tight_layout()
+glue("mean_filter_fig", fig)
+```
+
+```{glue:figure} mean_filter_fig
+---
+align: center
+name: mean_filter_figure
+---
+Applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
+```
