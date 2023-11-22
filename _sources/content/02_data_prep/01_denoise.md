@@ -471,7 +471,7 @@ For the frequency domain, we have:
 G(u,v) = F(u,v) \cdot H(u,v) + N(u,v)
 ```
 
-As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an $\hat{f)(x,y)$ that minimizes the following::
+As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an $\hat{f}(x,y)$ that minimizes the following::
 
 ```{math}
 :label: wiener_function_mse_spatial
@@ -518,21 +518,21 @@ Which simplifies to:
 
 ```{math}
 :label: wiener_function_mse_derivative_2
-W = \frac{1}{H}\frac{|H}^2}{|H|^2+\frac{|N|^2}{|F|^2}}
+W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{|N|^2}{|F|^2}}
 ```
 
-Note that $\frac{|N|^2}{|F|^2} is the inverse of the signal-to-noise (SNR), which give us:
+Note that $\frac{|N|^2}{|F|^2}$ is the inverse of the signal-to-noise (SNR), which give us:
 
 ```{math}
 :label: wiener_function_mse_derivative_3
-W = \frac{1}{H}\frac{|H}^2}{|H|^2+\frac{1}{SNR}}
+W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{1}{SNR}}
 ```
 
-Note, that if there is no blurring and only noise, the Wiener function simplifies to:
+If there is no blurring and only noise, the Wiener function simplifies to:
 
 ```{math}
 :label: wiener_function_noise
 W = \frac{P_s}{P_s + \sigma^2_n}
 ```
 
-where $\sigma^2_n is the noise variance.
+where $\sigma^2_n$ is the noise variance, and $P_s$ is the power spectrum of the image obtained by taking the Fourier transform of the image signal autocorrelation.

@@ -815,7 +815,7 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 </details>
 </div>
 <figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/30d5e022051f899bf6aa139d1eaddd4bdf2c4d51f200a3a03339d25568b4dc49.png" src="../../_images/30d5e022051f899bf6aa139d1eaddd4bdf2c4d51f200a3a03339d25568b4dc49.png" />
+<img alt="../../_images/2457ef3d6f43b85aba093d016b5af4881234b84c0d112a4ebe17ea873b67d997.png" src="../../_images/2457ef3d6f43b85aba093d016b5af4881234b84c0d112a4ebe17ea873b67d997.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -873,7 +873,7 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 </details>
 </div>
 <figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
-<img alt="../../_images/5627f91b49f81835ac2dfd3366ef2c1c9124edbbfd08e440ba6e68388c123810.png" src="../../_images/5627f91b49f81835ac2dfd3366ef2c1c9124edbbfd08e440ba6e68388c123810.png" />
+<img alt="../../_images/98e1f4f0caa340e5ce361e4792996a77b5a31045c860cdd3850db854205e6cdb.png" src="../../_images/98e1f4f0caa340e5ce361e4792996a77b5a31045c860cdd3850db854205e6cdb.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filter with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -903,7 +903,7 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 <p>For the frequency domain, we have:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-frequency">
 <span class="eqno">(2.14)<a class="headerlink" href="#equation-wiener-function-frequency" title="Permalink to this equation">#</a></span>\[G(u,v) = F(u,v) \cdot H(u,v) + N(u,v)\]</div>
-<p>As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an <span class="math notranslate nohighlight">\(\hat{f)(x,y)\)</span> that minimizes the following::</p>
+<p>As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an <span class="math notranslate nohighlight">\(\hat{f}(x,y)\)</span> that minimizes the following::</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-spatial">
 <span class="eqno">(2.15)<a class="headerlink" href="#equation-wiener-function-mse-spatial" title="Permalink to this equation">#</a></span>\[e = \displaystyle\sum_x \displaystyle\sum_y |f(x,y)-\hat{f}(x,y)|^2\]</div>
 <p>In the frequency domain, we have:</p>
@@ -924,14 +924,14 @@ Working in the frequency domain simplifies our notation, so we will work there f
 <span class="eqno">(2.20)<a class="headerlink" href="#equation-wiener-function-mse-derivative" title="Permalink to this equation">#</a></span>\[\frac{\partial e}{\partial W} = 0 = |F^2[2(1-W*H*)(-H)]+|N|^2|W*| = 0\]</div>
 <p>Which simplifies to:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-derivative-2">
-<span class="eqno">(2.21)<a class="headerlink" href="#equation-wiener-function-mse-derivative-2" title="Permalink to this equation">#</a></span>\[W = \frac{1}{H}\frac{|H}^2}{|H|^2+\frac{|N|^2}{|F|^2}}\]</div>
-<p>Note that $\frac{|N|^2}{|F|^2} is the inverse of the signal-to-noise (SNR), which give us:</p>
+<span class="eqno">(2.21)<a class="headerlink" href="#equation-wiener-function-mse-derivative-2" title="Permalink to this equation">#</a></span>\[W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{|N|^2}{|F|^2}}\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(\frac{|N|^2}{|F|^2}\)</span> is the inverse of the signal-to-noise (SNR), which give us:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-derivative-3">
-<span class="eqno">(2.22)<a class="headerlink" href="#equation-wiener-function-mse-derivative-3" title="Permalink to this equation">#</a></span>\[W = \frac{1}{H}\frac{|H}^2}{|H|^2+\frac{1}{SNR}}\]</div>
-<p>Note, that if there is no blurring and only noise, the Wiener function simplifies to:</p>
+<span class="eqno">(2.22)<a class="headerlink" href="#equation-wiener-function-mse-derivative-3" title="Permalink to this equation">#</a></span>\[W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{1}{SNR}}\]</div>
+<p>If there is no blurring and only noise, the Wiener function simplifies to:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-noise">
 <span class="eqno">(2.23)<a class="headerlink" href="#equation-wiener-function-noise" title="Permalink to this equation">#</a></span>\[W = \frac{P_s}{P_s + \sigma^2_n}\]</div>
-<p>where $\sigma^2_n is the noise variance.</p>
+<p>where <span class="math notranslate nohighlight">\(\sigma^2_n\)</span> is the noise variance, and <span class="math notranslate nohighlight">\(P_s\)</span> is the power spectrum of the image obtained by taking the Fourier transform of the image signal autocorrelation.</p>
 </section>
 </section>
 </section>
