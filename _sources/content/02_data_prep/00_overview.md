@@ -45,8 +45,8 @@ Image Quality Assessment (IQA) is the process of evaluating the extent to which 
 
 ### Subjective Image Quality Assessment
 
-Subjective methods are based on human subjects’ opinions of image quality {cite}` linLargeScaleCrowdsourcedSubjective2022`. Though time-consuming, expensive, and difficult to scale in real-time,
-subjective methods are considered the most reliable methods for assessing image quality because they rely on the opinions of human subjects, who represent the ultimate users of the digital media application {cite}` afnanSubjectiveAssessmentObjective2023`.
+Subjective methods are based on human subjects’ opinions of image quality {cite}`linLargeScaleCrowdsourcedSubjective2022`. Though time-consuming, expensive, and difficult to scale in real-time,
+subjective methods are considered the most reliable methods for assessing image quality because they rely on the opinions of human subjects, who represent the ultimate users of the digital media application {cite}`afnanSubjectiveAssessmentObjective2023`.
 
 Subjective assessments will be performed on a double stimulus comparison scale (DSCS), in which a random selection of test images is compared to its associated ground truth images. In addition,
 images from the various image enhancement methods are visually evaluated and scored in terms of relative image quality.
@@ -140,6 +140,4 @@ Finally, the three components are combined into a unique expression that is weig
 SSIM(x,y) = [l(x,y)\^\alpha \cdot [c(x,y)]^\beta \cdot [s(x,y)]^\gamma
 ```
 
-```{admonition}
-The expressions refer to constants $C_1$, $C_2$, and $C_3$ that are introduced for numerical stability. These three quantities are functions of the dynamic range of the pixel values L (L=255 for 8-bit gray-scale images) and two scalar constants $K_1 \ll 1$ and $K_2 \ll 1$. Traditionally, $K_1$  and $K_2$ are equal to 0.01, and 0.03, respectively. $C_1=(K_1,L)^2, C_2=(K_2,L)^2,  C_3=\frac{C_2}{2}. In the original paper {cite}`wangImageQualityAssessment2004`, $\alpha= \beta = \gamma = 1$.
-```
+The expressions refer to constants $C_1$, $C_2$, and $C_3$ that are introduced for numerical stability. These three quantities are functions of the dynamic range of the pixel values L (L=255 for 8-bit gray-scale images) and two scalar constants $K_1 \ll 1$ and $K_2 \ll 1$. Traditionally, $K_1$  and $K_2$ are equal to 0.01, and 0.03, respectively. $C_1=(K_1,L)^2, C_2=(K_2,L)^2,  C_3=\frac{C_2}{2}$. In the original paper {cite}`wangImageQualityAssessment2004`, $\alpha= \beta = \gamma = 1$.
