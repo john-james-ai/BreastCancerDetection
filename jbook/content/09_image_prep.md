@@ -10,8 +10,6 @@ kernelspec:
   language: python
   name: python3
 ---
-
-
 # Image Preprocessing
 
 Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.
@@ -31,7 +29,7 @@ Addressing these challenges is fundamentally important to model detection, recog
 
 In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.
 
-```{figure} ../figures/ImagePrep.png
+```{figure}
 ---
 name: image_prep
 ---
@@ -49,9 +47,7 @@ What is noise? Somewhat imprecisely, we might say that noise is any variation in
 
 > Noise is the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$.
 
-In the following subsections, we expand on this definition with a review of the most common noise models in screen-film mammograph. Next, we describe the predominate types of noises encountered. Finally, we briefly survey the most frequently applied denoising methods in low-dose X-ray mammography.
-
-
+In the following subsections, we expand on this definition with a review of the most common noise models in screen-film mammograph. Then, we describe the predominate types of noises encountered in screen-film mammography.  Next, we introduce the most frequently applied denoising methods in low-dose X-ray mammography. Finally, we conduct an evaluation to determine the denoiser that produces
 
 ### Noise Models
 
@@ -151,7 +147,7 @@ Next, we review the types of noise we may encounter.
 
 The types of noise most inherent in screen-film mammography are summarized in {numref}`noise_types`.
 
-```{table} Noise Types in Screen-Film Mammography
+```{table}
 :name: noise_types
 
 | Noise                         | Model          | Signal Dependence | Source                            |
@@ -186,7 +182,7 @@ P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 
 where $\mu$ is the mean gray value, and $\sigma$ is the standard deviation.
 
-```{figure} ../figures/mammogram_gaussian.png
+```{figure}
 ---
 name: mmg_gaussian
 ---
@@ -204,7 +200,7 @@ Quantization noise is an unavoidable aspect of ADC. An analog signal is continuo
 
 Let $\triangle$ be the step size, then quantization noise, $q$, is modeled as being mean-centered and uniform between $\frac{-\triangle}{2}$ and $\frac{\triangle}{2}$. The variance is $\frac{\triangle^2}{12}$.
 
-```{figure} ../figures/mammogram_quantize.png
+```{figure}
 ---
 name: mmg_quantize
 ---
@@ -218,7 +214,7 @@ The image in {numref}`mmg_quantize` has been quantized to only one bit. Note tha
 
 Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.
 
-```{figure} ../figures/mammogram_speckle.png
+```{figure}
 ---
 name: mmg_speckle
 ---
@@ -257,7 +253,7 @@ Pr(f=\text{min}) = \frac{\alpha}{2}
 
 For instance, {numref}`mmg_snp` shows an 8-bit image with $\alpha=0.3$. Approximately 70%  ($1-\alpha$) of the image is unaltered, and 30% ($\alpha$) of the pixels have been changed to black or white.
 
-```{figure} ../figures/mammogram_snp.png
+```{figure}
 ---
 name: mmg_snp
 ---
@@ -277,7 +273,7 @@ where $\lambda$ is the expected number of photons per unit time interval. The un
 
 Since the photon count follows a Poisson distribution, it has the property that the variance, $Var[N]$ is equal to the expectation, $E[N]$. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.
 
-```{figure} ../figures/mammogram_poisson.png
+```{figure}
 ---
 name: mmg_poisson
 ---
@@ -313,4 +309,3 @@ For this effort, we focus on five classes of filters commonly applied to the tas
 #### Mean Filter
 
 Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. Usually thought of as a *convolutional filter*, mean filtering is based around the notion of a kernel, which represents the shape and size of the neighborhood to be sampled when computing the average intensities. Typically a 3x3 kernel is used; however, larger kernels (5x5, 7x7) can be used if greater smoothing is required.
-

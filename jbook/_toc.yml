@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 03:42:38 pm                                               #
-# Modified   : Monday November 13th 2023 10:28:33 pm                                               #
+# Modified   : Tuesday November 21st 2023 09:32:41 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,8 +20,26 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: content/00_intro
-chapters:
-- file: content/07_eda
-- file: content/09_image_prep
-- file: content/99_references
+root: index
+parts:
+- caption: Front Matter
+  numbered: 3
+  chapters:
+  - file: content/00_front_matter/00_preface
+  - file: content/00_front_matter/01_intro
+  - file: content/00_front_matter/02_toc
+- caption: CBIS-DDSM
+  numbered: 3
+  chapters:
+  - file: content/01_eda/00_data
+  - file: content/01_eda/01_data_prep
+  - file: content/01_eda/02_eda
+- caption: Image Preprocessing
+  numbered: 3
+  chapters:
+  - file: content/02_data_prep/00_overview
+  - file: content/02_data_prep/01_denoise
+- caption: References
+  numbered: false
+  chapters:
+  - file: content/99_references
