@@ -377,3 +377,55 @@ Mean filter noise reduction images and histograms.
 ```
 
 As shown in {numref}`mean_filter_figure`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
+
+{numref}`mean_filters_diff_kernel_sizes_fig` illustrates the effects of filters of varying kernel sizes
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+# Obtain the source image
+orig = cv2.imread(FP_ORIG)
+
+# Add random Gaussian noise with zero mean and variance of 0.1
+img_gaussian = random_noise(orig, mode='gaussian', mean=0,var=0.1)
+img_gaussian = convert_uint8(img_gaussian)
+
+# Create images with varying kernel sizes.
+img_1 = cv2.blur(img_gaussian, (3,3))
+img_2 = cv2.blur(img_gaussian, (9,9))
+img_3 = cv2.blur(img_gaussian, (15,15))
+
+# Create Figure object
+fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,6), dpi=200)
+
+# Show images
+_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
+_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
+_ = ax[0,0].set_xticks([])
+_ = ax[0,0].set_yticks([])
+
+_ = ax[0,1].imshow(img_1, cmap=CMAP)
+_ = ax[0,1].set_xlabel('(b) Mean Filtered Image with 3x3 kernel', fontsize=10)
+_ = ax[0,1].set_xticks([])
+_ = ax[0,1].set_yticks([])
+
+_ = ax[1,0].imshow(img_2, cmap=CMAP)
+_ = ax[1,0].set_xlabel('(c) Mean Filtered Image with 9x9 kernel', fontsize=10)
+_ = ax[1,0].set_xticks([])
+_ = ax[1,0].set_yticks([])
+
+_ = ax[1,1].imshow(img_3, cmap=CMAP)
+_ = ax[1,1].set_xlabel('(d) Mean Filtered Image with 15x15 kernel', fontsize=10)
+_ = ax[1,1].set_xticks([])
+_ = ax[1,1].set_yticks([])
+
+plt.tight_layout()
+glue("mean_filters_diff_kernel_sizes", fig)
+```
+
+```{glue:figure} mean_filters_diff_kernel_sizes
+---
+align: center
+name: mean_filters_diff_kernel_sizes_fig
+---
+Mean filter with varying kernel sizes.
+```

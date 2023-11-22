@@ -808,12 +808,69 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 </details>
 </div>
 <figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/5f1baf406bdbb23ce75f672e35ee6fbc04e191437542b18623432e670a04e367.png" src="../../_images/5f1baf406bdbb23ce75f672e35ee6fbc04e191437542b18623432e670a04e367.png" />
+<img alt="../../_images/dd0a7b17ad5859793f7d07c2b1f007ff10a37454760754303d50494fc348e1db.png" src="../../_images/dd0a7b17ad5859793f7d07c2b1f007ff10a37454760754303d50494fc348e1db.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>As shown in <a class="reference internal" href="#mean-filter-figure"><span class="std std-numref">Fig. 2.7</span></a>, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
+<p><a class="reference internal" href="#mean-filters-diff-kernel-sizes-fig"><span class="std std-numref">Fig. 2.8</span></a> illustrates the effects of filters of varying kernel sizes</p>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain the source image</span>
+<span class="n">orig</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">)</span>
+
+<span class="c1"># Add random Gaussian noise with zero mean and variance of 0.1</span>
+<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">convert_uint8</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">)</span>
+
+<span class="c1"># Create images with varying kernel sizes.</span>
+<span class="n">img_1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">img_2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="n">img_3</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+
+<span class="c1"># Create Figure object</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># Show images</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(a) Original Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(b) Mean Filtered Image with 3x3 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(c) Mean Filtered Image with 9x9 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(d) Mean Filtered Image with 15x15 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_filters_diff_kernel_sizes&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
+<img alt="../../_images/a0859361b7c669088eae2d1b5e53c73f827eb7f03b90ca5963e24f7e4f0078f9.png" src="../../_images/a0859361b7c669088eae2d1b5e53c73f827eb7f03b90ca5963e24f7e4f0078f9.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filter with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 </section>
