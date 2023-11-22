@@ -815,7 +815,7 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 </details>
 </div>
 <figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/2457ef3d6f43b85aba093d016b5af4881234b84c0d112a4ebe17ea873b67d997.png" src="../../_images/2457ef3d6f43b85aba093d016b5af4881234b84c0d112a4ebe17ea873b67d997.png" />
+<img alt="../../_images/6c440928e9e3710362d2792b6061885b810e7809a90f1fa05cd5430057ddf5bd.png" src="../../_images/6c440928e9e3710362d2792b6061885b810e7809a90f1fa05cd5430057ddf5bd.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -873,7 +873,7 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 </details>
 </div>
 <figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
-<img alt="../../_images/98e1f4f0caa340e5ce361e4792996a77b5a31045c860cdd3850db854205e6cdb.png" src="../../_images/98e1f4f0caa340e5ce361e4792996a77b5a31045c860cdd3850db854205e6cdb.png" />
+<img alt="../../_images/b66b2e7dd48403629206752de21c084c028dcc553ab4ed8ca5be84fa16b52f4e.png" src="../../_images/b66b2e7dd48403629206752de21c084c028dcc553ab4ed8ca5be84fa16b52f4e.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filter with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -887,7 +887,7 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 </section>
 <section id="wiener-filter">
 <h5>Wiener Filter<a class="headerlink" href="#wiener-filter" title="Permalink to this heading">#</a></h5>
-<p>The Wiener filter computes a statistical estimate of an unknown image <span class="math notranslate nohighlight">\(f(x,y) using a related image g(x,y) as input and filters that image to produce an estimate \)</span>\hat{f(x,y)<span class="math notranslate nohighlight">\( of the unknown, unobserved image of interest, which minimizes the mean-squared error between \)</span>f(x,y) and \hat{f}(x,y)$.</p>
+<p>The Wiener filter takes an image <span class="math notranslate nohighlight">\(g(x,y)\)</span> as input and filters that image to produce an estimate <span class="math notranslate nohighlight">\(\hat{f}(x,y)\)</span> of the unknown, unobserved image <span class="math notranslate nohighlight">\(f(x,y)\)</span> of interest, which minimizes the mean-squared error between <span class="math notranslate nohighlight">\(f(x,y)\)</span> and <span class="math notranslate nohighlight">\(\hat{f}(x,y)\)</span>.</p>
 <figure class="align-default" id="wiener-diagram">
 <img alt="../../_images/wiener_diagram.png" src="../../_images/wiener_diagram.png" />
 <figcaption>
@@ -896,14 +896,14 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 </figure>
 <p><a class="reference internal" href="#wiener-diagram"><span class="std std-numref">Fig. 2.9</span></a> shows the overall process model for the Wiener filter. It begins with an unknown image <span class="math notranslate nohighlight">\(f(x,y)\)</span> that is fed into a degradation function <span class="math notranslate nohighlight">\(H\)</span>, then noise is applied to create the observed image <span class="math notranslate nohighlight">\(g(x,y)\)</span>. This image is fed into a Wiener restoration filter as input, and the output is an estimate of the original image <span class="math notranslate nohighlight">\(\hat{f}(x,y)\)</span>.</p>
 <p>It is assumed that the image and the additive noise are stationary linear stochastic processes. That is, the joint probability distribution is time-shift invariant.  In addition, a priori knowledge of the spectral characteristics, or the autocorrelation and cross-correlation are assumed.  Finally, the noise (zero-mean) and image are assumed to be uncorrelated.</p>
-<p>Note: the blurring function <span class="math notranslate nohighlight">\(H\)</span> must be known or estimated, blurring exists in the image. The impulse response can be estimated from the data, or discovered through experimentation.</p>
+<p>Note: the blurring function <span class="math notranslate nohighlight">\(H\)</span> must be known or estimated if blurring exists in the image. The impulse response can be estimated from the data, or discovered through experimentation.</p>
 <p>Mathematically, we can describe the model in the spatial domain as:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-spatial">
 <span class="eqno">(2.13)<a class="headerlink" href="#equation-wiener-function-spatial" title="Permalink to this equation">#</a></span>\[g(x,y) = f(x,y) \cdot h(x,y) + \eta(x,y)\]</div>
-<p>For the frequency domain, we have:</p>
+<p>where <span class="math notranslate nohighlight">\(g(x,y)\)</span> is the observed image, <span class="math notranslate nohighlight">\(f(x,y)\)</span> is the unobserved, uncorrupted image, <span class="math notranslate nohighlight">\(h(x,y)\)</span> is the blurring function, and <span class="math notranslate nohighlight">\(\eta(x,y)\)</span> is the uncorrelated noise component. For the frequency domain, we have:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-frequency">
 <span class="eqno">(2.14)<a class="headerlink" href="#equation-wiener-function-frequency" title="Permalink to this equation">#</a></span>\[G(u,v) = F(u,v) \cdot H(u,v) + N(u,v)\]</div>
-<p>As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an <span class="math notranslate nohighlight">\(\hat{f}(x,y)\)</span> that minimizes the following::</p>
+<p>As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an <span class="math notranslate nohighlight">\(\hat{f}(x,y)\)</span> that minimizes the following:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-spatial">
 <span class="eqno">(2.15)<a class="headerlink" href="#equation-wiener-function-mse-spatial" title="Permalink to this equation">#</a></span>\[e = \displaystyle\sum_x \displaystyle\sum_y |f(x,y)-\hat{f}(x,y)|^2\]</div>
 <p>In the frequency domain, we have:</p>
@@ -911,7 +911,7 @@ The mean filter is based upon the notion of a m x n kernel or matrix, typically 
 <span class="eqno">(2.16)<a class="headerlink" href="#equation-wiener-function-mse-frequency" title="Permalink to this equation">#</a></span>\[e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-\hat{F}(u,v)|^2\]</div>
 <p>Substituting the definition of <span class="math notranslate nohighlight">\(\hat{F}(u,v)\)</span>, we have:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-frequency-expanded">
-<span class="eqno">(2.17)<a class="headerlink" href="#equation-wiener-function-mse-frequency-expanded" title="Permalink to this equation">#</a></span>\[e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-[F(u,v)H(u,v) = N(u,v)]W(u,v)]^2\]</div>
+<span class="eqno">(2.17)<a class="headerlink" href="#equation-wiener-function-mse-frequency-expanded" title="Permalink to this equation">#</a></span>\[e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-[F(u,v)H(u,v) + N(u,v)]W(u,v)]^2\]</div>
 <p>Our objective is to find W that minimizes <a class="reference internal" href="#equation-wiener-function-mse-frequency-expanded">(2.17)</a>.
 Working in the frequency domain simplifies our notation, so we will work there for the rest of this derivation. Again, our objective is to minimize:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-frequency-2">
@@ -921,7 +921,7 @@ Working in the frequency domain simplifies our notation, so we will work there f
 <span class="eqno">(2.19)<a class="headerlink" href="#equation-wiener-function-mse-frequency-3" title="Permalink to this equation">#</a></span>\[e \approx \displaystyle\sum_u \displaystyle\sum_v |F^2[1-HW]^2-|N|^2|W|^2\]</div>
 <p>To minimize this function, we take the derivative with respect to W and set it to zero.</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-derivative">
-<span class="eqno">(2.20)<a class="headerlink" href="#equation-wiener-function-mse-derivative" title="Permalink to this equation">#</a></span>\[\frac{\partial e}{\partial W} = 0 = |F^2[2(1-W*H*)(-H)]+|N|^2|W*| = 0\]</div>
+<span class="eqno">(2.20)<a class="headerlink" href="#equation-wiener-function-mse-derivative" title="Permalink to this equation">#</a></span>\[\frac{\partial e}{\partial W} = 0 = |F^2[2(1-W^*H^*)(-H)]+|N|^2|W^*| = 0\]</div>
 <p>Which simplifies to:</p>
 <div class="math notranslate nohighlight" id="equation-wiener-function-mse-derivative-2">
 <span class="eqno">(2.21)<a class="headerlink" href="#equation-wiener-function-mse-derivative-2" title="Permalink to this equation">#</a></span>\[W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{|N|^2}{|F|^2}}\]</div>

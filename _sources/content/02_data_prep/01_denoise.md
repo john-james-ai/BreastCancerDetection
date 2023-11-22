@@ -442,7 +442,7 @@ Both of these challenges are addressed using the median filter, which we will co
 
 ##### Wiener Filter
 
-The Wiener filter computes a statistical estimate of an unknown image $f(x,y) using a related image g(x,y) as input and filters that image to produce an estimate $\hat{f(x,y)$ of the unknown, unobserved image of interest, which minimizes the mean-squared error between $f(x,y) and \hat{f}(x,y)$.
+The Wiener filter takes an image $g(x,y)$ as input and filters that image to produce an estimate $\hat{f}(x,y)$ of the unknown, unobserved image $f(x,y)$ of interest, which minimizes the mean-squared error between $f(x,y)$ and $\hat{f}(x,y)$.
 
 ```{figure} ../../figures/wiener_diagram.png
 ---
@@ -455,7 +455,7 @@ Wiener Filter Model
 
 It is assumed that the image and the additive noise are stationary linear stochastic processes. That is, the joint probability distribution is time-shift invariant.  In addition, a priori knowledge of the spectral characteristics, or the autocorrelation and cross-correlation are assumed.  Finally, the noise (zero-mean) and image are assumed to be uncorrelated.
 
-Note: the blurring function $H$ must be known or estimated, blurring exists in the image. The impulse response can be estimated from the data, or discovered through experimentation.
+Note: the blurring function $H$ must be known or estimated if blurring exists in the image. The impulse response can be estimated from the data, or discovered through experimentation.
 
 Mathematically, we can describe the model in the spatial domain as:
 
@@ -464,14 +464,14 @@ Mathematically, we can describe the model in the spatial domain as:
 g(x,y) = f(x,y) \cdot h(x,y) + \eta(x,y)
 ```
 
-For the frequency domain, we have:
+where $g(x,y)$ is the observed image, $f(x,y)$ is the unobserved, uncorrupted image, $h(x,y)$ is the blurring function, and $\eta(x,y)$ is the uncorrelated noise component. For the frequency domain, we have:
 
 ```{math}
 :label: wiener_function_frequency
 G(u,v) = F(u,v) \cdot H(u,v) + N(u,v)
 ```
 
-As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an $\hat{f}(x,y)$ that minimizes the following::
+As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an $\hat{f}(x,y)$ that minimizes the following:
 
 ```{math}
 :label: wiener_function_mse_spatial
@@ -489,7 +489,7 @@ Substituting the definition of $\hat{F}(u,v)$, we have:
 
 ```{math}
 :label: wiener_function_mse_frequency_expanded
-e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-[F(u,v)H(u,v) = N(u,v)]W(u,v)]^2
+e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-[F(u,v)H(u,v) + N(u,v)]W(u,v)]^2
 ```
 
 Our objective is to find W that minimizes {eq}`wiener_function_mse_frequency_expanded`.
@@ -511,7 +511,7 @@ To minimize this function, we take the derivative with respect to W and set it t
 
 ```{math}
 :label: wiener_function_mse_derivative
-\frac{\partial e}{\partial W} = 0 = |F^2[2(1-W*H*)(-H)]+|N|^2|W*| = 0
+\frac{\partial e}{\partial W} = 0 = |F^2[2(1-W^*H^*)(-H)]+|N|^2|W^*| = 0
 ```
 
 Which simplifies to:
@@ -536,3 +536,4 @@ W = \frac{P_s}{P_s + \sigma^2_n}
 ```
 
 where $\sigma^2_n$ is the noise variance, and $P_s$ is the power spectrum of the image obtained by taking the Fourier transform of the image signal autocorrelation.
+
