@@ -10,7 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
-# Image Preprocessing
+# Image Preprocessing Overview
 
 Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.
 
@@ -25,11 +25,11 @@ Exploratory analysis of the CBIS-DDSM mammograph illuminated several issues that
 
 Addressing these challenges is fundamentally important to model detection, recognition, and classification performance.
 
-## Image Preprocessing Overview
+## Image Preprocessing Approach
 
 In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.
 
-```{figure} ../../figures/ImagePrep.png
+```{figure}
 ---
 name: image_prep
 ---
@@ -53,7 +53,7 @@ images from the various image enhancement methods are visually evaluated and sco
 
 ### Objective Image Quality Assessment
 
-Objective methods are based on image quality metrics (IQMs) that are designed to estimate the quality of the image automatically, in qualitative terms as observed by human subjects {cite}afnanSubjectiveAssessmentObjective2023`. Image processing algorithms will be ranked by calculating these metrics to select the algorithm that produces the highest-quality images.
+Objective methods are based on image quality metrics (IQMs) that are designed to estimate the quality of the image automatically, in qualitative terms as observed by human subjects {cite}`afnanSubjectiveAssessmentObjective2023`. Image processing algorithms will be ranked by calculating these metrics to select the algorithm that produces the highest-quality images.
 
 For this effort, three IQMs will be used to assess image quality: mean squared error (MSE), peak signal-to-noise ratio (PSNR), and the structural similarity index measure (SSIM).
 
@@ -87,7 +87,7 @@ Mathematically, PSNR is calculated with equation {eq}`psnr`.
 
 where MAX is the maximum pixel value contained in the image and PSNR is measured in decibels (dB). An acceptable PSNR for an 8-bit image would be in the range of 30 to 50 dB {cite}``beeravoluPreprocessingBreastCancer2021`.
 
-### Structural Similarity Index Measure (SSIM)
+#### Structural Similarity Index Measure (SSIM)
 
 The Structural Similarity Index Measure (SSIM) is a method for measuring the structural similarity between two images. Since its introduction in 2004 {cite}`bakurovStructuralSimilarityIndex2022`, the SSIM has become one of the most popular full-reference image quality assessment (FR-IQA) measures (over 47,960 citations), owing its success to its mathematical simplicity, low computational complexity, and implicit incorporation of the Human Visual System’s (HVS) characteristics. The incorporation of this characteristic has resulted in a better correlation with subjective evaluation provided by human observers. Consequently, SSIM has been used as a proxy evaluation for human assessment in a range of image processing and computer vision applications.
 
@@ -97,7 +97,7 @@ Unlike the MSE-based measures that compare images on a pixel-by-pixel basis, the
 
 Formally, the SSIM compares a reference image and a potentially corrupt image based on three independent components: luminance, contrast, and structure.
 
-#### SSIM Luminance Component
+##### SSIM Luminance Component
 
 Each image’s patch average $\mu$ represents the luminance information. Hence, the comparison is given by:
 
@@ -108,7 +108,7 @@ l(x,y) = \frac{2\mu_x\mu_y+C_1}{\mu_x^2 + \mu_y^2 + C_1},
 
 where $C_1$ is a small quantity introduced for numerical stability. (Stand by, we’ll define that quantity at the end.)
 
-#### SSIM Contrast Component
+##### SSIM Contrast Component
 
 Contrast is defined in terms of the standard deviation, and the comparison is given by:
 
@@ -117,7 +117,7 @@ Contrast is defined in terms of the standard deviation, and the comparison is gi
 c(x,y) = \frac{2\sigma_x\sigma_y+C_2}{\sigma_x^2 + \sugna_y^2 + C_2},
 ```
 
-#### SSIM Structure Component
+##### SSIM Structure Component
 
 The structure element is represented by the inner product of the mean and standard deviation of each image. The comparison is given by:
 

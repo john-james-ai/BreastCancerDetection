@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>7. Image Preprocessing &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>7. Image Preprocessing Overview &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -174,7 +174,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Image Preprocessing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Image Preprocessing Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_denoise.html">8. Denoise</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
@@ -446,7 +446,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Image Preprocessing</h1>
+    <h1>Image Preprocessing Overview</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -456,18 +456,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-overview">7.1. Image Preprocessing Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-approach">7.1. Image Preprocessing Approach</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-assessment-iqa">7.2. Image Quality Assessment (IQA)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subjective-image-quality-assessment">7.2.1. Subjective Image Quality Assessment</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-image-quality-assessment">7.2.2. Objective Image Quality Assessment</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">7.2.2.1. Mean Squared Error (MSE)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peak-signal-to-noise-ratio-psnr">7.2.2.2. Peak Signal-to-Noise Ratio (PSNR)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-similarity-index-measure-ssim">7.2.2.3. Structural Similarity Index Measure (SSIM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-luminance-component">7.2.2.3.1. SSIM Luminance Component</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-contrast-component">7.2.2.3.2. SSIM Contrast Component</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-structure-component">7.2.2.3.3. SSIM Structure Component</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-similarity-index-measure-ssim">7.2.3. Structural Similarity Index Measure (SSIM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-luminance-component">7.2.3.1. SSIM Luminance Component</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-contrast-component">7.2.3.2. SSIM Contrast Component</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-structure-component">7.2.3.3. SSIM Structure Component</a></li>
 </ul>
 </li>
 </ul>
@@ -483,8 +483,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="image-preprocessing">
-<h1><span class="section-number">7. </span>Image Preprocessing<a class="headerlink" href="#image-preprocessing" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="image-preprocessing-overview">
+<h1><span class="section-number">7. </span>Image Preprocessing Overview<a class="headerlink" href="#image-preprocessing-overview" title="Permalink to this heading">#</a></h1>
 <p>Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.</p>
 <p>Exploratory analysis of the CBIS-DDSM mammograph illuminated several issues that compromise the discriminatory power of image detection and recognition models.</p>
 <ul class="simple">
@@ -496,15 +496,9 @@ document.write(`
 <li><p>Deep learning models for computer vision require large datasets. The CBIS-DDSM has just over 3500 full mammogram images, a relatively small dataset for model training.</p></li>
 </ul>
 <p>Addressing these challenges is fundamentally important to model detection, recognition, and classification performance.</p>
-<section id="image-preprocessing-overview">
-<h2><span class="section-number">7.1. </span>Image Preprocessing Overview<a class="headerlink" href="#image-preprocessing-overview" title="Permalink to this heading">#</a></h2>
-<p>In this regard, a five-stage image preprocessing approach (<a class="reference internal" href="#image-prep"><span class="std std-numref">Fig. 7.1</span></a>) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.</p>
-<figure class="align-default" id="image-prep">
-<img alt="../../_images/ImagePrep.png" src="../../_images/ImagePrep.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 7.1 </span><span class="caption-text">Image Preprocessing Approach</span><a class="headerlink" href="#image-prep" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<section id="image-preprocessing-approach">
+<h2><span class="section-number">7.1. </span>Image Preprocessing Approach<a class="headerlink" href="#image-preprocessing-approach" title="Permalink to this heading">#</a></h2>
+<p>In this regard, a five-stage image preprocessing approach (<code class="xref std std-numref docutils literal notranslate"><span class="pre">image_prep</span></code>) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.</p>
 <p>We begin with an evaluation of various denoising methods commonly applied to mammography. Once a denoising method and its (hyper) parameters are selected, we move to the artifact removal stage. Image binarizing and thresholding methods are evaluated, then morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast with Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Additive White Gaussian Noise (AWGN) is also added to improve the generalized performance of the neural network and mitigate model overfitting. Finally, we extract the ROIs using automated pixel intensity thresholding to create a binary mask which is applied to the enhanced images.</p>
 </section>
 <section id="image-quality-assessment-iqa">
@@ -519,7 +513,7 @@ images from the various image enhancement methods are visually evaluated and sco
 </section>
 <section id="objective-image-quality-assessment">
 <h3><span class="section-number">7.2.2. </span>Objective Image Quality Assessment<a class="headerlink" href="#objective-image-quality-assessment" title="Permalink to this heading">#</a></h3>
-<p>Objective methods are based on image quality metrics (IQMs) that are designed to estimate the quality of the image automatically, in qualitative terms as observed by human subjects {cite}afnanSubjectiveAssessmentObjective2023`. Image processing algorithms will be ranked by calculating these metrics to select the algorithm that produces the highest-quality images.</p>
+<p>Objective methods are based on image quality metrics (IQMs) that are designed to estimate the quality of the image automatically, in qualitative terms as observed by human subjects <span id="id3">[<a class="reference internal" href="../99_references.html#id333" title="Afnan Afnan, Faiz Ullah, Yaseen Yaseen, Jinhee Lee, Sonain Jamil, and Oh-Jin Kwon. Subjective Assessment of Objective Image Quality Metrics Range Guaranteeing Visually Lossless Compression. Sensors, 23(3):1297, January 2023. URL: https://www.mdpi.com/1424-8220/23/3/1297 (visited on 2023-11-21), doi:10.3390/s23031297.">15</a>]</span>. Image processing algorithms will be ranked by calculating these metrics to select the algorithm that produces the highest-quality images.</p>
 <p>For this effort, three IQMs will be used to assess image quality: mean squared error (MSE), peak signal-to-noise ratio (PSNR), and the structural similarity index measure (SSIM).</p>
 <section id="mean-squared-error-mse">
 <h4><span class="section-number">7.2.2.1. </span>Mean Squared Error (MSE)<a class="headerlink" href="#mean-squared-error-mse" title="Permalink to this heading">#</a></h4>
@@ -539,28 +533,27 @@ images from the various image enhancement methods are visually evaluated and sco
 <span class="eqno">(7.2)<a class="headerlink" href="#equation-psnr" title="Permalink to this equation">#</a></span>\[\text{PSNR} = 20\text{log}_10\Bigg(\frac{(MAX)}{\sqrt{MSE}}\Bigg)\]</div>
 <p>where MAX is the maximum pixel value contained in the image and PSNR is measured in decibels (dB). An acceptable PSNR for an 8-bit image would be in the range of 30 to 50 dB {cite}``beeravoluPreprocessingBreastCancer2021`.</p>
 </section>
-</section>
 <section id="structural-similarity-index-measure-ssim">
-<h3><span class="section-number">7.2.3. </span>Structural Similarity Index Measure (SSIM)<a class="headerlink" href="#structural-similarity-index-measure-ssim" title="Permalink to this heading">#</a></h3>
-<p>The Structural Similarity Index Measure (SSIM) is a method for measuring the structural similarity between two images. Since its introduction in 2004 <span id="id3">[<a class="reference internal" href="../99_references.html#id335" title="Illya Bakurov, Marco Buzzelli, Raimondo Schettini, Mauro Castelli, and Leonardo Vanneschi. Structural similarity index (SSIM) revisited: A data-driven approach. Expert Systems with Applications, 189:116087, March 2022. URL: https://linkinghub.elsevier.com/retrieve/pii/S0957417421014238 (visited on 2023-11-22), doi:10.1016/j.eswa.2021.116087.">16</a>]</span>, the SSIM has become one of the most popular full-reference image quality assessment (FR-IQA) measures (over 47,960 citations), owing its success to its mathematical simplicity, low computational complexity, and implicit incorporation of the Human Visual System’s (HVS) characteristics. The incorporation of this characteristic has resulted in a better correlation with subjective evaluation provided by human observers. Consequently, SSIM has been used as a proxy evaluation for human assessment in a range of image processing and computer vision applications.</p>
-<p>SSIM separately measures local brightness (a.k.a. luminance), contrast, and structure of both images and then aggregates all local assessments to obtain the overall measure <span id="id4">[<a class="reference internal" href="../99_references.html#id335" title="Illya Bakurov, Marco Buzzelli, Raimondo Schettini, Mauro Castelli, and Leonardo Vanneschi. Structural similarity index (SSIM) revisited: A data-driven approach. Expert Systems with Applications, 189:116087, March 2022. URL: https://linkinghub.elsevier.com/retrieve/pii/S0957417421014238 (visited on 2023-11-22), doi:10.1016/j.eswa.2021.116087.">16</a>]</span>.</p>
+<h4><span class="section-number">7.2.2.3. </span>Structural Similarity Index Measure (SSIM)<a class="headerlink" href="#structural-similarity-index-measure-ssim" title="Permalink to this heading">#</a></h4>
+<p>The Structural Similarity Index Measure (SSIM) is a method for measuring the structural similarity between two images. Since its introduction in 2004 <span id="id4">[<a class="reference internal" href="../99_references.html#id335" title="Illya Bakurov, Marco Buzzelli, Raimondo Schettini, Mauro Castelli, and Leonardo Vanneschi. Structural similarity index (SSIM) revisited: A data-driven approach. Expert Systems with Applications, 189:116087, March 2022. URL: https://linkinghub.elsevier.com/retrieve/pii/S0957417421014238 (visited on 2023-11-22), doi:10.1016/j.eswa.2021.116087.">16</a>]</span>, the SSIM has become one of the most popular full-reference image quality assessment (FR-IQA) measures (over 47,960 citations), owing its success to its mathematical simplicity, low computational complexity, and implicit incorporation of the Human Visual System’s (HVS) characteristics. The incorporation of this characteristic has resulted in a better correlation with subjective evaluation provided by human observers. Consequently, SSIM has been used as a proxy evaluation for human assessment in a range of image processing and computer vision applications.</p>
+<p>SSIM separately measures local brightness (a.k.a. luminance), contrast, and structure of both images and then aggregates all local assessments to obtain the overall measure <span id="id5">[<a class="reference internal" href="../99_references.html#id335" title="Illya Bakurov, Marco Buzzelli, Raimondo Schettini, Mauro Castelli, and Leonardo Vanneschi. Structural similarity index (SSIM) revisited: A data-driven approach. Expert Systems with Applications, 189:116087, March 2022. URL: https://linkinghub.elsevier.com/retrieve/pii/S0957417421014238 (visited on 2023-11-22), doi:10.1016/j.eswa.2021.116087.">16</a>]</span>.</p>
 <p>Unlike the MSE-based measures that compare images on a pixel-by-pixel basis, the SSIM operates on patches obtained from a sliding window.  This technique better models the HVS because our eyes can discern differences in local information in a specific area of two images.</p>
 <p>Formally, the SSIM compares a reference image and a potentially corrupt image based on three independent components: luminance, contrast, and structure.</p>
 <section id="ssim-luminance-component">
-<h4><span class="section-number">7.2.3.1. </span>SSIM Luminance Component<a class="headerlink" href="#ssim-luminance-component" title="Permalink to this heading">#</a></h4>
+<h5><span class="section-number">7.2.2.3.1. </span>SSIM Luminance Component<a class="headerlink" href="#ssim-luminance-component" title="Permalink to this heading">#</a></h5>
 <p>Each image’s patch average <span class="math notranslate nohighlight">\(\mu\)</span> represents the luminance information. Hence, the comparison is given by:</p>
 <div class="math notranslate nohighlight" id="equation-luminance">
 <span class="eqno">(7.3)<a class="headerlink" href="#equation-luminance" title="Permalink to this equation">#</a></span>\[l(x,y) = \frac{2\mu_x\mu_y+C_1}{\mu_x^2 + \mu_y^2 + C_1},\]</div>
 <p>where <span class="math notranslate nohighlight">\(C_1\)</span> is a small quantity introduced for numerical stability. (Stand by, we’ll define that quantity at the end.)</p>
 </section>
 <section id="ssim-contrast-component">
-<h4><span class="section-number">7.2.3.2. </span>SSIM Contrast Component<a class="headerlink" href="#ssim-contrast-component" title="Permalink to this heading">#</a></h4>
+<h5><span class="section-number">7.2.2.3.2. </span>SSIM Contrast Component<a class="headerlink" href="#ssim-contrast-component" title="Permalink to this heading">#</a></h5>
 <p>Contrast is defined in terms of the standard deviation, and the comparison is given by:</p>
 <div class="math notranslate nohighlight" id="equation-contrast">
 <span class="eqno">(7.4)<a class="headerlink" href="#equation-contrast" title="Permalink to this equation">#</a></span>\[c(x,y) = \frac{2\sigma_x\sigma_y+C_2}{\sigma_x^2 + \sugna_y^2 + C_2},\]</div>
 </section>
 <section id="ssim-structure-component">
-<h4><span class="section-number">7.2.3.3. </span>SSIM Structure Component<a class="headerlink" href="#ssim-structure-component" title="Permalink to this heading">#</a></h4>
+<h5><span class="section-number">7.2.2.3.3. </span>SSIM Structure Component<a class="headerlink" href="#ssim-structure-component" title="Permalink to this heading">#</a></h5>
 <p>The structure element is represented by the inner product of the mean and standard deviation of each image. The comparison is given by:</p>
 <div class="math notranslate nohighlight" id="equation-structure">
 <span class="eqno">(7.5)<a class="headerlink" href="#equation-structure" title="Permalink to this equation">#</a></span>\[s(x,y) = \frac{\sigma_{xy}+C_3}{\sigma_x \sigma_y + C_3}\]</div>
@@ -570,7 +563,8 @@ images from the various image enhancement methods are visually evaluated and sco
 <p>Finally, the three components are combined into a unique expression that is weighted with exponents <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, and <span class="math notranslate nohighlight">\(\gamma\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-ssim">
 <span class="eqno">(7.7)<a class="headerlink" href="#equation-ssim" title="Permalink to this equation">#</a></span>\[SSIM(x,y) = [l(x,y)\^\alpha \cdot [c(x,y)]^\beta \cdot [s(x,y)]^\gamma\]</div>
-<p>The expressions refer to constants <span class="math notranslate nohighlight">\(C_1\)</span>, <span class="math notranslate nohighlight">\(C_2\)</span>, and <span class="math notranslate nohighlight">\(C_3\)</span> that are introduced for numerical stability. These three quantities are functions of the dynamic range of the pixel values L (L=255 for 8-bit gray-scale images) and two scalar constants <span class="math notranslate nohighlight">\(K_1 \ll 1\)</span> and <span class="math notranslate nohighlight">\(K_2 \ll 1\)</span>. Traditionally, <span class="math notranslate nohighlight">\(K_1\)</span>  and <span class="math notranslate nohighlight">\(K_2\)</span> are equal to 0.01, and 0.03, respectively. <span class="math notranslate nohighlight">\(C_1=(K_1,L)^2, C_2=(K_2,L)^2,  C_3=\frac{C_2}{2}\)</span>. In the original paper <span id="id5">[<a class="reference internal" href="../99_references.html#id336" title="Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE Transactions on Image Processing, 13(4):600–612, April 2004. URL: http://ieeexplore.ieee.org/document/1284395/ (visited on 2023-11-22), doi:10.1109/TIP.2003.819861.">17</a>]</span>, <span class="math notranslate nohighlight">\(\alpha= \beta = \gamma = 1\)</span>.</p>
+<p>The expressions refer to constants <span class="math notranslate nohighlight">\(C_1\)</span>, <span class="math notranslate nohighlight">\(C_2\)</span>, and <span class="math notranslate nohighlight">\(C_3\)</span> that are introduced for numerical stability. These three quantities are functions of the dynamic range of the pixel values L (L=255 for 8-bit gray-scale images) and two scalar constants <span class="math notranslate nohighlight">\(K_1 \ll 1\)</span> and <span class="math notranslate nohighlight">\(K_2 \ll 1\)</span>. Traditionally, <span class="math notranslate nohighlight">\(K_1\)</span>  and <span class="math notranslate nohighlight">\(K_2\)</span> are equal to 0.01, and 0.03, respectively. <span class="math notranslate nohighlight">\(C_1=(K_1,L)^2, C_2=(K_2,L)^2,  C_3=\frac{C_2}{2}\)</span>. In the original paper <span id="id6">[<a class="reference internal" href="../99_references.html#id336" title="Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE Transactions on Image Processing, 13(4):600–612, April 2004. URL: http://ieeexplore.ieee.org/document/1284395/ (visited on 2023-11-22), doi:10.1109/TIP.2003.819861.">17</a>]</span>, <span class="math notranslate nohighlight">\(\alpha= \beta = \gamma = 1\)</span>.</p>
+</section>
 </section>
 </section>
 </section>
@@ -643,18 +637,18 @@ images from the various image enhancement methods are visually evaluated and sco
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-overview">7.1. Image Preprocessing Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-approach">7.1. Image Preprocessing Approach</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-assessment-iqa">7.2. Image Quality Assessment (IQA)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subjective-image-quality-assessment">7.2.1. Subjective Image Quality Assessment</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-image-quality-assessment">7.2.2. Objective Image Quality Assessment</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">7.2.2.1. Mean Squared Error (MSE)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peak-signal-to-noise-ratio-psnr">7.2.2.2. Peak Signal-to-Noise Ratio (PSNR)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-similarity-index-measure-ssim">7.2.2.3. Structural Similarity Index Measure (SSIM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-luminance-component">7.2.2.3.1. SSIM Luminance Component</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-contrast-component">7.2.2.3.2. SSIM Contrast Component</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-structure-component">7.2.2.3.3. SSIM Structure Component</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structural-similarity-index-measure-ssim">7.2.3. Structural Similarity Index Measure (SSIM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-luminance-component">7.2.3.1. SSIM Luminance Component</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-contrast-component">7.2.3.2. SSIM Contrast Component</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ssim-structure-component">7.2.3.3. SSIM Structure Component</a></li>
 </ul>
 </li>
 </ul>
