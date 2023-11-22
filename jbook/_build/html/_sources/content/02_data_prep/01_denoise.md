@@ -281,15 +281,18 @@ Our objective is to create an approximation of the original image, $\hat{s}$ in 
 
 Over the past two decades, a considerable body of research has been devoted to the design, development, and testing of denoising methods for biomedical imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used techniques used in denoising biomedical images, with a focus on applications in mammography.
 
-For this effort, we focus on five classes of filters commonly applied to the task of biomedical image noise reduction:
+In general, the denoiser method space is comprised of spatial domain methods and transform domain methods, which we will introduce in the next couple of subsections.
 
-1. **Mean Filter**: Also known as the average filter,
-2. **Median Filter**: A non-linear noise reduction technique {cite}`arceNonlinearSignalProcessing2005`,
-3. **Gaussian Filter**: A linear noise reduction method based upon a Gaussian kernel {cite}`klapperResponseApproximationGaussian1959`,
-4. **Adaptive Median Filter**: Median filter with variable window size {cite}`hwangAdaptiveMedianFilters1995`, and
-5. **Non-Local Means Filter**: Filtering based upon non-local averaging of all pixels in the image {cite}`buadesNonLocalAlgorithmImage2005`.
+### Spatial Domain Filtering
 
-### Mean Filter
+In spatial domain filtering, the value of a pixel is based upon both itself and the values of the surrounding pixels. Specifically, the output pixel value results from an algorithm that is applied to the values of the pixels in the neighborhood of a corresponding input pixel. Spatial domain filters are classified into two types: linear filters and non-linear filters.
+
+#### Linear Filters
+
+Linear filters are those in which the value of an output pixel is a linear combination of the values of the pixels in the input pixel’s neighborhood.  The filtering process is one of sliding a kernel, or mask of weights, along the image and performing a ‘multiple and accumulate’ operation (convolution) on the pixels covered by the mask. The effect is that the image pixel at the center of the mask is set to the weighted average of all the pixels in its *neighborhood*. The shape, and weights of the neighborhood are given by the kernel.
+Examples of linear filters include the mean filter and the Wiener filter.
+
+##### Mean Filter
 
 Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. It’s based on the idea that random noise consists of “sharp” transitions in the intensity of the signal. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. By doing so, the “sharp” transitions in the intensities are reduced.
 The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
@@ -377,3 +380,159 @@ Mean filter noise reduction images and histograms.
 ```
 
 As shown in {numref}`mean_filter_figure`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
+
+{numref}`mean_filters_diff_kernel_sizes_fig` illustrates the effects of filters of varying kernel sizes
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+# Obtain the source image
+orig = cv2.imread(FP_ORIG)
+
+# Add random Gaussian noise with zero mean and variance of 0.1
+img_gaussian = random_noise(orig, mode='gaussian', mean=0,var=0.1)
+img_gaussian = convert_uint8(img_gaussian)
+
+# Create images with varying kernel sizes.
+img_1 = cv2.blur(img_gaussian, (3,3))
+img_2 = cv2.blur(img_gaussian, (9,9))
+img_3 = cv2.blur(img_gaussian, (15,15))
+
+# Create Figure object
+fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,6), dpi=200)
+
+# Show images
+_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
+_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
+_ = ax[0,0].set_xticks([])
+_ = ax[0,0].set_yticks([])
+
+_ = ax[0,1].imshow(img_1, cmap=CMAP)
+_ = ax[0,1].set_xlabel('(b) Mean Filtered Image with 3x3 kernel', fontsize=10)
+_ = ax[0,1].set_xticks([])
+_ = ax[0,1].set_yticks([])
+
+_ = ax[1,0].imshow(img_2, cmap=CMAP)
+_ = ax[1,0].set_xlabel('(c) Mean Filtered Image with 9x9 kernel', fontsize=10)
+_ = ax[1,0].set_xticks([])
+_ = ax[1,0].set_yticks([])
+
+_ = ax[1,1].imshow(img_3, cmap=CMAP)
+_ = ax[1,1].set_xlabel('(d) Mean Filtered Image with 15x15 kernel', fontsize=10)
+_ = ax[1,1].set_xticks([])
+_ = ax[1,1].set_yticks([])
+
+plt.tight_layout()
+glue("mean_filters_diff_kernel_sizes", fig)
+```
+
+```{glue:figure} mean_filters_diff_kernel_sizes
+---
+align: center
+name: mean_filters_diff_kernel_sizes_fig
+---
+Mean filter with varying kernel sizes.
+```
+
+Due to its simplicity, and computational efficiency, the mean filter is one of the most widely used spatial domain filters in biomedical imaging. As a low-pass frequency filter, it reduces the spatial intensity derivatives in the image; thereby, reducing the amount of noise corrupting the representation. There are; however, two main challenges with the main filter:
+
+1. The mean filter averaging is sensitive to unrepresentative pixel values, which can significantly affect the mean value of all pixels in the neighborhood.
+2. Since edges tend to have 'sharp' intensity gradients, the mean filter will interpolate new values based on the averages, which has the effect of blurring the edges.
+
+Both of these challenges are addressed using the median filter, which we will cover in the next section.
+
+##### Wiener Filter
+
+The Wiener filter computes a statistical estimate of an unknown image $f(x,y) using a related image g(x,y) as input and filters that image to produce an estimate $\hat{f(x,y)$ of the unknown, unobserved image of interest, which minimizes the mean-squared error between $f(x,y) and \hat{f}(x,y)$.
+
+```{figure} ../../figures/wiener_diagram.png
+---
+name: wiener_diagram
+---
+Wiener Filter Model
+```
+
+{numref}`wiener_diagram` shows the overall process model for the Wiener filter. It begins with an unknown image $f(x,y)$ that is fed into a degradation function $H$, then noise is applied to create the observed image $g(x,y)$. This image is fed into a Wiener restoration filter as input, and the output is an estimate of the original image $\hat{f}(x,y)$.
+
+It is assumed that the image and the additive noise are stationary linear stochastic processes. That is, the joint probability distribution is time-shift invariant.  In addition, a priori knowledge of the spectral characteristics, or the autocorrelation and cross-correlation are assumed.  Finally, the noise (zero-mean) and image are assumed to be uncorrelated.
+
+Note: the blurring function $H$ must be known or estimated, blurring exists in the image. The impulse response can be estimated from the data, or discovered through experimentation.
+
+Mathematically, we can describe the model in the spatial domain as:
+
+```{math}
+:label: wiener_function_spatial
+g(x,y) = f(x,y) \cdot h(x,y) + \eta(x,y)
+```
+
+For the frequency domain, we have:
+
+```{math}
+:label: wiener_function_frequency
+G(u,v) = F(u,v) \cdot H(u,v) + N(u,v)
+```
+
+As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an $\hat{f}(x,y)$ that minimizes the following::
+
+```{math}
+:label: wiener_function_mse_spatial
+e = \displaystyle\sum_x \displaystyle\sum_y |f(x,y)-\hat{f}(x,y)|^2
+```
+
+In the frequency domain, we have:
+
+```{math}
+:label: wiener_function_mse_frequency
+e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-\hat{F}(u,v)|^2
+```
+
+Substituting the definition of $\hat{F}(u,v)$, we have:
+
+```{math}
+:label: wiener_function_mse_frequency_expanded
+e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-[F(u,v)H(u,v) = N(u,v)]W(u,v)]^2
+```
+
+Our objective is to find W that minimizes {eq}`wiener_function_mse_frequency_expanded`.
+Working in the frequency domain simplifies our notation, so we will work there for the rest of this derivation. Again, our objective is to minimize:
+
+```{math}
+:label: wiener_function_mse_frequency_2
+e = \displaystyle\sum_u \displaystyle\sum_v |F[1-HW]-NW|^2
+```
+
+Which is close to:
+
+```{math}
+:label: wiener_function_mse_frequency_3
+e \approx \displaystyle\sum_u \displaystyle\sum_v |F^2[1-HW]^2-|N|^2|W|^2
+```
+
+To minimize this function, we take the derivative with respect to W and set it to zero.
+
+```{math}
+:label: wiener_function_mse_derivative
+\frac{\partial e}{\partial W} = 0 = |F^2[2(1-W*H*)(-H)]+|N|^2|W*| = 0
+```
+
+Which simplifies to:
+
+```{math}
+:label: wiener_function_mse_derivative_2
+W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{|N|^2}{|F|^2}}
+```
+
+Note that $\frac{|N|^2}{|F|^2}$ is the inverse of the signal-to-noise (SNR), which give us:
+
+```{math}
+:label: wiener_function_mse_derivative_3
+W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{1}{SNR}}
+```
+
+If there is no blurring and only noise, the Wiener function simplifies to:
+
+```{math}
+:label: wiener_function_noise
+W = \frac{P_s}{P_s + \sigma^2_n}
+```
+
+where $\sigma^2_n$ is the noise variance, and $P_s$ is the power spectrum of the image obtained by taking the Fourier transform of the image signal autocorrelation.

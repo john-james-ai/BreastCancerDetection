@@ -137,7 +137,7 @@ Finally, the three components are combined into a unique expression that is weig
 
 ```{math}
 :label: ssim
-SSIM(x,y) = [l(x,y)\^\alpha \cdot [c(x,y)]^\beta \cdot [s(x,y)]^\gamma
+SSIM(x,y) = [l(x,y)]^\alpha \cdot [c(x,y)]^\beta \cdot [s(x,y)]^\gamma
 ```
 
 The expressions refer to constants $C_1$, $C_2$, and $C_3$ that are introduced for numerical stability. These three quantities are functions of the dynamic range of the pixel values L (L=255 for 8-bit gray-scale images) and two scalar constants $K_1 \ll 1$ and $K_2 \ll 1$. Traditionally, $K_1$  and $K_2$ are equal to 0.01, and 0.03, respectively. $C_1=(K_1,L)^2, C_2=(K_2,L)^2,  C_3=\frac{C_2}{2}$. In the original paper {cite}`wangImageQualityAssessment2004`, $\alpha= \beta = \gamma = 1$.
