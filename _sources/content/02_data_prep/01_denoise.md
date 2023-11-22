@@ -444,7 +444,7 @@ Both of these challenges are addressed using the median filter, which we will co
 
 The Wiener filter computes a statistical estimate of an unknown image $f(x,y) using a related image g(x,y) as input and filters that image to produce an estimate $\hat{f(x,y)$ of the unknown, unobserved image of interest, which minimizes the mean-squared error between $f(x,y) and \hat{f}(x,y)$.
 
-```{figure} ../../figures/weiner_diagram.png
+```{figure} ../../figures/wiener_diagram.png
 ---
 name: wiener_diagram
 ---
@@ -503,7 +503,7 @@ e = \displaystyle\sum_u \displaystyle\sum_v |F[1-HW]-NW|^2
 Which is close to:
 
 ```{math}
-:label: wiener_function_mse_frequency_2
+:label: wiener_function_mse_frequency_3
 e \approx \displaystyle\sum_u \displaystyle\sum_v |F^2[1-HW]^2-|N|^2|W|^2
 ```
 
