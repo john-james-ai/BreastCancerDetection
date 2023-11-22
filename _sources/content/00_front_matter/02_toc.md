@@ -13,5 +13,5 @@ kernelspec:
 # Table of Contents
 
 ```
-{tableofcontents}
+{contents}
 ```
