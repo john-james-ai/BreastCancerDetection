@@ -373,7 +373,7 @@ glue("mean_filter_fig", fig)
 align: center
 name: mean_filter_figure
 ---
-
+Mean filter noise reduction images and histograms.
 ```
 
 As shown in {numref}`mean_filter_figure`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.

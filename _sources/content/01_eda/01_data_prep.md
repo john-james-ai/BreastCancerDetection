@@ -10,7 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
-# CBIS-DDSM Data Preparation
+# Data Preparation
 
 In the prior section, we obtained the CBIS-DDSM data from [The Cancer Imaging Archive](https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629) (TCIA). This brief section aims to convert the data to a form suitable for exploratory data analyses.  Once complete, we'll have the following four datasets for subsequent phase analysis:
 

@@ -82,14 +82,14 @@ Mathematically, PSNR is calculated with equation {eq}`psnr`.
 
 ```{math}
 :label: psnr
-\text{PSNR} = 20\text{log}_10\Bigg(\frac{(MAX)}{\sqrt{MSE}}\Bigg)
+\text{PSNR} = 20\text{log}_{10}\Bigg(\frac{(MAX)}{\sqrt{MSE}}\Bigg)
 ```
 
-where MAX is the maximum pixel value contained in the image and PSNR is measured in decibels (dB). An acceptable PSNR for an 8-bit image would be in the range of 30 to 50 dB {cite}``beeravoluPreprocessingBreastCancer2021`.
+where MAX is the maximum pixel value contained in the image and PSNR is measured in decibels (dB). An acceptable PSNR for an 8-bit image would be in the range of 30 to 50 dB {cite}`beeravoluPreprocessingBreastCancer2021`.
 
 #### Structural Similarity Index Measure (SSIM)
 
-The Structural Similarity Index Measure (SSIM) is a method for measuring the structural similarity between two images. Since its introduction in 2004 {cite}`bakurovStructuralSimilarityIndex2022`, the SSIM has become one of the most popular full-reference image quality assessment (FR-IQA) measures (over 47,960 citations), owing its success to its mathematical simplicity, low computational complexity, and implicit incorporation of the Human Visual System’s (HVS) characteristics. The incorporation of this characteristic has resulted in a better correlation with subjective evaluation provided by human observers. Consequently, SSIM has been used as a proxy evaluation for human assessment in a range of image processing and computer vision applications.
+The Structural Similarity Index Measure (SSIM) is a method for measuring the structural similarity between two images. Since its introduction in 2004 {cite}`bakurovStructuralSimilarityIndex2022`, the SSIM has become one of the most popular full-reference image quality assessment (FR-IQA) measures (over 47,960 citations), owing its success to its mathematical simplicity, low computational complexity, and implicit incorporation of the Human Visual System’s (HVS) characteristics. The incorporation of these characteristics has resulted in a metric with better correlation with subjective evaluation provided by human observers. Consequently, SSIM has been used as a proxy evaluation for human assessment in a range of image processing and computer vision applications.
 
 SSIM separately measures local brightness (a.k.a. luminance), contrast, and structure of both images and then aggregates all local assessments to obtain the overall measure {cite}`bakurovStructuralSimilarityIndex2022`.
 
@@ -114,7 +114,7 @@ Contrast is defined in terms of the standard deviation, and the comparison is gi
 
 ```{math}
 :label: contrast
-c(x,y) = \frac{2\sigma_x\sigma_y+C_2}{\sigma_x^2 + \sugna_y^2 + C_2},
+c(x,y) = \frac{2\sigma_x\sigma_y+C_2}{\sigma_x^2 + \sigma_y^2 + C_2},
 ```
 
 ##### SSIM Structure Component
