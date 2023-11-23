@@ -622,5 +622,156 @@ The next linear filter takes a statistical approach to reducing blur, and minimi
 
 ##### Wiener Filter
 
-  the Gaussian filter is often the first filter attempted in image processing
-Another linear filter worth note is the Wiener filter. It takes a statistical approach to estimating an uncorrupted image that minimizes the mean-squared error (MSE) between the estimate, and an underlying, unobserved, desired ground truth image. It's particularly effective at inversing the blurring effect, and reducing speckle and poisson noise. The Wiener filter is applied in the frequency domain, and involves direct computation of the auto-correlation, and cross-correlation of the signal and noise
+The Wiener filter, introduced in a 1943 classified memo by Norbert Wiener, incorporates statistical characteristics of the signal and noise into the image restoration process.
+
+The objective of the Wiener filter is to take an input image, and then create an estimate of the true image such that the expected value of the squared difference between the estimate and the true image, is minimized.
+
+The Wiener filter asserts the principle of orthogonality, which loosely states that the difference between the estimate and the input image, is uncorrelated with the input image. This means that the estimate is the projection of the input image onto the subspace spanned by the original image that minimizes the expected value of the error. From this, the filter computes a function that optimizes the trade-off between noise reduction, and signal distortion, by optimally attenuating the frequencies where the noise is dominant and preserving the frequencies where the signal is dominant.
+
+The Wiener filter has some nice properties. Since it is optimal in the mean-squared error sense, it can produce high-quality images where noise is minimized and fine detail is retained. Another advantage is that it adapts to changing characteristics of the signal and the noise, making it suitable for speech, image restoration, and other applications whereby the noise is unknown or varies in time and space.
+
+However, certain disadvantages limit its applicability and performance. For instance, the Wiener filter requires a priori knowledge of the degradation function and the power spectra for noise and signal, which may be difficult or impractical to obtain. Another disadvantage is that the Wiener filter can introduce artifacts, such as blurring and ringing due to smoothing in the frequency domain.
+Next, up? Non-linear filters.
+
+#### Non-Linear Filters
+
+In the previous section, we examined filters in which the output was a linear combination of the input. For additive, independent noise, or that which follows a simple statistical pattern, linear filters will reduce noise to the extent that signal and noise can be separated in the frequency domain.  For multiplicative, noise (speckle) or signals with non-linear features (edges, lines) that must be preserved, non-linear methods will be needed.
+
+Now, we explore four non-linear techniques widely used in biomedical imaging: median filter, adaptive median filter, non-local means filter, and bilateral filter.
+
+In the next sections, we’ll describe each of these methods, exhibit their performance, assess their advantages and disadvantages, and highlight the differences among them.
+
+##### Median Filter
+
+The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.
+
+###### Median Filter Performance
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from skimage.util import random_noise
+from skimage.restoration import wiener
+
+from bcd.utils.image import convert_uint8
+
+FP_ORIG = "jbook/figures/mammogram.png"
+CMAP = 'gray'
+
+# Obtain the source image
+fx = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
+
+# Add random salt and pepper noise
+gx = random_noise(fx, mode='s&p', amount=0.30)
+gx = convert_uint8(gx)
+# gx = gx[:,:]
+
+# Apply Median Filter
+fx2 = cv2.medianBlur(gx,5)
+
+# Subtract the noise
+nx = gx - fx2
+
+# Compute histograms
+fx_hist = cv2.calcHist([fx], [0], None, [256], [0,256])
+gx_hist = cv2.calcHist([gx], [0], None, [256], [0,256])
+fx2_hist = cv2.calcHist([fx2], [0], None, [256], [0,256])
+nx_hist = cv2.calcHist([nx], [0], None, [256], [0,256])
+
+# Create Figure object
+fig, ax = plt.subplots(nrows=2, ncols=4, figsize=(12,6), dpi=200)
+
+# Show images
+_ = ax[0,0].imshow(fx, cmap=CMAP)
+_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
+
+_ = ax[0,1].imshow(gx, cmap=CMAP)
+_ = ax[0,1].set_xlabel('(b) Corrupted Image', fontsize=10)
+
+_ = ax[0,2].imshow(fx2, cmap=CMAP)
+_ = ax[0,2].set_xlabel('(c) Guassian Filtered Image', fontsize=10)
+
+_ = ax[0,3].imshow(nx, cmap=CMAP)
+_ = ax[0,3].set_xlabel('(d) Noise', fontsize=10)
+
+# Show histograms
+_ = ax[1,0].plot(fx_hist)
+_ = ax[1,0].set_xlabel("(e) Original Image Histogram", fontsize=10)
+
+_ = ax[1,1].plot(gx_hist)
+_ = ax[1,1].set_xlabel("(f) Corrupted Image Histogram", fontsize=10)
+
+_ = ax[1,2].plot(fx2_hist)
+_ = ax[1,2].set_xlabel("(g) Gaussian Filtered Histogram ", fontsize=10)
+
+_ = ax[1,3].plot(nx_hist)
+_ = ax[1,3].set_xlabel("(g) Noise Histogram ", fontsize=10)
+
+plt.tight_layout()
+glue("median_filter_performance", fig)
+```
+
+```{glue:figure} median_filter_performance
+---
+align: center
+name: median_filter_performance_fig
+---
+Median Filter Perfomrance
+```
+
+###### Median Filter Examples
+
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
+# Obtain the source image
+orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
+
+# Add random Gaussian noise with zero mean and variance of 0.1
+img_gaussian = random_noise(orig, mode='s&p', amount=0.3)
+img_gaussian = convert_uint8(img_gaussian)
+
+# Create images with varying kernel sizes.
+img_1 = cv2.medianBlur(img_gaussian, 3)
+img_2 = cv2.medianBlur(img_gaussian, 5)
+img_3 = cv2.medianBlur(img_gaussian, 9)
+
+# Create Figure object
+fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,6), dpi=200)
+
+# Show images
+_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
+_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
+_ = ax[0,0].set_xticks([])
+_ = ax[0,0].set_yticks([])
+
+_ = ax[0,1].imshow(img_1, cmap=CMAP)
+_ = ax[0,1].set_xlabel('(b) Gaussian Filtered Image with 3x3 kernel', fontsize=10)
+_ = ax[0,1].set_xticks([])
+_ = ax[0,1].set_yticks([])
+
+_ = ax[1,0].imshow(img_2, cmap=CMAP)
+_ = ax[1,0].set_xlabel('(c) Gaussian Filtered Image with 5x5 kernel', fontsize=10)
+_ = ax[1,0].set_xticks([])
+_ = ax[1,0].set_yticks([])
+
+_ = ax[1,1].imshow(img_3, cmap=CMAP)
+_ = ax[1,1].set_xlabel('(d) GaussianFiltered Image with 9x9 kernel', fontsize=10)
+_ = ax[1,1].set_xticks([])
+_ = ax[1,1].set_yticks([])
+
+plt.tight_layout()
+glue("median_filter_examples", fig)
+```
+
+```{glue:figure} median_filter_examples
+---
+align: center
+name: median_filter_examples_fig
+---
+Median Filter Examples with Varying Kernel Sizes
+```
