@@ -279,7 +279,7 @@ Our objective is to create an approximation of the original image, $\hat{s}$ in 
 - textures are preserved, and
 - no new artifacts are generated.
 
-Over the past two decades, a considerable body of research has been devoted to the design, development, and testing of denoising methods for biomedical imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce the most commonly used techniques used in denoising biomedical images, with a focus on applications in mammography.
+Over the past two decades, a considerable body of research has been devoted to the design, development, and testing of denoising methods for biomedical imaging. While a systematic review of the denoising landscape is well beyond the scope of this effort, we will introduce a few of the most commonly used biomedical image denoising methods, with a focus on applications in mammography. Specifically, we will be evaluating the following five methods:
 
 In general, the denoiser method space is comprised of spatial domain methods and transform domain methods, which we will introduce in the next couple of subsections.
 
@@ -295,6 +295,7 @@ Examples of linear filters include the mean filter and the Wiener filter.
 ##### Mean Filter
 
 Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. It’s based on the idea that random noise consists of “sharp” transitions in the intensity of the signal. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. By doing so, the “sharp” transitions in the intensities are reduced.
+
 The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
 
 ```{figure} ../../figures/kernel.png
@@ -317,6 +318,8 @@ Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is com
 
 The process of convolving with a 3x3 mean filter is as follows:
 ![MeanFilter](../../figures/gif/02_mean_filter.gif)
+
+###### Mean Filter Performance
 
 {numref}`mean_filter_figure` illustrates the results of a 3x3 mean filter kernel on a mammogram image.
 
@@ -381,6 +384,8 @@ Mean filter noise reduction images and histograms.
 
 As shown in {numref}`mean_filter_figure`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
 
+###### Mean Filter Examples
+
 {numref}`mean_filters_diff_kernel_sizes_fig` illustrates the effects of filters of varying kernel sizes
 
 ```{code-cell} ipython3
@@ -430,7 +435,7 @@ glue("mean_filters_diff_kernel_sizes", fig)
 align: center
 name: mean_filters_diff_kernel_sizes_fig
 ---
-Mean filter with varying kernel sizes.
+Mean filters with varying kernel sizes.
 ```
 
 Due to its simplicity, and computational efficiency, the mean filter is one of the most widely used spatial domain filters in biomedical imaging. As a low-pass frequency filter, it reduces the spatial intensity derivatives in the image; thereby, reducing the amount of noise corrupting the representation. There are; however, two main challenges with the main filter:
@@ -440,99 +445,167 @@ Due to its simplicity, and computational efficiency, the mean filter is one of t
 
 Both of these challenges are addressed using the median filter, which we will cover in the next section.
 
-##### Wiener Filter
+##### Gaussian Filter
 
-The Wiener filter computes a statistical estimate of an unknown image $f(x,y) using a related image g(x,y) as input and filters that image to produce an estimate $\hat{f(x,y)$ of the unknown, unobserved image of interest, which minimizes the mean-squared error between $f(x,y) and \hat{f}(x,y)$.
+The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window.  Unlike the Mean filter, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
 
-```{figure} ../../figures/wiener_diagram.png
+```{math}
+:label: gaussian_filter
+G(x,y) = \frac{1}{2\pi\sigma^2}e{-\frac{x^2+y^2}{2\sigma^2}}
+```
+
+{numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
+
+```{figure} ../../figures/gaussian_kernel.gif
 ---
-name: wiener_diagram
+name: gaussian_kernel
 ---
-Wiener Filter Model
+5 x 5 Gaussian Kernel
 ```
 
-{numref}`wiener_diagram` shows the overall process model for the Wiener filter. It begins with an unknown image $f(x,y)$ that is fed into a degradation function $H$, then noise is applied to create the observed image $g(x,y)$. This image is fed into a Wiener restoration filter as input, and the output is an estimate of the original image $\hat{f}(x,y)$.
+Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent $-\infty - \infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about 2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
-It is assumed that the image and the additive noise are stationary linear stochastic processes. That is, the joint probability distribution is time-shift invariant.  In addition, a priori knowledge of the spectral characteristics, or the autocorrelation and cross-correlation are assumed.  Finally, the noise (zero-mean) and image are assumed to be uncorrelated.
+The Gaussian filter has several advantages:
 
-Note: the blurring function $H$ must be known or estimated, blurring exists in the image. The impulse response can be estimated from the data, or discovered through experimentation.
+1. Easy to implement.
+2. Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.
+3. Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.
+4. Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.
+5. Rotationally symmetric, with no directional bias.
 
-Mathematically, we can describe the model in the spatial domain as:
+Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create
 
-```{math}
-:label: wiener_function_spatial
-g(x,y) = f(x,y) \cdot h(x,y) + \eta(x,y)
+Guassian filters do have certain challenges:
+
+1. Blurring removes fine detail that may have diagnostic relevance.
+2. Not as effective at removing "salt and pepper".
+3. Blurred edges can complicate edge detection.
+
+###### GAussian Filter Performance
+
+```{code-cell} ipython3
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from skimage.util import random_noise
+from skimage.restoration import wiener
+
+from bcd.utils.image import convert_uint8
+
+
+FP_ORIG = "jbook/figures/mammogram.png"
+CMAP = 'gray'
+
+# Obtain the source image
+fx = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
+
+# Add random Gaussian noise with zero mean and variance of 0.1
+gx = random_noise(fx, mode='gaussian', mean=0,var=0.1)
+gx = convert_uint8(gx)
+# gx = gx[:,:]
+
+# Apply the Gaussian Kernel
+fx2 = cv2.GaussianBlur(gx, (15,15), 0)
+
+# Subtract the noise
+nx = gx - fx2
+
+# Compute histograms
+fx_hist = cv2.calcHist([fx], [0], None, [256], [0,256])
+gx_hist = cv2.calcHist([gx], [0], None, [256], [0,256])
+fx2_hist = cv2.calcHist([fx2], [0], None, [256], [0,256])
+nx_hist = cv2.calcHist([nx], [0], None, [256], [0,256])
+
+# Create Figure object
+fig, ax = plt.subplots(nrows=2, ncols=4, figsize=(12,6), dpi=200)
+
+# Show images
+_ = ax[0,0].imshow(fx, cmap=CMAP)
+_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
+
+_ = ax[0,1].imshow(gx, cmap=CMAP)
+_ = ax[0,1].set_xlabel('(b) Corrupted Image', fontsize=10)
+
+_ = ax[0,2].imshow(fx2, cmap=CMAP)
+_ = ax[0,2].set_xlabel('(c) Guassian Filtered Image', fontsize=10)
+
+_ = ax[0,3].imshow(nx, cmap=CMAP)
+_ = ax[0,3].set_xlabel('(d) Noise', fontsize=10)
+
+# Show histograms
+_ = ax[1,0].plot(fx_hist)
+_ = ax[1,0].set_xlabel("(e) Original Image Histogram", fontsize=10)
+
+_ = ax[1,1].plot(gx_hist)
+_ = ax[1,1].set_xlabel("(f) Corrupted Image Histogram", fontsize=10)
+
+_ = ax[1,2].plot(fx2_hist)
+_ = ax[1,2].set_xlabel("(g) Gaussian Filtered Histogram ", fontsize=10)
+
+_ = ax[1,3].plot(nx_hist)
+_ = ax[1,3].set_xlabel("(g) Noise Histogram ", fontsize=10)
+
+plt.tight_layout()
+glue("gaussian_filter_performance", fig)
 ```
 
-For the frequency domain, we have:
-
-```{math}
-:label: wiener_function_frequency
-G(u,v) = F(u,v) \cdot H(u,v) + N(u,v)
+```{glue:figure} gaussian_filter_performance
+---
+align: center
+name: gaussian_filter_performance_fig
+---
+Gaussian filters with varying kernel sizes.
 ```
 
-As stated, the Wiener filter is optimal in the mean-squared error sense. Hence the Wiener filter selects an $\hat{f}(x,y)$ that minimizes the following::
+###### Gaussian Filter Examples
 
-```{math}
-:label: wiener_function_mse_spatial
-e = \displaystyle\sum_x \displaystyle\sum_y |f(x,y)-\hat{f}(x,y)|^2
+{numref}`gaussian_filter_examples_fig` displays the results of several Gaussian filters of varying kernel sizes.
+
+```{code-cell} ipython3
+# Obtain the source image
+orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
+
+# Add random Gaussian noise with zero mean and variance of 0.1
+img_gaussian = random_noise(orig, mode='gaussian', mean=0,var=0.1)
+img_gaussian = convert_uint8(img_gaussian)
+
+# Create images with varying kernel sizes.
+img_1 = cv2.GaussianBlur(img_gaussian, (3,3), 0)
+img_2 = cv2.GaussianBlur(img_gaussian, (9,9), 0)
+img_3 = cv2.GaussianBlur(img_gaussian, (15,15), 0)
+
+# Create Figure object
+fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,6), dpi=200)
+
+# Show images
+_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
+_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
+_ = ax[0,0].set_xticks([])
+_ = ax[0,0].set_yticks([])
+
+_ = ax[0,1].imshow(img_1, cmap=CMAP)
+_ = ax[0,1].set_xlabel('(b) Gaussian Filtered Image with 3x3 kernel', fontsize=10)
+_ = ax[0,1].set_xticks([])
+_ = ax[0,1].set_yticks([])
+
+_ = ax[1,0].imshow(img_2, cmap=CMAP)
+_ = ax[1,0].set_xlabel('(c) Gaussian Filtered Image with 9x9 kernel', fontsize=10)
+_ = ax[1,0].set_xticks([])
+_ = ax[1,0].set_yticks([])
+
+_ = ax[1,1].imshow(img_3, cmap=CMAP)
+_ = ax[1,1].set_xlabel('(d) GaussianFiltered Image with 15x15 kernel', fontsize=10)
+_ = ax[1,1].set_xticks([])
+_ = ax[1,1].set_yticks([])
+
+plt.tight_layout()
+glue("gaussian_filter_examples", fig)
 ```
 
-In the frequency domain, we have:
-
-```{math}
-:label: wiener_function_mse_frequency
-e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-\hat{F}(u,v)|^2
+```{glue:figure} gaussian_filter_examples
+---
+align: center
+name: gaussian_filter_examples_fig
+---
+Gaussian filters with varying kernel sizes.
 ```
-
-Substituting the definition of $\hat{F}(u,v)$, we have:
-
-```{math}
-:label: wiener_function_mse_frequency_expanded
-e = \displaystyle\sum_u \displaystyle\sum_v |F(u,v)-[F(u,v)H(u,v) = N(u,v)]W(u,v)]^2
-```
-
-Our objective is to find W that minimizes {eq}`wiener_function_mse_frequency_expanded`.
-Working in the frequency domain simplifies our notation, so we will work there for the rest of this derivation. Again, our objective is to minimize:
-
-```{math}
-:label: wiener_function_mse_frequency_2
-e = \displaystyle\sum_u \displaystyle\sum_v |F[1-HW]-NW|^2
-```
-
-Which is close to:
-
-```{math}
-:label: wiener_function_mse_frequency_3
-e \approx \displaystyle\sum_u \displaystyle\sum_v |F^2[1-HW]^2-|N|^2|W|^2
-```
-
-To minimize this function, we take the derivative with respect to W and set it to zero.
-
-```{math}
-:label: wiener_function_mse_derivative
-\frac{\partial e}{\partial W} = 0 = |F^2[2(1-W*H*)(-H)]+|N|^2|W*| = 0
-```
-
-Which simplifies to:
-
-```{math}
-:label: wiener_function_mse_derivative_2
-W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{|N|^2}{|F|^2}}
-```
-
-Note that $\frac{|N|^2}{|F|^2}$ is the inverse of the signal-to-noise (SNR), which give us:
-
-```{math}
-:label: wiener_function_mse_derivative_3
-W = \frac{1}{H}\frac{|H|^2}{|H|^2+\frac{1}{SNR}}
-```
-
-If there is no blurring and only noise, the Wiener function simplifies to:
-
-```{math}
-:label: wiener_function_noise
-W = \frac{P_s}{P_s + \sigma^2_n}
-```
-
-where $\sigma^2_n$ is the noise variance, and $P_s$ is the power spectrum of the image obtained by taking the Fourier transform of the image signal autocorrelation.
