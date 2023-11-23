@@ -10,7 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
-# Image Preprocessing Overview
+# Overview
 
 Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.
 
@@ -29,7 +29,7 @@ Addressing these challenges is fundamentally important to model detection, recog
 
 In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.
 
-```{figure} ../../figures/ImagePrep.png
+```{figure}
 ---
 name: image_prep
 ---
