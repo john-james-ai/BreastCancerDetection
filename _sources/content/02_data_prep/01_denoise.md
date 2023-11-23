@@ -559,7 +559,7 @@ Gaussian filters with varying kernel sizes.
 
 ###### Gaussian Filter Examples
 
-{figure}`gaussian_filter_examples_fig` displays the results of several Gaussian filters of varying kernel sizes.
+{numref}`gaussian_filter_examples_fig` displays the results of several Gaussian filters of varying kernel sizes.
 
 ```{code-cell} ipython3
 # Obtain the source image
