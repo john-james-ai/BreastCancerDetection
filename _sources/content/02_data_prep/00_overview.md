@@ -29,7 +29,7 @@ Addressing these challenges is fundamentally important to model detection, recog
 
 In this regard, a five-stage image preprocessing approach ({numref}`image_prep`) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.
 
-```{figure}
+```{figure} ../../figures/ImagePrep.png
 ---
 name: image_prep
 ---

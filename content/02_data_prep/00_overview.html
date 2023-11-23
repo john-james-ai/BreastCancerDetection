@@ -498,7 +498,13 @@ document.write(`
 <p>Addressing these challenges is fundamentally important to model detection, recognition, and classification performance.</p>
 <section id="image-preprocessing-approach">
 <h2><span class="section-number">1.1. </span>Image Preprocessing Approach<a class="headerlink" href="#image-preprocessing-approach" title="Permalink to this heading">#</a></h2>
-<p>In this regard, a five-stage image preprocessing approach (<code class="xref std std-numref docutils literal notranslate"><span class="pre">image_prep</span></code>) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.</p>
+<p>In this regard, a five-stage image preprocessing approach (<a class="reference internal" href="#image-prep"><span class="std std-numref">Fig. 1.1</span></a>) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.</p>
+<figure class="align-default" id="image-prep">
+<img alt="../../_images/ImagePrep.png" src="../../_images/ImagePrep.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text">Image Preprocessing Approach</span><a class="headerlink" href="#image-prep" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>We begin with an evaluation of various denoising methods commonly applied to mammography. Once a denoising method and its (hyper) parameters are selected, we move to the artifact removal stage. Image binarizing and thresholding methods are evaluated, then morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast with Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Additive White Gaussian Noise (AWGN) is also added to improve the generalized performance of the neural network and mitigate model overfitting. Finally, we extract the ROIs using automated pixel intensity thresholding to create a binary mask which is applied to the enhanced images.</p>
 </section>
 <section id="image-quality-assessment-iqa">
