@@ -451,8 +451,10 @@ The Gaussian Filter is similar to the Mean filter, in that it works by convolvin
 
 ```{math}
 :label: gaussian_filter
-G(x,y) = \frac{1}{2\pi\sigma^2}}e{-\frac{x^2+y^2}{2\sigma^2}
+G(x,y) = \frac{1}{2\pi\sigma^2}e{-\frac{x^2+y^2}{2\sigma^2}}
 ```
+
+{numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
 ```{figure} ../../figures/gaussian_kernel.gif
 ---
@@ -460,8 +462,6 @@ name: gaussian_kernel
 ---
 5 x 5 Gaussian Kernel
 ```
-
-{numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
 Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent $-\infty - \infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about 2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
