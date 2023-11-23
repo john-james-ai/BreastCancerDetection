@@ -313,7 +313,7 @@ The mean filter works by convolving the kernel over the image as follows. Let w(
 ```
 
 ```{admonition} Kernel Coefficients
-Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the entire image is normalized by the normalization constant $\frac{1}{mn}$ at the end.
+Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  $\frac{1}{mn}$, is applied at the end.
 ```
 
 The process of convolving with a 3x3 mean filter is as follows:
@@ -463,7 +463,7 @@ name: gaussian_kernel
 5 x 5 Gaussian Kernel
 ```
 
-Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about 2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
+Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about $2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
 The Gaussian filter has several advantages:
 
@@ -473,12 +473,12 @@ The Gaussian filter has several advantages:
 4. Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.
 5. Rotationally symmetric, with no directional bias.
 
-Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create
+Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.
 
 Guassian filters do have certain challenges:
 
 1. Blurring removes fine detail that may have diagnostic relevance.
-2. Not as effective at removing "salt and pepper".
+2. Not as effective at removing "salt and pepper" noise.
 3. Blurred edges can complicate edge detection.
 
 ###### Gaussian Filter Performance
