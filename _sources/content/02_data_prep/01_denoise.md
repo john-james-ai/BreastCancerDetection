@@ -465,22 +465,6 @@ name: gaussian_kernel
 
 Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about $2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
-The Gaussian filter has several advantages:
-
-1. Easy to implement.
-2. Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.
-3. Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.
-4. Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.
-5. Rotationally symmetric, with no directional bias.
-
-Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.
-
-Guassian filters do have certain challenges:
-
-1. Blurring removes fine detail that may have diagnostic relevance.
-2. Not as effective at removing "salt and pepper" noise.
-3. Blurred edges can complicate edge detection.
-
 ###### Gaussian Filter Performance
 
 ```{code-cell} ipython3
@@ -609,3 +593,19 @@ name: gaussian_filter_examples_fig
 ---
 Gaussian filters with varying kernel sizes.
 ```
+
+The Gaussian filter has several advantages:
+
+1. Easy to implement.
+2. Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.
+3. Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.
+4. Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.
+5. Rotationally symmetric, with no directional bias.
+
+Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.
+
+Guassian filters do have certain challenges:
+
+1. Blurring removes fine detail that may have diagnostic relevance.
+2. Not as effective at removing "salt and pepper" noise.
+3. Blurred edges can complicate edge detection.

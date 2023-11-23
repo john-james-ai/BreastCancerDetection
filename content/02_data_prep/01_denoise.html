@@ -825,7 +825,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/66964084b457afa93b5126dd5c9dd2a50e3530568a97bbe386e7322634b0eac8.png" src="../../_images/66964084b457afa93b5126dd5c9dd2a50e3530568a97bbe386e7322634b0eac8.png" />
+<img alt="../../_images/778f7952706f339e5d4d9c8bd9fb7cf4980a5aebdc93a94faff86c3339cfc60f.png" src="../../_images/778f7952706f339e5d4d9c8bd9fb7cf4980a5aebdc93a94faff86c3339cfc60f.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -886,7 +886,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
-<img alt="../../_images/ea019927194715bd62271a4b4601100a8cb3272264a5c685831697ace6ea1d24.png" src="../../_images/ea019927194715bd62271a4b4601100a8cb3272264a5c685831697ace6ea1d24.png" />
+<img alt="../../_images/ff76b44dbfe11a708d2e6827505547788078ef387bd3c6bae2587780f5398914.png" src="../../_images/ff76b44dbfe11a708d2e6827505547788078ef387bd3c6bae2587780f5398914.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filters with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -912,21 +912,6 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </figcaption>
 </figure>
 <p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9x10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
-<p>The Gaussian filter has several advantages:</p>
-<ol class="arabic simple">
-<li><p>Easy to implement.</p></li>
-<li><p>Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.</p></li>
-<li><p>Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.</p></li>
-<li><p>Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.</p></li>
-<li><p>Rotationally symmetric, with no directional bias.</p></li>
-</ol>
-<p>Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.</p>
-<p>Guassian filters do have certain challenges:</p>
-<ol class="arabic simple">
-<li><p>Blurring removes fine detail that may have diagnostic relevance.</p></li>
-<li><p>Not as effective at removing “salt and pepper” noise.</p></li>
-<li><p>Blurred edges can complicate edge detection.</p></li>
-</ol>
 <section id="gaussian-filter-performance">
 <h6>Gaussian Filter Performance<a class="headerlink" href="#gaussian-filter-performance" title="Permalink to this heading">#</a></h6>
 <div class="cell docutils container">
@@ -998,12 +983,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c6d6d14811fc2e6b9163a472931064ba8a55bbaad87e1e10a42b964b2d68f261.png" src="../../_images/c6d6d14811fc2e6b9163a472931064ba8a55bbaad87e1e10a42b964b2d68f261.png" />
-<img alt="../../_images/c6d6d14811fc2e6b9163a472931064ba8a55bbaad87e1e10a42b964b2d68f261.png" src="../../_images/c6d6d14811fc2e6b9163a472931064ba8a55bbaad87e1e10a42b964b2d68f261.png" />
+<img alt="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" src="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" />
+<img alt="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" src="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" />
 </div>
 </div>
 <figure class="align-center" id="gaussian-filter-performance-fig">
-<img alt="../../_images/c6d6d14811fc2e6b9163a472931064ba8a55bbaad87e1e10a42b964b2d68f261.png" src="../../_images/c6d6d14811fc2e6b9163a472931064ba8a55bbaad87e1e10a42b964b2d68f261.png" />
+<img alt="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" src="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-performance-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1056,16 +1041,31 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/99202a0a6a8b9e7a1736862b462dfa758c795a6988535d64913b8aac3f39fa9c.png" src="../../_images/99202a0a6a8b9e7a1736862b462dfa758c795a6988535d64913b8aac3f39fa9c.png" />
-<img alt="../../_images/99202a0a6a8b9e7a1736862b462dfa758c795a6988535d64913b8aac3f39fa9c.png" src="../../_images/99202a0a6a8b9e7a1736862b462dfa758c795a6988535d64913b8aac3f39fa9c.png" />
+<img alt="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" src="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" />
+<img alt="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" src="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" />
 </div>
 </div>
 <figure class="align-center" id="gaussian-filter-examples-fig">
-<img alt="../../_images/99202a0a6a8b9e7a1736862b462dfa758c795a6988535d64913b8aac3f39fa9c.png" src="../../_images/99202a0a6a8b9e7a1736862b462dfa758c795a6988535d64913b8aac3f39fa9c.png" />
+<img alt="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" src="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-examples-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p>The Gaussian filter has several advantages:</p>
+<ol class="arabic simple">
+<li><p>Easy to implement.</p></li>
+<li><p>Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.</p></li>
+<li><p>Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.</p></li>
+<li><p>Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.</p></li>
+<li><p>Rotationally symmetric, with no directional bias.</p></li>
+</ol>
+<p>Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.</p>
+<p>Guassian filters do have certain challenges:</p>
+<ol class="arabic simple">
+<li><p>Blurring removes fine detail that may have diagnostic relevance.</p></li>
+<li><p>Not as effective at removing “salt and pepper” noise.</p></li>
+<li><p>Blurred edges can complicate edge detection.</p></li>
+</ol>
 </section>
 </section>
 </section>
