@@ -825,7 +825,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/8e5126882277e78b4d565c3726f08e8128101f4fc964020b6c703d885aa9e801.png" src="../../_images/8e5126882277e78b4d565c3726f08e8128101f4fc964020b6c703d885aa9e801.png" />
+<img alt="../../_images/674275b35527a5658809189848f012c7234e70c87f77d21b83c57aac05fa464d.png" src="../../_images/674275b35527a5658809189848f012c7234e70c87f77d21b83c57aac05fa464d.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -886,7 +886,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
-<img alt="../../_images/c276c5885f6092d120ab73908f6e9e2d245e86a776b4bb49abaf91eaab436449.png" src="../../_images/c276c5885f6092d120ab73908f6e9e2d245e86a776b4bb49abaf91eaab436449.png" />
+<img alt="../../_images/3840cd167f6a8a3b4317a2e2b88f694d5c8186e4132df764b1f5d2e04e7bbaf3.png" src="../../_images/3840cd167f6a8a3b4317a2e2b88f694d5c8186e4132df764b1f5d2e04e7bbaf3.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filters with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -906,12 +906,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <span class="eqno">(2.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
 <p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 2.9</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
 <figure class="align-default" id="gaussian-kernel">
-<img alt="figures/gaussian_kernel.gif" src="figures/gaussian_kernel.gif" />
+<img alt="../../_images/gaussian_kernel.png" src="../../_images/gaussian_kernel.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent <span class="math notranslate nohighlight">\(-\infty - \infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about 2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
+<p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about 2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
 <p>The Gaussian filter has several advantages:</p>
 <ol class="arabic simple">
 <li><p>Easy to implement.</p></li>
@@ -998,12 +998,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" src="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" />
-<img alt="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" src="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" />
+<img alt="../../_images/79944221246ee1edc40ef626a8ac861c8531869ea1a9a2904f123e33c4acb850.png" src="../../_images/79944221246ee1edc40ef626a8ac861c8531869ea1a9a2904f123e33c4acb850.png" />
+<img alt="../../_images/79944221246ee1edc40ef626a8ac861c8531869ea1a9a2904f123e33c4acb850.png" src="../../_images/79944221246ee1edc40ef626a8ac861c8531869ea1a9a2904f123e33c4acb850.png" />
 </div>
 </div>
 <figure class="align-center" id="gaussian-filter-performance-fig">
-<img alt="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" src="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" />
+<img alt="../../_images/79944221246ee1edc40ef626a8ac861c8531869ea1a9a2904f123e33c4acb850.png" src="../../_images/79944221246ee1edc40ef626a8ac861c8531869ea1a9a2904f123e33c4acb850.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-performance-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1056,12 +1056,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" src="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" />
-<img alt="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" src="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" />
+<img alt="../../_images/f5572a4dabacde67ac817fc9ecbd686dfe1ef8d59add369857dad76794d52a6d.png" src="../../_images/f5572a4dabacde67ac817fc9ecbd686dfe1ef8d59add369857dad76794d52a6d.png" />
+<img alt="../../_images/f5572a4dabacde67ac817fc9ecbd686dfe1ef8d59add369857dad76794d52a6d.png" src="../../_images/f5572a4dabacde67ac817fc9ecbd686dfe1ef8d59add369857dad76794d52a6d.png" />
 </div>
 </div>
 <figure class="align-center" id="gaussian-filter-examples-fig">
-<img alt="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" src="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" />
+<img alt="../../_images/f5572a4dabacde67ac817fc9ecbd686dfe1ef8d59add369857dad76794d52a6d.png" src="../../_images/f5572a4dabacde67ac817fc9ecbd686dfe1ef8d59add369857dad76794d52a6d.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-examples-fig" title="Permalink to this image">#</a></p>
 </figcaption>
