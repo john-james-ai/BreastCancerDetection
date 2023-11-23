@@ -825,7 +825,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/778f7952706f339e5d4d9c8bd9fb7cf4980a5aebdc93a94faff86c3339cfc60f.png" src="../../_images/778f7952706f339e5d4d9c8bd9fb7cf4980a5aebdc93a94faff86c3339cfc60f.png" />
+<img alt="../../_images/e810ae0d02a9b7e111a56ae724f82372f55804eeb6dea559babe6816a8838e08.png" src="../../_images/e810ae0d02a9b7e111a56ae724f82372f55804eeb6dea559babe6816a8838e08.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -886,7 +886,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
-<img alt="../../_images/ff76b44dbfe11a708d2e6827505547788078ef387bd3c6bae2587780f5398914.png" src="../../_images/ff76b44dbfe11a708d2e6827505547788078ef387bd3c6bae2587780f5398914.png" />
+<img alt="../../_images/7a19f2f321713b55a0209dd820b223c3031232361a4cdbc06d591f60bfeb7401.png" src="../../_images/7a19f2f321713b55a0209dd820b223c3031232361a4cdbc06d591f60bfeb7401.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filters with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -911,10 +911,15 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9x10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
+<p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9 \times 10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
 <section id="gaussian-filter-performance">
 <h6>Gaussian Filter Performance<a class="headerlink" href="#gaussian-filter-performance" title="Permalink to this heading">#</a></h6>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -982,13 +987,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" src="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" />
-<img alt="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" src="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" />
-</div>
+</details>
 </div>
 <figure class="align-center" id="gaussian-filter-performance-fig">
-<img alt="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" src="../../_images/721aa63e96ad944787699e3622a70823d6b33b884afc8d1b3acb56136e1bd8fb.png" />
+<img alt="../../_images/6f1653eae7a3d10f75dabb522cc824a067e1631249dcc2a40c36b940bb87b37b.png" src="../../_images/6f1653eae7a3d10f75dabb522cc824a067e1631249dcc2a40c36b940bb87b37b.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-performance-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -997,7 +999,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <section id="gaussian-filter-examples">
 <h6>Gaussian Filter Examples<a class="headerlink" href="#gaussian-filter-examples" title="Permalink to this heading">#</a></h6>
 <p><a class="reference internal" href="#gaussian-filter-examples-fig"><span class="std std-numref">Fig. 2.11</span></a> displays the results of several Gaussian filters of varying kernel sizes.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain the source image</span>
 <span class="n">orig</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
@@ -1040,13 +1047,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" src="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" />
-<img alt="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" src="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" />
-</div>
+</details>
 </div>
 <figure class="align-center" id="gaussian-filter-examples-fig">
-<img alt="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" src="../../_images/b21c43ca965c119ff23712714d4cdf435c0a14628a31e4898cf9534cf423b82f.png" />
+<img alt="../../_images/3cf1cfdd07ec3c9dfc1571e2ecca2e8b1aecdaa1486cd19e8ab53b1fc460db5e.png" src="../../_images/3cf1cfdd07ec3c9dfc1571e2ecca2e8b1aecdaa1486cd19e8ab53b1fc460db5e.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-examples-fig" title="Permalink to this image">#</a></p>
 </figcaption>

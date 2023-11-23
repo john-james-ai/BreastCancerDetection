@@ -463,11 +463,13 @@ name: gaussian_kernel
 5 x 5 Gaussian Kernel
 ```
 
-Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about $2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
+Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about $2.9 \times 10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
 ###### Gaussian Filter Performance
 
 ```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -546,6 +548,8 @@ Gaussian filters with varying kernel sizes.
 {numref}`gaussian_filter_examples_fig` displays the results of several Gaussian filters of varying kernel sizes.
 
 ```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
 # Obtain the source image
 orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
 
