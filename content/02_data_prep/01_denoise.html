@@ -479,7 +479,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-performance">GAussian Filter Performance</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-performance">Gaussian Filter Performance</a></li>
 <li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-examples">Gaussian Filter Examples</a></li>
 </ul>
 </li>
@@ -825,7 +825,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/f02e3046ea134778aba8d19e23a618c3df152389819fd7a52d6b137cee47dd56.png" src="../../_images/f02e3046ea134778aba8d19e23a618c3df152389819fd7a52d6b137cee47dd56.png" />
+<img alt="../../_images/8e5126882277e78b4d565c3726f08e8128101f4fc964020b6c703d885aa9e801.png" src="../../_images/8e5126882277e78b4d565c3726f08e8128101f4fc964020b6c703d885aa9e801.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -886,7 +886,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
-<img alt="../../_images/f45a8cb173c28ba977054d15b4ab57171afe1524629c71d3fbadb1d5efdb24dc.png" src="../../_images/f45a8cb173c28ba977054d15b4ab57171afe1524629c71d3fbadb1d5efdb24dc.png" />
+<img alt="../../_images/c276c5885f6092d120ab73908f6e9e2d245e86a776b4bb49abaf91eaab436449.png" src="../../_images/c276c5885f6092d120ab73908f6e9e2d245e86a776b4bb49abaf91eaab436449.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filters with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -903,10 +903,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <h5>Gaussian Filter<a class="headerlink" href="#gaussian-filter" title="Permalink to this heading">#</a></h5>
 <p>The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window.  Unlike the Mean filter, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-filter">
-<span class="eqno">(2.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
+<span class="eqno">(2.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
 <p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 2.9</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
 <figure class="align-default" id="gaussian-kernel">
-<img alt="../../_images/gaussian_kernel.png" src="../../_images/gaussian_kernel.png" />
+<img alt="figures/gaussian_kernel.gif" src="figures/gaussian_kernel.gif" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -928,7 +928,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <li><p>Blurred edges can complicate edge detection.</p></li>
 </ol>
 <section id="gaussian-filter-performance">
-<h6>GAussian Filter Performance<a class="headerlink" href="#gaussian-filter-performance" title="Permalink to this heading">#</a></h6>
+<h6>Gaussian Filter Performance<a class="headerlink" href="#gaussian-filter-performance" title="Permalink to this heading">#</a></h6>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
@@ -998,12 +998,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/3b47ddad597d4ee966f3b0a487548e96659b7cd10c4de5915761e04b2dae5f83.png" src="../../_images/3b47ddad597d4ee966f3b0a487548e96659b7cd10c4de5915761e04b2dae5f83.png" />
-<img alt="../../_images/3b47ddad597d4ee966f3b0a487548e96659b7cd10c4de5915761e04b2dae5f83.png" src="../../_images/3b47ddad597d4ee966f3b0a487548e96659b7cd10c4de5915761e04b2dae5f83.png" />
+<img alt="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" src="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" />
+<img alt="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" src="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" />
 </div>
 </div>
 <figure class="align-center" id="gaussian-filter-performance-fig">
-<img alt="../../_images/3b47ddad597d4ee966f3b0a487548e96659b7cd10c4de5915761e04b2dae5f83.png" src="../../_images/3b47ddad597d4ee966f3b0a487548e96659b7cd10c4de5915761e04b2dae5f83.png" />
+<img alt="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" src="../../_images/a9b3db307c7cb3956a883a48a3954bf2ca40432a9b1e97bf62948aa575119508.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-performance-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1056,12 +1056,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fd9d888a4f2d425549bd3ebe67bf861c7a6a25b67234d51774dd1b6f0b1d0aec.png" src="../../_images/fd9d888a4f2d425549bd3ebe67bf861c7a6a25b67234d51774dd1b6f0b1d0aec.png" />
-<img alt="../../_images/fd9d888a4f2d425549bd3ebe67bf861c7a6a25b67234d51774dd1b6f0b1d0aec.png" src="../../_images/fd9d888a4f2d425549bd3ebe67bf861c7a6a25b67234d51774dd1b6f0b1d0aec.png" />
+<img alt="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" src="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" />
+<img alt="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" src="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" />
 </div>
 </div>
 <figure class="align-center" id="gaussian-filter-examples-fig">
-<img alt="../../_images/fd9d888a4f2d425549bd3ebe67bf861c7a6a25b67234d51774dd1b6f0b1d0aec.png" src="../../_images/fd9d888a4f2d425549bd3ebe67bf861c7a6a25b67234d51774dd1b6f0b1d0aec.png" />
+<img alt="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" src="../../_images/322311e8e9cbe0d75fbe4748c057cffba6c8e34245b455aac1a0f77098fa296e.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-examples-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1163,7 +1163,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </ul>
 </li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-performance">GAussian Filter Performance</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-performance">Gaussian Filter Performance</a></li>
 <li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-examples">Gaussian Filter Examples</a></li>
 </ul>
 </li>

@@ -451,7 +451,7 @@ The Gaussian Filter is similar to the Mean filter, in that it works by convolvin
 
 ```{math}
 :label: gaussian_filter
-G(x,y) = \frac{1}{2\pi\sigma^2}e{-\frac{x^2+y^2}{2\sigma^2}}
+G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
 ```
 
 {numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
@@ -481,7 +481,7 @@ Guassian filters do have certain challenges:
 2. Not as effective at removing "salt and pepper".
 3. Blurred edges can complicate edge detection.
 
-###### GAussian Filter Performance
+###### Gaussian Filter Performance
 
 ```{code-cell} ipython3
 import cv2
