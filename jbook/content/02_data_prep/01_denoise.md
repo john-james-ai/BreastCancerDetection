@@ -126,7 +126,7 @@ Impulse noise can be static or dynamic. In the case of static impulse noise, its
 
 Next, we review the types of noise we may encounter.
 
-## Types of Noise in Digital Mammography
+## Noise Types
 
 The types of noise most inherent in digital mammography are summarized below.
 
@@ -313,7 +313,7 @@ The mean filter works by convolving the kernel over the image as follows. Let w(
 ```
 
 ```{admonition} Kernel Coefficients
-Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the entire image is normalized by the normalization constant $\frac{1}{mn}$ at the end.
+Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  $\frac{1}{mn}$, is applied at the end.
 ```
 
 The process of convolving with a 3x3 mean filter is as follows:
@@ -443,47 +443,33 @@ Due to its simplicity, and computational efficiency, the mean filter is one of t
 1. The mean filter averaging is sensitive to unrepresentative pixel values, which can significantly affect the mean value of all pixels in the neighborhood.
 2. Since edges tend to have 'sharp' intensity gradients, the mean filter will interpolate new values based on the averages, which has the effect of blurring the edges.
 
-Both of these challenges are addressed using the median filter, which we will cover in the next section.
+Next, we examine another low-pass, linear filter widely used in image processing, the Gaussian filter.
 
 ##### Gaussian Filter
 
-The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window.  Unlike the Mean filter, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
+The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window.  Unlike the Mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
 
 ```{math}
 :label: gaussian_filter
-G(x,y) = \frac{1}{2\pi\sigma^2}e{-\frac{x^2+y^2}{2\sigma^2}}
+G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
 ```
 
 {numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
-```{figure} ../../figures/gaussian_kernel.gif
+```{figure} ../../figures/gaussian_kernel.png
 ---
 name: gaussian_kernel
 ---
 5 x 5 Gaussian Kernel
 ```
 
-Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent $-\infty - \infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about 2.9x10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
-
-The Gaussian filter has several advantages:
-
-1. Easy to implement.
-2. Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.
-3. Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.
-4. Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.
-5. Rotationally symmetric, with no directional bias.
-
-Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create
-
-Guassian filters do have certain challenges:
-
-1. Blurring removes fine detail that may have diagnostic relevance.
-2. Not as effective at removing "salt and pepper".
-3. Blurred edges can complicate edge detection.
+Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about $2.9 \times 10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
 ###### Gaussian Filter Performance
 
 ```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -557,11 +543,15 @@ name: gaussian_filter_performance_fig
 Gaussian filters with varying kernel sizes.
 ```
 
+{numref}`gaussian_filter_performance_fig` we have an image corrupted by random Gaussian noise with $\sigma^2=0.1$. We've denoised the image with a 15x15 Gaussian filter. Much of the noise has been attenuated, particularly in the light areas at the expense of some loss of detail. Gaussian filtering is the art of designing a kernel that achieves the right bargain between noise reduction and the blurring effect.
+
 ###### Gaussian Filter Examples
 
 {numref}`gaussian_filter_examples_fig` displays the results of several Gaussian filters of varying kernel sizes.
 
 ```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
 # Obtain the source image
 orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
 
@@ -609,3 +599,28 @@ name: gaussian_filter_examples_fig
 ---
 Gaussian filters with varying kernel sizes.
 ```
+
+The Gaussian filter has several advantages:
+
+1. Easy to implement.
+2. Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.
+3. Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.
+4. Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.
+5. Rotationally symmetric, with no directional bias.
+
+Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.
+
+Gaussian filters do have certain challenges:
+
+1. Blurring removes fine detail that may have diagnostic relevance.
+2. Not as effective at removing "salt and pepper" noise.
+3. Blurred edges can complicate edge detection.
+
+Still, its design, computational efficiency, and flexibility makes the Gaussian filter ubiquitous in image processing.
+
+The next linear filter takes a statistical approach to reducing blur, and minimizing noise, while retaining image detail.
+
+##### Wiener Filter
+
+  the Gaussian filter is often the first filter attempted in image processing
+Another linear filter worth note is the Wiener filter. It takes a statistical approach to estimating an uncorrupted image that minimizes the mean-squared error (MSE) between the estimate, and an underlying, unobserved, desired ground truth image. It's particularly effective at inversing the blurring effect, and reducing speckle and poisson noise. The Wiener filter is applied in the frequency domain, and involves direct computation of the auto-correlation, and cross-correlation of the signal and noise
