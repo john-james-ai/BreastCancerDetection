@@ -369,7 +369,7 @@ Mean Filter Performance Characteristics with Gaussian Noise
 :tags: [hide-cell, remove-output]
 
 analyzer = MeanFilterAnalyzer()
-analyzer.add_quantization_noise()
+analyzer.add_quantize_noise()
 fig = analyzer.analyze()
 glue("mean_quant_characteristics", fig)
 ```
@@ -388,7 +388,7 @@ Let's examine the effects of various kernel sizes on performance.
 :tags: [hide-cell, remove-output]
 
 analyzer = MeanFilterAnalyzer()
-analyzer.add_quantization_noise()
+analyzer.add_quantize_noise()
 fig = analyzer.compare()
 glue("mean_quant_analysis", fig)
 ```
