@@ -516,7 +516,19 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
 
-<span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyzer</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span>
+<span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyze</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyze</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span>
+
+<span class="ne">ImportError</span>: cannot import name &#39;MeanFilterAnalyze&#39; from &#39;bcd.preprocess.image.denoise.analyze&#39; (/home/john/projects/bcd/bcd/preprocess/image/denoise/analyze.py)
 </pre></div>
 </div>
 </div>
@@ -763,7 +775,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <img alt="MeanFilter" src="../../_images/02_mean_filter.gif" /></p>
 <section id="mean-filter-gaussian-noise">
 <h6>Mean Filter - Gaussian Noise<a class="headerlink" href="#mean-filter-gaussian-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.7</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_gaussian_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -780,15 +792,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-gaussian-characteristics-fig">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
-</pre></div>
-</div>
-<figcaption>
-<p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>As shown in <a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.7</span></a>, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
+<p>As shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_gaussian_characteristics_fig</span></code>, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -806,16 +810,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-gaussian-analysis-fig">
-<img alt="../../_images/e06e04448ba32c1367be2c8850176a3ac134eca7d9d6864d5b2ff8e818fc5348.png" src="../../_images/e06e04448ba32c1367be2c8850176a3ac134eca7d9d6864d5b2ff8e818fc5348.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="mean-filter-quantization-noise">
 <h6>Mean Filter - Quantization Noise<a class="headerlink" href="#mean-filter-quantization-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-quant-characteristics-fig"><span class="std std-numref">Fig. 2.9</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with quantization noise.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_quant_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with quantization noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -832,14 +830,6 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-quant-characteristics-fig">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
-</pre></div>
-</div>
-<figcaption>
-<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">Mean Filter Performance Analysis with Quantization Noise</span><a class="headerlink" href="#mean-quant-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -857,16 +847,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-quant-analysis-fig">
-<img alt="../../_images/767855bdbd2474e81ed75a873f3173cd6b000d3455250dff5a378fd1a76078a9.png" src="../../_images/767855bdbd2474e81ed75a873f3173cd6b000d3455250dff5a378fd1a76078a9.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Mean Filter Performance Characteristics with Quantization Noise</span><a class="headerlink" href="#mean-quant-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="mean-filter-speckle-noise">
 <h6>Mean Filter - Speckle Noise<a class="headerlink" href="#mean-filter-speckle-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-speckle-characteristics-fig"><span class="std std-numref">Fig. 2.11</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with speckle noise.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_speckle_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with speckle noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -883,14 +867,6 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-speckle-characteristics-fig">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
-</pre></div>
-</div>
-<figcaption>
-<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Mean Filter Performance Analysis with Speckle Noise</span><a class="headerlink" href="#mean-speckle-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 <hr class="docutils" />
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
@@ -909,16 +885,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-speckle-analysis-fig">
-<img alt="../../_images/c3690607c32099489f503f50e95d6e39c43d9ca8a86aff663167e7bdc71fddd0.png" src="../../_images/c3690607c32099489f503f50e95d6e39c43d9ca8a86aff663167e7bdc71fddd0.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.12 </span><span class="caption-text">Mean Filter Performance Characteristics with Speckle Noise</span><a class="headerlink" href="#mean-speckle-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="mean-filter-salt-pepper-noise">
 <h6>Mean Filter - Salt &amp; Pepper Noise<a class="headerlink" href="#mean-filter-salt-pepper-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-snp-characteristics-fig"><span class="std std-numref">Fig. 2.13</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with salt and pepper noise.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_snp_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with salt and pepper noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -935,14 +905,6 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-snp-characteristics-fig">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
-</pre></div>
-</div>
-<figcaption>
-<p><span class="caption-number">Fig. 2.13 </span><span class="caption-text">Mean Filter Performance Analysis with Salt &amp; Pepper Noise</span><a class="headerlink" href="#mean-snp-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 <hr class="docutils" />
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
@@ -961,16 +923,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-snp-analysis-fig">
-<img alt="../../_images/1acda78bf97840dbd32a548eafcbeb51a02156bc9dcff3f3edfdf99f727ec256.png" src="../../_images/1acda78bf97840dbd32a548eafcbeb51a02156bc9dcff3f3edfdf99f727ec256.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.14 </span><span class="caption-text">Mean Filter Performance Characteristics with Salt &amp; Pepper Noise</span><a class="headerlink" href="#mean-snp-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="mean-filter-poisson-noise">
 <h6>Mean Filter - Poisson Noise<a class="headerlink" href="#mean-filter-poisson-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-poisson-characteristics-fig"><span class="std std-numref">Fig. 2.15</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Poisson noise.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_poisson_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Poisson noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -987,14 +943,6 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-poisson-characteristics-fig">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
-</pre></div>
-</div>
-<figcaption>
-<p><span class="caption-number">Fig. 2.15 </span><span class="caption-text">Mean Filter Performance Analysis with Poisson Noise</span><a class="headerlink" href="#mean-poisson-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 <hr class="docutils" />
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
@@ -1013,12 +961,6 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-poisson-analysis-fig">
-<img alt="../../_images/e28f758c5e730781e1a01139412761749da5b27fdb09d1fa55ac34431e322af2.png" src="../../_images/e28f758c5e730781e1a01139412761749da5b27fdb09d1fa55ac34431e322af2.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.16 </span><span class="caption-text">Mean Filter Performance Characteristics with Poisson Noise</span><a class="headerlink" href="#mean-poisson-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 </section>
 </section>

@@ -23,7 +23,7 @@ from myst_nb import glue
 import numpy as np
 from skimage.util import random_noise
 
-from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer
+from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyze, GaussianFilterAnalyzer, MedianFilterAnalyzer
 ```
 
 What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. Yet, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For denoising, we distinguish noise from other imperfections, with the following definition:
@@ -337,7 +337,7 @@ glue("mean_gaussian_characteristics", fig)
 align: center
 name: mean_gaussian_characteristics_fig
 ---
-Mean Filter Performance Analysis with Gaussian Noise
+Mean Filter Performance Characteristics with Gaussian Noise
 ```
 
 As shown in {numref}`mean_gaussian_characteristics_fig`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
@@ -358,7 +358,7 @@ glue("mean_gaussian_analysis", fig)
 align: center
 name: mean_gaussian_analysis_fig
 ---
-Mean Filter Performance Characteristics with Gaussian Noise
+Mean Filter Performance Analysis with Gaussian Noise
 ```
 
 ###### Mean Filter - Quantization Noise
@@ -379,7 +379,7 @@ glue("mean_quant_characteristics", fig)
 align: center
 name: mean_quant_characteristics_fig
 ---
-Mean Filter Performance Analysis with Quantization Noise
+Mean Filter Performance Characteristics is with Quantization Noise
 ```
 
 Let's examine the effects of various kernel sizes on performance.
@@ -398,7 +398,7 @@ glue("mean_quant_analysis", fig)
 align: center
 name: mean_quant_analysis_fig
 ---
-Mean Filter Performance Characteristics with Quantization Noise
+Mean Filter Performance Analysis with Quantization Noise
 ```
 
 
@@ -420,7 +420,7 @@ glue("mean_speckle_characteristics", fig)
 align: center
 name: mean_speckle_characteristics_fig
 ---
-Mean Filter Performance Analysis with Speckle Noise
+Mean Filter Performance Characteristics with Speckle Noise
 ```
 
 ---
@@ -441,7 +441,7 @@ glue("mean_speckle_analysis", fig)
 align: center
 name: mean_speckle_analysis_fig
 ---
-Mean Filter Performance Characteristics with Speckle Noise
+Mean Filter Performance Analysis with Speckle Noise
 ```
 
 ###### Mean Filter - Salt & Pepper Noise
@@ -462,7 +462,7 @@ glue("mean_snp_characteristics", fig)
 align: center
 name: mean_snp_characteristics_fig
 ---
-Mean Filter Performance Analysis with Salt & Pepper Noise
+Mean Filter Performance Characteristics with Salt & Pepper Noise
 ```
 
 ---
@@ -483,7 +483,7 @@ glue("mean_snp_analysis", fig)
 align: center
 name: mean_snp_analysis_fig
 ---
-Mean Filter Performance Characteristics with Salt & Pepper Noise
+Mean Filter Performance Analysis with Salt & Pepper Noise
 ```
 
 ###### Mean Filter - Poisson Noise
@@ -504,7 +504,7 @@ glue("mean_poisson_characteristics", fig)
 align: center
 name: mean_poisson_characteristics_fig
 ---
-Mean Filter Performance Analysis with Poisson Noise
+Mean Filter Performance Characteristics with Poisson Noise
 ```
 
 ---
@@ -525,5 +525,5 @@ glue("mean_poisson_analysis", fig)
 align: center
 name: mean_poisson_analysis_fig
 ---
-Mean Filter Performance Characteristics with Poisson Noise
+Mean Filter Performance Analysis with Poisson Noise
 ```
