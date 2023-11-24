@@ -755,6 +755,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <p>The mean filter works by convolving the kernel over the image as follows. Let w(x,y) represent a set of coordinates in a  m x n rectangular window in the image, centered at point (x,y). The mean filtering process computes the average value of the corrupted image g(x,y) in the area defined by w(x,y). The value of the restored image at any point (x,y) is:</p>
 <div class="math notranslate nohighlight" id="equation-mean-filter">
 <span class="eqno">(2.12)<a class="headerlink" href="#equation-mean-filter" title="Permalink to this equation">#</a></span>\[^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)\]</div>
+<div class="admonition-kernel-coefficients admonition">
+<p class="admonition-title">Kernel Coefficients</p>
+<p>Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  <span class="math notranslate nohighlight">\(\frac{1}{mn}\)</span>, is applied at the end.</p>
+</div>
 <p>The process of convolving with a 3x3 mean filter is as follows:
 <img alt="MeanFilter" src="../../_images/02_mean_filter.gif" /></p>
 <section id="mean-filter-gaussian-noise">
@@ -804,7 +808,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-analysis-fig">
-<img alt="../../_images/1706ff12f46f2c1e88ffa1c18983a0a082cb957ac8a22a46b68ef4eda311c0dc.png" src="../../_images/1706ff12f46f2c1e88ffa1c18983a0a082cb957ac8a22a46b68ef4eda311c0dc.png" />
+<img alt="../../_images/848fafc4202ff69893016b441e6f132112f41729d2c7f23c6479dfe0dba492d7.png" src="../../_images/848fafc4202ff69893016b441e6f132112f41729d2c7f23c6479dfe0dba492d7.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>

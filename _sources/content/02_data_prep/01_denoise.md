@@ -312,7 +312,7 @@ The mean filter works by convolving the kernel over the image as follows. Let w(
 ^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)
 ```
 
-```{admonition}
+```{admonition} Kernel Coefficients
 Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  $\frac{1}{mn}$, is applied at the end.
 ```
 
