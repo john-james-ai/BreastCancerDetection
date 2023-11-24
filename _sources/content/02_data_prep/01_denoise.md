@@ -559,7 +559,7 @@ BF[I] = \frac{1}{W_p}\displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_
 where the normalization factor $W_p$ ensures the pixel weights sum to 1.0:
 
 ```{math}
-:label: bilateral
+:label: bilateral_normalizer
 W_p = \displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|).
 ```
 
