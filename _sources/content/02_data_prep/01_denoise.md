@@ -23,7 +23,7 @@ from myst_nb import glue
 import numpy as np
 from skimage.util import random_noise
 
-from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer
+from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer
 ```
 
 What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. Yet, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For denoising, we distinguish noise from other imperfections, with the following definition:
@@ -370,7 +370,7 @@ Next, we examine another low-pass, linear filter widely used in image processing
 
 ##### Gaussian Filter
 
-The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the Mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
+The Gaussian Filter is similar to the mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
 
 ```{math}
 :label: gaussian_filter
@@ -428,7 +428,7 @@ name: gaussian_gaussian_analysis_fig
 Gaussian Filter Performance Analysis with Gaussian Noise
 ```
 
-Close examination shows some loss of detail, but not to the extent observed using the Mean filter.
+Close examination shows some loss of detail, but not to the extent observed using the mean filter.
 
 The Gaussian filter has several advantages:
 
@@ -473,9 +473,9 @@ In the next sections, we’ll describe each of these methods, exhibit their perf
 
 ##### Median Filter
 
-The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.
+The median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.
 
-In {numref}`median_gaussian_characteristics_fig`, we have the results of a 3x3 Median filter on a mammogram image degraded with Gaussian noise.
+In {numref}`median_gaussian_characteristics_fig`, we have the results of a 3x3 median filter on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
@@ -494,9 +494,9 @@ name: median_gaussian_characteristics_fig
 Median Filter Performance Characteristics with Gaussian Noise
 ```
 
-`median_gaussian_characteristics_fig` (c) shows the result of applying a Median filter to an image corrupted by Gaussian noise. The noise is effectively, removed while preserving much of the fine detail.
+{numref}`median_gaussian_characteristics_fig` (c) shows the result of applying a median filter to an image corrupted by Gaussian noise. The noise is effectively, removed while preserving much of the fine detail. Note the shape of the histogram in `median_gaussian_characteristics_fig` (g) more closely resembles that of the original image than the histograms of the linear filters.
 
-Where the Median filter differentiates itself is with noise that produces extreme changes in pixel intensity. In `median_snp_characteristics_fig`, we apply the Median filter to an image corrupted by 'salt and pepper' noise.
+Where the median filter is quite distinguished is with noise that produces extreme changes in pixel intensity. In {numref}`median_snp_characteristics_fig`, we apply the median filter to an image corrupted by 'salt and pepper' noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
@@ -514,3 +514,82 @@ name: median_snp_characteristics_fig
 ---
 Median Filter Performance Characteristics with Salt and Pepper Noise
 ```
+
+Again, the noise is largely eliminated with little blurring effect.
+
+{numref}`median_snp_analysis_fig` displays the effect of varying median filter kernels on salt and pepper noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = MedianFilterAnalyzer()
+analyzer.add_snp_noise(amount=0.4)
+fig = analyzer.compare()
+glue("median_snp_analysis", fig)
+```
+
+```{glue:figure} median_snp_analysis
+---
+align: center
+name: median_snp_analysis_fig
+---
+Median Filter Performance Analysis with Salt and Pepper Noise
+```
+
+The performance of the median filter is a characteristic of two properties:
+
+1. The median is a more robust estimate of centrality than the mean. It is less affected by outliers.
+2. Since the a pixel's output is an actual pixel value from its neighborhood, the median filter doesn't create unrealistic pixel values when the kernel straddles a line or edge.
+
+As such, the median filter is much better at preserving sharp edges than the Mean or Gaussian filters.
+
+The median filter preserves high spatial frequency detail and performs best when noise is characterized by relatively few extreme changes in pixel intensity. However, when noise (such as Gaussian noise) effects the majority of pixels in the neighborhood, the median filter can be subjectively less effective than the Mean or Gaussian filters.
+
+##### Bilateral Filter
+
+Introduced in 1995 by Volker Aurich et. al. {cite}`aurichNonLinearGaussianFilters1995`, the bilateral filter is a non-linear technique that can smooth an image while preserving strong edges. It has become a standard denoising tool in interactive applications such as Adobe Photoshop$\circledR$.
+
+The bilateral filter is a weighted average of nearby pixels, similar to the Gaussian filter. The difference is that the bilateral filter considers the difference between a pixel value and that of its neighbors. The main idea is that a pixel is influenced by pixels that are not only nearby, but also have a similar intensity. The formulation is given by:
+
+```{math}
+:label: bilateral
+BF[I] = \frac{1}{W_p}\displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|)I_q,
+```
+
+where the normalization factor $W_p$ ensures the pixel weights sum to 1.0:
+
+```{math}
+:label: bilateral
+W_p = \displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|).
+```
+
+where:
+
+- $I_p$ is the intensity value of center pixel $p$,
+- $I-q$ is the intensity value of neighboring pixel $q$,
+- $G_{\sigma_s}$ is a spatial Gaussian weighting that decreases the influence of distant pixels, and
+- $G_{\sigma_r}$ is a range Gaussian weighting that decreases the influence of pixels $q$ with intensity values that differ from $I_p$.
+
+The spatial, or domain parameter, $\sigma_s$, is related to the scale of the pixel values and is found experimentally. The range parameter, $\sigma_r$, can be adapted from the noise level {cite}`celiuNoiseEstimationSingle2006`. As $\sigma_r$ increases, the bilateral filter gradually approximates the Gaussian filter. Best results have been achieved with  $\sigma_r = 1.95 \sigma_n$, where $\sigma_n$ is the local noise level.
+
+In {numref}`bilateral_gaussian_characteristics_fig`, a bilateral filter with $\sigma_r=75$, and $\sigma_s=75$ is applied to an image degraded with Gaussian noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = BilateralFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("bilateral_gaussian_characteristics", fig)
+```
+
+```{glue:figure} bilateral_gaussian_characteristics
+---
+align: center
+name: bilateral_gaussian_characteristics_fig
+---
+Bilateral Filter Performance Characteristics with Gaussian Noise
+```
+
+
+A consequence of the way the bilateral filter considers the range of intensity values is suboptimal performance with salt and pepper noise. The noise may be sparse, but the affected pixels' intensity values may span the entire range (e.g., 0-255 for 8-bit images). The values may be too different from their neighbors to influence a pixel. Often, these images are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
