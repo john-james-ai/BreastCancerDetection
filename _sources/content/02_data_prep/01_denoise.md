@@ -325,7 +325,7 @@ The process of convolving with a 3x3 mean filter is as follows:
 :tags: [hide-cell, remove-output]
 
 analyzer = MeanFilterAnalyzer()
-analyzer.add_gaussian_noise()
+analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.analyze()
 glue("mean_gaussian_characteristics", fig)
 ```
@@ -346,7 +346,7 @@ Let's examine the effects of various kernel sizes on performance.
 :tags: [hide-cell, remove-output]
 
 analyzer = MeanFilterAnalyzer()
-analyzer.add_gaussian_noise()
+analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.compare()
 glue("mean_gaussian_analysis", fig)
 ```
@@ -394,7 +394,7 @@ Producing such a kernel of discrete coefficients requires an approximation of th
 :tags: [hide-cell, remove-output]
 
 analyzer = GaussianFilterAnalyzer()
-analyzer.add_gaussian_noise()
+analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.analyze()
 glue("gaussian_gaussian_characteristics", fig)
 ```
@@ -415,7 +415,7 @@ Let's examine the effects of various kernel sizes on performance.
 :tags: [hide-cell, remove-output]
 
 analyzer = GaussianFilterAnalyzer()
-analyzer.add_gaussian_noise()
+analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.compare()
 glue("gaussian_gaussian_analysis", fig)
 ```
@@ -475,13 +475,13 @@ In the next sections, we’ll describe each of these methods, exhibit their perf
 
 The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.
 
-In {numref}`median_gaussian_characteristics_fig`, we haev the results of a 3x3 Median filter on a mammogram image degraded with Gaussian noise.
+In {numref}`median_gaussian_characteristics_fig`, we have the results of a 3x3 Median filter on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
 analyzer = MedianFilterAnalyzer()
-analyzer.add_gaussian_noise()
+analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.analyze()
 glue("median_gaussian_characteristics", fig)
 ```
