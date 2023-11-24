@@ -342,8 +342,6 @@ Mean Filter Performance Analysis with Gaussian Noise
 
 As shown in {numref}`mean_gaussian_characteristics_fig`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
 
----
-
 Let's examine the effects of various kernel sizes on performance.
 
 ```{code-cell}
