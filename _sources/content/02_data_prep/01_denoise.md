@@ -321,7 +321,7 @@ The process of convolving with a 3x3 mean filter is as follows:
 
 ###### Mean Filter - Gaussian Noise
 
-{numref}`mean_gaussian_characteristics` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.
+{numref}`mean_gaussian_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
