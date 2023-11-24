@@ -778,7 +778,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-characteristics-fig">
-<img alt="../../_images/52b9d62a6023de3fbef785ba890f3e63c04b336de6bf06464e9dec474fb0b653.png" src="../../_images/52b9d62a6023de3fbef785ba890f3e63c04b336de6bf06464e9dec474fb0b653.png" />
+<img alt="../../_images/bbeae879ec8025dc0e959b8be6bf86fb230e1b6d1c874a512973a5956dc929f1.png" src="../../_images/bbeae879ec8025dc0e959b8be6bf86fb230e1b6d1c874a512973a5956dc929f1.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -802,7 +802,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-analysis-fig">
-<img alt="../../_images/0bcbce1936b3a2fe80d3ace0dc339fcd4ff0280bc07070722515cec376f07186.png" src="../../_images/0bcbce1936b3a2fe80d3ace0dc339fcd4ff0280bc07070722515cec376f07186.png" />
+<img alt="../../_images/2cece6d5ca9eaf661bd39914611795265ac6f7ad0d75b6e40d9558dc51757072.png" src="../../_images/2cece6d5ca9eaf661bd39914611795265ac6f7ad0d75b6e40d9558dc51757072.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -820,9 +820,15 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <p>The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the Mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-filter">
 <span class="eqno">(2.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
-<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">gaussian_kernel</span></code> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
+<p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 2.9</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
+<figure class="align-default" id="gaussian-kernel">
+<img alt="../../_images/gaussian_kernel.png" src="../../_images/gaussian_kernel.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9 \times 10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
-<p><a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.9</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.</p>
+<p><a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.10</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -840,12 +846,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-characteristics-fig">
-<img alt="../../_images/aaac352edd06a700a9fbd178811a16c45a26dfae47da0f26d9f1cbca5df3c4d2.png" src="../../_images/aaac352edd06a700a9fbd178811a16c45a26dfae47da0f26d9f1cbca5df3c4d2.png" />
+<img alt="../../_images/4577aac8584edb4ffa884feb2d904bbbe35ba280c733e57c5b074eee7bfad96a.png" src="../../_images/4577aac8584edb4ffa884feb2d904bbbe35ba280c733e57c5b074eee7bfad96a.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.9</span></a>, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
+<p>As shown in <a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.10</span></a>, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -864,9 +870,9 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-analysis-fig">
-<img alt="../../_images/f136b02adf68803b8bd8334faee2863ac52a2c3fbf8d27169b1fa5607a8a1637.png" src="../../_images/f136b02adf68803b8bd8334faee2863ac52a2c3fbf8d27169b1fa5607a8a1637.png" />
+<img alt="../../_images/96055b59749831e4036937a9af74ea038c2eca1f1118b2ce05a5bf5552ef4a6c.png" src="../../_images/96055b59749831e4036937a9af74ea038c2eca1f1118b2ce05a5bf5552ef4a6c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Close examination shows some loss of detail, but not to the extent observed using the Mean filter.</p>
@@ -906,7 +912,7 @@ Next, up? Non-linear filters.</p>
 <section id="median-filter">
 <h5>Median Filter<a class="headerlink" href="#median-filter" title="Permalink to this heading">#</a></h5>
 <p>The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.</p>
-<p>In <a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.11</span></a>, we haev the results of a 3x3 Median filter on a mammogram image degraded with Gaussian noise.</p>
+<p>In <a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.12</span></a>, we haev the results of a 3x3 Median filter on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -924,9 +930,9 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="median-gaussian-characteristics-fig">
-<img alt="../../_images/f77beba10bdf3e6183c074d33e6144b637d5b0dd9e0ba132a506f589c70b3203.png" src="../../_images/f77beba10bdf3e6183c074d33e6144b637d5b0dd9e0ba132a506f589c70b3203.png" />
+<img alt="../../_images/9fd328f921bfa5c8787b27ebacd23ab93cd70c1ec5ac591b7295cca57a93887c.png" src="../../_images/9fd328f921bfa5c8787b27ebacd23ab93cd70c1ec5ac591b7295cca57a93887c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Median Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#median-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.12 </span><span class="caption-text">Median Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#median-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
