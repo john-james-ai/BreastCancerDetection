@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Thursday November 23rd 2023 06:41:41 pm                                             #
+# Modified   : Friday November 24th 2023 05:13:26 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -159,7 +159,7 @@ class DenoiserAnalyzer(ABC):
             axes[idx].set_xticks([])
             axes[idx].set_yticks([])
 
-        title = string.capwords(s=self._denoiser) + " Performance Characteristics"
+        title = string.capwords(s=self._denoiser) + " Performance Analysis"
         fig.suptitle(title, fontsize=12)
 
         plt.tight_layout()
@@ -216,9 +216,11 @@ class DenoiserAnalyzer(ABC):
         ax7.set_xlabel("(f) Degraded Image Histogram", fontsize=10)
         ax7.set_yticks([])
 
-        title = string.capwords(s=self._denoiser) + " Performance Analysis"
+        title = string.capwords(s=self._denoiser) + " Performance Characteristics"
         plt.tight_layout()
         fig.suptitle(title, fontsize=12)
+
+        return fig
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -251,10 +253,31 @@ class GaussianFilterAnalyzer(DenoiserAnalyzer):
 #                                MEDIAN FILTER VISUALIZER                                          #
 # ------------------------------------------------------------------------------------------------ #
 class MedianFilterAnalyzer(DenoiserAnalyzer):
-    """Analyzes Gaussian Filters"""
+    """Analyzes Median Filters"""
 
     def __init__(self, denoiser: str = "Median Filter") -> None:
         super().__init__(denoiser)
 
     def apply_filter(self, image: np.ndarray, size: int = 3) -> np.ndarray:
         return cv2.medianBlur(image, size)
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                              BILATERAL FILTER VISUALIZER                                         #
+# ------------------------------------------------------------------------------------------------ #
+class BilateralFilterAnalyzer(DenoiserAnalyzer):
+    """Analyzes Bilateral Filters"""
+
+    def __init__(self, denoiser: str = "Bilateral Filter") -> None:
+        super().__init__(denoiser)
+
+    def apply_filter(
+        self,
+        image: np.ndarray,
+        d: int = -1,
+        sigma_range: float = 75,
+        sigma_domain: float = 75,
+    ) -> np.ndarray:
+        return cv2.bilateralFilter(
+            image, d=d, sigmaColor=sigma_range, sigmaSpace=sigma_domain
+        )

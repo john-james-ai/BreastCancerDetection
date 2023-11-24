@@ -23,7 +23,7 @@ from myst_nb import glue
 import numpy as np
 from skimage.util import random_noise
 
-from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer
+from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer
 ```
 
 What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. Yet, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For denoising, we distinguish noise from other imperfections, with the following definition:
@@ -165,7 +165,7 @@ P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 
 where $\mu$ is the mean gray value, and $\sigma$ is the standard deviation.
 
-```{figure}
+```{figure} ../../figures/mammogram_gaussian.png
 ---
 name: mammogram_gaussian
 ---
@@ -183,7 +183,7 @@ Quantization noise is an unavoidable aspect of ADC. An analog signal is continuo
 
 Let $\triangle$ be the step size, then quantization noise, $q$, is modeled as being mean-centered and uniform between $\frac{-\triangle}{2}$ and $\frac{\triangle}{2}$. The variance is $\frac{\triangle^2}{12}$.
 
-```{figure}
+```{figure} ../../figures/mammogram_quantize.png
 ---
 name: mammogram_quantize
 ---
@@ -197,7 +197,7 @@ The image in {numref}`mammogram_quantize` has been quantized to only one bit. No
 
 Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.
 
-```{figure}
+```{figure} ../../figures/mammogram_speckle.png
 ---
 name: mammogram_speckle
 ---
@@ -236,7 +236,7 @@ Pr(f=\text{min}) = \frac{\alpha}{2}
 
 For instance, {numref}`mammogram_snp` shows an 8-bit image with $\alpha=0.3$. Approximately 70%  ($1-\alpha$) of the image is unaltered, and 30% ($\alpha$) of the pixels have been changed to black or white.
 
-```{figure}
+```{figure} ../../figures/mammogram_snp.png
 ---
 name: mammogram_snp
 ---
@@ -256,7 +256,7 @@ where $\lambda$ is the expected number of photons per unit time interval. The un
 
 Since the photon count follows a Poisson distribution, it has the property that the variance, $Var[N]$ is equal to the expectation, $E[N]$. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.
 
-```{figure}
+```{figure} ../../figures/mammogram_poisson.png
 ---
 name: mammogram_poisson
 ---
@@ -298,7 +298,7 @@ Most commonly used to reduce additive Gaussian noise, the mean filter is a simpl
 
 The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
 
-```{figure}
+```{figure} ../../figures/kernel.png
 ---
 name: kernel
 ---
@@ -312,23 +312,42 @@ The mean filter works by convolving the kernel over the image as follows. Let w(
 ^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)
 ```
 
-```{admonition}
+```{admonition} Kernel Coefficients
 Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  $\frac{1}{mn}$, is applied at the end.
 ```
 
 The process of convolving with a 3x3 mean filter is as follows:
 ![MeanFilter](../../figures/gif/02_mean_filter.gif)
 
-###### Mean Filter - Gaussian Noise
-
-{numref}`mean_filter_figure` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.
+{numref}`mean_gaussian_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
 analyzer = MeanFilterAnalyzer()
-analyzer.add_gaussian_noise()
+analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.analyze()
+glue("mean_gaussian_characteristics", fig)
+```
+
+```{glue:figure} mean_gaussian_characteristics
+---
+align: center
+name: mean_gaussian_characteristics_fig
+---
+Mean Filter Performance Characteristics with Gaussian Noise
+```
+
+As shown in {numref}`mean_gaussian_characteristics_fig`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
+
+Let's examine the effects of various kernel sizes on performance.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = MeanFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.compare()
 glue("mean_gaussian_analysis", fig)
 ```
 
@@ -337,86 +356,10 @@ glue("mean_gaussian_analysis", fig)
 align: center
 name: mean_gaussian_analysis_fig
 ---
-Mean filter noise reduction images and histograms.
+Mean Filter Performance Analysis with Gaussian Noise
 ```
 
-As shown in {numref}`mean_gaussian_analysis_fig`, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
-
----
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_gaussian_noise()
-fig = analyzer.compare()
-glue("mean_gaussian_compare", fig)
-```
-
-```{glue:figure} mean_gaussian_compare
----
-align: center
-name: mean_gaussian_compare_fig
----
-Mean filter noise reduction images and histograms.
-```
-
-
-###### Mean Filter Examples
-
-{numref}`mean_filters_diff_kernel_sizes_fig` illustrates the effects of filters of varying kernel sizes
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-# Obtain the source image
-orig = cv2.imread(FP_ORIG)
-
-# Add random Gaussian noise with zero mean and variance of 0.1
-img_gaussian = random_noise(orig, mode='gaussian', mean=0,var=0.1)
-img_gaussian = convert_uint8(img_gaussian)
-
-# Create images with varying kernel sizes.
-img_1 = cv2.blur(img_gaussian, (3,3))
-img_2 = cv2.blur(img_gaussian, (9,9))
-img_3 = cv2.blur(img_gaussian, (15,15))
-
-# Create Figure object
-fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,6), dpi=200)
-
-# Show images
-_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
-_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
-_ = ax[0,0].set_xticks([])
-_ = ax[0,0].set_yticks([])
-
-_ = ax[0,1].imshow(img_1, cmap=CMAP)
-_ = ax[0,1].set_xlabel('(b) Mean Filtered Image with 3x3 kernel', fontsize=10)
-_ = ax[0,1].set_xticks([])
-_ = ax[0,1].set_yticks([])
-
-_ = ax[1,0].imshow(img_2, cmap=CMAP)
-_ = ax[1,0].set_xlabel('(c) Mean Filtered Image with 9x9 kernel', fontsize=10)
-_ = ax[1,0].set_xticks([])
-_ = ax[1,0].set_yticks([])
-
-_ = ax[1,1].imshow(img_3, cmap=CMAP)
-_ = ax[1,1].set_xlabel('(d) Mean Filtered Image with 15x15 kernel', fontsize=10)
-_ = ax[1,1].set_xticks([])
-_ = ax[1,1].set_yticks([])
-
-plt.tight_layout()
-glue("mean_filters_diff_kernel_sizes", fig)
-```
-
-```{glue:figure}
----
-align: center
-name: mean_filters_diff_kernel_sizes_fig
----
-Mean filters with varying kernel sizes.
-```
+{numref}`mean_gaussian_analysis_fig` shows the effect of increasing kernel sizes on images corrupted by Gaussian noise. A blurring effect, and loss of detail is increasingly evident with larger kernel sizes.
 
 Due to its simplicity, and computational efficiency, the mean filter is one of the most widely used spatial domain filters in biomedical imaging. As a low-pass frequency filter, it reduces the spatial intensity derivatives in the image; thereby, reducing the amount of noise corrupting the representation. There are; however, two main challenges with the main filter:
 
@@ -427,7 +370,7 @@ Next, we examine another low-pass, linear filter widely used in image processing
 
 ##### Gaussian Filter
 
-The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window.  Unlike the Mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
+The Gaussian Filter is similar to the mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
 
 ```{math}
 :label: gaussian_filter
@@ -436,7 +379,7 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
 
 {numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
-```{figure}
+```{figure} ../../figures/gaussian_kernel.png
 ---
 name: gaussian_kernel
 ---
@@ -445,140 +388,47 @@ name: gaussian_kernel
 
 Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about $2.9 \times 10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
-###### Gaussian Filter Performance
+{numref}`gaussian_gaussian_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-from skimage.util import random_noise
-from skimage.restoration import wiener
-
-from bcd.utils.image import convert_uint8
-
-
-FP_ORIG = "jbook/figures/mammogram.png"
-CMAP = 'gray'
-
-# Obtain the source image
-fx = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
-
-# Add random Gaussian noise with zero mean and variance of 0.1
-gx = random_noise(fx, mode='gaussian', mean=0,var=0.1)
-gx = convert_uint8(gx)
-# gx = gx[:,:]
-
-# Apply the Gaussian Kernel
-fx2 = cv2.GaussianBlur(gx, (15,15), 0)
-
-# Subtract the noise
-nx = gx - fx2
-
-# Compute histograms
-fx_hist = cv2.calcHist([fx], [0], None, [256], [0,256])
-gx_hist = cv2.calcHist([gx], [0], None, [256], [0,256])
-fx2_hist = cv2.calcHist([fx2], [0], None, [256], [0,256])
-nx_hist = cv2.calcHist([nx], [0], None, [256], [0,256])
-
-# Create Figure object
-fig, ax = plt.subplots(nrows=2, ncols=4, figsize=(12,6), dpi=200)
-
-# Show images
-_ = ax[0,0].imshow(fx, cmap=CMAP)
-_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
-
-_ = ax[0,1].imshow(gx, cmap=CMAP)
-_ = ax[0,1].set_xlabel('(b) Corrupted Image', fontsize=10)
-
-_ = ax[0,2].imshow(fx2, cmap=CMAP)
-_ = ax[0,2].set_xlabel('(c) Guassian Filtered Image', fontsize=10)
-
-_ = ax[0,3].imshow(nx, cmap=CMAP)
-_ = ax[0,3].set_xlabel('(d) Noise', fontsize=10)
-
-# Show histograms
-_ = ax[1,0].plot(fx_hist)
-_ = ax[1,0].set_xlabel("(e) Original Image Histogram", fontsize=10)
-
-_ = ax[1,1].plot(gx_hist)
-_ = ax[1,1].set_xlabel("(f) Corrupted Image Histogram", fontsize=10)
-
-_ = ax[1,2].plot(fx2_hist)
-_ = ax[1,2].set_xlabel("(g) Gaussian Filtered Histogram ", fontsize=10)
-
-_ = ax[1,3].plot(nx_hist)
-_ = ax[1,3].set_xlabel("(g) Noise Histogram ", fontsize=10)
-
-plt.tight_layout()
-glue("gaussian_filter_performance", fig)
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("gaussian_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} gaussian_gaussian_characteristics
 ---
 align: center
-name: gaussian_filter_performance_fig
+name: gaussian_gaussian_characteristics_fig
 ---
-Gaussian filters with varying kernel sizes.
+Gaussian Filter Performance Characteristics with Gaussian Noise
 ```
 
-{numref}`gaussian_filter_performance_fig` we have an image corrupted by random Gaussian noise with $\sigma^2=0.1$. We've denoised the image with a 15x15 Gaussian filter. Much of the noise has been attenuated, particularly in the light areas at the expense of some loss of detail. Gaussian filtering is the art of designing a kernel that achieves the right bargain between noise reduction and the blurring effect.
+As shown in {numref}`gaussian_gaussian_characteristics_fig`, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
 
-###### Gaussian Filter Examples
-
-{numref}`gaussian_filter_examples_fig` displays the results of several Gaussian filters of varying kernel sizes.
+Let's examine the effects of various kernel sizes on performance.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
-# Obtain the source image
-orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
-
-# Add random Gaussian noise with zero mean and variance of 0.1
-img_gaussian = random_noise(orig, mode='gaussian', mean=0,var=0.1)
-img_gaussian = convert_uint8(img_gaussian)
-
-# Create images with varying kernel sizes.
-img_1 = cv2.GaussianBlur(img_gaussian, (3,3), 0)
-img_2 = cv2.GaussianBlur(img_gaussian, (9,9), 0)
-img_3 = cv2.GaussianBlur(img_gaussian, (15,15), 0)
-
-# Create Figure object
-fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,6), dpi=200)
-
-# Show images
-_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
-_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
-_ = ax[0,0].set_xticks([])
-_ = ax[0,0].set_yticks([])
-
-_ = ax[0,1].imshow(img_1, cmap=CMAP)
-_ = ax[0,1].set_xlabel('(b) Gaussian Filtered Image with 3x3 kernel', fontsize=10)
-_ = ax[0,1].set_xticks([])
-_ = ax[0,1].set_yticks([])
-
-_ = ax[1,0].imshow(img_2, cmap=CMAP)
-_ = ax[1,0].set_xlabel('(c) Gaussian Filtered Image with 9x9 kernel', fontsize=10)
-_ = ax[1,0].set_xticks([])
-_ = ax[1,0].set_yticks([])
-
-_ = ax[1,1].imshow(img_3, cmap=CMAP)
-_ = ax[1,1].set_xlabel('(d) GaussianFiltered Image with 15x15 kernel', fontsize=10)
-_ = ax[1,1].set_xticks([])
-_ = ax[1,1].set_yticks([])
-
-plt.tight_layout()
-glue("gaussian_filter_examples", fig)
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.compare()
+glue("gaussian_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} gaussian_gaussian_analysis
 ---
 align: center
-name: gaussian_filter_examples_fig
+name: gaussian_gaussian_analysis_fig
 ---
-Gaussian filters with varying kernel sizes.
+Gaussian Filter Performance Analysis with Gaussian Noise
 ```
+
+Close examination shows some loss of detail, but not to the extent observed using the mean filter.
 
 The Gaussian filter has several advantages:
 
@@ -623,134 +473,123 @@ In the next sections, we’ll describe each of these methods, exhibit their perf
 
 ##### Median Filter
 
-The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.
+The median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.
 
-###### Median Filter Performance
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-from skimage.util import random_noise
-from skimage.restoration import wiener
-
-from bcd.utils.image import convert_uint8
-
-FP_ORIG = "jbook/figures/mammogram.png"
-CMAP = 'gray'
-
-# Obtain the source image
-fx = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
-
-# Add random salt and pepper noise
-gx = random_noise(fx, mode='s&p', amount=0.30)
-gx = convert_uint8(gx)
-# gx = gx[:,:]
-
-# Apply Median Filter
-fx2 = cv2.medianBlur(gx,5)
-
-# Subtract the noise
-nx = gx - fx2
-
-# Compute histograms
-fx_hist = cv2.calcHist([fx], [0], None, [256], [0,256])
-gx_hist = cv2.calcHist([gx], [0], None, [256], [0,256])
-fx2_hist = cv2.calcHist([fx2], [0], None, [256], [0,256])
-nx_hist = cv2.calcHist([nx], [0], None, [256], [0,256])
-
-# Create Figure object
-fig, ax = plt.subplots(nrows=2, ncols=4, figsize=(12,6), dpi=200)
-
-# Show images
-_ = ax[0,0].imshow(fx, cmap=CMAP)
-_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
-
-_ = ax[0,1].imshow(gx, cmap=CMAP)
-_ = ax[0,1].set_xlabel('(b) Corrupted Image', fontsize=10)
-
-_ = ax[0,2].imshow(fx2, cmap=CMAP)
-_ = ax[0,2].set_xlabel('(c) Guassian Filtered Image', fontsize=10)
-
-_ = ax[0,3].imshow(nx, cmap=CMAP)
-_ = ax[0,3].set_xlabel('(d) Noise', fontsize=10)
-
-# Show histograms
-_ = ax[1,0].plot(fx_hist)
-_ = ax[1,0].set_xlabel("(e) Original Image Histogram", fontsize=10)
-
-_ = ax[1,1].plot(gx_hist)
-_ = ax[1,1].set_xlabel("(f) Corrupted Image Histogram", fontsize=10)
-
-_ = ax[1,2].plot(fx2_hist)
-_ = ax[1,2].set_xlabel("(g) Gaussian Filtered Histogram ", fontsize=10)
-
-_ = ax[1,3].plot(nx_hist)
-_ = ax[1,3].set_xlabel("(g) Noise Histogram ", fontsize=10)
-
-plt.tight_layout()
-glue("median_filter_performance", fig)
-```
-
-```{glue:figure}
----
-align: center
-name: median_filter_performance_fig
----
-Median Filter Perfomrance
-```
-
-###### Median Filter Examples
+In {numref}`median_gaussian_characteristics_fig`, we have the results of a 3x3 median filter on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
-# Obtain the source image
-orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
-
-# Add random Gaussian noise with zero mean and variance of 0.1
-img_gaussian = random_noise(orig, mode='s&p', amount=0.3)
-img_gaussian = convert_uint8(img_gaussian)
-
-# Create images with varying kernel sizes.
-img_1 = cv2.medianBlur(img_gaussian, 3)
-img_2 = cv2.medianBlur(img_gaussian, 5)
-img_3 = cv2.medianBlur(img_gaussian, 9)
-
-# Create Figure object
-fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,6), dpi=200)
-
-# Show images
-_ = ax[0,0].imshow(img_gaussian, cmap=CMAP)
-_ = ax[0,0].set_xlabel('(a) Original Image', fontsize=10)
-_ = ax[0,0].set_xticks([])
-_ = ax[0,0].set_yticks([])
-
-_ = ax[0,1].imshow(img_1, cmap=CMAP)
-_ = ax[0,1].set_xlabel('(b) Gaussian Filtered Image with 3x3 kernel', fontsize=10)
-_ = ax[0,1].set_xticks([])
-_ = ax[0,1].set_yticks([])
-
-_ = ax[1,0].imshow(img_2, cmap=CMAP)
-_ = ax[1,0].set_xlabel('(c) Gaussian Filtered Image with 5x5 kernel', fontsize=10)
-_ = ax[1,0].set_xticks([])
-_ = ax[1,0].set_yticks([])
-
-_ = ax[1,1].imshow(img_3, cmap=CMAP)
-_ = ax[1,1].set_xlabel('(d) GaussianFiltered Image with 9x9 kernel', fontsize=10)
-_ = ax[1,1].set_xticks([])
-_ = ax[1,1].set_yticks([])
-
-plt.tight_layout()
-glue("median_filter_examples", fig)
+analyzer = MedianFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("median_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} median_gaussian_characteristics
 ---
 align: center
-name: median_filter_examples_fig
+name: median_gaussian_characteristics_fig
 ---
-Median Filter Examples with Varying Kernel Sizes
+Median Filter Performance Characteristics with Gaussian Noise
 ```
+
+{numref}`median_gaussian_characteristics_fig` (c) shows the result of applying a median filter to an image corrupted by Gaussian noise. The noise is effectively, removed while preserving much of the fine detail. Note the shape of the histogram in `median_gaussian_characteristics_fig` (g) more closely resembles that of the original image than the histograms of the linear filters.
+
+Where the median filter is quite distinguished is with noise that produces extreme changes in pixel intensity. In {numref}`median_snp_characteristics_fig`, we apply the median filter to an image corrupted by 'salt and pepper' noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = MedianFilterAnalyzer()
+analyzer.add_snp_noise(amount=0.4)
+fig = analyzer.analyze()
+glue("median_snp_characteristics", fig)
+```
+
+```{glue:figure} median_snp_characteristics
+---
+align: center
+name: median_snp_characteristics_fig
+---
+Median Filter Performance Characteristics with Salt and Pepper Noise
+```
+
+Again, the noise is largely eliminated with little blurring effect.
+
+{numref}`median_snp_analysis_fig` displays the effect of varying median filter kernels on salt and pepper noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = MedianFilterAnalyzer()
+analyzer.add_snp_noise(amount=0.4)
+fig = analyzer.compare()
+glue("median_snp_analysis", fig)
+```
+
+```{glue:figure} median_snp_analysis
+---
+align: center
+name: median_snp_analysis_fig
+---
+Median Filter Performance Analysis with Salt and Pepper Noise
+```
+
+The performance of the median filter is a characteristic of two properties:
+
+1. The median is a more robust estimate of centrality than the mean. It is less affected by outliers.
+2. Since the a pixel's output is an actual pixel value from its neighborhood, the median filter doesn't create unrealistic pixel values when the kernel straddles a line or edge.
+
+As such, the median filter is much better at preserving sharp edges than the Mean or Gaussian filters.
+
+The median filter preserves high spatial frequency detail and performs best when noise is characterized by relatively few extreme changes in pixel intensity. However, when noise (such as Gaussian noise) effects the majority of pixels in the neighborhood, the median filter can be subjectively less effective than the Mean or Gaussian filters.
+
+##### Bilateral Filter
+
+Introduced in 1995 by Volker Aurich et. al. {cite}`aurichNonLinearGaussianFilters1995`, the bilateral filter is a non-linear technique that can smooth an image while preserving strong edges. It has become a standard denoising tool in interactive applications such as Adobe Photoshop$\circledR$.
+
+The bilateral filter is a weighted average of nearby pixels, similar to the Gaussian filter. The difference is that the bilateral filter considers the difference between a pixel value and that of its neighbors. The main idea is that a pixel is influenced by pixels that are not only nearby, but also have a similar intensity. The formulation is given by:
+
+```{math}
+:label: bilateral
+BF[I] = \frac{1}{W_p}\displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|)I_q,
+```
+
+where the normalization factor $W_p$ ensures the pixel weights sum to 1.0:
+
+```{math}
+:label: bilateral_normalizer
+W_p = \displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|).
+```
+
+where:
+
+- $I_p$ is the intensity value of center pixel $p$,
+- $I-q$ is the intensity value of neighboring pixel $q$,
+- $G_{\sigma_s}$ is a spatial Gaussian weighting that decreases the influence of distant pixels, and
+- $G_{\sigma_r}$ is a range Gaussian weighting that decreases the influence of pixels $q$ with intensity values that differ from $I_p$.
+
+The spatial, or domain parameter, $\sigma_s$, is related to the scale of the pixel values and is found experimentally. The range parameter, $\sigma_r$, can be adapted from the noise level {cite}`celiuNoiseEstimationSingle2006`. As $\sigma_r$ increases, the bilateral filter gradually approximates the Gaussian filter. Best results have been achieved with  $\sigma_r = 1.95 \sigma_n$, where $\sigma_n$ is the local noise level.
+
+In {numref}`bilateral_gaussian_characteristics_fig`, a bilateral filter with $\sigma_r=75$, and $\sigma_s=75$ is applied to an image degraded with Gaussian noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = BilateralFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("bilateral_gaussian_characteristics", fig)
+```
+
+```{glue:figure} bilateral_gaussian_characteristics
+---
+align: center
+name: bilateral_gaussian_characteristics_fig
+---
+Bilateral Filter Performance Characteristics with Gaussian Noise
+```
+
+
+A consequence of the way the bilateral filter considers the range of intensity values is suboptimal performance with salt and pepper noise. The noise may be sparse, but the affected pixels' intensity values may span the entire range (e.g., 0-255 for 8-bit images). The values may be too different from their neighbors to influence a pixel. Often, these images are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
