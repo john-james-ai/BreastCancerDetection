@@ -401,7 +401,6 @@ name: mean_quant_analysis_fig
 Mean Filter Performance Analysis with Quantization Noise
 ```
 
-
 ###### Mean Filter - Speckle Noise
 
 {numref}`mean_speckle_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with speckle noise.
@@ -527,3 +526,216 @@ name: mean_poisson_analysis_fig
 ---
 Mean Filter Performance Analysis with Poisson Noise
 ```
+
+##### Gaussian Filter
+
+###### Gaussian Filter - Gaussian Noise
+
+{numref}`gaussian_gaussian_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_gaussian_noise()
+fig = analyzer.analyze()
+glue("gaussian_gaussian_characteristics", fig)
+```
+
+```{glue:figure} gaussian_gaussian_characteristics
+---
+align: center
+name: gaussian_gaussian_characteristics_fig
+---
+Gaussian Filter Performance Characteristics with Gaussian Noise
+```
+
+As shown in {numref}`gaussian_gaussian_characteristics_fig`, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.
+
+Let's examine the effects of various kernel sizes on performance.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_gaussian_noise()
+fig = analyzer.compare()
+glue("gaussian_gaussian_analysis", fig)
+```
+
+```{glue:figure} gaussian_gaussian_analysis
+---
+align: center
+name: gaussian_gaussian_analysis_fig
+---
+Gaussian Filter Performance Analysis with Gaussian Noise
+```
+
+###### Gaussian Filter - Quantization Noise
+
+{numref}`gaussian_quant_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with quantization noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_quantize_noise()
+fig = analyzer.analyze()
+glue("gaussian_quant_characteristics", fig)
+```
+
+```{glue:figure} gaussian_quant_characteristics
+---
+align: center
+name: gaussian_quant_characteristics_fig
+---
+Gaussian Filter Performance Characteristics is with Quantization Noise
+```
+
+Let's examine the effects of various kernel sizes on performance.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_quantize_noise()
+fig = analyzer.compare()
+glue("gaussian_quant_analysis", fig)
+```
+
+```{glue:figure} gaussian_quant_analysis
+---
+align: center
+name: gaussian_quant_analysis_fig
+---
+Gaussian Filter Performance Analysis with Quantization Noise
+```
+
+###### Gaussian Filter - Speckle Noise
+
+{numref}`gaussian_speckle_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with speckle noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_speckle_noise()
+fig = analyzer.analyze()
+glue("gaussian_speckle_characteristics", fig)
+```
+
+```{glue:figure} gaussian_speckle_characteristics
+---
+align: center
+name: gaussian_speckle_characteristics_fig
+---
+Gaussian Filter Performance Characteristics with Speckle Noise
+```
+
+---
+
+Let's examine the effects of various kernel sizes on performance.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_speckle_noise()
+fig = analyzer.compare()
+glue("gaussian_speckle_analysis", fig)
+```
+
+```{glue:figure} gaussian_speckle_analysis
+---
+align: center
+name: gaussian_speckle_analysis_fig
+---
+Gaussian Filter Performance Analysis with Speckle Noise
+```
+
+###### Gaussian Filter - Salt & Pepper Noise
+
+{numref}`gaussian_snp_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with salt and pepper noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_snp_noise()
+fig = analyzer.analyze()
+glue("gaussian_snp_characteristics", fig)
+```
+
+```{glue:figure} gaussian_snp_characteristics
+---
+align: center
+name: gaussian_snp_characteristics_fig
+---
+Gaussian Filter Performance Characteristics with Salt & Pepper Noise
+```
+
+---
+
+Let's examine the effects of various kernel sizes on performance.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_snp_noise()
+fig = analyzer.compare()
+glue("gaussian_snp_analysis", fig)
+```
+
+```{glue:figure} gaussian_snp_analysis
+---
+align: center
+name: gaussian_snp_analysis_fig
+---
+Gaussian Filter Performance Analysis with Salt & Pepper Noise
+```
+
+###### Gaussian Filter - Poisson Noise
+
+{numref}`gaussian_poisson_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Poisson noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_poisson_noise()
+fig = analyzer.analyze()
+glue("gaussian_poisson_characteristics", fig)
+```
+
+```{glue:figure} gaussian_poisson_characteristics
+---
+align: center
+name: gaussian_poisson_characteristics_fig
+---
+Gaussian Filter Performance Characteristics with Poisson Noise
+```
+
+---
+
+Let's examine the effects of various kernel sizes on performance.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = GaussianFilterAnalyzer()
+analyzer.add_poisson_noise()
+fig = analyzer.compare()
+glue("gaussian_poisson_analysis", fig)
+```
+
+```{glue:figure} gaussian_poisson_analysis
+---
+align: center
+name: gaussian_poisson_analysis_fig
+---
+Gaussian Filter Performance Analysis with Poisson Noise
+```
+
+
+
