@@ -474,22 +474,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-filtering">2.3.1. Spatial Domain Filtering</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-filters">Linear Filters</a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-performance">Mean Filter Performance</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-examples">Mean Filter Examples</a></li>
-</ul>
-</li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-performance">Gaussian Filter Performance</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-examples">Gaussian Filter Examples</a></li>
-</ul>
-</li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#wiener-filter">Wiener Filter</a></li>
-</ul>
-</li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linear-filters">Non-Linear Filters</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter-performance">Median Filter Performance</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter-examples">Median Filter Examples</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-gaussian-noise">Mean Filter - Gaussian Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-quantization-noise">Mean Filter - Quantization Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-speckle-noise">Mean Filter - Speckle Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-salt-pepper-noise">Mean Filter - Salt &amp; Pepper Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-poisson-noise">Mean Filter - Poisson Noise</a></li>
 </ul>
 </li>
 </ul>
@@ -527,7 +516,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
 
-<span class="kn">from</span> <span class="nn">bcd.utils.image</span> <span class="kn">import</span> <span class="n">convert_uint8</span>
+<span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyzer</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span>
 </pre></div>
 </div>
 </div>
@@ -659,37 +648,19 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-gaussian-pdf">
 <span class="eqno">(2.7)<a class="headerlink" href="#equation-gaussian-pdf" title="Permalink to this equation">#</a></span>\[P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean gray value, and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation.</p>
-<figure class="align-default" id="mammogram-gaussian">
-<img alt="../../_images/mammogram_gaussian.png" src="../../_images/mammogram_gaussian.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Mammogram Gaussian Noise</span><a class="headerlink" href="#mammogram-gaussian" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>In <a class="reference internal" href="#mammogram-gaussian"><span class="std std-numref">Fig. 2.1</span></a> (b) we see the effect of a small amount of noise (<span class="math notranslate nohighlight">\(\sigma^2\)</span> = 0.01). In <a class="reference internal" href="#mammogram-gaussian"><span class="std std-numref">Fig. 2.1</span></a> (c), the noise has been increased by a factor of 10 (<span class="math notranslate nohighlight">\(\sigma^2 = 0.1\)</span>). Notice the overall ‘fuzziness’. Increasing the noise by another factor of ten (<a class="reference internal" href="#mammogram-gaussian"><span class="std std-numref">Fig. 2.1</span></a> (d)), the noise is much more objectionable.</p>
+<p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">mammogram_gaussian</span></code> (b) we see the effect of a small amount of noise (<span class="math notranslate nohighlight">\(\sigma^2\)</span> = 0.01). In <code class="xref std std-numref docutils literal notranslate"><span class="pre">mammogram_gaussian</span></code> (c), the noise has been increased by a factor of 10 (<span class="math notranslate nohighlight">\(\sigma^2 = 0.1\)</span>). Notice the overall ‘fuzziness’. Increasing the noise by another factor of ten (<code class="xref std std-numref docutils literal notranslate"><span class="pre">mammogram_gaussian</span></code> (d)), the noise is much more objectionable.</p>
 </section>
 <section id="quantization-noise">
 <h3><span class="section-number">2.2.2. </span>Quantization Noise<a class="headerlink" href="#quantization-noise" title="Permalink to this heading">#</a></h3>
 <p>Quantization noise arises out of the process of converting a continuous analog image to a discrete digital representation. This Analog to Digital Conversion (ADC) consists of two steps: sampling and quantization. Sampling is the process of digitizing the coordinate values, <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(y\)</span>. It defines the spatial resolution or number of pixels of the digitized image. Quantization is the process of digitizing the amplitude or intensity values. This process defines the number of gray levels that each pixel can take.</p>
 <p>Quantization noise is an unavoidable aspect of ADC. An analog signal is continuous, with (almost) infinite accuracy, while the digital signal’s accuracy depends upon the quantization resolution or number of bits in the ADC. A common assumption is that quantization noise is additive, uniformly distributed, and signal-independent unless the number of quantization levels are small. In which case, the noise is correlated on a pixel-by-pixel basis, and is not uniformly distributed <span id="id3">[<a class="reference internal" href="../99_references.html#id332" title="Alan C. Bovik, editor. Handbook of image and video processing. Academic Press series in communications, networking and multimedia. Academic Press, San Diego, 2000. ISBN 978-0-12-119790-2.">19</a>]</span>.</p>
 <p>Let <span class="math notranslate nohighlight">\(\triangle\)</span> be the step size, then quantization noise, <span class="math notranslate nohighlight">\(q\)</span>, is modeled as being mean-centered and uniform between <span class="math notranslate nohighlight">\(\frac{-\triangle}{2}\)</span> and <span class="math notranslate nohighlight">\(\frac{\triangle}{2}\)</span>. The variance is <span class="math notranslate nohighlight">\(\frac{\triangle^2}{12}\)</span>.</p>
-<figure class="align-default" id="mammogram-quantize">
-<img alt="../../_images/mammogram_quantize.png" src="../../_images/mammogram_quantize.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Mammogram Quantization Noise</span><a class="headerlink" href="#mammogram-quantize" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>The image in <a class="reference internal" href="#mammogram-quantize"><span class="std std-numref">Fig. 2.2</span></a> has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as “scalloped”.</p>
+<p>The image in <code class="xref std std-numref docutils literal notranslate"><span class="pre">mammogram_quantize</span></code> has been quantized to only one bit. Note that fine graduations in intensities are lost. Texturing in the image is lost to large areas of constant gray level. The effect of quantizing to too few bits creates an appearance known as “scalloped”.</p>
 </section>
 <section id="speckle-noise">
 <h3><span class="section-number">2.2.3. </span>Speckle Noise<a class="headerlink" href="#speckle-noise" title="Permalink to this heading">#</a></h3>
 <p>Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.</p>
-<figure class="align-default" id="mammogram-speckle">
-<img alt="../../_images/mammogram_speckle.png" src="../../_images/mammogram_speckle.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.3 </span><span class="caption-text">Mammogram Speckle Noise</span><a class="headerlink" href="#mammogram-speckle" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p><a class="reference internal" href="#mammogram-speckle"><span class="std std-numref">Fig. 2.3</span></a> illustrates several distributions of speckle degradation.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mammogram_speckle</span></code> illustrates several distributions of speckle degradation.</p>
 </section>
 <section id="salt-and-pepper-noise">
 <h3><span class="section-number">2.2.4. </span>Salt and Pepper Noise<a class="headerlink" href="#salt-and-pepper-noise" title="Permalink to this heading">#</a></h3>
@@ -707,13 +678,7 @@ document.write(`
 <span class="eqno">(2.9)<a class="headerlink" href="#equation-snp-salt" title="Permalink to this equation">#</a></span>\[Pr(f=\text{max}) = \frac{\alpha}{2}\]</div>
 <div class="math notranslate nohighlight" id="equation-snp-pepper">
 <span class="eqno">(2.10)<a class="headerlink" href="#equation-snp-pepper" title="Permalink to this equation">#</a></span>\[Pr(f=\text{min}) = \frac{\alpha}{2}\]</div>
-<p>For instance, <a class="reference internal" href="#mammogram-snp"><span class="std std-numref">Fig. 2.4</span></a> shows an 8-bit image with <span class="math notranslate nohighlight">\(\alpha=0.3\)</span>. Approximately 70%  (<span class="math notranslate nohighlight">\(1-\alpha\)</span>) of the image is unaltered, and 30% (<span class="math notranslate nohighlight">\(\alpha\)</span>) of the pixels have been changed to black or white.</p>
-<figure class="align-default" id="mammogram-snp">
-<img alt="../../_images/mammogram_snp.png" src="../../_images/mammogram_snp.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.4 </span><span class="caption-text">Mammogram Salt and Pepper Noise</span><a class="headerlink" href="#mammogram-snp" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<p>For instance, <code class="xref std std-numref docutils literal notranslate"><span class="pre">mammogram_snp</span></code> shows an 8-bit image with <span class="math notranslate nohighlight">\(\alpha=0.3\)</span>. Approximately 70%  (<span class="math notranslate nohighlight">\(1-\alpha\)</span>) of the image is unaltered, and 30% (<span class="math notranslate nohighlight">\(\alpha\)</span>) of the pixels have been changed to black or white.</p>
 </section>
 <section id="poisson-noise">
 <h3><span class="section-number">2.2.5. </span>Poisson Noise<a class="headerlink" href="#poisson-noise" title="Permalink to this heading">#</a></h3>
@@ -722,13 +687,7 @@ document.write(`
 <span class="eqno">(2.11)<a class="headerlink" href="#equation-poisson-pdf" title="Permalink to this equation">#</a></span>\[Pr(N=k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is the expected number of photons per unit time interval. The uncertainty described by this distribution is known as photon noise or Poisson noise.</p>
 <p>Since the photon count follows a Poisson distribution, it has the property that the variance, <span class="math notranslate nohighlight">\(Var[N]\)</span> is equal to the expectation, <span class="math notranslate nohighlight">\(E[N]\)</span>. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.</p>
-<figure class="align-default" id="mammogram-poisson">
-<img alt="../../_images/mammogram_poisson.png" src="../../_images/mammogram_poisson.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.5 </span><span class="caption-text">Mammogram Poisson Noise</span><a class="headerlink" href="#mammogram-poisson" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>The image in <a class="reference internal" href="#mammogram-poisson"><span class="std std-numref">Fig. 2.5</span></a> shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.</p>
+<p>The image in <code class="xref std std-numref docutils literal notranslate"><span class="pre">mammogram_poisson</span></code> shows the effect of poisson noise. Careful examination reveals that white areas are slightly more noisy than the dark areas.</p>
 </section>
 </section>
 <section id="denoiser-methods">
@@ -756,25 +715,15 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <section id="mean-filter">
 <h5>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h5>
 <p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. It’s based on the idea that random noise consists of “sharp” transitions in the intensity of the signal. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. By doing so, the “sharp” transitions in the intensities are reduced.</p>
-<p>The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  <a class="reference internal" href="#kernel"><span class="std std-numref">Fig. 2.6</span></a> illustrates a 3 x 3 kernel.</p>
-<figure class="align-default" id="kernel">
-<img alt="../../_images/kernel.png" src="../../_images/kernel.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.6 </span><span class="caption-text">3 x 3 Mean Filter Kernel</span><a class="headerlink" href="#kernel" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<p>The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  <code class="xref std std-numref docutils literal notranslate"><span class="pre">kernel</span></code> illustrates a 3 x 3 kernel.</p>
 <p>The mean filter works by convolving the kernel over the image as follows. Let w(x,y) represent a set of coordinates in a  m x n rectangular window in the image, centered at point (x,y). The mean filtering process computes the average value of the corrupted image g(x,y) in the area defined by w(x,y). The value of the restored image at any point (x,y) is:</p>
 <div class="math notranslate nohighlight" id="equation-mean-filter">
 <span class="eqno">(2.12)<a class="headerlink" href="#equation-mean-filter" title="Permalink to this equation">#</a></span>\[^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)\]</div>
-<div class="admonition-kernel-coefficients admonition">
-<p class="admonition-title">Kernel Coefficients</p>
-<p>Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  <span class="math notranslate nohighlight">\(\frac{1}{mn}\)</span>, is applied at the end.</p>
-</div>
 <p>The process of convolving with a 3x3 mean filter is as follows:
 <img alt="MeanFilter" src="../../_images/02_mean_filter.gif" /></p>
-<section id="mean-filter-performance">
-<h6>Mean Filter Performance<a class="headerlink" href="#mean-filter-performance" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-filter-figure"><span class="std std-numref">Fig. 2.7</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image.</p>
+<section id="mean-filter-gaussian-noise">
+<h6>Mean Filter - Gaussian Noise<a class="headerlink" href="#mean-filter-gaussian-noise" title="Permalink to this heading">#</a></h6>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_filter_figure</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -782,68 +731,26 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FP_ORIG</span> <span class="o">=</span> <span class="s2">&quot;jbook/figures/mammogram.png&quot;</span>
-<span class="n">CMAP</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
-
-<span class="c1"># Obtain the source image</span>
-<span class="n">orig</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">)</span>
-
-<span class="c1"># Add random Gaussian noise with zero mean and variance of 0.1</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">convert_uint8</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">)</span>
-
-<span class="c1"># Apply the 3x3 mean filter kernel</span>
-<span class="n">img_filtered</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-
-<span class="c1"># Subtract the filtered</span>
-<span class="n">img_noise</span> <span class="o">=</span> <span class="n">img_gaussian</span> <span class="o">-</span> <span class="n">img_filtered</span>
-
-<span class="c1"># Compute histograms</span>
-<span class="n">img_gaussian_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">img_gaussian</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">img_filtered_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">img_filtered</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">img_noise_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">img_noise</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-
-<span class="c1"># Create Figure object</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-<span class="c1"># Show images</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(a) Original Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_filtered</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(b) Mean Filtered Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_noise</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(c) Image Noise&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># Show histograms</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">img_gaussian_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(d) Original Image Histogram&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">img_filtered_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(e) Mean Filtered Image Histogram&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">img_noise_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(f) Image Noise Histogram&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_filter_fig&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_gaussian_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-filter-figure">
-<img alt="../../_images/68f1c2fca0a01c10517d2988a1941beaaa87a0a18bf4cdfb29447536b49209e7.png" src="../../_images/68f1c2fca0a01c10517d2988a1941beaaa87a0a18bf4cdfb29447536b49209e7.png" />
+<figure class="align-center" id="mean-gaussian-characteristics-fig">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
 <figcaption>
-<p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean filter noise reduction images and histograms.</span><a class="headerlink" href="#mean-filter-figure" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="#mean-filter-figure"><span class="std std-numref">Fig. 2.7</span></a>, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
-</section>
-<section id="mean-filter-examples">
-<h6>Mean Filter Examples<a class="headerlink" href="#mean-filter-examples" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-filters-diff-kernel-sizes-fig"><span class="std std-numref">Fig. 2.8</span></a> illustrates the effects of filters of varying kernel sizes</p>
+<p>As shown in <a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.1</span></a>, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
+<hr class="docutils" />
+<p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -851,78 +758,25 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain the source image</span>
-<span class="n">orig</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">)</span>
-
-<span class="c1"># Add random Gaussian noise with zero mean and variance of 0.1</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">convert_uint8</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">)</span>
-
-<span class="c1"># Create images with varying kernel sizes.</span>
-<span class="n">img_1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">img_2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
-<span class="n">img_3</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
-
-<span class="c1"># Create Figure object</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-<span class="c1"># Show images</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(a) Original Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(b) Mean Filtered Image with 3x3 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(c) Mean Filtered Image with 9x9 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(d) Mean Filtered Image with 15x15 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_filters_diff_kernel_sizes&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_gaussian_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="mean-filters-diff-kernel-sizes-fig">
-<img alt="../../_images/2d2dc0b5897c1f35d6aeba8240e63102662436f99d34804e007fd9b9fbea700d.png" src="../../_images/2d2dc0b5897c1f35d6aeba8240e63102662436f99d34804e007fd9b9fbea700d.png" />
+<figure class="align-center" id="mean-gaussian-analysis-fig">
+<img alt="../../_images/35c04d238a69bc488e7b3178244de723cc8d0b7f7da64cde5cf75a09733131af.png" src="../../_images/35c04d238a69bc488e7b3178244de723cc8d0b7f7da64cde5cf75a09733131af.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean filters with varying kernel sizes.</span><a class="headerlink" href="#mean-filters-diff-kernel-sizes-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Due to its simplicity, and computational efficiency, the mean filter is one of the most widely used spatial domain filters in biomedical imaging. As a low-pass frequency filter, it reduces the spatial intensity derivatives in the image; thereby, reducing the amount of noise corrupting the representation. There are; however, two main challenges with the main filter:</p>
-<ol class="arabic simple">
-<li><p>The mean filter averaging is sensitive to unrepresentative pixel values, which can significantly affect the mean value of all pixels in the neighborhood.</p></li>
-<li><p>Since edges tend to have ‘sharp’ intensity gradients, the mean filter will interpolate new values based on the averages, which has the effect of blurring the edges.</p></li>
-</ol>
-<p>Next, we examine another low-pass, linear filter widely used in image processing, the Gaussian filter.</p>
 </section>
-</section>
-<section id="gaussian-filter">
-<h5>Gaussian Filter<a class="headerlink" href="#gaussian-filter" title="Permalink to this heading">#</a></h5>
-<p>The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window.  Unlike the Mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:</p>
-<div class="math notranslate nohighlight" id="equation-gaussian-filter">
-<span class="eqno">(2.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
-<p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 2.9</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
-<figure class="align-default" id="gaussian-kernel">
-<img alt="../../_images/gaussian_kernel.png" src="../../_images/gaussian_kernel.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9 \times 10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
-<section id="gaussian-filter-performance">
-<h6>Gaussian Filter Performance<a class="headerlink" href="#gaussian-filter-performance" title="Permalink to this heading">#</a></h6>
+<section id="mean-filter-quantization-noise">
+<h6>Mean Filter - Quantization Noise<a class="headerlink" href="#mean-filter-quantization-noise" title="Permalink to this heading">#</a></h6>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_quant_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with quantization noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -930,85 +784,17 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
-<span class="kn">from</span> <span class="nn">skimage.restoration</span> <span class="kn">import</span> <span class="n">wiener</span>
-
-<span class="kn">from</span> <span class="nn">bcd.utils.image</span> <span class="kn">import</span> <span class="n">convert_uint8</span>
-
-
-<span class="n">FP_ORIG</span> <span class="o">=</span> <span class="s2">&quot;jbook/figures/mammogram.png&quot;</span>
-<span class="n">CMAP</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
-
-<span class="c1"># Obtain the source image</span>
-<span class="n">fx</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
-
-<span class="c1"># Add random Gaussian noise with zero mean and variance of 0.1</span>
-<span class="n">gx</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">fx</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">gx</span> <span class="o">=</span> <span class="n">convert_uint8</span><span class="p">(</span><span class="n">gx</span><span class="p">)</span>
-<span class="c1"># gx = gx[:,:]</span>
-
-<span class="c1"># Apply the Gaussian Kernel</span>
-<span class="n">fx2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># Subtract the noise</span>
-<span class="n">nx</span> <span class="o">=</span> <span class="n">gx</span> <span class="o">-</span> <span class="n">fx2</span>
-
-<span class="c1"># Compute histograms</span>
-<span class="n">fx_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">fx</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">gx_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">gx</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">fx2_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">fx2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">nx_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">nx</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-
-<span class="c1"># Create Figure object</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-<span class="c1"># Show images</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fx</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(a) Original Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(b) Corrupted Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fx2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(c) Guassian Filtered Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(d) Noise&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># Show histograms</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fx_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(e) Original Image Histogram&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gx_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(f) Corrupted Image Histogram&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fx2_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(g) Gaussian Filtered Histogram &quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nx_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(g) Noise Histogram &quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_filter_performance&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_quantization_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_quant_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="gaussian-filter-performance-fig">
-<img alt="../../_images/821e665a22019f898ba893ef36443b3c1e730e12156d2318ae755ef180e7ae59.png" src="../../_images/821e665a22019f898ba893ef36443b3c1e730e12156d2318ae755ef180e7ae59.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-performance-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p><a class="reference internal" href="#gaussian-filter-performance-fig"><span class="std std-numref">Fig. 2.10</span></a> we have an image corrupted by random Gaussian noise with <span class="math notranslate nohighlight">\(\sigma^2=0.1\)</span>. We’ve denoised the image with a 15x15 Gaussian filter. Much of the noise has been attenuated, particularly in the light areas at the expense of some loss of detail. Gaussian filtering is the art of designing a kernel that achieves the right bargain between noise reduction and the blurring effect.</p>
-</section>
-<section id="gaussian-filter-examples">
-<h6>Gaussian Filter Examples<a class="headerlink" href="#gaussian-filter-examples" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#gaussian-filter-examples-fig"><span class="std std-numref">Fig. 2.11</span></a> displays the results of several Gaussian filters of varying kernel sizes.</p>
+<hr class="docutils" />
+<p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1016,94 +802,19 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain the source image</span>
-<span class="n">orig</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
-
-<span class="c1"># Add random Gaussian noise with zero mean and variance of 0.1</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">var</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">convert_uint8</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">)</span>
-
-<span class="c1"># Create images with varying kernel sizes.</span>
-<span class="n">img_1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">img_2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">img_3</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># Create Figure object</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-<span class="c1"># Show images</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(a) Original Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(b) Gaussian Filtered Image with 3x3 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(c) Gaussian Filtered Image with 9x9 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(d) GaussianFiltered Image with 15x15 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_filter_examples&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_quantization_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_quant_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="gaussian-filter-examples-fig">
-<img alt="../../_images/e7b1879524023b17a36cbec9ebd8c1daa0613774158d8b9900e0911ce5ef5a7b.png" src="../../_images/e7b1879524023b17a36cbec9ebd8c1daa0613774158d8b9900e0911ce5ef5a7b.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Gaussian filters with varying kernel sizes.</span><a class="headerlink" href="#gaussian-filter-examples-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>The Gaussian filter has several advantages:</p>
-<ol class="arabic simple">
-<li><p>Easy to implement.</p></li>
-<li><p>Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.</p></li>
-<li><p>Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.</p></li>
-<li><p>Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.</p></li>
-<li><p>Rotationally symmetric, with no directional bias.</p></li>
-</ol>
-<p>Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.</p>
-<p>Gaussian filters do have certain challenges:</p>
-<ol class="arabic simple">
-<li><p>Blurring removes fine detail that may have diagnostic relevance.</p></li>
-<li><p>Not as effective at removing “salt and pepper” noise.</p></li>
-<li><p>Blurred edges can complicate edge detection.</p></li>
-</ol>
-<p>Still, its design, computational efficiency, and flexibility makes the Gaussian filter ubiquitous in image processing.</p>
-<p>The next linear filter takes a statistical approach to reducing blur, and minimizing noise, while retaining image detail.</p>
 </section>
-</section>
-<section id="wiener-filter">
-<h5>Wiener Filter<a class="headerlink" href="#wiener-filter" title="Permalink to this heading">#</a></h5>
-<p>The Wiener filter, introduced in a 1943 classified memo by Norbert Wiener, incorporates statistical characteristics of the signal and noise into the image restoration process.</p>
-<p>The objective of the Wiener filter is to take an input image, and then create an estimate of the true image such that the expected value of the squared difference between the estimate and the true image, is minimized.</p>
-<p>The Wiener filter asserts the principle of orthogonality, which loosely states that the difference between the estimate and the input image, is uncorrelated with the input image. This means that the estimate is the projection of the input image onto the subspace spanned by the original image that minimizes the expected value of the error. From this, the filter computes a function that optimizes the trade-off between noise reduction, and signal distortion, by optimally attenuating the frequencies where the noise is dominant and preserving the frequencies where the signal is dominant.</p>
-<p>The Wiener filter has some nice properties. Since it is optimal in the mean-squared error sense, it can produce high-quality images where noise is minimized and fine detail is retained. Another advantage is that it adapts to changing characteristics of the signal and the noise, making it suitable for speech, image restoration, and other applications whereby the noise is unknown or varies in time and space.</p>
-<p>However, certain disadvantages limit its applicability and performance. For instance, the Wiener filter requires a priori knowledge of the degradation function and the power spectra for noise and signal, which may be difficult or impractical to obtain. Another disadvantage is that the Wiener filter can introduce artifacts, such as blurring and ringing due to smoothing in the frequency domain.
-Next, up? Non-linear filters.</p>
-</section>
-</section>
-<section id="non-linear-filters">
-<h4>Non-Linear Filters<a class="headerlink" href="#non-linear-filters" title="Permalink to this heading">#</a></h4>
-<p>In the previous section, we examined filters in which the output was a linear combination of the input. For additive, independent noise, or that which follows a simple statistical pattern, linear filters will reduce noise to the extent that signal and noise can be separated in the frequency domain.  For multiplicative, noise (speckle) or signals with non-linear features (edges, lines) that must be preserved, non-linear methods will be needed.</p>
-<p>Now, we explore four non-linear techniques widely used in biomedical imaging: median filter, adaptive median filter, non-local means filter, and bilateral filter.</p>
-<p>In the next sections, we’ll describe each of these methods, exhibit their performance, assess their advantages and disadvantages, and highlight the differences among them.</p>
-<section id="median-filter">
-<h5>Median Filter<a class="headerlink" href="#median-filter" title="Permalink to this heading">#</a></h5>
-<p>The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.</p>
-<section id="median-filter-performance">
-<h6>Median Filter Performance<a class="headerlink" href="#median-filter-performance" title="Permalink to this heading">#</a></h6>
+<section id="mean-filter-speckle-noise">
+<h6>Mean Filter - Speckle Noise<a class="headerlink" href="#mean-filter-speckle-noise" title="Permalink to this heading">#</a></h6>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_speckle_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with speckle noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1111,82 +822,17 @@ Next, up? Non-linear filters.</p>
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
-<span class="kn">from</span> <span class="nn">skimage.restoration</span> <span class="kn">import</span> <span class="n">wiener</span>
-
-<span class="kn">from</span> <span class="nn">bcd.utils.image</span> <span class="kn">import</span> <span class="n">convert_uint8</span>
-
-<span class="n">FP_ORIG</span> <span class="o">=</span> <span class="s2">&quot;jbook/figures/mammogram.png&quot;</span>
-<span class="n">CMAP</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
-
-<span class="c1"># Obtain the source image</span>
-<span class="n">fx</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
-
-<span class="c1"># Add random salt and pepper noise</span>
-<span class="n">gx</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">fx</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;s&amp;p&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">0.30</span><span class="p">)</span>
-<span class="n">gx</span> <span class="o">=</span> <span class="n">convert_uint8</span><span class="p">(</span><span class="n">gx</span><span class="p">)</span>
-<span class="c1"># gx = gx[:,:]</span>
-
-<span class="c1"># Apply Median Filter</span>
-<span class="n">fx2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="c1"># Subtract the noise</span>
-<span class="n">nx</span> <span class="o">=</span> <span class="n">gx</span> <span class="o">-</span> <span class="n">fx2</span>
-
-<span class="c1"># Compute histograms</span>
-<span class="n">fx_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">fx</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">gx_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">gx</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">fx2_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">fx2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-<span class="n">nx_hist</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">calcHist</span><span class="p">([</span><span class="n">nx</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">256</span><span class="p">])</span>
-
-<span class="c1"># Create Figure object</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-<span class="c1"># Show images</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fx</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(a) Original Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(b) Corrupted Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">fx2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(c) Guassian Filtered Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(d) Noise&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># Show histograms</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fx_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(e) Original Image Histogram&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gx_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(f) Corrupted Image Histogram&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fx2_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(g) Gaussian Filtered Histogram &quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nx_hist</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(g) Noise Histogram &quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;median_filter_performance&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_speckle_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_speckle_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="median-filter-performance-fig">
-<img alt="../../_images/7d081cb6d228f8b67bed95e5783879fbc9ee81d710a318ca061e606b6da2401e.png" src="../../_images/7d081cb6d228f8b67bed95e5783879fbc9ee81d710a318ca061e606b6da2401e.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.12 </span><span class="caption-text">Median Filter Perfomrance</span><a class="headerlink" href="#median-filter-performance-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="median-filter-examples">
-<h6>Median Filter Examples<a class="headerlink" href="#median-filter-examples" title="Permalink to this heading">#</a></h6>
+<hr class="docutils" />
+<p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1194,55 +840,91 @@ Next, up? Non-linear filters.</p>
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Obtain the source image</span>
-<span class="n">orig</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_ORIG</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
-
-<span class="c1"># Add random Gaussian noise with zero mean and variance of 0.1</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">orig</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;s&amp;p&#39;</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-<span class="n">img_gaussian</span> <span class="o">=</span> <span class="n">convert_uint8</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">)</span>
-
-<span class="c1"># Create images with varying kernel sizes.</span>
-<span class="n">img_1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">img_2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">img_3</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
-
-<span class="c1"># Create Figure object</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-<span class="c1"># Show images</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_gaussian</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(a) Original Image&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(b) Gaussian Filtered Image with 3x3 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(c) Gaussian Filtered Image with 5x5 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CMAP</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(d) GaussianFiltered Image with 9x9 kernel&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;median_filter_examples&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_speckle_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_speckle_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="median-filter-examples-fig">
-<img alt="../../_images/e9bfeb59d201e004d61c352da0a835078e974dfc35eb77a58d45dbc0868b6fd4.png" src="../../_images/e9bfeb59d201e004d61c352da0a835078e974dfc35eb77a58d45dbc0868b6fd4.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.13 </span><span class="caption-text">Median Filter Examples with Varying Kernel Sizes</span><a class="headerlink" href="#median-filter-examples-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+</section>
+<section id="mean-filter-salt-pepper-noise">
+<h6>Mean Filter - Salt &amp; Pepper Noise<a class="headerlink" href="#mean-filter-salt-pepper-noise" title="Permalink to this heading">#</a></h6>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_snp_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with salt and pepper noise.</p>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_snp_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_snp_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<hr class="docutils" />
+<p>Let’s examine the effects of various kernel sizes on performance.</p>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_snp_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_snp_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="mean-filter-poisson-noise">
+<h6>Mean Filter - Poisson Noise<a class="headerlink" href="#mean-filter-poisson-noise" title="Permalink to this heading">#</a></h6>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_poisson_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Poisson noise.</p>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_poisson_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_poisson_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<hr class="docutils" />
+<p>Let’s examine the effects of various kernel sizes on performance.</p>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_poisson_noise</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_poisson_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 </section>
 </section>
 </section>
@@ -1335,22 +1017,11 @@ Next, up? Non-linear filters.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-filtering">2.3.1. Spatial Domain Filtering</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-filters">Linear Filters</a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-performance">Mean Filter Performance</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-examples">Mean Filter Examples</a></li>
-</ul>
-</li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-performance">Gaussian Filter Performance</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-examples">Gaussian Filter Examples</a></li>
-</ul>
-</li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#wiener-filter">Wiener Filter</a></li>
-</ul>
-</li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linear-filters">Non-Linear Filters</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter-performance">Median Filter Performance</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter-examples">Median Filter Examples</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-gaussian-noise">Mean Filter - Gaussian Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-quantization-noise">Mean Filter - Quantization Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-speckle-noise">Mean Filter - Speckle Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-salt-pepper-noise">Mean Filter - Salt &amp; Pepper Noise</a></li>
+<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-poisson-noise">Mean Filter - Poisson Noise</a></li>
 </ul>
 </li>
 </ul>
