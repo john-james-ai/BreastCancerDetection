@@ -384,8 +384,6 @@ name: mean_quant_characteristics_fig
 Mean Filter Performance Analysis with Quantization Noise
 ```
 
----
-
 Let's examine the effects of various kernel sizes on performance.
 
 ```{code-cell}
