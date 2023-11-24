@@ -319,8 +319,6 @@ Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is com
 The process of convolving with a 3x3 mean filter is as follows:
 ![MeanFilter](../../figures/gif/02_mean_filter.gif)
 
-###### Mean Filter - Gaussian Noise
-
 {numref}`mean_gaussian_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
@@ -361,175 +359,34 @@ name: mean_gaussian_analysis_fig
 Mean Filter Performance Analysis with Gaussian Noise
 ```
 
-###### Mean Filter - Quantization Noise
+{numref}`mean_gaussian_analysis_fig` shows the effect of increasing kernel sizes on images corrupted by Gaussian noise. A blurring effect, and loss of detail is increasingly evident with larger kernel sizes.
 
-{numref}`mean_quant_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with quantization noise.
+Due to its simplicity, and computational efficiency, the mean filter is one of the most widely used spatial domain filters in biomedical imaging. As a low-pass frequency filter, it reduces the spatial intensity derivatives in the image; thereby, reducing the amount of noise corrupting the representation. There are; however, two main challenges with the main filter:
 
-```{code-cell}
-:tags: [hide-cell, remove-output]
+1. The mean filter averaging is sensitive to unrepresentative pixel values, which can significantly affect the mean value of all pixels in the neighborhood.
+2. Since edges tend to have 'sharp' intensity gradients, the mean filter will interpolate new values based on the averages, which has the effect of blurring the edges.
 
-analyzer = MeanFilterAnalyzer()
-analyzer.add_quantize_noise()
-fig = analyzer.analyze()
-glue("mean_quant_characteristics", fig)
-```
-
-```{glue:figure} mean_quant_characteristics
----
-align: center
-name: mean_quant_characteristics_fig
----
-Mean Filter Performance Characteristics is with Quantization Noise
-```
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_quantize_noise()
-fig = analyzer.compare()
-glue("mean_quant_analysis", fig)
-```
-
-```{glue:figure} mean_quant_analysis
----
-align: center
-name: mean_quant_analysis_fig
----
-Mean Filter Performance Analysis with Quantization Noise
-```
-
-###### Mean Filter - Speckle Noise
-
-{numref}`mean_speckle_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with speckle noise.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_speckle_noise()
-fig = analyzer.analyze()
-glue("mean_speckle_characteristics", fig)
-```
-
-```{glue:figure} mean_speckle_characteristics
----
-align: center
-name: mean_speckle_characteristics_fig
----
-Mean Filter Performance Characteristics with Speckle Noise
-```
-
----
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_speckle_noise()
-fig = analyzer.compare()
-glue("mean_speckle_analysis", fig)
-```
-
-```{glue:figure} mean_speckle_analysis
----
-align: center
-name: mean_speckle_analysis_fig
----
-Mean Filter Performance Analysis with Speckle Noise
-```
-
-###### Mean Filter - Salt & Pepper Noise
-
-{numref}`mean_snp_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with salt and pepper noise.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_snp_noise()
-fig = analyzer.analyze()
-glue("mean_snp_characteristics", fig)
-```
-
-```{glue:figure} mean_snp_characteristics
----
-align: center
-name: mean_snp_characteristics_fig
----
-Mean Filter Performance Characteristics with Salt & Pepper Noise
-```
-
----
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_snp_noise()
-fig = analyzer.compare()
-glue("mean_snp_analysis", fig)
-```
-
-```{glue:figure} mean_snp_analysis
----
-align: center
-name: mean_snp_analysis_fig
----
-Mean Filter Performance Analysis with Salt & Pepper Noise
-```
-
-###### Mean Filter - Poisson Noise
-
-{numref}`mean_poisson_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Poisson noise.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_poisson_noise()
-fig = analyzer.analyze()
-glue("mean_poisson_characteristics", fig)
-```
-
-```{glue:figure} mean_poisson_characteristics
----
-align: center
-name: mean_poisson_characteristics_fig
----
-Mean Filter Performance Characteristics with Poisson Noise
-```
-
----
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_poisson_noise()
-fig = analyzer.compare()
-glue("mean_poisson_analysis", fig)
-```
-
-```{glue:figure} mean_poisson_analysis
----
-align: center
-name: mean_poisson_analysis_fig
----
-Mean Filter Performance Analysis with Poisson Noise
-```
+Next, we examine another low-pass, linear filter widely used in image processing, the Gaussian filter.
 
 ##### Gaussian Filter
 
-###### Gaussian Filter - Gaussian Noise
+The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the Mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:
+
+```{math}
+:label: gaussian_filter
+G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
+```
+
+{numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
+
+```{figure}
+---
+name: gaussian_kernel
+---
+5 x 5 Gaussian Kernel
+```
+
+Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from $-\infty$ to $+\infty$. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, $5\sigma$ are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from $5\sigma$ to $\infty$ is about $2.9 \times 10^{-7}$.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.
 
 {numref}`gaussian_gaussian_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.
 
@@ -571,171 +428,68 @@ name: gaussian_gaussian_analysis_fig
 Gaussian Filter Performance Analysis with Gaussian Noise
 ```
 
-###### Gaussian Filter - Quantization Noise
+Close examination shows some loss of detail, but not to the extent observed using the Mean filter.
 
-{numref}`gaussian_quant_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with quantization noise.
+The Gaussian filter has several advantages:
+
+1. Easy to implement.
+2. Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.
+3. Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.
+4. Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.
+5. Rotationally symmetric, with no directional bias.
+
+Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.
+
+Gaussian filters do have certain challenges:
+
+1. Blurring removes fine detail that may have diagnostic relevance.
+2. Not as effective at removing "salt and pepper" noise.
+3. Blurred edges can complicate edge detection.
+
+Still, its design, computational efficiency, and flexibility makes the Gaussian filter ubiquitous in image processing.
+
+The next linear filter takes a statistical approach to reducing blur, and minimizing noise, while retaining image detail.
+
+##### Wiener Filter
+
+The Wiener filter, introduced in a 1943 classified memo by Norbert Wiener, incorporates statistical characteristics of the signal and noise into the image restoration process.
+
+The objective of the Wiener filter is to take an input image, and then create an estimate of the true image such that the expected value of the squared difference between the estimate and the true image, is minimized.
+
+The Wiener filter asserts the principle of orthogonality, which loosely states that the difference between the estimate and the input image, is uncorrelated with the input image. This means that the estimate is the projection of the input image onto the subspace spanned by the original image that minimizes the expected value of the error. From this, the filter computes a function that optimizes the trade-off between noise reduction, and signal distortion, by optimally attenuating the frequencies where the noise is dominant and preserving the frequencies where the signal is dominant.
+
+The Wiener filter has some nice properties. Since it is optimal in the mean-squared error sense, it can produce high-quality images where noise is minimized and fine detail is retained. Another advantage is that it adapts to changing characteristics of the signal and the noise, making it suitable for speech, image restoration, and other applications whereby the noise is unknown or varies in time and space.
+
+However, certain disadvantages limit its applicability and performance. For instance, the Wiener filter requires a priori knowledge of the degradation function and the power spectra for noise and signal, which may be difficult or impractical to obtain. Another disadvantage is that the Wiener filter can introduce artifacts, such as blurring and ringing due to smoothing in the frequency domain.
+Next, up? Non-linear filters.
+
+#### Non-Linear Filters
+
+In the previous section, we examined filters in which the output was a linear combination of the input. For additive, independent noise, or that which follows a simple statistical pattern, linear filters will reduce noise to the extent that signal and noise can be separated in the frequency domain.  For multiplicative, noise (speckle) or signals with non-linear features (edges, lines) that must be preserved, non-linear methods will be needed.
+
+Now, we explore four non-linear techniques widely used in biomedical imaging: median filter, adaptive median filter, non-local means filter, and bilateral filter.
+
+In the next sections, we’ll describe each of these methods, exhibit their performance, assess their advantages and disadvantages, and highlight the differences among them.
+
+##### Median Filter
+
+The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.
+
+In {numref}`median_gaussian_characteristics_fig`, we haev the results of a 3x3 Median filter on a mammogram image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_quantize_noise()
+analyzer = MedianFilterAnalyzer()
+analyzer.add_gaussian_noise()
 fig = analyzer.analyze()
-glue("gaussian_quant_characteristics", fig)
+glue("median_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} gaussian_quant_characteristics
+```{glue:figure} median_gaussian_characteristics
 ---
 align: center
-name: gaussian_quant_characteristics_fig
+name: median_gaussian_characteristics_fig
 ---
-Gaussian Filter Performance Characteristics is with Quantization Noise
+Median Filter Performance Characteristics with Gaussian Noise
 ```
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_quantize_noise()
-fig = analyzer.compare()
-glue("gaussian_quant_analysis", fig)
-```
-
-```{glue:figure} gaussian_quant_analysis
----
-align: center
-name: gaussian_quant_analysis_fig
----
-Gaussian Filter Performance Analysis with Quantization Noise
-```
-
-###### Gaussian Filter - Speckle Noise
-
-{numref}`gaussian_speckle_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with speckle noise.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_speckle_noise()
-fig = analyzer.analyze()
-glue("gaussian_speckle_characteristics", fig)
-```
-
-```{glue:figure} gaussian_speckle_characteristics
----
-align: center
-name: gaussian_speckle_characteristics_fig
----
-Gaussian Filter Performance Characteristics with Speckle Noise
-```
-
----
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_speckle_noise()
-fig = analyzer.compare()
-glue("gaussian_speckle_analysis", fig)
-```
-
-```{glue:figure} gaussian_speckle_analysis
----
-align: center
-name: gaussian_speckle_analysis_fig
----
-Gaussian Filter Performance Analysis with Speckle Noise
-```
-
-###### Gaussian Filter - Salt & Pepper Noise
-
-{numref}`gaussian_snp_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with salt and pepper noise.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_snp_noise()
-fig = analyzer.analyze()
-glue("gaussian_snp_characteristics", fig)
-```
-
-```{glue:figure} gaussian_snp_characteristics
----
-align: center
-name: gaussian_snp_characteristics_fig
----
-Gaussian Filter Performance Characteristics with Salt & Pepper Noise
-```
-
----
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_snp_noise()
-fig = analyzer.compare()
-glue("gaussian_snp_analysis", fig)
-```
-
-```{glue:figure} gaussian_snp_analysis
----
-align: center
-name: gaussian_snp_analysis_fig
----
-Gaussian Filter Performance Analysis with Salt & Pepper Noise
-```
-
-###### Gaussian Filter - Poisson Noise
-
-{numref}`gaussian_poisson_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Poisson noise.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_poisson_noise()
-fig = analyzer.analyze()
-glue("gaussian_poisson_characteristics", fig)
-```
-
-```{glue:figure} gaussian_poisson_characteristics
----
-align: center
-name: gaussian_poisson_characteristics_fig
----
-Gaussian Filter Performance Characteristics with Poisson Noise
-```
-
----
-
-Let's examine the effects of various kernel sizes on performance.
-
-```{code-cell}
-:tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_poisson_noise()
-fig = analyzer.compare()
-glue("gaussian_poisson_analysis", fig)
-```
-
-```{glue:figure} gaussian_poisson_analysis
----
-align: center
-name: gaussian_poisson_analysis_fig
----
-Gaussian Filter Performance Analysis with Poisson Noise
-```
-
-
-

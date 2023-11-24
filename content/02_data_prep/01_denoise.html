@@ -473,22 +473,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoiser-methods">2.3. Denoiser Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-filtering">2.3.1. Spatial Domain Filtering</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-filters">Linear Filters</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-gaussian-noise">Mean Filter - Gaussian Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-quantization-noise">Mean Filter - Quantization Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-speckle-noise">Mean Filter - Speckle Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-salt-pepper-noise">Mean Filter - Salt &amp; Pepper Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-poisson-noise">Mean Filter - Poisson Noise</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#wiener-filter">Wiener Filter</a></li>
 </ul>
 </li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-gaussian-noise">Gaussian Filter - Gaussian Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-quantization-noise">Gaussian Filter - Quantization Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-speckle-noise">Gaussian Filter - Speckle Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-salt-pepper-noise">Gaussian Filter - Salt &amp; Pepper Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-poisson-noise">Gaussian Filter - Poisson Noise</a></li>
-</ul>
-</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linear-filters">Non-Linear Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median Filter</a></li>
 </ul>
 </li>
 </ul>
@@ -769,8 +760,6 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </div>
 <p>The process of convolving with a 3x3 mean filter is as follows:
 <img alt="MeanFilter" src="../../_images/02_mean_filter.gif" /></p>
-<section id="mean-filter-gaussian-noise">
-<h6>Mean Filter - Gaussian Noise<a class="headerlink" href="#mean-filter-gaussian-noise" title="Permalink to this heading">#</a></h6>
 <p><a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.7</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -789,7 +778,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-characteristics-fig">
-<img alt="../../_images/0c2b5b5d343bd24d597f815678d39fbd0d64c5d1c5ab32d30d04372f1c84b243.png" src="../../_images/0c2b5b5d343bd24d597f815678d39fbd0d64c5d1c5ab32d30d04372f1c84b243.png" />
+<img alt="../../_images/52b9d62a6023de3fbef785ba890f3e63c04b336de6bf06464e9dec474fb0b653.png" src="../../_images/52b9d62a6023de3fbef785ba890f3e63c04b336de6bf06464e9dec474fb0b653.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -813,217 +802,27 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-analysis-fig">
-<img alt="../../_images/c5ff1ea2832e9e7a0593189abe8cef6dc28e1fe83c53b516a1676e168e573947.png" src="../../_images/c5ff1ea2832e9e7a0593189abe8cef6dc28e1fe83c53b516a1676e168e573947.png" />
+<img alt="../../_images/0bcbce1936b3a2fe80d3ace0dc339fcd4ff0280bc07070722515cec376f07186.png" src="../../_images/0bcbce1936b3a2fe80d3ace0dc339fcd4ff0280bc07070722515cec376f07186.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-</section>
-<section id="mean-filter-quantization-noise">
-<h6>Mean Filter - Quantization Noise<a class="headerlink" href="#mean-filter-quantization-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-quant-characteristics-fig"><span class="std std-numref">Fig. 2.9</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with quantization noise.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_quantize_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_quant_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-quant-characteristics-fig">
-<img alt="../../_images/6ee9f4e0ee4117347b8c750f6bf290730db9c3b477f4675b35fd85bd32f2ad19.png" src="../../_images/6ee9f4e0ee4117347b8c750f6bf290730db9c3b477f4675b35fd85bd32f2ad19.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">Mean Filter Performance Characteristics is with Quantization Noise</span><a class="headerlink" href="#mean-quant-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_quantize_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_quant_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-quant-analysis-fig">
-<img alt="../../_images/767855bdbd2474e81ed75a873f3173cd6b000d3455250dff5a378fd1a76078a9.png" src="../../_images/767855bdbd2474e81ed75a873f3173cd6b000d3455250dff5a378fd1a76078a9.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Mean Filter Performance Analysis with Quantization Noise</span><a class="headerlink" href="#mean-quant-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="mean-filter-speckle-noise">
-<h6>Mean Filter - Speckle Noise<a class="headerlink" href="#mean-filter-speckle-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-speckle-characteristics-fig"><span class="std std-numref">Fig. 2.11</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with speckle noise.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_speckle_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_speckle_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-speckle-characteristics-fig">
-<img alt="../../_images/bc832073cfd4c89515b38cf68c6b0f4c0f5854158fd3f5f75cae8aee77007965.png" src="../../_images/bc832073cfd4c89515b38cf68c6b0f4c0f5854158fd3f5f75cae8aee77007965.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Mean Filter Performance Characteristics with Speckle Noise</span><a class="headerlink" href="#mean-speckle-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<hr class="docutils" />
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_speckle_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_speckle_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-speckle-analysis-fig">
-<img alt="../../_images/7d1066cf3b76a93f34a6481b198a047fcaf3c036762f425e52197922a35f6c51.png" src="../../_images/7d1066cf3b76a93f34a6481b198a047fcaf3c036762f425e52197922a35f6c51.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.12 </span><span class="caption-text">Mean Filter Performance Analysis with Speckle Noise</span><a class="headerlink" href="#mean-speckle-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="mean-filter-salt-pepper-noise">
-<h6>Mean Filter - Salt &amp; Pepper Noise<a class="headerlink" href="#mean-filter-salt-pepper-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-snp-characteristics-fig"><span class="std std-numref">Fig. 2.13</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with salt and pepper noise.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_snp_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_snp_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-snp-characteristics-fig">
-<img alt="../../_images/adfaf8a3603e6e1cdb48761567254472f9dc2683e61937e6e595b508ff3b0a79.png" src="../../_images/adfaf8a3603e6e1cdb48761567254472f9dc2683e61937e6e595b508ff3b0a79.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.13 </span><span class="caption-text">Mean Filter Performance Characteristics with Salt &amp; Pepper Noise</span><a class="headerlink" href="#mean-snp-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<hr class="docutils" />
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_snp_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_snp_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-snp-analysis-fig">
-<img alt="../../_images/19aef668af715aa68c6358950ec64bda6fdaf60a3e3c1a7ca28e2a9bc3dd7f1a.png" src="../../_images/19aef668af715aa68c6358950ec64bda6fdaf60a3e3c1a7ca28e2a9bc3dd7f1a.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.14 </span><span class="caption-text">Mean Filter Performance Analysis with Salt &amp; Pepper Noise</span><a class="headerlink" href="#mean-snp-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="mean-filter-poisson-noise">
-<h6>Mean Filter - Poisson Noise<a class="headerlink" href="#mean-filter-poisson-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#mean-poisson-characteristics-fig"><span class="std std-numref">Fig. 2.15</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Poisson noise.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_poisson_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_poisson_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-poisson-characteristics-fig">
-<img alt="../../_images/8af30a82496b537c98178fec3510a4287178f37eeeb03ecdee5942be18ade346.png" src="../../_images/8af30a82496b537c98178fec3510a4287178f37eeeb03ecdee5942be18ade346.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.15 </span><span class="caption-text">Mean Filter Performance Characteristics with Poisson Noise</span><a class="headerlink" href="#mean-poisson-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<hr class="docutils" />
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MeanFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_poisson_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;mean_poisson_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="mean-poisson-analysis-fig">
-<img alt="../../_images/817231b22fb47820e350f553d3f2bd6029b95710423cd456495da33707537ac3.png" src="../../_images/817231b22fb47820e350f553d3f2bd6029b95710423cd456495da33707537ac3.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.16 </span><span class="caption-text">Mean Filter Performance Analysis with Poisson Noise</span><a class="headerlink" href="#mean-poisson-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
+<p><a class="reference internal" href="#mean-gaussian-analysis-fig"><span class="std std-numref">Fig. 2.8</span></a> shows the effect of increasing kernel sizes on images corrupted by Gaussian noise. A blurring effect, and loss of detail is increasingly evident with larger kernel sizes.</p>
+<p>Due to its simplicity, and computational efficiency, the mean filter is one of the most widely used spatial domain filters in biomedical imaging. As a low-pass frequency filter, it reduces the spatial intensity derivatives in the image; thereby, reducing the amount of noise corrupting the representation. There are; however, two main challenges with the main filter:</p>
+<ol class="arabic simple">
+<li><p>The mean filter averaging is sensitive to unrepresentative pixel values, which can significantly affect the mean value of all pixels in the neighborhood.</p></li>
+<li><p>Since edges tend to have ‘sharp’ intensity gradients, the mean filter will interpolate new values based on the averages, which has the effect of blurring the edges.</p></li>
+</ol>
+<p>Next, we examine another low-pass, linear filter widely used in image processing, the Gaussian filter.</p>
 </section>
 <section id="gaussian-filter">
 <h5>Gaussian Filter<a class="headerlink" href="#gaussian-filter" title="Permalink to this heading">#</a></h5>
-<section id="gaussian-filter-gaussian-noise">
-<h6>Gaussian Filter - Gaussian Noise<a class="headerlink" href="#gaussian-filter-gaussian-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.17</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.</p>
+<p>The Gaussian Filter is similar to the Mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the Mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:</p>
+<div class="math notranslate nohighlight" id="equation-gaussian-filter">
+<span class="eqno">(2.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">gaussian_kernel</span></code> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
+<p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9 \times 10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
+<p><a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.9</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1041,12 +840,12 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-characteristics-fig">
-<img alt="../../_images/621c81106d1d8c8cfd4a90e0bffb67f94368cdf2cc78c549345c98e5ee4e8233.png" src="../../_images/621c81106d1d8c8cfd4a90e0bffb67f94368cdf2cc78c549345c98e5ee4e8233.png" />
+<img alt="../../_images/aaac352edd06a700a9fbd178811a16c45a26dfae47da0f26d9f1cbca5df3c4d2.png" src="../../_images/aaac352edd06a700a9fbd178811a16c45a26dfae47da0f26d9f1cbca5df3c4d2.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.17 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.17</span></a>, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
+<p>As shown in <a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.9</span></a>, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -1065,15 +864,49 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-analysis-fig">
-<img alt="../../_images/ad51d14e216947be4153ae95af4aac17f382a124cad753e396d8de905b7028d7.png" src="../../_images/ad51d14e216947be4153ae95af4aac17f382a124cad753e396d8de905b7028d7.png" />
+<img alt="../../_images/f136b02adf68803b8bd8334faee2863ac52a2c3fbf8d27169b1fa5607a8a1637.png" src="../../_images/f136b02adf68803b8bd8334faee2863ac52a2c3fbf8d27169b1fa5607a8a1637.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.18 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p>Close examination shows some loss of detail, but not to the extent observed using the Mean filter.</p>
+<p>The Gaussian filter has several advantages:</p>
+<ol class="arabic simple">
+<li><p>Easy to implement.</p></li>
+<li><p>Its’ Fourier transform is also a Gaussian distribution, centered around zero frequency. Its low-pass effectiveness can be controlled by adjusting its standard deviation.</p></li>
+<li><p>Coefficients give higher weights to pixels in the centre; thereby, reducing the blurring effect over edges.</p></li>
+<li><p>Computationally efficient. Gaussian kernels are separable; therefore, large filters can be implemented using many small 1D filters.</p></li>
+<li><p>Rotationally symmetric, with no directional bias.</p></li>
+</ol>
+<p>Most fundamentally, the Gaussian filter is based on the Human Visual System (HVS). It has been found that neurons create similar filters when processing visual information.</p>
+<p>Gaussian filters do have certain challenges:</p>
+<ol class="arabic simple">
+<li><p>Blurring removes fine detail that may have diagnostic relevance.</p></li>
+<li><p>Not as effective at removing “salt and pepper” noise.</p></li>
+<li><p>Blurred edges can complicate edge detection.</p></li>
+</ol>
+<p>Still, its design, computational efficiency, and flexibility makes the Gaussian filter ubiquitous in image processing.</p>
+<p>The next linear filter takes a statistical approach to reducing blur, and minimizing noise, while retaining image detail.</p>
 </section>
-<section id="gaussian-filter-quantization-noise">
-<h6>Gaussian Filter - Quantization Noise<a class="headerlink" href="#gaussian-filter-quantization-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#gaussian-quant-characteristics-fig"><span class="std std-numref">Fig. 2.19</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with quantization noise.</p>
+<section id="wiener-filter">
+<h5>Wiener Filter<a class="headerlink" href="#wiener-filter" title="Permalink to this heading">#</a></h5>
+<p>The Wiener filter, introduced in a 1943 classified memo by Norbert Wiener, incorporates statistical characteristics of the signal and noise into the image restoration process.</p>
+<p>The objective of the Wiener filter is to take an input image, and then create an estimate of the true image such that the expected value of the squared difference between the estimate and the true image, is minimized.</p>
+<p>The Wiener filter asserts the principle of orthogonality, which loosely states that the difference between the estimate and the input image, is uncorrelated with the input image. This means that the estimate is the projection of the input image onto the subspace spanned by the original image that minimizes the expected value of the error. From this, the filter computes a function that optimizes the trade-off between noise reduction, and signal distortion, by optimally attenuating the frequencies where the noise is dominant and preserving the frequencies where the signal is dominant.</p>
+<p>The Wiener filter has some nice properties. Since it is optimal in the mean-squared error sense, it can produce high-quality images where noise is minimized and fine detail is retained. Another advantage is that it adapts to changing characteristics of the signal and the noise, making it suitable for speech, image restoration, and other applications whereby the noise is unknown or varies in time and space.</p>
+<p>However, certain disadvantages limit its applicability and performance. For instance, the Wiener filter requires a priori knowledge of the degradation function and the power spectra for noise and signal, which may be difficult or impractical to obtain. Another disadvantage is that the Wiener filter can introduce artifacts, such as blurring and ringing due to smoothing in the frequency domain.
+Next, up? Non-linear filters.</p>
+</section>
+</section>
+<section id="non-linear-filters">
+<h4>Non-Linear Filters<a class="headerlink" href="#non-linear-filters" title="Permalink to this heading">#</a></h4>
+<p>In the previous section, we examined filters in which the output was a linear combination of the input. For additive, independent noise, or that which follows a simple statistical pattern, linear filters will reduce noise to the extent that signal and noise can be separated in the frequency domain.  For multiplicative, noise (speckle) or signals with non-linear features (edges, lines) that must be preserved, non-linear methods will be needed.</p>
+<p>Now, we explore four non-linear techniques widely used in biomedical imaging: median filter, adaptive median filter, non-local means filter, and bilateral filter.</p>
+<p>In the next sections, we’ll describe each of these methods, exhibit their performance, assess their advantages and disadvantages, and highlight the differences among them.</p>
+<section id="median-filter">
+<h5>Median Filter<a class="headerlink" href="#median-filter" title="Permalink to this heading">#</a></h5>
+<p>The Median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.</p>
+<p>In <a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.11</span></a>, we haev the results of a 3x3 Median filter on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1081,195 +914,21 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_quantize_noise</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">MedianFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">()</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_quant_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;median_gaussian_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="gaussian-quant-characteristics-fig">
-<img alt="../../_images/91fa177fed2c398bea450e67b839462676bb0e4d861d5fc9c12156234d97fc4e.png" src="../../_images/91fa177fed2c398bea450e67b839462676bb0e4d861d5fc9c12156234d97fc4e.png" />
+<figure class="align-center" id="median-gaussian-characteristics-fig">
+<img alt="../../_images/f77beba10bdf3e6183c074d33e6144b637d5b0dd9e0ba132a506f589c70b3203.png" src="../../_images/f77beba10bdf3e6183c074d33e6144b637d5b0dd9e0ba132a506f589c70b3203.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.19 </span><span class="caption-text">Gaussian Filter Performance Characteristics is with Quantization Noise</span><a class="headerlink" href="#gaussian-quant-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Median Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#median-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_quantize_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_quant_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="gaussian-quant-analysis-fig">
-<img alt="../../_images/0bab7fa569c75400f0b43a50e08ccbf231f3beaf91f3b43d02bac70e4770309a.png" src="../../_images/0bab7fa569c75400f0b43a50e08ccbf231f3beaf91f3b43d02bac70e4770309a.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">Gaussian Filter Performance Analysis with Quantization Noise</span><a class="headerlink" href="#gaussian-quant-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="gaussian-filter-speckle-noise">
-<h6>Gaussian Filter - Speckle Noise<a class="headerlink" href="#gaussian-filter-speckle-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#gaussian-speckle-characteristics-fig"><span class="std std-numref">Fig. 2.21</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with speckle noise.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_speckle_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_speckle_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="gaussian-speckle-characteristics-fig">
-<img alt="../../_images/91f88e9cca3539c90797f62aab11bcc953189a78eaf0ea57c3b3f8f7a8fba5ca.png" src="../../_images/91f88e9cca3539c90797f62aab11bcc953189a78eaf0ea57c3b3f8f7a8fba5ca.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.21 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Speckle Noise</span><a class="headerlink" href="#gaussian-speckle-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<hr class="docutils" />
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_speckle_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_speckle_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="gaussian-speckle-analysis-fig">
-<img alt="../../_images/7096e33762e960ececf85a1d742b863eae49c8524d04d5b97bee0692075d8ea5.png" src="../../_images/7096e33762e960ececf85a1d742b863eae49c8524d04d5b97bee0692075d8ea5.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Gaussian Filter Performance Analysis with Speckle Noise</span><a class="headerlink" href="#gaussian-speckle-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="gaussian-filter-salt-pepper-noise">
-<h6>Gaussian Filter - Salt &amp; Pepper Noise<a class="headerlink" href="#gaussian-filter-salt-pepper-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#gaussian-snp-characteristics-fig"><span class="std std-numref">Fig. 2.23</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with salt and pepper noise.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_snp_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_snp_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="gaussian-snp-characteristics-fig">
-<img alt="../../_images/213a0359b1ba5ea3fb0af1159724e73b4253f8e3b26995c99defeb0d27b2a579.png" src="../../_images/213a0359b1ba5ea3fb0af1159724e73b4253f8e3b26995c99defeb0d27b2a579.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Salt &amp; Pepper Noise</span><a class="headerlink" href="#gaussian-snp-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<hr class="docutils" />
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_snp_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_snp_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="gaussian-snp-analysis-fig">
-<img alt="../../_images/b0f4f18f8d5252e4ec8ad116141ac0e3696f2c741884701d2ee6e6aaa77d3066.png" src="../../_images/b0f4f18f8d5252e4ec8ad116141ac0e3696f2c741884701d2ee6e6aaa77d3066.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.24 </span><span class="caption-text">Gaussian Filter Performance Analysis with Salt &amp; Pepper Noise</span><a class="headerlink" href="#gaussian-snp-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="gaussian-filter-poisson-noise">
-<h6>Gaussian Filter - Poisson Noise<a class="headerlink" href="#gaussian-filter-poisson-noise" title="Permalink to this heading">#</a></h6>
-<p><a class="reference internal" href="#gaussian-poisson-characteristics-fig"><span class="std std-numref">Fig. 2.25</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Poisson noise.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_poisson_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_poisson_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="gaussian-poisson-characteristics-fig">
-<img alt="../../_images/b873b57f4ee780af5839740cc8b15fa3cd5cfbb74653d6c065e0bd3a216cc940.png" src="../../_images/b873b57f4ee780af5839740cc8b15fa3cd5cfbb74653d6c065e0bd3a216cc940.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.25 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Poisson Noise</span><a class="headerlink" href="#gaussian-poisson-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<hr class="docutils" />
-<p>Let’s examine the effects of various kernel sizes on performance.</p>
-<div class="cell tag_hide-cell tag_remove-output docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analyzer</span> <span class="o">=</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">()</span>
-<span class="n">analyzer</span><span class="o">.</span><span class="n">add_poisson_noise</span><span class="p">()</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;gaussian_poisson_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<figure class="align-center" id="gaussian-poisson-analysis-fig">
-<img alt="../../_images/704374e56bac9d71378b22f35ca9fc6e5be6fa3568e6b6cb917fecab7f040b0a.png" src="../../_images/704374e56bac9d71378b22f35ca9fc6e5be6fa3568e6b6cb917fecab7f040b0a.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.26 </span><span class="caption-text">Gaussian Filter Performance Analysis with Poisson Noise</span><a class="headerlink" href="#gaussian-poisson-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
 </section>
 </section>
 </section>
@@ -1360,22 +1019,13 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#denoiser-methods">2.3. Denoiser Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-domain-filtering">2.3.1. Spatial Domain Filtering</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-filters">Linear Filters</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-gaussian-noise">Mean Filter - Gaussian Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-quantization-noise">Mean Filter - Quantization Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-speckle-noise">Mean Filter - Speckle Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-salt-pepper-noise">Mean Filter - Salt &amp; Pepper Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter-poisson-noise">Mean Filter - Poisson Noise</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-filter">Mean Filter</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#wiener-filter">Wiener Filter</a></li>
 </ul>
 </li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter">Gaussian Filter</a><ul class="nav section-nav flex-column">
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-gaussian-noise">Gaussian Filter - Gaussian Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-quantization-noise">Gaussian Filter - Quantization Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-speckle-noise">Gaussian Filter - Speckle Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-salt-pepper-noise">Gaussian Filter - Salt &amp; Pepper Noise</a></li>
-<li class="toc-h6 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-filter-poisson-noise">Gaussian Filter - Poisson Noise</a></li>
-</ul>
-</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#non-linear-filters">Non-Linear Filters</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#median-filter">Median Filter</a></li>
 </ul>
 </li>
 </ul>
