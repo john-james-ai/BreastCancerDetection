@@ -493,3 +493,24 @@ name: median_gaussian_characteristics_fig
 ---
 Median Filter Performance Characteristics with Gaussian Noise
 ```
+
+`median_gaussian_characteristics_fig` (c) shows the result of applying a Median filter to an image corrupted by Gaussian noise. The noise is effectively, removed while preserving much of the fine detail.
+
+Where the Median filter differentiates itself is with noise that produces extreme changes in pixel intensity. In `median_snp_characteristics_fig`, we apply the Median filter to an image corrupted by 'salt and pepper' noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = MedianFilterAnalyzer()
+analyzer.add_snp_noise(amount=0.4)
+fig = analyzer.analyze()
+glue("median_snp_characteristics", fig)
+```
+
+```{glue:figure} median_snp_characteristics
+---
+align: center
+name: median_snp_characteristics_fig
+---
+Median Filter Performance Characteristics with Salt and Pepper Noise
+```
