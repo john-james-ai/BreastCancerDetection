@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Friday November 24th 2023 08:41:51 pm                                               #
+# Modified   : Saturday November 25th 2023 01:00:40 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -309,6 +309,64 @@ class BilateralFilterAnalyzer(DenoiserAnalyzer):
 
         for idx, (s, image) in enumerate(images.items()):
             label = rf"{pfx[idx]} {string.capwords(self._denoiser)} $\sigma_r$={s}, $\sigma_s$={s}."
+            axes[idx].imshow(image, cmap=self.__CMAP)
+            axes[idx].set_xlabel(label, fontsize=10)
+            axes[idx].set_xticks([])
+            axes[idx].set_yticks([])
+
+        title = string.capwords(s=self._denoiser) + " Performance Analysis"
+        fig.suptitle(title, fontsize=12)
+
+        plt.tight_layout()
+
+        return fig
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                              NON-LOCAL MEANS FILTER VISUALIZER                                   #
+# ------------------------------------------------------------------------------------------------ #
+class NLMeansFilterAnalyzer(DenoiserAnalyzer):
+    """Analyzes Non-Local Means Filters"""
+
+    __CMAP = "gray"
+
+    def __init__(self, denoiser: str = "Non-Local Means Filter") -> None:
+        super().__init__(denoiser)
+
+    def apply_filter(
+        self,
+        image: np.ndarray,
+        kernel_size: int = 7,
+        search_window: int = 21,
+        h: int = 10,
+    ) -> np.ndarray:
+        return cv2.fastNlMeansDenoising(
+            image, templateWindowSize=kernel_size, searchWindowSize=search_window, h=h
+        )
+
+    def compare(self, h: tuple = (10, 20, 30, 50)) -> None:
+        """Compares performance of various denoisers
+
+        Args:
+            h (tuple): Various values for h, which determines filter strength.
+        """
+        if self._image_degraded is None:
+            msg = "Image must be degraded before filtering can be applied."
+            self._logger.exception(msg)
+
+        images = {}
+        for h_ in h:
+            images[h_] = self.apply_filter(image=self._image_degraded, h=h_)
+        return self._plot_filtered_images(images=images)
+
+    def _plot_filtered_images(self, images: dict) -> plt.Figure:
+        """Plots the filtered images"""
+        pfx = ["(a)", "(b)", "(c)", "(d)"]
+        fig, axes = plt.subplots(figsize=(12, 8), nrows=2, ncols=2)
+        axes = axes.flatten()
+
+        for idx, (h, image) in enumerate(images.items()):
+            label = rf"{pfx[idx]} {string.capwords(self._denoiser)} $h$ = {h}, kernel size = 7, search window size = 21."
             axes[idx].imshow(image, cmap=self.__CMAP)
             axes[idx].set_xlabel(label, fontsize=10)
             axes[idx].set_xticks([])

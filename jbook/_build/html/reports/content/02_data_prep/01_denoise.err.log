@@ -17,34 +17,19 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-analyzer = BilateralFilterAnalyzer()
+analyzer = NLMeansFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.compare()
-glue("bilateral_gaussian_analysis", fig)
+fig = analyzer.analyze()
+glue("nlmeans_gaussian_characteristics", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mAttributeError[0m                            Traceback (most recent call last)
-Cell [0;32mIn[10], line 3[0m
-[1;32m      1[0m analyzer [38;5;241m=[39m BilateralFilterAnalyzer()
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[11], line 1[0m
+[0;32m----> 1[0m analyzer [38;5;241m=[39m [43mNLMeansFilterAnalyzer[49m()
 [1;32m      2[0m analyzer[38;5;241m.[39madd_gaussian_noise(var[38;5;241m=[39m[38;5;241m0.2[39m)
-[0;32m----> 3[0m fig [38;5;241m=[39m [43manalyzer[49m[38;5;241;43m.[39;49m[43mcompare[49m[43m([49m[43m)[49m
-[1;32m      4[0m glue([38;5;124m"[39m[38;5;124mbilateral_gaussian_analysis[39m[38;5;124m"[39m, fig)
+[1;32m      3[0m fig [38;5;241m=[39m analyzer[38;5;241m.[39manalyze()
 
-File [0;32m~/projects/bcd/bcd/preprocess/image/denoise/analyze.py:300[0m, in [0;36mBilateralFilterAnalyzer.compare[0;34m(self, sigma)[0m
-[1;32m    296[0m [38;5;28;01mfor[39;00m s [38;5;129;01min[39;00m sigma:
-[1;32m    297[0m     images[s] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mapply_filter(
-[1;32m    298[0m         image[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39m_image_degraded, sigma_range[38;5;241m=[39ms, sigma_domain[38;5;241m=[39ms
-[1;32m    299[0m     )
-[0;32m--> 300[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_plot_filtered_images[49m[43m([49m[43mimages[49m[38;5;241;43m=[39;49m[43mimages[49m[43m)[49m
-
-File [0;32m~/projects/bcd/bcd/preprocess/image/denoise/analyze.py:310[0m, in [0;36mBilateralFilterAnalyzer._plot_filtered_images[0;34m(self, images)[0m
-[1;32m    308[0m [38;5;28;01mfor[39;00m idx, (s, image) [38;5;129;01min[39;00m [38;5;28menumerate[39m(images[38;5;241m.[39mitems()):
-[1;32m    309[0m     label [38;5;241m=[39m [38;5;124mrf[39m[38;5;124m"[39m[38;5;132;01m{[39;00mpfx[idx][38;5;132;01m}[39;00m[38;5;124m [39m[38;5;132;01m{[39;00mstring[38;5;241m.[39mcapwords([38;5;28mself[39m[38;5;241m.[39m_denoiser)[38;5;132;01m}[39;00m[38;5;124m $[39m[38;5;124m\[39m[38;5;124msigma_r$=[39m[38;5;132;01m{[39;00ms[38;5;132;01m}[39;00m[38;5;124m, $[39m[38;5;124m\[39m[38;5;124msigma_s$=[39m[38;5;132;01m{[39;00ms[38;5;132;01m}[39;00m[38;5;124m.[39m[38;5;124m"[39m
-[0;32m--> 310[0m     axes[idx][38;5;241m.[39mimshow(image, cmap[38;5;241m=[39m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m__CMAP[49m)
-[1;32m    311[0m     axes[idx][38;5;241m.[39mset_xlabel(label, fontsize[38;5;241m=[39m[38;5;241m10[39m)
-[1;32m    312[0m     axes[idx][38;5;241m.[39mset_xticks([])
-
-[0;31mAttributeError[0m: 'BilateralFilterAnalyzer' object has no attribute '_BilateralFilterAnalyzer__CMAP'
-AttributeError: 'BilateralFilterAnalyzer' object has no attribute '_BilateralFilterAnalyzer__CMAP'
+[0;31mNameError[0m: name 'NLMeansFilterAnalyzer' is not defined
+NameError: name 'NLMeansFilterAnalyzer' is not defined
 
