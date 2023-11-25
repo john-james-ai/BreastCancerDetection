@@ -572,14 +572,14 @@ where:
 
 The spatial, or domain parameter, $\sigma_s$, is related to the scale of the pixel values and is found experimentally. The range parameter, $\sigma_r$, can be adapted from the noise level {cite}`celiuNoiseEstimationSingle2006`. As $\sigma_r$ increases, the bilateral filter gradually approximates the Gaussian filter. Best results have been achieved with  $\sigma_r = 1.95 \sigma_n$, where $\sigma_n$ is the local noise level.
 
-In {numref}`bilateral_gaussian_characteristics_fig`, a bilateral filter with $\sigma_r=75$, and $\sigma_s=75$ is applied to an image degraded with Gaussian noise.
+In {numref}`bilateral_gaussian_characteristics_fig`, a bilateral filter with $\sigma_r=25$, and $\sigma_s=25$ is applied to an image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
 analyzer = BilateralFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze()
+fig = analyzer.analyze(sigma_range=25, sigma_domain=25)
 glue("bilateral_gaussian_characteristics", fig)
 ```
 
@@ -590,6 +590,6 @@ name: bilateral_gaussian_characteristics_fig
 ---
 Bilateral Filter Performance Characteristics with Gaussian Noise
 ```
-
+{numref}`bilateral_gaussian_characteristics_fig` exhibits some blurring and loss of image detail, likely due to the
 
 A consequence of the way the bilateral filter considers the range of intensity values is suboptimal performance with salt and pepper noise. The noise may be sparse, but the affected pixels' intensity values may span the entire range (e.g., 0-255 for 8-bit images). The values may be too different from their neighbors to influence a pixel. Often, these images are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
