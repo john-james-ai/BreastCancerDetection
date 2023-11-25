@@ -590,6 +590,25 @@ name: bilateral_gaussian_characteristics_fig
 ---
 Bilateral Filter Performance Characteristics with Gaussian Noise
 ```
-{numref}`bilateral_gaussian_characteristics_fig` exhibits some blurring and loss of image detail, likely due to the
+
+{numref}`bilateral_gaussian_characteristics_fig`(c) exhibits noise reduction at the cost of some image detail. {numref}`bilateral_gaussian_analysis_fig` shows how $\sigma_r$, and $\sigma_s$ affect performance.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = BilateralFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.compare()
+glue("bilateral_gaussian_analysis", fig)
+```
+
+```{glue:figure} bilateral_gaussian_analysis
+---
+align: center
+name: bilateral_gaussian_analysis_fig
+---
+Gaussian Filter Performance Analysis with Gaussian Noise
+```
+
 
 A consequence of the way the bilateral filter considers the range of intensity values is suboptimal performance with salt and pepper noise. The noise may be sparse, but the affected pixels' intensity values may span the entire range (e.g., 0-255 for 8-bit images). The values may be too different from their neighbors to influence a pixel. Often, these images are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
