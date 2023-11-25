@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Friday November 24th 2023 05:13:26 pm                                               #
+# Modified   : Friday November 24th 2023 08:41:51 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -268,6 +268,8 @@ class MedianFilterAnalyzer(DenoiserAnalyzer):
 class BilateralFilterAnalyzer(DenoiserAnalyzer):
     """Analyzes Bilateral Filters"""
 
+    __CMAP = "gray"
+
     def __init__(self, denoiser: str = "Bilateral Filter") -> None:
         super().__init__(denoiser)
 
@@ -275,9 +277,46 @@ class BilateralFilterAnalyzer(DenoiserAnalyzer):
         self,
         image: np.ndarray,
         d: int = -1,
-        sigma_range: float = 75,
-        sigma_domain: float = 75,
+        sigma_range: float = 25,
+        sigma_domain: float = 25,
     ) -> np.ndarray:
         return cv2.bilateralFilter(
             image, d=d, sigmaColor=sigma_range, sigmaSpace=sigma_domain
         )
+
+    def compare(self, sigma: tuple = (10, 25, 75, 150)) -> None:
+        """Compares performance of n filters
+
+        Args:
+            sigma (tuple): Various values for range and domain parameters.
+        """
+        if self._image_degraded is None:
+            msg = "Image must be degraded before filtering can be applied."
+            self._logger.exception(msg)
+
+        images = {}
+        for s in sigma:
+            images[s] = self.apply_filter(
+                image=self._image_degraded, sigma_range=s, sigma_domain=s
+            )
+        return self._plot_filtered_images(images=images)
+
+    def _plot_filtered_images(self, images: dict) -> plt.Figure:
+        """Plots the filtered images"""
+        pfx = ["(a)", "(b)", "(c)", "(d)"]
+        fig, axes = plt.subplots(figsize=(12, 8), nrows=2, ncols=2)
+        axes = axes.flatten()
+
+        for idx, (s, image) in enumerate(images.items()):
+            label = rf"{pfx[idx]} {string.capwords(self._denoiser)} $\sigma_r$={s}, $\sigma_s$={s}."
+            axes[idx].imshow(image, cmap=self.__CMAP)
+            axes[idx].set_xlabel(label, fontsize=10)
+            axes[idx].set_xticks([])
+            axes[idx].set_yticks([])
+
+        title = string.capwords(s=self._denoiser) + " Performance Analysis"
+        fig.suptitle(title, fontsize=12)
+
+        plt.tight_layout()
+
+        return fig

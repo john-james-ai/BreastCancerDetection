@@ -572,14 +572,14 @@ where:
 
 The spatial, or domain parameter, $\sigma_s$, is related to the scale of the pixel values and is found experimentally. The range parameter, $\sigma_r$, can be adapted from the noise level {cite}`celiuNoiseEstimationSingle2006`. As $\sigma_r$ increases, the bilateral filter gradually approximates the Gaussian filter. Best results have been achieved with  $\sigma_r = 1.95 \sigma_n$, where $\sigma_n$ is the local noise level.
 
-In {numref}`bilateral_gaussian_characteristics_fig`, a bilateral filter with $\sigma_r=75$, and $\sigma_s=75$ is applied to an image degraded with Gaussian noise.
+In {numref}`bilateral_gaussian_characteristics_fig`, a bilateral filter with $\sigma_r=25$, and $\sigma_s=25$ is applied to an image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
 analyzer = BilateralFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze()
+fig = analyzer.analyze(sigma_range=25, sigma_domain=25)
 glue("bilateral_gaussian_characteristics", fig)
 ```
 
@@ -591,5 +591,29 @@ name: bilateral_gaussian_characteristics_fig
 Bilateral Filter Performance Characteristics with Gaussian Noise
 ```
 
+{numref}`bilateral_gaussian_characteristics_fig`(c) exhibits noise reduction at the cost of some image detail. {numref}`bilateral_gaussian_analysis_fig` shows how $\sigma_r$, and $\sigma_s$ affect performance.
 
-A consequence of the way the bilateral filter considers the range of intensity values is suboptimal performance with salt and pepper noise. The noise may be sparse, but the affected pixels' intensity values may span the entire range (e.g., 0-255 for 8-bit images). The values may be too different from their neighbors to influence a pixel. Often, these images are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = BilateralFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.compare()
+glue("bilateral_gaussian_analysis", fig)
+```
+
+```{glue:figure} bilateral_gaussian_analysis
+---
+align: center
+name: bilateral_gaussian_analysis_fig
+---
+Bilateral Filter Performance Analysis with Gaussian Noise
+```
+
+The bilateral filter has several advantages. It has a simple formulation: a pixel's value becomes the weighted average of the pixel values in its neighborhood. Consequently, its behavior can be understood intuitively and adapted to application-specific tasks. Another advantage is that the bilateral filter depends on only two parameters that specify the contrast and size of features to preserve. Therefore, it is easy to tune to application-specific requirements.
+
+An aspect that limits the applicability of the bilateral filter is its computational complexity, $O(S^2)$, where $S$ is the number of pixels. With quadratic complexity, the computational cost increases sharply with image size.  can explode the computational cost. Yet, there is no dearth of optimizations proposed [{cite}`durandFastBilateralFiltering2002`,{cite}`eladOriginBilateralFilter2002`, {cite}`phamSeparableBilateralFiltering2005`, {cite}`parisFastApproximationBilateral2006`, {cite}`weissFastMedianBilateral2006a`], which reduce the computation cost.
+
+Another limitation extends from one of its strengths. As mentioned, the bilateral filter considers the range of intensity values when computing the weights to apply. If a pixel value is too different from the values of neighboring pixels, it has less influence on the output. As a consequence, the bilateral filter is not the best filter for salt and pepper noise. Here, the difference between a pixel and its neighbors can span the entire range (e.g., 0-255 for 8-bit images). In such cases, the values are too different to influence the output. Several approaches have been proposed to improve its performance in such cases. An example involves mollification. Often, images containing extreme intensity gradients are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
+
+The use of the bilateral filter has grown rapidly since its introduction and is now ubiquitous in many image-processing applications.
