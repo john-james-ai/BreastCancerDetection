@@ -624,7 +624,7 @@ The bilateral filter above is pixel-based, in that the weights are based on the 
 
 The NL-means algorithm {cite}`buadesNonLocalAlgorithmImage2005` extends neighborhood filtering algorithms, such as the bilateral filter, by comparing the similarity not of the individual pixels, but of the neighborhoods centered at the pixels. Somewhat informally, each pixel $i$, in a neighborhood $\mathbb{N}_i$ of some fixed size $s$, is the weighted sum of the similarities between $\mathbb{N}_i$ and every other neighborhood $\mathbb{N}_j$ for $j\in I$.
 
-More precisely, let $v={v(i) | i \in I} be a noisy image, $i$, be a pixel in that image, and $\mathbb{N}_i$ be a (square) neighborhood of size $s$ centered on pixel $i$, then the estimated value $NL[v](i)$, for pixel $i$, is:
+More precisely, let $v=\{v(i) | i \in I\}$ be a noisy image, $i$, be a pixel in that image, and $\mathbb{N}_i$ be a (square) neighborhood of size $s$ centered on pixel $i$, then the estimated value NL[v](i), for pixel $i$, is:
 
 ```{math}
 :label: nl_means
