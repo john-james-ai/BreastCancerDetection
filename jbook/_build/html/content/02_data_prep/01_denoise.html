@@ -517,7 +517,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
 
-<span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyzer</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span><span class="p">,</span> <span class="n">BilateralFilterAnalyzer</span>
+<span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyzer</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span><span class="p">,</span> <span class="n">BilateralFilterAnalyzer</span><span class="p">,</span> <span class="n">NLMeansFilterAnalyzer</span>
 </pre></div>
 </div>
 </div>
@@ -780,7 +780,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-characteristics-fig">
-<img alt="../../_images/d9db1dbb6288ddc775515a8292baa8348f0120fcefe654d98d916d4eeadab6a1.png" src="../../_images/d9db1dbb6288ddc775515a8292baa8348f0120fcefe654d98d916d4eeadab6a1.png" />
+<img alt="../../_images/3f1075c02378683211b6ea6a4165c666b24851bdd8cd7ab8ec9cefacd6522188.png" src="../../_images/3f1075c02378683211b6ea6a4165c666b24851bdd8cd7ab8ec9cefacd6522188.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -804,7 +804,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-analysis-fig">
-<img alt="../../_images/b969bed65be617e7bd7bb6940e1256a2fe9512fb845430bf109a7da5ef7edd43.png" src="../../_images/b969bed65be617e7bd7bb6940e1256a2fe9512fb845430bf109a7da5ef7edd43.png" />
+<img alt="../../_images/037445c286814937fb883c6f1aff6342339296ff8c6087eab8af46a5556c2249.png" src="../../_images/037445c286814937fb883c6f1aff6342339296ff8c6087eab8af46a5556c2249.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -848,7 +848,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-characteristics-fig">
-<img alt="../../_images/1c74a83b4cec3f64f40e6b02cd9a1a83fd415951366982ad4daba7e8272f02da.png" src="../../_images/1c74a83b4cec3f64f40e6b02cd9a1a83fd415951366982ad4daba7e8272f02da.png" />
+<img alt="../../_images/d39e3a134ba5cccbf07bcc90e8ab4b9d43bd473b247e7a34871b7e431c1f9bff.png" src="../../_images/d39e3a134ba5cccbf07bcc90e8ab4b9d43bd473b247e7a34871b7e431c1f9bff.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -872,7 +872,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-analysis-fig">
-<img alt="../../_images/487106feb80a20572f71551db2307798fdfc1d0297d8e78c5b6bf18c2c713514.png" src="../../_images/487106feb80a20572f71551db2307798fdfc1d0297d8e78c5b6bf18c2c713514.png" />
+<img alt="../../_images/9dd1d0cd0c58584e709b229f253f49eb417687b991f03258117c69ac803da0b5.png" src="../../_images/9dd1d0cd0c58584e709b229f253f49eb417687b991f03258117c69ac803da0b5.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -932,7 +932,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="median-gaussian-characteristics-fig">
-<img alt="../../_images/0026c8cdf8eb8adad45bfdab31446df8ebb39828b41b0df769d808437ccedc17.png" src="../../_images/0026c8cdf8eb8adad45bfdab31446df8ebb39828b41b0df769d808437ccedc17.png" />
+<img alt="../../_images/cf6f53a80e767d55ed1f32c305b441cde77fbe625cb1c3843b61f2b69d58112f.png" src="../../_images/cf6f53a80e767d55ed1f32c305b441cde77fbe625cb1c3843b61f2b69d58112f.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.12 </span><span class="caption-text">Median Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#median-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -956,7 +956,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="median-snp-characteristics-fig">
-<img alt="../../_images/7a7513e62a27cba5569dedd005c416fe30474cc5e22385428210617f230577c2.png" src="../../_images/7a7513e62a27cba5569dedd005c416fe30474cc5e22385428210617f230577c2.png" />
+<img alt="../../_images/019e0145eda7270ee0e27745583debe8059202db3a21abeec4d3f09dd5e88575.png" src="../../_images/019e0145eda7270ee0e27745583debe8059202db3a21abeec4d3f09dd5e88575.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.13 </span><span class="caption-text">Median Filter Performance Characteristics with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -980,7 +980,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="median-snp-analysis-fig">
-<img alt="../../_images/f310caa595aa40149c1e03e96dc81635cc2633c86fa1d99de49fb42c8f837c51.png" src="../../_images/f310caa595aa40149c1e03e96dc81635cc2633c86fa1d99de49fb42c8f837c51.png" />
+<img alt="../../_images/9e8c687831013544e81011956541b2b645993ad3917e3a6a3ad15293da5fb6fa.png" src="../../_images/9e8c687831013544e81011956541b2b645993ad3917e3a6a3ad15293da5fb6fa.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.14 </span><span class="caption-text">Median Filter Performance Analysis with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1028,7 +1028,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="bilateral-gaussian-characteristics-fig">
-<img alt="../../_images/a35a28463936ee0fd12d52ef62153d2b843d3ee8497c9d1498c002453aaa2778.png" src="../../_images/a35a28463936ee0fd12d52ef62153d2b843d3ee8497c9d1498c002453aaa2778.png" />
+<img alt="../../_images/03833c008197dd6e9f2b95200295c9cfbb83d57f09e597172f8fc88322851e0e.png" src="../../_images/03833c008197dd6e9f2b95200295c9cfbb83d57f09e597172f8fc88322851e0e.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.15 </span><span class="caption-text">Bilateral Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1051,7 +1051,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="bilateral-gaussian-analysis-fig">
-<img alt="../../_images/488f86aae511a0b1b94933de888b2d6a2619959b6b0aba99f17881b994e40b24.png" src="../../_images/488f86aae511a0b1b94933de888b2d6a2619959b6b0aba99f17881b994e40b24.png" />
+<img alt="../../_images/515abbb5e0de193b80ead2fec95c8b610452721de5a2853b293be1c32d87a95d.png" src="../../_images/515abbb5e0de193b80ead2fec95c8b610452721de5a2853b293be1c32d87a95d.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.16 </span><span class="caption-text">Bilateral Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -1065,10 +1065,10 @@ Next, up? Non-linear filters.</p>
 <h5>Non-Local Means (NL-means) Filter<a class="headerlink" href="#non-local-means-nl-means-filter" title="Permalink to this heading">#</a></h5>
 <p>The bilateral filter above is pixel-based, in that the weights are based on the location and intensity similarity between individual pixels. The problem is that comparing only grey levels in a single pixel is not very robust when these values are noisy <span id="id11">[<a class="reference internal" href="../99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">27</a>]</span>.</p>
 <p>The NL-means algorithm <span id="id12">[<a class="reference internal" href="../99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">27</a>]</span> extends neighborhood filtering algorithms, such as the bilateral filter, by comparing the similarity not of the individual pixels, but of the neighborhoods centered at the pixels. Somewhat informally, each pixel <span class="math notranslate nohighlight">\(i\)</span>, in a neighborhood <span class="math notranslate nohighlight">\(\mathbb{N}_i\)</span> of some fixed size <span class="math notranslate nohighlight">\(s\)</span>, is the weighted sum of the similarities between <span class="math notranslate nohighlight">\(\mathbb{N}_i\)</span> and every other neighborhood <span class="math notranslate nohighlight">\(\mathbb{N}_j\)</span> for <span class="math notranslate nohighlight">\(j\in I\)</span>.</p>
-<p>More precisely, let <span class="math notranslate nohighlight">\(v={v(i) | i \in I} be a noisy image, \)</span>i<span class="math notranslate nohighlight">\(, be a pixel in that image, and \)</span>\mathbb{N}_i<span class="math notranslate nohighlight">\( be a (square) neighborhood of size \)</span>s<span class="math notranslate nohighlight">\( centered on pixel \)</span>i<span class="math notranslate nohighlight">\(, then the estimated value \)</span>NL<span class="xref myst">v</span><span class="math notranslate nohighlight">\(, for pixel \)</span>i$, is:</p>
+<p>More precisely, let <span class="math notranslate nohighlight">\(v=\{v(i) | i \in I\}\)</span> be a noisy image, <span class="math notranslate nohighlight">\(i\)</span>, be a pixel in that image, and <span class="math notranslate nohighlight">\(\mathbb{N}_i\)</span> be a (square) neighborhood of size <span class="math notranslate nohighlight">\(s\)</span> centered on pixel <span class="math notranslate nohighlight">\(i\)</span>, then the estimated value NL(v)(i), for pixel <span class="math notranslate nohighlight">\(i\)</span>, is:</p>
 <div class="math notranslate nohighlight" id="equation-nl-means">
 <span class="eqno">(2.16)<a class="headerlink" href="#equation-nl-means" title="Permalink to this equation">#</a></span>\[NL[V](i) = \displaystyle\sum_{j \in I} w(i,j)v(I,j),\]</div>
-<p>where the set of weights <span class="math notranslate nohighlight">\({w(i,j)}_j\)</span> depend on the similarity between the neighborhoods of pixel <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\mathbb{N}_i\)</span> and pixel <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(\mathbb{N}_j\)</span>,  and satisfy conditions <span class="math notranslate nohighlight">\(0 \le w(I,j) \le 1\)</span> and <span class="math notranslate nohighlight">\(\dislaystyle\sum_j w(i,j) = 1\)</span>.</p>
+<p>where the set of weights <span class="math notranslate nohighlight">\({w(i,j)}_j\)</span> depend on the similarity between the neighborhoods of pixel <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\mathbb{N}_i\)</span> and pixel <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(\mathbb{N}_j\)</span>,  and satisfy conditions <span class="math notranslate nohighlight">\(0 \le w(i,j) \le 1\)</span> and <span class="math notranslate nohighlight">\(\dislaystyle\sum_j w(i,j) = 1\)</span>.</p>
 <p>We describe the similarity between the neighborhoods <span class="math notranslate nohighlight">\(\mathbb{N}_i\)</span> and <span class="math notranslate nohighlight">\(\mathbb{N}_j\)</span> in terms of the intensity gray level vectors <span class="math notranslate nohighlight">\(v(\mathbb{N}_i)\)</span> and <span class="math notranslate nohighlight">\(v(\mathbb{N}_j)\)</span>, where <span class="math notranslate nohighlight">\(\mathbb{N}_k\)</span> denotes a square neighborhood of fixed size and centered at pixel <span class="math notranslate nohighlight">\(k\)</span>.</p>
 <p>The similarity is measured as a decreasing function of the weighted Euclidean distance, <span class="math notranslate nohighlight">\(||v(\mathbb{N}_i) - v(\mathbb{N}_j)||^2_{2,\alpha}\)</span>, where <span class="math notranslate nohighlight">\(\alpha &gt; 0\)</span> is the standard deviation of the Gaussian kernel.
 Hence, the weights are defined as:</p>
@@ -1079,7 +1079,7 @@ Hence, the weights are defined as:</p>
 <span class="eqno">(2.18)<a class="headerlink" href="#equation-nl-means-nc" title="Permalink to this equation">#</a></span>\[Z(i) = \sum_j e^{-\frac{||v(\mathbb{N}_i)-v(\mathbb{N}_j)||^2_{2,\alpha}}{h^2}},\]</div>
 <p>and the parameter <span class="math notranslate nohighlight">\(h\)</span> controls the decay of the exponential function and therefore the decay of the weights as a function of the Euclidean distances <span id="id13">[<a class="reference internal" href="../99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">27</a>]</span>.</p>
 <p>The original NL-means algorithm compares the neighborhood of each pixel <span class="math notranslate nohighlight">\(i\)</span>, with the neighborhoods of every other pixel <span class="math notranslate nohighlight">\(j \forall \n I\)</span>! This has a computational complexity that is quadratic in the number of pixels in the image. In practice, the search for similar neighborhoods is often restricted to a search window centered on the pixel itself, instead of the whole image.</p>
-<p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">nlmeans_gaussian_characteristics_fig</span></code>, a non-local means filter with <span class="math notranslate nohighlight">\(h=10\)</span>, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.</p>
+<p>In <a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.17</span></a>, a non-local means filter with <span class="math notranslate nohighlight">\(h=10\)</span>, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1096,7 +1096,13 @@ Hence, the weights are defined as:</p>
 </div>
 </details>
 </div>
-<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">nlmeans_gaussian_characteristics_fig</span></code>(c)</p>
+<figure class="align-center" id="nlmeans-gaussian-characteristics-fig">
+<img alt="../../_images/cf2064bac565c5a330a28306a0feb7f78cec80605330deaff434cb392083fdf3.png" src="../../_images/cf2064bac565c5a330a28306a0feb7f78cec80605330deaff434cb392083fdf3.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.17 </span><span class="caption-text">Non-Local Means Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 2.17</span></a>(c)</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1113,6 +1119,12 @@ Hence, the weights are defined as:</p>
 </div>
 </details>
 </div>
+<figure class="align-center" id="nlmeans-gaussian-analysis-fig">
+<img alt="../../_images/87e75aff0f76734376fe7ef1a6561284d6d542097bbb064d20e01e60ce274ba7.png" src="../../_images/87e75aff0f76734376fe7ef1a6561284d6d542097bbb064d20e01e60ce274ba7.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.18 </span><span class="caption-text">Non-Local Means Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 </section>
