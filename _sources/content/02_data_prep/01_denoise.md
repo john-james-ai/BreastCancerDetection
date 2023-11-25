@@ -566,7 +566,7 @@ W_p = \displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|).
 where:
 
 - $I_p$ is the intensity value of center pixel $p$,
-- $I-q$ is the intensity value of neighboring pixel $q$,
+- $I_q$ is the intensity value of neighboring pixel $q$,
 - $G_{\sigma_s}$ is a spatial Gaussian weighting that decreases the influence of distant pixels, and
 - $G_{\sigma_r}$ is a range Gaussian weighting that decreases the influence of pixels $q$ with intensity values that differ from $I_p$.
 
@@ -612,7 +612,7 @@ Bilateral Filter Performance Analysis with Gaussian Noise
 
 The bilateral filter has several advantages. It has a simple formulation: a pixel's value becomes the weighted average of the pixel values in its neighborhood. Consequently, its behavior can be understood intuitively and adapted to application-specific tasks. Another advantage is that the bilateral filter depends on only two parameters that specify the contrast and size of features to preserve. Therefore, it is easy to tune to application-specific requirements.
 
-An aspect that limits the applicability of the bilateral filter is its computational complexity, $O(S^2)$, where $S$ is the number of pixels. With quadratic complexity, the computational cost increases sharply with image size.  can explode the computational cost. Yet, there is no dearth of optimizations proposed [{cite}`durandFastBilateralFiltering2002`,{cite}`eladOriginBilateralFilter2002`, {cite}`phamSeparableBilateralFiltering2005`, {cite}`parisFastApproximationBilateral2006`, {cite}`weissFastMedianBilateral2006a`], which reduce the computation cost.
+An aspect that limits the applicability of the bilateral filter is its computational complexity, $O(S^2)$, where $S$ is the number of pixels. With quadratic complexity, the computational cost increases sharply with image size.  can explode the computational cost. Yet, there is no dearth of optimizations proposed ({cite}`durandFastBilateralFiltering2002`,{cite}`eladOriginBilateralFilter2002`, {cite}`phamSeparableBilateralFiltering2005`, {cite}`parisFastApproximationBilateral2006`, {cite}`weissFastMedianBilateral2006a`), which reduce the computation cost.
 
 Another limitation extends from one of its strengths. As mentioned, the bilateral filter considers the range of intensity values when computing the weights to apply. If a pixel value is too different from the values of neighboring pixels, it has less influence on the output. As a consequence, the bilateral filter is not the best filter for salt and pepper noise. Here, the difference between a pixel and its neighbors can span the entire range (e.g., 0-255 for 8-bit images). In such cases, the values are too different to influence the output. Several approaches have been proposed to improve its performance in such cases. An example involves mollification. Often, images containing extreme intensity gradients are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
 
