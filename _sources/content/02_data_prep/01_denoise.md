@@ -617,3 +617,39 @@ An aspect that limits the applicability of the bilateral filter is its computati
 Another limitation extends from one of its strengths. As mentioned, the bilateral filter considers the range of intensity values when computing the weights to apply. If a pixel value is too different from the values of neighboring pixels, it has less influence on the output. As a consequence, the bilateral filter is not the best filter for salt and pepper noise. Here, the difference between a pixel and its neighbors can span the entire range (e.g., 0-255 for 8-bit images). In such cases, the values are too different to influence the output. Several approaches have been proposed to improve its performance in such cases. An example involves mollification. Often, images containing extreme intensity gradients are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
 
 The use of the bilateral filter has grown rapidly since its introduction and is now ubiquitous in many image-processing applications.
+
+##### Non-Local Means (NL-means) Filter
+
+The bilateral filter above is pixel-based, in that the weights are based on the location and intensity similarity between individual pixels. The problem is that comparing only grey levels in a single pixel is not very robust when these values are noisy {cite}`buadesNonLocalAlgorithmImage2005`.
+
+The NL-means algorithm {cite}`buadesNonLocalAlgorithmImage2005` extends neighborhood filtering algorithms, such as the bilateral filter, by comparing the similarity not of the individual pixels, but of the neighborhoods centered at the pixels. Somewhat informally, each pixel $i$, in a neighborhood $\mathbb{N}_i$ of some fixed size $s$, is the weighted sum of the similarities between $\mathbb{N}_i$ and every other neighborhood $\mathbb{N}_j$ for $j\in I$.
+
+More precisely, let $v={v(i) | i \in I} be a noisy image, $i$, be a pixel in that image, and $\mathbb{N}_i$ be a (square) neighborhood of size $s$ centered on pixel $i$, then the estimated value $NL[v](i)$, for pixel $i$, is:
+
+```{math}
+:label: nl_means
+NL[V](i) = \displaystyle\sum_{j \in I} w(i,j)v(I,j),
+```
+
+where the set of weights ${w(i,j)}_j$ depend on the similarity between the neighborhoods of pixel $i$, $\mathbb{N}_i$ and pixel $j$, $\mathbb{N}_j$,  and satisfy conditions $0 \le w(I,j) \le 1$ and $\dislaystyle\sum_j w(i,j) = 1$.
+
+We describe the similarity between the neighborhoods $\mathbb{N}_i$ and $\mathbb{N}_j$ in terms of the intensity gray level vectors $v(\mathbb{N}_i)$ and $v(\mathbb{N}_j)$, where $\mathbb{N}_k$ denotes a square neighborhood of fixed size and centered at pixel $k$.
+
+The similarity is measured as a decreasing function of the weighted Euclidean distance, $||v(\mathbb{N}_i) - v(\mathbb{N}_j)||^2_{2,\alpha}$, where $\alpha > 0$ is the standard deviation of the Gaussian kernel.
+Hence, the weights are defined as:
+
+```{math}
+:label: nl_means_weights
+w(i,j) = \frac{1}{Z(i)}e^{-\frac{||v(\mathbb{N}_i) - v(\mathbb{N}_j)||^2_{2,\alpha}}{h^2}},
+```
+
+where $Z(i)$ is the normalizing constant:
+
+```{math}
+:label: nl_means_nc
+Z(i) = \sum_j e^{-\frac{||v(\mathbb{N}_i)-v(\mathbb{N}_j)||^2_{2,\alpha}}{h^2}},
+```
+
+and the parameter $h$ controls the decay of the exponential function and therefore the decay of the weights as a function of the Euclidean distances {cite}`buadesNonLocalAlgorithmImage2005`.
+
+The original NL-means algorithm compares the neighborhood of each pixel $i$, with the neighborhoods of every other pixel $j \forall \n I$! This has a computational complexity that is quadratic in the number of pixels in the image. In practice, the search for similar neighborhoods is often restricted to a search window centered on the pixel itself, instead of the whole image.
