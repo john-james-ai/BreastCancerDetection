@@ -653,3 +653,41 @@ Z(i) = \sum_j e^{-\frac{||v(\mathbb{N}_i)-v(\mathbb{N}_j)||^2_{2,\alpha}}{h^2}},
 and the parameter $h$ controls the decay of the exponential function and therefore the decay of the weights as a function of the Euclidean distances {cite}`buadesNonLocalAlgorithmImage2005`.
 
 The original NL-means algorithm compares the neighborhood of each pixel $i$, with the neighborhoods of every other pixel $j \forall \n I$! This has a computational complexity that is quadratic in the number of pixels in the image. In practice, the search for similar neighborhoods is often restricted to a search window centered on the pixel itself, instead of the whole image.
+
+In {numref}`nlmeans_gaussian_characteristics_fig`, a non-local means filter with $h=10$, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = NLMeansFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("nlmeans_gaussian_characteristics", fig)
+```
+
+```{glue:figure} nlmeans_gaussian_characteristics
+---
+align: center
+name: nlmeans_gaussian_characteristics_fig
+---
+Non-Local Means Filter Performance Characteristics with Gaussian Noise
+```
+
+{numref}`nlmeans_gaussian_characteristics_fig`(c)
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+analyzer = NLMeansFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.compare()
+glue("nlmeans_gaussian_analysis", fig)
+```
+
+```{glue:figure} nlmeans_gaussian_analysis
+---
+align: center
+name: nlmeans_gaussian_analysis_fig
+---
+Non-Local Means Filter Performance Analysis with Gaussian Noise
+```
