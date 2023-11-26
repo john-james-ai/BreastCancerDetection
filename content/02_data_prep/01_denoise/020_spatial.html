@@ -498,10 +498,20 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <section id="mean-filter">
 <h3>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h3>
 <p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. It’s based on the idea that random noise consists of “sharp” transitions in the intensity of the signal. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. By doing so, the “sharp” transitions in the intensities are reduced.</p>
-<p>The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  <code class="xref std std-numref docutils literal notranslate"><span class="pre">kernel</span></code> illustrates a 3 x 3 kernel.</p>
+<p>The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  <a class="reference internal" href="#kernel"><span class="std std-numref">Fig. 2.6</span></a> illustrates a 3 x 3 kernel.</p>
+<figure class="align-default" id="kernel">
+<img alt="../../../_images/kernel.png" src="../../../_images/kernel.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.6 </span><span class="caption-text">3 x 3 Mean Filter Kernel</span><a class="headerlink" href="#kernel" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The mean filter works by convolving the kernel over the image as follows. Let w(x,y) represent a set of coordinates in a  m x n rectangular window in the image, centered at point (x,y). The mean filtering process computes the average value of the corrupted image g(x,y) in the area defined by w(x,y). The value of the restored image at any point (x,y) is:</p>
 <div class="math notranslate nohighlight" id="equation-mean-filter">
 <span class="eqno">(2.12)<a class="headerlink" href="#equation-mean-filter" title="Permalink to this equation">#</a></span>\[^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)\]</div>
+<div class="admonition-kernel-coefficients admonition">
+<p class="admonition-title">Kernel Coefficients</p>
+<p>Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  <span class="math notranslate nohighlight">\(\frac{1}{mn}\)</span>, is applied at the end.</p>
+</div>
 <p>The process of convolving with a 3x3 mean filter is as follows:
 <img alt="MeanFilter" src="../../../_images/02_mean_filter.gif" /></p>
 <p><code class="xref std std-numref docutils literal notranslate"><span class="pre">mean_gaussian_characteristics_fig</span></code> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
@@ -550,7 +560,13 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <p>The Gaussian Filter is similar to the mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-filter">
 <span class="eqno">(2.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
-<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">gaussian_kernel</span></code> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
+<p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 2.7</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
+<figure class="align-default" id="gaussian-kernel">
+<img alt="../../../_images/gaussian_kernel.png" src="../../../_images/gaussian_kernel.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.7 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9 \times 10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
 <p><code class="xref std std-numref docutils literal notranslate"><span class="pre">gaussian_gaussian_characteristics_fig</span></code> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
