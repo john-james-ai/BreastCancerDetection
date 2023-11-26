@@ -71,7 +71,7 @@ fig = analyzer.analyze()
 glue("mean_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} mean_gaussian_characteristics
 ---
 align: center
 name: mean_gaussian_characteristics_fig
@@ -89,7 +89,7 @@ fig = analyzer.compare()
 glue("mean_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} mean_gaussian_analysis
 ---
 align: center
 name: mean_gaussian_analysis_fig
@@ -137,7 +137,7 @@ fig = analyzer.analyze()
 glue("gaussian_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} gaussian_gaussian_characteristics
 ---
 align: center
 name: gaussian_gaussian_characteristics_fig
@@ -155,7 +155,7 @@ fig = analyzer.compare()
 glue("gaussian_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} gaussian_gaussian_analysis
 ---
 align: center
 name: gaussian_gaussian_analysis_fig
@@ -221,7 +221,7 @@ fig = analyzer.analyze()
 glue("median_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} median_gaussian_characteristics
 ---
 align: center
 name: median_gaussian_characteristics_fig
@@ -242,7 +242,7 @@ fig = analyzer.analyze()
 glue("median_snp_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} median_snp_characteristics
 ---
 align: center
 name: median_snp_characteristics_fig
@@ -260,7 +260,7 @@ fig = analyzer.compare()
 glue("median_snp_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} median_snp_analysis
 ---
 align: center
 name: median_snp_analysis_fig
@@ -317,7 +317,7 @@ fig = analyzer.analyze(sigma_range=25, sigma_domain=25)
 glue("bilateral_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} bilateral_gaussian_characteristics
 ---
 align: center
 name: bilateral_gaussian_characteristics_fig
@@ -333,7 +333,7 @@ fig = analyzer.compare()
 glue("bilateral_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} bilateral_gaussian_analysis
 ---
 align: center
 name: bilateral_gaussian_analysis_fig
@@ -396,7 +396,7 @@ fig = analyzer.analyze(h=40)
 glue("nlmeans_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} nlmeans_gaussian_characteristics
 ---
 align: center
 name: nlmeans_gaussian_characteristics_fig
@@ -412,7 +412,7 @@ fig = analyzer.compare()
 glue("nlmeans_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} nlmeans_gaussian_analysis
 ---
 align: center
 name: nlmeans_gaussian_analysis_fig
