@@ -12,6 +12,20 @@ kernelspec:
 ---
 # Spatial Domain Filtering
 
+```{code-cell}
+:tags: [hide-cell]
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../..")))
+import cv2
+from matplotlib import pyplot as plt
+from myst_nb import glue
+import numpy as np
+from skimage.util import random_noise
+
+from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer, NLMeansFilterAnalyzer
+```
+
 In spatial domain filtering, the value of a pixel is based upon both itself and the values of the surrounding pixels. Specifically, the output pixel value results from an algorithm that is applied to the values of the pixels in the neighborhood of a corresponding input pixel. Spatial domain filters are classified into two types: linear filters and non-linear filters.
 
 ## Linear Filters

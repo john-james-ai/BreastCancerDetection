@@ -485,6 +485,40 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="spatial-domain-filtering">
 <h1><span class="section-number">2.4. </span>Spatial Domain Filtering<a class="headerlink" href="#spatial-domain-filtering" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../..&quot;</span><span class="p">)))</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
+
+<span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyzer</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span><span class="p">,</span> <span class="n">BilateralFilterAnalyzer</span><span class="p">,</span> <span class="n">NLMeansFilterAnalyzer</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">skimage.util</span> <span class="kn">import</span> <span class="n">random_noise</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">MeanFilterAnalyzer</span><span class="p">,</span> <span class="n">GaussianFilterAnalyzer</span><span class="p">,</span> <span class="n">MedianFilterAnalyzer</span><span class="p">,</span> <span class="n">BilateralFilterAnalyzer</span><span class="p">,</span> <span class="n">NLMeansFilterAnalyzer</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;bcd&#39;
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>In spatial domain filtering, the value of a pixel is based upon both itself and the values of the surrounding pixels. Specifically, the output pixel value results from an algorithm that is applied to the values of the pixels in the neighborhood of a corresponding input pixel. Spatial domain filters are classified into two types: linear filters and non-linear filters.</p>
 <section id="linear-filters">
 <h2><span class="section-number">2.4.1. </span>Linear Filters<a class="headerlink" href="#linear-filters" title="Permalink to this heading">#</a></h2>

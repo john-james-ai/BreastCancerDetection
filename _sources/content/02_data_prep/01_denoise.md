@@ -12,20 +12,6 @@ kernelspec:
 ---
 # Denoise
 
-```{code-cell}
-:tags: [hide-cell]
-import os
-if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../../..")))
-import cv2
-from matplotlib import pyplot as plt
-from myst_nb import glue
-import numpy as np
-from skimage.util import random_noise
-
-from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer, NLMeansFilterAnalyzer
-```
-
 What is noise? Somewhat imprecisely, we might say that noise is any variation in brightness information not part of the original image. Yet, all biomedical images are imperfect representations of the underlying structure that is being imaged. Limited resolution (defined by the optics), uneven illumination or background, out-of-focus light, artifacts, and, of course, image noise, contribute to this imperfection. For denoising, we distinguish noise from other imperfections, with the following definition:
 
 > Noise is the discrepancy between the true amount of light $s_i$ being measured at pixel $i$, and the corresponding measured pixel value $x_i$.

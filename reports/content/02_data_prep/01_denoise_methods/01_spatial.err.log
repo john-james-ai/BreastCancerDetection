@@ -17,19 +17,25 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-analyzer = MeanFilterAnalyzer()
-analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze()
-glue("mean_gaussian_characteristics", fig)
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../..")))
+import cv2
+from matplotlib import pyplot as plt
+from myst_nb import glue
+import numpy as np
+from skimage.util import random_noise
+
+from bcd.preprocess.image.denoise.analyze import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer, NLMeansFilterAnalyzer
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[1], line 1[0m
-[0;32m----> 1[0m analyzer [38;5;241m=[39m [43mMeanFilterAnalyzer[49m()
-[1;32m      2[0m analyzer[38;5;241m.[39madd_gaussian_noise(var[38;5;241m=[39m[38;5;241m0.2[39m)
-[1;32m      3[0m fig [38;5;241m=[39m analyzer[38;5;241m.[39manalyze()
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 10[0m
+[1;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mskimage[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutil[39;00m [38;5;28;01mimport[39;00m random_noise
+[0;32m---> 10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpreprocess[39;00m[38;5;21;01m.[39;00m[38;5;21;01mimage[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdenoise[39;00m[38;5;21;01m.[39;00m[38;5;21;01manalyze[39;00m [38;5;28;01mimport[39;00m MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer, NLMeansFilterAnalyzer
 
-[0;31mNameError[0m: name 'MeanFilterAnalyzer' is not defined
-NameError: name 'MeanFilterAnalyzer' is not defined
+[0;31mModuleNotFoundError[0m: No module named 'bcd'
+ModuleNotFoundError: No module named 'bcd'
 
