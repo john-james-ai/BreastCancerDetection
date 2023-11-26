@@ -21,11 +21,11 @@ Representing an image in the frequency domain makes certain denoising and smooth
 y = A\text{sin}\Bigg(\frac{2\pi x}{\lambda} + \phi \Bigg)
 ```
 
-where A is the amplitude of the wave, $2\pi$ is the angle measured in radians, equivalent to $360\degree$, $\lambda$ is the wavelength, and $\phi$ is the phase, the amount the wave has shifted along the $x$ axis.
+where A is the amplitude of the wave, $2\pi$ is the angle measured in radians, equivalent to $360^{\circ}$, $\lambda$ is the wavelength, and $\phi$ is the phase, the amount the wave has shifted along the $x$ axis.
 
 Each image value at a position, $F$, in the frequency domain, represents the amount that the intensity values in the spatial domain image vary over a specific distance relative to $F$ {cite}`GlossaryFrequencyDomain`.
 
-We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier transformation* (DFT) {cite}` fourierAnalyticalTheoryHeat2007.  The DFT of an image $f$ of size $M \times N$ is an image $F$ of the same size and is defined as:
+We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier transformation* (DFT) {cite}`fourierAnalyticalTheoryHeat2007`.  The DFT of an image $f$ of size $M \times N$ is an image $F$ of the same size and is defined as:
 
 ```{math}
 :label: dft
