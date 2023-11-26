@@ -44,7 +44,7 @@ def get_image(fp: str, size: int = 200):
     img = cv2.imread(fp, cv2.IMREAD_GRAYSCALE)
     return cv2.resize(img, (size,size))
 
-def transform_image(img):
+def transform_image(img, log: bool = False, clip: bool = False):
     # Shift the input
     img = np.fft.ifftshift(img)
     # Compute fourier transformation
@@ -53,6 +53,13 @@ def transform_image(img):
     img = np.fft.fftshift(img)
     # Compute amplitude
     img = np.abs(img)
+    # Convert to log to scale the image
+    if log:
+        img = np.log(img)
+    # Clip the image for photos.
+    if clip:
+        img = np.clip(img, a_min=0, a_max=50000)
+
     return img
 
 
@@ -64,7 +71,7 @@ img_mmg = get_image(fp=FP_MMG)
 img_white_fft = transform_image(img_white)
 img_hline_fft = transform_image(img_hline)
 img_vline_fft = transform_image(img_vline)
-img_mmg_fft = transform_image(img_mmg)
+img_mmg_fft = transform_image(img_mmg, clip=True)
 
 fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,6))
 _ = axes[0,0].imshow(img_white, cmap='gray')
@@ -79,7 +86,7 @@ _ = axes[1,1].set_ylim([520,480])
 _ = axes[1,2].imshow(img_vline_fft, cmap='gray')
 _ = axes[1,2].set_xlim([520,480])
 _ = axes[1,2].set_ylim([480,520])
-_ = axes[1,3].imshow(np.log(img_mmg_fft), cmap='gray')
+_ = axes[1,3].imshow(img_mmg_fft, cmap='gray')
 
 labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
 for i in range(2):
