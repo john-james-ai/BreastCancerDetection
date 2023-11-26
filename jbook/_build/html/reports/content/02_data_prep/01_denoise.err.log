@@ -17,19 +17,28 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-analyzer = NLMeansFilterAnalyzer()
-analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze()
-glue("nlmeans_gaussian_characteristics", fig)
+# obtain the original images
+img = get_image(fp=FP_WHITE)
+img_fft = transform_image(img)
+fig = plot_images(img1=img,img2=img_fft)
+glue("fft_uniform", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[11], line 1[0m
-[0;32m----> 1[0m analyzer [38;5;241m=[39m [43mNLMeansFilterAnalyzer[49m()
-[1;32m      2[0m analyzer[38;5;241m.[39madd_gaussian_noise(var[38;5;241m=[39m[38;5;241m0.2[39m)
-[1;32m      3[0m fig [38;5;241m=[39m analyzer[38;5;241m.[39manalyze()
+[0;31merror[0m                                     Traceback (most recent call last)
+Cell [0;32mIn[14], line 2[0m
+[1;32m      1[0m [38;5;66;03m# obtain the original images[39;00m
+[0;32m----> 2[0m img [38;5;241m=[39m [43mget_image[49m[43m([49m[43mfp[49m[38;5;241;43m=[39;49m[43mFP_WHITE[49m[43m)[49m
+[1;32m      3[0m img_fft [38;5;241m=[39m transform_image(img)
+[1;32m      4[0m fig [38;5;241m=[39m plot_images(img1[38;5;241m=[39mimg,img2[38;5;241m=[39mimg_fft)
 
-[0;31mNameError[0m: name 'NLMeansFilterAnalyzer' is not defined
-NameError: name 'NLMeansFilterAnalyzer' is not defined
+Cell [0;32mIn[13], line 12[0m, in [0;36mget_image[0;34m(fp, size)[0m
+[1;32m     10[0m [38;5;28;01mdef[39;00m [38;5;21mget_image[39m(fp: [38;5;28mstr[39m, size: [38;5;28mint[39m [38;5;241m=[39m [38;5;241m200[39m):
+[1;32m     11[0m     img [38;5;241m=[39m cv2[38;5;241m.[39mimread(fp, cv2[38;5;241m.[39mIMREAD_GRAYSCALE)
+[0;32m---> 12[0m     [38;5;28;01mreturn[39;00m [43mcv2[49m[38;5;241;43m.[39;49m[43mresize[49m[43m([49m[43mimg[49m[43m,[49m[43m [49m[43m([49m[43msize[49m[43m,[49m[43msize[49m[43m)[49m[43m)[49m
+
+[0;31merror[0m: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/resize.cpp:4062: error: (-215:Assertion failed) !ssize.empty() in function 'resize'
+
+error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/resize.cpp:4062: error: (-215:Assertion failed) !ssize.empty() in function 'resize'
+
 

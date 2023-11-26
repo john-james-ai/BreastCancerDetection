@@ -541,9 +541,11 @@ The performance of the median filter is a characteristic of two properties:
 1. The median is a more robust estimate of centrality than the mean. It is less affected by outliers.
 2. Since the a pixel's output is an actual pixel value from its neighborhood, the median filter doesn't create unrealistic pixel values when the kernel straddles a line or edge.
 
-As such, the median filter is much better at preserving sharp edges than the Mean or Gaussian filters.
+As such, the median filter is much better at preserving sharp edges than the mean or Gaussian filters.
 
-The median filter preserves high spatial frequency detail and performs best when noise is characterized by relatively few extreme changes in pixel intensity. However, when noise (such as Gaussian noise) effects the majority of pixels in the neighborhood, the median filter can be subjectively less effective than the Mean or Gaussian filters.
+The median filter preserves high spatial frequency detail and performs best when noise is characterized by relatively few extreme changes in pixel intensity. However, when noise (such as Gaussian noise) effects the majority of pixels in the neighborhood, the median filter can be subjectively less effective than the mean or Gaussian filters.
+
+Though the median filter is robust and possesses many optimality properties, its performance can be limited as all pixel values in the neighborhood are treated equally, regardless of their location within the observation window. A variant of the median filter that addresses this problem is the weighted median filter. Much like the weighted mean filter (Gaussian filter), where the output is the weighted median of the values in the neighborhood.
 
 ##### Bilateral Filter
 
@@ -622,46 +624,46 @@ The use of the bilateral filter has grown rapidly since its introduction and is 
 
 The bilateral filter above is pixel-based, in that the weights are based on the location and intensity similarity between individual pixels. The problem is that comparing only grey levels in a single pixel is not very robust when these values are noisy {cite}`buadesNonLocalAlgorithmImage2005`.
 
-The NL-means algorithm {cite}`buadesNonLocalAlgorithmImage2005` extends neighborhood filtering algorithms, such as the bilateral filter, by comparing the similarity not of the individual pixels, but of the neighborhoods centered at the pixels. Somewhat informally, each pixel $i$, in a neighborhood $\mathbb{N}_i$ of some fixed size $s$, is the weighted sum of the similarities between $\mathbb{N}_i$ and every other neighborhood $\mathbb{N}_j$ for $j\in I$.
+The NL-means algorithm {cite}`buadesNonLocalAlgorithmImage2005` extends neighborhood filtering algorithms, such as the bilateral filter, by comparing the similarity not of the individual pixels, but of the neighborhoods centered at the pixels. Somewhat informally, each pixel $i$, in a neighborhood $\mathcal{N}_i$ of some fixed size $s$, is the weighted sum of the similarities between $\mathcal{N}_i$ and every other neighborhood $\mathcal{N}_j$ for $j\in I$.
 
-More precisely, let $v=\{v(i) | i \in I\}$ be a noisy image, $i$, be a pixel in that image, and $\mathbb{N}_i$ be a (square) neighborhood of size $s$ centered on pixel $i$, then the estimated value NL(v)(i), for pixel $i$, is:
+More precisely, let $v=\{v(i) | i \in I\}$ be a noisy image, $i$, be a pixel in that image, and $\mathcal{N}_i$ be a (square) neighborhood of size $s$ centered on pixel $i$, then the estimated value NL(v)(i), for pixel $i$, is:
 
 ```{math}
 :label: nl_means
-NL[V](i) = \displaystyle\sum_{j \in I} w(i,j)v(I,j),
+NL(v)(i) = \displaystyle\sum_{j \in I} w(i,j)v(i,j),
 ```
 
-where the set of weights ${w(i,j)}_j$ depend on the similarity between the neighborhoods of pixel $i$, $\mathbb{N}_i$ and pixel $j$, $\mathbb{N}_j$,  and satisfy conditions $0 \le w(i,j) \le 1$ and $\dislaystyle\sum_j w(i,j) = 1$.
+where the set of weights ${w(i,j)}_j$ depend on the similarity between the neighborhoods of pixel $i$, $\mathcal{N}_i$ and pixel $j$, $\mathcal{N}_j$,  and satisfy conditions $0 \le w(i,j) \le 1$ and $\displaystyle\sum_j w(i,j) = 1$.
 
-We describe the similarity between the neighborhoods $\mathbb{N}_i$ and $\mathbb{N}_j$ in terms of the intensity gray level vectors $v(\mathbb{N}_i)$ and $v(\mathbb{N}_j)$, where $\mathbb{N}_k$ denotes a square neighborhood of fixed size and centered at pixel $k$.
+We describe the similarity between the neighborhoods $\mathcal{N}_i$ and $\mathcal{N}_j$ in terms of the intensity gray level vectors $v(\mathcal{N}_i)$ and $v(\mathcal{N}_j)$, where $\mathcal{N}_k$ denotes a square neighborhood of fixed size and centered at pixel $k$.
 
-The similarity is measured as a decreasing function of the weighted Euclidean distance, $||v(\mathbb{N}_i) - v(\mathbb{N}_j)||^2_{2,\alpha}$, where $\alpha > 0$ is the standard deviation of the Gaussian kernel.
+The similarity is measured as a decreasing function of the weighted Euclidean distance, $||v(\mathcal{N}_i) - v(\mathcal{N}_j)||^2_{2,\alpha}$, where $\alpha > 0$ is the standard deviation of the Gaussian kernel.
 Hence, the weights are defined as:
 
 ```{math}
 :label: nl_means_weights
-w(i,j) = \frac{1}{Z(i)}e^{-\frac{||v(\mathbb{N}_i) - v(\mathbb{N}_j)||^2_{2,\alpha}}{h^2}},
+w(i,j) = \frac{1}{Z(i)}e^{-\frac{||v(\mathcal{N}_i) - v(\mathcal{N}_j)||^2_{2,\alpha}}{h^2}},
 ```
 
 where $Z(i)$ is the normalizing constant:
 
 ```{math}
 :label: nl_means_nc
-Z(i) = \sum_j e^{-\frac{||v(\mathbb{N}_i)-v(\mathbb{N}_j)||^2_{2,\alpha}}{h^2}},
+Z(i) = \sum_j e^{-\frac{||v(\mathcal{N}_i)-v(\mathcal{N}_j)||^2_{2,\alpha}}{h^2}},
 ```
 
 and the parameter $h$ controls the decay of the exponential function and therefore the decay of the weights as a function of the Euclidean distances {cite}`buadesNonLocalAlgorithmImage2005`.
 
-The original NL-means algorithm compares the neighborhood of each pixel $i$, with the neighborhoods of every other pixel $j \forall \n I$! This has a computational complexity that is quadratic in the number of pixels in the image. In practice, the search for similar neighborhoods is often restricted to a search window centered on the pixel itself, instead of the whole image.
+The original NL-means algorithm compares the neighborhood of each pixel $i$, with the neighborhoods of every other pixel $j$ $\forall j \in I$! This has a computational complexity that is quadratic in the number of pixels in the image. In practice, the search for similar neighborhoods is often restricted to a search window centered on the pixel itself, instead of the whole image.
 
-In {numref}`nlmeans_gaussian_characteristics_fig`, a non-local means filter with $h=10$, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.
+In {numref}`nlmeans_gaussian_characteristics_fig`, a non-local means filter with $h=40$, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
 analyzer = NLMeansFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze()
+fig = analyzer.analyze(h=40)
 glue("nlmeans_gaussian_characteristics", fig)
 ```
 
@@ -673,7 +675,7 @@ name: nlmeans_gaussian_characteristics_fig
 Non-Local Means Filter Performance Characteristics with Gaussian Noise
 ```
 
-{numref}`nlmeans_gaussian_characteristics_fig`(c)
+{numref}`nlmeans_gaussian_characteristics_fig`(c) shows some residual noise in the tissues which, upon close examination, obscures some fine detail. The histogram in {numref}`nlmeans_gaussian_characteristics_fig`(g) has a shape that more closely resembles those of the linear filters, than those of the other non-linear filters.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
@@ -691,3 +693,76 @@ name: nlmeans_gaussian_analysis_fig
 ---
 Non-Local Means Filter Performance Analysis with Gaussian Noise
 ```
+
+In {numref}`nlmeans_gaussian_analysis_fig`, we see the effects of various Gaussian kernels on a noisy image. The amount of residual noise is a decreasing function of $h$; however, the blurring effect is shown to increase with larger Gaussian kernels. At $h=80$, almost all of the noise is removed; although, the amount of blur is objectionable.
+
+This wraps up our discussion of spatial domain filtering. In the next section, we will explore filtering in the frequency domain.
+
+### Frequency Domain Filtering
+
+Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.
+
+Representing an image as the sum of sinusoidal waves places it in the frequency domain [^frequency] in which certain denoising and smoothing operations on the periodic structure are possible.
+We convert an image to a spectrum in the frequency domain via the Fourier transformation (FT) {cite}` fourierAnalyticalTheoryHeat2007. It has two components: **magnitude** and **phase**. The magnitude tells us *how much* a certain frequency component is present, and the phase tells us *where* the frequency component is in the image.
+
+To get some intuition into the frequency domain representation, we plot a few FT images. In general, we plot the magnitude images and **not** the phase images [^phase].
+
+[^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Nonetheless, the study of phase images in the frequency domain is best avoided.
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+from bcd.utils.image import convert_uint8
+
+FP_WHITE = "../../figures/frequency_white.jpg"
+FP_HLINE = "../../figures/frequency_hline.png"
+FP_VLINE = "../../figures/frequency_vline.png"
+
+def get_image(fp: str, size: int = 200):
+    img = cv2.imread(fp, cv2.IMREAD_GRAYSCALE)
+    return cv2.resize(img, (size,size))
+    #return convert_uint8(img=img, asfloat=True, invert=True)
+
+def transform_image(img):
+    # Compute fourier transformation
+    img_fft = np.fft.fft2(img)
+    # Shift the zero-frequency to the center
+    img_shifted = np.fft.fftshift(img_fft)
+    # Compute amplitude
+    img_amp = np.abs(img_shifted)
+    img_amp = np.clip(img_amp, a_min=0, a_max=50000)
+    return img_amp
+
+def plot_images(img1, img2, size=(12,6)):
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=size)
+    _ = axes[0].imshow(img1, cmap='gray')
+    _ = axes[1].imshow(img2, cmap='gray')
+
+    for i in range(2):
+        _ = axes[i].set_xticks([])
+        _ = axes[i].set_yticks([])
+    plt.tight_layout()
+    return fig
+
+```
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+# obtain the original images
+img = get_image(fp=FP_WHITE)
+img_fft = transform_image(img)
+fig = plot_images(img1=img,img2=img_fft)
+glue("fft_uniform", fig)
+```
+
+```{glue:figure} fft_uniform
+---
+align: center
+name: fft_uniform_fig
+---
+Fourier Transformation of a White Background
+```
+
+{numref}`fft_uniform_fig` shows

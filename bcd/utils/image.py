@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday November 18th 2023 12:29:17 pm                                             #
-# Modified   : Thursday November 23rd 2023 04:23:06 pm                                             #
+# Modified   : Sunday November 26th 2023 05:59:37 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,9 @@ import numpy as np
 # ------------------------------------------------------------------------------------------------ #
 
 
-def convert_uint8(img: np.ndarray, invert: bool = False) -> np.ndarray:
+def convert_uint8(
+    img: np.ndarray, invert: bool = False, asfloat: bool = False
+) -> np.ndarray:
     """Converts floating point array in [0,1] to unit8 in [9,255]
 
     This is used on the output of skimage random_noise function that returns a normalized
@@ -39,4 +41,6 @@ def convert_uint8(img: np.ndarray, invert: bool = False) -> np.ndarray:
     img = np.array(255 * img, dtype="uint8")
     if invert:
         img = 255 - img
+    if asfloat:
+        img = np.asfarray(img)
     return img

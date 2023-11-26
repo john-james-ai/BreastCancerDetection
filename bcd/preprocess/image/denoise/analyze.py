@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Saturday November 25th 2023 01:00:40 am                                             #
+# Modified   : Sunday November 26th 2023 05:52:23 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -213,7 +213,7 @@ class DenoiserAnalyzer(ABC):
 
         ax7 = fig.add_subplot(spec[1, 3])
         ax7.plot(self._hist_noise)
-        ax7.set_xlabel("(f) Degraded Image Histogram", fontsize=10)
+        ax7.set_xlabel("(h) Degraded Image Histogram", fontsize=10)
         ax7.set_yticks([])
 
         title = string.capwords(s=self._denoiser) + " Performance Characteristics"
@@ -344,7 +344,7 @@ class NLMeansFilterAnalyzer(DenoiserAnalyzer):
             image, templateWindowSize=kernel_size, searchWindowSize=search_window, h=h
         )
 
-    def compare(self, h: tuple = (10, 20, 30, 50)) -> None:
+    def compare(self, h: tuple = (10, 20, 40, 80)) -> None:
         """Compares performance of various denoisers
 
         Args:
@@ -366,7 +366,7 @@ class NLMeansFilterAnalyzer(DenoiserAnalyzer):
         axes = axes.flatten()
 
         for idx, (h, image) in enumerate(images.items()):
-            label = rf"{pfx[idx]} {string.capwords(self._denoiser)} $h$ = {h}, kernel size = 7, search window size = 21."
+            label = rf"{pfx[idx]} {string.capwords(self._denoiser)} $h$ = {h}."
             axes[idx].imshow(image, cmap=self.__CMAP)
             axes[idx].set_xlabel(label, fontsize=10)
             axes[idx].set_xticks([])
