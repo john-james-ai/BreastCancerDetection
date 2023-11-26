@@ -10,10 +10,9 @@ kernelspec:
   language: python
   name: python3
 ---
-
 # Frequency Domain
 
-```{code-cell} ipython3
+```{code-cell}
 :tags: [hide-cell, remove-output]
 import cv2
 import matplotlib.pyplot as plt
@@ -54,7 +53,7 @@ def plot_images(img1, img2, size=(12,6)):
 
 ## White
 
-```{code-cell} ipython3
+```{code-cell}
 # obtain the original images
 img = get_image(fp=FP_WHITE)
 img_fft = transform_image(img)
@@ -63,7 +62,7 @@ fig = plot_images(img1=img,img2=img_fft)
 
 ## Horizontal Lines
 
-```{code-cell} ipython3
+```{code-cell}
 # obtain the original images
 img = get_image(fp=FP_HLINE)
 img_fft = transform_image(img)
@@ -72,7 +71,7 @@ fig = plot_images(img1=img,img2=img_fft)
 
 ## Vertical Lines
 
-```{code-cell} ipython3
+```{code-cell}
 # obtain the original images
 img = get_image(fp=FP_VLINE)
 img_fft = transform_image(img)
@@ -81,7 +80,7 @@ fig = plot_images(img1=img,img2=img_fft)
 
 ## Diagonal Lines
 
-```{code-cell} ipython3
+```{code-cell}
 # obtain the original images
 img = get_image(fp=FP_DLINE)
 img_fft = transform_image(img)
@@ -90,7 +89,7 @@ fig = plot_images(img1=img,img2=img_fft)
 
 ## Mammography
 
-```{code-cell} ipython3
+```{code-cell}
 # obtain the original images
 img = get_image(fp=FP_MMG)
 img_fft = transform_image(img)
