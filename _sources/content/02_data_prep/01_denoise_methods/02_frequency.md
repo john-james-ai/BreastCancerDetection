@@ -23,14 +23,17 @@ To get some intuition into the frequency domain representation, we plot a few th
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../../..")))
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 from bcd.utils.image import convert_uint8
 
-FP_WHITE = "../../figures/frequency_white.jpg"
-FP_HLINE = "../../figures/frequency_hline.png"
-FP_VLINE = "../../figures/frequency_vline.png"
+FP_WHITE = "../../../figures/frequency_white.jpg"
+FP_HLINE = "../../../figures/frequency_hline.png"
+FP_VLINE = "../../../figures/frequency_vline.png"
 
 def get_image(fp: str, size: int = 200):
     img = cv2.imread(fp, cv2.IMREAD_GRAYSCALE)
