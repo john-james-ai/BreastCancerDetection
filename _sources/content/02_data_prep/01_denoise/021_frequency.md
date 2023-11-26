@@ -138,7 +138,7 @@ Moving to the right (f), we have the DFT for the vertical sinusoid. Notice The D
 
 In the next image (g), we have twice the number of cycles (1/2 wavelength), rotated $\frac{\pi}{2}$ radians. Notice in this case, the dots are oriented along the $v-axis$, the direction of the rate of change, and are twice the distance from the origin.
 
-{numref}`fft` (h) shows the DFT for a mammogram image. Notice, the single blob about the origin. Most 8-bit gray-scale images tend to have an average value of about 128, and lots of low-frequency information close to the origin.
+{numref}`fft_fig` (h) shows the DFT for a mammogram image. Notice, the single blob about the origin. Most 8-bit gray-scale images tend to have an average value of about 128, and lots of low-frequency information close to the origin.
 
 The above examples illuminate the important properties of the frequency spectrum of an image:
 
