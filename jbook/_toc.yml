@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 03:42:38 pm                                               #
-# Modified   : Tuesday November 21st 2023 09:32:41 pm                                              #
+# Modified   : Sunday November 26th 2023 08:47:06 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -39,6 +39,9 @@ parts:
   chapters:
   - file: content/02_data_prep/00_overview
   - file: content/02_data_prep/01_denoise
+    sections:
+    - file: content/02_data_prep/01_denoise_methods/01_spatial
+    - file: content/02_data_prep/01_denoise_methods/02_frequency
 - caption: References
   numbered: false
   chapters:

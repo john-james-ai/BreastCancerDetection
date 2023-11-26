@@ -702,12 +702,12 @@ This wraps up our discussion of spatial domain filtering. In the next section, w
 
 Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.
 
-Representing an image as the sum of sinusoidal waves places it in the frequency domain [^frequency] in which certain denoising and smoothing operations on the periodic structure are possible.
+Representing an image as the sum of sinusoidal waves places it in the frequency domain in which certain denoising and smoothing operations on the periodic structure are possible.
 We convert an image to a spectrum in the frequency domain via the Fourier transformation (FT) {cite}` fourierAnalyticalTheoryHeat2007. It has two components: **magnitude** and **phase**. The magnitude tells us *how much* a certain frequency component is present, and the phase tells us *where* the frequency component is in the image.
 
-To get some intuition into the frequency domain representation, we plot a few FT images. In general, we plot the magnitude images and **not** the phase images [^phase].
+To get some intuition into the frequency domain representation, we plot a few the Fourier transformation of a few simple images. In general, we plot the *magnitude* images and **not** the *phase* images [^phase].
 
-[^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Nonetheless, the study of phase images in the frequency domain is best avoided.
+[^phase]: The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Nonetheless, the study of phase images in the frequency domain is best avoided.
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
@@ -723,7 +723,6 @@ FP_VLINE = "../../figures/frequency_vline.png"
 def get_image(fp: str, size: int = 200):
     img = cv2.imread(fp, cv2.IMREAD_GRAYSCALE)
     return cv2.resize(img, (size,size))
-    #return convert_uint8(img=img, asfloat=True, invert=True)
 
 def transform_image(img):
     # Compute fourier transformation
@@ -746,10 +745,6 @@ def plot_images(img1, img2, size=(12,6)):
     plt.tight_layout()
     return fig
 
-```
-
-```{code-cell} ipython3
-:tags: [hide-cell, remove-output]
 # obtain the original images
 img = get_image(fp=FP_WHITE)
 img_fft = transform_image(img)
@@ -765,4 +760,4 @@ name: fft_uniform_fig
 Fourier Transformation of a White Background
 ```
 
-{numref}`fft_uniform_fig` shows
+In {numref}`fft_uniform_fig` we see a constant white image on the left along with its frequency spectrum image on the right. The white dot we see in the center of the  frequency domain
