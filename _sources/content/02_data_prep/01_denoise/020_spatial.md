@@ -13,7 +13,7 @@ kernelspec:
 # Spatial Domain Filtering
 
 ```{code-cell}
-:tags: [hide-cell]
+:tags: [remove-cell]
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
@@ -39,7 +39,7 @@ Most commonly used to reduce additive Gaussian noise, the mean filter is a simpl
 
 The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
 
-```{figure} ../../../figures/kernel.png
+```{figure}
 ---
 name: kernel
 ---
@@ -53,7 +53,7 @@ The mean filter works by convolving the kernel over the image as follows. Let w(
 ^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)
 ```
 
-```{admonition} Kernel Coefficients
+```{admonition}
 Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  $\frac{1}{mn}$, is applied at the end.
 ```
 
@@ -71,7 +71,7 @@ fig = analyzer.analyze()
 glue("mean_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} mean_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: mean_gaussian_characteristics_fig
@@ -85,14 +85,11 @@ Let's examine the effects of various kernel sizes on performance.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
-
-analyzer = MeanFilterAnalyzer()
-analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.compare()
 glue("mean_gaussian_analysis", fig)
 ```
 
-```{glue:figure} mean_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: mean_gaussian_analysis_fig
@@ -120,7 +117,7 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
 
 {numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
-```{figure} ../../../figures/gaussian_kernel.png
+```{figure}
 ---
 name: gaussian_kernel
 ---
@@ -140,7 +137,7 @@ fig = analyzer.analyze()
 glue("gaussian_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} gaussian_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: gaussian_gaussian_characteristics_fig
@@ -154,14 +151,11 @@ Let's examine the effects of various kernel sizes on performance.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
-
-analyzer = GaussianFilterAnalyzer()
-analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.compare()
 glue("gaussian_gaussian_analysis", fig)
 ```
 
-```{glue:figure} gaussian_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: gaussian_gaussian_analysis_fig
@@ -227,7 +221,7 @@ fig = analyzer.analyze()
 glue("median_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} median_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: median_gaussian_characteristics_fig
@@ -248,7 +242,7 @@ fig = analyzer.analyze()
 glue("median_snp_characteristics", fig)
 ```
 
-```{glue:figure} median_snp_characteristics
+```{glue:figure}
 ---
 align: center
 name: median_snp_characteristics_fig
@@ -262,14 +256,11 @@ Again, the noise is largely eliminated with little blurring effect.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
-
-analyzer = MedianFilterAnalyzer()
-analyzer.add_snp_noise(amount=0.4)
 fig = analyzer.compare()
 glue("median_snp_analysis", fig)
 ```
 
-```{glue:figure} median_snp_analysis
+```{glue:figure}
 ---
 align: center
 name: median_snp_analysis_fig
@@ -326,7 +317,7 @@ fig = analyzer.analyze(sigma_range=25, sigma_domain=25)
 glue("bilateral_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} bilateral_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: bilateral_gaussian_characteristics_fig
@@ -338,14 +329,11 @@ Bilateral Filter Performance Characteristics with Gaussian Noise
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
-
-analyzer = BilateralFilterAnalyzer()
-analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.compare()
 glue("bilateral_gaussian_analysis", fig)
 ```
 
-```{glue:figure} bilateral_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: bilateral_gaussian_analysis_fig
@@ -408,7 +396,7 @@ fig = analyzer.analyze(h=40)
 glue("nlmeans_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} nlmeans_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: nlmeans_gaussian_characteristics_fig
@@ -420,14 +408,11 @@ Non-Local Means Filter Performance Characteristics with Gaussian Noise
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
-
-analyzer = NLMeansFilterAnalyzer()
-analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.compare()
 glue("nlmeans_gaussian_analysis", fig)
 ```
 
-```{glue:figure} nlmeans_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: nlmeans_gaussian_analysis_fig

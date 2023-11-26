@@ -469,8 +469,8 @@ document.write(`
 <h1><span class="section-number">2.3.2. </span>Frequency Domain Filtering<a class="headerlink" href="#frequency-domain-filtering" title="Permalink to this heading">#</a></h1>
 <p>Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.</p>
 <p>Representing an image as the sum of sinusoidal waves places it in the frequency domain in which certain denoising and smoothing operations on the periodic structure are possible.
-We convert an image to a spectrum in the frequency domain via the Fourier transformation (FT) {cite}` fourierAnalyticalTheoryHeat2007. It has two components: <strong>magnitude</strong> and <strong>phase</strong>. The magnitude tells us <em>how much</em> a certain frequency component is present, and the phase tells us <em>where</em> the frequency component is in the image.</p>
-<p>To get some intuition into the frequency domain representation, we plot a few the Fourier transformation of a few simple images. In general, we plot the <em>magnitude</em> images and <strong>not</strong> the <em>phase</em> images <a class="footnote-reference brackets" href="#phase" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+We convert an image to a spectrum in the frequency domain via the Discrete Fourier transformation (DFT) <span id="id1">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">28</a>]</span>. It has two components: <strong>magnitude</strong> and <strong>phase</strong>. The magnitude tells us <em>how much</em> a certain frequency component is present, and the phase tells us <em>where</em> the frequency component is in the image.</p>
+<p>To get some intuition into the frequency domain representation, we plot a few the Fourier transformation of a few simple images. In general, we plot the <em>magnitude</em> images and <strong>not</strong> the <em>phase</em> images <a class="footnote-reference brackets" href="#phase" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -546,13 +546,13 @@ We convert an image to a spectrum in the frequency domain via the Fourier transf
 <figure class="align-center" id="fft-fig">
 <img alt="../../../_images/fc21ef7739a76eb6580244986300f385b2bff7739b469ac330f079dd81146ee8.png" src="../../../_images/fc21ef7739a76eb6580244986300f385b2bff7739b469ac330f079dd81146ee8.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.19 </span><span class="caption-text">Discrete Fourier Transformation</span><a class="headerlink" href="#fft-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.6 </span><span class="caption-text">Discrete Fourier Transformation</span><a class="headerlink" href="#fft-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="phase" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery <span id="id2">[<a class="reference internal" href="../../99_references.html#id351" title="Introduction to the Fourier Transform. URL: https://www.cs.unm.edu/~brayer/vision/fourier.html (visited on 2023-11-26).">28</a>]</span>  have not been corroborated. Nonetheless, the study of phase images in the frequency domain is best avoided.</p>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery <span id="id3">[<a class="reference internal" href="../../99_references.html#id351" title="Introduction to the Fourier Transform. URL: https://www.cs.unm.edu/~brayer/vision/fourier.html (visited on 2023-11-26).">29</a>]</span>  have not been corroborated. Nonetheless, the study of phase images in the frequency domain is best avoided.</p>
 </aside>
 </section>
 
