@@ -480,6 +480,7 @@ We convert an image to a spectrum in the frequency domain via the Fourier transf
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">bcd.utils.image</span> <span class="kn">import</span> <span class="n">convert_uint8</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
 <span class="n">FP_WHITE</span> <span class="o">=</span> <span class="s2">&quot;jbook/figures/frequency_white.jpg&quot;</span>
 <span class="n">FP_HLINE</span> <span class="o">=</span> <span class="s2">&quot;jbook/figures/frequency_hline.png&quot;</span>
@@ -520,7 +521,13 @@ We convert an image to a spectrum in the frequency domain via the Fourier transf
 </div>
 </details>
 </div>
-<p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">fft_uniform_fig</span></code> we see a constant white image on the left along with its frequency spectrum image on the right. The white dot we see in the center of the  frequency domain</p>
+<figure class="align-center" id="fft-uniform-fig">
+<img alt="../../../_images/75c2a1699bcfeb923b9ecb8c5414a02d04668b2ee03058e8d2e75eb290a7c875.png" src="../../../_images/75c2a1699bcfeb923b9ecb8c5414a02d04668b2ee03058e8d2e75eb290a7c875.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.19 </span><span class="caption-text">Fourier Transformation of a White Background</span><a class="headerlink" href="#fft-uniform-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In <a class="reference internal" href="#fft-uniform-fig"><span class="std std-numref">Fig. 2.19</span></a> we see a constant white image on the left along with its frequency spectrum image on the right. The white dot we see in the center of the  frequency domain</p>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="phase" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>

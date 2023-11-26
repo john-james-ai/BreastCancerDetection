@@ -30,6 +30,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 from bcd.utils.image import convert_uint8
+from myst_nb import glue
 
 FP_WHITE = "jbook/figures/frequency_white.jpg"
 FP_HLINE = "jbook/figures/frequency_hline.png"
