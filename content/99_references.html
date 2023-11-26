@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="2.5. Frequency Domain Filtering" href="02_data_prep/01_denoise_methods/02_frequency.html" />
+    <link rel="prev" title="2.3.2. Frequency Domain Filtering" href="02_data_prep/01_denoise/021_frequency.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -173,8 +173,13 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="02_data_prep/00_overview.html">1. Overview</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="02_data_prep/01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="02_data_prep/01_denoise_methods/01_spatial.html">2.4. Spatial Domain Filtering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_data_prep/01_denoise_methods/02_frequency.html">2.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_data_prep/01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_data_prep/01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="02_data_prep/01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="02_data_prep/01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02_data_prep/01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -504,8 +509,12 @@ document.write(`
 <span class="label"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></span>
 <p>A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In <em>2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05)</em>, volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1467423/">http://ieeexplore.ieee.org/document/1467423/</a> (visited on 2023-11-15), <a class="reference external" href="https://doi.org/10.1109/CVPR.2005.38">doi:10.1109/CVPR.2005.38</a>.</p>
 </div>
-<div class="citation" id="id351" role="doc-biblioentry">
+<div class="citation" id="id353" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></span>
+<p>Glossary - Frequency Domain. URL: <a class="reference external" href="https://homepages.inf.ed.ac.uk/rbf/HIPR2/freqdom.htm">https://homepages.inf.ed.ac.uk/rbf/HIPR2/freqdom.htm</a> (visited on 2023-11-26).</p>
+</div>
+<div class="citation" id="id351" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></span>
 <p>Introduction to the Fourier Transform. URL: <a class="reference external" href="https://www.cs.unm.edu/~brayer/vision/fourier.html">https://www.cs.unm.edu/~brayer/vision/fourier.html</a> (visited on 2023-11-26).</p>
 </div>
 </div>
@@ -544,12 +553,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="02_data_prep/01_denoise_methods/02_frequency.html"
+       href="02_data_prep/01_denoise/021_frequency.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2.5. </span>Frequency Domain Filtering</p>
+        <p class="prev-next-title"><span class="section-number">2.3.2. </span>Frequency Domain Filtering</p>
       </div>
     </a>
 </div></div>
