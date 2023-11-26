@@ -49,7 +49,7 @@ P(x|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 
 where $\mu$ is the mean gray value, and $\sigma$ is the standard deviation.
 
-```{figure} ../../figures/mammogram_gaussian.png
+```{figure} ../../../figures/mammogram_gaussian.png
 ---
 name: mammogram_gaussian
 ---
@@ -67,7 +67,7 @@ Quantization noise is an unavoidable aspect of ADC. An analog signal is continuo
 
 Let $\triangle$ be the step size, then quantization noise, $q$, is modeled as being mean-centered and uniform between $\frac{-\triangle}{2}$ and $\frac{\triangle}{2}$. The variance is $\frac{\triangle^2}{12}$.
 
-```{figure} ../../figures/mammogram_quantize.png
+```{figure} ../../../figures/mammogram_quantize.png
 ---
 name: mammogram_quantize
 ---
@@ -81,7 +81,7 @@ The image in {numref}`mammogram_quantize` has been quantized to only one bit. No
 
 Speckle noise is signal-dependent, non-Gaussian, multiplicative, and spatial-dependent which makes it one of the more complex image noise models. When an X-ray strikes a surface, it is reflected because of random microscopic variations in the roughness of the surface within one pixel.
 
-```{figure} ../../figures/mammogram_speckle.png
+```{figure} ../../../figures/mammogram_speckle.png
 ---
 name: mammogram_speckle
 ---
@@ -120,7 +120,7 @@ Pr(f=\text{min}) = \frac{\alpha}{2}
 
 For instance, {numref}`mammogram_snp` shows an 8-bit image with $\alpha=0.3$. Approximately 70%  ($1-\alpha$) of the image is unaltered, and 30% ($\alpha$) of the pixels have been changed to black or white.
 
-```{figure} ../../figures/mammogram_snp.png
+```{figure} ../../../figures/mammogram_snp.png
 ---
 name: mammogram_snp
 ---
@@ -140,7 +140,7 @@ where $\lambda$ is the expected number of photons per unit time interval. The un
 
 Since the photon count follows a Poisson distribution, it has the property that the variance, $Var[N]$ is equal to the expectation, $E[N]$. This shows that photon noise is signal-dependent and that the standard deviation grows with the square root of the signal.
 
-```{figure} ../../figures/mammogram_poisson.png
+```{figure} ../../../figures/mammogram_poisson.png
 ---
 name: mammogram_poisson
 ---
