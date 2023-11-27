@@ -12,40 +12,31 @@ kernelspec:
 ---
 # Frequency Domain Filtering
 
-Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.
+Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some denoising operations are complicated, or impossible to perform in the spatial domain.
 
-In his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) {cite}`fourierAnalyticalTheoryHeat2007`, French mathematician Jean Baptiste Joseph Fourier, stated:
+The frequency domain is a space in which images are represented in terms of frequency rather than time. As such, the frequency domain representation reveals information about an image that is otherwise difficult to see, or not visible in the spatial domain. For instance, the frequency domain reveals the frequency with which pixel values change, information that is used as the basis for low-pass denoising algorithms. Many mathematical operations in the time domain have corresponding, and often simpler, operations in the frequency domain. For instance, convolution and differentiation in the time domain correspond to multiplication in the frequency domain.
 
-> Any periodic function, no matter how complicated, can be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient.
+We convert signals from the time domain into the frequency domain using a mathematical operation called the Fourier transform {cite}`fourierAnalyticalTheoryHeat2007`. Introduced by French mathematician Jean Baptiste Joseph Fourier in his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) {cite}`fourierAnalyticalTheoryHeat2007`, the Fourier transform allows any periodic function, no matter how complicated, to be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient. Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.
 
-This non-intuitive idea was met with considerable skepticism; still, it gets even better. Fourier continues:
-
-> Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.
-
-The formulation was called the Fourier transform and the important characteristic, perhaps **the** characteristic that propelled entire industries, reshaped academic disciplines and revolutionized the field of signal processing, states:
-
-> A Function expressed as a Fourier transform can be reconstructed completely via an inverse transform with no loss of information.
-
-This means that we transform a signal from the spatial domain, work in the *Fourier domain* (now called the *frequency domain*), then return to the original domain without losing any information. This and the Fourier series allowed for the first time, practical processing of a range of signals of exceptional importance, from medical monitors, and scanners to modern telecommunications.
+Consequently, a function expressed as a Fourier transform can be reconstructed by an inverse transform in the spatial domain with no loss of information.
 
 ## Discrete Fourier Transform (DFT)
 
-We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier Transformation* (DFT) {cite}`fourierAnalyticalTheoryHeat2007`.  The DFT of an image $f(x,y)$ of size $M \times N$ is an image $F$ of the same size and is defined as:
+The discrete Fourier Transform (DFT) of an image $f(x,y)$ of size $M \times N$ is an image $F$ of the same size and is defined as:
 
 ```{math}
 :label: dft
 F(u,v) = \displaystyle\sum_{x=0}^{M-1}\displaystyle\sum_{y=0}^{N-1} f(x,y)e^{-j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
 
-We can convert an image back into the spatial domain using the *inverse* Discrete Fourier Transformation (IDFT), given by:
+The *inverse* Discrete Fourier Transformation (IDFT), given by:
 
 ```{math}
 :label: dft_inv
 f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} F(u,v)e^{+j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
-To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and **not** the phase images [^phase].
 
-[^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Still, better safe….
+To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images.
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
@@ -151,7 +142,7 @@ The above examples illuminate the important properties of the frequency spectrum
 - The frequency amplitude spectrum is symmetric about the center DC pixel. Hence, the amplitudes of a given frequency F, are contained in a ring of radius F about the center DC pixel.
 - Lower frequencies will present as pairs of dots symmetrically placed a short distance from the origin; whereas, higher frequencies will render pairs of dots symmetrically placed at farther distances from the origin.
 
-As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering.
+As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering. Next, we describe the process by which filtering in the frequency domain is conducted.
 
 ## Filtering in the Frequency Domain
 
@@ -225,3 +216,77 @@ H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}
 ```
 
 where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequency at a distance $D_0$ from the origin, and $D(u,v)$ is given by {eq}`ideal_distance`. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.
+
+{numref}`butterworth_characteristics_fig` illustrates the behavior of the Butterworth Filter on an image degraded by Gaussian noise. The order was set at 10, the cutoff frequency was set to 2000.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+from bcd.preprocess.image.denoise.analyze import ButterworthFilterAnalyzer
+analyzer = ButterworthFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze(order=10, cutoff_frequency=2000)
+glue("butterworth_characteristics", fig)
+```
+
+```{glue:figure} butterworth_characteristics
+---
+align: center
+name: butterworth_characteristics_fig
+---
+Butterworth Filter Performance Characteristics with Gaussian Noise
+```
+
+{numref}`butterworth_characteristics_fig` shows almost no reduction in noise and a slight blurring effect is extant. {numref}`butterworth_analysis_fig` displays the behavior over a range of orders and cutoff frequencies.
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+fig = analyzer.compare()
+glue("butterworth_analysis", fig)
+```
+
+```{glue:figure} butterworth_analysis
+---
+align: center
+name: butterworth_analysis_fig
+---
+Butterworth Filter Performance Analysis with Gaussian Noise
+```
+
+Order values were 6,8, and 10 for the first, second and third rows respectively. The frequency cutoffs were 500, 750, 1000 and 1500 for the first, second, third, and forth columns respectively. At the lower frequency cutoffs, we have a significant amount of blurring as well as apparent ringing effect, most notable at cutoff frequencies 500 and 750. Moving right, the blurring decreases; however, much of the Gaussian noise remains.
+
+Next, we examine the Wavelet domain filter, another frequency domain filter commonly applied in biomedical imaging.
+
+## Wavelet Domain Filter
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+from bcd.preprocess.image.denoise.analyze import WaveletFilterAnalyzer
+analyzer = WaveletFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("wavelet_characteristics", fig)
+```
+
+```{glue:figure} wavelet_characteristics
+---
+align: center
+name: wavelet_characteristics_fig
+---
+Wavelet Domain Filter Performance Characteristics with Gaussian Noise
+```
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+fig = analyzer.compare()
+glue("wavelet_analysis", fig)
+```
+
+```{glue:figure} wavelet_analysis
+---
+align: center
+name: wavelet_analysis_fig
+---
+Wavelet Domain Filter Performance Analysis with Gaussian Noise
+```

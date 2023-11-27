@@ -1,0 +1,59 @@
+Traceback (most recent call last):
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from bcd.preprocess.image.denoise.analyze import WaveletFilterAnalyzer
+analyzer = WaveletFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("wavelet_characteristics", fig)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31merror[0m                                     Traceback (most recent call last)
+Cell [0;32mIn[4], line 4[0m
+[1;32m      2[0m analyzer [38;5;241m=[39m WaveletFilterAnalyzer()
+[1;32m      3[0m analyzer[38;5;241m.[39madd_gaussian_noise(var[38;5;241m=[39m[38;5;241m0.2[39m)
+[0;32m----> 4[0m fig [38;5;241m=[39m [43manalyzer[49m[38;5;241;43m.[39;49m[43manalyze[49m[43m([49m[43m)[49m
+[1;32m      5[0m glue([38;5;124m"[39m[38;5;124mwavelet_characteristics[39m[38;5;124m"[39m, fig)
+
+File [0;32m~/projects/bcd/bcd/preprocess/image/denoise/analyze.py:137[0m, in [0;36mDenoiserAnalyzer.analyze[0;34m(self, *args, **kwargs)[0m
+[1;32m    131[0m [38;5;28mself[39m[38;5;241m.[39m_image_filtered [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mapply_filter(
+[1;32m    132[0m     image[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39m_image_degraded, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs
+[1;32m    133[0m )
+[1;32m    135[0m [38;5;28mself[39m[38;5;241m.[39m_image_noise [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_image_degraded [38;5;241m-[39m [38;5;28mself[39m[38;5;241m.[39m_image_filtered
+[0;32m--> 137[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_create_histograms[49m[43m([49m[43m)[49m
+[1;32m    139[0m [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_build_analysis_plot(fig[38;5;241m=[39mfig)
+
+File [0;32m~/projects/bcd/bcd/preprocess/image/denoise/analyze.py:150[0m, in [0;36mDenoiserAnalyzer._create_histograms[0;34m(self)[0m
+[1;32m    143[0m [38;5;28mself[39m[38;5;241m.[39m_hist_ground_truth [38;5;241m=[39m cv2[38;5;241m.[39mcalcHist(
+[1;32m    144[0m     [[38;5;28mself[39m[38;5;241m.[39m_image_ground_truth], [[38;5;241m0[39m], [38;5;28;01mNone[39;00m, [[38;5;241m256[39m], [[38;5;241m0[39m, [38;5;241m256[39m]
+[1;32m    145[0m )
+[1;32m    146[0m [38;5;28mself[39m[38;5;241m.[39m_hist_degraded [38;5;241m=[39m cv2[38;5;241m.[39mcalcHist(
+[1;32m    147[0m     [[38;5;28mself[39m[38;5;241m.[39m_image_degraded], [[38;5;241m0[39m], [38;5;28;01mNone[39;00m, [[38;5;241m256[39m], [[38;5;241m0[39m, [38;5;241m256[39m]
+[1;32m    148[0m )
+[0;32m--> 150[0m [38;5;28mself[39m[38;5;241m.[39m_hist_filtered [38;5;241m=[39m [43mcv2[49m[38;5;241;43m.[39;49m[43mcalcHist[49m[43m([49m
+[1;32m    151[0m [43m    [49m[43m[[49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_image_filtered[49m[43m][49m[43m,[49m[43m [49m[43m[[49m[38;5;241;43m0[39;49m[43m][49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m,[49m[43m [49m[43m[[49m[38;5;241;43m256[39;49m[43m][49m[43m,[49m[43m [49m[43m[[49m[38;5;241;43m0[39;49m[43m,[49m[43m [49m[38;5;241;43m256[39;49m[43m][49m
+[1;32m    152[0m [43m[49m[43m)[49m
+[1;32m    154[0m [38;5;28mself[39m[38;5;241m.[39m_hist_noise [38;5;241m=[39m cv2[38;5;241m.[39mcalcHist([[38;5;28mself[39m[38;5;241m.[39m_image_noise], [[38;5;241m0[39m], [38;5;28;01mNone[39;00m, [[38;5;241m256[39m], [[38;5;241m0[39m, [38;5;241m256[39m])
+
+[0;31merror[0m: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/histogram.cpp:1008: error: (-210:Unsupported format or combination of formats)  in function 'calcHist'
+
+error: OpenCV(4.8.1) /io/opencv/modules/imgproc/src/histogram.cpp:1008: error: (-210:Unsupported format or combination of formats)  in function 'calcHist'
+
+

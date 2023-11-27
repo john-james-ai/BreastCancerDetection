@@ -11,11 +11,14 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Sunday November 26th 2023 05:52:23 am                                               #
+# Modified   : Monday November 27th 2023 10:09:31 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=no-member, arguments-differ, unused-argument, no-name-in-module
+# ------------------------------------------------------------------------------------------------ #
 import logging
 import string
 from abc import ABC, abstractmethod
@@ -23,14 +26,17 @@ from abc import ABC, abstractmethod
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy
 from PIL import Image
+from skimage.restoration import denoise_wavelet
 from skimage.util import random_noise
 
 from bcd.utils.image import convert_uint8
 
-
 # ------------------------------------------------------------------------------------------------ #
-# pylint: disable=no-member, arguments-differ, unused-argument
+logging.basicConfig(level=logging.INFO)
+
+
 # ------------------------------------------------------------------------------------------------ #
 class DenoiserAnalyzer(ABC):
     """Analyzes a Denoiser
@@ -141,9 +147,11 @@ class DenoiserAnalyzer(ABC):
         self._hist_degraded = cv2.calcHist(
             [self._image_degraded], [0], None, [256], [0, 256]
         )
+
         self._hist_filtered = cv2.calcHist(
             [self._image_filtered], [0], None, [256], [0, 256]
         )
+
         self._hist_noise = cv2.calcHist([self._image_noise], [0], None, [256], [0, 256])
 
     def _plot_filtered_images(self, images: dict) -> plt.Figure:
@@ -378,3 +386,134 @@ class NLMeansFilterAnalyzer(DenoiserAnalyzer):
         plt.tight_layout()
 
         return fig
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                              BUTTERWORTH FILTER VISUALIZER                                       #
+# ------------------------------------------------------------------------------------------------ #
+class ButterworthFilterAnalyzer(DenoiserAnalyzer):
+    """Analyzes the Butterworth Filter"""
+
+    __CMAP = "gray"
+
+    def __init__(self, denoiser: str = "Butterworth Filter") -> None:
+        super().__init__(denoiser)
+
+    def apply_filter(
+        self,
+        image: np.ndarray,
+        order: int,
+        cutoff_frequency: int,
+        sampling_frequency: float = 44100,
+    ) -> np.ndarray:
+        b, a = scipy.signal.butter(
+            N=order,
+            Wn=cutoff_frequency,
+            fs=sampling_frequency,
+            btype="lowpass",
+            analog=False,
+        )
+        return scipy.signal.filtfilt(b, a, image)
+        # return convert_uint8(filtered_image)
+
+    def compare(
+        self,
+        orders: tuple = (6, 8, 10),
+        cutoff_frequencies: tuple = (500, 750, 1000, 1500),
+    ) -> None:
+        """Compares performance of various denoisers
+
+        Args:
+            order (tuple): Values for the order of the filter
+            cutoff_frequencies (tuple): Values for cutoff frequencies.
+        """
+        labels = np.array(
+            [
+                ["(a)", "(b)", "(c)", "(d)"],
+                ["(e)", "(f)", "(g)", "(h)"],
+                ["(i)", "(j)", "(k)", "(l)"],
+            ]
+        )
+
+        if self._image_degraded is None:
+            msg = "Image must be degraded before filtering can be applied."
+            self._logger.exception(msg)
+
+        fig, axes = plt.subplots(figsize=(12, 7), nrows=3, ncols=4)
+
+        for i, order in enumerate(orders):
+            for j, cutoff in enumerate(cutoff_frequencies):
+                img = self.apply_filter(
+                    image=self._image_degraded,
+                    order=order,
+                    cutoff_frequency=cutoff,
+                )
+                label = f"{labels[i,j]} Order: {order} Cutoff: {cutoff}"
+                _ = axes[i, j].imshow(img, cmap="gray")
+                _ = axes[i, j].set_xlabel(label)
+                _ = axes[i, j].set_xticks([])
+                _ = axes[i, j].set_yticks([])
+        plt.tight_layout()
+        return fig
+
+    def _create_histograms(self) -> None:
+        """Creates the four histograms"""
+        self._hist_ground_truth = cv2.calcHist(
+            [self._image_ground_truth], [0], None, [256], [0, 256]
+        )
+        self._hist_degraded = cv2.calcHist(
+            [self._image_degraded], [0], None, [256], [0, 256]
+        )
+
+        self._hist_filtered = cv2.calcHist(
+            [convert_uint8(self._image_filtered)], [0], None, [256], [0, 256]
+        )
+
+        self._hist_noise = cv2.calcHist(
+            [convert_uint8(self._image_noise)], [0], None, [256], [0, 256]
+        )
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                  WAVELET FILTER VISUALIZER                                       #
+# ------------------------------------------------------------------------------------------------ #
+class WaveletFilterAnalyzer(DenoiserAnalyzer):
+    """Analyzes Wavelet Filters"""
+
+    def __init__(self, denoiser: str = "Wavelet Filter") -> None:
+        super().__init__(denoiser)
+
+    def apply_filter(
+        self,
+        image: np.ndarray,
+        sigma: float = None,
+        wavelet: str = "haar",
+        mode: str = "soft",
+        method: str = "BayesShrink",
+        channel_axis: int = None,
+    ) -> np.ndarray:
+        return denoise_wavelet(
+            image=image,
+            sigma=sigma,
+            wavelet=wavelet,
+            mode=mode,
+            method=method,
+            channel_axis=channel_axis,
+        )
+
+    def _create_histograms(self) -> None:
+        """Creates the four histograms"""
+        self._hist_ground_truth = cv2.calcHist(
+            [self._image_ground_truth], [0], None, [256], [0, 256]
+        )
+        self._hist_degraded = cv2.calcHist(
+            [self._image_degraded], [0], None, [256], [0, 256]
+        )
+
+        self._hist_filtered = cv2.calcHist(
+            [convert_uint8(self._image_filtered)], [0], None, [256], [0, 256]
+        )
+
+        self._hist_noise = cv2.calcHist(
+            [convert_uint8(self._image_noise)], [0], None, [256], [0, 256]
+        )
