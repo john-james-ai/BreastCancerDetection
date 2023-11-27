@@ -600,7 +600,7 @@ document.write(`
 <li><p>The frequency amplitude spectrum is symmetric about the center DC pixel. Hence, the amplitudes of a given frequency F, are contained in a ring of radius F about the center DC pixel.</p></li>
 <li><p>Lower frequencies will present as pairs of dots symmetrically placed a short distance from the origin; whereas, higher frequencies will render pairs of dots symmetrically placed at farther distances from the origin.</p></li>
 </ul>
-<p>As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering.</p>
+<p>As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering. Next, we describe the process by which filtering in the frequency domain is conducted.</p>
 </section>
 <section id="filtering-in-the-frequency-domain">
 <h2>Filtering in the Frequency Domain<a class="headerlink" href="#filtering-in-the-frequency-domain" title="Permalink to this heading">#</a></h2>
@@ -654,7 +654,7 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-butterworth-freq">
 <span class="eqno">(2.23)<a class="headerlink" href="#equation-butterworth-freq" title="Permalink to this equation">#</a></span>\[H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(n\)</span> represents the order of the filter, <span class="math notranslate nohighlight">\(D_0\)</span> indicates the cutoff frequency at a distance <span class="math notranslate nohighlight">\(D_0\)</span> from the origin, and <span class="math notranslate nohighlight">\(D(u,v)\)</span> is given by <a class="reference internal" href="#equation-ideal-distance">(2.22)</a>. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.</p>
-<p>In <a class="reference internal" href="#butterworth-fig"><span class="std std-numref">Fig. 2.22</span></a>, we’ve experimented with frequency cutoffs in [500,750,1000,1500] and order values of [6,8,10].</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">butterworth_characteristics_fig</span></code> illustrates the behavior of the Butterworth Filter on an image degraded by by Gaussian</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -662,46 +662,30 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy</span>
-<span class="kn">import</span> <span class="nn">cv2</span>
-
-<span class="n">FP_IMAGE</span> <span class="o">=</span> <span class="s2">&quot;jbook/figures/mammogram.png&quot;</span>
-
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">44100</span> <span class="c1"># Sampling rate</span>
-<span class="n">fc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">500</span><span class="p">,</span><span class="mi">750</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1500</span><span class="p">])</span>  <span class="c1"># Cutoff Frequencies</span>
-<span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span> <span class="c1"># Order values</span>
-
-<span class="n">f</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">FP_IMAGE</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
-
-<span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="s2">&quot;(a)&quot;</span><span class="p">,</span> <span class="s2">&quot;(b)&quot;</span><span class="p">,</span> <span class="s2">&quot;(c)&quot;</span><span class="p">,</span> <span class="s2">&quot;(d)&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;(e)&quot;</span><span class="p">,</span> <span class="s2">&quot;(f)&quot;</span><span class="p">,</span> <span class="s2">&quot;(g)&quot;</span><span class="p">,</span> <span class="s2">&quot;(h)&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;(i)&quot;</span><span class="p">,</span> <span class="s1">&#39;(j)&#39;</span><span class="p">,</span> <span class="s2">&quot;(k)&quot;</span><span class="p">,</span> <span class="s2">&quot;(l)&quot;</span><span class="p">]])</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">N</span><span class="p">)):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fc</span><span class="p">)):</span>
-        <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">butter</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">Wn</span><span class="o">=</span><span class="n">fc</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;lowpass&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s2"> Order: </span><span class="si">{</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> Cutoff: </span><span class="si">{</span><span class="n">fc</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;butterworth&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">ButterworthFilterAnalyzer</span>
+<span class="n">analyzer</span> <span class="o">=</span> <span class="n">ButterworthFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">cutoff_frequency</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;butterworth_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="butterworth-fig">
-<img alt="../../../_images/f5cba22116c206f047d97cf83fda792b8f19d8f9ae8273d6466200e40fc2571e.png" src="../../../_images/f5cba22116c206f047d97cf83fda792b8f19d8f9ae8273d6466200e40fc2571e.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Butterworth Filter</span><a class="headerlink" href="#butterworth-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;butterworth_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 </section>
 </section>
 

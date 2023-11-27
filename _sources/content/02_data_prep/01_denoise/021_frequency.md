@@ -142,7 +142,7 @@ The above examples illuminate the important properties of the frequency spectrum
 - The frequency amplitude spectrum is symmetric about the center DC pixel. Hence, the amplitudes of a given frequency F, are contained in a ring of radius F about the center DC pixel.
 - Lower frequencies will present as pairs of dots symmetrically placed a short distance from the origin; whereas, higher frequencies will render pairs of dots symmetrically placed at farther distances from the origin.
 
-As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering.
+As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering. Next, we describe the process by which filtering in the frequency domain is conducted.
 
 ## Filtering in the Frequency Domain
 
@@ -217,46 +217,36 @@ H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}
 
 where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequency at a distance $D_0$ from the origin, and $D(u,v)$ is given by {eq}`ideal_distance`. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.
 
-In {numref}`butterworth_fig`, we've experimented with frequency cutoffs in [500,750,1000,1500] and order values of [6,8,10].
+{numref}`butterworth_characteristics_fig` illustrates the behavior of the Butterworth Filter on an image degraded by by Gaussian
 
-```{code-cell} ipython3
+```{code-cell}
 :tags: [hide-cell, remove-output]
 
-import matplotlib.pyplot as plt
-import numpy as np
-import scipy
-import cv2
-
-FP_IMAGE = "jbook/figures/mammogram.png"
-
-fs = 44100 # Sampling rate
-fc = np.array([500,750,1000,1500])  # Cutoff Frequencies
-N = np.array([6,8,10]) # Order values
-
-f = cv2.imread(FP_IMAGE, cv2.IMREAD_GRAYSCALE)
-
-labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"], ["(i)", '(j)', "(k)", "(l)"]])
-
-fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(12,7))
-
-for i in range(len(N)):
-    for j in range(len(fc)):
-        b, a = scipy.signal.butter(N=N[i], Wn=fc[j], btype='lowpass', analog=False, fs=fs)
-        y = scipy.signal.lfilter(b,a,f)
-        _ = axes[i,j].imshow(y, cmap='gray')
-        label = f"{labels[i,j]} Order: {N[i]} Cutoff: {fc[j]}"
-        _ = axes[i,j].set_xlabel(label)
-        _ = axes[i,j].set_xticks([])
-        _ = axes[i,j].set_yticks([])
-plt.tight_layout()
-
-glue("butterworth", fig)
+from bcd.preprocess.image.denoise.analyze import ButterworthFilterAnalyzer
+analyzer = ButterworthFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze(order=6, cutoff_frequency=1000)
+glue("butterworth_characteristics", fig)
 ```
 
-```{glue:figure} butterworth
+```{glue:figure} butterworth_characteristics
 ---
 align: center
-name: butterworth_fig
+name: butterworth_characteristics_fig
 ---
-Butterworth Filter
+Butterworth Filter Performance Characteristics with Gaussian Noise
+```
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+fig = analyzer.compare()
+glue("butterworth_analysis", fig)
+```
+
+```{glue:figure} butterworth_analysis
+---
+align: center
+name: butterworth_analysis_fig
+---
+Butterworth Filter Performance Analysis with Gaussian Noise
 ```
