@@ -14,32 +14,36 @@ kernelspec:
 
 Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.
 
-Representing an image in the frequency domain makes certain denoising and smoothing operations on the periodic structure of the image possible. The frequency domain is a space in which an image is decomposed into the sum of complex sinusoidal waves; each represented by:
+In his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) {cite}`fourierAnalyticalTheoryHeat2007`, French mathematician Jean Baptiste Joseph Fourier, stated:
 
-```{math}
-:label: wave
-y = A\text{sin}\Bigg(\frac{2\pi x}{\lambda} + \phi \Bigg)
-```
+> Any periodic function, no matter how complicated, can be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient.
 
-where A is the amplitude of the wave, $2\pi$ is the angle measured in radians, equivalent to $360^{\circ}$, $\lambda$ is the wavelength, and $\phi$ is the phase, the amount the wave has shifted along the $x$ axis.
+This non-intuitive idea was met with considerable skepticism; still, it gets even better. Fourier continues:
 
-Each image value at a position, $F$, in the frequency domain, represents the amount that the intensity values in the spatial domain image vary over a specific distance relative to $F$ {cite}`GlossaryFrequencyDomain`.
+> Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.
 
-We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier Transformation* (DFT) {cite}`fourierAnalyticalTheoryHeat2007`.  The DFT of an image $f$ of size $M \times N$ is an image $F$ of the same size and is defined as:
+The formulation was called the Fourier transform and the important characteristic, perhaps **the** characteristic that propelled entire industries, reshaped academic disciplines and revolutionized the field of signal processing, states:
+
+> A Function expressed as a Fourier transform can be reconstructed completely via an inverse transform with no loss of information.
+
+This means that we transform a signal from the spatial domain, work in the *Fourier domain* (now called the *frequency domain*), then return to the original domain without losing any information. This and the Fourier series allowed for the first time, practical processing of a range of signals of exceptional importance, from medical monitors, and scanners to modern telecommunications.
+
+## Discrete Fourier Transform (DFT)
+
+We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier Transformation* (DFT) {cite}`fourierAnalyticalTheoryHeat2007`.  The DFT of an image $f(x,y)$ of size $M \times N$ is an image $F$ of the same size and is defined as:
 
 ```{math}
 :label: dft
-F(u,v) = \displaystyle\sum_{m=0}^{M-1}\displaystyle\sum_{n=0}^{N-1} f(m,n)e^{-j2\pi(\frac{um}{M}+\frac{vn}{N})}
+F(u,v) = \displaystyle\sum_{x=0}^{M-1}\displaystyle\sum_{y=0}^{N-1} f(x,y)e^{-j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
 
-We can convert an image back into the spatial domain using the *inverse* Discrete Fourier Transformation, given by:
+We can convert an image back into the spatial domain using the *inverse* Discrete Fourier Transformation (IDFT), given by:
 
 ```{math}
 :label: dft_inv
-F(x,y) = \frac{1}{MN}\displaystyle\sum_{m=0}^{M-1}\displaystyle\sum_{n=0}^{N-1} F(u,v)e^{+j2\pi(\frac{um}{M}+\frac{vn}{N})}
+f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} F(u,v)e^{+j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
-
-To get some intuition into the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and **not** the phase images [^phase].
+To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and **not** the phase images [^phase].
 
 [^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Still, better safe….
 
@@ -130,7 +134,7 @@ name: fft_fig
 Discrete Fourier Transformation
 ```
 
-In {numref}`fft_fig` we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles),  a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a  mammogram on the top row, along with their frequency spectrum images on the second row.
+In {numref}`fft_fig` we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles), a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a mammogram on the top row, along with their frequency spectrum images on the second row.
 
 The DFT of the white image (e) contains a single dot at the center (origin) of the frequency coordinate system. The color of the dot represents the average intensity in the image and its location indicates the amplitude of the zero-frequency wave, also called the direct current (DC) of the constant white image.
 
@@ -142,27 +146,69 @@ In the next image (g), we have twice the number of cycles (1/2 wavelength), rota
 
 The above examples illuminate the important properties of the frequency spectrum of an image:
 
+- Rotating $f(x,y)$ by an angle $\theta_0$ rotates $F(u,v)$ by the same angle. Conversely, rotating $F(u,v)$ rotates $f(x,y)$ by the same angle,
 - The center pixel of the spectrum image is the average color or gray-level intensity of the image.
 - The frequency amplitude spectrum is symmetric about the center DC pixel. Hence, the amplitudes of a given frequency F, are contained in a ring of radius F about the center DC pixel.
 - Lower frequencies will present as pairs of dots symmetrically placed a short distance from the origin; whereas, higher frequencies will render pairs of dots symmetrically placed at farther distances from the origin.
-- The frequency spectrum contains only frequency amplitude information, no positional data.
 
-As a consequence of the above properties, smoothing, and denoising operations are a relatively simple matter of applying a circular ring mask around the center of the frequency spectrum. The diameter of the mask controls the cut-off frequency. Low-pass smoothing and denoising filters attenuate the high-frequencies outside the mask perimeter and *pass* the low-frequency information inside the mask.  High-pass edge-detecting masks attenuate low-frequency information inside the mask and pass the high-frequency data outside the periphery.
+As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering.
 
-The frequency domain filters that we will be considering are the Butterworth Filter and the Wavelet denoising filter.
+## Filtering in the Frequency Domain
 
-## Butterworth Filter
+The process of filtering in the frequency domain is summarized as follows:
 
-A so-called *ideal* filter attenuates unwanted frequencies from a signal while passing the wanted frequencies with uniform sensitivity. It has a ‘brick wall’ profile, in that the gain increases from zero at the stopband, to the higher gain of the passband at a single frequency. Such a filter is not realizable for several reasons:
+1. Given an input image $f(x,y)$ of size $M \times N$, obtain the padding sizes $P=2M$ and $Q=2N$.
+2. Form a padded image $f_p(x,y)$ of size $P \times Q$ using zero, mirror, or replicate padding.
+3. Shift $f_p(x,y)$ to center the Fourier transform on the  $P \times Q$ frequency rectangle.
+4. Compute DFT, $F(u,v)$, of the shifted image $f_p(x,y)$.
+5. Construct the real symmetric filter transfer function, $H(u,v)$ of size $P \times Q$ with center at ($P/2,Q/2).
+6. Perform the element-wise product $G(u,v)=H(u,v)F(u,v)$ for $i=0,1,2,..,M-1$ and $k=0,1,2,...,N-1$
+7. Obtain the frequency domain representation $g_p(x,y)$ by computing the IDFT of $G(u,v)$.
+8. Extract the filtered image of size $M \times N$ from the top left quadrant of $g_p(x,y)$
 
-- no filter can have an infinite slope at the cutoff frequency,
-- the impulse responses tend to be of infinite length, requiring infinite memory,
-- real-world filters must be causal, in that they depend only upon past and present inputs; however, the impulse response of an ideal low-pass filter is a sinc function that is non-causal, and
-- any filter that cannot be described by a finite order differential/difference equation has no implementable finite-time computable algorithm.
+Next, we will consider three types of frequency domain filters: the *ideal* filter, the Butterworth filter, and the Wavelet domain filter.
 
-A 1930 paper by Stephen Butterworth, a British engineer and physicist  {cite}`ctx8685948790003821` showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of other filters in the frequency domain, such as the Chebyshev filter.
+## Ideal Filter
 
-The Butterworth filter’s stopband begins at the cutoff frequency, the frequency at which the filter’s response begins to roll off. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
+The *ideal* filter attenuates unwanted frequencies from a signal while passing the wanted frequencies with uniform sensitivity. It has a ‘brick wall’ profile, in that the gain increases from zero at the stopband, to the higher gain of the passband at a single frequency. The ideal low-pass filter (ILPF) is defined by the following transfer function:
+
+```{math}
+:label: ideal_transfer
+H(u,v) = \begin{cases}
+    1 & if D(u,v) \le D_0 \\
+    0 & if D(u,v) \gt D_0
+\end{cases}
+```
+
+where $D_0$ is a positive constant, and $D(u,v)$ is the distance between a point $(u,v)$ in the frequency domain and the origin of the $P \times Q$ frequency rectangle; that is:
+
+```{math}
+:label: ideal_distance
+D(u,v) = [(\mu-P/2)^2 + (v-Q/2)^2]^{1/2}
+```
+
+where $P=2M$ and $Q=2N$ are the padded sizes of the image.
+
+{numref}`ideal_filter` shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius $D_0$ are passed; whereas, all frequencies outside the circle are completely attenuated.
+
+```{figure} ../../../figures/ideal_filter.png
+---
+name: ideal_filter
+---
+Ideal Filter
+```
+
+The point of transition between the values $H(u,v)=1$ and $H(u,v)=0$ is called the *cutoff frequency*, the frequency at which the filter’s response drops off.
+
+For a variety of reasons, the ideal filter cannot be realized; however, its behavior can be studied via simulation. And a characteristic of the ideal filter is significant 'ringing', which occurs when the impulse response oscillates at sharp transitions in the step function and increases with the amount of high-frequency content that is passed. This is an unacceptable aspect, particularly in medical imaging where artifacts can affect clinical diagnoses and outcomes.
+
+The Butterworth low-pass filter which we will discuss next, avoids this phenomenon by decaying the impulse response.
+
+## Butterworth Lowpass Filter
+
+A 1930 paper by Stephen Butterworth, a British engineer and physicist {cite}`ctx8685948790003821` showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.
+
+The Butterworth filter’s stopband begins at the cutoff frequency The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
 
 ```{figure} ../../../figures/butterworth.png
 ---
@@ -171,13 +217,11 @@ name: butterworth_ideal
 Ideal Frequency Response for a Butterworth Filter
 ```
 
-Note that the higher-order filters come closer to the ‘ideal’ response.
-
-The generalized equation representing the frequency response of an $n^{th}$ order Butterworth filter is given as:
+Note that the higher-order filters come closer to the ‘ideal’ response. The transfer function of an $n^{th}$ order Butterworth filter is given as:
 
 ```{math}
 :label: butterworth_freq
-H_{j\omega} = \frac{1}{\sqrt{1+\epsilon^2\Bigg(\frac{\omega}{\omega_p}\Bigg)^{2n}}
+H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}
 ```
 
-where $n$ represents the filter order, $\omega$ is equal to $2\pif$ and $\epsilon$ is the maximum pass band gain, $A_{max}$.
+where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequency at a distance $D_0$ from the origin, and $D(u,v)$ is given by {eq}`ideal_distance`. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.

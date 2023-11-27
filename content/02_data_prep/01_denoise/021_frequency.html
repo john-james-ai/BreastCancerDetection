@@ -465,7 +465,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#butterworth-filter">Butterworth Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-fourier-transform-dft">Discrete Fourier Transform (DFT)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-in-the-frequency-domain">Filtering in the Frequency Domain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-filter">Ideal Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#butterworth-lowpass-filter">Butterworth Lowpass Filter</a></li>
 </ul>
             </nav>
         </div>
@@ -480,19 +483,29 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="frequency-domain-filtering">
 <h1><span class="section-number">2.3.2. </span>Frequency Domain Filtering<a class="headerlink" href="#frequency-domain-filtering" title="Permalink to this heading">#</a></h1>
 <p>Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.</p>
-<p>Representing an image in the frequency domain makes certain denoising and smoothing operations on the periodic structure of the image possible. The frequency domain is a space in which an image is decomposed into the sum of complex sinusoidal waves; each represented by:</p>
-<div class="math notranslate nohighlight" id="equation-wave">
-<span class="eqno">(2.19)<a class="headerlink" href="#equation-wave" title="Permalink to this equation">#</a></span>\[y = A\text{sin}\Bigg(\frac{2\pi x}{\lambda} + \phi \Bigg)\]</div>
-<p>where A is the amplitude of the wave, <span class="math notranslate nohighlight">\(2\pi\)</span> is the angle measured in radians, equivalent to <span class="math notranslate nohighlight">\(360^{\circ}\)</span>, <span class="math notranslate nohighlight">\(\lambda\)</span> is the wavelength, and <span class="math notranslate nohighlight">\(\phi\)</span> is the phase, the amount the wave has shifted along the <span class="math notranslate nohighlight">\(x\)</span> axis.</p>
-<p>Each image value at a position, <span class="math notranslate nohighlight">\(F\)</span>, in the frequency domain, represents the amount that the intensity values in the spatial domain image vary over a specific distance relative to <span class="math notranslate nohighlight">\(F\)</span> <span id="id1">[<a class="reference internal" href="../../99_references.html#id353" title="Glossary - Frequency Domain. URL: https://homepages.inf.ed.ac.uk/rbf/HIPR2/freqdom.htm (visited on 2023-11-26).">28</a>]</span>.</p>
-<p>We convert an image from the spatial domain to a spectrum in the frequency domain via the <em>Discrete Fourier Transformation</em> (DFT) <span id="id2">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">29</a>]</span>.  The DFT of an image <span class="math notranslate nohighlight">\(f\)</span> of size <span class="math notranslate nohighlight">\(M \times N\)</span> is an image <span class="math notranslate nohighlight">\(F\)</span> of the same size and is defined as:</p>
+<p>In his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) <span id="id1">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">28</a>]</span>, French mathematician Jean Baptiste Joseph Fourier, stated:</p>
+<blockquote>
+<div><p>Any periodic function, no matter how complicated, can be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient.</p>
+</div></blockquote>
+<p>This non-intuitive idea was met with considerable skepticism; still, it gets even better. Fourier continues:</p>
+<blockquote>
+<div><p>Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.</p>
+</div></blockquote>
+<p>The formulation was called the Fourier transform and the important characteristic, perhaps <strong>the</strong> characteristic that propelled entire industries, reshaped academic disciplines and revolutionized the field of signal processing, states:</p>
+<blockquote>
+<div><p>A Function expressed as a Fourier transform can be reconstructed completely via an inverse transform with no loss of information.</p>
+</div></blockquote>
+<p>This means that we transform a signal from the spatial domain, work in the <em>Fourier domain</em> (now called the <em>frequency domain</em>), then return to the original domain without losing any information. This and the Fourier series allowed for the first time, practical processing of a range of signals of exceptional importance, from medical monitors, and scanners to modern telecommunications.</p>
+<section id="discrete-fourier-transform-dft">
+<h2>Discrete Fourier Transform (DFT)<a class="headerlink" href="#discrete-fourier-transform-dft" title="Permalink to this heading">#</a></h2>
+<p>We convert an image from the spatial domain to a spectrum in the frequency domain via the <em>Discrete Fourier Transformation</em> (DFT) <span id="id2">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">28</a>]</span>.  The DFT of an image <span class="math notranslate nohighlight">\(f(x,y)\)</span> of size <span class="math notranslate nohighlight">\(M \times N\)</span> is an image <span class="math notranslate nohighlight">\(F\)</span> of the same size and is defined as:</p>
 <div class="math notranslate nohighlight" id="equation-dft">
-<span class="eqno">(2.20)<a class="headerlink" href="#equation-dft" title="Permalink to this equation">#</a></span>\[F(u,v) = \displaystyle\sum_{m=0}^{M-1}\displaystyle\sum_{n=0}^{N-1} f(m,n)e^{-j2\pi(\frac{um}{M}+\frac{vn}{N})}\]</div>
-<p>We can convert an image back into the spatial domain using the <em>inverse</em> Discrete Fourier Transformation, given by:</p>
+<span class="eqno">(2.19)<a class="headerlink" href="#equation-dft" title="Permalink to this equation">#</a></span>\[F(u,v) = \displaystyle\sum_{x=0}^{M-1}\displaystyle\sum_{y=0}^{N-1} f(x,y)e^{-j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]</div>
+<p>We can convert an image back into the spatial domain using the <em>inverse</em> Discrete Fourier Transformation (IDFT), given by:</p>
 <div class="math notranslate nohighlight" id="equation-dft-inv">
-<span class="eqno">(2.21)<a class="headerlink" href="#equation-dft-inv" title="Permalink to this equation">#</a></span>\[F(x,y) = \frac{1}{MN}\displaystyle\sum_{m=0}^{M-1}\displaystyle\sum_{n=0}^{N-1} F(u,v)e^{+j2\pi(\frac{um}{M}+\frac{vn}{N})}\]</div>
-<p>To get some intuition into the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and <strong>not</strong> the phase images [^phase].</p>
-<p>[^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery <span id="id3">[<a class="reference internal" href="../../99_references.html#id351" title="Introduction to the Fourier Transform. URL: https://www.cs.unm.edu/~brayer/vision/fourier.html (visited on 2023-11-26).">30</a>]</span>  have not been corroborated. Still, better safe….</p>
+<span class="eqno">(2.20)<a class="headerlink" href="#equation-dft-inv" title="Permalink to this equation">#</a></span>\[f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} F(u,v)e^{+j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]</div>
+<p>To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and <strong>not</strong> the phase images [^phase].</p>
+<p>[^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery <span id="id3">[<a class="reference internal" href="../../99_references.html#id351" title="Introduction to the Fourier Transform. URL: https://www.cs.unm.edu/~brayer/vision/fourier.html (visited on 2023-11-26).">29</a>]</span>  have not been corroborated. Still, better safe….</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -586,42 +599,72 @@ document.write(`
 <p><span class="caption-number">Fig. 2.19 </span><span class="caption-text">Discrete Fourier Transformation</span><a class="headerlink" href="#fft-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In <a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 2.19</span></a> we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles),  a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a  mammogram on the top row, along with their frequency spectrum images on the second row.</p>
+<p>In <a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 2.19</span></a> we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles), a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a mammogram on the top row, along with their frequency spectrum images on the second row.</p>
 <p>The DFT of the white image (e) contains a single dot at the center (origin) of the frequency coordinate system. The color of the dot represents the average intensity in the image and its location indicates the amplitude of the zero-frequency wave, also called the direct current (DC) of the constant white image.</p>
 <p>Moving to the right (f), we have the DFT for the vertical sinusoid. Notice The DFT has two dots placed symmetrically along the <span class="math notranslate nohighlight">\(u-axis\)</span> about the center of the DFT image.  The distance each dot occupies from the origin indicates the frequency with which the intensities are changing.</p>
 <p>In the next image (g), we have twice the number of cycles (1/2 wavelength), rotated <span class="math notranslate nohighlight">\(\frac{\pi}{2}\)</span> radians. Notice in this case, the dots are oriented along the <span class="math notranslate nohighlight">\(v-axis\)</span>, the direction of the rate of change, and are twice the distance from the origin.</p>
 <p><a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 2.19</span></a> (h) shows the DFT for a mammogram image. Notice, the single blob about the origin. Most 8-bit gray-scale images tend to have an average value of about 128, and lots of low-frequency information close to the origin.</p>
 <p>The above examples illuminate the important properties of the frequency spectrum of an image:</p>
 <ul class="simple">
+<li><p>Rotating <span class="math notranslate nohighlight">\(f(x,y)\)</span> by an angle <span class="math notranslate nohighlight">\(\theta_0\)</span> rotates <span class="math notranslate nohighlight">\(F(u,v)\)</span> by the same angle. Conversely, rotating <span class="math notranslate nohighlight">\(F(u,v)\)</span> rotates <span class="math notranslate nohighlight">\(f(x,y)\)</span> by the same angle,</p></li>
 <li><p>The center pixel of the spectrum image is the average color or gray-level intensity of the image.</p></li>
 <li><p>The frequency amplitude spectrum is symmetric about the center DC pixel. Hence, the amplitudes of a given frequency F, are contained in a ring of radius F about the center DC pixel.</p></li>
 <li><p>Lower frequencies will present as pairs of dots symmetrically placed a short distance from the origin; whereas, higher frequencies will render pairs of dots symmetrically placed at farther distances from the origin.</p></li>
-<li><p>The frequency spectrum contains only frequency amplitude information, no positional data.</p></li>
 </ul>
-<p>As a consequence of the above properties, smoothing, and denoising operations are a relatively simple matter of applying a circular ring mask around the center of the frequency spectrum. The diameter of the mask controls the cut-off frequency. Low-pass smoothing and denoising filters attenuate the high-frequencies outside the mask perimeter and <em>pass</em> the low-frequency information inside the mask.  High-pass edge-detecting masks attenuate low-frequency information inside the mask and pass the high-frequency data outside the periphery.</p>
-<p>The frequency domain filters that we will be considering are the Butterworth Filter and the Wavelet denoising filter.</p>
-<section id="butterworth-filter">
-<h2>Butterworth Filter<a class="headerlink" href="#butterworth-filter" title="Permalink to this heading">#</a></h2>
-<p>A so-called <em>ideal</em> filter attenuates unwanted frequencies from a signal while passing the wanted frequencies with uniform sensitivity. It has a ‘brick wall’ profile, in that the gain increases from zero at the stopband, to the higher gain of the passband at a single frequency. Such a filter is not realizable for several reasons:</p>
-<ul class="simple">
-<li><p>no filter can have an infinite slope at the cutoff frequency,</p></li>
-<li><p>the impulse responses tend to be of infinite length, requiring infinite memory,</p></li>
-<li><p>real-world filters must be causal, in that they depend only upon past and present inputs; however, the impulse response of an ideal low-pass filter is a sinc function that is non-causal, and</p></li>
-<li><p>any filter that cannot be described by a finite order differential/difference equation has no implementable finite-time computable algorithm.</p></li>
-</ul>
-<p>A 1930 paper by Stephen Butterworth, a British engineer and physicist  <span id="id4">[]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of other filters in the frequency domain, such as the Chebyshev filter.</p>
-<p>The Butterworth filter’s stopband begins at the cutoff frequency, the frequency at which the filter’s response begins to roll off. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.20</span></a></p>
+<p>As a consequence of the above properties, smoothing, and denoising operations are achieved by high-frequency attenuation, i.e. low-pass filtering.</p>
+</section>
+<section id="filtering-in-the-frequency-domain">
+<h2>Filtering in the Frequency Domain<a class="headerlink" href="#filtering-in-the-frequency-domain" title="Permalink to this heading">#</a></h2>
+<p>The process of filtering in the frequency domain is summarized as follows:</p>
+<ol class="arabic simple">
+<li><p>Given an input image <span class="math notranslate nohighlight">\(f(x,y)\)</span> of size <span class="math notranslate nohighlight">\(M \times N\)</span>, obtain the padding sizes <span class="math notranslate nohighlight">\(P=2M\)</span> and <span class="math notranslate nohighlight">\(Q=2N\)</span>.</p></li>
+<li><p>Form a padded image <span class="math notranslate nohighlight">\(f_p(x,y)\)</span> of size <span class="math notranslate nohighlight">\(P \times Q\)</span> using zero, mirror, or replicate padding.</p></li>
+<li><p>Shift <span class="math notranslate nohighlight">\(f_p(x,y)\)</span> to center the Fourier transform on the  <span class="math notranslate nohighlight">\(P \times Q\)</span> frequency rectangle.</p></li>
+<li><p>Compute DFT, <span class="math notranslate nohighlight">\(F(u,v)\)</span>, of the shifted image <span class="math notranslate nohighlight">\(f_p(x,y)\)</span>.</p></li>
+<li><p>Construct the real symmetric filter transfer function, <span class="math notranslate nohighlight">\(H(u,v)\)</span> of size <span class="math notranslate nohighlight">\(P \times Q\)</span> with center at ($P/2,Q/2).</p></li>
+<li><p>Perform the element-wise product <span class="math notranslate nohighlight">\(G(u,v)=H(u,v)F(u,v)\)</span> for <span class="math notranslate nohighlight">\(i=0,1,2,..,M-1\)</span> and <span class="math notranslate nohighlight">\(k=0,1,2,...,N-1\)</span></p></li>
+<li><p>Obtain the frequency domain representation <span class="math notranslate nohighlight">\(g_p(x,y)\)</span> by computing the IDFT of <span class="math notranslate nohighlight">\(G(u,v)\)</span>.</p></li>
+<li><p>Extract the filtered image of size <span class="math notranslate nohighlight">\(M \times N\)</span> from the top left quadrant of <span class="math notranslate nohighlight">\(g_p(x,y)\)</span></p></li>
+</ol>
+<p>Next, we will consider three types of frequency domain filters: the <em>ideal</em> filter, the Butterworth filter, and the Wavelet domain filter.</p>
+</section>
+<section id="ideal-filter">
+<h2>Ideal Filter<a class="headerlink" href="#ideal-filter" title="Permalink to this heading">#</a></h2>
+<p>The <em>ideal</em> filter attenuates unwanted frequencies from a signal while passing the wanted frequencies with uniform sensitivity. It has a ‘brick wall’ profile, in that the gain increases from zero at the stopband, to the higher gain of the passband at a single frequency. The ideal low-pass filter (ILPF) is defined by the following transfer function:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-transfer">
+<span class="eqno">(2.21)<a class="headerlink" href="#equation-ideal-transfer" title="Permalink to this equation">#</a></span>\[\begin{split}H(u,v) = \begin{cases}
+    1 &amp; if D(u,v) \le D_0 \\
+    0 &amp; if D(u,v) \gt D_0
+\end{cases}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(D_0\)</span> is a positive constant, and <span class="math notranslate nohighlight">\(D(u,v)\)</span> is the distance between a point <span class="math notranslate nohighlight">\((u,v)\)</span> in the frequency domain and the origin of the <span class="math notranslate nohighlight">\(P \times Q\)</span> frequency rectangle; that is:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-distance">
+<span class="eqno">(2.22)<a class="headerlink" href="#equation-ideal-distance" title="Permalink to this equation">#</a></span>\[D(u,v) = [(\mu-P/2)^2 + (v-Q/2)^2]^{1/2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(P=2M\)</span> and <span class="math notranslate nohighlight">\(Q=2N\)</span> are the padded sizes of the image.</p>
+<p><a class="reference internal" href="#id4"><span class="std std-numref">Fig. 2.20</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
+<figure class="align-default" id="id4">
+<img alt="figures/ideal_filter.png" src="figures/ideal_filter.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The point of transition between the values <span class="math notranslate nohighlight">\(H(u,v)=1\)</span> and <span class="math notranslate nohighlight">\(H(u,v)=0\)</span> is called the <em>cutoff frequency</em>, the frequency at which the filter’s response drops off.</p>
+<p>For a variety of reasons, the ideal filter cannot be realized; however, its behavior can be studied via simulation. And a characteristic of the ideal filter is significant ‘ringing’, which occurs when the impulse response oscillates at sharp transitions in the step function and increases with the amount of high-frequency content that is passed. This is an unacceptable aspect, particularly in medical imaging where artifacts can affect clinical diagnoses and outcomes.</p>
+<p>The Butterworth low-pass filter which we will discuss next, avoids this phenomenon by decaying the impulse response.</p>
+</section>
+<section id="butterworth-lowpass-filter">
+<h2>Butterworth Lowpass Filter<a class="headerlink" href="#butterworth-lowpass-filter" title="Permalink to this heading">#</a></h2>
+<p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id5">[<a class="reference internal" href="../../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">30</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
+<p>The Butterworth filter’s stopband begins at the cutoff frequency The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.21</span></a></p>
 <figure class="align-default" id="butterworth-ideal">
 <img alt="../../../_images/butterworth.png" src="../../../_images/butterworth.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.21 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Note that the higher-order filters come closer to the ‘ideal’ response.</p>
-<p>The generalized equation representing the frequency response of an <span class="math notranslate nohighlight">\(n^{th}\)</span> order Butterworth filter is given as:</p>
+<p>Note that the higher-order filters come closer to the ‘ideal’ response. The transfer function of an <span class="math notranslate nohighlight">\(n^{th}\)</span> order Butterworth filter is given as:</p>
 <div class="math notranslate nohighlight" id="equation-butterworth-freq">
-<span class="eqno">(2.22)<a class="headerlink" href="#equation-butterworth-freq" title="Permalink to this equation">#</a></span>\[H_{j\omega} = \frac{1}{\sqrt{1+\epsilon^2\Bigg(\frac{\omega}{\omega_p}\Bigg)^{2n}}\]</div>
-<p>where <span class="math notranslate nohighlight">\(n\)</span> represents the filter order, <span class="math notranslate nohighlight">\(\omega\)</span> is equal to <span class="math notranslate nohighlight">\(2\pif\)</span> and <span class="math notranslate nohighlight">\(\epsilon\)</span> is the maximum pass band gain, <span class="math notranslate nohighlight">\(A_{max}\)</span>.</p>
+<span class="eqno">(2.23)<a class="headerlink" href="#equation-butterworth-freq" title="Permalink to this equation">#</a></span>\[H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> represents the order of the filter, <span class="math notranslate nohighlight">\(D_0\)</span> indicates the cutoff frequency at a distance <span class="math notranslate nohighlight">\(D_0\)</span> from the origin, and <span class="math notranslate nohighlight">\(D(u,v)\)</span> is given by <a class="reference internal" href="#equation-ideal-distance">(2.22)</a>. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.</p>
 </section>
 </section>
 
@@ -692,7 +735,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#butterworth-filter">Butterworth Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-fourier-transform-dft">Discrete Fourier Transform (DFT)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-in-the-frequency-domain">Filtering in the Frequency Domain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-filter">Ideal Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#butterworth-lowpass-filter">Butterworth Lowpass Filter</a></li>
 </ul>
   </nav></div>
 
