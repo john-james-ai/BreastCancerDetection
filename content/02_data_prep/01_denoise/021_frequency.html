@@ -469,6 +469,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-in-the-frequency-domain">Filtering in the Frequency Domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-filter">Ideal Filter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#butterworth-lowpass-filter">Butterworth Lowpass Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wavelet-domain-filter">Wavelet Domain Filter</a></li>
 </ul>
             </nav>
         </div>
@@ -673,7 +674,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-characteristics-fig">
-<img alt="../../../_images/212b8bd17c3a50a704a5a5af6cf9a7061571f4ebfaed5124e4da8118a1bec464.png" src="../../../_images/212b8bd17c3a50a704a5a5af6cf9a7061571f4ebfaed5124e4da8118a1bec464.png" />
+<img alt="../../../_images/c0a161d32afebe461d9d1d4a6a6ea16e7e1fdd620dc432f2cef1c42dd30e8d86.png" src="../../../_images/c0a161d32afebe461d9d1d4a6a6ea16e7e1fdd620dc432f2cef1c42dd30e8d86.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Butterworth Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#butterworth-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -694,13 +695,47 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-analysis-fig">
-<img alt="../../../_images/cfd62eb80529a2177e9755bce505534dcddea1ad58d2d8196c49e678a02695e0.png" src="../../../_images/cfd62eb80529a2177e9755bce505534dcddea1ad58d2d8196c49e678a02695e0.png" />
+<img alt="../../../_images/531c530209496c264b5105ae046431ab3df07090d5a8bd6e0214a7f6e77c759d.png" src="../../../_images/531c530209496c264b5105ae046431ab3df07090d5a8bd6e0214a7f6e77c759d.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">Butterworth Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#butterworth-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Order values were 6,8, and 10 for the first, second and third rows respectively. The frequency cutoffs were 500, 750, 1000 and 1500 for the first, second, third, and forth columns respectively. At the lower frequency cutoffs, we have a significant amount of blurring as well as apparent ringing effect, most notable at cutoff frequencies 500 and 750. Moving right, the blurring decreases; however, much of the Gaussian noise remains.</p>
 <p>Next, we examine the Wavelet domain filter, another frequency domain filter commonly applied in biomedical imaging.</p>
+</section>
+<section id="wavelet-domain-filter">
+<h2>Wavelet Domain Filter<a class="headerlink" href="#wavelet-domain-filter" title="Permalink to this heading">#</a></h2>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
+<span class="n">analyzer</span> <span class="o">=</span> <span class="n">WaveletFilterAnalyzer</span><span class="p">()</span>
+<span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;wavelet_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-cell tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">compare</span><span class="p">()</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;wavelet_analysis&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 </section>
 </section>
 
@@ -775,6 +810,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-in-the-frequency-domain">Filtering in the Frequency Domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-filter">Ideal Filter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#butterworth-lowpass-filter">Butterworth Lowpass Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wavelet-domain-filter">Wavelet Domain Filter</a></li>
 </ul>
   </nav></div>
 

@@ -239,7 +239,6 @@ Butterworth Filter Performance Characteristics with Gaussian Noise
 
 {numref}`butterworth_characteristics_fig` shows almost no reduction in noise and a slight blurring effect is extant. {numref}`butterworth_analysis_fig` displays the behavior over a range of orders and cutoff frequencies.
 
-
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 fig = analyzer.compare()
@@ -257,3 +256,37 @@ Butterworth Filter Performance Analysis with Gaussian Noise
 Order values were 6,8, and 10 for the first, second and third rows respectively. The frequency cutoffs were 500, 750, 1000 and 1500 for the first, second, third, and forth columns respectively. At the lower frequency cutoffs, we have a significant amount of blurring as well as apparent ringing effect, most notable at cutoff frequencies 500 and 750. Moving right, the blurring decreases; however, much of the Gaussian noise remains.
 
 Next, we examine the Wavelet domain filter, another frequency domain filter commonly applied in biomedical imaging.
+
+## Wavelet Domain Filter
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+
+from bcd.preprocess.image.denoise.analyze import WaveletFilterAnalyzer
+analyzer = WaveletFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze()
+glue("wavelet_characteristics", fig)
+```
+
+```{glue:figure} wavelet_characteristics
+---
+align: center
+name: wavelet_characteristics_fig
+---
+Wavelet Domain Filter Performance Characteristics with Gaussian Noise
+```
+
+```{code-cell}
+:tags: [hide-cell, remove-output]
+fig = analyzer.compare()
+glue("wavelet_analysis", fig)
+```
+
+```{glue:figure} wavelet_analysis
+---
+align: center
+name: wavelet_analysis_fig
+---
+Wavelet Domain Filter Performance Analysis with Gaussian Noise
+```
