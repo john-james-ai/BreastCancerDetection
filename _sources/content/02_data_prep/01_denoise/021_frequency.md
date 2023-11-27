@@ -44,7 +44,7 @@ We can convert an image back into the spatial domain using the *inverse* Discret
 f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} F(u,v)e^{+j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
 
-To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and **not** the phase images [^phase].
+To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and **not** the phase images :[^phase].
 
 [^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Still, better safe….
 
@@ -268,5 +268,5 @@ glue("butterworth", fig)
 align: center
 name: butterworth_fig
 ---
-Discrete Fourier Transformation
+Butterworth Filter
 ```
