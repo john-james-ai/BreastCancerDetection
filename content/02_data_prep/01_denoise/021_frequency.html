@@ -482,30 +482,19 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="frequency-domain-filtering">
 <h1><span class="section-number">2.3.2. </span>Frequency Domain Filtering<a class="headerlink" href="#frequency-domain-filtering" title="Permalink to this heading">#</a></h1>
-<p>Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.</p>
-<p>In his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) <span id="id1">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">28</a>]</span>, French mathematician Jean Baptiste Joseph Fourier, stated:</p>
-<blockquote>
-<div><p>Any periodic function, no matter how complicated, can be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient.</p>
-</div></blockquote>
-<p>This non-intuitive idea was met with considerable skepticism; still, it gets even better. Fourier continues:</p>
-<blockquote>
-<div><p>Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.</p>
-</div></blockquote>
-<p>The formulation was called the Fourier transform and the important characteristic, perhaps <strong>the</strong> characteristic that propelled entire industries, reshaped academic disciplines and revolutionized the field of signal processing, states:</p>
-<blockquote>
-<div><p>A Function expressed as a Fourier transform can be reconstructed completely via an inverse transform with no loss of information.</p>
-</div></blockquote>
-<p>This means that we transform a signal from the spatial domain, work in the <em>Fourier domain</em> (now called the <em>frequency domain</em>), then return to the original domain without losing any information. This and the Fourier series allowed for the first time, practical processing of a range of signals of exceptional importance, from medical monitors, and scanners to modern telecommunications.</p>
+<p>Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some denoising operations are complicated, or impossible to perform in the spatial domain.</p>
+<p>The frequency domain is a space in which images are represented in terms of frequency rather than time. As such, the frequency domain representation reveals information about an image that is otherwise difficult to see, or not visible in the spatial domain. For instance, the frequency domain reveals the frequency with which pixel values change, information that is used as the basis for low-pass denoising algorithms. Many mathematical operations in the time domain have corresponding, and often simpler, operations in the frequency domain. For instance, convolution and differentiation in the time domain correspond to multiplication in the frequency domain.</p>
+<p>We convert signals from the time domain into the frequency domain using a mathematical operation called the Fourier transform <span id="id1">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">28</a>]</span>. Introduced by French mathematician Jean Baptiste Joseph Fourier in his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) <span id="id2">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">28</a>]</span>, the Fourier transform allows any periodic function, no matter how complicated, to be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient. Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.</p>
+<p>Consequently, a function expressed as a Fourier transform can be reconstructed by an inverse transform in the spatial domain with no loss of information.</p>
 <section id="discrete-fourier-transform-dft">
 <h2>Discrete Fourier Transform (DFT)<a class="headerlink" href="#discrete-fourier-transform-dft" title="Permalink to this heading">#</a></h2>
-<p>We convert an image from the spatial domain to a spectrum in the frequency domain via the <em>Discrete Fourier Transformation</em> (DFT) <span id="id2">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">28</a>]</span>.  The DFT of an image <span class="math notranslate nohighlight">\(f(x,y)\)</span> of size <span class="math notranslate nohighlight">\(M \times N\)</span> is an image <span class="math notranslate nohighlight">\(F\)</span> of the same size and is defined as:</p>
+<p>The discrete Fourier Transform (DFT) of an image <span class="math notranslate nohighlight">\(f(x,y)\)</span> of size <span class="math notranslate nohighlight">\(M \times N\)</span> is an image <span class="math notranslate nohighlight">\(F\)</span> of the same size and is defined as:</p>
 <div class="math notranslate nohighlight" id="equation-dft">
 <span class="eqno">(2.19)<a class="headerlink" href="#equation-dft" title="Permalink to this equation">#</a></span>\[F(u,v) = \displaystyle\sum_{x=0}^{M-1}\displaystyle\sum_{y=0}^{N-1} f(x,y)e^{-j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]</div>
-<p>We can convert an image back into the spatial domain using the <em>inverse</em> Discrete Fourier Transformation (IDFT), given by:</p>
+<p>The <em>inverse</em> Discrete Fourier Transformation (IDFT), given by:</p>
 <div class="math notranslate nohighlight" id="equation-dft-inv">
 <span class="eqno">(2.20)<a class="headerlink" href="#equation-dft-inv" title="Permalink to this equation">#</a></span>\[f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} F(u,v)e^{+j2\pi(\frac{ux}{M}+\frac{vy}{N})}\]</div>
-<p>To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and <strong>not</strong> the phase images :[^phase].</p>
-<p>[^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery <span id="id3">[<a class="reference internal" href="../../99_references.html#id351" title="Introduction to the Fourier Transform. URL: https://www.cs.unm.edu/~brayer/vision/fourier.html (visited on 2023-11-26).">29</a>]</span>  have not been corroborated. Still, better safe….</p>
+<p>To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -640,11 +629,11 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-ideal-distance">
 <span class="eqno">(2.22)<a class="headerlink" href="#equation-ideal-distance" title="Permalink to this equation">#</a></span>\[D(u,v) = [(\mu-P/2)^2 + (v-Q/2)^2]^{1/2}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P=2M\)</span> and <span class="math notranslate nohighlight">\(Q=2N\)</span> are the padded sizes of the image.</p>
-<p><a class="reference internal" href="#id4"><span class="std std-numref">Fig. 2.20</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
-<figure class="align-default" id="id4">
+<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 2.20</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
+<figure class="align-default" id="id3">
 <img alt="../../../_images/ideal_filter.jpg" src="../../../_images/ideal_filter.jpg" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The point of transition between the values <span class="math notranslate nohighlight">\(H(u,v)=1\)</span> and <span class="math notranslate nohighlight">\(H(u,v)=0\)</span> is called the <em>cutoff frequency</em>, the frequency at which the filter’s response drops off.</p>
@@ -653,7 +642,7 @@ document.write(`
 </section>
 <section id="butterworth-lowpass-filter">
 <h2>Butterworth Lowpass Filter<a class="headerlink" href="#butterworth-lowpass-filter" title="Permalink to this heading">#</a></h2>
-<p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id5">[<a class="reference internal" href="../../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">30</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
+<p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id4">[<a class="reference internal" href="../../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">29</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
 <p>The Butterworth filter’s stopband begins at the cutoff frequency The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.21</span></a></p>
 <figure class="align-default" id="butterworth-ideal">
 <img alt="../../../_images/butterworth.png" src="../../../_images/butterworth.png" />

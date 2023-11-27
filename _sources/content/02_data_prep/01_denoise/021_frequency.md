@@ -12,41 +12,31 @@ kernelspec:
 ---
 # Frequency Domain Filtering
 
-Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some operations are complicated, or impossible to perform in the spatial domain, and; therefore, a different representation is required.
+Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some denoising operations are complicated, or impossible to perform in the spatial domain.
 
-In his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) {cite}`fourierAnalyticalTheoryHeat2007`, French mathematician Jean Baptiste Joseph Fourier, stated:
+The frequency domain is a space in which images are represented in terms of frequency rather than time. As such, the frequency domain representation reveals information about an image that is otherwise difficult to see, or not visible in the spatial domain. For instance, the frequency domain reveals the frequency with which pixel values change, information that is used as the basis for low-pass denoising algorithms. Many mathematical operations in the time domain have corresponding, and often simpler, operations in the frequency domain. For instance, convolution and differentiation in the time domain correspond to multiplication in the frequency domain.
 
-> Any periodic function, no matter how complicated, can be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient.
+We convert signals from the time domain into the frequency domain using a mathematical operation called the Fourier transform {cite}`fourierAnalyticalTheoryHeat2007`. Introduced by French mathematician Jean Baptiste Joseph Fourier in his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) {cite}`fourierAnalyticalTheoryHeat2007`, the Fourier transform allows any periodic function, no matter how complicated, to be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient. Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.
 
-This non-intuitive idea was met with considerable skepticism; still, it gets even better. Fourier continues:
-
-> Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.
-
-The formulation was called the Fourier transform and the important characteristic, perhaps **the** characteristic that propelled entire industries, reshaped academic disciplines and revolutionized the field of signal processing, states:
-
-> A Function expressed as a Fourier transform can be reconstructed completely via an inverse transform with no loss of information.
-
-This means that we transform a signal from the spatial domain, work in the *Fourier domain* (now called the *frequency domain*), then return to the original domain without losing any information. This and the Fourier series allowed for the first time, practical processing of a range of signals of exceptional importance, from medical monitors, and scanners to modern telecommunications.
+Consequently, a function expressed as a Fourier transform can be reconstructed by an inverse transform in the spatial domain with no loss of information.
 
 ## Discrete Fourier Transform (DFT)
 
-We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier Transformation* (DFT) {cite}`fourierAnalyticalTheoryHeat2007`.  The DFT of an image $f(x,y)$ of size $M \times N$ is an image $F$ of the same size and is defined as:
+The discrete Fourier Transform (DFT) of an image $f(x,y)$ of size $M \times N$ is an image $F$ of the same size and is defined as:
 
 ```{math}
 :label: dft
 F(u,v) = \displaystyle\sum_{x=0}^{M-1}\displaystyle\sum_{y=0}^{N-1} f(x,y)e^{-j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
 
-We can convert an image back into the spatial domain using the *inverse* Discrete Fourier Transformation (IDFT), given by:
+The *inverse* Discrete Fourier Transformation (IDFT), given by:
 
 ```{math}
 :label: dft_inv
 f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} F(u,v)e^{+j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
 
-To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and **not** the phase images :[^phase].
-
-[^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Still, better safe….
+To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images.
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
