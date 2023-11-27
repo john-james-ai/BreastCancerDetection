@@ -191,7 +191,7 @@ where $P=2M$ and $Q=2N$ are the padded sizes of the image.
 
 {numref}`ideal_filter` shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius $D_0$ are passed; whereas, all frequencies outside the circle are completely attenuated.
 
-```{figure} ../../../figures/ideal_filter.png
+```{figure} jbook/figures/ideal_filter.jpg
 ---
 name: ideal_filter
 ---
