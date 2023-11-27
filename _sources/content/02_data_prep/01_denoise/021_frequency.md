@@ -43,6 +43,7 @@ We can convert an image back into the spatial domain using the *inverse* Discret
 :label: dft_inv
 f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} F(u,v)e^{+j2\pi(\frac{ux}{M}+\frac{vy}{N})}
 ```
+
 To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images. In general, we plot the magnitude images and **not** the phase images [^phase].
 
 [^phase] The case reports of people who have studied phase images shortly thereafter succumbing to hallucinogenics or ending up in a Tibetan monastery {cite}`IntroductionFourierTransform`  have not been corroborated. Still, better safe….
@@ -225,3 +226,47 @@ H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}
 ```
 
 where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequency at a distance $D_0$ from the origin, and $D(u,v)$ is given by {eq}`ideal_distance`. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.
+
+In {numref}`butterworth_fig`, we've experimented with frequency cutoffs in [500,750,1000,1500] and order values of [6,8,10].
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy
+import cv2
+
+FP_IMAGE = "jbook/figures/mammogram.png"
+
+fs = 44100 # Sampling rate
+fc = np.array([500,750,1000,1500])  # Cutoff Frequencies
+N = np.array([6,8,10]) # Order values
+
+f = cv2.imread(FP_IMAGE, cv2.IMREAD_GRAYSCALE)
+
+labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"], ["(i)", '(j)', "(k)", "(l)"]])
+
+fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(12,7))
+
+for i in range(len(N)):
+    for j in range(len(fc)):
+        b, a = scipy.signal.butter(N=N[i], Wn=fc[j], btype='lowpass', analog=False, fs=fs)
+        y = scipy.signal.lfilter(b,a,f)
+        _ = axes[i,j].imshow(y, cmap='gray')
+        label = f"{labels[i,j]} Order: {N[i]} Cutoff: {fc[j]}"
+        _ = axes[i,j].set_xlabel(label)
+        _ = axes[i,j].set_xticks([])
+        _ = axes[i,j].set_yticks([])
+plt.tight_layout()
+
+glue("butterworth", fig)
+```
+
+```{glue:figure} butterworth
+---
+align: center
+name: butterworth_fig
+---
+Discrete Fourier Transformation
+```
