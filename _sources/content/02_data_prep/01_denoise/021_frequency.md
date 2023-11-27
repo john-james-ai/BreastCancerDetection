@@ -217,7 +217,7 @@ H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}
 
 where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequency at a distance $D_0$ from the origin, and $D(u,v)$ is given by {eq}`ideal_distance`. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.
 
-{numref}`butterworth_characteristics_fig` illustrates the behavior of the Butterworth Filter on an image degraded by by Gaussian
+{numref}`butterworth_characteristics_fig` illustrates the behavior of the Butterworth Filter on an image degraded by Gaussian noise. The order was set at 10, the cutoff frequency was set to 2000.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
@@ -225,7 +225,7 @@ where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequen
 from bcd.preprocess.image.denoise.analyze import ButterworthFilterAnalyzer
 analyzer = ButterworthFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze(order=6, cutoff_frequency=1000)
+fig = analyzer.analyze(order=10, cutoff_frequency=2000)
 glue("butterworth_characteristics", fig)
 ```
 
@@ -236,6 +236,9 @@ name: butterworth_characteristics_fig
 ---
 Butterworth Filter Performance Characteristics with Gaussian Noise
 ```
+
+{numref}`butterworth_characteristics_fig` shows almost no reduction in noise and a slight blurring effect is extant. {numref}`butterworth_analysis_fig` displays the behavior over a range of orders and cutoff frequencies.
+
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
@@ -250,3 +253,7 @@ name: butterworth_analysis_fig
 ---
 Butterworth Filter Performance Analysis with Gaussian Noise
 ```
+
+Order values were 6,8, and 10 for the first, second and third rows respectively. The frequency cutoffs were 500, 750, 1000 and 1500 for the first, second, third, and forth columns respectively. At the lower frequency cutoffs, we have a significant amount of blurring as well as apparent ringing effect, most notable at cutoff frequencies 500 and 750. Moving right, the blurring decreases; however, much of the Gaussian noise remains.
+
+Next, we examine the Wavelet domain filter, another frequency domain filter commonly applied in biomedical imaging.
