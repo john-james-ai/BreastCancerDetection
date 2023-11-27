@@ -25,14 +25,14 @@ where A is the amplitude of the wave, $2\pi$ is the angle measured in radians, e
 
 Each image value at a position, $F$, in the frequency domain, represents the amount that the intensity values in the spatial domain image vary over a specific distance relative to $F$ {cite}`GlossaryFrequencyDomain`.
 
-We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier transformation* (DFT) {cite}`fourierAnalyticalTheoryHeat2007`.  The DFT of an image $f$ of size $M \times N$ is an image $F$ of the same size and is defined as:
+We convert an image from the spatial domain to a spectrum in the frequency domain via the *Discrete Fourier Transformation* (DFT) {cite}`fourierAnalyticalTheoryHeat2007`.  The DFT of an image $f$ of size $M \times N$ is an image $F$ of the same size and is defined as:
 
 ```{math}
 :label: dft
 F(u,v) = \displaystyle\sum_{m=0}^{M-1}\displaystyle\sum_{n=0}^{N-1} f(m,n)e^{-j2\pi(\frac{um}{M}+\frac{vn}{N})}
 ```
 
-We can convert an image back into the spatial domain using the Inverse Discrete Fourier Transformation, given by:
+We can convert an image back into the spatial domain using the *inverse* Discrete Fourier Transformation, given by:
 
 ```{math}
 :label: dft_inv
@@ -148,3 +148,36 @@ The above examples illuminate the important properties of the frequency spectrum
 - The frequency spectrum contains only frequency amplitude information, no positional data.
 
 As a consequence of the above properties, smoothing, and denoising operations are a relatively simple matter of applying a circular ring mask around the center of the frequency spectrum. The diameter of the mask controls the cut-off frequency. Low-pass smoothing and denoising filters attenuate the high-frequencies outside the mask perimeter and *pass* the low-frequency information inside the mask.  High-pass edge-detecting masks attenuate low-frequency information inside the mask and pass the high-frequency data outside the periphery.
+
+The frequency domain filters that we will be considering are the Butterworth Filter and the Wavelet denoising filter.
+
+## Butterworth Filter
+
+A so-called *ideal* filter attenuates unwanted frequencies from a signal while passing the wanted frequencies with uniform sensitivity. It has a ‘brick wall’ profile, in that the gain increases from zero at the stopband, to the higher gain of the passband at a single frequency. Such a filter is not realizable for several reasons:
+
+- no filter can have an infinite slope at the cutoff frequency,
+- the impulse responses tend to be of infinite length, requiring infinite memory,
+- real-world filters must be causal, in that they depend only upon past and present inputs; however, the impulse response of an ideal low-pass filter is a sinc function that is non-causal, and
+- any filter that cannot be described by a finite order differential/difference equation has no implementable finite-time computable algorithm.
+
+A 1930 paper by Stephen Butterworth, a British engineer and physicist  {cite}`ctx8685948790003821` showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of other filters in the frequency domain, such as the Chebyshev filter.
+
+The Butterworth filter’s stopband begins at the cutoff frequency, the frequency at which the filter’s response begins to roll off. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
+
+```{figure} ../../../figures/butterworth.png
+---
+name: butterworth_ideal
+---
+Ideal Frequency Response for a Butterworth Filter
+```
+
+Note that the higher-order filters come closer to the ‘ideal’ response.
+
+The generalized equation representing the frequency response of an $n^{th}$ order Butterworth filter is given as:
+
+```{math}
+:label: butterworth_freq
+H_{j\omega} = \frac{1}{\sqrt{1+\epsilon^2\Bigg(\frac{\omega}{\omega_p}\Bigg)^{2n}}
+```
+
+where $n$ represents the filter order, $\omega$ is equal to $2\pif$ and $\epsilon$ is the maximum pass band gain, $A_{max}$.
