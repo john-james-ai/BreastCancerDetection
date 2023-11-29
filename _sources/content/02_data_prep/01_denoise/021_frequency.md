@@ -317,7 +317,7 @@ This is a universal threshold for the removal of additive Gaussian noise. Specif
 from bcd.preprocess.image.denoise.analyze import WaveletFilterAnalyzer
 analyzer = WaveletFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze(method='Visushrink, sigma=0.15)
+fig = analyzer.analyze(method='Visushrink', sigma=0.15)
 glue("wavelet_visushrink_characteristics", fig)
 ```
 
@@ -348,7 +348,7 @@ where $\sigma^2$ is the noise variance and $\sigma_s$ is the signal variance wit
 from bcd.preprocess.image.denoise.analyze import WaveletFilterAnalyzer
 analyzer = WaveletFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze(method='BayesShrink)
+fig = analyzer.analyze(method='BayesShrink')
 glue("wavelet_bayesshrink_characteristics", fig)
 ```
 

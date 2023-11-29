@@ -682,7 +682,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-characteristics-fig">
-<img alt="../../../_images/b71d5b3189334479b0787dcf6b1314ddb7fe8d68311d5af8f57f95d40784cdb3.png" src="../../../_images/b71d5b3189334479b0787dcf6b1314ddb7fe8d68311d5af8f57f95d40784cdb3.png" />
+<img alt="../../../_images/c960367cb745ded7a196c92a24970215ee7cd798837fb7ae8d629e814bbbc9ab.png" src="../../../_images/c960367cb745ded7a196c92a24970215ee7cd798837fb7ae8d629e814bbbc9ab.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Butterworth Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#butterworth-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -703,7 +703,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-analysis-fig">
-<img alt="../../../_images/1eae82bd795594bed8ca94c7f45b01045eb0460216ed7bda6a8056dad7e56646.png" src="../../../_images/1eae82bd795594bed8ca94c7f45b01045eb0460216ed7bda6a8056dad7e56646.png" />
+<img alt="../../../_images/2b9f2641556b963cda98883f84c8294bf34f824a3c28cf9c7d23d0730630784f.png" src="../../../_images/2b9f2641556b963cda98883f84c8294bf34f824a3c28cf9c7d23d0730630784f.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">Butterworth Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#butterworth-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -758,7 +758,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">WaveletFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;Visushrink, sigma=0.15)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;Visushrink&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
 <span class="n">glue</span><span class="p">(</span><span class="s2">&quot;wavelet_visushrink_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -783,7 +783,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.denoise.analyze</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">WaveletFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;BayesShrink)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;BayesShrink&#39;</span><span class="p">)</span>
 <span class="n">glue</span><span class="p">(</span><span class="s2">&quot;wavelet_bayesshrink_characteristics&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
