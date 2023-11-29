@@ -117,7 +117,7 @@ plt.tight_layout()
 glue("fft", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} fft
 ---
 align: center
 name: fft_fig
@@ -182,7 +182,7 @@ where $P=2M$ and $Q=2N$ are the padded sizes of the image.
 
 {numref}`ideal_filter` shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius $D_0$ are passed; whereas, all frequencies outside the circle are completely attenuated.
 
-```{figure}
+```{figure} ../../../figures/ideal_filter.jpg
 ---
 name: ideal_filter
 ---
@@ -201,7 +201,7 @@ A 1930 paper by Stephen Butterworth, a British engineer and physicist {cite}`ctx
 
 The Butterworth filter’s stopband begins at the cutoff frequency The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
 
-```{figure}
+```{figure} ../../../figures/butterworth.png
 ---
 name: butterworth_ideal
 ---
@@ -229,7 +229,7 @@ fig = analyzer.analyze(order=10, cutoff_frequency=2000)
 glue("butterworth_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} butterworth_characteristics
 ---
 align: center
 name: butterworth_characteristics_fig
@@ -245,7 +245,7 @@ fig = analyzer.compare()
 glue("butterworth_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} butterworth_analysis
 ---
 align: center
 name: butterworth_analysis_fig
