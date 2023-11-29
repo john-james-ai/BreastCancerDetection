@@ -340,7 +340,7 @@ t_b = \frac{\sigma^2}{\sigma_s}
 
 where $\sigma^2$ is the noise variance and $\sigma_s$ is the signal variance without noise. As with VisuShrink, the noise variance is estimated from the subband $HH^1$
 
-{numref}`wavelet_bayesshrink_characteristics` displays a wavelet denoiser using BayesShrink threshold
+{numref}`wavelet_bayesshrink_characteristics_fig` displays a wavelet denoiser using BayesShrink threshold
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
