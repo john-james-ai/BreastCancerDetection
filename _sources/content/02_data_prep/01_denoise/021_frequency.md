@@ -14,7 +14,7 @@ kernelspec:
 
 Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some denoising operations are complicated, or impossible to perform in the spatial domain.
 
-The frequency domain is a space in which images are represented in terms of frequency rather than time. As such, the frequency domain representation reveals information about an image that is otherwise difficult to see, or not visible in the spatial domain. For instance, the frequency domain reveals the frequency with which pixel values change, information that is used as the basis for low-pass denoising algorithms. Many mathematical operations in the time domain have corresponding, and often simpler, operations in the frequency domain. For instance, convolution and differentiation in the time domain correspond to multiplication in the frequency domain.
+The frequency domain is a space in which images are represented in terms of frequency rather than time. As such, the frequency domain representation reveals information about an image that is otherwise difficult to see, or not visible in the spatial domain. In particular, the frequency domain reveals the frequency with which pixel values change, information that is used as the basis for low-pass denoising algorithms. Many mathematical operations in the time domain have corresponding, and often simpler, operations in the frequency domain. For instance, convolution and differentiation in the time domain correspond to multiplication in the frequency domain.
 
 We convert signals from the time domain into the frequency domain using a mathematical operation called the Fourier transform {cite}`fourierAnalyticalTheoryHeat2007`. Introduced by French mathematician Jean Baptiste Joseph Fourier in his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) {cite}`fourierAnalyticalTheoryHeat2007`, the Fourier transform allows any periodic function, no matter how complicated, to be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient. Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.
 
@@ -38,7 +38,7 @@ f(x,y) = \frac{1}{MN}\displaystyle\sum_{u=0}^{M-1}\displaystyle\sum_{v=0}^{N-1} 
 
 To get some intuition into the Fourier transform (FT) and the frequency domain representation, let’s plot a few FT images.
 
-```{code-cell} ipython3
+```{code-cell}
 :tags: [hide-cell, remove-output]
 import os
 if 'jbook' in os.getcwd():
@@ -117,7 +117,7 @@ plt.tight_layout()
 glue("fft", fig)
 ```
 
-```{glue:figure} fft
+```{glue:figure}
 ---
 align: center
 name: fft_fig
@@ -182,7 +182,7 @@ where $P=2M$ and $Q=2N$ are the padded sizes of the image.
 
 {numref}`ideal_filter` shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius $D_0$ are passed; whereas, all frequencies outside the circle are completely attenuated.
 
-```{figure} ../../../figures/ideal_filter.jpg
+```{figure}
 ---
 name: ideal_filter
 ---
@@ -201,7 +201,7 @@ A 1930 paper by Stephen Butterworth, a British engineer and physicist {cite}`ctx
 
 The Butterworth filter’s stopband begins at the cutoff frequency The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
 
-```{figure} ../../../figures/butterworth.png
+```{figure}
 ---
 name: butterworth_ideal
 ---
@@ -229,7 +229,7 @@ fig = analyzer.analyze(order=10, cutoff_frequency=2000)
 glue("butterworth_characteristics", fig)
 ```
 
-```{glue:figure} butterworth_characteristics
+```{glue:figure}
 ---
 align: center
 name: butterworth_characteristics_fig
@@ -245,7 +245,7 @@ fig = analyzer.compare()
 glue("butterworth_analysis", fig)
 ```
 
-```{glue:figure} butterworth_analysis
+```{glue:figure}
 ---
 align: center
 name: butterworth_analysis_fig
@@ -255,9 +255,61 @@ Butterworth Filter Performance Analysis with Gaussian Noise
 
 Order values were 6,8, and 10 for the first, second and third rows respectively. The frequency cutoffs were 500, 750, 1000 and 1500 for the first, second, third, and forth columns respectively. At the lower frequency cutoffs, we have a significant amount of blurring as well as apparent ringing effect, most notable at cutoff frequencies 500 and 750. Moving right, the blurring decreases; however, much of the Gaussian noise remains.
 
-Next, we examine the Wavelet domain filter, another frequency domain filter commonly applied in biomedical imaging.
+The Fourier transform expresses an image as a sum of sine and cosine waves, which go on 'forever', repeating out to positive and negative infinity. They are non-local, by definition and therefore they do not approximate sharp intensity changes very well. Next, we examine an alternative to Fourier transform-based denoisers based upon wavelets which are well-suited for approximating data with sharp discontinuities.
 
-## Wavelet Domain Filter
+## Wavelet Denoising
+
+Wavelet denoising is a non-parametric method that attempts to remove noise and retain the signal regardless of the frequency content of the signal.  Wavelets are small oscillating waveforms that begin from zero, reach a maximum, and then decay quickly back to zero; in contrast to sine and cosine waves which repeat from negative to positive infinity.
+
+### Discrete Wavelet Transform
+
+The Discrete Wavelet Transform (DWT) is the first step in image denoising; whereby, an image is decomposed into a sequence of low-frequency and high-frequency bands.
+
+```{figure} ../../../figures/dwt.png
+---
+name: dwt
+---
+Discrete Wavelet Transform (2-Level)
+```
+
+As indicated in {numref}`dwt`, DWT first level decomposition separates the image into:
+
+- low-frequency bands ($LL^1$) that approximate the original image;
+- horizontal fluctuation detail containing both high and low frequencies ($LH^1$)
+- vertical fluctuation detail containing both high and low frequencies ($HL^1$)
+- diagonal fluctuation detail containing high-frequency information ($HH^1$)
+
+The next level decomposition is applied to the $LL^1$ sub-band only.  This type of 2-D DWT produces a decomposition of approximation coefficients $CA_J$ at level $j$ in the four sub-bands: the approximation $CA_{j+1}$ and the details in three orientations: horizontal, vertical, and diagonal.
+
+As mentioned before, noise tends to dominate high-frequency information. If an appropriate threshold $t$ can be set in the (horizontal, vertical, and diagonal) detail coefficients, we can drop the noise-contaminated detail coefficients to zero; thereby, removing the noise while preserving the signal.
+
+### Threshold Selection and Application
+
+Thresholding is the next step in wavelet image denoising. Core to wavelet denoising, threshold selection is the crucial ingredient in this procedure. Many threshold selection techniques have been proposed; withal, we will be exploring two methods commonly used in biomedical image processing: VisuShrink, and BayesShrink.
+
+#### VisuShrink
+
+VisuShrink {cite}`donohoIdealSpatialAdaptation1994`  uses a threshold $t$ that is proportional to the standard deviation of the noise. It is a hard threshold, and is defined by:
+
+```{math}
+:label: visushrink
+t_v = \sigma \sqrt{2 log M}
+```
+
+where $\sigma$ is the noise variance present in the signal and $M$ represents the number of pixels in the image.
+
+The noise level variance $\sigma$ is estimated by:
+
+```{math}
+:label: visushrink_noise
+\sigma = \frac{(\text{median}|Y_{ij}|)}{0.06745}
+```
+
+where $Y_{ij} \in HH^1$.
+
+This is a universal threshold for the removal of additive Gaussian noise. Specifying $\sigma$ at the noise variance can result in an overly smooth result. Often $\sigma$ less than the noise variance reduces noise while retaining fine detail.
+
+{numref}`wavelet_visushrink_characteristics_fig`displays wavelet denoising using a VisuShrink threshold with $\sigma=0.15$  on Gaussian noise with $\sigma=0.2$
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
@@ -265,28 +317,45 @@ Next, we examine the Wavelet domain filter, another frequency domain filter comm
 from bcd.preprocess.image.denoise.analyze import WaveletFilterAnalyzer
 analyzer = WaveletFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze()
-glue("wavelet_characteristics", fig)
+fig = analyzer.analyze(method='Visushrink, sigma=0.15)
+glue("wavelet_visushrink_characteristics", fig)
 ```
 
-```{glue:figure} wavelet_characteristics
+```{glue:figure} wavelet_visushrink_characteristics
 ---
 align: center
-name: wavelet_characteristics_fig
+name: wavelet_visushrink_characteristics_fig
 ---
-Wavelet Domain Filter Performance Characteristics with Gaussian Noise
+Wavelet Domain Filter Performance Characteristics with VisuShrink Threshold applied to Gaussian Noise
 ```
+
+#### BayesShrink
+
+The BayesShrink method {cite}`changAdaptiveWaveletThresholding2000` minimizes the Bayesian risk, hence the name. It is a subband-dependent, soft threshold, which means that the threshold is adapted to each band of resolution in the wavelet decomposition.  The BayesShrink threshold is given by:
+
+```{math}
+:label: bayesshrink
+t_b = \frac{\sigma^2}{\sigma_s}
+```
+
+where $\sigma^2$ is the noise variance and $\sigma_s$ is the signal variance without noise. As with VisuShrink, the noise variance is estimated from the subband $HH^1$
+
+{numref}`wavelet_bayesshrink_characteristics` displays a wavelet denoiser using BayesShrink threshold
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
-fig = analyzer.compare()
-glue("wavelet_analysis", fig)
+
+from bcd.preprocess.image.denoise.analyze import WaveletFilterAnalyzer
+analyzer = WaveletFilterAnalyzer()
+analyzer.add_gaussian_noise(var=0.2)
+fig = analyzer.analyze(method='BayesShrink)
+glue("wavelet_bayesshrink_characteristics", fig)
 ```
 
-```{glue:figure} wavelet_analysis
+```{glue:figure} wavelet_bayesshrink_characteristics
 ---
 align: center
-name: wavelet_analysis_fig
+name: wavelet_bayesshrink_characteristics_fig
 ---
-Wavelet Domain Filter Performance Analysis with Gaussian Noise
+Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise
 ```
