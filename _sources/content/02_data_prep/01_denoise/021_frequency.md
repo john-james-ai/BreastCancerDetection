@@ -225,7 +225,7 @@ where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequen
 from bcd.preprocess.image.denoise.analyze import ButterworthFilterAnalyzer
 analyzer = ButterworthFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze(order=10, cutoff_frequency=2000)
+fig = analyzer.analyze(order=10, cutoff_frequency=1500)
 glue("butterworth_characteristics", fig)
 ```
 
