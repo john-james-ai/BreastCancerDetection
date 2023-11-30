@@ -199,7 +199,7 @@ The Butterworth low-pass filter which we will discuss next, avoids this phenomen
 
 A 1930 paper by Stephen Butterworth, a British engineer and physicist {cite}`ctx8685948790003821` showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.
 
-The Butterworth filter’s stopband begins at the cutoff frequency The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
+The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
 
 ```{figure} ../../../figures/butterworth.png
 ---
@@ -296,9 +296,9 @@ VisuShrink {cite}`donohoIdealSpatialAdaptation1994`  uses a threshold $t$ that i
 t_v = \sigma \sqrt{2 log M}
 ```
 
-where $\sigma$ is the noise variance present in the signal and $M$ represents the number of pixels in the image.
+where $\sigma$ is the noise standard deviation present in the signal and $M$ represents the number of pixels in the image.
 
-The noise level variance $\sigma$ is estimated by:
+The noise level standad deviation  $\sigma$ is estimated by:
 
 ```{math}
 :label: visushrink_noise
@@ -307,9 +307,9 @@ The noise level variance $\sigma$ is estimated by:
 
 where $Y_{ij} \in HH^1$.
 
-This is a universal threshold for the removal of additive Gaussian noise. Specifying $\sigma$ at the noise variance can result in an overly smooth result. Often $\sigma$ less than the noise variance reduces noise while retaining fine detail.
+This is a universal threshold for the removal of additive Gaussian noise. Specifying $\sigma$ at the noise standard deviation can result in an overly smooth result. Often $\sigma$ less than the noise standard deviation reduces noise while retaining fine detail.
 
-{numref}`wavelet_visushrink_characteristics_fig`displays wavelet denoising using a VisuShrink threshold with $\sigma=0.15$  on Gaussian noise with $\sigma=0.2$
+{numref}`wavelet_visushrink_characteristics_fig` displays wavelet denoising using a VisuShrink threshold with $\sigma^2=0.15$  on Gaussian noise with $\sigma^2=0.2$
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
@@ -359,3 +359,7 @@ name: wavelet_bayesshrink_characteristics_fig
 ---
 Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise
 ```
+
+Wavelet denoising can effectively remove both additive and multiplicative noise from images while preserving fine details and edges. However, it can be computational complex and may produce 'ringing' artifacts around sharp edges in the image.
+
+This covers the denoisers that will be evaluated. Next, we move to the experimentation stage where we select a denoiser for the CBIS-DDSM images.

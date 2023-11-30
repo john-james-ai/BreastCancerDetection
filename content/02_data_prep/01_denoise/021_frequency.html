@@ -652,7 +652,7 @@ document.write(`
 <section id="butterworth-lowpass-filter">
 <h2>Butterworth Lowpass Filter<a class="headerlink" href="#butterworth-lowpass-filter" title="Permalink to this heading">#</a></h2>
 <p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id4">[<a class="reference internal" href="../../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">29</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
-<p>The Butterworth filter’s stopband begins at the cutoff frequency The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.21</span></a></p>
+<p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.21</span></a></p>
 <figure class="align-default" id="butterworth-ideal">
 <img alt="../../../_images/butterworth.png" src="../../../_images/butterworth.png" />
 <figcaption>
@@ -741,13 +741,13 @@ document.write(`
 <p>VisuShrink <span id="id5">[<a class="reference internal" href="../../99_references.html#id355" title="David L Donoho and Iain M Johnstone. Ideal spatial adaptation by wavelet shrinkage. Biometrika, 81(3):425–455, September 1994. URL: https://academic.oup.com/biomet/article/81/3/425/256924 (visited on 2023-11-29), doi:10.1093/biomet/81.3.425.">30</a>]</span>  uses a threshold <span class="math notranslate nohighlight">\(t\)</span> that is proportional to the standard deviation of the noise. It is a hard threshold, and is defined by:</p>
 <div class="math notranslate nohighlight" id="equation-visushrink">
 <span class="eqno">(2.24)<a class="headerlink" href="#equation-visushrink" title="Permalink to this equation">#</a></span>\[t_v = \sigma \sqrt{2 log M}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is the noise variance present in the signal and <span class="math notranslate nohighlight">\(M\)</span> represents the number of pixels in the image.</p>
-<p>The noise level variance <span class="math notranslate nohighlight">\(\sigma\)</span> is estimated by:</p>
+<p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is the noise standard deviation present in the signal and <span class="math notranslate nohighlight">\(M\)</span> represents the number of pixels in the image.</p>
+<p>The noise level standad deviation  <span class="math notranslate nohighlight">\(\sigma\)</span> is estimated by:</p>
 <div class="math notranslate nohighlight" id="equation-visushrink-noise">
 <span class="eqno">(2.25)<a class="headerlink" href="#equation-visushrink-noise" title="Permalink to this equation">#</a></span>\[\sigma = \frac{(\text{median}|Y_{ij}|)}{0.06745}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Y_{ij} \in HH^1\)</span>.</p>
-<p>This is a universal threshold for the removal of additive Gaussian noise. Specifying <span class="math notranslate nohighlight">\(\sigma\)</span> at the noise variance can result in an overly smooth result. Often <span class="math notranslate nohighlight">\(\sigma\)</span> less than the noise variance reduces noise while retaining fine detail.</p>
-<p><a class="reference internal" href="#wavelet-visushrink-characteristics-fig"><span class="std std-numref">Fig. 2.25</span></a>displays wavelet denoising using a VisuShrink threshold with <span class="math notranslate nohighlight">\(\sigma=0.15\)</span>  on Gaussian noise with <span class="math notranslate nohighlight">\(\sigma=0.2\)</span></p>
+<p>This is a universal threshold for the removal of additive Gaussian noise. Specifying <span class="math notranslate nohighlight">\(\sigma\)</span> at the noise standard deviation can result in an overly smooth result. Often <span class="math notranslate nohighlight">\(\sigma\)</span> less than the noise standard deviation reduces noise while retaining fine detail.</p>
+<p><a class="reference internal" href="#wavelet-visushrink-characteristics-fig"><span class="std std-numref">Fig. 2.25</span></a> displays wavelet denoising using a VisuShrink threshold with <span class="math notranslate nohighlight">\(\sigma^2=0.15\)</span>  on Gaussian noise with <span class="math notranslate nohighlight">\(\sigma^2=0.2\)</span></p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -802,6 +802,8 @@ document.write(`
 <p><span class="caption-number">Fig. 2.26 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-bayesshrink-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p>Wavelet denoising can effectively remove both additive and multiplicative noise from images while preserving fine details and edges. However, it can be computational complex and may produce ‘ringing’ artifacts around sharp edges in the image.</p>
+<p>This covers the denoisers that will be evaluated. Next, we move to the experimentation stage where we select a denoiser for the CBIS-DDSM images.</p>
 </section>
 </section>
 </section>
