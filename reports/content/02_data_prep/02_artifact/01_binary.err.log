@@ -22,29 +22,15 @@ if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
 import cv2
+import numpy as np
 import matplotlib.pyplot as plt
+from skimage.filters import threshold_mean
 from myst_nb import glue
-from bcd.utils.image import convert_uint8
 
-img1 = "data/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png"
-img2 = "data/image/2_exp/train/benign/3f72309d-7cd9-4e30-ae81-073adb541bcd.png"
-img3 = "data/image/2_exp/train/benign/97556037-b959-4395-830b-380dcac2d58e.png"
-img4 = "data/image/2_exp/train/malignant/6cdf46d8-596b-47ab-a428-c8769733c93c.png"
-
-img1 = cv2.imread(img1, cv2.IMREAD_GRAYSCALE)
-img2 = cv2.imread(img2, cv2.IMREAD_GRAYSCALE)
-img3 = cv2.imread(img3, cv2.IMREAD_GRAYSCALE)
-img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
-
-img1 = convert_uint8(img1)
-img2 = convert_uint8(img2)
-img3 = convert_uint8(img3)
-img4 = convert_uint8(img4)
-
-r, bm1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
-r, bm2 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY)
-r, bm3 = cv2.threshold(img3, 127, 255, cv2.THRESH_BINARY)
-r, bm4 = cv2.threshold(img4, 127, 255, cv2.THRESH_BINARY)
+bm1 = threshold_mean(img1)
+bm2 = threshold_mean(img2)
+bm3 = threshold_mean(img3)
+bm4 = threshold_mean(img4)
 
 fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
 _ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
@@ -65,18 +51,53 @@ for i in range(2):
 
 plt.tight_layout()
 
-glue("bm1", fig)
+glue("bm2", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[1], line 40[0m
-[1;32m     37[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m2[39m][38;5;241m.[39mimshow(bm3, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
-[1;32m     38[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m3[39m][38;5;241m.[39mimshow(bm4, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
-[0;32m---> 40[0m labels [38;5;241m=[39m [43mnp[49m[38;5;241m.[39marray([[[38;5;124m"[39m[38;5;124m(a)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(b)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(c)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(d)[39m[38;5;124m"[39m], [[38;5;124m"[39m[38;5;124m(e)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(f)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(g)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(h)[39m[38;5;124m"[39m]])
-[1;32m     41[0m [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m2[39m):
-[1;32m     42[0m     [38;5;28;01mfor[39;00m j [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m4[39m):
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[2], line 21[0m
+[1;32m     19[0m _ [38;5;241m=[39m axes[[38;5;241m0[39m,[38;5;241m2[39m][38;5;241m.[39mimshow(img3, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
+[1;32m     20[0m _ [38;5;241m=[39m axes[[38;5;241m0[39m,[38;5;241m3[39m][38;5;241m.[39mimshow(img4, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
+[0;32m---> 21[0m _ [38;5;241m=[39m [43maxes[49m[43m[[49m[38;5;241;43m1[39;49m[43m,[49m[38;5;241;43m0[39;49m[43m][49m[38;5;241;43m.[39;49m[43mimshow[49m[43m([49m[43mbm1[49m[43m,[49m[43m [49m[43mcmap[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mgray[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43maspect[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mauto[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[1;32m     22[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m1[39m][38;5;241m.[39mimshow(bm2, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
+[1;32m     23[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m2[39m][38;5;241m.[39mimshow(bm3, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
 
-[0;31mNameError[0m: name 'np' is not defined
-NameError: name 'np' is not defined
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/matplotlib/__init__.py:1442[0m, in [0;36m_preprocess_data.<locals>.inner[0;34m(ax, data, *args, **kwargs)[0m
+[1;32m   1439[0m [38;5;129m@functools[39m[38;5;241m.[39mwraps(func)
+[1;32m   1440[0m [38;5;28;01mdef[39;00m [38;5;21minner[39m(ax, [38;5;241m*[39margs, data[38;5;241m=[39m[38;5;28;01mNone[39;00m, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[1;32m   1441[0m     [38;5;28;01mif[39;00m data [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[0;32m-> 1442[0m         [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[43max[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;28;43mmap[39;49m[43m([49m[43msanitize_sequence[49m[43m,[49m[43m [49m[43margs[49m[43m)[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m   1444[0m     bound [38;5;241m=[39m new_sig[38;5;241m.[39mbind(ax, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[1;32m   1445[0m     auto_label [38;5;241m=[39m (bound[38;5;241m.[39marguments[38;5;241m.[39mget(label_namer)
+[1;32m   1446[0m                   [38;5;129;01mor[39;00m bound[38;5;241m.[39mkwargs[38;5;241m.[39mget(label_namer))
+
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/matplotlib/axes/_axes.py:5665[0m, in [0;36mAxes.imshow[0;34m(self, X, cmap, norm, aspect, interpolation, alpha, vmin, vmax, origin, extent, interpolation_stage, filternorm, filterrad, resample, url, **kwargs)[0m
+[1;32m   5657[0m [38;5;28mself[39m[38;5;241m.[39mset_aspect(aspect)
+[1;32m   5658[0m im [38;5;241m=[39m mimage[38;5;241m.[39mAxesImage([38;5;28mself[39m, cmap[38;5;241m=[39mcmap, norm[38;5;241m=[39mnorm,
+[1;32m   5659[0m                       interpolation[38;5;241m=[39minterpolation, origin[38;5;241m=[39morigin,
+[1;32m   5660[0m                       extent[38;5;241m=[39mextent, filternorm[38;5;241m=[39mfilternorm,
+[1;32m   5661[0m                       filterrad[38;5;241m=[39mfilterrad, resample[38;5;241m=[39mresample,
+[1;32m   5662[0m                       interpolation_stage[38;5;241m=[39minterpolation_stage,
+[1;32m   5663[0m                       [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[0;32m-> 5665[0m [43mim[49m[38;5;241;43m.[39;49m[43mset_data[49m[43m([49m[43mX[49m[43m)[49m
+[1;32m   5666[0m im[38;5;241m.[39mset_alpha(alpha)
+[1;32m   5667[0m [38;5;28;01mif[39;00m im[38;5;241m.[39mget_clip_path() [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+[1;32m   5668[0m     [38;5;66;03m# image does not already have clipping set, clip to axes patch[39;00m
+
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/matplotlib/image.py:710[0m, in [0;36m_ImageBase.set_data[0;34m(self, A)[0m
+[1;32m    706[0m     [38;5;28mself[39m[38;5;241m.[39m_A [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_A[:, :, [38;5;241m0[39m]
+[1;32m    708[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m ([38;5;28mself[39m[38;5;241m.[39m_A[38;5;241m.[39mndim [38;5;241m==[39m [38;5;241m2[39m
+[1;32m    709[0m         [38;5;129;01mor[39;00m [38;5;28mself[39m[38;5;241m.[39m_A[38;5;241m.[39mndim [38;5;241m==[39m [38;5;241m3[39m [38;5;129;01mand[39;00m [38;5;28mself[39m[38;5;241m.[39m_A[38;5;241m.[39mshape[[38;5;241m-[39m[38;5;241m1[39m] [38;5;129;01min[39;00m [[38;5;241m3[39m, [38;5;241m4[39m]):
+[0;32m--> 710[0m     [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m([38;5;124m"[39m[38;5;124mInvalid shape [39m[38;5;132;01m{}[39;00m[38;5;124m for image data[39m[38;5;124m"[39m
+[1;32m    711[0m                     [38;5;241m.[39mformat([38;5;28mself[39m[38;5;241m.[39m_A[38;5;241m.[39mshape))
+[1;32m    713[0m [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39m_A[38;5;241m.[39mndim [38;5;241m==[39m [38;5;241m3[39m:
+[1;32m    714[0m     [38;5;66;03m# If the input data has values outside the valid range (after[39;00m
+[1;32m    715[0m     [38;5;66;03m# normalisation), we issue a warning and then clip X to the bounds[39;00m
+[1;32m    716[0m     [38;5;66;03m# - otherwise casting wraps extreme values, hiding outliers and[39;00m
+[1;32m    717[0m     [38;5;66;03m# making reliable interpretation impossible.[39;00m
+[1;32m    718[0m     high [38;5;241m=[39m [38;5;241m255[39m [38;5;28;01mif[39;00m np[38;5;241m.[39missubdtype([38;5;28mself[39m[38;5;241m.[39m_A[38;5;241m.[39mdtype, np[38;5;241m.[39minteger) [38;5;28;01melse[39;00m [38;5;241m1[39m
+
+[0;31mTypeError[0m: Invalid shape () for image data
+TypeError: Invalid shape () for image data
 

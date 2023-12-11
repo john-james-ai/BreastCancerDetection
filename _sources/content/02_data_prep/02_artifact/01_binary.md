@@ -31,7 +31,7 @@ where $I$ denotes the image and $M$ indicates the binary mask.
 
 Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image.
 
-To illustrate, let’s create a binary mask using threshold $T=127$.
+To illustrate, let’s create a binary mask using threshold $T=30$.
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
@@ -61,10 +61,10 @@ img2 = convert_uint8(img2)
 img3 = convert_uint8(img3)
 img4 = convert_uint8(img4)
 
-r, bm1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
-r, bm2 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY)
-r, bm3 = cv2.threshold(img3, 127, 255, cv2.THRESH_BINARY)
-r, bm4 = cv2.threshold(img4, 127, 255, cv2.THRESH_BINARY)
+r, bm1 = cv2.threshold(img1, 30, 255, cv2.THRESH_BINARY)
+r, bm2 = cv2.threshold(img2, 30, 255, cv2.THRESH_BINARY)
+r, bm3 = cv2.threshold(img3, 30, 255, cv2.THRESH_BINARY)
+r, bm4 = cv2.threshold(img4, 30, 255, cv2.THRESH_BINARY)
 
 fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
 _ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
@@ -108,9 +108,63 @@ Automated methods can be classified as either global thresholding or adaptive th
 
 ### Global Thresholding
 
-One obvious way of segmenting artifacts from an image is via global thresholding; whereby, a threshold $T$ is selected as a pixel value between the minimum and maximum pixel values in the image. If $T$ applies to the entire image, the process is referred to as **global thresholding**.
+One obvious way of segmenting artifacts from an image is via global thresholding; whereby, a single threshold $T$ is selected as a pixel value between the minimum and maximum pixel values in the image and applied to the entire image.
 
 #### Mean Thresholding
+
+A simple, albiet naive approach is to set $T$ to the mean of the pixel values.  Let's illustrate the mean threshold applied to our test images.
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../../..")))
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from skimage.filters import threshold_mean
+from myst_nb import glue
+
+bm1 = threshold_mean(img1)
+bm2 = threshold_mean(img2)
+bm3 = threshold_mean(img3)
+bm4 = threshold_mean(img4)
+
+fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
+_ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
+_ = axes[0,1].imshow(img2, cmap='gray',aspect='auto')
+_ = axes[0,2].imshow(img3, cmap='gray',aspect='auto')
+_ = axes[0,3].imshow(img4, cmap='gray',aspect='auto')
+_ = axes[1,0].imshow(bm1, cmap='gray', aspect='auto')
+_ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
+_ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
+_ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
+
+labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
+for i in range(2):
+    for j in range(4):
+        _ = axes[i,j].set_xlabel(labels[i,j])
+        _ = axes[i,j].set_xticks([])
+        _ = axes[i,j].set_yticks([])
+
+plt.tight_layout()
+
+glue("bm2", fig)
+```
+
+```{glue:figure} bm2
+---
+align: center
+name: bm2_fig
+---
+Binary Masking with Mean Threshold
+```
+
+### Adaptive Thresholding
+
+#### Adaptive Mean Thresholding
 
 Mean thresholding provides an automated method for selecting a global threshold $T$ when the foreground and background regions are sufficiently distinct. For mean thresholding, the following iterative algorithm can serve this purpose:
 
