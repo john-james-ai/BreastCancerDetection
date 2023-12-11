@@ -35,7 +35,7 @@ The Image Quality Assessment (IQA) was the process by which denoiser algorithms 
 Subjective assessments were performed on a double stimulus continuous quality scale (DSCQS) {cite}`BT500Methodologies`, in which each test image was compared to its associated ground truth image for noise reduction and preservation of fine detail in the breast tissue itself. Both images were marked with quality scores in [0,100], and then the difference between the quality scores of both the ground-truth and test image were calculated on a continuous scale. The DSCQS score was calculated by averaging the quality score differences for all images denoised by a given method. A lower value indicates better image quality and a larger value reflects poorer image quality. The subjective score is finally calculated for each denoiser method as follows:
 
 ```{math}
-:label: mse
+:label: subjective
 \text{Subjective Score} = 100-\text{DSCQS Score}
 ```
 
