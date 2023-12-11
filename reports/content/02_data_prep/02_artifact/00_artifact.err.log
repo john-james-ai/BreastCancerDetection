@@ -18,10 +18,14 @@ Traceback (most recent call last):
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
 import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../../..")))
+
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 from bcd.utils.image import convert_uint8
+from myst_nb import glue
 
 img1 = "data/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png"
 img2 = "data/image/2_exp/train/benign/3f72309d-7cd9-4e30-ae81-073adb541bcd.png"
@@ -43,20 +47,28 @@ _ = axes[0].imshow(img1, cmap='gray', aspect='auto')
 _ = axes[1].imshow(img2, cmap='gray',aspect='auto')
 _ = axes[2].imshow(img3, cmap='gray',aspect='auto')
 _ = axes[3].imshow(img4, cmap='gray',aspect='auto')
+
+labels = np.array(["(a)", "(b)", "(c)", "(d)"])
+for i in range(4):
+    _ = axes[i].set_xlabel(labels[i,j])
+    _ = axes[i].set_xticks([])
+    _ = axes[i].set_yticks([])
+
+
 plt.tight_layout()
 
 glue("artifacts", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[1], line 5[0m
-[1;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mcv2[39;00m
-[1;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[0;32m----> 5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mimage[39;00m [38;5;28;01mimport[39;00m convert_uint8
-[1;32m      7[0m img1 [38;5;241m=[39m [38;5;124m"[39m[38;5;124mdata/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png[39m[38;5;124m"[39m
-[1;32m      8[0m img2 [38;5;241m=[39m [38;5;124m"[39m[38;5;124mdata/image/2_exp/train/benign/3f72309d-7cd9-4e30-ae81-073adb541bcd.png[39m[38;5;124m"[39m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[1], line 34[0m
+[1;32m     32[0m labels [38;5;241m=[39m np[38;5;241m.[39marray([[38;5;124m"[39m[38;5;124m(a)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(b)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(c)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(d)[39m[38;5;124m"[39m])
+[1;32m     33[0m [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m4[39m):
+[0;32m---> 34[0m     _ [38;5;241m=[39m axes[i][38;5;241m.[39mset_xlabel(labels[i,[43mj[49m])
+[1;32m     35[0m     _ [38;5;241m=[39m axes[i][38;5;241m.[39mset_xticks([])
+[1;32m     36[0m     _ [38;5;241m=[39m axes[i][38;5;241m.[39mset_yticks([])
 
-[0;31mModuleNotFoundError[0m: No module named 'bcd'
-ModuleNotFoundError: No module named 'bcd'
+[0;31mNameError[0m: name 'j' is not defined
+NameError: name 'j' is not defined
 

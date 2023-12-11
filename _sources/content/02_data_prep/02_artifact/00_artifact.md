@@ -48,6 +48,14 @@ _ = axes[0].imshow(img1, cmap='gray', aspect='auto')
 _ = axes[1].imshow(img2, cmap='gray',aspect='auto')
 _ = axes[2].imshow(img3, cmap='gray',aspect='auto')
 _ = axes[3].imshow(img4, cmap='gray',aspect='auto')
+
+labels = np.array(["(a)", "(b)", "(c)", "(d)"])
+for i in range(4):
+    _ = axes[i].set_xlabel(labels[i,j])
+    _ = axes[i].set_xticks([])
+    _ = axes[i].set_yticks([])
+
+
 plt.tight_layout()
 
 glue("artifacts", fig)

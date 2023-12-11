@@ -26,10 +26,25 @@ import matplotlib.pyplot as plt
 from myst_nb import glue
 from bcd.utils.image import convert_uint8
 
-r, bm1 = cv2.adaptiveThreshold(img1, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
-r, bm2 = cv2.adaptiveThreshold(img2, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
-r, bm3 = cv2.adaptiveThreshold(img3, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
-r, bm4 = cv2.adaptiveThreshold(img4, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+img1 = "data/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png"
+img2 = "data/image/2_exp/train/benign/3f72309d-7cd9-4e30-ae81-073adb541bcd.png"
+img3 = "data/image/2_exp/train/benign/97556037-b959-4395-830b-380dcac2d58e.png"
+img4 = "data/image/2_exp/train/malignant/6cdf46d8-596b-47ab-a428-c8769733c93c.png"
+
+img1 = cv2.imread(img1, cv2.IMREAD_GRAYSCALE)
+img2 = cv2.imread(img2, cv2.IMREAD_GRAYSCALE)
+img3 = cv2.imread(img3, cv2.IMREAD_GRAYSCALE)
+img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
+
+img1 = convert_uint8(img1)
+img2 = convert_uint8(img2)
+img3 = convert_uint8(img3)
+img4 = convert_uint8(img4)
+
+r, bm1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
+r, bm2 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY)
+r, bm3 = cv2.threshold(img3, 127, 255, cv2.THRESH_BINARY)
+r, bm4 = cv2.threshold(img4, 127, 255, cv2.THRESH_BINARY)
 
 fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
 _ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
@@ -41,20 +56,27 @@ _ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
 _ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
 _ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
 
+labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
+for i in range(2):
+    for j in range(4):
+        _ = axes[i,j].set_xlabel(labels[i,j])
+        _ = axes[i,j].set_xticks([])
+        _ = axes[i,j].set_yticks([])
+
 plt.tight_layout()
 
-glue("bm2", fig)
+glue("bm1", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValueError[0m                                Traceback (most recent call last)
-Cell [0;32mIn[2], line 10[0m
-[1;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmyst_nb[39;00m [38;5;28;01mimport[39;00m glue
-[1;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mimage[39;00m [38;5;28;01mimport[39;00m convert_uint8
-[0;32m---> 10[0m r, bm1 [38;5;241m=[39m cv2[38;5;241m.[39madaptiveThreshold(img1, [38;5;241m255[39m, cv2[38;5;241m.[39mADAPTIVE_THRESH_MEAN_C, cv2[38;5;241m.[39mTHRESH_BINARY, [38;5;241m11[39m,[38;5;241m2[39m)
-[1;32m     11[0m r, bm2 [38;5;241m=[39m cv2[38;5;241m.[39madaptiveThreshold(img2, [38;5;241m255[39m, cv2[38;5;241m.[39mADAPTIVE_THRESH_MEAN_C, cv2[38;5;241m.[39mTHRESH_BINARY, [38;5;241m11[39m,[38;5;241m2[39m)
-[1;32m     12[0m r, bm3 [38;5;241m=[39m cv2[38;5;241m.[39madaptiveThreshold(img3, [38;5;241m255[39m, cv2[38;5;241m.[39mADAPTIVE_THRESH_MEAN_C, cv2[38;5;241m.[39mTHRESH_BINARY, [38;5;241m11[39m,[38;5;241m2[39m)
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[1], line 40[0m
+[1;32m     37[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m2[39m][38;5;241m.[39mimshow(bm3, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
+[1;32m     38[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m3[39m][38;5;241m.[39mimshow(bm4, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
+[0;32m---> 40[0m labels [38;5;241m=[39m [43mnp[49m[38;5;241m.[39marray([[[38;5;124m"[39m[38;5;124m(a)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(b)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(c)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(d)[39m[38;5;124m"[39m], [[38;5;124m"[39m[38;5;124m(e)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(f)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(g)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(h)[39m[38;5;124m"[39m]])
+[1;32m     41[0m [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m2[39m):
+[1;32m     42[0m     [38;5;28;01mfor[39;00m j [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m4[39m):
 
-[0;31mValueError[0m: too many values to unpack (expected 2)
-ValueError: too many values to unpack (expected 2)
+[0;31mNameError[0m: name 'np' is not defined
+NameError: name 'np' is not defined
 

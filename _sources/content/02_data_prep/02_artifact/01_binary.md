@@ -75,6 +75,13 @@ _ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
 _ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
 _ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
 
+labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
+for i in range(2):
+    for j in range(4):
+        _ = axes[i,j].set_xlabel(labels[i,j])
+        _ = axes[i,j].set_xticks([])
+        _ = axes[i,j].set_yticks([])
+
 plt.tight_layout()
 
 glue("bm1", fig)
@@ -124,10 +131,10 @@ import matplotlib.pyplot as plt
 from myst_nb import glue
 from bcd.utils.image import convert_uint8
 
-bm1 = cv2.adaptiveThreshold(img1, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
-bm2 = cv2.adaptiveThreshold(img2, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
-bm3 = cv2.adaptiveThreshold(img3, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
-bm4 = cv2.adaptiveThreshold(img4, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+bm1 = cv2.adaptiveThreshold(img1, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 11,2)
+bm2 = cv2.adaptiveThreshold(img2, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 11,2)
+bm3 = cv2.adaptiveThreshold(img3, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 11,2)
+bm4 = cv2.adaptiveThreshold(img4, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 11,2)
 
 fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
 _ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
@@ -138,6 +145,13 @@ _ = axes[1,0].imshow(bm1, cmap='gray', aspect='auto')
 _ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
 _ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
 _ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
+
+labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
+for i in range(2):
+    for j in range(4):
+        _ = axes[i,j].set_xlabel(labels[i,j])
+        _ = axes[i,j].set_xticks([])
+        _ = axes[i,j].set_yticks([])
 
 plt.tight_layout()
 
