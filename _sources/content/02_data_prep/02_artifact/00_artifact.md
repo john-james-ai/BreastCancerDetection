@@ -22,7 +22,6 @@ import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
-import os
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -61,3 +60,5 @@ name: artifacts_fig
 ---
 Artifacts in Mammogram Images
 ```
+
+Edges, text, annotations, and other objects tend to have pixel intensities similar to those of the ROI. It is, therefore, crucial that such artifacts are removed before the modeling stage. One of the simplest ways to segment artifacts from an image is by binary threshold masking.
