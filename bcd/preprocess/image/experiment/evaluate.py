@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday October 27th 2023 03:24:36 am                                                #
-# Modified   : Monday November 13th 2023 02:18:36 pm                                               #
+# Modified   : Monday December 11th 2023 10:26:30 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -72,7 +72,7 @@ class SSIM(Metric):
     @classmethod
     def compute(cls, orig: np.ndarray, test: np.ndarray) -> float:
         """Computes the score."""
-        return ssidx(orig, test)
+        return ssidx(orig, test, data_range=256)
 
 
 # ------------------------------------------------------------------------------------------------ #

@@ -11,13 +11,14 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday November 18th 2023 12:29:17 pm                                             #
-# Modified   : Sunday November 26th 2023 05:59:37 am                                               #
+# Modified   : Monday December 11th 2023 12:41:04 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Images Utilities"""
 import numpy as np
+from skimage.util import random_noise
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=no-member
@@ -38,9 +39,44 @@ def convert_uint8(
         invert (bool): Whether to invert the colors
 
     """
+    img = img.astype(float)
     img = np.array(255 * img, dtype="uint8")
     if invert:
         img = 255 - img
     if asfloat:
         img = np.asfarray(img)
     return img
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                       NOISER                                                     #
+# ------------------------------------------------------------------------------------------------ #
+class Noiser:
+    """Adds random noise to an image"""
+
+    def __init__(
+        self,
+        mean: float = 0,
+        var_gaussian: float = 0.05,
+        var_speckle: float = 0.01,
+        amount: float = 0.05,
+        svp: float = 0.5,
+    ) -> None:
+        self._mean = mean
+        self._var_gaussian = var_gaussian
+        self._var_speckle = var_speckle
+        self._amount = amount
+        self._svp = svp
+
+    def add_noise(self, image: np.ndarray) -> np.ndarray:
+        image = random_noise(
+            image=image, mode="gaussian", mean=self._mean, var=self._var_gaussian
+        )
+        image = random_noise(
+            image=image, mode="speckle", mean=self._mean, var=self._var_speckle
+        )
+        image = random_noise(image=image, mode="poisson")
+        image = random_noise(
+            image=image, mode="s&p", amount=self._amount, salt_vs_pepper=self._svp
+        )
+        return convert_uint8(image)

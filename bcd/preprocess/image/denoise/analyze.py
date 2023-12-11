@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Monday November 27th 2023 10:09:31 am                                               #
+# Modified   : Wednesday November 29th 2023 05:40:14 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -517,3 +517,6 @@ class WaveletFilterAnalyzer(DenoiserAnalyzer):
         self._hist_noise = cv2.calcHist(
             [convert_uint8(self._image_noise)], [0], None, [256], [0, 256]
         )
+
+    def compare(self, *args, **kwargs) -> None:
+        raise NotImplementedError

@@ -11,23 +11,26 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 30th 2023 04:50:27 pm                                                #
-# Modified   : Monday November 13th 2023 01:58:47 pm                                               #
+# Modified   : Thursday November 30th 2023 12:30:24 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=no-member, arguments-differ,invalid-name, no-name-in-module
+# ------------------------------------------------------------------------------------------------ #
 from abc import abstractmethod
 from dataclasses import dataclass
 
 import cv2
 import numpy as np
+import scipy
+from skimage.restoration import denoise_wavelet
 
 from bcd import DataClass
 from bcd.preprocess.image.method.base import Method
 
 
-# ------------------------------------------------------------------------------------------------ #
-# pylint: disable=no-member, arguments-differ
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class FilterParams(DataClass):
@@ -39,6 +42,8 @@ class FilterParams(DataClass):
     sigma_domain_factor: int = 1
 
 
+# ------------------------------------------------------------------------------------------------ #
+#                                   FILTER BASE CLASS                                              #
 # ------------------------------------------------------------------------------------------------ #
 class Filter(Method):
     """Abstract base class for Filters."""
@@ -52,6 +57,8 @@ class Filter(Method):
 
 
 # ------------------------------------------------------------------------------------------------ #
+#                                        MEAN FILTER                                               #
+# ------------------------------------------------------------------------------------------------ #
 class MeanFilter(Filter):
     """Performs Mean Filtering"""
 
@@ -63,16 +70,7 @@ class MeanFilter(Filter):
 
 
 # ------------------------------------------------------------------------------------------------ #
-class MedianFilter(Filter):
-    """Performs Median Filtering"""
-
-    name = __qualname__
-
-    @classmethod
-    def execute(cls, image: np.ndarray, kernel: int) -> np.ndarray:
-        return cv2.medianBlur(image, kernel)
-
-
+#                                       GAUSSIAN FILTER                                            #
 # ------------------------------------------------------------------------------------------------ #
 class GaussianFilter(Filter):
     """Performs Gaussian Filtering"""
@@ -85,6 +83,21 @@ class GaussianFilter(Filter):
 
 
 # ------------------------------------------------------------------------------------------------ #
+#                                       MEDIAN FILTER                                              #
+# ------------------------------------------------------------------------------------------------ #
+class MedianFilter(Filter):
+    """Performs Median Filtering"""
+
+    name = __qualname__
+
+    @classmethod
+    def execute(cls, image: np.ndarray, kernel: int) -> np.ndarray:
+        return cv2.medianBlur(image, kernel)
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                      BILATERAL FILTER                                            #
+# ------------------------------------------------------------------------------------------------ #
 class BilateralFilter(Filter):
     """Performs Gaussian Filtering"""
 
@@ -92,7 +105,10 @@ class BilateralFilter(Filter):
 
     @classmethod
     def execute(
-        cls, image: np.ndarray, sigma_color_factor: float, sigma_space_factor: float
+        cls,
+        image: np.ndarray,
+        sigma_color_factor: float = 1,
+        sigma_space_factor: float = 1,
     ) -> np.ndarray:
         sigma_color = cls._est_sigma_color(
             image=image, sigma_color_factor=sigma_color_factor
@@ -146,3 +162,67 @@ class BilateralFilter(Filter):
         """Estimates sigma space (domain) to be 2% of the image diagonal."""
         size = np.sqrt(np.square(image.shape[0]) + np.square(image.shape[1]))
         return 0.02 * size * sigma_space_factor
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                   NON-LOCAL MEANS FILTER                                         #
+# ------------------------------------------------------------------------------------------------ #
+class NLMeansFilter(Filter):
+    """Performs Non-Local Means Filtering"""
+
+    name = __qualname__
+
+    @classmethod
+    def execute(
+        cls, image: np.ndarray, kernel: int = 7, search: int = 21, h: int = 10
+    ) -> np.ndarray:
+        return cv2.fastNlMeansDenoising(
+            image, templateWindowSize=kernel, searchWindowSize=search, h=h
+        )
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                    BUTTERWORTH FILTER                                            #
+# ------------------------------------------------------------------------------------------------ #
+class ButterworthFilter(Filter):
+    """Performs Butterworth Filtering"""
+
+    name = __qualname__
+
+    @classmethod
+    def execute(
+        cls,
+        image: np.ndarray,
+        order: int,
+        cutoff: int,
+    ) -> np.ndarray:
+        b, a = scipy.signal.butter(N=order, Wn=cutoff, btype="lowpass", analog=False)
+        return scipy.signal.filtfilt(b, a, image)
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                       WAVELET FILTER                                             #
+# ------------------------------------------------------------------------------------------------ #
+class WaveletFilter(Filter):
+    """Performs Wavelet Filtering"""
+
+    name = __qualname__
+
+    @classmethod
+    def execute(
+        cls,
+        image: np.ndarray,
+        sigma: float = None,
+        wavelet: str = "haar",
+        mode: str = "soft",
+        method: str = "BayesShrink",
+        channel_axis: int = None,
+    ) -> np.ndarray:
+        return denoise_wavelet(
+            image=image,
+            sigma=sigma,
+            wavelet=wavelet,
+            mode=mode,
+            method=method,
+            channel_axis=channel_axis,
+        )

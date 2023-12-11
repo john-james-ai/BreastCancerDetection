@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday November 6th 2023 05:47:17 am                                                #
+# Modified   : Wednesday November 29th 2023 10:58:55 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -253,10 +253,4 @@ class TaskRepo(Repo):
         """
         query = f"DELETE FROM {self.__tablename} WHERE mode = :mode;"
         params = {"mode": self.mode}
-        self.database.delete(query=query, params=params)
-
-    def delete_all(self) -> None:
-        """Deletes all tasks"""
-        query = f"DELETE FROM {self.__tablename};"
-        params = None
         self.database.delete(query=query, params=params)
