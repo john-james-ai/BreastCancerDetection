@@ -16,7 +16,7 @@ kernelspec:
 Various types of artifacts were found on breast mammogram images, as shown below.
 
 ```{code-cell} ipython3
-:tags: [hide-cell, remove-output]
+:tags: [remove-input, remove-output]
 
 import os
 if 'jbook' in os.getcwd():
