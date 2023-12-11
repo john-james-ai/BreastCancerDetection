@@ -21,36 +21,40 @@ import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
-import os
 import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
+from bcd.utils.image import convert_uint8
 
-r, bm1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
-r, bm2 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY)
-r, bm3 = cv2.threshold(img3, 127, 255, cv2.THRESH_BINARY)
-r, bm4 = cv2.threshold(img4, 127, 255, cv2.THRESH_BINARY)
+bm1 = cv2.adaptiveThreshold(img1, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+bm2 = cv2.adaptiveThreshold(img2, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+bm3 = cv2.adaptiveThreshold(img3, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+bm4 = cv2.adaptiveThreshold(img4, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
 
-fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(12,6))
-_ = axes[0].imshow(bm1, cmap='gray', aspect='auto')
-_ = axes[1].imshow(bm2, cmap='gray',aspect='auto')
-_ = axes[2].imshow(bm3, cmap='gray',aspect='auto')
-_ = axes[3].imshow(bm4, cmap='gray',aspect='auto')
+fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
+_ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
+_ = axes[0,1].imshow(img2, cmap='gray',aspect='auto')
+_ = axes[0,2].imshow(img3, cmap='gray',aspect='auto')
+_ = axes[0,3].imshow(img4, cmap='gray',aspect='auto')
+_ = axes[1,0].imshow(bm1, cmap='gray', aspect='auto')
+_ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
+_ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
+_ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
 
 plt.tight_layout()
 
-glue("bm1", fig)
+glue("bm2", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[1], line 10[0m
-[1;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[1;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmyst_nb[39;00m [38;5;28;01mimport[39;00m glue
-[0;32m---> 10[0m r, bm1 [38;5;241m=[39m cv2[38;5;241m.[39mthreshold([43mimg1[49m, [38;5;241m127[39m, [38;5;241m255[39m, cv2[38;5;241m.[39mTHRESH_BINARY)
-[1;32m     11[0m r, bm2 [38;5;241m=[39m cv2[38;5;241m.[39mthreshold(img2, [38;5;241m127[39m, [38;5;241m255[39m, cv2[38;5;241m.[39mTHRESH_BINARY)
-[1;32m     12[0m r, bm3 [38;5;241m=[39m cv2[38;5;241m.[39mthreshold(img3, [38;5;241m127[39m, [38;5;241m255[39m, cv2[38;5;241m.[39mTHRESH_BINARY)
+[0;31mValueError[0m                                Traceback (most recent call last)
+Cell [0;32mIn[2], line 10[0m
+[1;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmyst_nb[39;00m [38;5;28;01mimport[39;00m glue
+[1;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mimage[39;00m [38;5;28;01mimport[39;00m convert_uint8
+[0;32m---> 10[0m r, bm1 [38;5;241m=[39m cv2[38;5;241m.[39madaptiveThreshold(img1, [38;5;241m255[39m, cv2[38;5;241m.[39mADAPTIVE_THRESH_MEAN_C, cv2[38;5;241m.[39mTHRESH_BINARY, [38;5;241m11[39m,[38;5;241m2[39m)
+[1;32m     11[0m r, bm2 [38;5;241m=[39m cv2[38;5;241m.[39madaptiveThreshold(img2, [38;5;241m255[39m, cv2[38;5;241m.[39mADAPTIVE_THRESH_MEAN_C, cv2[38;5;241m.[39mTHRESH_BINARY, [38;5;241m11[39m,[38;5;241m2[39m)
+[1;32m     12[0m r, bm3 [38;5;241m=[39m cv2[38;5;241m.[39madaptiveThreshold(img3, [38;5;241m255[39m, cv2[38;5;241m.[39mADAPTIVE_THRESH_MEAN_C, cv2[38;5;241m.[39mTHRESH_BINARY, [38;5;241m11[39m,[38;5;241m2[39m)
 
-[0;31mNameError[0m: name 'img1' is not defined
-NameError: name 'img1' is not defined
+[0;31mValueError[0m: too many values to unpack (expected 2)
+ValueError: too many values to unpack (expected 2)
 

@@ -17,6 +17,20 @@ In binary masking, each pixel in the binary mask has one of two values: ‘0’ 
 
 Whether the pixel value in the binary mask is assigned a 0 or 1 depends most often, on whether the associated image pixel value meets a designated or automatically selected threshold. Simply put, each pixel value $M_{i,j}$ in a binary mask $M$ is set to 0 if the corresponding pixel value $I_{i,j}$ in image $I$ is less than or equal to a threshold $T$, and set to 1 otherwise.
 
+In other words:
+
+```{math}
+:label: global_threshold
+M_{i,j} = \begin{cases}
+1 & \text{if} I_{i,j} > T \\
+0 & \text{if} I_{I,j} \le T \\
+\end{cases}
+```
+
+where $I$ denotes the image and $M$ indicates the binary mask.
+
+Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image.
+
 To illustrate, let’s create a binary mask using threshold $T=127$.
 
 ```{code-cell} ipython3
@@ -74,26 +88,15 @@ name: bm1_fig
 Binary Masking with Threshold $T=127$
 ```
 
-This simple binary mask {numref}`bm1` shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.
+This simple binary mask {numref}`bm1_fig` shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.
 
 ## Automated Thresholding
 
-Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image. Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold $T$ to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask.
-Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.
+Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold $T$ to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask. Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.
 
 ### Global Thresholding
 
-One obvious way of segmenting artifacts from an image is via global thresholding; whereby, a threshold $T$ is selected as a pixel value between the minimum and maximum pixel values in the image. All pixel values in $I_{i,j}$ greater than $T$ are considered foreground and the corresponding pixel $M_{i,j}$ in the binary mask $M$ is assigned a value of 1. Otherwise, the corresponding pixel $M_{i,j}$ in the binary mask $M$ is assigned a value of 0. In other words:
-
-```{math}
-:label: global_threshold
-M_{i,j} = \begin{cases}
-1 & if I_{i,j} > T \\
-2 & if I_{I,j} \le T \\
-\end{cases}
-```
-
-where $I$ denotes the image and $M$ indicates the binary mask. If $T$ applies to the entire image, the process is referred to as **global thresholding**.
+One obvious way of segmenting artifacts from an image is via global thresholding; whereby, a threshold $T$ is selected as a pixel value between the minimum and maximum pixel values in the image. If $T$ applies to the entire image, the process is referred to as **global thresholding**.
 
 #### Mean Thresholding
 
@@ -104,9 +107,51 @@ Mean thresholding provides an automated method for selecting a global threshold 
 3. Compute the mean intensity values $m_1$, and $m_2$ for the pixels in $G_1$ and $G_2$, respectively.
 4. Compute a new threshold $T$ midway between $m_1$ and $m_2$.
 5. Repeat Steps 2 through 4 until the difference between successive values of $T$ is smaller than a predefined value, $\Delta T$.
+
 Rather than computing these values iteratively, the image histogram can be used to more efficiently compute the global threshold $T$. Hence, the mean threshold method is often referred to as a **histogram shape-based** method.
 
-Let's examine the binary mask created from the images
+Let's examine the binary mask created with Mean thresholding. The mean thresholding function takes a neighborhood size parameter, 11, and a constant $C=2$, which is subtracted from the mean to obtain the threshold $T$.
+
+```{code-cell} ipython3
+:tags: [hide-cell, remove-output]
+
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../../..")))
+
+import cv2
+import matplotlib.pyplot as plt
+from myst_nb import glue
+from bcd.utils.image import convert_uint8
+
+r, bm1 = cv2.adaptiveThreshold(img1, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+r, bm2 = cv2.adaptiveThreshold(img2, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+r, bm3 = cv2.adaptiveThreshold(img3, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+r, bm4 = cv2.adaptiveThreshold(img4, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11,2)
+
+fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
+_ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
+_ = axes[0,1].imshow(img2, cmap='gray',aspect='auto')
+_ = axes[0,2].imshow(img3, cmap='gray',aspect='auto')
+_ = axes[0,3].imshow(img4, cmap='gray',aspect='auto')
+_ = axes[1,0].imshow(bm1, cmap='gray', aspect='auto')
+_ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
+_ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
+_ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
+
+plt.tight_layout()
+
+glue("bm2", fig)
+```
+
+```{glue:figure} bm2
+---
+align: center
+name: bm2_fig
+---
+Binary Masking with Threshold $T=127$
+```
+
 
 #### Median Threshold
 
