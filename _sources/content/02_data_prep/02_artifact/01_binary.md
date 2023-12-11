@@ -41,6 +41,7 @@ if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
 import cv2
+import numpy as np
 import matplotlib.pyplot as plt
 from myst_nb import glue
 from bcd.utils.image import convert_uint8
@@ -127,6 +128,7 @@ if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
 import cv2
+import numpy as np
 import matplotlib.pyplot as plt
 from myst_nb import glue
 from bcd.utils.image import convert_uint8

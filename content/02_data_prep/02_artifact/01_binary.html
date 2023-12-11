@@ -512,6 +512,7 @@ document.write(`
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../../..&quot;</span><span class="p">)))</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 <span class="kn">from</span> <span class="nn">bcd.utils.image</span> <span class="kn">import</span> <span class="n">convert_uint8</span>
@@ -561,7 +562,13 @@ document.write(`
 </div>
 </details>
 </div>
-<p>This simple binary mask <code class="xref std std-numref docutils literal notranslate"><span class="pre">bm1_fig</span></code> shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.</p>
+<figure class="align-center" id="bm1-fig">
+<img alt="../../../_images/d4c5bd61d052e0d85accc6a1de00efa48b32c4a5f9708827e59a79693f336914.png" src="../../../_images/d4c5bd61d052e0d85accc6a1de00efa48b32c4a5f9708827e59a79693f336914.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=127\)</span></span><a class="headerlink" href="#bm1-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This simple binary mask <a class="reference internal" href="#bm1-fig"><span class="std std-numref">Fig. 4.1</span></a> shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.</p>
 <section id="automated-thresholding">
 <h2><span class="section-number">4.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
 <p>Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask. Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.</p>
@@ -592,6 +599,7 @@ document.write(`
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../../..&quot;</span><span class="p">)))</span>
 
 <span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 <span class="kn">from</span> <span class="nn">bcd.utils.image</span> <span class="kn">import</span> <span class="n">convert_uint8</span>
@@ -626,7 +634,13 @@ document.write(`
 </div>
 </details>
 </div>
-<p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">bm2_fig</span></code> we see.</p>
+<figure class="align-center" id="bm2-fig">
+<img alt="../../../_images/c129d7438adcc7163a84859c195a76906c8c988e622a5cb3dfd789ce9f2b465b.png" src="../../../_images/c129d7438adcc7163a84859c195a76906c8c988e622a5cb3dfd789ce9f2b465b.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=127\)</span></span><a class="headerlink" href="#bm2-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In <a class="reference internal" href="#bm2-fig"><span class="std std-numref">Fig. 4.2</span></a> we see.</p>
 </section>
 <section id="median-threshold">
 <h4>Median Threshold<a class="headerlink" href="#median-threshold" title="Permalink to this heading">#</a></h4>
