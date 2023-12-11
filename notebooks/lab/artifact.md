@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Artifact Removal 
+# Artifact Removal
 Various types of artifacts were found on breast mammogram images, as shown below.
 
 ```{code-cell} ipython3
@@ -51,4 +51,23 @@ _ = axes[2].imshow(img3, cmap='gray',aspect='auto')
 _ = axes[3].imshow(img4, cmap='gray',aspect='auto')
 plt.tight_layout()
 plt.show()
+```
+
+## Binary Masking
+
+```{code-cell} ipython3
+r, bm1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
+r, bm2 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY)
+r, bm3 = cv2.threshold(img3, 127, 255, cv2.THRESH_BINARY)
+r, bm4 = cv2.threshold(img4, 127, 255, cv2.THRESH_BINARY)
+```
+
+```{code-cell} ipython3
+fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(12,6))
+_ = axes[0].imshow(bm1, cmap='gray', aspect='auto')
+_ = axes[1].imshow(bm2, cmap='gray',aspect='auto')
+_ = axes[2].imshow(bm3, cmap='gray',aspect='auto')
+_ = axes[3].imshow(bm4, cmap='gray',aspect='auto')
+plt.tight_layout()
+
 ```

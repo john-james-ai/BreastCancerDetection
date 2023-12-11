@@ -16,13 +16,12 @@ kernelspec:
 Various types of artifacts were found on breast mammogram images, as shown below.
 
 ```{code-cell} ipython3
-:tags: [hide-cell, remove-output]
+:tags: [remove-input, remove-output]
 
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
-import os
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -49,6 +48,14 @@ _ = axes[0].imshow(img1, cmap='gray', aspect='auto')
 _ = axes[1].imshow(img2, cmap='gray',aspect='auto')
 _ = axes[2].imshow(img3, cmap='gray',aspect='auto')
 _ = axes[3].imshow(img4, cmap='gray',aspect='auto')
+
+labels = np.array(["(a)", "(b)", "(c)", "(d)"])
+for i in range(4):
+    _ = axes[i].set_xlabel(labels[i,j])
+    _ = axes[i].set_xticks([])
+    _ = axes[i].set_yticks([])
+
+
 plt.tight_layout()
 
 glue("artifacts", fig)
@@ -61,3 +68,5 @@ name: artifacts_fig
 ---
 Artifacts in Mammogram Images
 ```
+
+Edges, text, annotations, and other objects tend to have pixel intensities similar to those of the ROI. It is, therefore, crucial that such artifacts are removed before the modeling stage. One of the simplest ways to segment artifacts from an image is by binary threshold masking.

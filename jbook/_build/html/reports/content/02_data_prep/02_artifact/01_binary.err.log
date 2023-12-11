@@ -21,11 +21,10 @@ import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
-import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from bcd.utils.image import convert_uint8
 from myst_nb import glue
+from bcd.utils.image import convert_uint8
 
 img1 = "data/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png"
 img2 = "data/image/2_exp/train/benign/3f72309d-7cd9-4e30-ae81-073adb541bcd.png"
@@ -42,33 +41,42 @@ img2 = convert_uint8(img2)
 img3 = convert_uint8(img3)
 img4 = convert_uint8(img4)
 
-fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(12,6))
-_ = axes[0].imshow(img1, cmap='gray', aspect='auto')
-_ = axes[1].imshow(img2, cmap='gray',aspect='auto')
-_ = axes[2].imshow(img3, cmap='gray',aspect='auto')
-_ = axes[3].imshow(img4, cmap='gray',aspect='auto')
+r, bm1 = cv2.threshold(img1, 127, 255, cv2.THRESH_BINARY)
+r, bm2 = cv2.threshold(img2, 127, 255, cv2.THRESH_BINARY)
+r, bm3 = cv2.threshold(img3, 127, 255, cv2.THRESH_BINARY)
+r, bm4 = cv2.threshold(img4, 127, 255, cv2.THRESH_BINARY)
 
-labels = np.array(["(a)", "(b)", "(c)", "(d)"])
-for i in range(4):
-    _ = axes[i].set_xlabel(labels[i,j])
-    _ = axes[i].set_xticks([])
-    _ = axes[i].set_yticks([])
+fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
+_ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
+_ = axes[0,1].imshow(img2, cmap='gray',aspect='auto')
+_ = axes[0,2].imshow(img3, cmap='gray',aspect='auto')
+_ = axes[0,3].imshow(img4, cmap='gray',aspect='auto')
+_ = axes[1,0].imshow(bm1, cmap='gray', aspect='auto')
+_ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
+_ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
+_ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
 
+labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
+for i in range(2):
+    for j in range(4):
+        _ = axes[i,j].set_xlabel(labels[i,j])
+        _ = axes[i,j].set_xticks([])
+        _ = axes[i,j].set_yticks([])
 
 plt.tight_layout()
 
-glue("artifacts", fig)
+glue("bm1", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[1], line 34[0m
-[1;32m     32[0m labels [38;5;241m=[39m np[38;5;241m.[39marray([[38;5;124m"[39m[38;5;124m(a)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(b)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(c)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(d)[39m[38;5;124m"[39m])
-[1;32m     33[0m [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m4[39m):
-[0;32m---> 34[0m     _ [38;5;241m=[39m axes[i][38;5;241m.[39mset_xlabel(labels[i,[43mj[49m])
-[1;32m     35[0m     _ [38;5;241m=[39m axes[i][38;5;241m.[39mset_xticks([])
-[1;32m     36[0m     _ [38;5;241m=[39m axes[i][38;5;241m.[39mset_yticks([])
+Cell [0;32mIn[1], line 40[0m
+[1;32m     37[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m2[39m][38;5;241m.[39mimshow(bm3, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
+[1;32m     38[0m _ [38;5;241m=[39m axes[[38;5;241m1[39m,[38;5;241m3[39m][38;5;241m.[39mimshow(bm4, cmap[38;5;241m=[39m[38;5;124m'[39m[38;5;124mgray[39m[38;5;124m'[39m,aspect[38;5;241m=[39m[38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m)
+[0;32m---> 40[0m labels [38;5;241m=[39m [43mnp[49m[38;5;241m.[39marray([[[38;5;124m"[39m[38;5;124m(a)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(b)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(c)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(d)[39m[38;5;124m"[39m], [[38;5;124m"[39m[38;5;124m(e)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(f)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(g)[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124m(h)[39m[38;5;124m"[39m]])
+[1;32m     41[0m [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m2[39m):
+[1;32m     42[0m     [38;5;28;01mfor[39;00m j [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m4[39m):
 
-[0;31mNameError[0m: name 'j' is not defined
-NameError: name 'j' is not defined
+[0;31mNameError[0m: name 'np' is not defined
+NameError: name 'np' is not defined
 
