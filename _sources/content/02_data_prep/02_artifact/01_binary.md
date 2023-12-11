@@ -127,10 +127,15 @@ import matplotlib.pyplot as plt
 from skimage.filters import threshold_mean
 from myst_nb import glue
 
-bm1 = threshold_mean(img1)
-bm2 = threshold_mean(img2)
-bm3 = threshold_mean(img3)
-bm4 = threshold_mean(img4)
+t1 = threshold_mean(img1)
+t2 = threshold_mean(img2)
+t3 = threshold_mean(img3)
+t4 = threshold_mean(img4)
+
+bm1 = img1 > t1
+bm2 = img2 > t2
+bm3 = img3 > t3
+bm4 = img4 > t4
 
 fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
 _ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
