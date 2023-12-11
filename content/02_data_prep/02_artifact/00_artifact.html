@@ -475,10 +475,15 @@ document.write(`
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../../..&quot;</span><span class="p">)))</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">bcd.utils.image</span> <span class="kn">import</span> <span class="n">convert_uint8</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
 <span class="n">img1</span> <span class="o">=</span> <span class="s2">&quot;data/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png&quot;</span>
 <span class="n">img2</span> <span class="o">=</span> <span class="s2">&quot;data/image/2_exp/train/benign/3f72309d-7cd9-4e30-ae81-073adb541bcd.png&quot;</span>
@@ -508,6 +513,12 @@ document.write(`
 </div>
 </details>
 </div>
+<figure class="align-center" id="artifacts-fig">
+<img alt="../../../_images/0a9f59bab63b9a8956c0a80dbef4b01fff10da04b1b3046c0a482e28b7a3b7df.png" src="../../../_images/0a9f59bab63b9a8956c0a80dbef4b01fff10da04b1b3046c0a482e28b7a3b7df.png" />
+<figcaption>
+<p><span class="caption-text">Artifacts in Mammogram Images</span><a class="headerlink" href="#artifacts-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 
     <script type="text/x-thebe-config">

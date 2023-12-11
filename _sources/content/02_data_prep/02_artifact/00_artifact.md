@@ -19,10 +19,15 @@ Various types of artifacts were found on breast mammogram images, as shown below
 :tags: [hide-cell, remove-output]
 
 import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../../..")))
+
+import os
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 from bcd.utils.image import convert_uint8
+from myst_nb import glue
 
 img1 = "data/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png"
 img2 = "data/image/2_exp/train/benign/3f72309d-7cd9-4e30-ae81-073adb541bcd.png"
