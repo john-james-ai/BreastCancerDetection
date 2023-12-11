@@ -183,6 +183,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
 </ul>
@@ -512,7 +513,7 @@ document.write(`
 <p>Note that we can transform a multiplicative noise model to an additive noise model by taking the logarithm of both sides of the multiplication model. The additive model becomes multiplicative by exponentiation.</p>
 <p>For instance, <a class="reference internal" href="#equation-multiplicative-noise-model">(2.2)</a> becomes:</p>
 <div class="math notranslate nohighlight" id="equation-log-mult-model">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-log-mult-model" title="Permalink to this equation">#</a></span>\[log f = log(sn) = log (s) + log (n)\]</div>
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-log-mult-model" title="Permalink to this equation">#</a></span>\[\text{log} f = \text{log}(s_n) = \text{log}(s) + \text{log}(n)\]</div>
 <p>Similarly, <a class="reference internal" href="#equation-additive-noise-model">(2.1)</a> becomes:</p>
 <div class="math notranslate nohighlight" id="equation-exp-add-model">
 <span class="eqno">(2.4)<a class="headerlink" href="#equation-exp-add-model" title="Permalink to this equation">#</a></span>\[e^f = e^{s_n} = e^f e^n.\]</div>
@@ -523,12 +524,12 @@ document.write(`
 <p>Lastly, we have the impulse noise model, which represents a separate mathematical model, neither additive nor multiplicative. Impulse noise arises in the image as a consequence of signal transmission errors. Mathematically, we can describe impulse noise by the following equation.</p>
 <div class="math notranslate nohighlight" id="equation-impulse">
 <span class="eqno">(2.5)<a class="headerlink" href="#equation-impulse" title="Permalink to this equation">#</a></span>\[\begin{split}{f(x,y)} = \begin{cases}
-    s(x,y)\text{ with probability 1-P} \\
-    s(x,y) + n(x,y) \text{ with probability P}
+    s(x,y) &amp; \text{ with probability 1-P} \\
+    s(x,y) + n(x,y) &amp; \text{ with probability P}
 \end{cases}\end{split}\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p>0 \le P \le 1</p></li>
+<li><p><span class="math notranslate nohighlight">\(0 \le P \le 1\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of the pixel to which the noise is applied;</p></li>
 <li><p><span class="math notranslate nohighlight">\(f(x,y)\)</span> is the noisy image;</p></li>
 <li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image;</p></li>
@@ -538,8 +539,8 @@ document.write(`
 <p>A simplification of <a class="reference internal" href="#equation-impulse">(2.5)</a> for the case in which <span class="math notranslate nohighlight">\(n(x,y)\)</span> replaces <span class="math notranslate nohighlight">\(s(x,y)\)</span></p>
 <div class="math notranslate nohighlight" id="equation-impulse-2">
 <span class="eqno">(2.6)<a class="headerlink" href="#equation-impulse-2" title="Permalink to this equation">#</a></span>\[\begin{split}{f(x,y)} = \begin{cases}
-    s(x,y)\text{ with probability 1-P} \\
-    n(x,y) \text{ with probability P}
+    s(x,y) &amp; \text{ with probability 1-P} \\
+    n(x,y) &amp; \text{ with probability P}
 \end{cases}\end{split}\]</div>
 <p>Impulse noise can be static or dynamic. In the case of static impulse noise, its pixel values get modified by only two values: either the low or high value in the range of pixel values. For instance, in an 8-bit grayscale image with values ranging from 0 (black) to 255 (white), dark pixels corrupted by impulse noise would be replaced by 255, and white pixels would be replaced by 0. In the case of dynamic impulse noise, pixels are modified independently, with random values between 0 and 255.</p>
 <p>Next, we review the types of noise we may encounter.</p>

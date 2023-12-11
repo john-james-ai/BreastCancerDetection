@@ -56,7 +56,7 @@ For instance, {eq}`multiplicative_noise_model` becomes:
 
 ```{math}
 :label: log_mult_model
-log f = log(sn) = log (s) + log (n)
+\text{log} f = \text{log}(s_n) = \text{log}(s) + \text{log}(n)
 ```
 
 Similarly, {eq}`additive_noise_model` becomes:
@@ -75,14 +75,14 @@ Lastly, we have the impulse noise model, which represents a separate mathematica
 ```{math}
 :label: impulse
 {f(x,y)} = \begin{cases}
-    s(x,y)\text{ with probability 1-P} \\
-    s(x,y) + n(x,y) \text{ with probability P}
+    s(x,y) & \text{ with probability 1-P} \\
+    s(x,y) + n(x,y) & \text{ with probability P}
 \end{cases}
 ```
 
 where:
 
-- 0 \le P \le 1
+- $0 \le P \le 1$
 - $x$ and $y$ are the coordinates of the pixel to which the noise is applied;
 - $f(x,y)$ is the noisy image;
 - $s(x,y)$ is the noise-free image;
@@ -95,8 +95,8 @@ A simplification of {eq}`impulse` for the case in which $n(x,y)$ replaces $s(x,y
 ```{math}
 :label: impulse_2
 {f(x,y)} = \begin{cases}
-    s(x,y)\text{ with probability 1-P} \\
-    n(x,y) \text{ with probability P}
+    s(x,y) & \text{ with probability 1-P} \\
+    n(x,y) & \text{ with probability P}
 \end{cases}
 ```
 
