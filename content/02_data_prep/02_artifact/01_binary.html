@@ -571,7 +571,9 @@ document.write(`
 <p>This simple binary mask <a class="reference internal" href="#bm1-fig"><span class="std std-numref">Fig. 4.1</span></a> shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.</p>
 <section id="automated-thresholding">
 <h2><span class="section-number">4.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
-<p>Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask. Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.</p>
+<p>Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask.</p>
+<p>Literature is replete with automated binary threshold methods, most of which are based upon certain assumptions regarding the distribution of pixel values in the image. If the underlying assumptions about the image histogram shape or statistics are reasonably met, the methods perform very well; if not, the performance of the methods can range from acceptable to disasterous.</p>
+<p>Automated methods can be classified as either global thresholding or adaptive thresholding.</p>
 <section id="global-thresholding">
 <h3><span class="section-number">4.1.1. </span>Global Thresholding<a class="headerlink" href="#global-thresholding" title="Permalink to this heading">#</a></h3>
 <p>One obvious way of segmenting artifacts from an image is via global thresholding; whereby, a threshold <span class="math notranslate nohighlight">\(T\)</span> is selected as a pixel value between the minimum and maximum pixel values in the image. If <span class="math notranslate nohighlight">\(T\)</span> applies to the entire image, the process is referred to as <strong>global thresholding</strong>.</p>
@@ -585,8 +587,21 @@ document.write(`
 <li><p>Compute a new threshold <span class="math notranslate nohighlight">\(T\)</span> midway between <span class="math notranslate nohighlight">\(m_1\)</span> and <span class="math notranslate nohighlight">\(m_2\)</span>.</p></li>
 <li><p>Repeat Steps 2 through 4 until the difference between successive values of <span class="math notranslate nohighlight">\(T\)</span> is smaller than a predefined value, <span class="math notranslate nohighlight">\(\Delta T\)</span>.</p></li>
 </ol>
-<p>Rather than computing these values iteratively, the image histogram can be used to more efficiently compute the global threshold <span class="math notranslate nohighlight">\(T\)</span>. Hence, the mean threshold method is often referred to as a <strong>histogram shape-based</strong> method.</p>
-<p>Let’s examine the binary mask created with Mean thresholding. The mean thresholding function takes a neighborhood size parameter, 11, and a constant <span class="math notranslate nohighlight">\(C=2\)</span>, which is subtracted from the mean to obtain the threshold <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p>Rather than computing these values iteratively, the image histogram can be used to more efficiently compute the global threshold <span class="math notranslate nohighlight">\(T\)</span>. Hence, the mean threshold method is often referred to as a <strong>histogram shape-based</strong> method. It tends to perform well for pixel values having a bimodal distribution.</p>
+<p>Let’s examine the binary mask created with Mean thresholding. We’ll use the OpenCV ‘cv2.adaptiveThreshold’ method, which takes five parameters:</p>
+<ol class="arabic simple">
+<li><p>The input image,</p></li>
+<li><p>The maximum pixel value,</p></li>
+<li><p>The adaptive threshold method, which can be:</p>
+<ul class="simple">
+<li><p>cv.ADAPTIVE_THRESH_MEAN_C</p></li>
+<li><p>cv.ADAPTIVE_THRESH_GAUSSIAN_C</p></li>
+</ul>
+</li>
+<li><p>The neighborhood size parameter which specifies the size of the neighborhood around the target pixel from which the mean is calculated, and</p></li>
+<li><p>A constant C which is subtracted from the mean to compute the threshold <span class="math notranslate nohighlight">\(T\)</span>.</p></li>
+</ol>
+<p>We’ll use the ADAPTIVE_MEAN_THRESH_C method with neighborhood size = 11 and <span class="math notranslate nohighlight">\(C=2\)</span></p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">

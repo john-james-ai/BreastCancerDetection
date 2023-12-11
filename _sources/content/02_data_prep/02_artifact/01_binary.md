@@ -100,7 +100,11 @@ This simple binary mask {numref}`bm1_fig` shows how artifacts can be separated f
 
 ## Automated Thresholding
 
-Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold $T$ to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask. Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.
+Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold $T$ to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask.
+
+Literature is replete with automated binary threshold methods, most of which are based upon certain assumptions regarding the distribution of pixel values in the image. If the underlying assumptions about the image histogram shape or statistics are reasonably met, the methods perform very well; if not, the performance of the methods can range from acceptable to disasterous.
+
+Automated methods can be classified as either global thresholding or adaptive thresholding.
 
 ### Global Thresholding
 
@@ -116,9 +120,19 @@ Mean thresholding provides an automated method for selecting a global threshold 
 4. Compute a new threshold $T$ midway between $m_1$ and $m_2$.
 5. Repeat Steps 2 through 4 until the difference between successive values of $T$ is smaller than a predefined value, $\Delta T$.
 
-Rather than computing these values iteratively, the image histogram can be used to more efficiently compute the global threshold $T$. Hence, the mean threshold method is often referred to as a **histogram shape-based** method.
+Rather than computing these values iteratively, the image histogram can be used to more efficiently compute the global threshold $T$. Hence, the mean threshold method is often referred to as a **histogram shape-based** method. It tends to perform well for pixel values having a bimodal distribution.
 
-Let's examine the binary mask created with Mean thresholding. The mean thresholding function takes a neighborhood size parameter, 11, and a constant $C=2$, which is subtracted from the mean to obtain the threshold $T$.
+Let's examine the binary mask created with Mean thresholding. We'll use the OpenCV 'cv2.adaptiveThreshold' method, which takes five parameters:
+
+1. The input image,
+2. The maximum pixel value,
+3. The adaptive threshold method, which can be:
+   - cv.ADAPTIVE_THRESH_MEAN_C
+   - cv.ADAPTIVE_THRESH_GAUSSIAN_C
+4. The neighborhood size parameter which specifies the size of the neighborhood around the target pixel from which the mean is calculated, and
+5. A constant C which is subtracted from the mean to compute the threshold $T$.
+
+We'll use the ADAPTIVE_MEAN_THRESH_C method with neighborhood size = 11 and $C=2$
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
