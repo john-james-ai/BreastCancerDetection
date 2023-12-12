@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Monday December 11th 2023 10:33:09 pm                                               #
+# Modified   : Tuesday December 12th 2023 12:15:26 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -63,6 +63,7 @@ class ThresholdAnalyzer(ABC):
 
         self._images = []
         self._binary_masks = []
+        self._masked_images = []
         self._histograms = []
         self._thresholds = []
 
@@ -81,6 +82,73 @@ class ThresholdAnalyzer(ABC):
             threshold (float): The threshold applied. Only for global threshold methods
             binary_mask (np.ndarray): Binary mask of image.
         """
+
+    def try_all_global(self, image: np.ndarray) -> None:
+        """Runs all global binary thresholding methods on the given image.
+
+        Args:
+            image (np.ndarray): Numpy array containing test image pixel values.
+        """
+        fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(12, 20))
+        axes = axes.flatten()
+
+        thresholds = [
+            {"name": "Mean Threshold", "callable": threshold_mean, "params": None},
+            {
+                "name": "Minimum Threshold",
+                "callable": threshold_minimum,
+                "params": None,
+            },
+            {
+                "name": "ISOData Threshold",
+                "callable": threshold_isodata,
+                "params": None,
+            },
+            {"name": "LI Threshold", "callable": threshold_li, "params": None},
+            {"name": "Yen Threshold", "callable": threshold_yen, "params": None},
+            {
+                "name": "Triangle Threshold",
+                "callable": threshold_triangle,
+                "params": None,
+            },
+            {"name": "OTSU's Method", "callable": threshold_otsu, "params": None},
+            {
+                "name": "Adaptive Mean",
+                "callable": cv2.adaptiveThreshold,
+                "params": [
+                    255,
+                    cv2.ADAPTIVE_THRESH_MEAN_C,
+                    cv2.THRESH_BINARY_INV,
+                    11,
+                    2,
+                ],
+            },
+        ]
+
+        _ = axes[0].imshow(image, cmap=self.__CMAP, aspect="auto")
+        _ = axes[0].set_xlabel("Original Image", fontsize=10)
+        _ = axes[0].set_xticks([])
+        _ = axes[0].set_yticks([])
+
+        for i, threshold in enumerate(thresholds):
+            if threshold["params"] is None:
+                T = threshold["callable"](image)
+                mask = image > T
+                binimage = np.bitwise_and(image, mask)
+
+            else:
+                mask = threshold["callable"](image, *threshold["params"])
+                binimage = np.bitwise_and(image, mask)
+
+            _ = axes[i + 1].imshow(binimage, cmap=self.__CMAP, aspect="auto")
+            _ = axes[i + 1].set_xlabel(threshold["name"], fontsize=10)
+            _ = axes[i + 1].set_xticks([])
+            _ = axes[i + 1].set_yticks([])
+
+        title = "Binary Threshold Analysis"
+        fig.suptitle(title, fontsize=12)
+
+        plt.tight_layout()
 
     def analyze(self, images: np.ndarray, *args, **kwargs) -> plt.Figure:
         """Plots an analysis of the threshold methods
@@ -106,8 +174,14 @@ class ThresholdAnalyzer(ABC):
         """
 
         for image in images:
+            # Get the threshold and the binary mask
             threshold, binary_mask = self.apply_threshold(image=image, *args, **kwargs)
+            # Mask the image using bitwise and
+            masked_image = np.bitwise_and(image, binary_mask)
+            # Calculate the histogram
             histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
+            # Append masked images, masks, thresholds and histograms to list.
+            self._masked_images.append(masked_image)
             self._binary_masks.append(binary_mask)
             self._thresholds.append(threshold)
             self._histograms.append(histogram)
@@ -120,15 +194,18 @@ class ThresholdAnalyzer(ABC):
         """
 
         for image in images:
+            # Compute the adaptive binary mask
             binary_mask = self.apply_threshold(image=image, *args, **kwargs)
+            # Apply the mask to teh image using bitwise and
+            masked_image = np.bitwise_and(image, binary_mask)
+            # Append to lists
+            self._masked_images.append(masked_image)
             self._binary_masks.append(binary_mask)
 
     def _build_global_analysis_plot(self) -> None:
-        height = (
-            3 * self.__ROWHEIGHT if self._global_threshold else 2 * self.__ROWHEIGHT
-        )
+        height = 4 * self.__ROWHEIGHT
 
-        fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(12, height))
+        fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(12, height))
         labels = np.array(["a", "b", "c", "d"])
 
         # Plot images
@@ -141,22 +218,27 @@ class ThresholdAnalyzer(ABC):
         # Plot binary masks
         for i, mask in enumerate(self._binary_masks):
             axes[1, i].imshow(mask, cmap=self.__CMAP, aspect="auto")
-            axes[1, i].set_xlabel(f"{self._name} ({labels[i]})", fontsize=10)
+            axes[1, i].set_xlabel(f"{self._name} Mask ({labels[i]})", fontsize=10)
             axes[1, i].set_xticks([])
             axes[1, i].set_yticks([])
 
+        # Plot masked images
+        for i, img in enumerate(self._masked_images):
+            axes[2, i].imshow(img, cmap=self.__CMAP, aspect="auto")
+            axes[2, i].set_xlabel(f"{self._name} Image ({labels[i]})", fontsize=10)
+            axes[2, i].set_xticks([])
+            axes[2, i].set_yticks([])
+
         # Plot histograms
         for i, hist in enumerate(self._histograms):
-            axes[2, i].plot(hist)
-            axes[2, i].axvline(
+            axes[3, i].plot(hist)
+            axes[3, i].axvline(
                 x=self._thresholds[i],
                 color="r",
                 label=f"T={round(self._thresholds[i],1)}",
             )
-            axes[2, i].set_xlabel(f"Histogram ({labels[i]})", fontsize=10)
-            axes[2, i].legend(loc="upper right")
-            # axes[2, i].set_xticks([])
-            # axes[2, i].set_yticks([])
+            axes[3, i].set_xlabel(f"Histogram ({labels[i]})", fontsize=10)
+            axes[3, i].legend(loc="upper right")
 
         title = self._name + " Analysis"
         fig.suptitle(title, fontsize=12)
@@ -165,9 +247,9 @@ class ThresholdAnalyzer(ABC):
         return fig
 
     def _build_adaptive_analysis_plot(self) -> None:
-        height = 2 * self.__ROWHEIGHT
+        height = 3 * self.__ROWHEIGHT
 
-        fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12, height))
+        fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(12, height))
         labels = np.array(["a", "b", "c", "d"])
         # Plot images
         for i, img in enumerate(self._images):
@@ -182,6 +264,13 @@ class ThresholdAnalyzer(ABC):
             axes[1, i].set_xlabel(f"{self._name} ({labels[i]})", fontsize=10)
             axes[1, i].set_xticks([])
             axes[1, i].set_yticks([])
+
+        # Plot masked images
+        for i, img in enumerate(self._masked_images):
+            axes[2, i].imshow(img, cmap=self.__CMAP, aspect="auto")
+            axes[2, i].set_xlabel(f"{self._name} Image ({labels[i]})", fontsize=10)
+            axes[2, i].set_xticks([])
+            axes[2, i].set_yticks([])
 
         title = self._name + " Analysis"
         fig.suptitle(title, fontsize=12)
@@ -351,3 +440,17 @@ class ThresholdAdaptiveMean(ThresholdAnalyzer):
             *args,
             **kwargs,
         )
+
+
+# ------------------------------------------------------------------------------------------------ #
+class TryAllThresholds(ThresholdAnalyzer):
+    def __init__(
+        self,
+        name: str = "Try All Thresholds",
+        threshold: Callable = None,
+        global_threshold: bool = False,
+    ) -> None:
+        super().__init__(name, threshold, global_threshold)
+
+    def apply_threshold(self, image: np.ndarray, *args, **kwargs) -> np.ndarray:
+        raise NotImplementedError()
