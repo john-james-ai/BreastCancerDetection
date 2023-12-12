@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>4. Threshold-Based Segmentation (TBS) for Artifact Removal &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>3.2. Threshold-Based Segmentation (TBS) for Artifact Removal &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -186,8 +186,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="00_overview.html">3. Segmentation</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_overview.html">3. Segmentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">3.2. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -468,13 +470,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">4.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">4.1.1. Global Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.2.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">Global Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">Mean Thresholding</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">4.1.2. Adaptive Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">Adaptive Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding">Adaptive Mean Thresholding</a></li>
 </ul>
 </li>
@@ -492,11 +494,11 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="threshold-based-segmentation-tbs-for-artifact-removal">
-<h1><span class="section-number">4. </span>Threshold-Based Segmentation (TBS) for Artifact Removal<a class="headerlink" href="#threshold-based-segmentation-tbs-for-artifact-removal" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">3.2. </span>Threshold-Based Segmentation (TBS) for Artifact Removal<a class="headerlink" href="#threshold-based-segmentation-tbs-for-artifact-removal" title="Permalink to this heading">#</a></h1>
 <p>Removing artifacts from an image using threshold-based segmentation involves the partition of the image <span class="math notranslate nohighlight">\(I\)</span> into two (or more) regions, typically foreground and background, using a binary image, or mask <span class="math notranslate nohighlight">\(B\)</span>. Each pixel in the binary mask <span class="math notranslate nohighlight">\(B_{i,j}\)</span> can have one of two values: 0 or 1. The value a pixel takes in the binary image depends upon the value of the corresponding pixel <span class="math notranslate nohighlight">\(I_{i,j}\)</span> in image <span class="math notranslate nohighlight">\(I\)</span> relative to a manually designated, or automatically selected, threshold <span class="math notranslate nohighlight">\(T\)</span>.  If <span class="math notranslate nohighlight">\(I_{i,j} &gt; T\)</span>, then the value of the corresponding pixel in the binary mask <span class="math notranslate nohighlight">\(B_{i,j}\)</span> is 1, otherwise,  <span class="math notranslate nohighlight">\(B_{i,j}\)</span> is 0.
 In other words,</p>
 <div class="math notranslate nohighlight" id="equation-global-threshold">
-<span class="eqno">(4.1)<a class="headerlink" href="#equation-global-threshold" title="Permalink to this equation">#</a></span>\[\begin{split}M_{i,j} = \begin{cases}
+<span class="eqno">(3.1)<a class="headerlink" href="#equation-global-threshold" title="Permalink to this equation">#</a></span>\[\begin{split}M_{i,j} = \begin{cases}
 1 &amp; \text{if} I_{i,j} &gt; T \\
 0 &amp; \text{if} I_{I,j} \le T \\
 \end{cases}\end{split}\]</div>
@@ -577,16 +579,16 @@ In other words,</p>
 <figure class="align-center" id="tbs1-fig">
 <img alt="../../../_images/aae714675356a5e21cd8a1130a88a4a1a830a0c4b10a42588f0f3618d4aeb4c0.png" src="../../../_images/aae714675356a5e21cd8a1130a88a4a1a830a0c4b10a42588f0f3618d4aeb4c0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=30\)</span> with original image, binary mask and threshold image.</span><a class="headerlink" href="#tbs1-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=30\)</span> with original image, binary mask and threshold image.</span><a class="headerlink" href="#tbs1-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The first row of <a class="reference internal" href="#tbs1-fig"><span class="std std-numref">Fig. 4.1</span></a> contains the original images, the second row is comprised of the binary masks, and the last row contains the threshold images. This simple binary mask shows how artifacts can be separated from the image using threshold techniques; however, we lose detail in the breast tissue, indicating that our threshold is likely set too high for this application.</p>
+<p>The first row of <a class="reference internal" href="#tbs1-fig"><span class="std std-numref">Fig. 3.2</span></a> contains the original images, the second row is comprised of the binary masks, and the last row contains the threshold images. This simple binary mask shows how artifacts can be separated from the image using threshold techniques; however, we lose detail in the breast tissue, indicating that our threshold is likely set too high for this application.</p>
 <p>Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel in the binary mask <span class="math notranslate nohighlight">\(B\)</span>, and those in the background correspond to the ‘0’ pixel values in the binary mask.</p>
 <section id="automated-thresholding">
-<h2><span class="section-number">4.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.2.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
 <p>Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.</p>
 <section id="global-thresholding">
-<h3><span class="section-number">4.1.1. </span>Global Thresholding<a class="headerlink" href="#global-thresholding" title="Permalink to this heading">#</a></h3>
+<h3>Global Thresholding<a class="headerlink" href="#global-thresholding" title="Permalink to this heading">#</a></h3>
 <p>Global thresholding works by applying a single threshold value <span class="math notranslate nohighlight">\(T\)</span> to an image. Several of the most commonly used global thresholding methods are:</p>
 <ul class="simple">
 <li><p>Mean Thresholding</p></li>
@@ -596,7 +598,7 @@ In other words,</p>
 <li><p>Triangle Method</p></li>
 <li><p>OTSU’s Method.</p></li>
 </ul>
-<p>We’ll briefly introduce each of these methods and illustrate their performance on our test images above using the scikit-image <span id="id1">[]</span> package.</p>
+<p>We’ll briefly introduce each of these methods and illustrate their performance on our test images above using the scikit-image <span id="id1">[<a class="reference internal" href="../../99_references.html#id360" title="Thresholding — skimage 0.22.0 documentation. URL: https://scikit-image.org/docs/stable/auto_examples/applications/plot_thresholding_guide.html#how-to-apply-a-threshold (visited on 2023-12-11).">33</a>]</span> package.</p>
 <section id="mean-thresholding">
 <h4>Mean Thresholding<a class="headerlink" href="#mean-thresholding" title="Permalink to this heading">#</a></h4>
 <p>A simple, albiet naive approach is to set <span class="math notranslate nohighlight">\(T\)</span> to the mean of the pixel values.  Let’s illustrate the mean threshold applied to our test images.</p>
@@ -655,7 +657,7 @@ In other words,</p>
 <figure class="align-center" id="tsb-mean-fig">
 <img alt="../../../_images/d36498dc60ba32a153934f1725199ee51ffa56840ac6d00585f1560ecc55a362.png" src="../../../_images/d36498dc60ba32a153934f1725199ee51ffa56840ac6d00585f1560ecc55a362.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#tsb-mean-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#tsb-mean-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -710,19 +712,19 @@ In other words,</p>
 <figure class="align-center" id="tbs-iso-fig">
 <img alt="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" src="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.3 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#tbs-iso-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#tbs-iso-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 </section>
 <section id="adaptive-thresholding">
-<h3><span class="section-number">4.1.2. </span>Adaptive Thresholding<a class="headerlink" href="#adaptive-thresholding" title="Permalink to this heading">#</a></h3>
+<h3>Adaptive Thresholding<a class="headerlink" href="#adaptive-thresholding" title="Permalink to this heading">#</a></h3>
 <section id="adaptive-mean-thresholding">
 <h4>Adaptive Mean Thresholding<a class="headerlink" href="#adaptive-mean-thresholding" title="Permalink to this heading">#</a></h4>
 <p>Mean thresholding provides an automated method for selecting a global threshold <span class="math notranslate nohighlight">\(T\)</span> when the foreground and background regions are sufficiently distinct. For mean thresholding, the following iterative algorithm can serve this purpose:</p>
 <ol class="arabic simple">
 <li><p>Select an initial value for the global threshold <span class="math notranslate nohighlight">\(T\)</span>.</p></li>
-<li><p>Segment the image using <span class="math notranslate nohighlight">\(T\)</span> in <a class="reference internal" href="#equation-global-threshold">(4.1)</a>  to produce two regions <span class="math notranslate nohighlight">\(G_1\)</span> consisting of pixel values &gt; <span class="math notranslate nohighlight">\(T\)</span>, and <span class="math notranslate nohighlight">\(G_2\)</span> consisting of pixel values <span class="math notranslate nohighlight">\(\le T\)</span>.</p></li>
+<li><p>Segment the image using <span class="math notranslate nohighlight">\(T\)</span> in <a class="reference internal" href="#equation-global-threshold">(3.1)</a>  to produce two regions <span class="math notranslate nohighlight">\(G_1\)</span> consisting of pixel values &gt; <span class="math notranslate nohighlight">\(T\)</span>, and <span class="math notranslate nohighlight">\(G_2\)</span> consisting of pixel values <span class="math notranslate nohighlight">\(\le T\)</span>.</p></li>
 <li><p>Compute the mean intensity values <span class="math notranslate nohighlight">\(m_1\)</span>, and <span class="math notranslate nohighlight">\(m_2\)</span> for the pixels in <span class="math notranslate nohighlight">\(G_1\)</span> and <span class="math notranslate nohighlight">\(G_2\)</span>, respectively.</p></li>
 <li><p>Compute a new threshold <span class="math notranslate nohighlight">\(T\)</span> midway between <span class="math notranslate nohighlight">\(m_1\)</span> and <span class="math notranslate nohighlight">\(m_2\)</span>.</p></li>
 <li><p>Repeat Steps 2 through 4 until the difference between successive values of <span class="math notranslate nohighlight">\(T\)</span> is smaller than a predefined value, <span class="math notranslate nohighlight">\(\Delta T\)</span>.</p></li>
@@ -814,13 +816,13 @@ In other words,</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">4.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">4.1.1. Global Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.2.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">Global Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">Mean Thresholding</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">4.1.2. Adaptive Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">Adaptive Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding">Adaptive Mean Thresholding</a></li>
 </ul>
 </li>
