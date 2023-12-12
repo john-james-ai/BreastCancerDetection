@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Tuesday December 12th 2023 12:15:26 am                                              #
+# Modified   : Tuesday December 12th 2023 12:16:37 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -444,6 +444,8 @@ class ThresholdAdaptiveMean(ThresholdAnalyzer):
 
 # ------------------------------------------------------------------------------------------------ #
 class TryAllThresholds(ThresholdAnalyzer):
+    """Try all methods"""
+
     def __init__(
         self,
         name: str = "Try All Thresholds",

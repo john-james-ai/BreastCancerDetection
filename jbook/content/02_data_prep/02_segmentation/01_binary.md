@@ -13,9 +13,9 @@ kernelspec:
 
 ## Binary Masking
 
-In binary masking, each pixel in the binary mask has one of two values: ‘0’ representing the background, and ‘1’ or the maximum pixel intensity value i.e. ‘255’, corresponding to the image foreground. For the remainder of this discussion, we will use binary mask pixel values 0 and 1.
+In binary masking, each pixel in the binary mask has one of two values: ‘0’ representing the background, and ‘1’, corresponding to the image foreground.
 
-Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated image pixel value meets a designated or automatically selected threshold. Simply put, each pixel value $M_{i,j}$ in a binary mask $M$ is set to 0 if the corresponding pixel value $I_{i,j}$ in image $I$ is less than or equal to a threshold $T$, and set to 1 otherwise.
+Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated image pixel value meets a manually designated or automatically selected threshold. Simply put, each pixel value $M_{i,j}$ in a binary mask $M$ is set to 0 if the corresponding pixel value $I_{i,j}$ in image $I$ is less than or equal to a threshold $T$, and set to 1 otherwise.
 
 In other words:
 
