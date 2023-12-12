@@ -101,11 +101,11 @@ name: tbs1_fig
 Binary Masking with Threshold $T=30$ with original image, binary mask and threshold image.
 ```
 
-This simple binary mask {numref}`tbs1_fig` shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.
+The first row of {numref}`tbs1_fig` contains the original images, the second row is comprised of the binary masks, and the last row contains the threshold images. This simple binary mask shows how artifacts can be separated from the image using threshold techniques; however, we lose detail in the breast tissue, indicating that our threshold is likely set too high for this application.
+
+Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold $T$ to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel in the binary mask $B$, and those in the background correspond to the ‘0’ pixel values in the binary mask.
 
 ## Automated Thresholding
-
-Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image. Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold $T$ to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask.
 
 Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.
 
@@ -168,18 +168,19 @@ for i in range(2):
 
 plt.tight_layout()
 
-glue("bm2", fig)
+glue("tsb_mean", fig)
 ```
 
-```{glue:figure} bm2
+```{glue:figure} tsb_mean
 ---
 align: center
-name: bm2_fig
+name: tsb_mean_fig
 ---
 Binary Masking with Mean Threshold
 ```
 
 #### ISOData Method
+
 The ISOData threshold {cite}`PictureThresholdingUsing1978` is an iterative method for selecting $T$. An initial threshold $T$ is set, then the average pixel values above and below this initial threshold are computed. The new threshold is set to the average of the two values, and this process iterates until the threshold is larger than the average brightness between the two regions.
 
 Let's examine the performance of the ISOData method on our test images.
@@ -218,21 +219,16 @@ for i in range(2):
 
 plt.tight_layout()
 
-glue("bm2", fig)
+glue("tbs_iso", fig)
 ```
 
-```{glue:figure} bm2
+```{glue:figure} tbs_iso
 ---
 align: center
-name: bm2_fig
+name: tbs_iso_fig
 ---
 Binary Masking with Mean Threshold
 ```
-
-
-
-
-
 
 ### Adaptive Thresholding
 

@@ -581,10 +581,10 @@ In other words,</p>
 <p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=30\)</span> with original image, binary mask and threshold image.</span><a class="headerlink" href="#tbs1-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>This simple binary mask <a class="reference internal" href="#tbs1-fig"><span class="std std-numref">Fig. 4.1</span></a> shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.</p>
+<p>The first row of <a class="reference internal" href="#tbs1-fig"><span class="std std-numref">Fig. 4.1</span></a> contains the original images, the second row is comprised of the binary masks, and the last row contains the threshold images. This simple binary mask shows how artifacts can be separated from the image using threshold techniques; however, we lose detail in the breast tissue, indicating that our threshold is likely set too high for this application.</p>
+<p>Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel in the binary mask <span class="math notranslate nohighlight">\(B\)</span>, and those in the background correspond to the ‘0’ pixel values in the binary mask.</p>
 <section id="automated-thresholding">
 <h2><span class="section-number">4.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
-<p>Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image. Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask.</p>
 <p>Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.</p>
 <section id="global-thresholding">
 <h3><span class="section-number">4.1.1. </span>Global Thresholding<a class="headerlink" href="#global-thresholding" title="Permalink to this heading">#</a></h3>
@@ -647,16 +647,16 @@ In other words,</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;bm2&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;tsb_mean&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="bm2-fig">
-<img alt="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" src="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" />
+<figure class="align-center" id="tsb-mean-fig">
+<img alt="../../../_images/d36498dc60ba32a153934f1725199ee51ffa56840ac6d00585f1560ecc55a362.png" src="../../../_images/d36498dc60ba32a153934f1725199ee51ffa56840ac6d00585f1560ecc55a362.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#bm2-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#tsb-mean-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -702,16 +702,16 @@ In other words,</p>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;bm2&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;tbs_iso&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="tbs-iso-fig">
 <img alt="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" src="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.3 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.3 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#tbs-iso-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
