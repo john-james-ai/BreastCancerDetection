@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>4. Binary Masking &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>4. Threshold-Based Segmentation (TBS) for Artifact Removal &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -187,8 +187,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="00_overview.html">3. Segmentation</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Binary Masking</a></li>
-
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -459,7 +458,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Binary Masking</h1>
+    <h1>Threshold-Based Segmentation (TBS) for Artifact Removal</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -469,22 +468,20 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">4. Binary Masking</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">5. Automated Thresholding</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">5.1. Global Thresholding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">5.1.1. Mean Thresholding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">5.1.2. ISOData Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">4.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">4.1.1. Global Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">Mean Thresholding</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">5.2. Adaptive Thresholding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding">5.2.1. Adaptive Mean Thresholding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-threshold">5.2.2. Median Threshold</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">4.1.2. Adaptive Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding">Adaptive Mean Thresholding</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#median-threshold">Median Threshold</a></li>
 </ul>
 </li>
 </ul>
-
+</li>
+</ul>
             </nav>
         </div>
     </div>
@@ -495,18 +492,17 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="binary-masking">
-<h1><span class="section-number">4. </span>Binary Masking<a class="headerlink" href="#binary-masking" title="Permalink to this heading">#</a></h1>
-<p>In binary masking, each pixel in the binary mask has one of two values: ‘0’ representing the background, and ‘1’, corresponding to the image foreground.</p>
-<p>Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated image pixel value meets a manually designated or automatically selected threshold. Simply put, each pixel value <span class="math notranslate nohighlight">\(M_{i,j}\)</span> in a binary mask <span class="math notranslate nohighlight">\(M\)</span> is set to 0 if the corresponding pixel value <span class="math notranslate nohighlight">\(I_{i,j}\)</span> in image <span class="math notranslate nohighlight">\(I\)</span> is less than or equal to a threshold <span class="math notranslate nohighlight">\(T\)</span>, and set to 1 otherwise.</p>
-<p>In other words:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="threshold-based-segmentation-tbs-for-artifact-removal">
+<h1><span class="section-number">4. </span>Threshold-Based Segmentation (TBS) for Artifact Removal<a class="headerlink" href="#threshold-based-segmentation-tbs-for-artifact-removal" title="Permalink to this heading">#</a></h1>
+<p>Removing artifacts from an image using threshold-based segmentation involves the partition of the image <span class="math notranslate nohighlight">\(I\)</span> into two (or more) regions, typically foreground and background, using a binary image, or mask <span class="math notranslate nohighlight">\(B\)</span>. Each pixel in the binary mask <span class="math notranslate nohighlight">\(B_{i,j}\)</span> can have one of two values: 0 or 1. The value a pixel takes in the binary image depends upon the value of the corresponding pixel <span class="math notranslate nohighlight">\(I_{i,j}\)</span> in image <span class="math notranslate nohighlight">\(I\)</span> relative to a manually designated, or automatically selected, threshold <span class="math notranslate nohighlight">\(T\)</span>.  If <span class="math notranslate nohighlight">\(I_{i,j} &gt; T\)</span>, then the value of the corresponding pixel in the binary mask <span class="math notranslate nohighlight">\(B_{i,j}\)</span> is 1, otherwise,  <span class="math notranslate nohighlight">\(B_{i,j}\)</span> is 0.
+In other words,</p>
 <div class="math notranslate nohighlight" id="equation-global-threshold">
 <span class="eqno">(4.1)<a class="headerlink" href="#equation-global-threshold" title="Permalink to this equation">#</a></span>\[\begin{split}M_{i,j} = \begin{cases}
 1 &amp; \text{if} I_{i,j} &gt; T \\
 0 &amp; \text{if} I_{I,j} \le T \\
 \end{cases}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(I\)</span> denotes the image and <span class="math notranslate nohighlight">\(M\)</span> indicates the binary mask. Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image.</p>
-<p>To illustrate, let’s create a binary mask using threshold <span class="math notranslate nohighlight">\(T=30\)</span>.</p>
+<p>Applying the binary mask <span class="math notranslate nohighlight">\(B\)</span> to the image <span class="math notranslate nohighlight">\(I\)</span> results in a new copy of image <span class="math notranslate nohighlight">\(I\)</span>, say, <span class="math notranslate nohighlight">\(I_t\)</span> of the same shape and size as <span class="math notranslate nohighlight">\(I\)</span>, except all pixels in <span class="math notranslate nohighlight">\(I\)</span> that are less than or equal to the threshold <span class="math notranslate nohighlight">\(T\)</span> have a value of 0 in <span class="math notranslate nohighlight">\(I_t\)</span>. All other pixel values remain unchanged. Assuming the threshold <span class="math notranslate nohighlight">\(T\)</span> is set appropriately, this places all objects of interest in the foreground (shown as white), and all other objects, artifacts, text, and anomalies in the background (shown as black).</p>
+<p>So, setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures and results in over-segmentation. A threshold that is too high may remove important structural data from the image.  The simplest approach is to set the threshold <span class="math notranslate nohighlight">\(T\)</span> manually. To illustrate, let’s create a binary mask using threshold <span class="math notranslate nohighlight">\(T=30\)</span>.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -544,7 +540,12 @@ document.write(`
 <span class="n">r</span><span class="p">,</span> <span class="n">bm3</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img3</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
 <span class="n">r</span><span class="p">,</span> <span class="n">bm4</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img4</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+<span class="n">img1t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">bm1</span><span class="p">)</span>
+<span class="n">img2t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">bm2</span><span class="p">)</span>
+<span class="n">img3t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">img3</span><span class="p">,</span> <span class="n">bm3</span><span class="p">)</span>
+<span class="n">img4t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">img4</span><span class="p">,</span> <span class="n">bm4</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
@@ -553,36 +554,40 @@ document.write(`
 <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">bm2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">bm3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">bm4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img1t</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img2t</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img3t</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img4t</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 
-<span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="s2">&quot;(a)&quot;</span><span class="p">,</span> <span class="s2">&quot;(b)&quot;</span><span class="p">,</span> <span class="s2">&quot;(c)&quot;</span><span class="p">,</span> <span class="s2">&quot;(d)&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;(e)&quot;</span><span class="p">,</span> <span class="s2">&quot;(f)&quot;</span><span class="p">,</span> <span class="s2">&quot;(g)&quot;</span><span class="p">,</span> <span class="s2">&quot;(h)&quot;</span><span class="p">]])</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+<span class="n">imgtypes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Original Image&#39;</span><span class="p">,</span> <span class="s1">&#39;Binary Mask&#39;</span><span class="p">,</span> <span class="s1">&#39;Threshold Image&#39;</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;(a)&quot;</span><span class="p">,</span> <span class="s2">&quot;(b)&quot;</span><span class="p">,</span> <span class="s2">&quot;(c)&quot;</span><span class="p">,</span> <span class="s2">&quot;(d)&quot;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">imgtype</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgtypes</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">imgtype</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
         <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;bm1&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">&quot;tbs1&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="bm1-fig">
-<img alt="../../../_images/2df46b817530eea6e45958c5f13016f8121f251dcc49b4daed0b880ea8e384db.png" src="../../../_images/2df46b817530eea6e45958c5f13016f8121f251dcc49b4daed0b880ea8e384db.png" />
+<figure class="align-center" id="tbs1-fig">
+<img alt="../../../_images/aae714675356a5e21cd8a1130a88a4a1a830a0c4b10a42588f0f3618d4aeb4c0.png" src="../../../_images/aae714675356a5e21cd8a1130a88a4a1a830a0c4b10a42588f0f3618d4aeb4c0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=30\)</span></span><a class="headerlink" href="#bm1-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.1 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=30\)</span> with original image, binary mask and threshold image.</span><a class="headerlink" href="#tbs1-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>This simple binary mask <a class="reference internal" href="#bm1-fig"><span class="std std-numref">Fig. 4.1</span></a> shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.</p>
-</section>
+<p>This simple binary mask <a class="reference internal" href="#tbs1-fig"><span class="std std-numref">Fig. 4.1</span></a> shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.</p>
 <section id="automated-thresholding">
-<h1><span class="section-number">5. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h1>
+<h2><span class="section-number">4.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
 <p>Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image. Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel, and those in the background correspond to the ‘0’ pixel values in the binary mask.</p>
 <p>Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.</p>
 <section id="global-thresholding">
-<h2><span class="section-number">5.1. </span>Global Thresholding<a class="headerlink" href="#global-thresholding" title="Permalink to this heading">#</a></h2>
+<h3><span class="section-number">4.1.1. </span>Global Thresholding<a class="headerlink" href="#global-thresholding" title="Permalink to this heading">#</a></h3>
 <p>Global thresholding works by applying a single threshold value <span class="math notranslate nohighlight">\(T\)</span> to an image. Several of the most commonly used global thresholding methods are:</p>
 <ul class="simple">
 <li><p>Mean Thresholding</p></li>
@@ -594,7 +599,7 @@ document.write(`
 </ul>
 <p>We’ll briefly introduce each of these methods and illustrate their performance on our test images above using the scikit-image <span id="id1">[]</span> package.</p>
 <section id="mean-thresholding">
-<h3><span class="section-number">5.1.1. </span>Mean Thresholding<a class="headerlink" href="#mean-thresholding" title="Permalink to this heading">#</a></h3>
+<h4>Mean Thresholding<a class="headerlink" href="#mean-thresholding" title="Permalink to this heading">#</a></h4>
 <p>A simple, albiet naive approach is to set <span class="math notranslate nohighlight">\(T\)</span> to the mean of the pixel values.  Let’s illustrate the mean threshold applied to our test images.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -651,12 +656,12 @@ document.write(`
 <figure class="align-center" id="bm2-fig">
 <img alt="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" src="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#bm2-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.2 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#bm2-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="isodata-method">
-<h3><span class="section-number">5.1.2. </span>ISOData Method<a class="headerlink" href="#isodata-method" title="Permalink to this heading">#</a></h3>
+<h4>ISOData Method<a class="headerlink" href="#isodata-method" title="Permalink to this heading">#</a></h4>
 <p>The ISOData threshold <span id="id2">[]</span> is an iterative method for selecting <span class="math notranslate nohighlight">\(T\)</span>. An initial threshold <span class="math notranslate nohighlight">\(T\)</span> is set, then the average pixel values above and below this initial threshold are computed. The new threshold is set to the average of the two values, and this process iterates until the threshold is larger than the average brightness between the two regions.</p>
 <p>Let’s examine the performance of the ISOData method on our test images.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
@@ -706,15 +711,15 @@ document.write(`
 <figure class="align-center" id="id3">
 <img alt="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" src="../../../_images/d0af981b5e062ac7abb98cbd21b335ed262bf9c30bd4e1cc24effa616c0fc2a0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.2 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.3 </span><span class="caption-text">Binary Masking with Mean Threshold</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 </section>
 <section id="adaptive-thresholding">
-<h2><span class="section-number">5.2. </span>Adaptive Thresholding<a class="headerlink" href="#adaptive-thresholding" title="Permalink to this heading">#</a></h2>
+<h3><span class="section-number">4.1.2. </span>Adaptive Thresholding<a class="headerlink" href="#adaptive-thresholding" title="Permalink to this heading">#</a></h3>
 <section id="adaptive-mean-thresholding">
-<h3><span class="section-number">5.2.1. </span>Adaptive Mean Thresholding<a class="headerlink" href="#adaptive-mean-thresholding" title="Permalink to this heading">#</a></h3>
+<h4>Adaptive Mean Thresholding<a class="headerlink" href="#adaptive-mean-thresholding" title="Permalink to this heading">#</a></h4>
 <p>Mean thresholding provides an automated method for selecting a global threshold <span class="math notranslate nohighlight">\(T\)</span> when the foreground and background regions are sufficiently distinct. For mean thresholding, the following iterative algorithm can serve this purpose:</p>
 <ol class="arabic simple">
 <li><p>Select an initial value for the global threshold <span class="math notranslate nohighlight">\(T\)</span>.</p></li>
@@ -788,14 +793,15 @@ document.write(`
 <figure class="align-center" id="bm3-fig">
 <img alt="../../../_images/c129d7438adcc7163a84859c195a76906c8c988e622a5cb3dfd789ce9f2b465b.png" src="../../../_images/c129d7438adcc7163a84859c195a76906c8c988e622a5cb3dfd789ce9f2b465b.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.3 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=127\)</span></span><a class="headerlink" href="#bm3-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.4 </span><span class="caption-text">Binary Masking with Threshold <span class="math notranslate nohighlight">\(T=127\)</span></span><a class="headerlink" href="#bm3-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">bm2_fig</span></code> we see.</p>
 </section>
 <section id="median-threshold">
-<h3><span class="section-number">5.2.2. </span>Median Threshold<a class="headerlink" href="#median-threshold" title="Permalink to this heading">#</a></h3>
+<h4>Median Threshold<a class="headerlink" href="#median-threshold" title="Permalink to this heading">#</a></h4>
 <p>The Mean threshold method works well for images for which the histogram is bimodal. However, it is not robust to extreme gradients which may affect the mean pixel intensity values. An alternative is to use the <em>median</em> in step 3 instead of the mean.</p>
+</section>
 </section>
 </section>
 </section>
@@ -867,22 +873,20 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">4. Binary Masking</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">5. Automated Thresholding</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">5.1. Global Thresholding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">5.1.1. Mean Thresholding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">5.1.2. ISOData Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">4.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">4.1.1. Global Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">Mean Thresholding</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">5.2. Adaptive Thresholding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding">5.2.1. Adaptive Mean Thresholding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-threshold">5.2.2. Median Threshold</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-thresholding">4.1.2. Adaptive Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding">Adaptive Mean Thresholding</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#median-threshold">Median Threshold</a></li>
 </ul>
 </li>
 </ul>
-
+</li>
+</ul>
   </nav></div>
 
 </div></div>

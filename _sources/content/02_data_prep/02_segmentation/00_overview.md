@@ -12,7 +12,7 @@ kernelspec:
 ---
 # Segmentation
 
-Segmentation is the process by which an image is partitioned into separate regions in order to detect and extract the region of interest (ROI), breast tissue containing one or more masses or calcifications, from the image. However, ROI detection and segmentation can be affected by pectoral muscles, text and other artifacts which may cause over-segmentation, and lead to misclassification of breast tissue abnormalities. Below, four randomly selected mammogram images illustrate the artifact removal challenge.
+Segmentation is the process by which an image is partitioned into separate regions to detect and extract the region of interest (ROI), breast tissue containing one or more masses or calcifications, from the image. However, ROI detection and segmentation can be affected by pectoral muscles, text, and other artifacts which may cause over-segmentation, and lead to misclassification of breast tissue abnormalities. Below, four randomly selected mammogram images illustrate the artifact removal challenge.
 
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
@@ -68,14 +68,14 @@ name: artifacts_fig
 Artifacts in Mammogram Images
 ```
 
-As shown, edges, text, annotations and other anomalies can have pixel intensity characteristics similar to those of the ROI. Consequently, artifacts and other anomalies must be removed before ROI detection and segmentation can occur.
+As shown in {numref}`artifacts_fig`, edges, text, annotations, and other anomalies can have pixel intensity characteristics similar to those of the ROI. Consequently, artifacts and other anomalies must be removed before ROI detection and segmentation can occur.
 
 ## Segmentation for Artifact Removal
 
 This section highlights the classical segmentation methods most commonly used to remove artifacts in biomedical imaging in general, and in mammography specifically. These methods can be categorized as threshold-based segmentation, edge-based segmentation, and region-based segmentation {cite}`michaelBreastCancerSegmentation2021`.
 
-- **Threshold-Based Segmentation** (TBS) partitions regions of an image by applying a mask formed by applying one or more pixel intensity thresholds to the image. Such methods include Otsu thresholding, morphological thresholding, global and adaptive thresholding.
-- **Edge-Based Segmentation** (EBS) uses contours and gradients in the image to detect the edges surrounding one or more regions of interest. Canny Edge Detection, Active Contour and Sobel segmentation are among the most-common EBS methods.
-- **Region-Based Segmentation** (RBS) separates the image into regions with similar characteristics. The Watershed algorithm and certain morphological methods are prominent in this category.
+- Threshold-Based Segmentation (TBS) partitions regions of an image by applying a mask formed by applying one or more pixel intensity thresholds to the image. Such methods include Otsu thresholding, morphological thresholding, and global and adaptive thresholding.
+- Edge-Based Segmentation (EBS) uses contours and gradients in the image to detect the edges surrounding one or more regions of interest. Canny Edge Detection, Active Contour, and Sobel segmentation are among the most common EBS methods.
+- Region-Based Segmentation (RBS) separates the image into regions with similar characteristics. The Watershed algorithm and certain morphological methods are prominent in this category.
 
-In the next sections, we’ll review the most prominent Threshold-Based, Edge-Based, and Region-Based methods and evaluate their performance, strengths and shortcomings.
+In the next sections, we’ll review the most prominent Threshold-Based, Edge-Based, and Region-Based methods and evaluate their performance, strengths, and shortcomings.

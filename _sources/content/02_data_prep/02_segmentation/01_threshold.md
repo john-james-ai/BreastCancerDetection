@@ -11,13 +11,10 @@ kernelspec:
   name: python3
 ---
 
-## Binary Masking
+# Threshold-Based Segmentation (TBS) for Artifact Removal
 
-In binary masking, each pixel in the binary mask has one of two values: ‘0’ representing the background, and ‘1’, corresponding to the image foreground.
-
-Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated image pixel value meets a manually designated or automatically selected threshold. Simply put, each pixel value $M_{i,j}$ in a binary mask $M$ is set to 0 if the corresponding pixel value $I_{i,j}$ in image $I$ is less than or equal to a threshold $T$, and set to 1 otherwise.
-
-In other words:
+Removing artifacts from an image using threshold-based segmentation involves the partition of the image $I$ into two (or more) regions, typically foreground and background, using a binary image, or mask $B$. Each pixel in the binary mask $B_{i,j}$ can have one of two values: 0 or 1. The value a pixel takes in the binary image depends upon the value of the corresponding pixel $I_{i,j}$ in image $I$ relative to a manually designated, or automatically selected, threshold $T$.  If $I_{i,j} > T$, then the value of the corresponding pixel in the binary mask $B_{i,j}$ is 1, otherwise,  $B_{i,j}$ is 0.
+In other words,
 
 ```{math}
 :label: global_threshold
@@ -27,9 +24,9 @@ M_{i,j} = \begin{cases}
 \end{cases}
 ```
 
-where $I$ denotes the image and $M$ indicates the binary mask. Setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures, and a threshold that is too high may remove important structural data from the image.
+Applying the binary mask $B$ to the image $I$ results in a new copy of image $I$, say, $I_t$ of the same shape and size as $I$, except all pixels in $I$ that are less than or equal to the threshold $T$ have a value of 0 in $I_t$. All other pixel values remain unchanged. Assuming the threshold $T$ is set appropriately, this places all objects of interest in the foreground (shown as white), and all other objects, artifacts, text, and anomalies in the background (shown as black).
 
-To illustrate, let’s create a binary mask using threshold $T=30$.
+So, setting an appropriate threshold is critically important. One that is too low tends to merge too many image structures and results in over-segmentation. A threshold that is too high may remove important structural data from the image.  The simplest approach is to set the threshold $T$ manually. To illustrate, let’s create a binary mask using threshold $T=30$.
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
@@ -64,7 +61,12 @@ r, bm2 = cv2.threshold(img2, 30, 255, cv2.THRESH_BINARY)
 r, bm3 = cv2.threshold(img3, 30, 255, cv2.THRESH_BINARY)
 r, bm4 = cv2.threshold(img4, 30, 255, cv2.THRESH_BINARY)
 
-fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,12))
+img1t = np.bitwise_and(img1, bm1)
+img2t = np.bitwise_and(img2, bm2)
+img3t = np.bitwise_and(img3, bm3)
+img4t = np.bitwise_and(img4, bm4)
+
+fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(12,12))
 _ = axes[0,0].imshow(img1, cmap='gray', aspect='auto')
 _ = axes[0,1].imshow(img2, cmap='gray',aspect='auto')
 _ = axes[0,2].imshow(img3, cmap='gray',aspect='auto')
@@ -73,28 +75,33 @@ _ = axes[1,0].imshow(bm1, cmap='gray', aspect='auto')
 _ = axes[1,1].imshow(bm2, cmap='gray',aspect='auto')
 _ = axes[1,2].imshow(bm3, cmap='gray',aspect='auto')
 _ = axes[1,3].imshow(bm4, cmap='gray',aspect='auto')
+_ = axes[2,0].imshow(img1t, cmap='gray', aspect='auto')
+_ = axes[2,1].imshow(img2t, cmap='gray',aspect='auto')
+_ = axes[2,2].imshow(img3t, cmap='gray',aspect='auto')
+_ = axes[2,3].imshow(img4t, cmap='gray',aspect='auto')
 
-labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
-for i in range(2):
-    for j in range(4):
-        _ = axes[i,j].set_xlabel(labels[i,j])
+imgtypes = ['Original Image', 'Binary Mask', 'Threshold Image']
+labels = np.array(["(a)", "(b)", "(c)", "(d)"])
+for i, imgtype in enumerate(imgtypes):
+    for j, label in enumerate(labels):
+        _ = axes[i,j].set_xlabel(f"{imgtype} {label}")
         _ = axes[i,j].set_xticks([])
         _ = axes[i,j].set_yticks([])
 
 plt.tight_layout()
 
-glue("bm1", fig)
+glue("tbs1", fig)
 ```
 
-```{glue:figure} bm1
+```{glue:figure} tbs1
 ---
 align: center
-name: bm1_fig
+name: tbs1_fig
 ---
-Binary Masking with Threshold $T=30$
+Binary Masking with Threshold $T=30$ with original image, binary mask and threshold image.
 ```
 
-This simple binary mask {numref}`bm1_fig` shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.
+This simple binary mask {numref}`tbs1_fig` shows how artifacts can be separated from the image; however, we lose detail in the breast tissue, indicating that our threshold is likely set to a value which is too high for this application.
 
 ## Automated Thresholding
 
