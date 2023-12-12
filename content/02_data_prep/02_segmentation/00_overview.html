@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>1. Overview &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>3. Segmentation &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -20,54 +20,54 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'content/02_data_prep/00_overview';</script>
-    <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2. Denoise" href="01_denoise.html" />
-    <link rel="prev" title="3. Exploratory Data Analysis (EDA)" href="../01_eda/02_eda.html" />
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/02_data_prep/02_segmentation/00_overview';</script>
+    <link rel="shortcut icon" href="../../../_static/favicon-32x32.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="References" href="../../99_references.html" />
+    <link rel="prev" title="2.4. Denoising Experiment" href="../01_denoise/03_experiment.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -95,7 +95,7 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
-      action="../../search.html"
+      action="../../../search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -133,7 +133,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="../../index.html">
+<a class="navbar-brand logo" href="../../../index.html">
   
   
   
@@ -143,8 +143,8 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
 </a></div>
@@ -153,42 +153,42 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../index.html">
+                <a class="reference internal" href="../../../index.html">
                     Deep Learning for Breast Cancer Detection in Digital Mammography
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Front Matter</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../00_front_matter/00_preface.html">1. Preface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../00_front_matter/01_intro.html">2. Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../00_front_matter/02_toc.html">3. Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/00_preface.html">1. Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/01_intro.html">2. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/02_toc.html">3. Table of Contents</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../01_eda/00_data.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../01_eda/01_data_prep.html">2. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../01_eda/02_eda.html">3. Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/00_data.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/01_data_prep.html">2. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda.html">3. Exploratory Data Analysis (EDA)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Overview</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_overview.html">1. Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="02_segmentation/00_overview.html">3. Segmentation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Segmentation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../99_references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../99_references.html">References</a></li>
 </ul>
 
     </div>
@@ -243,7 +243,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/john-james-ai/BreastCancerDetection/main/v2/gh/john-james-ai/BreastCancerDetection/main?urlpath=tree/jbook/content/02_data_prep/00_overview.md" target="_blank"
+      <li><a href="https://mybinder.org/v2/gh/john-james-ai/BreastCancerDetection/main/v2/gh/john-james-ai/BreastCancerDetection/main?urlpath=tree/jbook/content/02_data_prep/02_segmentation/00_overview.md" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onBinder"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -252,7 +252,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <span class="btn__icon-container">
   
-    <img src="../../_static/images/logo_binder.svg">
+    <img src="../../../_static/images/logo_binder.svg">
   </span>
 <span class="btn__text-container">Binder</span>
 </a>
@@ -261,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/john-james-ai/BreastCancerDetection/blob/main/jbook/content/02_data_prep/00_overview.md" target="_blank"
+      <li><a href="https://colab.research.google.com/github/john-james-ai/BreastCancerDetection/blob/main/jbook/content/02_data_prep/02_segmentation/00_overview.md" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -270,7 +270,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <span class="btn__icon-container">
   
-    <img src="../../_static/images/logo_colab.png">
+    <img src="../../../_static/images/logo_colab.png">
   </span>
 <span class="btn__text-container">Colab</span>
 </a>
@@ -309,7 +309,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/edit/main/jbook/content/02_data_prep/00_overview.md" target="_blank"
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/edit/main/jbook/content/02_data_prep/02_segmentation/00_overview.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -326,7 +326,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/issues/new?title=Issue%20on%20page%20%2Fcontent/02_data_prep/00_overview.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/issues/new?title=Issue%20on%20page%20%2Fcontent/02_data_prep/02_segmentation/00_overview.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -356,7 +356,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/content/02_data_prep/00_overview.ipynb" target="_blank"
+      <li><a href="../../../_sources/content/02_data_prep/02_segmentation/00_overview.ipynb" target="_blank"
    class="btn btn-sm btn-download-notebook-button dropdown-item"
    title="Download notebook file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -373,7 +373,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/content/02_data_prep/00_overview.md" target="_blank"
+      <li><a href="../../../_sources/content/02_data_prep/02_segmentation/00_overview.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -455,7 +455,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Overview</h1>
+    <h1>Segmentation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -465,7 +465,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-approach">1.1. Image Preprocessing Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-for-artifact-removal">3.1. Segmentation for Artifact Removal</a></li>
 </ul>
             </nav>
         </div>
@@ -477,29 +477,19 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="overview">
-<h1><span class="section-number">1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
-<p>Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.</p>
-<p>Exploratory analysis of the CBIS-DDSM mammograph illuminated several issues that compromise the discriminatory power of image detection and recognition models.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="segmentation">
+<h1><span class="section-number">3. </span>Segmentation<a class="headerlink" href="#segmentation" title="Permalink to this heading">#</a></h1>
+<p>Segmentation is the process by which an image is partitioned into separate regions in order to detect and extract the region of interest (ROI), breast tissue containing one or more masses or calcifications, from the image. However, ROI detection and segmentation can be affected by pectoral muscles, text and other artifacts which may cause over-segmentation, and lead to misclassification of breast tissue abnormalities. Below, four randomly selected mammogram images illustrate the artifact removal challenge.</p>
+<p>As shown, edges, text, annotations and other anomalies can have pixel intensity characteristics similar to those of the ROI. Consequently, artifacts and other anomalies must be removed before ROI detection and segmentation can occur.</p>
+<section id="segmentation-for-artifact-removal">
+<h2><span class="section-number">3.1. </span>Segmentation for Artifact Removal<a class="headerlink" href="#segmentation-for-artifact-removal" title="Permalink to this heading">#</a></h2>
+<p>This section highlights the classical segmentation methods most commonly used to remove artifacts in biomedical imaging in general, and in mammography specifically. These methods can be categorized as threshold-based segmentation, edge-based segmentation, and region-based segmentation <span id="id1">[<a class="reference internal" href="../../99_references.html#id22" title="Epimack Michael, He Ma, Hong Li, Frank Kulwa, and Jing Li. Breast Cancer Segmentation Methods: Current Status and Future Potentials. BioMed Research International, 2021:1–29, July 2021. URL: https://www.hindawi.com/journals/bmri/2021/9962109/ (visited on 2023-05-24), doi:10.1155/2021/9962109.">32</a>]</span>.</p>
 <ul class="simple">
-<li><p>Various artifacts (large texts and annotations) are present within the mammography that resemble the pixel intensities of the regions of interest (ROIs), which can interfere with the ROI extraction process and/or lead to false diagnosis.</p></li>
-<li><p>Noise of various types in the images is an obstacle to effective feature extraction, image detection, recognition, and classification.</p></li>
-<li><p>Poor brightness and contrast levels in some mammograms may increase the influence of noise, and/or conceal important and subtle features.</p></li>
-<li><p>Malignant tumors are characterized by irregular shapes and ambiguous or blurred edges that complicate the ROI segmentation task.</p></li>
-<li><p>Dense breast tissue with pixel intensities similar to that of cancerous tissue, may conceal subtle structures of diagnostic importance.</p></li>
-<li><p>Deep learning models for computer vision require large datasets. The CBIS-DDSM has just over 3500 full mammogram images, a relatively small dataset for model training.</p></li>
+<li><p><strong>Threshold-Based Segmentation</strong> (TBS) partitions regions of an image by applying a mask formed by applying one or more pixel intensity thresholds to the image. Such methods include Otsu thresholding, morphological thresholding, global and adaptive thresholding.</p></li>
+<li><p><strong>Edge-Based Segmentation</strong> (EBS) uses contours and gradients in the image to detect the edges surrounding one or more regions of interest. Canny Edge Detection, Active Contour and Sobel segmentation are among the most-common EBS methods.</p></li>
+<li><p><strong>Region-Based Segmentation</strong> (RBS) separates the image into regions with similar characteristics. The Watershed algorithm and certain morphological methods are prominent in this category.</p></li>
 </ul>
-<p>Addressing these challenges is fundamentally important to model detection, recognition, and classification performance.</p>
-<section id="image-preprocessing-approach">
-<h2><span class="section-number">1.1. </span>Image Preprocessing Approach<a class="headerlink" href="#image-preprocessing-approach" title="Permalink to this heading">#</a></h2>
-<p>In this regard, a five-stage image preprocessing approach (<a class="reference internal" href="#image-prep"><span class="std std-numref">Fig. 1.1</span></a>) has been devised to reduce noise in the images, eliminate artifacts, and produce a collection of images for maximally effective computer vision model training and classification.</p>
-<figure class="align-default" id="image-prep">
-<img alt="../../_images/ImagePrep.png" src="../../_images/ImagePrep.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text">Image Preprocessing Approach</span><a class="headerlink" href="#image-prep" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>We begin with an evaluation of various denoising methods commonly applied to mammography. Once a denoising method and its (hyper) parameters are selected, we move to the artifact removal stage. Image binarizing and thresholding methods are evaluated, then morphological transformations are applied to the binarized images to remove artifacts. Next, the pectoral muscle is removed using various techniques such as Canny Edge Detection, Hough Lines Transformation, and Largest Contour Detection algorithms. To make malignant lesions more conspicuous during model training, we enhance image brightness and contrast with Gamma Correction and Contrast Limited Adaptive Histogram Equalization (CLAHE). Additive White Gaussian Noise (AWGN) is also added to improve the generalized performance of the neural network and mitigate model overfitting. Finally, we extract the ROIs using automated pixel intensity thresholding to create a binary mask which is applied to the enhanced images.</p>
+<p>In the next sections, we’ll review the most prominent Threshold-Based, Edge-Based, and Region-Based methods and evaluate their performance, strengths and shortcomings.</p>
 </section>
 </section>
 
@@ -516,7 +506,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./content/02_data_prep"
+            path: "./content/02_data_prep/02_segmentation"
         },
         predefinedOutput: true
     }
@@ -535,20 +525,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../01_eda/02_eda.html"
+       href="../01_denoise/03_experiment.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Exploratory Data Analysis (EDA)</p>
+        <p class="prev-next-title"><span class="section-number">2.4. </span>Denoising Experiment</p>
       </div>
     </a>
     <a class="right-next"
-       href="01_denoise.html"
+       href="../../99_references.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>Denoise</p>
+        <p class="prev-next-title">References</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -570,7 +560,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-preprocessing-approach">1.1. Image Preprocessing Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-for-artifact-removal">3.1. Segmentation for Artifact Removal</a></li>
 </ul>
   </nav></div>
 
@@ -618,8 +608,8 @@ By John James
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>
