@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="References" href="../../99_references.html" />
+    <link rel="next" title="4. Binary Masking" href="01_threshold.html" />
     <link rel="prev" title="2.4. Denoising Experiment" href="../01_denoise/03_experiment.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -185,6 +185,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_threshold.html">4. Binary Masking</a></li>
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -480,6 +482,12 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="segmentation">
 <h1><span class="section-number">3. </span>Segmentation<a class="headerlink" href="#segmentation" title="Permalink to this heading">#</a></h1>
 <p>Segmentation is the process by which an image is partitioned into separate regions in order to detect and extract the region of interest (ROI), breast tissue containing one or more masses or calcifications, from the image. However, ROI detection and segmentation can be affected by pectoral muscles, text and other artifacts which may cause over-segmentation, and lead to misclassification of breast tissue abnormalities. Below, four randomly selected mammogram images illustrate the artifact removal challenge.</p>
+<figure class="align-center" id="artifacts-fig">
+<img alt="../../../_images/7df940c6063280707b13119ca98e9708fa21131e488c4abce3661d51f34c15ca.png" src="../../../_images/7df940c6063280707b13119ca98e9708fa21131e488c4abce3661d51f34c15ca.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Artifacts in Mammogram Images</span><a class="headerlink" href="#artifacts-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>As shown, edges, text, annotations and other anomalies can have pixel intensity characteristics similar to those of the ROI. Consequently, artifacts and other anomalies must be removed before ROI detection and segmentation can occur.</p>
 <section id="segmentation-for-artifact-removal">
 <h2><span class="section-number">3.1. </span>Segmentation for Artifact Removal<a class="headerlink" href="#segmentation-for-artifact-removal" title="Permalink to this heading">#</a></h2>
@@ -534,11 +542,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../../99_references.html"
+       href="01_threshold.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Binary Masking</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

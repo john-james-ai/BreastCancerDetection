@@ -50,7 +50,7 @@ _ = axes[3].imshow(img4, cmap='gray',aspect='auto')
 
 labels = np.array(["(a)", "(b)", "(c)", "(d)"])
 for i in range(4):
-    _ = axes[i].set_xlabel(labels[i,j])
+    _ = axes[i].set_xlabel(labels[i])
     _ = axes[i].set_xticks([])
     _ = axes[i].set_yticks([])
 
