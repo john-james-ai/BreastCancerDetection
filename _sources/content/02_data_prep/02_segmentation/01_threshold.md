@@ -181,7 +181,7 @@ Binary Masking with Mean Threshold
 
 #### ISOData Method
 
-The ISOData threshold {cite}`PictureThresholdingUsing1978` is an iterative method for selecting $T$. An initial threshold $T$ is set, then the average pixel values above and below this initial threshold are computed. The new threshold is set to the average of the two values, and this process iterates until the threshold is larger than the average brightness between the two regions.
+The ISOData threshold is an iterative method for selecting $T$. An initial threshold $T$ is set, then the average pixel values above and below this initial threshold are computed. The new threshold is set to the average of the two values, and this process iterates until the threshold is larger than the average brightness between the two regions.
 
 Let's examine the performance of the ISOData method on our test images.
 
