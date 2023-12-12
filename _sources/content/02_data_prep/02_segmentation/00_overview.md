@@ -70,8 +70,6 @@ Artifacts in Mammogram Images
 
 As shown in {numref}`artifacts_fig`, edges, text, annotations, and other anomalies can have pixel intensity characteristics similar to those of the ROI. Consequently, artifacts and other anomalies must be removed before ROI detection and segmentation can occur.
 
-## Segmentation for Artifact Removal
-
 This section highlights the classical segmentation methods most commonly used to remove artifacts in biomedical imaging in general, and in mammography specifically. These methods can be categorized as threshold-based segmentation, edge-based segmentation, and region-based segmentation {cite}`michaelBreastCancerSegmentation2021`.
 
 - Threshold-Based Segmentation (TBS) partitions regions of an image by applying a mask formed by applying one or more pixel intensity thresholds to the image. Such methods include Otsu thresholding, morphological thresholding, and global and adaptive thresholding.

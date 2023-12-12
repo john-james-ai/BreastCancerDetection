@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3.2. Threshold-Based Segmentation (TBS) for Artifact Removal &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>3.1. Threshold-Based Segmentation (TBS) for Artifact Removal &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -187,7 +187,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="00_overview.html">3. Segmentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">3.2. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">3.1. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
 </ul>
 </li>
 </ul>
@@ -470,7 +470,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.2.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">Global Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">Mean Thresholding</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
@@ -494,7 +494,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="threshold-based-segmentation-tbs-for-artifact-removal">
-<h1><span class="section-number">3.2. </span>Threshold-Based Segmentation (TBS) for Artifact Removal<a class="headerlink" href="#threshold-based-segmentation-tbs-for-artifact-removal" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">3.1. </span>Threshold-Based Segmentation (TBS) for Artifact Removal<a class="headerlink" href="#threshold-based-segmentation-tbs-for-artifact-removal" title="Permalink to this heading">#</a></h1>
 <p>Removing artifacts from an image using threshold-based segmentation involves the partition of the image <span class="math notranslate nohighlight">\(I\)</span> into two (or more) regions, typically foreground and background, using a binary image, or mask <span class="math notranslate nohighlight">\(B\)</span>. Each pixel in the binary mask <span class="math notranslate nohighlight">\(B_{i,j}\)</span> can have one of two values: 0 or 1. The value a pixel takes in the binary image depends upon the value of the corresponding pixel <span class="math notranslate nohighlight">\(I_{i,j}\)</span> in image <span class="math notranslate nohighlight">\(I\)</span> relative to a manually designated, or automatically selected, threshold <span class="math notranslate nohighlight">\(T\)</span>.  If <span class="math notranslate nohighlight">\(I_{i,j} &gt; T\)</span>, then the value of the corresponding pixel in the binary mask <span class="math notranslate nohighlight">\(B_{i,j}\)</span> is 1, otherwise,  <span class="math notranslate nohighlight">\(B_{i,j}\)</span> is 0.
 In other words,</p>
 <div class="math notranslate nohighlight" id="equation-global-threshold">
@@ -585,7 +585,7 @@ In other words,</p>
 <p>The first row of <a class="reference internal" href="#tbs1-fig"><span class="std std-numref">Fig. 3.2</span></a> contains the original images, the second row is comprised of the binary masks, and the last row contains the threshold images. This simple binary mask shows how artifacts can be separated from the image using threshold techniques; however, we lose detail in the breast tissue, indicating that our threshold is likely set too high for this application.</p>
 <p>Manually selecting a threshold value is often suboptimal due to bias that may be introduced. In many cases, especially in biomedical imaging, we want the threshold <span class="math notranslate nohighlight">\(T\)</span> to be set automatically such that the pixels in the region of interest correspond most optimally to the ‘1’ pixel in the binary mask <span class="math notranslate nohighlight">\(B\)</span>, and those in the background correspond to the ‘0’ pixel values in the binary mask.</p>
 <section id="automated-thresholding">
-<h2><span class="section-number">3.2.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.1.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
 <p>Literature is replete with automated binary threshold methods, most of which can be classified as either global thresholding or adaptive thresholding.</p>
 <section id="global-thresholding">
 <h3>Global Thresholding<a class="headerlink" href="#global-thresholding" title="Permalink to this heading">#</a></h3>
@@ -816,7 +816,7 @@ In other words,</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.2.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#global-thresholding">Global Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-thresholding">Mean Thresholding</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
