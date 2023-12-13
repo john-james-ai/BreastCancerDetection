@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday November 6th 2023 02:43:43 am                                                #
-# Modified   : Monday November 6th 2023 05:56:23 am                                                #
+# Modified   : Wednesday December 13th 2023 01:41:41 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,7 @@ import pytest
 
 from bcd.etl.load import Loader
 from bcd.preprocess.image.experiment.denoise import DenoiseExperiment
-from bcd.preprocess.image.method.denoise import (
+from bcd.preprocess.image.operation.denoise import (
     BilateralFilter,
     GaussianFilter,
     MeanFilter,
@@ -181,7 +181,10 @@ class TestDenoiser:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
         repo = container.dal.image_repo()
-        params = {"sigma_color_factor": [0.8, 1, 1.2], "sigma_space_factor": [0.8, 1, 1.2]}
+        params = {
+            "sigma_color_factor": [0.8, 1, 1.2],
+            "sigma_space_factor": [0.8, 1, 1.2],
+        }
         task = DenoiseExperiment(method=BilateralFilter, params=params, batchsize=5)
         task.run()
         condition = lambda df: df["stage_id"] == 1

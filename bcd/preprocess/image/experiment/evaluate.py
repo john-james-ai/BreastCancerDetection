@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday October 27th 2023 03:24:36 am                                                #
-# Modified   : Monday December 11th 2023 10:26:30 am                                               #
+# Modified   : Tuesday December 12th 2023 04:13:59 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -91,6 +91,8 @@ class Evaluation(DataClass):
     psnr: float
     ssim: float
     evaluated: datetime
+    dataset: str = None
+    dataset_params: str = None
 
     def as_dict(self) -> dict:
         return {
@@ -101,6 +103,8 @@ class Evaluation(DataClass):
             "stage": self.test.stage,
             "method": self.method,
             "params": self.params,
+            "dataset": self.dataset,
+            "dataset_params": self.dataset_params,
             "image_view": self.test.image_view,
             "abnormality_type": self.test.abnormality_type,
             "assessment": self.test.assessment,
@@ -123,6 +127,8 @@ class Evaluation(DataClass):
         test: Image,
         method: str,
         params: str,
+        dataset: str = None,
+        dataset_params: str = None,
         mse: type[MSE] = MSE,
         psnr: type[PSNR] = PSNR,
         ssim: type[SSIM] = SSIM,
@@ -134,6 +140,9 @@ class Evaluation(DataClass):
             test (Image): The test image object
             method (str): The name of the method being evaluated.
             params (str): The parameters used by the method.
+            dataset (str): Description of the dataset upon which the evaluation is made.
+                Used for denoising evaluations
+            dataset_params (str): Parameters that further describe the dataset.
             mse (type[MSE]): The MSE computation class
             psnr (type[PSNR]): The PSNR computation class
             ssim (type[SSIM]): The SSIM computation class
@@ -146,6 +155,8 @@ class Evaluation(DataClass):
             test=test,
             method=method,
             params=params,
+            dataset=dataset,
+            dataset_params=dataset_params,
             build_time=test.build_time,
             mse=mse.compute(orig=orig.pixel_data, test=test.pixel_data),
             psnr=psnr.compute(orig=orig.pixel_data, test=test.pixel_data),

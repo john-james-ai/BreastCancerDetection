@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:41:24 pm                                              #
-# Modified   : Monday November 13th 2023 02:11:01 pm                                               #
+# Modified   : Tuesday December 12th 2023 04:16:38 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,6 +38,8 @@ EVAL_DTYPES = {
     "stage": VARCHAR(32),
     "method": VARCHAR(64),
     "params": VARCHAR(128),
+    "dataset": VARCHAR(32),
+    "dataset_params": VARCHAR(64),
     "image_view": VARCHAR(4),
     "abnormality_type": VARCHAR(24),
     "assessment": INTEGER,

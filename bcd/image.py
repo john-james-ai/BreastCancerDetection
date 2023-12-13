@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 10:27:45 am                                              #
-# Modified   : Monday November 6th 2023 04:57:08 am                                                #
+# Modified   : Tuesday December 12th 2023 04:06:14 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -274,7 +274,7 @@ class ImageFactory:
         pixel_data: np.ndarray,
         method: str,
         build_time: float,
-        task_id: str,
+        task_id: str = None,
     ) -> Image:
         """Creates an image from pizel data.
 

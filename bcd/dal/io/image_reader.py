@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Monday November 6th 2023 01:34:07 am                                                #
+# Modified   : Wednesday December 13th 2023 01:09:44 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -39,7 +39,7 @@ class ImageReader:
     """Iterator that returns images individually or in batches.
 
     Args:
-        batchsize (int): Size of batches to return. None is interpreted as a batch size of 1.
+        batchsize (int): Size of batches to return. Default batchsize is 1.
         condition (Callable): Lambda expression that will be used to select the data.
         repo (ImageRepo): Repository of images
     """
@@ -47,7 +47,7 @@ class ImageReader:
     @inject
     def __init__(
         self,
-        batchsize: int = None,
+        batchsize: int = 1,
         condition: Callable = None,
         repo: ImageRepo = Provide[BCDContainer.dal.image_repo],
     ) -> None:
@@ -58,10 +58,14 @@ class ImageReader:
         self._image_metadata_batches = None
         self._num_batches = 0
         self._image_batch = []
-        self._image_metadata = self._repo.get_meta(condition=self._condition).reset_index()
+        self._image_metadata = self._repo.get_meta(
+            condition=self._condition
+        ).reset_index()
         if self._batchsize:
             self._num_batches = math.ceil(len(self._image_metadata) / self._batchsize)
-            self._image_metadata_batches = np.array_split(self._image_metadata, self._num_batches)
+            self._image_metadata_batches = np.array_split(
+                self._image_metadata, self._num_batches
+            )
 
     def __iter__(self) -> ImageReader:
         self._index = 0

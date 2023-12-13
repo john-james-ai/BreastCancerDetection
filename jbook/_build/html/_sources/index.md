@@ -13,7 +13,3 @@ kernelspec:
 # Deep Learning for Breast Cancer Detection in Digital Mammography
 
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://github.com/john-james-ai/BreastCancerDetection)
-
-```{tableofcontents}
-
-```

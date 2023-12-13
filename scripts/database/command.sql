@@ -1,2 +1,2 @@
 use bcd;
-ALTER TABLE image ADD task_id VARCHAR(64);
+ALTER TABLE eval MODIFY dataset_params VARCHAR(128);
