@@ -470,8 +470,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-assessment-iqa">2.4.1. Image Quality Assessment (IQA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subjective-image-quality-assessment">Subjective Image Quality Assessment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subjective-image-quality-assessment">2.4.1. Subjective Image Quality Assessment</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-image-quality-assessment">Objective Image Quality Assessment</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peak-signal-to-noise-ratio-psnr">Peak Signal-to-Noise Ratio (PSNR)</a></li>
@@ -499,7 +498,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="denoising-experiment">
 <h1><span class="section-number">2.4. </span>Denoising Experiment<a class="headerlink" href="#denoising-experiment" title="Permalink to this heading">#</a></h1>
-<p>An experiment was conducted to evaluate the various denoising techniques described above. Eighty-eight images were selected using stratified sampling to ensure all case types and abnormalities were represented. The denoisers evaluated and their parameters are specified below.</p>
+<p>An experiment was conducted to evaluate the various denoising techniques described above. Eighty-eight (88) images were selected using stratified sampling to ensure all case types and abnormalities were represented. The denoisers evaluated and their parameters are specified below.</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Domain</p></th>
@@ -538,16 +537,12 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>The original images were considered ground-truth to which, random Gaussian, Speckle, Salt-n-Pepper, and Impulse noise were added to produce the test images.</p>
-<section id="image-quality-assessment-iqa">
-<h2><span class="section-number">2.4.1. </span>Image Quality Assessment (IQA)<a class="headerlink" href="#image-quality-assessment-iqa" title="Permalink to this heading">#</a></h2>
-<p>The Image Quality Assessment (IQA) was the process by which denoiser algorithms were evaluated. In this regard, our IQA was a combination of subjective and objective assessment methods.</p>
+<p>Four noisy images were created from each ground-truth image: a Gaussian noise image, a speckle noise image, a salt-n-pepper noise image, and an impulse noise image. Subjective and objective Image Quality Assessments (IQAs) were conducted for each of the above denoisers on a total of 352 images.</p>
 <section id="subjective-image-quality-assessment">
-<h3>Subjective Image Quality Assessment<a class="headerlink" href="#subjective-image-quality-assessment" title="Permalink to this heading">#</a></h3>
-<p>Subjective assessments were performed on a double stimulus continuous quality scale (DSCQS) <span id="id1">[<a class="reference internal" href="../../99_references.html#id357" title="BT.500 : Methodologies for the subjective assessment of the quality of television images. URL: https://www.itu.int/rec/R-REC-BT.500-15-202305-I/en (visited on 2023-12-11).">27</a>]</span>, in which each test image was compared to its associated ground truth image for noise reduction and preservation of fine detail in the breast tissue itself. Both images were marked with quality scores in [0,100], and then the difference between the quality scores of both the ground-truth and test image were calculated on a continuous scale. The DSCQS score was calculated by averaging the quality score differences for all images denoised by a given method. A lower value indicates better image quality and a larger value reflects poorer image quality. The subjective score is finally calculated for each denoiser method as follows:</p>
+<h2><span class="section-number">2.4.1. </span>Subjective Image Quality Assessment<a class="headerlink" href="#subjective-image-quality-assessment" title="Permalink to this heading">#</a></h2>
+<p>Subjective assessments were performed on a double stimulus continuous quality scale (DSCQS) <span id="id1">[<a class="reference internal" href="../../99_references.html#id357" title="BT.500 : Methodologies for the subjective assessment of the quality of television images. URL: https://www.itu.int/rec/R-REC-BT.500-15-202305-I/en (visited on 2023-12-11).">27</a>]</span>, in which a random sampling of test images was compared to their associated ground truth images for noise reduction and preservation of fine detail in the breast tissue. Each randomly selected ground truth and associated test image was marked with a quality score in [0,100], and then the difference between the quality scores was computed. The DSCQS score was calculated by averaging the quality score differences for all images denoised by a given method. A lower value indicates better image quality and a larger value reflects poorer image quality. The subjective score was finally calculated for each denoiser method as follows:</p>
 <div class="math notranslate nohighlight" id="equation-subjective">
 <span class="eqno">(2.27)<a class="headerlink" href="#equation-subjective" title="Permalink to this equation">#</a></span>\[\text{Subjective Score} = 100-\text{DSCQS Score}\]</div>
-</section>
 <section id="objective-image-quality-assessment">
 <h3>Objective Image Quality Assessment<a class="headerlink" href="#objective-image-quality-assessment" title="Permalink to this heading">#</a></h3>
 <p>Objective methods are based on image quality metrics (IQMs) that are designed to estimate the quality of the image automatically, in qualitative terms as observed by human subjects <span id="id2">[<a class="reference internal" href="../../99_references.html#id333" title="Afnan Afnan, Faiz Ullah, Yaseen Yaseen, Jinhee Lee, Sonain Jamil, and Oh-Jin Kwon. Subjective Assessment of Objective Image Quality Metrics Range Guaranteeing Visually Lossless Compression. Sensors, 23(3):1297, January 2023. URL: https://www.mdpi.com/1424-8220/23/3/1297 (visited on 2023-11-21), doi:10.3390/s23031297.">28</a>]</span>.  For this effort, three IQMs were used to assess image quality: mean squared error (MSE), peak signal-to-noise ratio (PSNR), and the structural similarity index measure (SSIM).</p>
@@ -606,7 +601,7 @@ Peak Signal-to-Noise Ratio (PSNR) avoids this problem by scaling the MSE accordi
 </section>
 <section id="results-of-the-denoising-experiment">
 <h2><span class="section-number">2.4.2. </span>Results of the Denoising Experiment<a class="headerlink" href="#results-of-the-denoising-experiment" title="Permalink to this heading">#</a></h2>
-<p>A total of 616 subjective and objective assessments were conducted using the IQMs described above. The Median filter with a kernel size of 3 produced the overall best quality in terms of noise reduction and preservation of detail in the breast tissue. The Gaussian filter was a close second; however, it did not preserve the detail in the breast tissue as well as the Median filter did. The Frequency Domain filters effectively removed noise that could be categorized as Salt-n-Pepper or Speckle noise; however, their blurring effect was objectionable.</p>
+<p>A total of 44 subjective assessments and 352 objective assessments were conducted using the IQMs described above. The Median filter with a kernel size of 3 produced the overall best quality in terms of noise reduction and preservation of detail in the breast tissue. The Gaussian filter was a close second; however, it did not preserve the detail in the breast tissue as well as the Median filter did. The Frequency Domain filters were effective on salt-n-pepper and speckle noise; however, the overall blurring effect was objectionable.</p>
 </section>
 </section>
 
@@ -677,8 +672,7 @@ Peak Signal-to-Noise Ratio (PSNR) avoids this problem by scaling the MSE accordi
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-assessment-iqa">2.4.1. Image Quality Assessment (IQA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subjective-image-quality-assessment">Subjective Image Quality Assessment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subjective-image-quality-assessment">2.4.1. Subjective Image Quality Assessment</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-image-quality-assessment">Objective Image Quality Assessment</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#peak-signal-to-noise-ratio-psnr">Peak Signal-to-Noise Ratio (PSNR)</a></li>

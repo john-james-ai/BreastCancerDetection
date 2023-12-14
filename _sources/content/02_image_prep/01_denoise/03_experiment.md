@@ -12,7 +12,7 @@ kernelspec:
 ---
 # Denoising Experiment
 
-An experiment was conducted to evaluate the various denoising techniques described above. Eighty-eight images were selected using stratified sampling to ensure all case types and abnormalities were represented. The denoisers evaluated and their parameters are specified below.
+An experiment was conducted to evaluate the various denoising techniques described above. Eighty-eight (88) images were selected using stratified sampling to ensure all case types and abnormalities were represented. The denoisers evaluated and their parameters are specified below.
 
 | Domain     | Denoiser          | Parameters                                                               |
 |------------|-------------------|--------------------------------------------------------------------------|
@@ -24,15 +24,11 @@ An experiment was conducted to evaluate the various denoising techniques describ
 | Frequency  | ButterworthFilter | params={'order': [10], 'cutoff': [0.25, 0.5, 0.75]}                      |
 |            | WaveletFilter     | params={'wavelet': ['haar']}                                             |
 
-The original images were considered ground-truth to which, random Gaussian, Speckle, Salt-n-Pepper, and Impulse noise were added to produce the test images.
+Four noisy images were created from each ground-truth image: a Gaussian noise image, a speckle noise image, a salt-n-pepper noise image, and an impulse noise image. Subjective and objective Image Quality Assessments (IQAs) were conducted for each of the above denoisers on a total of 352 images.
 
-## Image Quality Assessment (IQA)
+## Subjective Image Quality Assessment
 
-The Image Quality Assessment (IQA) was the process by which denoiser algorithms were evaluated. In this regard, our IQA was a combination of subjective and objective assessment methods.
-
-### Subjective Image Quality Assessment
-
-Subjective assessments were performed on a double stimulus continuous quality scale (DSCQS) {cite}`BT500Methodologies`, in which each test image was compared to its associated ground truth image for noise reduction and preservation of fine detail in the breast tissue itself. Both images were marked with quality scores in [0,100], and then the difference between the quality scores of both the ground-truth and test image were calculated on a continuous scale. The DSCQS score was calculated by averaging the quality score differences for all images denoised by a given method. A lower value indicates better image quality and a larger value reflects poorer image quality. The subjective score is finally calculated for each denoiser method as follows:
+Subjective assessments were performed on a double stimulus continuous quality scale (DSCQS) {cite}`BT500Methodologies`, in which a random sampling of test images was compared to their associated ground truth images for noise reduction and preservation of fine detail in the breast tissue. Each randomly selected ground truth and associated test image was marked with a quality score in [0,100], and then the difference between the quality scores was computed. The DSCQS score was calculated by averaging the quality score differences for all images denoised by a given method. A lower value indicates better image quality and a larger value reflects poorer image quality. The subjective score was finally calculated for each denoiser method as follows:
 
 ```{math}
 :label: subjective
@@ -127,4 +123,4 @@ The expressions refer to constants $C_1$, $C_2$, and $C_3$ that are introduced f
 
 ## Results of the Denoising Experiment
 
-A total of 616 subjective and objective assessments were conducted using the IQMs described above. The Median filter with a kernel size of 3 produced the overall best quality in terms of noise reduction and preservation of detail in the breast tissue. The Gaussian filter was a close second; however, it did not preserve the detail in the breast tissue as well as the Median filter did. The Frequency Domain filters effectively removed noise that could be categorized as Salt-n-Pepper or Speckle noise; however, their blurring effect was objectionable.
+A total of 44 subjective assessments and 352 objective assessments were conducted using the IQMs described above. The Median filter with a kernel size of 3 produced the overall best quality in terms of noise reduction and preservation of detail in the breast tissue. The Gaussian filter was a close second; however, it did not preserve the detail in the breast tissue as well as the Median filter did. The Frequency Domain filters were effective on salt-n-pepper and speckle noise; however, the overall blurring effect was objectionable.
