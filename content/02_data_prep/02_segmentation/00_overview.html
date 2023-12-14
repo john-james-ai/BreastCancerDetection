@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3. Segmentation &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>3. Image Segmentation for Mammography &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -184,7 +184,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">3. Segmentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">3. Image Segmentation for Mammography</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="01_threshold.html">3.1. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
 </ul>
 </li>
@@ -456,7 +456,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Segmentation</h1>
+    <h1>Image Segmentation for Mammography</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -470,23 +470,24 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="segmentation">
-<h1><span class="section-number">3. </span>Segmentation<a class="headerlink" href="#segmentation" title="Permalink to this heading">#</a></h1>
-<p>Segmentation is the process by which an image is partitioned into separate regions to detect and extract the region of interest (ROI), breast tissue containing one or more masses or calcifications, from the image. However, ROI detection and segmentation can be affected by pectoral muscles, text, and other artifacts which may cause over-segmentation, and lead to misclassification of breast tissue abnormalities. Below, four randomly selected mammogram images illustrate the artifact removal challenge.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="image-segmentation-for-mammography">
+<h1><span class="section-number">3. </span>Image Segmentation for Mammography<a class="headerlink" href="#image-segmentation-for-mammography" title="Permalink to this heading">#</a></h1>
+<p>Image segmentation
+Segmentation is the process by which an image is partitioned into separate regions for the purposes of to detect and extract the region of interest (ROI), breast tissue containing one or more masses or calcifications. However, ROI detection and segmentation can be affected by pectoral muscles, text, and other artifacts which may cause over-segmentation, and lead to misclassification of breast tissue abnormalities. Below, four randomly selected mammogram images from the CBIS-DDSM dataset illustrate the challenge.</p>
 <figure class="align-center" id="artifacts-fig">
 <img alt="../../../_images/7df940c6063280707b13119ca98e9708fa21131e488c4abce3661d51f34c15ca.png" src="../../../_images/7df940c6063280707b13119ca98e9708fa21131e488c4abce3661d51f34c15ca.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Artifacts in Mammogram Images</span><a class="headerlink" href="#artifacts-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="#artifacts-fig"><span class="std std-numref">Fig. 3.1</span></a>, edges, text, annotations, and other anomalies can have pixel intensity characteristics similar to those of the ROI. Consequently, artifacts and other anomalies must be removed before ROI detection and segmentation can occur.</p>
-<p>This section highlights the classical segmentation methods most commonly used to remove artifacts in biomedical imaging in general, and in mammography specifically. These methods can be categorized as threshold-based segmentation, edge-based segmentation, and region-based segmentation <span id="id1">[<a class="reference internal" href="../../99_references.html#id22" title="Epimack Michael, He Ma, Hong Li, Frank Kulwa, and Jing Li. Breast Cancer Segmentation Methods: Current Status and Future Potentials. BioMed Research International, 2021:1–29, July 2021. URL: https://www.hindawi.com/journals/bmri/2021/9962109/ (visited on 2023-05-24), doi:10.1155/2021/9962109.">32</a>]</span>.</p>
+<p>As shown in <a class="reference internal" href="#artifacts-fig"><span class="std std-numref">Fig. 3.1</span></a>, edges, text, annotations, and other anomalies can have pixel characteristics similar to those of the ROI. Consequently, artifacts and other anomalies must be removed before ROI detection and segmentation can occur.</p>
+<p>This section highlights the classical segmentation methods most commonly used to remove artifacts in biomedical imaging in general, and in mammography specifically. We’ll be focusing on three classifications of image segmentation: threshold-based segmentation, edge-based segmentation, and region-based segmentation.</p>
 <ul class="simple">
 <li><p>Threshold-Based Segmentation (TBS) partitions regions of an image by applying a mask formed by applying one or more pixel intensity thresholds to the image. Such methods include Otsu thresholding, morphological thresholding, and global and adaptive thresholding.</p></li>
 <li><p>Edge-Based Segmentation (EBS) uses contours and gradients in the image to detect the edges surrounding one or more regions of interest. Canny Edge Detection, Active Contour, and Sobel segmentation are among the most common EBS methods.</p></li>
 <li><p>Region-Based Segmentation (RBS) separates the image into regions with similar characteristics. The Watershed algorithm and certain morphological methods are prominent in this category.</p></li>
 </ul>
-<p>In the next sections, we’ll review the most prominent Threshold-Based, Edge-Based, and Region-Based methods and evaluate their performance, strengths, and shortcomings.</p>
+<p>We’ll review the most prominent threshold-Based, edge-Based, and region-Based methods, evaluate their performance, and characterize their relative strengths, and shortcomings.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
