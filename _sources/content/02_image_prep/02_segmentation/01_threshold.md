@@ -46,7 +46,6 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
-from skimage.filters import threshold_mean
 
 from bcd.preprocess.image.analysis.threshold import ThresholdMean, ThresholdLi, ThresholdYen, ThresholdMinimum, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, TryAllThresholds, ThresholdManual
 
