@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="4. Threshold-Based Segmentation (TBS) for Artifact Removal" href="02_data_prep/02_segmentation/01_threshold.html" />
+    <link rel="prev" title="3.1. Threshold-Based Segmentation (TBS) for Artifact Removal" href="02_image_prep/02_segmentation/01_threshold.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -171,20 +171,22 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep/00_overview.html">1. Overview</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="02_data_prep/01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="02_data_prep/01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_data_prep/01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="02_data_prep/01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="02_data_prep/01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02_data_prep/01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_image_prep/00_overview.html">1. Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="02_image_prep/01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_prep/01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_image_prep/01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="02_image_prep/01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="02_image_prep/01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02_image_prep/01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02_data_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep/02_segmentation/00_overview.html">3. Segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep/02_segmentation/01_threshold.html">4. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="02_image_prep/02_segmentation/00_overview.html">3. Image Segmentation for Mammography</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_prep/02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="current nav bd-sidenav">
@@ -528,12 +530,8 @@ document.write(`
 <span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
 <p>Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. <em>IEEE Transactions on Image Processing</em>, 13(4):600–612, April 2004. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1284395/">http://ieeexplore.ieee.org/document/1284395/</a> (visited on 2023-11-22), <a class="reference external" href="https://doi.org/10.1109/TIP.2003.819861">doi:10.1109/TIP.2003.819861</a>.</p>
 </div>
-<div class="citation" id="id22" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
-<p>Epimack Michael, He Ma, Hong Li, Frank Kulwa, and Jing Li. Breast Cancer Segmentation Methods: Current Status and Future Potentials. <em>BioMed Research International</em>, 2021:1–29, July 2021. URL: <a class="reference external" href="https://www.hindawi.com/journals/bmri/2021/9962109/">https://www.hindawi.com/journals/bmri/2021/9962109/</a> (visited on 2023-05-24), <a class="reference external" href="https://doi.org/10.1155/2021/9962109">doi:10.1155/2021/9962109</a>.</p>
-</div>
 <div class="citation" id="id360" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
 <p>Thresholding — skimage 0.22.0 documentation. URL: <a class="reference external" href="https://scikit-image.org/docs/stable/auto_examples/applications/plot_thresholding_guide.html#how-to-apply-a-threshold">https://scikit-image.org/docs/stable/auto_examples/applications/plot_thresholding_guide.html#how-to-apply-a-threshold</a> (visited on 2023-12-11).</p>
 </div>
 </div>
@@ -572,12 +570,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="02_data_prep/02_segmentation/01_threshold.html"
+       href="02_image_prep/02_segmentation/01_threshold.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>Threshold-Based Segmentation (TBS) for Artifact Removal</p>
+        <p class="prev-next-title"><span class="section-number">3.1. </span>Threshold-Based Segmentation (TBS) for Artifact Removal</p>
       </div>
     </a>
 </div></div>

@@ -12,7 +12,7 @@ kernelspec:
 ---
 # Data Preparation
 
-In the prior section, we obtained the CBIS-DDSM data from [The Cancer Imaging Archive](https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629) (TCIA). This brief section aims to convert the data to a form suitable for exploratory data analyses.  Once complete, we'll have the following four datasets for subsequent phase analysis:
+In the prior section, we obtained the CBIS-DDSM data from [The Cancer Imaging Archive](https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629) (TCIA). This brief section aims to convert the data to a form well suited for exploratory data analyses.
 
 | # | Dataset              | Description                                                                  |
 | - | -------------------- | ---------------------------------------------------------------------------- |
@@ -22,13 +22,6 @@ In the prior section, we obtained the CBIS-DDSM data from [The Cancer Imaging Ar
 | 4 | dicom.csv            | DICOM dataset containing properties, and quality assessments for each image. |
 
 First, we'll build the case datasets (1,2,3), then we'll construct the DICOM image metadata and quality assessment dataset (4).
-, four datasets will be produced
-This Our tasks are as follows:
-
-5. **Assess Image Quality**:
-6. **Extract DICOM Image Metadata**: Extract image metadata such as height, width, bit-depth, pixel values, and photometric interpretation from DICOM image files.
-
-Once complete, we will have the following datasets for analysis:
 
 ```{code-cell}
 :tags: [hide-input]

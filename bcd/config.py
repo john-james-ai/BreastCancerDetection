@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 01:47:42 am                                                #
-# Modified   : Sunday November 5th 2023 11:05:57 am                                                #
+# Modified   : Thursday December 14th 2023 02:29:31 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,7 +22,7 @@ import os
 
 import dotenv
 
-from bcd.dal.io.file import IOService
+from bcd.data.file import IOService
 
 # ------------------------------------------------------------------------------------------------ #
 LOG_LEVELS = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -58,7 +58,9 @@ class Config:
         dotenv_file = dotenv.find_dotenv()
         dotenv.load_dotenv(dotenv_file)
         os.environ["MODE"] = mode
-        dotenv.set_key(str(dotenv_file), key_to_set="MODE", value_to_set=mode, export=True)
+        dotenv.set_key(
+            str(dotenv_file), key_to_set="MODE", value_to_set=mode, export=True
+        )
 
     @classmethod
     def get_name(cls) -> str:
@@ -122,12 +124,12 @@ class Config:
     def get_data_dir(cls) -> str:
         config = cls.read_config()
         mode = cls.get_mode()
-        return os.path.abspath(config["data_dir"][mode])
+        return os.path.abspath(config["data"]["image"][mode])
 
     @classmethod
     def get_dicom_metadata_filepath(cls) -> str:
         config = cls.read_config()
-        return os.path.abspath(config["data_dir"]["metadata"])
+        return os.path.abspath(config["data"]["metadata"])
 
     @classmethod
     def get_model_dir(cls) -> str:

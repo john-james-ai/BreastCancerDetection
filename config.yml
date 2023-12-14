@@ -1,9 +1,10 @@
-data_dir:
-  dev: data/image/1_dev/
-  exp: data/image/2_exp/
+data:
+  image:
+    dev: data/image/1_dev/
+    prod: data/image/2_prod/
+    raw: data/image/0_raw/
+    test: tests/data/images/
   metadata: data/meta/2_clean/dicom.csv
-  prod: data/image/3_prod/
-  test: tests/data/images/
 logging:
   disable_existing_loggers: false
   formatters:
@@ -36,5 +37,4 @@ logging:
   version: 1
 models:
   dev: models/1_dev/
-  exp: models/2_exp/
-  prod: models/3_prod/
+  prod: models/2_prod/

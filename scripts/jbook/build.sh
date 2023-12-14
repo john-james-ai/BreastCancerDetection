@@ -17,6 +17,5 @@
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 echo $'\nPublishing jbook...'
-# jb clean jbook/
 jb build -W -n --keep-going jbook/
 ghp-import -n -p -f jbook/_build/html

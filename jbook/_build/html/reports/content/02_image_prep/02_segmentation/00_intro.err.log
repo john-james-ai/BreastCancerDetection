@@ -1,0 +1,88 @@
+Traceback (most recent call last):
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../../..")))
+
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+from bcd.utils.image import convert_uint8
+from myst_nb import glue
+
+img1 = "data/image/2_exp/train/benign/2a44122c-f831-4220-95a8-408bcafcf2ce.png"
+img2 = "data/image/2_exp/train/malignant/19b64d16-ec08-4a99-9786-325a064108ff.png"
+img3 = "data/image/2_exp/train/benign/97556037-b959-4395-830b-380dcac2d58e.png"
+img4 = "data/image/2_exp/train/malignant/6cdf46d8-596b-47ab-a428-c8769733c93c.png"
+
+img1 = cv2.imread(img1, cv2.IMREAD_GRAYSCALE)
+img2 = cv2.imread(img2, cv2.IMREAD_GRAYSCALE)
+img3 = cv2.imread(img3, cv2.IMREAD_GRAYSCALE)
+img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
+
+img1 = convert_uint8(img1)
+img2 = convert_uint8(img2)
+img3 = convert_uint8(img3)
+img4 = convert_uint8(img4)
+
+fig, axes = plt.subplots(nrows=1, ncols=4, figsize=(12,6))
+_ = axes[0].imshow(img1, cmap='gray', aspect='auto')
+_ = axes[1].imshow(img2, cmap='gray',aspect='auto')
+_ = axes[2].imshow(img3, cmap='gray',aspect='auto')
+_ = axes[3].imshow(img4, cmap='gray',aspect='auto')
+
+labels = np.array(["(a)", "(b)", "(c)", "(d)"])
+for i in range(4):
+    _ = axes[i].set_xlabel(labels[i])
+    _ = axes[i].set_xticks([])
+    _ = axes[i].set_yticks([])
+
+
+plt.tight_layout()
+
+glue("artifacts", fig)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[1], line 21[0m
+[1;32m     18[0m img3 [38;5;241m=[39m cv2[38;5;241m.[39mimread(img3, cv2[38;5;241m.[39mIMREAD_GRAYSCALE)
+[1;32m     19[0m img4 [38;5;241m=[39m cv2[38;5;241m.[39mimread(img4, cv2[38;5;241m.[39mIMREAD_GRAYSCALE)
+[0;32m---> 21[0m img1 [38;5;241m=[39m [43mconvert_uint8[49m[43m([49m[43mimg1[49m[43m)[49m
+[1;32m     22[0m img2 [38;5;241m=[39m convert_uint8(img2)
+[1;32m     23[0m img3 [38;5;241m=[39m convert_uint8(img3)
+
+File [0;32m~/projects/bcd/bcd/utils/image.py:41[0m, in [0;36mconvert_uint8[0;34m(img, invert, asfloat)[0m
+[1;32m     27[0m [38;5;28;01mdef[39;00m [38;5;21mconvert_uint8[39m(
+[1;32m     28[0m     img: np[38;5;241m.[39mndarray, invert: [38;5;28mbool[39m [38;5;241m=[39m [38;5;28;01mFalse[39;00m, asfloat: [38;5;28mbool[39m [38;5;241m=[39m [38;5;28;01mFalse[39;00m
+[1;32m     29[0m ) [38;5;241m-[39m[38;5;241m>[39m np[38;5;241m.[39mndarray:
+[1;32m     30[0m [38;5;250m    [39m[38;5;124;03m"""Converts floating point array in [0,1] to unit8 in [9,255][39;00m
+[1;32m     31[0m 
+[1;32m     32[0m [38;5;124;03m    This is used on the output of skimage random_noise function that returns a normalized[39;00m
+[0;32m   (...)[0m
+[1;32m     39[0m 
+[1;32m     40[0m [38;5;124;03m    """[39;00m
+[0;32m---> 41[0m     img [38;5;241m=[39m [43mimg[49m[38;5;241;43m.[39;49m[43mastype[49m([38;5;28mfloat[39m)
+[1;32m     42[0m     img [38;5;241m=[39m np[38;5;241m.[39marray([38;5;241m255[39m [38;5;241m*[39m img, dtype[38;5;241m=[39m[38;5;124m"[39m[38;5;124muint8[39m[38;5;124m"[39m)
+[1;32m     43[0m     [38;5;28;01mif[39;00m invert:
+
+[0;31mAttributeError[0m: 'NoneType' object has no attribute 'astype'
+AttributeError: 'NoneType' object has no attribute 'astype'
+

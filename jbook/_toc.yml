@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 03:42:38 pm                                               #
-# Modified   : Tuesday December 12th 2023 09:37:06 am                                              #
+# Modified   : Thursday December 14th 2023 07:59:44 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -37,19 +37,19 @@ parts:
 - caption: Image Preprocessing
   numbered: 3
   chapters:
-  - file: content/02_data_prep/00_overview
-  - file: content/02_data_prep/01_denoise
+  - file: content/02_image_prep/00_overview
+  - file: content/02_image_prep/01_denoise
     sections:
-    - file: content/02_data_prep/01_denoise/00_noise_models
-    - file: content/02_data_prep/01_denoise/01_noise_types
-    - file: content/02_data_prep/01_denoise/02_denoisers
+    - file: content/02_image_prep/01_denoise/00_noise_models
+    - file: content/02_image_prep/01_denoise/01_noise_types
+    - file: content/02_image_prep/01_denoise/02_denoisers
       sections:
-      - file: content/02_data_prep/01_denoise/020_spatial
-      - file: content/02_data_prep/01_denoise/021_frequency
-    - file: content/02_data_prep/01_denoise/03_experiment
-  - file: content/02_data_prep/02_segmentation/00_overview
+      - file: content/02_image_prep/01_denoise/020_spatial
+      - file: content/02_image_prep/01_denoise/021_frequency
+    - file: content/02_image_prep/01_denoise/03_experiment
+  - file: content/02_image_prep/02_segmentation/00_intro
     sections:
-    - file: content/02_data_prep/02_segmentation/01_threshold
+    - file: content/02_image_prep/02_segmentation/01_threshold
 
 - caption: References
   numbered: false

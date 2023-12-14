@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:43:26 pm                                              #
-# Modified   : Monday November 6th 2023 06:26:02 am                                                #
+# Modified   : Thursday December 14th 2023 01:52:39 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,12 +20,6 @@ import logging
 import logging.config
 
 from dependency_injector import containers, providers
-
-from bcd.dal.database.mysql import MySQLDatabase
-from bcd.dal.repo.evaluate import EvalRepo
-from bcd.dal.repo.image import ImageRepo
-from bcd.dal.repo.task import TaskRepo
-from bcd.dal.repo.uow import UoW
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=c-extension-no-member
@@ -47,31 +41,6 @@ class LoggingContainer(containers.DeclarativeContainer):
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        REPO                                                      #
-# ------------------------------------------------------------------------------------------------ #
-class DALContainer(containers.DeclarativeContainer):
-    """Contains the Data Access Layer"""
-
-    config = providers.Configuration()
-
-    db = providers.Singleton(MySQLDatabase)
-
-    image_repo = providers.Singleton(ImageRepo, database=db)
-
-    task_repo = providers.Singleton(TaskRepo, database=db)
-
-    eval_repo = providers.Singleton(EvalRepo, database=db)
-
-    uow = providers.Singleton(
-        UoW,
-        database=db,
-        image_repo=ImageRepo,
-        eval_repo=EvalRepo,
-        task_repo=TaskRepo,
-    )
-
-
-# ------------------------------------------------------------------------------------------------ #
 #                                       CONTAINER                                                  #
 # ------------------------------------------------------------------------------------------------ #
 class BCDContainer(containers.DeclarativeContainer):
@@ -80,5 +49,3 @@ class BCDContainer(containers.DeclarativeContainer):
     config = providers.Configuration(yaml_files=["config.yml"])
 
     logs = providers.Container(LoggingContainer, config=config)
-
-    dal = providers.Container(DALContainer, config=config)

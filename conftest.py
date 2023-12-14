@@ -11,19 +11,16 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Monday November 6th 2023 06:14:40 am                                                #
+# Modified   : Thursday December 14th 2023 03:26:30 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-import cv2
 import pandas as pd
 import pytest
-from tqdm import tqdm
 
 from bcd.config import Config
 from bcd.container import BCDContainer
-from bcd.image import ImageFactory
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*", "bcd/preprocess/**/*.*"]
@@ -75,8 +72,12 @@ def container():
     ctr = BCDContainer()
     ctr.init_resources()
     ctr.wire(
-        modules=["bcd.etl.load"],
-        packages=["bcd.dal", "bcd.preprocess.image.flow", "bcd.preprocess.image.experiment"],
+        modules=["bcd.data.load"],
+        packages=[
+            "bcd.dal",
+            "bcd.preprocess.image.flow",
+            "bcd.preprocess.image.experiment",
+        ],
     )
 
     return ctr
@@ -92,34 +93,6 @@ def case_ids():
     df = df.loc[df["series_description"] == "full mammogram images"]
     df = df.sample(n=10)
     return list(df["case_id"])
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                            IMAGES                                                #
-# ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="module", autouse=False)
-def images():
-    image_list = []
-    method = ["P1", "P2"]
-    factory = ImageFactory()
-    df = pd.read_csv(IMAGE_FP)
-    df = df.loc[df["series_description"] == "full mammogram images"]
-    df = df.sample(n=10)
-    i = 0
-    for _, meta in tqdm(df.iterrows(), total=df.shape[0]):
-        pixel_data = cv2.imread(meta["filepath"], cv2.IMREAD_UNCHANGED)
-        stage_id = i % 2
-        image = factory.create(
-            case_id=meta["case_id"],
-            stage_id=stage_id,
-            pixel_data=pixel_data,
-            method=method[stage_id],
-            build_time=22,
-            task_id="some_task_id",
-        )
-        i += 1
-        image_list.append(image)
-    return image_list
 
 
 # ------------------------------------------------------------------------------------------------ #
