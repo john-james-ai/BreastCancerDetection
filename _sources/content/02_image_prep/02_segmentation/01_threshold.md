@@ -45,8 +45,9 @@ if 'jbook' in os.getcwd():
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from bcd.utils.image import convert_uint8
+from myst_nb import glue
 from skimage.filters import threshold_mean
+
 from bcd.preprocess.image.analysis.threshold import ThresholdMean, ThresholdLi, ThresholdYen, ThresholdMinimum, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, TryAllThresholds, ThresholdManual
 
 img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"
