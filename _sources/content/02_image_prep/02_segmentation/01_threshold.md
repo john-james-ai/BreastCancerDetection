@@ -14,7 +14,7 @@ kernelspec:
 
 Our first step in breast segmentation is to separate the foreground of the mammogram containing the breast ROI from the background. From a grayscale mammogram, we can use threshold-based segmentation to create a binary image or mask, that, when applied to the original image, separates the foreground and the ROI from the background.
 
-In binary masking, each pixel in the binary mask has one of two values: ‘0’ representing the background, and ‘1’, corresponding to the image foreground.  Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated image pixel value meets a designated or automatically selected threshold. Generally speaking, image pixel values less than or equal to the threshold are 0 in the corresponding binary mask, all other pixel values are set to 1.
+In the binary mask, each pixel has one of two values: ‘0’ representing the background, and ‘1’, corresponding to the image foreground.  Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated *image* pixel value meets a designated or automatically selected threshold. Generally speaking, image pixel values less than or equal to the threshold are 0 in the corresponding binary mask, and all other pixel values are set to 1.
 
 Two commonly used threshold-based segmentation techniques are global threshold segmentation and adaptive local threshold segmentation.
 
@@ -32,7 +32,7 @@ B_{x,y} = \begin{cases}
 
 where $T$ is a global threshold.
 
-To illustrate, let’s create some binary masks for our test images using a manually set threshold $T=30$.
+To illustrate, let’s create some binary masks for our test images using a manually set threshold $T=10$.
 
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
@@ -61,16 +61,67 @@ img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
 
 images = (img1,img2,img3,img4)
 
-analysis = ThresholdManual(threshold=30)
+analysis = ThresholdManual(threshold=10)
 fig = analysis.analyze(images=images)
 
-glue("threshold_manual", fig)
+glue("threshold_manual_10", fig)
 ```
 
-```{glue:figure} threshold_manual
+```{glue:figure} threshold_manual_10
 ---
 align: center
-name: threshold_manual_fig
+name: threshold_manual_10_fig
 ---
-Threshold-Based Segmentation with $T=30$
+Manual Threshold-Based Segmentation with $T=10$
 ```
+
+In {numref}`threshold_manual_10_fig`, we have our four randomly selected images, the associated binary masks, and the output images. At threshold $T=10$, we have a clear separation between foreground and background; however, we have little to no artifact suppression.
+
+Let’s examine the effect of increasing the threshold to $T=100$.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analysis = ThresholdManual(threshold=100)
+fig = analysis.analyze(images=images)
+
+glue("threshold_manual_100", fig)
+```
+
+```{glue:figure} threshold_manual_100
+---
+align: center
+name: threshold_manual_100_fig
+---
+Manual Threshold-Based Segmentation with $T=100$
+```
+
+{numref}`threshold_manual_10_fig` and {numref}`threshold_manual_100_fig` illustrate the first key takeaway of this section.
+
+`````{admonition} In threshold segmentation, the choice of threshold is crucial!
+:class: tip
+Different thresholds may yield dramatically different segmentation results.
+`````
+
+A threshold that is too low tends to produce over-segmentation, combining artifacts and regions of interest into single structures. A high threshold can make objects smaller, as structures of interest are designated to the background. So, what are the principled ways by which an appropriate threshold is selected?
+
+This leads to our second key takeaway.
+
+`````{admonition} Choosing a threshold manually should be avoided, when possible!
+:class: tip
+Manual thresholding is inefficient, irreproducible, and a huge source of user bias
+`````
+
+...rant inbound in 3,…2,…
+
+Selecting thresholds manually is tedious, time-consuming, and a huge source of user bias. It is based upon human perception of what information should be extracted from the image, leading to high intra- and inter-user variability; further compounded by the inherent variability in digital mammography. One fixed threshold will not extract similar features from different images. Manual thresholding has little to no reproducibility and it is incompatible with automatic, image-driven thresholding that is based on image-intrinsic properties and not on subjective real-time user decisions.
+
+## Automatic Thresholding
+
+Image processing literature is replete with automatic thresholding algorithms that are based on a wide range of image properties. The benefits of automatic thresholding are:
+
+- No user bias is introduced during thresholding,
+- Thresholds are objectively determined and image-specific,
+- They are reproducible, in that an image will always have the same binarization result,
+- They are fast and computationally efficient, lending themselves to image preprocessing automation.
+
