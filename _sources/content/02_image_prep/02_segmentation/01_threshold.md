@@ -137,14 +137,14 @@ Still, automatic thresholding algorithms are not a universal, purely objective, 
 
 ### The Universally Superior Automatic Thresholding Algorithm
 
-Selecting an automatic thresholding algorithm from among the space of candidate algorithms can be described in terms of Wolpert and Macreary’s {numref}`lunch`.
+Selecting an automatic thresholding algorithm from among the space of candidate algorithms can be described in terms of Wolpert and Macreary’s {eq}`lunch`.
 
 ```{math}
 :label: lunch
 \sum_f P(d^y_m|f,m,a_1) = \sum_f P(d^y_m|f,m,a_2),
 ```
 
-{numref}`lunch` was derived within the context of machine learning algorithms {cite}`wolpertNoFreeLunch1997a`, and classes of objective functions, and states that for any pair of algorithms, the probability distribution of results over the domain of objective functions is independent of the algorithm and identically distributed. In other words, “any two algorithms are equivalent when their performance is averaged across all possible problems.”{cite}`wolpertCoevolutionaryFreeLunches2005`
+{eq}`lunch` was derived within the context of machine learning algorithms {cite}`wolpertNoFreeLunch1997a`, and classes of objective functions, and states that for any pair of algorithms, the probability distribution of results over the domain of objective functions is independent of the algorithm and identically distributed. In other words, “any two algorithms are equivalent when their performance is averaged across all possible problems.”{cite}`wolpertCoevolutionaryFreeLunches2005`
 
 The so-called “No Free Lunch Theorem for Optimization #1” (NFL) {cite}`wolpertNoFreeLunch1997a` explicitly demonstrates, under certain conditions [^nfl], that no algorithm performs well on all classes of problems within the domain. For instance, an automatic thresholding algorithm that performs well on average for mammograms with bimodal pixel value distributions, necessarily does worse on average over the remaining classes and modalities – a problem widely documented in literature surveys {cite}`al-bayatiMammogramImagesThresholding2013` {cite}`sankurSurveyImageThresholding2004`  {cite}`niuResearchAnalysisThreshold2019`.
 
