@@ -118,44 +118,58 @@ So, what are the principled ways by which an appropriate threshold is selected? 
 Manual thresholding is inefficient, irreproducible, and a huge source of user bias.
 `````
 
-...rant inbound in 3,…2,…
+...rant in 3,…2,…
 
 Selecting thresholds manually is tedious, time-consuming, and a huge source of user bias. It is based upon human perception of what information should be extracted from the image, leading to high intra- and inter-user variability; further compounded by the inherent variability in digital mammography. One fixed threshold will not extract similar features from different images. Manual thresholding has little to no reproducibility and it is incompatible with automatic, image-driven thresholding that is based on image-intrinsic properties and not on subjective real-time user decisions.
 
 So, what is the alternative?
 
-## Automatic Thresholding
+## Automated Thresholding
 
-Image processing literature is replete with automatic thresholding algorithms that are based on a vast array of image-intrinsic properties. What are the benefits of automatic thresholding?
+Image processing literature is replete with automatic thresholding algorithms of various types, each based upon a vast array of image-intrinsic properties.  Automated thresholding has several benefits vis-à-vis manual thresholding.
 
-- No user bias is introduced during *thresholding*,
-- Thresholds are objectively determined and image-specific,
-- They are reproducible, in that an algorithm will always produce the same binarization result for a given image,
-- They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.
+- **Bias-Free Thresholding**: No user bias is introduced during *thresholding*,
+- **Objectivity**: Thresholds are objectively determined and image-specific,
+- **Reproducibility**: They are reproducible, in that a parameterized algorithm will always produce the same binarization result for a given image,
+- **Efficient**: They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.
 
-Still, automatic thresholding algorithms are not a universal, purely objective, and bias-free remedy to the threshold segmentation challenges in biomedical imaging and other applications.
+Notwithstanding, automated thresholding presents certain challenges for the practitioner.
 
-### The Universally Superior Automatic Thresholding Algorithm
+- **No Free Lunch**: {cite}`wolpertNoFreeLunch1997a`: There is no universally superior automated thresholding algorithm that performs equally well for all biomedical images, modalities, contexts, and needs.
+- **Algorithm Selection Bias**: Algorithm selection is a subjective user decision based upon experience, human perception, and prior expectations concerning the information to be extracted from an image. For instance, an algorithm selected by the current expert pathologist may eliminate a structure later determined to be a critical indicator.
+- **Prior Knowledge**: Practitioners may lack the domain expertise required to effectively characterize the performance of the algorithms under evaluation. Algorithm selection is often based upon a priori expectation of visual features, structures, and information to be extracted during the segmentation process.
 
-Selecting an automatic thresholding algorithm from among the space of candidate algorithms can be described in terms of Wolpert and Macreary’s {eq}`lunch`.
+Selecting an appropriate automated thresholding algorithm from the growing space of candidate solutions is an increasingly challenging endeavor, guided by the intended use of the extracted information, the questions to be answered, the quality, format, and modality of the imaging content, and a working understanding of candidate algorithm performance characteristics.
 
-```{math}
-:label: lunch
-\sum_f P(d^y_m|f,m,a_1) = \sum_f P(d^y_m|f,m,a_2),
+### Automated Thresholding Algorithm Space
+
+Sezgin and Sankur {cite}`sankurSurveyImageThresholding2004` cast the space of automated thresholding techniques as follows:
+
+- Histogram shape-based methods that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.
+- Clustering-based methods cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.
+- Entropy-based methods use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.
+- Object attribute-based methods that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.
+- The spatial methods use higher-order probability distribution and/or correlation between pixels
+- Local methods adapt the threshold value on each pixel to the local image characteristics.
+
+For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}`otsuThresholdSelectionMethod1979` can be categorized as both a histogram shape-based method and a clustering-based method.
+
+### Automated Threshold Methods
+
+Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl`) histogram-based, entropy-based, and local-based threshold methods.
+
+```{table} Automated Threshold Methods
+:name: auto-thresh-tbl
+
+| Type            | Method                           | Author                                              | Publication                                                                           |
+|-----------------|----------------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------|
+| Histogram-Based | Triangle Method                  | Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,   | Automatic Measurement of Sister Chromatid Exchange Frequency                          |
+|                 | ISOData Method                   | Ridler, TW & Calvard, S (1978)                      | Picture thresholding using an iterative selection method                              |
+|                 | Otsu's Method                    | Nobuyuki Otsu (1979)                                | A threshold selection method from gray-level histograms                               |
+| Entropy-Based   | Minimum Cross Entropy Method     | Li C.H. and Lee C.K. (1993)                         | Minimum Cross Entropy Thresholding                                                    |
+|                 | Maximum Entropy Threshold Method | Kapur, J. N., Sahoo, P. K., & Wong, A. K. C. (1985) | A new method for gray-level picture thresholding using the entropy of the   histogram |
+|                 | Huang's Fuzzy Threshold Method   | Huang, L.-K., & Wang, M.-J. J. (1995)               | Image thresholding by minimizing the measures of fuzziness                            |
+| Local           | Adaptive Gaussian Method         | Bradley, D., G. Roth 2007                           | Adapting Thresholding Using the Integral Image                                        |
+|                 | Adaptive Mean Method             | Bradley, D., G. Roth 2007                           | Adapting Thresholding Using the Integral Image                                        |
+|                 | Adaptive Median Method           | Bradley, D., G. Roth 2007                           | Adapting Thresholding Using the Integral Image                                        |
 ```
-
-{eq}`lunch` was derived within the context of machine learning algorithms {cite}`wolpertNoFreeLunch1997a`, and classes of objective functions, and states that for any pair of algorithms, the probability distribution of results over the domain of objective functions is independent of the algorithm and identically distributed. In other words, “any two algorithms are equivalent when their performance is averaged across all possible problems.”{cite}`wolpertCoevolutionaryFreeLunches2005`
-
-The so-called “No Free Lunch Theorem for Optimization #1” (NFL) {cite}`wolpertNoFreeLunch1997a` explicitly demonstrates, under certain conditions [^nfl], that no algorithm performs well on all classes of problems within the domain. For instance, an automatic thresholding algorithm that performs well on average for mammograms with bimodal pixel value distributions, necessarily does worse on average over the remaining classes and modalities – a problem widely documented in literature surveys {cite}`al-bayatiMammogramImagesThresholding2013` {cite}`sankurSurveyImageThresholding2004`  {cite}`niuResearchAnalysisThreshold2019`.
-
-[^nfl]: NLF holds if and only if the distribution on objective functions is invariant under the permutation of the space of candidate algorithms{cite}`Streeter2003TwoBC`  {cite}`englishNoMoreLunch2004`. Although this condition is theoretically possible, some have argued that it doesn’t necessarily hold in practice.
-
-So, no universally superior automatic threshold algorithm has been invented that will perform well for all images, modalities, conditions, and needs.
-
-
-### Automatic Thresholding Algorithm Selection is Biased
-
-Wait. Didn’t we just cast automatic thresholding as based upon image-intrinsic properties and free of user bias during thresholding? Yes, but this doesn’t mean that *algorithm selection* is rigidly objective and bias-free.
-Just as the choice of a manual threshold in [0,256] is based upon user experience, human perception, problem characteristics, and prior expectations concerning the information to be extracted from an image, so too is the choice of an algorithm from the increasing candidate space of thresholding algorithms.
-On one hand, this is a reasonable basis upon which an algorithm can be selected. Indeed, the NFL theorem further establishes that the probability distribution of results $P(f)$ is uniform , ,that the probability distribution of performance over a class of that selection of an algorithm is only justified that without knowledge of problem-specific characteristics problem specific knowledge
-
