@@ -47,7 +47,9 @@ import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
 
-from bcd.preprocess.image.analysis.threshold import ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, TryAllThresholds, ThresholdManual
+from bcd.preprocess.image.analysis.threshold import (
+    ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, TryAllThresholds, ThresholdManual
+)
 
 img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"
 img2 = "data/image/1_dev/converted/train/benign/4ed91643-1e06-4b2c-8efb-bc60dd9e0313.png"
@@ -103,7 +105,7 @@ Manual Threshold-Based Segmentation with $T=100$
 Different thresholds may yield dramatically different segmentation results.
 `````
 
-A threshold that is too low tends to produce over-segmentation, combining artifacts and regions of interest into single structures. A high threshold can make objects smaller, as structures of interest are designated to the background. So, what are the principled ways by which an appropriate threshold is selected?
+A threshold that is too low tends to produce over-segmentation, failing to separate artifacts from regions of interest, and combining distinct objects into single structures.  A high threshold can make objects smaller, as structures of interest are designated to the background. So, what are the principled ways by which an appropriate threshold is selected?
 
 This leads to our second key takeaway.
 

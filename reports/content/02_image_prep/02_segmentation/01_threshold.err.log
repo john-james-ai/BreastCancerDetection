@@ -27,7 +27,9 @@ import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
 
-from bcd.preprocess.image.analysis.threshold import ThresholdLi, ThresholdYen,  ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, TryAllThresholds, ThresholdManual
+from bcd.preprocess.image.analysis.threshold import (
+    ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, TryAllThresholds, ThresholdManual
+)
 
 img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"
 img2 = "data/image/1_dev/converted/train/benign/4ed91643-1e06-4b2c-8efb-bc60dd9e0313.png"
@@ -48,14 +50,28 @@ glue("threshold_manual_10", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mImportError[0m                               Traceback (most recent call last)
-Cell [0;32mIn[1], line 11[0m
-[1;32m      8[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[1;32m      9[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmyst_nb[39;00m [38;5;28;01mimport[39;00m glue
-[0;32m---> 11[0m [38;5;28;01mfrom[39;00m [38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpreprocess[39;00m[38;5;21;01m.[39;00m[38;5;21;01mimage[39;00m[38;5;21;01m.[39;00m[38;5;21;01manalysis[39;00m[38;5;21;01m.[39;00m[38;5;21;01mthreshold[39;00m [38;5;28;01mimport[39;00m ThresholdLi, ThresholdYen,  ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, TryAllThresholds, ThresholdManual
-[1;32m     13[0m img1 [38;5;241m=[39m [38;5;124m"[39m[38;5;124mdata/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png[39m[38;5;124m"[39m
-[1;32m     14[0m img2 [38;5;241m=[39m [38;5;124m"[39m[38;5;124mdata/image/1_dev/converted/train/benign/4ed91643-1e06-4b2c-8efb-bc60dd9e0313.png[39m[38;5;124m"[39m
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[1], line 28[0m
+[1;32m     25[0m images [38;5;241m=[39m (img1,img2,img3,img4)
+[1;32m     27[0m analysis [38;5;241m=[39m ThresholdManual(threshold[38;5;241m=[39m[38;5;241m10[39m)
+[0;32m---> 28[0m fig [38;5;241m=[39m [43manalysis[49m[38;5;241;43m.[39;49m[43manalyze[49m[43m([49m[43mimages[49m[38;5;241;43m=[39;49m[43mimages[49m[43m)[49m
+[1;32m     30[0m glue([38;5;124m"[39m[38;5;124mthreshold_manual_10[39m[38;5;124m"[39m, fig)
 
-[0;31mImportError[0m: cannot import name 'ThresholdYen' from 'bcd.preprocess.image.analysis.threshold' (/home/john/projects/bcd/bcd/preprocess/image/analysis/threshold.py)
-ImportError: cannot import name 'ThresholdYen' from 'bcd.preprocess.image.analysis.threshold' (/home/john/projects/bcd/bcd/preprocess/image/analysis/threshold.py)
+File [0;32m~/projects/bcd/bcd/preprocess/image/analysis/threshold.py:86[0m, in [0;36mThresholdAnalyzer.analyze[0;34m(self, images)[0m
+[1;32m     83[0m [38;5;28mself[39m[38;5;241m.[39m_images [38;5;241m=[39m images
+[1;32m     85[0m [38;5;28mself[39m[38;5;241m.[39m_compare_thresholds(images[38;5;241m=[39mimages)
+[0;32m---> 86[0m fig [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_build_analysis_plot[49m[43m([49m[43m)[49m
+[1;32m     87[0m [38;5;28;01mreturn[39;00m fig
+
+File [0;32m~/projects/bcd/bcd/preprocess/image/analysis/threshold.py:114[0m, in [0;36mThresholdAnalyzer._build_analysis_plot[0;34m(self)[0m
+[1;32m    110[0m height [38;5;241m=[39m nrows [38;5;241m*[39m [38;5;28mself[39m[38;5;241m.[39m__ROWHEIGHT
+[1;32m    112[0m fig, axes [38;5;241m=[39m plt[38;5;241m.[39msubplots(nrows[38;5;241m=[39mnrows, ncols[38;5;241m=[39mncols, figsize[38;5;241m=[39m([38;5;241m12[39m, height))
+[1;32m    113[0m labels [38;5;241m=[39m np[38;5;241m.[39marray(
+[0;32m--> 114[0m     [43m[[49m[38;5;124;43m"[39;49m[38;5;124;43ma[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mb[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mc[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43md[39;49m[38;5;124;43m"[39;49m[43m][49m[43m[[49m[38;5;124;43m"[39;49m[38;5;124;43me[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mf[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mg[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mh[39;49m[38;5;124;43m"[39;49m[43m][49m, [[38;5;124m"[39m[38;5;124mi[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mj[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mk[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124ml[39m[38;5;124m"[39m]
+[1;32m    115[0m )
+[1;32m    117[0m [38;5;66;03m# Plot images[39;00m
+[1;32m    118[0m [38;5;28;01mfor[39;00m i, img [38;5;129;01min[39;00m [38;5;28menumerate[39m([38;5;28mself[39m[38;5;241m.[39m_images):
+
+[0;31mTypeError[0m: list indices must be integers or slices, not tuple
+TypeError: list indices must be integers or slices, not tuple
 
