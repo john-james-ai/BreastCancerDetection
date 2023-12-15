@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Thursday December 14th 2023 11:08:07 am                                             #
+# Modified   : Thursday December 14th 2023 11:19:04 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,20 +21,13 @@
 # ------------------------------------------------------------------------------------------------ #
 import logging
 from abc import ABC, abstractmethod
-from typing import Callable, Tuple, Union
+from typing import Tuple, Union
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-from skimage.filters import (
-    threshold_isodata,
-    threshold_li,
-    threshold_mean,
-    threshold_minimum,
-    threshold_otsu,
-    threshold_triangle,
-    threshold_yen,
-)
+from matplotlib.gridspec import GridSpec
+from skimage.filters import threshold_isodata, threshold_li
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(level=logging.INFO)
@@ -54,11 +47,8 @@ class ThresholdAnalyzer(ABC):
     __CMAP = "gray"
     __ROWHEIGHT = 3
 
-    def __init__(
-        self, name: str, threshold: Callable, global_threshold: bool = True
-    ) -> None:
+    def __init__(self, name: str, global_threshold: bool = True) -> None:
         self._name = name
-        self._threshold = threshold
         self._global_threshold = global_threshold
 
         self._images = []
@@ -83,72 +73,7 @@ class ThresholdAnalyzer(ABC):
             binary_mask (np.ndarray): Binary mask of image.
         """
 
-    def try_all(self, image: np.ndarray) -> None:
-        """Runs all global binary thresholding methods on the given image.
-
-        Args:
-            image (np.ndarray): Numpy array containing test image pixel values.
-        """
-        fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(12, 12))
-        axes = axes.flatten()
-
-        thresholds = [
-            {"name": "Mean Threshold", "callable": threshold_mean, "params": None},
-            {
-                "name": "Minimum Threshold",
-                "callable": threshold_minimum,
-                "params": None,
-            },
-            {
-                "name": "ISOData Threshold",
-                "callable": threshold_isodata,
-                "params": None,
-            },
-            {"name": "LI Threshold", "callable": threshold_li, "params": None},
-            {"name": "Yen Threshold", "callable": threshold_yen, "params": None},
-            {
-                "name": "Triangle Threshold",
-                "callable": threshold_triangle,
-                "params": None,
-            },
-            {"name": "OTSU's Method", "callable": threshold_otsu, "params": None},
-            {
-                "name": "Adaptive Mean",
-                "callable": cv2.adaptiveThreshold,
-                "params": [
-                    255,
-                    cv2.ADAPTIVE_THRESH_MEAN_C,
-                    cv2.THRESH_BINARY_INV,
-                    11,
-                    2,
-                ],
-            },
-        ]
-
-        _ = axes[0].imshow(image, cmap=self.__CMAP, aspect="auto")
-        _ = axes[0].set_xlabel("Original Image", fontsize=10)
-        _ = axes[0].set_xticks([])
-        _ = axes[0].set_yticks([])
-
-        for i, threshold in enumerate(thresholds):
-            if threshold["params"] is None:
-                T = threshold["callable"](image)
-                mask = image > T
-
-            else:
-                mask = threshold["callable"](image, *threshold["params"])
-
-            _ = axes[i + 1].imshow(mask, cmap=self.__CMAP, aspect="auto")
-            _ = axes[i + 1].set_xlabel(threshold["name"], fontsize=10)
-            _ = axes[i + 1].set_xticks([])
-            _ = axes[i + 1].set_yticks([])
-
-        title = "Binary Threshold Analysis"
-        fig.suptitle(title, fontsize=12)
-
-        return fig
-
-    def analyze(self, images: np.ndarray, *args, **kwargs) -> plt.Figure:
+    def analyze(self, images: np.ndarray) -> plt.Figure:
         """Plots an analysis of the threshold methods
 
         Args:
@@ -157,15 +82,11 @@ class ThresholdAnalyzer(ABC):
         """
         self._images = images
 
-        if self._global_threshold:
-            self._compare_global_thresholds(images=images, *args, **kwargs)
-            fig = self._build_global_analysis_plot()
-        else:
-            self._compare_adaptive_thresholds(images=images, *args, **kwargs)
-            fig = self._build_adaptive_analysis_plot()
+        self._compare_thresholds(images=images)
+        fig = self._build_analysis_plot()
         return fig
 
-    def _compare_global_thresholds(self, images: Tuple, *args, **kwargs) -> None:
+    def _compare_thresholds(self, images: Tuple) -> None:
         """Compares performance of global thresholds on test images
 
         Args:
@@ -174,85 +95,53 @@ class ThresholdAnalyzer(ABC):
 
         for image in images:
             # Get the threshold and the binary mask
-            threshold, binary_mask = self.apply_threshold(image=image, *args, **kwargs)
-            # Calculate the histogram
-            histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
-            # Append masks, thresholds and histograms to list.
-            self._binary_masks.append(binary_mask)
-            self._thresholds.append(threshold)
-            self._histograms.append(histogram)
-
-    def _compare_adaptive_thresholds(self, images: Tuple, *args, **kwargs) -> None:
-        """Compares performance of adaptive thresholds on test images
-
-        Args:
-            images (Tuple[np.ndarray]) Tuple of test images.
-        """
-
-        for image in images:
-            # Compute the adaptive binary mask
-            binary_mask = self.apply_threshold(image=image, *args, **kwargs)
-            # Apply the mask to teh image using bitwise and
+            threshold, binary_mask = self.apply_threshold(image=image)
+            # Apply the mask
             masked_image = cv2.bitwise_and(image, image, mask=binary_mask)
-            # Append to lists
-            self._masked_images.append(masked_image)
+            # Append masks, thresholds and masked images to list.
             self._binary_masks.append(binary_mask)
+            self._masked_images.append(masked_image)
+            if threshold:
+                self._thresholds.append(threshold)
 
-    def _build_global_analysis_plot(self) -> None:
-        height = 3 * self.__ROWHEIGHT
+    def _build_analysis_plot(self) -> None:
+        nrows = 3
+        ncols = 4
+        height = nrows * self.__ROWHEIGHT
 
-        fig, axes = plt.subplots(nrows=3, ncols=4, figsize=(12, height))
-        labels = np.array(["a", "b", "c", "d"])
+        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(12, height))
+        labels = np.array(
+            [["a", "b", "c", "d"], ["e", "f", "g", "h"], ["i", "j", "k", "l"]]
+        )
 
         # Plot images
         for i, img in enumerate(self._images):
             axes[0, i].imshow(img, cmap=self.__CMAP, aspect="auto")
-            axes[0, i].set_xlabel(f"Original Image ({labels[i]})", fontsize=10)
-            axes[0, i].set_xticks([])
-            axes[0, i].set_yticks([])
+            axes[0, i].set_xlabel(f"({labels[0,i]}) Original Image", fontsize=10)
 
         # Plot binary masks
         for i, mask in enumerate(self._binary_masks):
+            if self._global_threshold:
+                label = f"({labels[1,i]}) {self._name} Mask, T={np.round(self._thresholds[i],0)}"
+            else:
+                label = f"({labels[1,i]}) {self._name} Mask"
             axes[1, i].imshow(mask, cmap=self.__CMAP, aspect="auto")
-            axes[1, i].set_xlabel(f"{self._name} Mask ({labels[i]})", fontsize=10)
-            axes[1, i].set_xticks([])
-            axes[1, i].set_yticks([])
+            axes[1, i].set_xlabel(label, fontsize=10)
 
-        # Plot histograms
-        for i, hist in enumerate(self._histograms):
-            axes[2, i].plot(hist)
-            axes[2, i].axvline(
-                x=self._thresholds[i],
-                color="r",
-                label=f"T={round(self._thresholds[i],1)}",
-            )
-            axes[2, i].set_xlabel(f"Histogram ({labels[i]})", fontsize=10)
-            axes[2, i].legend(loc="upper right")
+        # Plot masked images
+        for i, img in enumerate(self._masked_images):
+            if self._global_threshold:
+                label = f"({labels[2,i]}) {self._name} Output, T={np.round(self._thresholds[i],0)}"
+            else:
+                label = f"({labels[2,i]}) {self._name} Output"
+            axes[2, i].imshow(img, cmap=self.__CMAP, aspect="auto")
+            axes[2, i].set_xlabel(label, fontsize=10)
 
-        title = self._name + " Analysis"
-        fig.suptitle(title, fontsize=12)
-
-        plt.tight_layout()
-        return fig
-
-    def _build_adaptive_analysis_plot(self) -> None:
-        height = 2 * self.__ROWHEIGHT
-
-        fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12, height))
-        labels = np.array(["a", "b", "c", "d"])
-        # Plot images
-        for i, img in enumerate(self._images):
-            axes[0, i].imshow(img, cmap=self.__CMAP, aspect="auto")
-            axes[0, i].set_xlabel(f"Original Image ({labels[i]})", fontsize=10)
-            axes[0, i].set_xticks([])
-            axes[0, i].set_yticks([])
-
-        # Plot binary masks
-        for i, mask in enumerate(self._binary_masks):
-            axes[1, i].imshow(mask, cmap=self.__CMAP, aspect="auto")
-            axes[1, i].set_xlabel(f"{self._name} ({labels[i]})", fontsize=10)
-            axes[1, i].set_xticks([])
-            axes[1, i].set_yticks([])
+        # Remove ticks
+        for i in range(nrows):
+            for j in range(ncols):
+                axes[i, j].set_xticks([])
+                axes[i, j].set_yticks([])
 
         title = self._name + " Analysis"
         fig.suptitle(title, fontsize=12)
@@ -271,7 +160,8 @@ class ThresholdManual(ThresholdAnalyzer):
         threshold: float = 0.1,
         global_threshold: bool = True,
     ) -> None:
-        super().__init__(name, threshold, global_threshold)
+        super().__init__(name, global_threshold)
+        self._threshold = threshold
 
     def apply_threshold(
         self, image: np.ndarray, *args, **kwargs
@@ -283,128 +173,45 @@ class ThresholdManual(ThresholdAnalyzer):
         else:
             threshold = self._threshold
 
-        image = image > threshold
-        return threshold, image
+        threshold, image = cv2.threshold(
+            image, thresh=threshold, maxval=np.max(image), type=cv2.THRESH_BINARY
+        )
 
-
-# ------------------------------------------------------------------------------------------------ #
-class ThresholdMean(ThresholdAnalyzer):
-    """Plots the threshold analysis for the Mean threshold method"""
-
-    def __init__(
-        self,
-        name: str = "Mean Threshold",
-        threshold: Callable = threshold_mean,
-        global_threshold: bool = True,
-    ) -> None:
-        super().__init__(name, threshold, global_threshold)
-
-    def apply_threshold(
-        self, image: np.ndarray, *args, **kwargs
-    ) -> Union[float, np.ndarray]:
-        threshold = self._threshold(image=image)
-        image = image > threshold
         return threshold, image
 
 
 # ------------------------------------------------------------------------------------------------ #
 class ThresholdISOData(ThresholdAnalyzer):
-    """Plots the threshold analysis for the ISOData threshold method"""
+    """Plots the threshold analysis for the Mean threshold method"""
 
     def __init__(
         self,
-        name: str = "ISO Data Threshold",
-        threshold: Callable = threshold_isodata,
+        name: str = "ISOData Threshold",
         global_threshold: bool = True,
     ) -> None:
-        super().__init__(name, threshold, global_threshold)
+        super().__init__(name, global_threshold)
 
-    def apply_threshold(
-        self, image: np.ndarray, *args, **kwargs
-    ) -> Union[float, np.ndarray]:
-        threshold = self._threshold(image=image)
-        image = image > threshold
-        return threshold, image
-
-
-# ------------------------------------------------------------------------------------------------ #
-class ThresholdMinimum(ThresholdAnalyzer):
-    """Plots the threshold analysis for minimum threshold method"""
-
-    def __init__(
-        self,
-        name: str = "Minimum Threshold",
-        threshold: Callable = threshold_minimum,
-        global_threshold: bool = True,
-    ) -> None:
-        super().__init__(name, threshold, global_threshold)
-
-    def apply_threshold(
-        self, image: np.ndarray, *args, **kwargs
-    ) -> Union[float, np.ndarray]:
-        threshold = self._threshold(image=image)
-        image = image > threshold
-        return threshold, image
+    def apply_threshold(self, image: np.ndarray) -> Union[float, np.ndarray]:
+        threshold = threshold_isodata(image=image, return_all=False)
+        binary_mask = (image > threshold).astype("uint8") * 255
+        return threshold, binary_mask
 
 
 # ------------------------------------------------------------------------------------------------ #
 class ThresholdLi(ThresholdAnalyzer):
-    """Plots the threshold analysis for Li threshold method"""
+    """Plots the threshold analysis for the Mean threshold method"""
 
     def __init__(
         self,
-        name: str = "Li Threshold",
-        threshold: Callable = threshold_li,
+        name: str = "Li's Minimum Cross-Entropy Threshold",
         global_threshold: bool = True,
     ) -> None:
-        super().__init__(name, threshold, global_threshold)
+        super().__init__(name, global_threshold)
 
-    def apply_threshold(
-        self, image: np.ndarray, *args, **kwargs
-    ) -> Union[float, np.ndarray]:
-        threshold = self._threshold(image=image)
-        image = image > threshold
-        return threshold, image
-
-
-# ------------------------------------------------------------------------------------------------ #
-class ThresholdYen(ThresholdAnalyzer):
-    """Plots the threshold analysis for Yen threshold method"""
-
-    def __init__(
-        self,
-        name: str = "Yen Threshold",
-        threshold: Callable = threshold_yen,
-        global_threshold: bool = True,
-    ) -> None:
-        super().__init__(name, threshold, global_threshold)
-
-    def apply_threshold(
-        self, image: np.ndarray, *args, **kwargs
-    ) -> Union[float, np.ndarray]:
-        threshold = self._threshold(image=image)
-        image = image > threshold
-        return threshold, image
-
-
-# ------------------------------------------------------------------------------------------------ #
-class ThresholdTriangle(ThresholdAnalyzer):
-    """Plots the threshold analysis for Yen threshold method"""
-
-    def __init__(
-        self,
-        name: str = "Triangle Threshold",
-        threshold: Callable = threshold_triangle,
-        global_threshold: bool = True,
-    ) -> None:
-        super().__init__(name, threshold, global_threshold)
-
-    def apply_threshold(
-        self, image: np.ndarray, *args, **kwargs
-    ) -> Union[float, np.ndarray]:
-        threshold = self._threshold(image=image)
-        image = image > threshold
-        return threshold, image
+    def apply_threshold(self, image: np.ndarray) -> Union[float, np.ndarray]:
+        threshold = threshold_li(image=image)
+        binary_mask = (image > threshold).astype("uint8") * 255
+        return threshold, binary_mask
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -414,17 +221,38 @@ class ThresholdOTSU(ThresholdAnalyzer):
     def __init__(
         self,
         name: str = "OTSU's Threshold",
-        threshold: Callable = threshold_otsu,
         global_threshold: bool = True,
     ) -> None:
-        super().__init__(name, threshold, global_threshold)
+        super().__init__(name, global_threshold)
 
     def apply_threshold(
         self, image: np.ndarray, *args, **kwargs
     ) -> Union[float, np.ndarray]:
-        threshold = self._threshold(image=image)
-        image = image > threshold
-        return threshold, image
+        threshold, binary_mask = cv2.threshold(
+            image, 0, np.max(image), cv2.THRESH_BINARY + cv2.THRESH_OTSU
+        )
+
+        return threshold, binary_mask
+
+
+# ------------------------------------------------------------------------------------------------ #
+class ThresholdTriangle(ThresholdAnalyzer):
+    """Plots the threshold analysis for the Triangle threshold method"""
+
+    def __init__(
+        self,
+        name: str = "Triangle Threshold",
+        global_threshold: bool = True,
+    ) -> None:
+        super().__init__(name, global_threshold)
+
+    def apply_threshold(
+        self, image: np.ndarray, *args, **kwargs
+    ) -> Union[float, np.ndarray]:
+        threshold, binary_mask = cv2.threshold(
+            image, 0, np.max(image), cv2.THRESH_BINARY + cv2.THRESH_TRIANGLE
+        )
+        return threshold, binary_mask
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -434,33 +262,179 @@ class ThresholdAdaptiveMean(ThresholdAnalyzer):
     def __init__(
         self,
         name: str = "Adaptive Mean Threshold",
-        threshold: Callable = cv2.adaptiveThreshold,
         global_threshold: bool = False,
+        blocksize: int = 11,
+        c: int = 0,
     ) -> None:
-        super().__init__(name, threshold, global_threshold)
+        super().__init__(name, global_threshold)
+        self._blocksize = blocksize
+        self._c = c
 
-    def apply_threshold(self, image: np.ndarray, *args, **kwargs) -> np.ndarray:
-        return self._threshold(
-            src=image,
-            maxValue=255,
-            adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
-            thresholdType=cv2.THRESH_BINARY_INV,
-            *args,
-            **kwargs,
+    def apply_threshold(
+        self, image: np.ndarray, *args, **kwargs
+    ) -> Union[float, np.ndarray]:
+        binary_mask = cv2.adaptiveThreshold(
+            image,
+            np.max(image),
+            cv2.ADAPTIVE_THRESH_MEAN_C,
+            cv2.THRESH_BINARY,
+            self._blocksize,
+            self._c,
         )
+        return None, binary_mask
 
 
 # ------------------------------------------------------------------------------------------------ #
-class TryAllThresholds(ThresholdAnalyzer):
-    """Try all methods"""
+class ThresholdAdaptiveGaussian(ThresholdAnalyzer):
+    """Plots the threshold analysis for adaptive mean threshold method"""
 
     def __init__(
         self,
-        name: str = "Try All Thresholds",
-        threshold: Callable = None,
+        name: str = "Adaptive Gaussian Threshold",
         global_threshold: bool = False,
+        blocksize: int = 11,
+        c: int = 0,
     ) -> None:
-        super().__init__(name, threshold, global_threshold)
+        super().__init__(name, global_threshold)
+        self._blocksize = blocksize
+        self._c = c
 
-    def apply_threshold(self, image: np.ndarray, *args, **kwargs) -> np.ndarray:
-        raise NotImplementedError()
+    def apply_threshold(
+        self, image: np.ndarray, *args, **kwargs
+    ) -> Union[float, np.ndarray]:
+        binary_mask = cv2.adaptiveThreshold(
+            image,
+            np.max(image),
+            cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+            cv2.THRESH_BINARY,
+            self._blocksize,
+            self._c,
+        )
+        return None, binary_mask
+
+
+# ------------------------------------------------------------------------------------------------ #
+class TryAllThresholds:
+    """Plots threshold masks or images for all supported methods.
+
+    Args:
+        threshold (Union[float,int]): Manual threshold value. Default = 0.1
+        blocksize (int): Blocksize for adaptive thresholds
+        c (int): C constant for adaptive thresholds.
+    """
+
+    def __init__(self, threshold: float = 0.1, blocksize: int = 11, c: int = 0) -> None:
+        self._threshold = threshold
+        self._blocksize = blocksize
+        self._c = c
+
+        self._images = []
+        self._labels = []
+
+        self._show_masks = False
+
+        self._logger = logging.getLogger(f"{self.__class__.__name__}")
+
+    def analyze(self, image: np.ndarray, show_masks: bool = False) -> plt.Figure:
+        self._images.append(image)
+        self._show_masks = show_masks
+        self._labels.append("(a) Original Image")
+
+        self._threshold_isodata(image=image)
+        self._threshold_triangle(image=image)
+        self._threshold_li(image=image)
+        self._threshold_otsu(image=image)
+        self._threshold_adaptive_mean(image=image)
+        self._threshold_adaptive_gaussian(image=image)
+
+        self._plot_results()
+
+    def _threshold_isodata(self, image: np.ndarray) -> None:
+        analyzer = ThresholdISOData()
+        thresh, img = self._apply_threshold(analyzer=analyzer, image=image)
+        label = f"(c) ISOData Threshold, T={round(thresh,0)}"
+        self._images.append(img)
+        self._labels.append(label)
+
+    def _threshold_triangle(self, image: np.ndarray) -> None:
+        analyzer = ThresholdTriangle()
+        thresh, img = self._apply_threshold(analyzer=analyzer, image=image)
+        label = f"(d) Triangle Threshold, T={round(thresh,0)}"
+        self._images.append(img)
+        self._labels.append(label)
+
+    def _threshold_li(self, image: np.ndarray) -> None:
+        analyzer = ThresholdLi()
+        thresh, img = self._apply_threshold(analyzer=analyzer, image=image)
+        label = f"(e) Li's Minimum Cross-Entropy Threshold\nT={round(thresh,0)}"
+        self._images.append(img)
+        self._labels.append(label)
+
+    def _threshold_otsu(self, image: np.ndarray) -> None:
+        analyzer = ThresholdOTSU()
+        thresh, img = self._apply_threshold(analyzer=analyzer, image=image)
+        label = f"(f) OTSU's Threshold, T={round(thresh,0)}"
+        self._images.append(img)
+        self._labels.append(label)
+
+    def _threshold_adaptive_mean(self, image: np.ndarray) -> None:
+        analyzer = ThresholdAdaptiveMean(blocksize=self._blocksize, c=self._c)
+        _, img = self._apply_threshold(analyzer=analyzer, image=image)
+        label = f"(g) Adaptive Mean Threshold\nblocksize={self._blocksize}, C={self._c}"
+        self._images.append(img)
+        self._labels.append(label)
+
+    def _threshold_adaptive_gaussian(self, image: np.ndarray) -> None:
+        analyzer = ThresholdAdaptiveGaussian(blocksize=self._blocksize, c=self._c)
+        _, img = self._apply_threshold(analyzer=analyzer, image=image)
+
+        label = (
+            f"(h) Adaptive Gaussian Threshold\nblocksize={self._blocksize}, C={self._c}"
+        )
+        self._images.append(img)
+        self._labels.append(label)
+
+    def _apply_threshold(
+        self, analyzer: ThresholdAnalyzer, image: np.ndarray
+    ) -> np.ndarray:
+        """Applies the threshold and returns the mask or the thresholded image"""
+        thresh, binary_mask = analyzer.apply_threshold(image=image)
+
+        if self._show_masks:
+            return thresh, binary_mask
+        else:
+            masked_image = cv2.bitwise_and(image, image, mask=binary_mask)
+            return thresh, masked_image
+
+    def _plot_results(self) -> plt.Figure:
+        fig = plt.figure(figsize=(12, 12))
+        gs = GridSpec(3, 3, figure=fig)
+
+        # Show original image
+        ax1 = fig.add_subplot(gs[0, 0])
+        ax1.imshow(self._images[0], cmap="gray", aspect="auto")
+        ax1.set_xlabel(self._labels[0], fontsize=10)
+        ax1.set_xticks([])
+        ax1.set_yticks([])
+
+        # Show histogram of original image
+        histogram = cv2.calcHist([self._images[0]], [0], None, [256], [0, 256])
+        ax2 = fig.add_subplot(gs[0, 1:])
+        ax2.plot(histogram)
+        ax2.set_xlabel("(b) Histogram Original Image", fontsize=10)
+        ax2.set_yticks([])
+
+        # Plot Threshold Results
+        method_no = 0
+        for i in range(2):
+            for j in range(3):
+                method_no += 1  # Already plotted image 0 (original image)
+                ax = fig.add_subplot(gs[i + 1, j])
+                ax.imshow(self._images[method_no], cmap="gray", aspect="auto")
+                ax.set_xlabel(self._labels[method_no], fontsize=10)
+                ax.set_xticks([])
+                ax.set_yticks([])
+
+        plt.tight_layout()
+        # fig.suptitle("Threshold Segmentation Analysis", fontsize=12)
+        return fig
