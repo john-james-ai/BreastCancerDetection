@@ -105,25 +105,35 @@ Manual Threshold-Based Segmentation with $T=100$
 Different thresholds may yield dramatically different segmentation results.
 `````
 
-A threshold that is too low tends to produce over-segmentation, failing to separate artifacts from regions of interest, and combining distinct objects into single structures.  A high threshold can make objects smaller, as structures of interest are designated to the background. So, what are the principled ways by which an appropriate threshold is selected?
+A threshold that is too low tends to produce over-segmentation, combining distinct objects into single structures and failing to separate artifacts from regions of interest as shown in {numref}`threshold_manual_10_fig`  (i)-(l). On the other hand, a high threshold can make objects smaller, resulting in loss of information as structures of interest are designated to the background as evidenced in {numref}`threshold_manual_100_fig`  (i)-(l).
 
-This leads to our second key takeaway.
+So, what are the principled ways by which an appropriate threshold is selected? This leads to our second key takeaway.
 
 `````{admonition} Choosing a threshold manually should be avoided, when possible!
 :class: tip
-Manual thresholding is inefficient, irreproducible, and a huge source of user bias
+Manual thresholding is inefficient, irreproducible, and a huge source of user bias.
 `````
 
 ...rant inbound in 3,…2,…
 
 Selecting thresholds manually is tedious, time-consuming, and a huge source of user bias. It is based upon human perception of what information should be extracted from the image, leading to high intra- and inter-user variability; further compounded by the inherent variability in digital mammography. One fixed threshold will not extract similar features from different images. Manual thresholding has little to no reproducibility and it is incompatible with automatic, image-driven thresholding that is based on image-intrinsic properties and not on subjective real-time user decisions.
 
+So, what is the alternative?
+
 ## Automatic Thresholding
 
 Image processing literature is replete with automatic thresholding algorithms that are based on a wide range of image properties. The benefits of automatic thresholding are:
 
-- No user bias is introduced during thresholding,
+- No user bias is introduced during *thresholding*,
 - Thresholds are objectively determined and image-specific,
 - They are reproducible, in that an image will always have the same binarization result,
 - They are fast and computationally efficient, lending themselves to image preprocessing automation.
 
+Still, automatic thresholding is not a universal, purely objective remedy for bias in threshold-based segmentation. Ultimately, the choice of threshold selection algorithm for a specific context or experiment is a user-subjective decision, also based on user perception, experience, and expectations.
+
+```{math}
+:label: lunch
+\sum_f P(d^y_m|f,m,a_1) = \sum_f P(d^y_m|f,m,a_2),
+```
+
+David Wolpert and William Macready claimed that the average performance of any two algorithms $a_1$, and $a_2$ for all problems $f$
