@@ -12,11 +12,15 @@ kernelspec:
 ---
 # Threshold-Based Segmentation
 
-Our first step in breast segmentation is to separate the foreground of the mammogram containing the breast ROI from the background. From a grayscale mammogram, we can use threshold-based segmentation to create a binary image or mask, that, when applied to the original image, separates the foreground and the ROI from the background.
+Our first step in the segmentation process is to separate the foreground of the mammogram containing the breast region of interest (ROI) from the background.  The result of this *binarization* process is a binary image or mask that can be used to isolate ROIs, label structures within the image, detect edges and contours, classify abnormalities, and perform other tasks across the image analysis workflow.
 
-In the binary mask, each pixel has one of two values: ‘0’ representing the background, and ‘1’, corresponding to the image foreground.  Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated *image* pixel value meets a designated or automatically selected threshold. Generally speaking, image pixel values less than or equal to the threshold are 0 in the corresponding binary mask, and all other pixel values are set to 1.
+This *binarization* of the image can be accomplished using a range of statistical approaches and sophisticated machine-learning classification methods that group pixels of an image into different classes. However, the simplest approach would be to set a pixel value cut-off point, or *threshold*, that separates groups of pixel intensities from each other. From a grayscale mammogram, a binary image or mask is created whereby all pixel values less than or equal to the threshold are set to 0 and all other pixel values are set to 1  [^binary].
 
-Two commonly used threshold-based segmentation techniques are global threshold segmentation and adaptive local threshold segmentation.
+[^binary]: WLOG some software packages equivalently set pixel values above the threshold to 255, instead of 1. Converting between these representations can be achieved via normalization of the pixel values.
+
+Image binarization using pixel intensity thresholds is suitable in digital mammography where pixel intensity is the parameter that most directly relates to the spatial characteristics of the structures within a mammogram. Hence, binarization using threshold-based segmentation is often a critical first step in many biomedical image analysis workflows.
+
+The taxonomy of threshold-based segmentation techniques can be roughly characterized as global threshold segmentation and adaptive local threshold segmentation.
 
 ## Global Threshold Segmentation
 
@@ -122,18 +126,36 @@ So, what is the alternative?
 
 ## Automatic Thresholding
 
-Image processing literature is replete with automatic thresholding algorithms that are based on a wide range of image properties. The benefits of automatic thresholding are:
+Image processing literature is replete with automatic thresholding algorithms that are based on a vast array of image-intrinsic properties. What are the benefits of automatic thresholding?
 
 - No user bias is introduced during *thresholding*,
 - Thresholds are objectively determined and image-specific,
-- They are reproducible, in that an image will always have the same binarization result,
-- They are fast and computationally efficient, lending themselves to image preprocessing automation.
+- They are reproducible, in that an algorithm will always produce the same binarization result for a given image,
+- They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.
 
-Still, automatic thresholding is not a universal, purely objective remedy for bias in threshold-based segmentation. Ultimately, the choice of threshold selection algorithm for a specific context or experiment is a user-subjective decision, also based on user perception, experience, and expectations.
+Still, automatic thresholding algorithms are not a universal, purely objective, and bias-free remedy to the threshold segmentation challenges in biomedical imaging and other applications.
+
+### The Universally Superior Automatic Thresholding Algorithm
+
+Selecting an automatic thresholding algorithm from among the space of candidate algorithms can be described in terms of Wolpert and Macreary’s {numref}`lunch`.
 
 ```{math}
 :label: lunch
 \sum_f P(d^y_m|f,m,a_1) = \sum_f P(d^y_m|f,m,a_2),
 ```
 
-David Wolpert and William Macready claimed that the average performance of any two algorithms $a_1$, and $a_2$ for all problems $f$
+{numref}`lunch` was derived within the context of machine learning algorithms {cite}`wolpertNoFreeLunch1997a`, and classes of objective functions, and states that for any pair of algorithms, the probability distribution of results over the domain of objective functions is independent of the algorithm and identically distributed. In other words, “any two algorithms are equivalent when their performance is averaged across all possible problems.”{cite}`wolpertCoevolutionaryFreeLunches2005`
+
+The so-called “No Free Lunch Theorem for Optimization #1” (NFL) {cite}`wolpertNoFreeLunch1997a` explicitly demonstrates, under certain conditions [^nfl], that no algorithm performs well on all classes of problems within the domain. For instance, an automatic thresholding algorithm that performs well on average for mammograms with bimodal pixel value distributions, necessarily does worse on average over the remaining classes and modalities – a problem widely documented in literature surveys {cite}`al-bayatiMammogramImagesThresholding2013` {cite}`sankurSurveyImageThresholding2004`  {cite}`niuResearchAnalysisThreshold2019`.
+
+[^nfl]: NLF holds if and only if the distribution on objective functions is invariant under the permutation of the space of candidate algorithms{cite}`Streeter2003TwoBC`  {cite}`englishNoMoreLunch2004`. Although this condition is theoretically possible, some have argued that it doesn’t necessarily hold in practice.
+
+So, no universally superior automatic threshold algorithm has been invented that will perform well for all images, modalities, conditions, and needs.
+
+
+### Automatic Thresholding Algorithm Selection is Biased
+
+Wait. Didn’t we just cast automatic thresholding as based upon image-intrinsic properties and free of user bias during thresholding? Yes, but this doesn’t mean that *algorithm selection* is rigidly objective and bias-free.
+Just as the choice of a manual threshold in [0,256] is based upon user experience, human perception, problem characteristics, and prior expectations concerning the information to be extracted from an image, so too is the choice of an algorithm from the increasing candidate space of thresholding algorithms.
+On one hand, this is a reasonable basis upon which an algorithm can be selected. Indeed, the NFL theorem further establishes that the probability distribution of results $P(f)$ is uniform , ,that the probability distribution of performance over a class of that selection of an algorithm is only justified that without knowledge of problem-specific characteristics problem specific knowledge
+

@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="3.1. Threshold-Based Segmentation (TBS) for Artifact Removal" href="02_image_prep/02_segmentation/01_threshold.html" />
+    <link rel="prev" title="3.1. Threshold-Based Segmentation" href="02_image_prep/02_segmentation/01_threshold.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -183,8 +183,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="02_image_prep/02_segmentation/00_overview.html">3. Image Segmentation for Mammography</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="02_image_prep/02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="02_image_prep/02_segmentation/00_intro.html">3. Breast Segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_prep/02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation</a></li>
 </ul>
 </li>
 </ul>
@@ -530,9 +530,33 @@ document.write(`
 <span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
 <p>Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. <em>IEEE Transactions on Image Processing</em>, 13(4):600–612, April 2004. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1284395/">http://ieeexplore.ieee.org/document/1284395/</a> (visited on 2023-11-22), <a class="reference external" href="https://doi.org/10.1109/TIP.2003.819861">doi:10.1109/TIP.2003.819861</a>.</p>
 </div>
-<div class="citation" id="id360" role="doc-biblioentry">
+<div class="citation" id="id362" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
-<p>Thresholding — skimage 0.22.0 documentation. URL: <a class="reference external" href="https://scikit-image.org/docs/stable/auto_examples/applications/plot_thresholding_guide.html#how-to-apply-a-threshold">https://scikit-image.org/docs/stable/auto_examples/applications/plot_thresholding_guide.html#how-to-apply-a-threshold</a> (visited on 2023-12-11).</p>
+<p>D.H. Wolpert and W.G. Macready. No free lunch theorems for optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 1(1):67–82, April 1997. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/585893/">http://ieeexplore.ieee.org/document/585893/</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1109/4235.585893">doi:10.1109/4235.585893</a>.</p>
+</div>
+<div class="citation" id="id363" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
+<p>D.H. Wolpert and W.G. Macready. Coevolutionary Free Lunches. <em>IEEE Transactions on Evolutionary Computation</em>, 9(6):721–735, December 2005. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1545946/">http://ieeexplore.ieee.org/document/1545946/</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1109/TEVC.2005.856205">doi:10.1109/TEVC.2005.856205</a>.</p>
+</div>
+<div class="citation" id="id366" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
+<p>Moumena Al-Bayati and Ali El-Zaart. Mammogram Images Thresholding for Breast Cancer Detection Using Different Thresholding Methods. <em>Advances in Breast Cancer Research</em>, 02(03):72–77, 2013. URL: <a class="reference external" href="http://www.scirp.org/journal/doi.aspx?DOI=10.4236/abcr.2013.23013">http://www.scirp.org/journal/doi.aspx?DOI=10.4236/abcr.2013.23013</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.4236/abcr.2013.23013">doi:10.4236/abcr.2013.23013</a>.</p>
+</div>
+<div class="citation" id="id367" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
+<p>Bu¨lent Sankur. Survey over image thresholding techniques and quantitative performance evaluation. <em>Journal of Electronic Imaging</em>, 13(1):146, January 2004. URL: <a class="reference external" href="http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315">http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1117/1.1631315">doi:10.1117/1.1631315</a>.</p>
+</div>
+<div class="citation" id="id368" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>36<span class="fn-bracket">]</span></span>
+<p>Zuodong Niu and Handong Li. Research and analysis of threshold segmentation algorithms in image processing. <em>Journal of Physics: Conference Series</em>, 1237(2):022122, June 2019. URL: <a class="reference external" href="https://iopscience.iop.org/article/10.1088/1742-6596/1237/2/022122">https://iopscience.iop.org/article/10.1088/1742-6596/1237/2/022122</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1088/1742-6596/1237/2/022122">doi:10.1088/1742-6596/1237/2/022122</a>.</p>
+</div>
+<div class="citation" id="id364" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>37<span class="fn-bracket">]</span></span>
+<p>Matthew J. Streeter. Two broad classes of functions for which a no free lunch result does not hold. In <em>Annual conference on genetic and evolutionary computation</em>. 2003. URL: <a class="reference external" href="https://api.semanticscholar.org/CorpusID:3142394">https://api.semanticscholar.org/CorpusID:3142394</a>.</p>
+</div>
+<div class="citation" id="id365" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>38<span class="fn-bracket">]</span></span>
+<p>T. English. No more lunch: analysis of sequential search. In <em>Proceedings of the 2004 Congress on Evolutionary Computation (IEEE Cat. No.04TH8753)</em>, 227–234. Portland, OR, USA, 2004. IEEE. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1330861/">http://ieeexplore.ieee.org/document/1330861/</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1109/CEC.2004.1330861">doi:10.1109/CEC.2004.1330861</a>.</p>
 </div>
 </div>
 </div>
@@ -575,7 +599,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">3.1. </span>Threshold-Based Segmentation (TBS) for Artifact Removal</p>
+        <p class="prev-next-title"><span class="section-number">3.1. </span>Threshold-Based Segmentation</p>
       </div>
     </a>
 </div></div>

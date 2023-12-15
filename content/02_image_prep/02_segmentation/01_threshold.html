@@ -471,7 +471,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-threshold-segmentation">3.1.1. Global Threshold Segmentation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-thresholding">3.1.2. Automatic Thresholding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-thresholding">3.1.2. Automatic Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-universally-superior-automatic-thresholding-algorithm">The Universally Superior Automatic Thresholding Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-thresholding-algorithm-selection-is-biased">Automatic Thresholding Algorithm Selection is Biased</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -485,9 +489,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="threshold-based-segmentation">
 <h1><span class="section-number">3.1. </span>Threshold-Based Segmentation<a class="headerlink" href="#threshold-based-segmentation" title="Permalink to this heading">#</a></h1>
-<p>Our first step in breast segmentation is to separate the foreground of the mammogram containing the breast ROI from the background. From a grayscale mammogram, we can use threshold-based segmentation to create a binary image or mask, that, when applied to the original image, separates the foreground and the ROI from the background.</p>
-<p>In the binary mask, each pixel has one of two values: ‘0’ representing the background, and ‘1’, corresponding to the image foreground.  Whether the pixel value in the binary mask is assigned a 0 or 1 depends on whether the associated <em>image</em> pixel value meets a designated or automatically selected threshold. Generally speaking, image pixel values less than or equal to the threshold are 0 in the corresponding binary mask, and all other pixel values are set to 1.</p>
-<p>Two commonly used threshold-based segmentation techniques are global threshold segmentation and adaptive local threshold segmentation.</p>
+<p>Our first step in the segmentation process is to separate the foreground of the mammogram containing the breast region of interest (ROI) from the background.  The result of this <em>binarization</em> process is a binary image or mask that can be used to isolate ROIs, label structures within the image, detect edges and contours, classify abnormalities, and perform other tasks across the image analysis workflow.</p>
+<p>This <em>binarization</em> of the image can be accomplished using a range of statistical approaches and sophisticated machine-learning classification methods that group pixels of an image into different classes. However, the simplest approach would be to set a pixel value cut-off point, or <em>threshold</em>, that separates groups of pixel intensities from each other. From a grayscale mammogram, a binary image or mask is created whereby all pixel values less than or equal to the threshold are set to 0 and all other pixel values are set to 1  <a class="footnote-reference brackets" href="#binary" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>Image binarization using pixel intensity thresholds is suitable in digital mammography where pixel intensity is the parameter that most directly relates to the spatial characteristics of the structures within a mammogram. Hence, binarization using threshold-based segmentation is often a critical first step in many biomedical image analysis workflows.</p>
+<p>The taxonomy of threshold-based segmentation techniques can be roughly characterized as global threshold segmentation and adaptive local threshold segmentation.</p>
 <section id="global-threshold-segmentation">
 <h2><span class="section-number">3.1.1. </span>Global Threshold Segmentation<a class="headerlink" href="#global-threshold-segmentation" title="Permalink to this heading">#</a></h2>
 <p>Global threshold segmentation applies a single designated or automatically selected threshold value to the entire image.  Specifically, let <span class="math notranslate nohighlight">\(I\)</span> be the input image with height <span class="math notranslate nohighlight">\(H\)</span> and width <span class="math notranslate nohighlight">\(W\)</span> pixels, and that <span class="math notranslate nohighlight">\(I_{x,y}\)</span> represents the gray value of row <span class="math notranslate nohighlight">\(x\)</span> and column <span class="math notranslate nohighlight">\(y\)</span> of <span class="math notranslate nohighlight">\(I\)</span>, such that <span class="math notranslate nohighlight">\(0 \le x &lt; H, 0 \le y &lt; W\)</span>. Then, <span class="math notranslate nohighlight">\(B_{x,y}\)</span> represents the binary value in row <span class="math notranslate nohighlight">\(x\)</span> and column <span class="math notranslate nohighlight">\(y\)</span> of binary mask <span class="math notranslate nohighlight">\(B\)</span>, and is given by:</p>
@@ -498,14 +503,26 @@ document.write(`
 \end{cases}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T\)</span> is a global threshold.</p>
 <p>To illustrate, let’s create some binary masks for our test images using a manually set threshold <span class="math notranslate nohighlight">\(T=10\)</span>.</p>
-<p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_10_fig</span></code>, we have our four randomly selected images, the associated binary masks, and the output images. At threshold <span class="math notranslate nohighlight">\(T=10\)</span>, we have a clear separation between foreground and background; however, we have little to no artifact suppression.</p>
+<figure class="align-center" id="threshold-manual-10-fig">
+<img alt="../../../_images/34530568cde7bb7a63ed3f918ca66663734a9bdf379bc89d48eccf88c5df0877.png" src="../../../_images/34530568cde7bb7a63ed3f918ca66663734a9bdf379bc89d48eccf88c5df0877.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Manual Threshold-Based Segmentation with <span class="math notranslate nohighlight">\(T=10\)</span></span><a class="headerlink" href="#threshold-manual-10-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In <a class="reference internal" href="#threshold-manual-10-fig"><span class="std std-numref">Fig. 3.2</span></a>, we have our four randomly selected images, the associated binary masks, and the output images. At threshold <span class="math notranslate nohighlight">\(T=10\)</span>, we have a clear separation between foreground and background; however, we have little to no artifact suppression.</p>
 <p>Let’s examine the effect of increasing the threshold to <span class="math notranslate nohighlight">\(T=100\)</span>.</p>
-<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_10_fig</span></code> and <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_100_fig</span></code> illustrate the first key takeaway of this section.</p>
+<figure class="align-center" id="threshold-manual-100-fig">
+<img alt="../../../_images/d4b2d0cacb44e73d7bd960eace0de0918d5c2558fad097665d43711e8faf571a.png" src="../../../_images/d4b2d0cacb44e73d7bd960eace0de0918d5c2558fad097665d43711e8faf571a.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Manual Threshold-Based Segmentation with <span class="math notranslate nohighlight">\(T=100\)</span></span><a class="headerlink" href="#threshold-manual-100-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#threshold-manual-10-fig"><span class="std std-numref">Fig. 3.2</span></a> and <a class="reference internal" href="#threshold-manual-100-fig"><span class="std std-numref">Fig. 3.3</span></a> illustrate the first key takeaway of this section.</p>
 <div class="tip admonition">
 <p class="admonition-title">In threshold segmentation, the choice of threshold is crucial!</p>
 <p>Different thresholds may yield dramatically different segmentation results.</p>
 </div>
-<p>A threshold that is too low tends to produce over-segmentation, combining distinct objects into single structures and failing to separate artifacts from regions of interest as shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_10_fig</span></code>  (i)-(l). On the other hand, a high threshold can make objects smaller, resulting in loss of information as structures of interest are designated to the background as evidenced in <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_100_fig</span></code>  (i)-(l).</p>
+<p>A threshold that is too low tends to produce over-segmentation, combining distinct objects into single structures and failing to separate artifacts from regions of interest as shown in <a class="reference internal" href="#threshold-manual-10-fig"><span class="std std-numref">Fig. 3.2</span></a>  (i)-(l). On the other hand, a high threshold can make objects smaller, resulting in loss of information as structures of interest are designated to the background as evidenced in <a class="reference internal" href="#threshold-manual-100-fig"><span class="std std-numref">Fig. 3.3</span></a>  (i)-(l).</p>
 <p>So, what are the principled ways by which an appropriate threshold is selected? This leads to our second key takeaway.</p>
 <div class="tip admonition">
 <p class="admonition-title">Choosing a threshold manually should be avoided, when possible!</p>
@@ -517,17 +534,38 @@ document.write(`
 </section>
 <section id="automatic-thresholding">
 <h2><span class="section-number">3.1.2. </span>Automatic Thresholding<a class="headerlink" href="#automatic-thresholding" title="Permalink to this heading">#</a></h2>
-<p>Image processing literature is replete with automatic thresholding algorithms that are based on a wide range of image properties. The benefits of automatic thresholding are:</p>
+<p>Image processing literature is replete with automatic thresholding algorithms that are based on a vast array of image-intrinsic properties. What are the benefits of automatic thresholding?</p>
 <ul class="simple">
 <li><p>No user bias is introduced during <em>thresholding</em>,</p></li>
 <li><p>Thresholds are objectively determined and image-specific,</p></li>
-<li><p>They are reproducible, in that an image will always have the same binarization result,</p></li>
-<li><p>They are fast and computationally efficient, lending themselves to image preprocessing automation.</p></li>
+<li><p>They are reproducible, in that an algorithm will always produce the same binarization result for a given image,</p></li>
+<li><p>They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.</p></li>
 </ul>
-<p>Still, automatic thresholding is not a universal, purely objective remedy for bias in threshold-based segmentation. Ultimately, the choice of threshold selection algorithm for a specific context or experiment is a user-subjective decision, also based on user perception, experience, and expectations.</p>
+<p>Still, automatic thresholding algorithms are not a universal, purely objective, and bias-free remedy to the threshold segmentation challenges in biomedical imaging and other applications.</p>
+<section id="the-universally-superior-automatic-thresholding-algorithm">
+<h3>The Universally Superior Automatic Thresholding Algorithm<a class="headerlink" href="#the-universally-superior-automatic-thresholding-algorithm" title="Permalink to this heading">#</a></h3>
+<p>Selecting an automatic thresholding algorithm from among the space of candidate algorithms can be described in terms of Wolpert and Macreary’s <code class="xref std std-numref docutils literal notranslate"><span class="pre">lunch</span></code>.</p>
 <div class="math notranslate nohighlight" id="equation-lunch">
 <span class="eqno">(3.2)<a class="headerlink" href="#equation-lunch" title="Permalink to this equation">#</a></span>\[\sum_f P(d^y_m|f,m,a_1) = \sum_f P(d^y_m|f,m,a_2),\]</div>
-<p>David Wolpert and William Macready claimed that the average performance of any two algorithms <span class="math notranslate nohighlight">\(a_1\)</span>, and <span class="math notranslate nohighlight">\(a_2\)</span> for all problems <span class="math notranslate nohighlight">\(f\)</span></p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">lunch</span></code> was derived within the context of machine learning algorithms <span id="id2">[<a class="reference internal" href="../../99_references.html#id362" title="D.H. Wolpert and W.G. Macready. No free lunch theorems for optimization. IEEE Transactions on Evolutionary Computation, 1(1):67–82, April 1997. URL: http://ieeexplore.ieee.org/document/585893/ (visited on 2023-12-15), doi:10.1109/4235.585893.">32</a>]</span>, and classes of objective functions, and states that for any pair of algorithms, the probability distribution of results over the domain of objective functions is independent of the algorithm and identically distributed. In other words, “any two algorithms are equivalent when their performance is averaged across all possible problems.”<span id="id3">[<a class="reference internal" href="../../99_references.html#id363" title="D.H. Wolpert and W.G. Macready. Coevolutionary Free Lunches. IEEE Transactions on Evolutionary Computation, 9(6):721–735, December 2005. URL: http://ieeexplore.ieee.org/document/1545946/ (visited on 2023-12-15), doi:10.1109/TEVC.2005.856205.">33</a>]</span></p>
+<p>The so-called “No Free Lunch Theorem for Optimization #1” (NFL) <span id="id4">[<a class="reference internal" href="../../99_references.html#id362" title="D.H. Wolpert and W.G. Macready. No free lunch theorems for optimization. IEEE Transactions on Evolutionary Computation, 1(1):67–82, April 1997. URL: http://ieeexplore.ieee.org/document/585893/ (visited on 2023-12-15), doi:10.1109/4235.585893.">32</a>]</span> explicitly demonstrates, under certain conditions <a class="footnote-reference brackets" href="#nfl" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, that no algorithm performs well on all classes of problems within the domain. For instance, an automatic thresholding algorithm that performs well on average for mammograms with bimodal pixel value distributions, necessarily does worse on average over the remaining classes and modalities – a problem widely documented in literature surveys <span id="id6">[<a class="reference internal" href="../../99_references.html#id366" title="Moumena Al-Bayati and Ali El-Zaart. Mammogram Images Thresholding for Breast Cancer Detection Using Different Thresholding Methods. Advances in Breast Cancer Research, 02(03):72–77, 2013. URL: http://www.scirp.org/journal/doi.aspx?DOI=10.4236/abcr.2013.23013 (visited on 2023-12-15), doi:10.4236/abcr.2013.23013.">34</a>]</span> <span id="id7">[<a class="reference internal" href="../../99_references.html#id367" title="Bu¨lent Sankur. Survey over image thresholding techniques and quantitative performance evaluation. Journal of Electronic Imaging, 13(1):146, January 2004. URL: http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315 (visited on 2023-12-15), doi:10.1117/1.1631315.">35</a>]</span>  <span id="id8">[<a class="reference internal" href="../../99_references.html#id368" title="Zuodong Niu and Handong Li. Research and analysis of threshold segmentation algorithms in image processing. Journal of Physics: Conference Series, 1237(2):022122, June 2019. URL: https://iopscience.iop.org/article/10.1088/1742-6596/1237/2/022122 (visited on 2023-12-15), doi:10.1088/1742-6596/1237/2/022122.">36</a>]</span>.</p>
+<p>So, no universally superior automatic threshold algorithm has been invented that will perform well for all images, modalities, conditions, and needs.</p>
+</section>
+<section id="automatic-thresholding-algorithm-selection-is-biased">
+<h3>Automatic Thresholding Algorithm Selection is Biased<a class="headerlink" href="#automatic-thresholding-algorithm-selection-is-biased" title="Permalink to this heading">#</a></h3>
+<p>Wait. Didn’t we just cast automatic thresholding as based upon image-intrinsic properties and free of user bias during thresholding? Yes, but this doesn’t mean that <em>algorithm selection</em> is rigidly objective and bias-free.
+Just as the choice of a manual threshold in [0,256] is based upon user experience, human perception, problem characteristics, and prior expectations concerning the information to be extracted from an image, so too is the choice of an algorithm from the increasing candidate space of thresholding algorithms.
+On one hand, this is a reasonable basis upon which an algorithm can be selected. Indeed, the NFL theorem further establishes that the probability distribution of results <span class="math notranslate nohighlight">\(P(f)\)</span> is uniform , ,that the probability distribution of performance over a class of that selection of an algorithm is only justified that without knowledge of problem-specific characteristics problem specific knowledge</p>
+<hr class="footnotes docutils" />
+<aside class="footnote brackets" id="binary" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>WLOG some software packages equivalently set pixel values above the threshold to 255, instead of 1. Converting between these representations can be achieved via normalization of the pixel values.</p>
+</aside>
+<aside class="footnote brackets" id="nfl" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
+<p>NLF holds if and only if the distribution on objective functions is invariant under the permutation of the space of candidate algorithms<span id="id9">[<a class="reference internal" href="../../99_references.html#id364" title="Matthew J. Streeter. Two broad classes of functions for which a no free lunch result does not hold. In Annual conference on genetic and evolutionary computation. 2003. URL: https://api.semanticscholar.org/CorpusID:3142394.">37</a>]</span>  <span id="id10">[<a class="reference internal" href="../../99_references.html#id365" title="T. English. No more lunch: analysis of sequential search. In Proceedings of the 2004 Congress on Evolutionary Computation (IEEE Cat. No.04TH8753), 227–234. Portland, OR, USA, 2004. IEEE. URL: http://ieeexplore.ieee.org/document/1330861/ (visited on 2023-12-15), doi:10.1109/CEC.2004.1330861.">38</a>]</span>. Although this condition is theoretically possible, some have argued that it doesn’t necessarily hold in practice.</p>
+</aside>
+</section>
 </section>
 </section>
 
@@ -599,7 +637,11 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-threshold-segmentation">3.1.1. Global Threshold Segmentation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-thresholding">3.1.2. Automatic Thresholding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-thresholding">3.1.2. Automatic Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-universally-superior-automatic-thresholding-algorithm">The Universally Superior Automatic Thresholding Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-thresholding-algorithm-selection-is-biased">Automatic Thresholding Algorithm Selection is Biased</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
