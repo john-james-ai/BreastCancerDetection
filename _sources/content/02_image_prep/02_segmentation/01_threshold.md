@@ -51,7 +51,7 @@ import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
 
-from bcd.preprocess.image.analysis.threshold import (
+from bcd.preprocess.image.experiment.threshold import (
     ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, TryAllThresholds, ThresholdManual
 )
 
@@ -145,12 +145,12 @@ Selecting an appropriate automated thresholding algorithm from the growing space
 
 Sezgin and Sankur {cite}`sankurSurveyImageThresholding2004` cast the space of automated thresholding techniques as follows:
 
-- Histogram shape-based methods that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.
-- Clustering-based methods cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.
-- Entropy-based methods use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.
-- Object attribute-based methods that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.
-- The spatial methods use higher-order probability distribution and/or correlation between pixels
-- Local methods adapt the threshold value on each pixel to the local image characteristics.
+- **Histogram shape-based methods** that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.
+- **Clustering-based methods** cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.
+- **Entropy-based methods** use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.
+- **Object attribute-based methods** that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.
+- **The spatial methods** use higher-order probability distribution and/or correlation between pixels
+- **Local methods** adapt the threshold value on each pixel to the local image characteristics.
 
 For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}`otsuThresholdSelectionMethod1979` can be categorized as both a histogram shape-based method and a clustering-based method.
 
@@ -161,15 +161,21 @@ Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl
 ```{table} Automated Threshold Methods
 :name: auto-thresh-tbl
 
-| Type            | Method                           | Author                                              | Publication                                                                           |
-|-----------------|----------------------------------|-----------------------------------------------------|---------------------------------------------------------------------------------------|
-| Histogram-Based | Triangle Method                  | Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,   | Automatic Measurement of Sister Chromatid Exchange Frequency                          |
-|                 | ISOData Method                   | Ridler, TW & Calvard, S (1978)                      | Picture thresholding using an iterative selection method                              |
-|                 | Otsu's Method                    | Nobuyuki Otsu (1979)                                | A threshold selection method from gray-level histograms                               |
-| Entropy-Based   | Minimum Cross Entropy Method     | Li C.H. and Lee C.K. (1993)                         | Minimum Cross Entropy Thresholding                                                    |
-|                 | Maximum Entropy Threshold Method | Kapur, J. N., Sahoo, P. K., & Wong, A. K. C. (1985) | A new method for gray-level picture thresholding using the entropy of the   histogram |
-|                 | Huang's Fuzzy Threshold Method   | Huang, L.-K., & Wang, M.-J. J. (1995)               | Image thresholding by minimizing the measures of fuzziness                            |
-| Local           | Adaptive Gaussian Method         | Bradley, D., G. Roth 2007                           | Adapting Thresholding Using the Integral Image                                        |
-|                 | Adaptive Mean Method             | Bradley, D., G. Roth 2007                           | Adapting Thresholding Using the Integral Image                                        |
-|                 | Adaptive Median Method           | Bradley, D., G. Roth 2007                           | Adapting Thresholding Using the Integral Image                                        |
+| Type            | Method                               | Author(s)                                            | Publication                                                  |
+|-----------------|--------------------------------------|------------------------------------------------------|--------------------------------------------------------------|
+| Histogram-Based | Triangle Method                      | Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,    | Automatic Measurement of Sister Chromatid Exchange Frequency |
+|                 | ISOData Method                       | Ridler, TW & Calvard, S (1978)                       | Picture thresholding using an iterative selection method     |
+|                 | Otsu's Method                        | Nobuyuki Otsu (1979)                                 | A threshold selection method from gray-level histograms      |
+| Entropy-Based   | Li's Minimum Cross Entropy Method    | Li C.H. and Lee C.K. (1993)                          | Minimum Cross Entropy Thresholding                           |
+| Spatial-Based   | Yen's Multilevel Thresholding Method | Jui-Cheng Yen, Fu-Juay Chang and Shyang Chang (1995) | A new criterion for automatic multilevel thresholding        |
+| Local           | Adaptive Gaussian Method             | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |
+|                 | Adaptive Mean Method                 | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |                                       |
 ```
+
+In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize method assumptions, strengths, and limitations.
+
+#### Histogram-Based Thresholding
+
+Histogram-based methods use the distribution of pixel intensities to determine an appropriate threshold.
+
+##### Triangle Method

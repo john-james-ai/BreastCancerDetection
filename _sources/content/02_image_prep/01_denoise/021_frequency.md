@@ -223,7 +223,7 @@ where $n$ represents the order of the filter, $D_0$ indicates the cutoff frequen
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
-from bcd.preprocess.image.analysis.noise import ButterworthFilterAnalyzer
+from bcd.preprocess.image.experiment.noise import ButterworthFilterAnalyzer
 analyzer = ButterworthFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.analyze(order=10, cutoff_frequency=1500)
@@ -315,7 +315,7 @@ This is a universal threshold for the removal of additive Gaussian noise. Specif
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
-from bcd.preprocess.image.analysis.noise import WaveletFilterAnalyzer
+from bcd.preprocess.image.experiment.noise import WaveletFilterAnalyzer
 analyzer = WaveletFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.analyze(method='VisuShrink', sigma=0.15)
@@ -346,7 +346,7 @@ where $\sigma^2$ is the noise variance and $\sigma_s$ is the signal variance wit
 ```{code-cell}
 :tags: [hide-cell, remove-output]
 
-from bcd.preprocess.image.analysis.noise import WaveletFilterAnalyzer
+from bcd.preprocess.image.experiment.noise import WaveletFilterAnalyzer
 analyzer = WaveletFilterAnalyzer()
 analyzer.add_gaussian_noise(var=0.2)
 fig = analyzer.analyze(method='BayesShrink')

@@ -473,7 +473,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-threshold-segmentation">3.1.1. Global Threshold Segmentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.2. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithm-space">Automated Thresholding Algorithm Space</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-based-thresholding">Histogram-Based Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -503,26 +509,14 @@ document.write(`
 \end{cases}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T\)</span> is a global threshold.</p>
 <p>To illustrate, let’s create some binary masks for our test images using a manually set threshold <span class="math notranslate nohighlight">\(T=10\)</span>.</p>
-<figure class="align-center" id="threshold-manual-10-fig">
-<img alt="../../../_images/34530568cde7bb7a63ed3f918ca66663734a9bdf379bc89d48eccf88c5df0877.png" src="../../../_images/34530568cde7bb7a63ed3f918ca66663734a9bdf379bc89d48eccf88c5df0877.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Manual Threshold-Based Segmentation with <span class="math notranslate nohighlight">\(T=10\)</span></span><a class="headerlink" href="#threshold-manual-10-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>In <a class="reference internal" href="#threshold-manual-10-fig"><span class="std std-numref">Fig. 3.2</span></a>, we have our four randomly selected images, the associated binary masks, and the output images. At threshold <span class="math notranslate nohighlight">\(T=10\)</span>, we have a clear separation between foreground and background; however, we have little to no artifact suppression.</p>
+<p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_10_fig</span></code>, we have our four randomly selected images, the associated binary masks, and the output images. At threshold <span class="math notranslate nohighlight">\(T=10\)</span>, we have a clear separation between foreground and background; however, we have little to no artifact suppression.</p>
 <p>Let’s examine the effect of increasing the threshold to <span class="math notranslate nohighlight">\(T=100\)</span>.</p>
-<figure class="align-center" id="threshold-manual-100-fig">
-<img alt="../../../_images/d4b2d0cacb44e73d7bd960eace0de0918d5c2558fad097665d43711e8faf571a.png" src="../../../_images/d4b2d0cacb44e73d7bd960eace0de0918d5c2558fad097665d43711e8faf571a.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Manual Threshold-Based Segmentation with <span class="math notranslate nohighlight">\(T=100\)</span></span><a class="headerlink" href="#threshold-manual-100-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p><a class="reference internal" href="#threshold-manual-10-fig"><span class="std std-numref">Fig. 3.2</span></a> and <a class="reference internal" href="#threshold-manual-100-fig"><span class="std std-numref">Fig. 3.3</span></a> illustrate the first key takeaway of this section.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_10_fig</span></code> and <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_100_fig</span></code> illustrate the first key takeaway of this section.</p>
 <div class="tip admonition">
 <p class="admonition-title">In threshold segmentation, the choice of threshold is crucial!</p>
 <p>Different thresholds may yield dramatically different segmentation results.</p>
 </div>
-<p>A threshold that is too low tends to produce over-segmentation, combining distinct objects into single structures and failing to separate artifacts from regions of interest as shown in <a class="reference internal" href="#threshold-manual-10-fig"><span class="std std-numref">Fig. 3.2</span></a>  (i)-(l). On the other hand, a high threshold can make objects smaller, resulting in loss of information as structures of interest are designated to the background as evidenced in <a class="reference internal" href="#threshold-manual-100-fig"><span class="std std-numref">Fig. 3.3</span></a>  (i)-(l).</p>
+<p>A threshold that is too low tends to produce over-segmentation, combining distinct objects into single structures and failing to separate artifacts from regions of interest as shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_10_fig</span></code>  (i)-(l). On the other hand, a high threshold can make objects smaller, resulting in loss of information as structures of interest are designated to the background as evidenced in <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_manual_100_fig</span></code>  (i)-(l).</p>
 <p>So, what are the principled ways by which an appropriate threshold is selected? This leads to our second key takeaway.</p>
 <div class="tip admonition">
 <p class="admonition-title">Choosing a threshold manually should be avoided, when possible!</p>
@@ -552,12 +546,12 @@ document.write(`
 <h3>Automated Thresholding Algorithm Space<a class="headerlink" href="#automated-thresholding-algorithm-space" title="Permalink to this heading">#</a></h3>
 <p>Sezgin and Sankur <span id="id3">[<a class="reference internal" href="../../99_references.html#id367" title="Bu¨lent Sankur. Survey over image thresholding techniques and quantitative performance evaluation. Journal of Electronic Imaging, 13(1):146, January 2004. URL: http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315 (visited on 2023-12-15), doi:10.1117/1.1631315.">33</a>]</span> cast the space of automated thresholding techniques as follows:</p>
 <ul class="simple">
-<li><p>Histogram shape-based methods that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.</p></li>
-<li><p>Clustering-based methods cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.</p></li>
-<li><p>Entropy-based methods use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.</p></li>
-<li><p>Object attribute-based methods that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.</p></li>
-<li><p>The spatial methods use higher-order probability distribution and/or correlation between pixels</p></li>
-<li><p>Local methods adapt the threshold value on each pixel to the local image characteristics.</p></li>
+<li><p><strong>Histogram shape-based methods</strong> that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.</p></li>
+<li><p><strong>Clustering-based methods</strong> cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.</p></li>
+<li><p><strong>Entropy-based methods</strong> use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.</p></li>
+<li><p><strong>Object attribute-based methods</strong> that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.</p></li>
+<li><p><strong>The spatial methods</strong> use higher-order probability distribution and/or correlation between pixels</p></li>
+<li><p><strong>Local methods</strong> adapt the threshold value on each pixel to the local image characteristics.</p></li>
 </ul>
 <p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method <span id="id4">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">34</a>]</span> can be categorized as both a histogram shape-based method and a clustering-based method.</p>
 </section>
@@ -569,7 +563,7 @@ document.write(`
 <thead>
 <tr class="row-odd"><th class="head"><p>Type</p></th>
 <th class="head"><p>Method</p></th>
-<th class="head"><p>Author</p></th>
+<th class="head"><p>Author(s)</p></th>
 <th class="head"><p>Publication</p></th>
 </tr>
 </thead>
@@ -590,42 +584,40 @@ document.write(`
 <td><p>A threshold selection method from gray-level histograms</p></td>
 </tr>
 <tr class="row-odd"><td><p>Entropy-Based</p></td>
-<td><p>Minimum Cross Entropy Method</p></td>
+<td><p>Li’s Minimum Cross Entropy Method</p></td>
 <td><p>Li C.H. and Lee C.K. (1993)</p></td>
 <td><p>Minimum Cross Entropy Thresholding</p></td>
 </tr>
-<tr class="row-even"><td><p></p></td>
-<td><p>Maximum Entropy Threshold Method</p></td>
-<td><p>Kapur, J. N., Sahoo, P. K., &amp; Wong, A. K. C. (1985)</p></td>
-<td><p>A new method for gray-level picture thresholding using the entropy of the   histogram</p></td>
+<tr class="row-even"><td><p>Spatial-Based</p></td>
+<td><p>Yen’s Multilevel Thresholding Method</p></td>
+<td><p>Jui-Cheng Yen, Fu-Juay Chang and Shyang Chang (1995)</p></td>
+<td><p>A new criterion for automatic multilevel thresholding</p></td>
 </tr>
-<tr class="row-odd"><td><p></p></td>
-<td><p>Huang’s Fuzzy Threshold Method</p></td>
-<td><p>Huang, L.-K., &amp; Wang, M.-J. J. (1995)</p></td>
-<td><p>Image thresholding by minimizing the measures of fuzziness</p></td>
-</tr>
-<tr class="row-even"><td><p>Local</p></td>
+<tr class="row-odd"><td><p>Local</p></td>
 <td><p>Adaptive Gaussian Method</p></td>
 <td><p>Bradley, D., G. Roth 2007</p></td>
 <td><p>Adapting Thresholding Using the Integral Image</p></td>
 </tr>
-<tr class="row-odd"><td><p></p></td>
-<td><p>Adaptive Mean Method</p></td>
-<td><p>Bradley, D., G. Roth 2007</p></td>
-<td><p>Adapting Thresholding Using the Integral Image</p></td>
-</tr>
 <tr class="row-even"><td><p></p></td>
-<td><p>Adaptive Median Method</p></td>
+<td><p>Adaptive Mean Method</p></td>
 <td><p>Bradley, D., G. Roth 2007</p></td>
 <td><p>Adapting Thresholding Using the Integral Image</p></td>
 </tr>
 </tbody>
 </table>
+<p>In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize method assumptions, strengths, and limitations.</p>
+<section id="histogram-based-thresholding">
+<h4>Histogram-Based Thresholding<a class="headerlink" href="#histogram-based-thresholding" title="Permalink to this heading">#</a></h4>
+<p>Histogram-based methods use the distribution of pixel intensities to determine an appropriate threshold.</p>
+<section id="triangle-method">
+<h5>Triangle Method<a class="headerlink" href="#triangle-method" title="Permalink to this heading">#</a></h5>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="binary" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>WLOG some software packages equivalently set pixel values above the threshold to 255, instead of 1. Converting between these representations can be achieved via normalization of the pixel values.</p>
 </aside>
+</section>
+</section>
 </section>
 </section>
 </section>
@@ -700,7 +692,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-threshold-segmentation">3.1.1. Global Threshold Segmentation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.2. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithm-space">Automated Thresholding Algorithm Space</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-based-thresholding">Histogram-Based Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

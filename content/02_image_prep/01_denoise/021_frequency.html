@@ -186,8 +186,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_segmentation/00_overview.html">3. Image Segmentation for Mammography</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_segmentation/00_intro.html">3. Breast Segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation</a></li>
 </ul>
 </li>
 </ul>
@@ -600,14 +600,14 @@ document.write(`
 <figure class="align-center" id="fft-fig">
 <img alt="../../../_images/f0f8292bbf1c8ce3a876f86669fcc37751aa3dd7dd0266ce9e0116663d69059c.png" src="../../../_images/f0f8292bbf1c8ce3a876f86669fcc37751aa3dd7dd0266ce9e0116663d69059c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.19 </span><span class="caption-text">Discrete Fourier Transformation</span><a class="headerlink" href="#fft-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Discrete Fourier Transformation</span><a class="headerlink" href="#fft-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In <a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 2.19</span></a> we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles), a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a mammogram on the top row, along with their frequency spectrum images on the second row.</p>
+<p>In <a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 2.8</span></a> we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles), a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a mammogram on the top row, along with their frequency spectrum images on the second row.</p>
 <p>The DFT of the white image (e) contains a single dot at the center (origin) of the frequency coordinate system. The color of the dot represents the average intensity in the image and its location indicates the amplitude of the zero-frequency wave, also called the direct current (DC) of the constant white image.</p>
 <p>Moving to the right (f), we have the DFT for the vertical sinusoid. Notice The DFT has two dots placed symmetrically along the <span class="math notranslate nohighlight">\(u-axis\)</span> about the center of the DFT image.  The distance each dot occupies from the origin indicates the frequency with which the intensities are changing.</p>
 <p>In the next image (g), we have twice the number of cycles (1/2 wavelength), rotated <span class="math notranslate nohighlight">\(\frac{\pi}{2}\)</span> radians. Notice in this case, the dots are oriented along the <span class="math notranslate nohighlight">\(v-axis\)</span>, the direction of the rate of change, and are twice the distance from the origin.</p>
-<p><a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 2.19</span></a> (h) shows the DFT for a mammogram image. Notice, the single blob about the origin. Most 8-bit gray-scale images tend to have an average value of about 128, and lots of low-frequency information close to the origin.</p>
+<p><a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 2.8</span></a> (h) shows the DFT for a mammogram image. Notice, the single blob about the origin. Most 8-bit gray-scale images tend to have an average value of about 128, and lots of low-frequency information close to the origin.</p>
 <p>The above examples illuminate the important properties of the frequency spectrum of an image:</p>
 <ul class="simple">
 <li><p>Rotating <span class="math notranslate nohighlight">\(f(x,y)\)</span> by an angle <span class="math notranslate nohighlight">\(\theta_0\)</span> rotates <span class="math notranslate nohighlight">\(F(u,v)\)</span> by the same angle. Conversely, rotating <span class="math notranslate nohighlight">\(F(u,v)\)</span> rotates <span class="math notranslate nohighlight">\(f(x,y)\)</span> by the same angle,</p></li>
@@ -644,11 +644,11 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-ideal-distance">
 <span class="eqno">(2.22)<a class="headerlink" href="#equation-ideal-distance" title="Permalink to this equation">#</a></span>\[D(u,v) = [(\mu-P/2)^2 + (v-Q/2)^2]^{1/2}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P=2M\)</span> and <span class="math notranslate nohighlight">\(Q=2N\)</span> are the padded sizes of the image.</p>
-<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 2.20</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
+<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 2.9</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
 <figure class="align-default" id="id3">
 <img alt="../../../_images/ideal_filter.jpg" src="../../../_images/ideal_filter.jpg" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The point of transition between the values <span class="math notranslate nohighlight">\(H(u,v)=1\)</span> and <span class="math notranslate nohighlight">\(H(u,v)=0\)</span> is called the <em>cutoff frequency</em>, the frequency at which the filter’s response drops off.</p>
@@ -658,18 +658,18 @@ document.write(`
 <section id="butterworth-lowpass-filter">
 <h2>Butterworth Lowpass Filter<a class="headerlink" href="#butterworth-lowpass-filter" title="Permalink to this heading">#</a></h2>
 <p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id4">[<a class="reference internal" href="../../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">24</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
-<p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.21</span></a></p>
+<p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.10</span></a></p>
 <figure class="align-default" id="butterworth-ideal">
 <img alt="../../../_images/butterworth.png" src="../../../_images/butterworth.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.21 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Note that the higher-order filters come closer to the ‘ideal’ response. The transfer function of an <span class="math notranslate nohighlight">\(n^{th}\)</span> order Butterworth filter is given as:</p>
 <div class="math notranslate nohighlight" id="equation-butterworth-freq">
 <span class="eqno">(2.23)<a class="headerlink" href="#equation-butterworth-freq" title="Permalink to this equation">#</a></span>\[H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(n\)</span> represents the order of the filter, <span class="math notranslate nohighlight">\(D_0\)</span> indicates the cutoff frequency at a distance <span class="math notranslate nohighlight">\(D_0\)</span> from the origin, and <span class="math notranslate nohighlight">\(D(u,v)\)</span> is given by <a class="reference internal" href="#equation-ideal-distance">(2.22)</a>. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.</p>
-<p><a class="reference internal" href="#butterworth-characteristics-fig"><span class="std std-numref">Fig. 2.22</span></a> illustrates the behavior of the Butterworth Filter on an image degraded by Gaussian noise. The order was set at 10, the cutoff frequency was set to 2000.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">butterworth_characteristics_fig</span></code> illustrates the behavior of the Butterworth Filter on an image degraded by Gaussian noise. The order was set at 10, the cutoff frequency was set to 2000.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -677,7 +677,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.analysis.noise</span> <span class="kn">import</span> <span class="n">ButterworthFilterAnalyzer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.experiment.noise</span> <span class="kn">import</span> <span class="n">ButterworthFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">ButterworthFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cutoff_frequency</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
@@ -687,13 +687,7 @@ document.write(`
 </div>
 </details>
 </div>
-<figure class="align-center" id="butterworth-characteristics-fig">
-<img alt="../../../_images/64e506f8e28d65812e364c930f59899590e7f3b7b858270f24a4c6f853d10c29.png" src="../../../_images/64e506f8e28d65812e364c930f59899590e7f3b7b858270f24a4c6f853d10c29.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Butterworth Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#butterworth-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p><a class="reference internal" href="#butterworth-characteristics-fig"><span class="std std-numref">Fig. 2.22</span></a> shows almost no reduction in noise and a slight blurring effect is extant. <a class="reference internal" href="#butterworth-analysis-fig"><span class="std std-numref">Fig. 2.23</span></a> displays the behavior over a range of orders and cutoff frequencies.</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">butterworth_characteristics_fig</span></code> shows almost no reduction in noise and a slight blurring effect is extant. <code class="xref std std-numref docutils literal notranslate"><span class="pre">butterworth_analysis_fig</span></code> displays the behavior over a range of orders and cutoff frequencies.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -708,12 +702,6 @@ document.write(`
 </div>
 </details>
 </div>
-<figure class="align-center" id="butterworth-analysis-fig">
-<img alt="../../../_images/3595fbe08700be4fba84ea754b8a7da655138611cfd6e4d91fa336a9c913a831.png" src="../../../_images/3595fbe08700be4fba84ea754b8a7da655138611cfd6e4d91fa336a9c913a831.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">Butterworth Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#butterworth-analysis-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 <p>Order values were 6,8, and 10 for the first, second and third rows respectively. The frequency cutoffs were 500, 750, 1000 and 1500 for the first, second, third, and forth columns respectively. At the lower frequency cutoffs, we have a significant amount of blurring as well as apparent ringing effect, most notable at cutoff frequencies 500 and 750. Moving right, the blurring decreases; however, much of the Gaussian noise remains.</p>
 <p>The Fourier transform expresses an image as a sum of sine and cosine waves, which go on ‘forever’, repeating out to positive and negative infinity. They are non-local, by definition and therefore they do not approximate sharp intensity changes very well. Next, we examine an alternative to Fourier transform-based denoisers based upon wavelets which are well-suited for approximating data with sharp discontinuities.</p>
 </section>
@@ -726,10 +714,10 @@ document.write(`
 <figure class="align-default" id="dwt">
 <img alt="../../../_images/dwt.png" src="../../../_images/dwt.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2.24 </span><span class="caption-text">Discrete Wavelet Transform (2-Level)</span><a class="headerlink" href="#dwt" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Discrete Wavelet Transform (2-Level)</span><a class="headerlink" href="#dwt" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As indicated in <a class="reference internal" href="#dwt"><span class="std std-numref">Fig. 2.24</span></a>, DWT first level decomposition separates the image into:</p>
+<p>As indicated in <a class="reference internal" href="#dwt"><span class="std std-numref">Fig. 2.11</span></a>, DWT first level decomposition separates the image into:</p>
 <ul class="simple">
 <li><p>low-frequency bands (<span class="math notranslate nohighlight">\(LL^1\)</span>) that approximate the original image;</p></li>
 <li><p>horizontal fluctuation detail containing both high and low frequencies (<span class="math notranslate nohighlight">\(LH^1\)</span>)</p></li>
@@ -753,7 +741,7 @@ document.write(`
 <span class="eqno">(2.25)<a class="headerlink" href="#equation-visushrink-noise" title="Permalink to this equation">#</a></span>\[\sigma = \frac{(\text{median}|Y_{ij}|)}{0.06745}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Y_{ij} \in HH^1\)</span>.</p>
 <p>This is a universal threshold for the removal of additive Gaussian noise. Specifying <span class="math notranslate nohighlight">\(\sigma\)</span> at the noise standard deviation can result in an overly smooth result. Often <span class="math notranslate nohighlight">\(\sigma\)</span> less than the noise standard deviation reduces noise while retaining fine detail.</p>
-<p><a class="reference internal" href="#wavelet-visushrink-characteristics-fig"><span class="std std-numref">Fig. 2.25</span></a> displays wavelet denoising using a VisuShrink threshold with <span class="math notranslate nohighlight">\(\sigma^2=0.15\)</span>  on Gaussian noise with <span class="math notranslate nohighlight">\(\sigma^2=0.2\)</span></p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">wavelet_visushrink_characteristics_fig</span></code> displays wavelet denoising using a VisuShrink threshold with <span class="math notranslate nohighlight">\(\sigma^2=0.15\)</span>  on Gaussian noise with <span class="math notranslate nohighlight">\(\sigma^2=0.2\)</span></p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -761,7 +749,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.analysis.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.experiment.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">WaveletFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;VisuShrink&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
@@ -771,12 +759,6 @@ document.write(`
 </div>
 </details>
 </div>
-<figure class="align-center" id="wavelet-visushrink-characteristics-fig">
-<img alt="../../../_images/545298a46e40f3687a9b18f2cd0f4b9bffdb02a9f8c2cc852cad00dd9bdf222a.png" src="../../../_images/545298a46e40f3687a9b18f2cd0f4b9bffdb02a9f8c2cc852cad00dd9bdf222a.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.25 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with VisuShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-visushrink-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="bayesshrink">
 <h4>BayesShrink<a class="headerlink" href="#bayesshrink" title="Permalink to this heading">#</a></h4>
@@ -784,7 +766,7 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-bayesshrink">
 <span class="eqno">(2.26)<a class="headerlink" href="#equation-bayesshrink" title="Permalink to this equation">#</a></span>\[t_b = \frac{\sigma^2}{\sigma_s}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\sigma^2\)</span> is the noise variance and <span class="math notranslate nohighlight">\(\sigma_s\)</span> is the signal variance without noise. As with VisuShrink, the noise variance is estimated from the subband <span class="math notranslate nohighlight">\(HH^1\)</span></p>
-<p><a class="reference internal" href="#wavelet-bayesshrink-characteristics-fig"><span class="std std-numref">Fig. 2.26</span></a> displays a wavelet denoiser using BayesShrink threshold</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">wavelet_bayesshrink_characteristics_fig</span></code> displays a wavelet denoiser using BayesShrink threshold</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -792,7 +774,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.analysis.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.experiment.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">WaveletFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;BayesShrink&#39;</span><span class="p">)</span>
@@ -802,12 +784,6 @@ document.write(`
 </div>
 </details>
 </div>
-<figure class="align-center" id="wavelet-bayesshrink-characteristics-fig">
-<img alt="../../../_images/b52e9423a7637c126e102707b9e6e11b1e01108abc6f9eb5b17013935e4ccff8.png" src="../../../_images/b52e9423a7637c126e102707b9e6e11b1e01108abc6f9eb5b17013935e4ccff8.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 2.26 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-bayesshrink-characteristics-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 <p>Wavelet denoising can effectively remove both additive and multiplicative noise from images while preserving fine details and edges. However, it can be computational complex and may produce ‘ringing’ artifacts around sharp edges in the image.</p>
 <p>This covers the denoisers that will be evaluated. Next, we move to the experimentation stage where we select a denoiser for the CBIS-DDSM images.</p>
 </section>
