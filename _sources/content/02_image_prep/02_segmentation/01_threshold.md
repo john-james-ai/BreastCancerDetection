@@ -51,7 +51,7 @@ import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
 
-from bcd.preprocess.image.threshold import (
+from bcd.preprocess.image.threshold import (ThresholdAnalyzer,
     ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, ThresholdManual
 )
 

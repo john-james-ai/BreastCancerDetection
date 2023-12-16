@@ -27,7 +27,7 @@ import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
 
-from bcd.preprocess.image.threshold import (
+from bcd.preprocess.image.threshold import (ThresholdAnalyzer,
     ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, ThresholdManual
 )
 
@@ -52,13 +52,12 @@ glue("threshold_manual_10", fig)
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[1], line 27[0m
-[1;32m     23[0m img4 [38;5;241m=[39m cv2[38;5;241m.[39mimread(img4, cv2[38;5;241m.[39mIMREAD_GRAYSCALE)
-[1;32m     25[0m images [38;5;241m=[39m (img1,img2,img3,img4)
-[0;32m---> 27[0m analyzer [38;5;241m=[39m [43mThresholdAnalyzer[49m()
+Cell [0;32mIn[1], line 29[0m
+[1;32m     27[0m analyzer [38;5;241m=[39m ThresholdAnalyzer()
 [1;32m     28[0m threshold [38;5;241m=[39m ThresholdManual(threshold[38;5;241m=[39m[38;5;241m10[39m)
-[1;32m     29[0m fig [38;5;241m=[39m analysis[38;5;241m.[39manalyze(images[38;5;241m=[39mimages, threshold[38;5;241m=[39mthreshold)
+[0;32m---> 29[0m fig [38;5;241m=[39m [43manalysis[49m[38;5;241m.[39manalyze(images[38;5;241m=[39mimages, threshold[38;5;241m=[39mthreshold)
+[1;32m     31[0m glue([38;5;124m"[39m[38;5;124mthreshold_manual_10[39m[38;5;124m"[39m, fig)
 
-[0;31mNameError[0m: name 'ThresholdAnalyzer' is not defined
-NameError: name 'ThresholdAnalyzer' is not defined
+[0;31mNameError[0m: name 'analysis' is not defined
+NameError: name 'analysis' is not defined
 
