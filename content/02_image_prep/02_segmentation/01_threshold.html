@@ -626,24 +626,66 @@ document.write(`
 </figcaption>
 </figure>
 <p><a class="reference internal" href="#triangle"><span class="std std-numref">Fig. 3.4</span></a> was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. A line is drawn perpendicular from the hypotenuse of the triangle to the histogram such that the length between the hypotenuse and the histogram is maximized. Point A is located at the base of the selected histogram bin and the threshold is set to A <span class="math notranslate nohighlight">\(+\delta \ge 0\)</span>.</p>
+<figure class="align-center" id="threshold-triangle-fig">
+<img alt="../../../_images/82ebaec8f3b61e4034dbd96bbabf408f40cd08e88d990350c08f6d2298c6b59c.png" src="../../../_images/82ebaec8f3b61e4034dbd96bbabf408f40cd08e88d990350c08f6d2298c6b59c.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.5 </span><span class="caption-text">Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)</span><a class="headerlink" href="#threshold-triangle-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="isodata-method">
 <h4>ISOData Method<a class="headerlink" href="#isodata-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-isodata-fig">
+<img alt="../../../_images/13cd8f12bc5b24e7f9ca9acdf3500ed80e6d3c25e0d2eb954ab38c2b2b0590a6.png" src="../../../_images/13cd8f12bc5b24e7f9ca9acdf3500ed80e6d3c25e0d2eb954ab38c2b2b0590a6.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.6 </span><span class="caption-text">ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-isodata-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="otsu-s-method">
 <h4>OTSU’s Method<a class="headerlink" href="#otsu-s-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-otsu-fig">
+<img alt="../../../_images/fa181c775de666fbd3f5957ed26acc1e8e6a3c528812fbbce0d7d3d0fae67217.png" src="../../../_images/fa181c775de666fbd3f5957ed26acc1e8e6a3c528812fbbce0d7d3d0fae67217.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">OTSU’s Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-otsu-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="li-s-minimum-cross-entropy-method">
 <h4>Li’s Minimum Cross-Entropy Method<a class="headerlink" href="#li-s-minimum-cross-entropy-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-li-fig">
+<img alt="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" src="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Li’s Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-li-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="yen-s-multilevel-thresholding-method">
 <h4>Yen’s Multilevel Thresholding Method<a class="headerlink" href="#yen-s-multilevel-thresholding-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-yen-fig">
+<img alt="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" src="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Yen’s Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-yen-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="adaptive-mean-thresholding-method">
 <h4>Adaptive Mean Thresholding Method<a class="headerlink" href="#adaptive-mean-thresholding-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-local-mean-fig">
+<img alt="../../../_images/b873d260f8472869aef2852651c8b4944724bb65648c2da52adf911db5d8687c.png" src="../../../_images/b873d260f8472869aef2852651c8b4944724bb65648c2da52adf911db5d8687c.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-mean-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="adaptive-gaussian-thresholding-method">
 <h4>Adaptive Gaussian Thresholding Method<a class="headerlink" href="#adaptive-gaussian-thresholding-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-local-gaussian-fig">
+<img alt="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" src="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.11 </span><span class="caption-text">Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-gaussian-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 </section>
