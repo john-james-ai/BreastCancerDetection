@@ -52,7 +52,7 @@ import matplotlib.pyplot as plt
 from myst_nb import glue
 
 from bcd.preprocess.image.threshold import (ThresholdAnalyzer,
-    ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, ThresholdManual
+    ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, ThresholdManual, ThresholdYen
 )
 
 img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"
@@ -248,7 +248,6 @@ name: threshold_otsu_fig
 ---
 OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
 ```
-
 
 #### Li's Minimum Cross-Entropy Method
 
