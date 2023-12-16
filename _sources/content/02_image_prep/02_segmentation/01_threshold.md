@@ -163,6 +163,7 @@ Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl
 ```{table} Automated Threshold Methods
 :name: auto-thresh-tbl
 
+
 | Type            | Method                               | Author(s)                                            | Publication                                                  |
 |-----------------|--------------------------------------|------------------------------------------------------|--------------------------------------------------------------|
 | Histogram-Based | Triangle Method                      | Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,    | Automatic Measurement of Sister Chromatid Exchange Frequency |
@@ -172,6 +173,7 @@ Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl
 | Spatial-Based   | Yen's Multilevel Thresholding Method | Jui-Cheng Yen, Fu-Juay Chang and Shyang Chang (1995) | A new criterion for automatic multilevel thresholding        |
 | Local           | Adaptive Gaussian Method             | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |
 |                 | Adaptive Mean Method                 | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |                                       |
+
 ```
 
 In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize method assumptions, strengths, and limitations.
@@ -180,4 +182,3 @@ In the remaining sections, we will describe how each method works, visualize the
 
 Histogram-based methods use the distribution of pixel intensities to determine an appropriate threshold.
 
-##### Triangle Method
