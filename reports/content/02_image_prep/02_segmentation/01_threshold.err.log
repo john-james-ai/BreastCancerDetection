@@ -17,21 +17,21 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-analyzer = ThresholdAnalyzer()
-threshold = ThresholdTriangle()
-fig = analyzer.analyze(images=images)
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdYen()
+fig = analyzer.analyze(images=images, threshold=threshold)
 
-glue("threshold_triangle", fig)
+glue("threshold_yen", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mTypeError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[3], line 3[0m
-[1;32m      1[0m analyzer [38;5;241m=[39m ThresholdAnalyzer()
-[1;32m      2[0m threshold [38;5;241m=[39m ThresholdTriangle()
-[0;32m----> 3[0m fig [38;5;241m=[39m [43manalyzer[49m[38;5;241;43m.[39;49m[43manalyze[49m[43m([49m[43mimages[49m[38;5;241;43m=[39;49m[43mimages[49m[43m)[49m
-[1;32m      5[0m glue([38;5;124m"[39m[38;5;124mthreshold_triangle[39m[38;5;124m"[39m, fig)
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[7], line 2[0m
+[1;32m      1[0m analyzer [38;5;241m=[39m ThresholdAnalyzer(show_histograms[38;5;241m=[39m[38;5;28;01mFalse[39;00m)
+[0;32m----> 2[0m threshold [38;5;241m=[39m [43mThresholdYen[49m()
+[1;32m      3[0m fig [38;5;241m=[39m analyzer[38;5;241m.[39manalyze(images[38;5;241m=[39mimages, threshold[38;5;241m=[39mthreshold)
+[1;32m      5[0m glue([38;5;124m"[39m[38;5;124mthreshold_yen[39m[38;5;124m"[39m, fig)
 
-[0;31mTypeError[0m: ThresholdAnalyzer.analyze() missing 1 required positional argument: 'threshold'
-TypeError: ThresholdAnalyzer.analyze() missing 1 required positional argument: 'threshold'
+[0;31mNameError[0m: name 'ThresholdYen' is not defined
+NameError: name 'ThresholdYen' is not defined
 

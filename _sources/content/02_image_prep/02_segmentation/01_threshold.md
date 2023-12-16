@@ -196,7 +196,7 @@ Triangle Thresholding Method
 
 analyzer = ThresholdAnalyzer()
 threshold = ThresholdTriangle()
-fig = analyzer.analyze(images=images)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_triangle", fig)
 ```
@@ -216,7 +216,7 @@ Triangle Threshold Segmentation Method. (a) through (d) are the original images,
 
 analyzer = ThresholdAnalyzer()
 threshold = ThresholdISOData()
-fig = analyzer.analyze(images=images)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_isodata", fig)
 ```
@@ -236,7 +236,7 @@ ISOData Threshold Segmentation Method. (a) through (d) are the original images, 
 
 analyzer = ThresholdAnalyzer()
 threshold = ThresholdOTSU()
-fig = analyzer.analyze(images=images)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_otsu", fig)
 ```
@@ -257,7 +257,7 @@ OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (
 
 analyzer = ThresholdAnalyzer(show_histograms=False)
 threshold = ThresholdLi()
-fig = analyzer.analyze(images=images)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_li", fig)
 ```
@@ -277,7 +277,7 @@ Li's Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are th
 
 analyzer = ThresholdAnalyzer(show_histograms=False)
 threshold = ThresholdYen()
-fig = analyzer.analyze(images=images)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_yen", fig)
 ```
@@ -297,7 +297,7 @@ Yen's Multilevel Threshold Segmentation Method. (a) through (d) are the original
 
 analyzer = ThresholdAnalyzer(show_histograms=False)
 threshold = ThresholdAdaptiveMean()
-fig = analyzer.analyze(images=images)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_local_mean", fig)
 ```
@@ -317,7 +317,7 @@ Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original im
 
 analyzer = ThresholdAnalyzer(show_histograms=False)
 threshold = ThresholdAdaptiveGaussian()
-fig = analyzer.analyze(images=images)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_local_gaussian", fig)
 ```
