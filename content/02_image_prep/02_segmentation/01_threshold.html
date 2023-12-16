@@ -470,8 +470,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-threshold-segmentation">3.1.1. Global Threshold Segmentation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.2. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithm-space">Automated Thresholding Algorithm Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
@@ -499,18 +498,15 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="threshold-based-segmentation">
 <h1><span class="section-number">3.1. </span>Threshold-Based Segmentation<a class="headerlink" href="#threshold-based-segmentation" title="Permalink to this heading">#</a></h1>
 <p>Our first step in the segmentation process is to separate the foreground of the mammogram containing the breast region of interest (ROI) from the background.  The result of this <em>binarization</em> process is a binary image or mask that can be used to isolate ROIs, label structures within the image, detect edges and contours, classify abnormalities, and perform other tasks across the image analysis workflow.</p>
-<p>This <em>binarization</em> of the image can be accomplished using a range of statistical approaches and sophisticated machine-learning classification methods that group pixels of an image into different classes. However, the simplest approach would be to set a pixel value cut-off point, or <em>threshold</em>, that separates groups of pixel intensities from each other. From a grayscale mammogram, a binary image or mask is created whereby all pixel values less than or equal to the threshold are set to 0 and all other pixel values are set to 1  <a class="footnote-reference brackets" href="#binary" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
-<p>Image binarization using pixel intensity thresholds is suitable in digital mammography where pixel intensity is the parameter that most directly relates to the spatial characteristics of the structures within a mammogram. Hence, binarization using threshold-based segmentation is often a critical first step in many biomedical image analysis workflows.</p>
-<p>The taxonomy of threshold-based segmentation techniques can be roughly characterized as global threshold segmentation and adaptive local threshold segmentation.</p>
-<section id="global-threshold-segmentation">
-<h2><span class="section-number">3.1.1. </span>Global Threshold Segmentation<a class="headerlink" href="#global-threshold-segmentation" title="Permalink to this heading">#</a></h2>
-<p>Global threshold segmentation applies a single designated or automatically selected threshold value to the entire image.  Specifically, let <span class="math notranslate nohighlight">\(I\)</span> be the input image with height <span class="math notranslate nohighlight">\(H\)</span> and width <span class="math notranslate nohighlight">\(W\)</span> pixels, and that <span class="math notranslate nohighlight">\(I_{x,y}\)</span> represents the gray value of row <span class="math notranslate nohighlight">\(x\)</span> and column <span class="math notranslate nohighlight">\(y\)</span> of <span class="math notranslate nohighlight">\(I\)</span>, such that <span class="math notranslate nohighlight">\(0 \le x &lt; H, 0 \le y &lt; W\)</span>. Then, <span class="math notranslate nohighlight">\(B_{x,y}\)</span> represents the binary value in row <span class="math notranslate nohighlight">\(x\)</span> and column <span class="math notranslate nohighlight">\(y\)</span> of binary mask <span class="math notranslate nohighlight">\(B\)</span>, and is given by:</p>
+<p>Binarization of the image can be accomplished using a range of statistical approaches and sophisticated machine-learning classification methods that group the pixels of an image into different classes. However, the simplest approach would be to set a pixel value cut-off point, or <em>threshold</em>, that separates groups of pixel intensities from each other.</p>
+<p>Given a gray-level digital mammogram <span class="math notranslate nohighlight">\(I\)</span>, that can take <span class="math notranslate nohighlight">\(K\)</span> possible gray levels <span class="math notranslate nohighlight">\(0,1,2,...,K-1\)</span>, we define an integer threshold <span class="math notranslate nohighlight">\(T \in {0,1,2,...,K-1}\)</span>. The process of thresholding simply compares each pixel value <span class="math notranslate nohighlight">\(I(n)\)</span> in <span class="math notranslate nohighlight">\(I\)</span> to the threshold <span class="math notranslate nohighlight">\(T\)</span> to determine the corresponding pixel value <span class="math notranslate nohighlight">\(B(n)\)</span> in an output binary image <span class="math notranslate nohighlight">\(B\)</span> as follows:</p>
 <div class="math notranslate nohighlight" id="equation-global-threshold">
-<span class="eqno">(3.1)<a class="headerlink" href="#equation-global-threshold" title="Permalink to this equation">#</a></span>\[\begin{split}B_{x,y} = \begin{cases}
-1 &amp; if I_{x,y} &gt; T \\
-0 &amp; if I_{x,y} \le T \\
+<span class="eqno">(3.1)<a class="headerlink" href="#equation-global-threshold" title="Permalink to this equation">#</a></span>\[\begin{split}B(n) = \begin{cases}
+1 &amp; \text{if } I(n) &gt; T \\
+0 &amp; \text{if } I(n) \le T \\
 \end{cases}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(T\)</span> is a global threshold.</p>
+<p>In other words, the pixel value in the binary image is (typically) set to 0 if the corresponding pixel value in the input image is less than or equal to the threshold. Otherwise, the corresponding binary image pixel value is set to 1. In practice; however, many software packages create gray-scale binary images with values of 0 and 255 for visualization purposes. In such cases, a segmented image is produced by applying a bitwise_and operation on the binary and input image.</p>
+<p>Image binarization using pixel intensity thresholds is justified in digital mammography where pixel intensity is the parameter that most directly relates to the spatial characteristics of the structures within a mammogram. Hence, binarization using threshold-based segmentation is often a critical first step in many digital mammography image analysis and preprocessing workflows.</p>
 <p>To illustrate, let’s create some binary masks for our test images using a manually set threshold <span class="math notranslate nohighlight">\(T=10\)</span>.</p>
 <figure class="align-center" id="threshold-manual-10-fig">
 <img alt="../../../_images/cd8c66e040fbd0974dd89c8987f6d8659fc87772dc76eac19ade60371b2809b3.png" src="../../../_images/cd8c66e040fbd0974dd89c8987f6d8659fc87772dc76eac19ade60371b2809b3.png" />
@@ -540,26 +536,25 @@ document.write(`
 <p>…rant in 3,…2,…</p>
 <p>Selecting thresholds manually is tedious, time-consuming, and a huge source of user bias. It is based upon human perception of what information should be extracted from the image, leading to high intra- and inter-user variability; further compounded by the inherent variability in digital mammography. One fixed threshold will not extract similar features from different images. Manual thresholding has little to no reproducibility and it is incompatible with automatic, image-driven thresholding that is based on image-intrinsic properties and not on subjective real-time user decisions.</p>
 <p>So, what is the alternative?</p>
-</section>
 <section id="automated-thresholding">
-<h2><span class="section-number">3.1.2. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.1.1. </span>Automated Thresholding<a class="headerlink" href="#automated-thresholding" title="Permalink to this heading">#</a></h2>
 <p>Image processing literature is replete with automatic thresholding algorithms of various types, each based upon a vast array of image-intrinsic properties.  Automated thresholding has several benefits vis-à-vis manual thresholding.</p>
 <ul class="simple">
 <li><p><strong>Bias-Free Thresholding</strong>: No user bias is introduced during <em>thresholding</em>,</p></li>
-<li><p><strong>Objectivity</strong>: Thresholds are objectively determined and image-specific,</p></li>
-<li><p><strong>Reproducibility</strong>: They are reproducible, in that a parameterized algorithm will always produce the same binarization result for a given image,</p></li>
+<li><p><strong>Objective</strong>: Thresholds are objectively determined and image-specific,</p></li>
+<li><p><strong>Reproducible</strong>: They are reproducible, in that a parameterized algorithm will always produce the same binarization result for a given image,</p></li>
 <li><p><strong>Efficient</strong>: They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.</p></li>
 </ul>
 <p>Notwithstanding, automated thresholding presents certain challenges for the practitioner.</p>
 <ul class="simple">
-<li><p><strong>No Free Lunch</strong>: <span id="id2">[<a class="reference internal" href="../../99_references.html#id362" title="D.H. Wolpert and W.G. Macready. No free lunch theorems for optimization. IEEE Transactions on Evolutionary Computation, 1(1):67–82, April 1997. URL: http://ieeexplore.ieee.org/document/585893/ (visited on 2023-12-15), doi:10.1109/4235.585893.">32</a>]</span>: There is no universally superior automated thresholding algorithm that performs equally well for all biomedical images, modalities, contexts, and needs.</p></li>
+<li><p><strong>No Free Lunch</strong> <span id="id1">[<a class="reference internal" href="../../99_references.html#id362" title="D.H. Wolpert and W.G. Macready. No free lunch theorems for optimization. IEEE Transactions on Evolutionary Computation, 1(1):67–82, April 1997. URL: http://ieeexplore.ieee.org/document/585893/ (visited on 2023-12-15), doi:10.1109/4235.585893.">32</a>]</span>: There is no universally superior automated thresholding algorithm that performs equally well for all biomedical images, modalities, contexts, and needs.</p></li>
 <li><p><strong>Algorithm Selection Bias</strong>: Algorithm selection is a subjective user decision based upon experience, human perception, and prior expectations concerning the information to be extracted from an image. For instance, an algorithm selected by the current expert pathologist may eliminate a structure later determined to be a critical indicator.</p></li>
 <li><p><strong>Prior Knowledge</strong>: Practitioners may lack the domain expertise required to effectively characterize the performance of the algorithms under evaluation. Algorithm selection is often based upon a priori expectation of visual features, structures, and information to be extracted during the segmentation process.</p></li>
 </ul>
 <p>Selecting an appropriate automated thresholding algorithm from the growing space of candidate solutions is an increasingly challenging endeavor, guided by the intended use of the extracted information, the questions to be answered, the quality, format, and modality of the imaging content, and a working understanding of candidate algorithm performance characteristics.</p>
 <section id="automated-thresholding-algorithm-space">
 <h3>Automated Thresholding Algorithm Space<a class="headerlink" href="#automated-thresholding-algorithm-space" title="Permalink to this heading">#</a></h3>
-<p>Sezgin and Sankur <span id="id3">[<a class="reference internal" href="../../99_references.html#id367" title="Bu¨lent Sankur. Survey over image thresholding techniques and quantitative performance evaluation. Journal of Electronic Imaging, 13(1):146, January 2004. URL: http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315 (visited on 2023-12-15), doi:10.1117/1.1631315.">33</a>]</span> cast the space of automated thresholding techniques as follows:</p>
+<p>Sezgin and Sankur <span id="id2">[<a class="reference internal" href="../../99_references.html#id367" title="Bu¨lent Sankur. Survey over image thresholding techniques and quantitative performance evaluation. Journal of Electronic Imaging, 13(1):146, January 2004. URL: http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315 (visited on 2023-12-15), doi:10.1117/1.1631315.">33</a>]</span> cast the space of automated thresholding techniques as follows:</p>
 <ul class="simple">
 <li><p><strong>Histogram shape-based methods</strong> that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.</p></li>
 <li><p><strong>Clustering-based methods</strong> cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.</p></li>
@@ -568,11 +563,11 @@ document.write(`
 <li><p><strong>The spatial methods</strong> use higher-order probability distribution and/or correlation between pixels</p></li>
 <li><p><strong>Local methods</strong> adapt the threshold value on each pixel to the local image characteristics.</p></li>
 </ul>
-<p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method <span id="id4">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">34</a>]</span> can be categorized as both a histogram shape-based method and a clustering-based method.</p>
+<p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method <span id="id3">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">34</a>]</span> can be categorized as both a histogram shape-based method and a clustering-based method.</p>
 </section>
 <section id="automated-threshold-methods">
 <h3>Automated Threshold Methods<a class="headerlink" href="#automated-threshold-methods" title="Permalink to this heading">#</a></h3>
-<p>Our candidate space will be comprised of the following (<a class="reference internal" href="#auto-thresh-tbl"><span class="std std-numref">Table 3.1</span></a>) histogram-based, entropy-based, and local-based threshold methods.</p>
+<p>Our candidate space will be comprised of the following (<a class="reference internal" href="#auto-thresh-tbl"><span class="std std-numref">Table 3.1</span></a>) histogram-based, entropy-based, spatial-based and local-based threshold methods.</p>
 <table class="table" id="auto-thresh-tbl">
 <caption><span class="caption-number">Table 3.1 </span><span class="caption-text">Automated Threshold Methods</span><a class="headerlink" href="#auto-thresh-tbl" title="Permalink to this table">#</a></caption>
 <thead>
@@ -620,82 +615,35 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize each method’s assumptions, strengths, and limitations.</p>
+<p>Next, we review how each method works, state any assumptions, characterize strengths and limitations, and visualize and assess the segmentation results for selected cases. Finally, an automated thresholding algorithm will be selected based on relative segmentation performance on our test cases.</p>
 <section id="triangle-method">
 <h4>Triangle Method<a class="headerlink" href="#triangle-method" title="Permalink to this heading">#</a></h4>
-<p>The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes <span id="id5">[<a class="reference internal" href="../../99_references.html#id370" title="G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. Journal of Histochemistry &amp; Cytochemistry, 25(7):741–753, July 1977. URL: http://journals.sagepub.com/doi/10.1177/25.7.70454 (visited on 2023-12-15), doi:10.1177/25.7.70454.">35</a>]</span>. It is particularly well suited for images that have pixel intensity distribution dominated by a single peak and a long tail.</p>
+<p>The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes <span id="id4">[<a class="reference internal" href="../../99_references.html#id370" title="G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. Journal of Histochemistry &amp; Cytochemistry, 25(7):741–753, July 1977. URL: http://journals.sagepub.com/doi/10.1177/25.7.70454 (visited on 2023-12-15), doi:10.1177/25.7.70454.">35</a>]</span>. It is particularly well suited for images that have a pixel intensity distribution dominated by a single peak and a long tail.</p>
 <figure class="align-default" id="triangle">
 <img alt="../../../_images/triangle_zack.png" src="../../../_images/triangle_zack.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Triangle Thresholding Method</span><a class="headerlink" href="#triangle" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#triangle"><span class="std std-numref">Fig. 3.4</span></a> was taken from the original paper <span id="id6">[<a class="reference internal" href="../../99_references.html#id370" title="G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. Journal of Histochemistry &amp; Cytochemistry, 25(7):741–753, July 1977. URL: http://journals.sagepub.com/doi/10.1177/25.7.70454 (visited on 2023-12-15), doi:10.1177/25.7.70454.">35</a>]</span> and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. The threshold at point A at the base of the histogram peak is located where the length of the line drawn perpendicular from the hypotenuse to point A is maximized.</p>
-<figure class="align-center" id="threshold-triangle-fig">
-<img alt="../../../_images/0a67fac6fb2f3740599072dc190d27b7317d51e00384a4b6381ff065f2962d2e.png" src="../../../_images/0a67fac6fb2f3740599072dc190d27b7317d51e00384a4b6381ff065f2962d2e.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.5 </span><span class="caption-text">Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)</span><a class="headerlink" href="#threshold-triangle-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<p><a class="reference internal" href="#triangle"><span class="std std-numref">Fig. 3.4</span></a> was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. A line is drawn perpendicular from the hypotenuse of the triangle to the histogram such that the length between the hypotenuse and the histogram is maximized. Point A is located at the base of the selected histogram bin and the threshold is set to A <span class="math notranslate nohighlight">\(+\delta \ge 0\)</span>.</p>
 </section>
 <section id="isodata-method">
 <h4>ISOData Method<a class="headerlink" href="#isodata-method" title="Permalink to this heading">#</a></h4>
-<figure class="align-center" id="threshold-isodata-fig">
-<img alt="../../../_images/13cd8f12bc5b24e7f9ca9acdf3500ed80e6d3c25e0d2eb954ab38c2b2b0590a6.png" src="../../../_images/13cd8f12bc5b24e7f9ca9acdf3500ed80e6d3c25e0d2eb954ab38c2b2b0590a6.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.6 </span><span class="caption-text">ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-isodata-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="otsu-s-method">
 <h4>OTSU’s Method<a class="headerlink" href="#otsu-s-method" title="Permalink to this heading">#</a></h4>
-<figure class="align-center" id="threshold-otsu-fig">
-<img alt="../../../_images/fa181c775de666fbd3f5957ed26acc1e8e6a3c528812fbbce0d7d3d0fae67217.png" src="../../../_images/fa181c775de666fbd3f5957ed26acc1e8e6a3c528812fbbce0d7d3d0fae67217.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">OTSU’s Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-otsu-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="li-s-minimum-cross-entropy-method">
 <h4>Li’s Minimum Cross-Entropy Method<a class="headerlink" href="#li-s-minimum-cross-entropy-method" title="Permalink to this heading">#</a></h4>
-<figure class="align-center" id="threshold-li-fig">
-<img alt="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" src="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Li’s Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-li-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="yen-s-multilevel-thresholding-method">
 <h4>Yen’s Multilevel Thresholding Method<a class="headerlink" href="#yen-s-multilevel-thresholding-method" title="Permalink to this heading">#</a></h4>
-<figure class="align-center" id="threshold-yen-fig">
-<img alt="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" src="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Yen’s Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-yen-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="adaptive-mean-thresholding-method">
 <h4>Adaptive Mean Thresholding Method<a class="headerlink" href="#adaptive-mean-thresholding-method" title="Permalink to this heading">#</a></h4>
-<figure class="align-center" id="threshold-local-mean-fig">
-<img alt="../../../_images/b873d260f8472869aef2852651c8b4944724bb65648c2da52adf911db5d8687c.png" src="../../../_images/b873d260f8472869aef2852651c8b4944724bb65648c2da52adf911db5d8687c.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-mean-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
 </section>
 <section id="adaptive-gaussian-thresholding-method">
 <h4>Adaptive Gaussian Thresholding Method<a class="headerlink" href="#adaptive-gaussian-thresholding-method" title="Permalink to this heading">#</a></h4>
-<figure class="align-center" id="threshold-local-gaussian-fig">
-<img alt="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" src="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.11 </span><span class="caption-text">Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-gaussian-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<hr class="footnotes docutils" />
-<aside class="footnote brackets" id="binary" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>WLOG some software packages equivalently set pixel values above the threshold to 255, instead of 1. Converting between these representations can be achieved via normalization of the pixel values.</p>
-</aside>
 </section>
 </section>
 </section>
@@ -768,8 +716,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-threshold-segmentation">3.1.1. Global Threshold Segmentation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.2. Automated Thresholding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.1. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithm-space">Automated Thresholding Algorithm Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>

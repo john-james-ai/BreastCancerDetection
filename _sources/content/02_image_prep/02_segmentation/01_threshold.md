@@ -14,27 +14,21 @@ kernelspec:
 
 Our first step in the segmentation process is to separate the foreground of the mammogram containing the breast region of interest (ROI) from the background.  The result of this *binarization* process is a binary image or mask that can be used to isolate ROIs, label structures within the image, detect edges and contours, classify abnormalities, and perform other tasks across the image analysis workflow.
 
-This *binarization* of the image can be accomplished using a range of statistical approaches and sophisticated machine-learning classification methods that group pixels of an image into different classes. However, the simplest approach would be to set a pixel value cut-off point, or *threshold*, that separates groups of pixel intensities from each other. From a grayscale mammogram, a binary image or mask is created whereby all pixel values less than or equal to the threshold are set to 0 and all other pixel values are set to 1  [^binary].
+Binarization of the image can be accomplished using a range of statistical approaches and sophisticated machine-learning classification methods that group the pixels of an image into different classes. However, the simplest approach would be to set a pixel value cut-off point, or *threshold*, that separates groups of pixel intensities from each other.
 
-[^binary]: WLOG some software packages equivalently set pixel values above the threshold to 255, instead of 1. Converting between these representations can be achieved via normalization of the pixel values.
-
-Image binarization using pixel intensity thresholds is suitable in digital mammography where pixel intensity is the parameter that most directly relates to the spatial characteristics of the structures within a mammogram. Hence, binarization using threshold-based segmentation is often a critical first step in many biomedical image analysis workflows.
-
-The taxonomy of threshold-based segmentation techniques can be roughly characterized as global threshold segmentation and adaptive local threshold segmentation.
-
-## Global Threshold Segmentation
-
-Global threshold segmentation applies a single designated or automatically selected threshold value to the entire image.  Specifically, let $I$ be the input image with height $H$ and width $W$ pixels, and that $I_{x,y}$ represents the gray value of row $x$ and column $y$ of $I$, such that $0 \le x < H, 0 \le y < W$. Then, $B_{x,y}$ represents the binary value in row $x$ and column $y$ of binary mask $B$, and is given by:
+Given a gray-level digital mammogram $I$, that can take $K$ possible gray levels $0,1,2,...,K-1$, we define an integer threshold $T \in {0,1,2,...,K-1}$. The process of thresholding simply compares each pixel value $I(n)$ in $I$ to the threshold $T$ to determine the corresponding pixel value $B(n)$ in an output binary image $B$ as follows:
 
 ```{math}
 :label: global_threshold
-B_{x,y} = \begin{cases}
-1 & if I_{x,y} > T \\
-0 & if I_{x,y} \le T \\
+B(n) = \begin{cases}
+1 & \text{if } I(n) > T \\
+0 & \text{if } I(n) \le T \\
 \end{cases}
 ```
 
-where $T$ is a global threshold.
+In other words, the pixel value in the binary image is (typically) set to 0 if the corresponding pixel value in the input image is less than or equal to the threshold. Otherwise, the corresponding binary image pixel value is set to 1. In practice; however, many software packages create gray-scale binary images with values of 0 and 255 for visualization purposes. In such cases, a segmented image is produced by applying a bitwise_and operation on the binary and input image.
+
+Image binarization using pixel intensity thresholds is justified in digital mammography where pixel intensity is the parameter that most directly relates to the spatial characteristics of the structures within a mammogram. Hence, binarization using threshold-based segmentation is often a critical first step in many digital mammography image analysis and preprocessing workflows.
 
 To illustrate, let’s create some binary masks for our test images using a manually set threshold $T=10$.
 
@@ -131,13 +125,13 @@ So, what is the alternative?
 Image processing literature is replete with automatic thresholding algorithms of various types, each based upon a vast array of image-intrinsic properties.  Automated thresholding has several benefits vis-à-vis manual thresholding.
 
 - **Bias-Free Thresholding**: No user bias is introduced during *thresholding*,
-- **Objectivity**: Thresholds are objectively determined and image-specific,
-- **Reproducibility**: They are reproducible, in that a parameterized algorithm will always produce the same binarization result for a given image,
+- **Objective**: Thresholds are objectively determined and image-specific,
+- **Reproducible**: They are reproducible, in that a parameterized algorithm will always produce the same binarization result for a given image,
 - **Efficient**: They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.
 
 Notwithstanding, automated thresholding presents certain challenges for the practitioner.
 
-- **No Free Lunch**: {cite}`wolpertNoFreeLunch1997a`: There is no universally superior automated thresholding algorithm that performs equally well for all biomedical images, modalities, contexts, and needs.
+- **No Free Lunch** {cite}`wolpertNoFreeLunch1997a`: There is no universally superior automated thresholding algorithm that performs equally well for all biomedical images, modalities, contexts, and needs.
 - **Algorithm Selection Bias**: Algorithm selection is a subjective user decision based upon experience, human perception, and prior expectations concerning the information to be extracted from an image. For instance, an algorithm selected by the current expert pathologist may eliminate a structure later determined to be a critical indicator.
 - **Prior Knowledge**: Practitioners may lack the domain expertise required to effectively characterize the performance of the algorithms under evaluation. Algorithm selection is often based upon a priori expectation of visual features, structures, and information to be extracted during the segmentation process.
 
@@ -158,7 +152,7 @@ For the taxonomist, Sezgin’s framework is not mutually exclusive and collectiv
 
 ### Automated Threshold Methods
 
-Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl`) histogram-based, entropy-based, and local-based threshold methods.
+Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl`) histogram-based, entropy-based, spatial-based and local-based threshold methods.
 
 ```{table} Automated Threshold Methods
 :name: auto-thresh-tbl
@@ -176,11 +170,11 @@ Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl
 
 ```
 
-In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize each method's assumptions, strengths, and limitations.
+Next, we review how each method works, state any assumptions, characterize strengths and limitations, and visualize and assess the segmentation results for selected cases. Finally, an automated thresholding algorithm will be selected based on relative segmentation performance on our test cases.
 
 #### Triangle Method
 
-The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`. It is particularly well suited for images that have pixel intensity distribution dominated by a single peak and a long tail.
+The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`. It is particularly well suited for images that have a pixel intensity distribution dominated by a single peak and a long tail.
 
 ```{figure} ../../../figures/triangle_zack.png
 ---
@@ -189,12 +183,12 @@ name: triangle
 Triangle Thresholding Method
 ```
 
-{numref}`triangle` was taken from the original paper {cite}`zackAutomaticMeasurementSister1977` and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. The threshold at point A at the base of the histogram peak is located where the length of the line drawn perpendicular from the hypotenuse to point A is maximized.
+{numref}`triangle` was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. A line is drawn perpendicular from the hypotenuse of the triangle to the histogram such that the length between the hypotenuse and the histogram is maximized. Point A is located at the base of the selected histogram bin and the threshold is set to A $+\delta \ge 0$.
 
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
 
-analyzer = ThresholdAnalyzer()
+analyzer = ThresholdTriangleAnalyzer()
 threshold = ThresholdTriangle()
 fig = analyzer.analyze(images=images, threshold=threshold)
 
