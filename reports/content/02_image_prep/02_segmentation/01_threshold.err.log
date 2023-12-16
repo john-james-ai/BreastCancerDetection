@@ -43,20 +43,22 @@ img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
 
 images = (img1,img2,img3,img4)
 
-analysis = ThresholdManual(threshold=10)
-fig = analysis.analyze(images=images)
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdManual(threshold=10)
+fig = analysis.analyze(images=images, threshold=threshold)
 
 glue("threshold_manual_10", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mAttributeError[0m                            Traceback (most recent call last)
-Cell [0;32mIn[1], line 28[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[1], line 27[0m
+[1;32m     23[0m img4 [38;5;241m=[39m cv2[38;5;241m.[39mimread(img4, cv2[38;5;241m.[39mIMREAD_GRAYSCALE)
 [1;32m     25[0m images [38;5;241m=[39m (img1,img2,img3,img4)
-[1;32m     27[0m analysis [38;5;241m=[39m ThresholdManual(threshold[38;5;241m=[39m[38;5;241m10[39m)
-[0;32m---> 28[0m fig [38;5;241m=[39m [43manalysis[49m[38;5;241;43m.[39;49m[43manalyze[49m(images[38;5;241m=[39mimages)
-[1;32m     30[0m glue([38;5;124m"[39m[38;5;124mthreshold_manual_10[39m[38;5;124m"[39m, fig)
+[0;32m---> 27[0m analyzer [38;5;241m=[39m [43mThresholdAnalyzer[49m()
+[1;32m     28[0m threshold [38;5;241m=[39m ThresholdManual(threshold[38;5;241m=[39m[38;5;241m10[39m)
+[1;32m     29[0m fig [38;5;241m=[39m analysis[38;5;241m.[39manalyze(images[38;5;241m=[39mimages, threshold[38;5;241m=[39mthreshold)
 
-[0;31mAttributeError[0m: 'ThresholdManual' object has no attribute 'analyze'
-AttributeError: 'ThresholdManual' object has no attribute 'analyze'
+[0;31mNameError[0m: name 'ThresholdAnalyzer' is not defined
+NameError: name 'ThresholdAnalyzer' is not defined
 
