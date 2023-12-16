@@ -69,7 +69,7 @@ images = (img1,img2,img3,img4)
 
 analyzer = ThresholdAnalyzer()
 threshold = ThresholdManual(threshold=10)
-fig = analysis.analyze(images=images, threshold=threshold)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_manual_10", fig)
 ```
@@ -91,7 +91,7 @@ Let’s examine the effect of increasing the threshold to $T=100$.
 
 analyzer = ThresholdAnalyzer()
 threshold = ThresholdManual(threshold=100)
-fig = analysis.analyze(images=images, threshold=threshold)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_manual_100", fig)
 ```
