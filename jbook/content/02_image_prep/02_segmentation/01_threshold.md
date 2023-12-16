@@ -51,8 +51,8 @@ import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
 
-from bcd.preprocess.image.analysis.threshold import (
-    ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, TryAllThresholds, ThresholdManual
+from bcd.preprocess.image.threshold import (ThresholdAnalyzer,
+    ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, ThresholdManual, ThresholdYen
 )
 
 img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"
@@ -67,8 +67,9 @@ img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
 
 images = (img1,img2,img3,img4)
 
-analysis = ThresholdManual(threshold=10)
-fig = analysis.analyze(images=images)
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdManual(threshold=10)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_manual_10", fig)
 ```
@@ -88,8 +89,9 @@ Let’s examine the effect of increasing the threshold to $T=100$.
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
 
-analysis = ThresholdManual(threshold=100)
-fig = analysis.analyze(images=images)
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdManual(threshold=100)
+fig = analyzer.analyze(images=images, threshold=threshold)
 
 glue("threshold_manual_100", fig)
 ```
@@ -118,44 +120,211 @@ So, what are the principled ways by which an appropriate threshold is selected? 
 Manual thresholding is inefficient, irreproducible, and a huge source of user bias.
 `````
 
-...rant inbound in 3,…2,…
+...rant in 3,…2,…
 
 Selecting thresholds manually is tedious, time-consuming, and a huge source of user bias. It is based upon human perception of what information should be extracted from the image, leading to high intra- and inter-user variability; further compounded by the inherent variability in digital mammography. One fixed threshold will not extract similar features from different images. Manual thresholding has little to no reproducibility and it is incompatible with automatic, image-driven thresholding that is based on image-intrinsic properties and not on subjective real-time user decisions.
 
 So, what is the alternative?
 
-## Automatic Thresholding
+## Automated Thresholding
 
-Image processing literature is replete with automatic thresholding algorithms that are based on a vast array of image-intrinsic properties. What are the benefits of automatic thresholding?
+Image processing literature is replete with automatic thresholding algorithms of various types, each based upon a vast array of image-intrinsic properties.  Automated thresholding has several benefits vis-à-vis manual thresholding.
 
-- No user bias is introduced during *thresholding*,
-- Thresholds are objectively determined and image-specific,
-- They are reproducible, in that an algorithm will always produce the same binarization result for a given image,
-- They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.
+- **Bias-Free Thresholding**: No user bias is introduced during *thresholding*,
+- **Objectivity**: Thresholds are objectively determined and image-specific,
+- **Reproducibility**: They are reproducible, in that a parameterized algorithm will always produce the same binarization result for a given image,
+- **Efficient**: They are fast, computationally efficient, and easily automated in image analysis and preprocessing workflows.
 
-Still, automatic thresholding algorithms are not a universal, purely objective, and bias-free remedy to the threshold segmentation challenges in biomedical imaging and other applications.
+Notwithstanding, automated thresholding presents certain challenges for the practitioner.
 
-### The Universally Superior Automatic Thresholding Algorithm
+- **No Free Lunch**: {cite}`wolpertNoFreeLunch1997a`: There is no universally superior automated thresholding algorithm that performs equally well for all biomedical images, modalities, contexts, and needs.
+- **Algorithm Selection Bias**: Algorithm selection is a subjective user decision based upon experience, human perception, and prior expectations concerning the information to be extracted from an image. For instance, an algorithm selected by the current expert pathologist may eliminate a structure later determined to be a critical indicator.
+- **Prior Knowledge**: Practitioners may lack the domain expertise required to effectively characterize the performance of the algorithms under evaluation. Algorithm selection is often based upon a priori expectation of visual features, structures, and information to be extracted during the segmentation process.
 
-Selecting an automatic thresholding algorithm from among the space of candidate algorithms can be described in terms of Wolpert and Macreary’s {eq}`lunch`.
+Selecting an appropriate automated thresholding algorithm from the growing space of candidate solutions is an increasingly challenging endeavor, guided by the intended use of the extracted information, the questions to be answered, the quality, format, and modality of the imaging content, and a working understanding of candidate algorithm performance characteristics.
 
-```{math}
-:label: lunch
-\sum_f P(d^y_m|f,m,a_1) = \sum_f P(d^y_m|f,m,a_2),
+### Automated Thresholding Algorithm Space
+
+Sezgin and Sankur {cite}`sankurSurveyImageThresholding2004` cast the space of automated thresholding techniques as follows:
+
+- **Histogram shape-based methods** that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.
+- **Clustering-based methods** cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.
+- **Entropy-based methods** use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.
+- **Object attribute-based methods** that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.
+- **The spatial methods** use higher-order probability distribution and/or correlation between pixels
+- **Local methods** adapt the threshold value on each pixel to the local image characteristics.
+
+For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}`otsuThresholdSelectionMethod1979` can be categorized as both a histogram shape-based method and a clustering-based method.
+
+### Automated Threshold Methods
+
+Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl`) histogram-based, entropy-based, and local-based threshold methods.
+
+```{table} Automated Threshold Methods
+:name: auto-thresh-tbl
+
+
+| Type            | Method                               | Author(s)                                            | Publication                                                  |
+|-----------------|--------------------------------------|------------------------------------------------------|--------------------------------------------------------------|
+| Histogram-Based | Triangle Method                      | Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,    | Automatic Measurement of Sister Chromatid Exchange Frequency |
+|                 | ISOData Method                       | Ridler, TW & Calvard, S (1978)                       | Picture thresholding using an iterative selection method     |
+|                 | Otsu's Method                        | Nobuyuki Otsu (1979)                                 | A threshold selection method from gray-level histograms      |
+| Entropy-Based   | Li's Minimum Cross Entropy Method    | Li C.H. and Lee C.K. (1993)                          | Minimum Cross Entropy Thresholding                           |
+| Spatial-Based   | Yen's Multilevel Thresholding Method | Jui-Cheng Yen, Fu-Juay Chang and Shyang Chang (1995) | A new criterion for automatic multilevel thresholding        |
+| Local           | Adaptive Gaussian Method             | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |
+|                 | Adaptive Mean Method                 | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |                                       |
+
 ```
 
-{eq}`lunch` was derived within the context of machine learning algorithms {cite}`wolpertNoFreeLunch1997a`, and classes of objective functions, and states that for any pair of algorithms, the probability distribution of results over the domain of objective functions is independent of the algorithm and identically distributed. In other words, “any two algorithms are equivalent when their performance is averaged across all possible problems.”{cite}`wolpertCoevolutionaryFreeLunches2005`
+In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize each method's assumptions, strengths, and limitations.
 
-The so-called “No Free Lunch Theorem for Optimization #1” (NFL) {cite}`wolpertNoFreeLunch1997a` explicitly demonstrates, under certain conditions [^nfl], that no algorithm performs well on all classes of problems within the domain. For instance, an automatic thresholding algorithm that performs well on average for mammograms with bimodal pixel value distributions, necessarily does worse on average over the remaining classes and modalities – a problem widely documented in literature surveys {cite}`al-bayatiMammogramImagesThresholding2013` {cite}`sankurSurveyImageThresholding2004`  {cite}`niuResearchAnalysisThreshold2019`.
+#### Triangle Method
 
-[^nfl]: NLF holds if and only if the distribution on objective functions is invariant under the permutation of the space of candidate algorithms{cite}`Streeter2003TwoBC`  {cite}`englishNoMoreLunch2004`. Although this condition is theoretically possible, some have argued that it doesn’t necessarily hold in practice.
+The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`. It is particularly well suited for images that have pixel intensity distribution dominated by a single peak and a long tail.
 
-So, no universally superior automatic threshold algorithm has been invented that will perform well for all images, modalities, conditions, and needs.
+```{figure} ../../../figures/triangle_zack.png
+---
+name: triangle
+---
+Triangle Thresholding Method
+```
 
+{numref}`triangle` was taken from the original paper {cite}`zackAutomaticMeasurementSister1977` and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. The threshold at point A at the base of the histogram peak is located where the length of the line drawn perpendicular from the hypotenuse to point A is maximized.
 
-### Automatic Thresholding Algorithm Selection is Biased
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
 
-Wait. Didn’t we just cast automatic thresholding as based upon image-intrinsic properties and free of user bias during thresholding? Yes, but this doesn’t mean that *algorithm selection* is rigidly objective and bias-free.
-Just as the choice of a manual threshold in [0,256] is based upon user experience, human perception, problem characteristics, and prior expectations concerning the information to be extracted from an image, so too is the choice of an algorithm from the increasing candidate space of thresholding algorithms.
-On one hand, this is a reasonable basis upon which an algorithm can be selected. Indeed, the NFL theorem further establishes that the probability distribution of results $P(f)$ is uniform , ,that the probability distribution of performance over a class of that selection of an algorithm is only justified that without knowledge of problem-specific characteristics problem specific knowledge
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdTriangle()
+fig = analyzer.analyze(images=images, threshold=threshold)
 
+glue("threshold_triangle", fig)
+```
+
+```{glue:figure} threshold_triangle
+---
+align: center
+name: threshold_triangle_fig
+---
+Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)
+```
+
+#### ISOData Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdISOData()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_isodata", fig)
+```
+
+```{glue:figure} threshold_isodata
+---
+align: center
+name: threshold_isodata_fig
+---
+ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### OTSU's Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdOTSU()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_otsu", fig)
+```
+
+```{glue:figure} threshold_otsu
+---
+align: center
+name: threshold_otsu_fig
+---
+OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Li's Minimum Cross-Entropy Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdLi()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_li", fig)
+```
+
+```{glue:figure} threshold_li
+---
+align: center
+name: threshold_li_fig
+---
+Li's Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Yen's Multilevel Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdYen()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_yen", fig)
+```
+
+```{glue:figure} threshold_yen
+---
+align: center
+name: threshold_yen_fig
+---
+Yen's Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Adaptive Mean Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdAdaptiveMean()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_local_mean", fig)
+```
+
+```{glue:figure} threshold_local_mean
+---
+align: center
+name: threshold_local_mean_fig
+---
+Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Adaptive Gaussian Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdAdaptiveGaussian()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_local_gaussian", fig)
+```
+
+```{glue:figure} threshold_local_gaussian
+---
+align: center
+name: threshold_local_gaussian_fig
+---
+Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```

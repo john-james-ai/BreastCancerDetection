@@ -186,8 +186,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_segmentation/00_overview.html">3. Image Segmentation for Mammography</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_segmentation/00_intro.html">3. Breast Segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation</a></li>
 </ul>
 </li>
 </ul>
@@ -677,7 +677,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.analysis.noise</span> <span class="kn">import</span> <span class="n">ButterworthFilterAnalyzer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.noise</span> <span class="kn">import</span> <span class="n">ButterworthFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">ButterworthFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cutoff_frequency</span><span class="o">=</span><span class="mi">1500</span><span class="p">)</span>
@@ -688,7 +688,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-characteristics-fig">
-<img alt="../../../_images/64e506f8e28d65812e364c930f59899590e7f3b7b858270f24a4c6f853d10c29.png" src="../../../_images/64e506f8e28d65812e364c930f59899590e7f3b7b858270f24a4c6f853d10c29.png" />
+<img alt="../../../_images/ec957afa2330356f44fde12fe38a2ba474cdf90edf15c99ac57a70502cb19759.png" src="../../../_images/ec957afa2330356f44fde12fe38a2ba474cdf90edf15c99ac57a70502cb19759.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Butterworth Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#butterworth-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -709,7 +709,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-analysis-fig">
-<img alt="../../../_images/3595fbe08700be4fba84ea754b8a7da655138611cfd6e4d91fa336a9c913a831.png" src="../../../_images/3595fbe08700be4fba84ea754b8a7da655138611cfd6e4d91fa336a9c913a831.png" />
+<img alt="../../../_images/3754e0f3e353d94b33ac5800ab2b340c224bf40493946ea6e18f4bee3d0c0086.png" src="../../../_images/3754e0f3e353d94b33ac5800ab2b340c224bf40493946ea6e18f4bee3d0c0086.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">Butterworth Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#butterworth-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -761,7 +761,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.analysis.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">WaveletFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;VisuShrink&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
@@ -772,7 +772,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="wavelet-visushrink-characteristics-fig">
-<img alt="../../../_images/545298a46e40f3687a9b18f2cd0f4b9bffdb02a9f8c2cc852cad00dd9bdf222a.png" src="../../../_images/545298a46e40f3687a9b18f2cd0f4b9bffdb02a9f8c2cc852cad00dd9bdf222a.png" />
+<img alt="../../../_images/df2487408baa8fb194955e2d20dde17a5d9c40e136bc798f90d538c5b0585a0b.png" src="../../../_images/df2487408baa8fb194955e2d20dde17a5d9c40e136bc798f90d538c5b0585a0b.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.25 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with VisuShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-visushrink-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -792,7 +792,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.analysis.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bcd.preprocess.image.noise</span> <span class="kn">import</span> <span class="n">WaveletFilterAnalyzer</span>
 <span class="n">analyzer</span> <span class="o">=</span> <span class="n">WaveletFilterAnalyzer</span><span class="p">()</span>
 <span class="n">analyzer</span><span class="o">.</span><span class="n">add_gaussian_noise</span><span class="p">(</span><span class="n">var</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;BayesShrink&#39;</span><span class="p">)</span>
@@ -803,7 +803,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="wavelet-bayesshrink-characteristics-fig">
-<img alt="../../../_images/b52e9423a7637c126e102707b9e6e11b1e01108abc6f9eb5b17013935e4ccff8.png" src="../../../_images/b52e9423a7637c126e102707b9e6e11b1e01108abc6f9eb5b17013935e4ccff8.png" />
+<img alt="../../../_images/04af597b9c697bda0cc1e6185ae2fe6824de40816a825f9f6a59d8148d04339a.png" src="../../../_images/04af597b9c697bda0cc1e6185ae2fe6824de40816a825f9f6a59d8148d04339a.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.26 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-bayesshrink-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
