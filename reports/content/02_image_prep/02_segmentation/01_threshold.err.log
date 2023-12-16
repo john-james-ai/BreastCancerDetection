@@ -17,47 +17,21 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import os
-import os
-if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../../../..")))
-
-import numpy as np
-import cv2
-import matplotlib.pyplot as plt
-from myst_nb import glue
-
-from bcd.preprocess.image.threshold import (ThresholdAnalyzer,
-    ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, ThresholdManual
-)
-
-img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"
-img2 = "data/image/1_dev/converted/train/benign/4ed91643-1e06-4b2c-8efb-bc60dd9e0313.png"
-img3 = "data/image/1_dev/converted/train/malignant/7dcc12fd-88f0-4048-a6ab-5dd0bd836f08.png"
-img4 = "data/image/1_dev/converted/train/malignant/596ef5db-9610-4f13-9c1a-4c411b1d957c.png"
-
-img1 = cv2.imread(img1, cv2.IMREAD_GRAYSCALE)
-img2 = cv2.imread(img2, cv2.IMREAD_GRAYSCALE)
-img3 = cv2.imread(img3, cv2.IMREAD_GRAYSCALE)
-img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
-
-images = (img1,img2,img3,img4)
-
 analyzer = ThresholdAnalyzer()
-threshold = ThresholdManual(threshold=10)
-fig = analysis.analyze(images=images, threshold=threshold)
+threshold = ThresholdTriangle()
+fig = analyzer.analyze(images=images)
 
-glue("threshold_manual_10", fig)
+glue("threshold_triangle", fig)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[1], line 29[0m
-[1;32m     27[0m analyzer [38;5;241m=[39m ThresholdAnalyzer()
-[1;32m     28[0m threshold [38;5;241m=[39m ThresholdManual(threshold[38;5;241m=[39m[38;5;241m10[39m)
-[0;32m---> 29[0m fig [38;5;241m=[39m [43manalysis[49m[38;5;241m.[39manalyze(images[38;5;241m=[39mimages, threshold[38;5;241m=[39mthreshold)
-[1;32m     31[0m glue([38;5;124m"[39m[38;5;124mthreshold_manual_10[39m[38;5;124m"[39m, fig)
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[3], line 3[0m
+[1;32m      1[0m analyzer [38;5;241m=[39m ThresholdAnalyzer()
+[1;32m      2[0m threshold [38;5;241m=[39m ThresholdTriangle()
+[0;32m----> 3[0m fig [38;5;241m=[39m [43manalyzer[49m[38;5;241;43m.[39;49m[43manalyze[49m[43m([49m[43mimages[49m[38;5;241;43m=[39;49m[43mimages[49m[43m)[49m
+[1;32m      5[0m glue([38;5;124m"[39m[38;5;124mthreshold_triangle[39m[38;5;124m"[39m, fig)
 
-[0;31mNameError[0m: name 'analysis' is not defined
-NameError: name 'analysis' is not defined
+[0;31mTypeError[0m: ThresholdAnalyzer.analyze() missing 1 required positional argument: 'threshold'
+TypeError: ThresholdAnalyzer.analyze() missing 1 required positional argument: 'threshold'
 

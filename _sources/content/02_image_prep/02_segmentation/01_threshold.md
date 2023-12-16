@@ -176,9 +176,156 @@ Our candidate space will be comprised of the following ({numref}`auto-thresh-tbl
 
 ```
 
-In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize method assumptions, strengths, and limitations.
+In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize each method's assumptions, strengths, and limitations.
 
-#### Histogram-Based Thresholding
+#### Triangle Method
 
-Histogram-based methods use the distribution of pixel intensities to determine an appropriate threshold.
+The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`. It is particularly well suited for images that have pixel intensity distribution dominated by a single peak and a long tail.
 
+```{figure} ../../../figures/triangle_zack.png
+---
+name: triangle
+---
+Triangle Thresholding Method
+```
+
+{numref}`triangle` was taken from the original paper {cite}`zackAutomaticMeasurementSister1977` and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. The threshold at point A at the base of the histogram peak is located where the length of the line drawn perpendicular from the hypotenuse to point A is maximized.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdTriangle()
+fig = analyzer.analyze(images=images)
+
+glue("threshold_triangle", fig)
+```
+
+```{glue:figure} threshold_triangle
+---
+align: center
+name: threshold_triangle_fig
+---
+Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)
+```
+
+#### ISOData Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdISOData()
+fig = analyzer.analyze(images=images)
+
+glue("threshold_isodata", fig)
+```
+
+```{glue:figure} threshold_isodata
+---
+align: center
+name: threshold_isodata_fig
+---
+ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### OTSU's Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdOTSU()
+fig = analyzer.analyze(images=images)
+
+glue("threshold_otsu", fig)
+```
+
+```{glue:figure} threshold_otsu
+---
+align: center
+name: threshold_otsu_fig
+---
+OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+
+#### Li's Minimum Cross-Entropy Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdLi()
+fig = analyzer.analyze(images=images)
+
+glue("threshold_li", fig)
+```
+
+```{glue:figure} threshold_li
+---
+align: center
+name: threshold_li_fig
+---
+Li's Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Yen's Multilevel Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdYen()
+fig = analyzer.analyze(images=images)
+
+glue("threshold_yen", fig)
+```
+
+```{glue:figure} threshold_yen
+---
+align: center
+name: threshold_yen_fig
+---
+Yen's Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Adaptive Mean Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdAdaptiveMean()
+fig = analyzer.analyze(images=images)
+
+glue("threshold_local_mean", fig)
+```
+
+```{glue:figure} threshold_local_mean
+---
+align: center
+name: threshold_local_mean_fig
+---
+Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Adaptive Gaussian Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdAdaptiveGaussian()
+fig = analyzer.analyze(images=images)
+
+glue("threshold_local_gaussian", fig)
+```
+
+```{glue:figure} threshold_local_gaussian
+---
+align: center
+name: threshold_local_gaussian_fig
+---
+Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```

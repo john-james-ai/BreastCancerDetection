@@ -474,7 +474,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.2. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithm-space">Automated Thresholding Algorithm Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-based-thresholding">Histogram-Based Thresholding</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">OTSU’s Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">Yen’s Multilevel Thresholding Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">Adaptive Mean Thresholding Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">Adaptive Gaussian Thresholding Method</a></li>
 </ul>
 </li>
 </ul>
@@ -614,10 +620,35 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize method assumptions, strengths, and limitations.</p>
-<section id="histogram-based-thresholding">
-<h4>Histogram-Based Thresholding<a class="headerlink" href="#histogram-based-thresholding" title="Permalink to this heading">#</a></h4>
-<p>Histogram-based methods use the distribution of pixel intensities to determine an appropriate threshold.</p>
+<p>In the remaining sections, we will describe how each method works, visualize the segmentation results, and characterize each method’s assumptions, strengths, and limitations.</p>
+<section id="triangle-method">
+<h4>Triangle Method<a class="headerlink" href="#triangle-method" title="Permalink to this heading">#</a></h4>
+<p>The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes <span id="id5">[<a class="reference internal" href="../../99_references.html#id370" title="G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. Journal of Histochemistry &amp; Cytochemistry, 25(7):741–753, July 1977. URL: http://journals.sagepub.com/doi/10.1177/25.7.70454 (visited on 2023-12-15), doi:10.1177/25.7.70454.">35</a>]</span>. It is particularly well suited for images that have pixel intensity distribution dominated by a single peak and a long tail.</p>
+<figure class="align-default" id="triangle">
+<img alt="../../../_images/triangle_zack.png" src="../../../_images/triangle_zack.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Triangle Thresholding Method</span><a class="headerlink" href="#triangle" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#triangle"><span class="std std-numref">Fig. 3.4</span></a> was taken from the original paper <span id="id6">[<a class="reference internal" href="../../99_references.html#id370" title="G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. Journal of Histochemistry &amp; Cytochemistry, 25(7):741–753, July 1977. URL: http://journals.sagepub.com/doi/10.1177/25.7.70454 (visited on 2023-12-15), doi:10.1177/25.7.70454.">35</a>]</span> and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram. A triangle is then formed by drawing a line from the peak of the histogram to the last bin in the tail of the intensity distribution. The threshold at point A at the base of the histogram peak is located where the length of the line drawn perpendicular from the hypotenuse to point A is maximized.</p>
+</section>
+<section id="isodata-method">
+<h4>ISOData Method<a class="headerlink" href="#isodata-method" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="otsu-s-method">
+<h4>OTSU’s Method<a class="headerlink" href="#otsu-s-method" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="li-s-minimum-cross-entropy-method">
+<h4>Li’s Minimum Cross-Entropy Method<a class="headerlink" href="#li-s-minimum-cross-entropy-method" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="yen-s-multilevel-thresholding-method">
+<h4>Yen’s Multilevel Thresholding Method<a class="headerlink" href="#yen-s-multilevel-thresholding-method" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="adaptive-mean-thresholding-method">
+<h4>Adaptive Mean Thresholding Method<a class="headerlink" href="#adaptive-mean-thresholding-method" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="adaptive-gaussian-thresholding-method">
+<h4>Adaptive Gaussian Thresholding Method<a class="headerlink" href="#adaptive-gaussian-thresholding-method" title="Permalink to this heading">#</a></h4>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="binary" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
@@ -699,7 +730,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding">3.1.2. Automated Thresholding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithm-space">Automated Thresholding Algorithm Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-threshold-methods">Automated Threshold Methods</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-based-thresholding">Histogram-Based Thresholding</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISOData Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">OTSU’s Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">Yen’s Multilevel Thresholding Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">Adaptive Mean Thresholding Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">Adaptive Gaussian Thresholding Method</a></li>
 </ul>
 </li>
 </ul>
