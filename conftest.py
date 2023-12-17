@@ -11,11 +11,12 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Thursday December 14th 2023 03:26:30 am                                             #
+# Modified   : Sunday December 17th 2023 04:28:18 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+import cv2
 import pandas as pd
 import pytest
 
@@ -101,3 +102,21 @@ def case_ids():
 @pytest.fixture(scope="module", autouse=False)
 def evals():
     return pd.read_csv(EVALUATION_FP)
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                           IMAGES                                                 #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="module", autouse=False)
+def images():
+    img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"
+    img2 = "data/image/1_dev/converted/train/benign/4ed91643-1e06-4b2c-8efb-bc60dd9e0313.png"
+    img3 = "data/image/1_dev/converted/train/malignant/7dcc12fd-88f0-4048-a6ab-5dd0bd836f08.png"
+    img4 = "data/image/1_dev/converted/train/malignant/596ef5db-9610-4f13-9c1a-4c411b1d957c.png"
+
+    img1 = cv2.imread(img1, cv2.IMREAD_GRAYSCALE)
+    img2 = cv2.imread(img2, cv2.IMREAD_GRAYSCALE)
+    img3 = cv2.imread(img3, cv2.IMREAD_GRAYSCALE)
+    img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
+
+    return [img1, img2, img3, img4]

@@ -19,6 +19,7 @@ import os
 import numpy as np
 import cv2
 from bcd.preprocess.image.threshold import ThresholdAnalyzer, ThresholdManual, ThresholdOTSU, ThresholdTriangle, ThresholdAdaptiveMean,  ThresholdAdaptiveGaussian, ThresholdISOData, ThresholdLi, ThresholdTriangleAnalyzer, ThresholdYen, ThresholdSurveyor
+from bcd.utils.visual import plot_images
 ```
 
 ```{code-cell} ipython3
@@ -37,6 +38,26 @@ img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
 
 ```{code-cell} ipython3
 images = (img1,img2,img3,img4)
+```
+
+## Threshold Values
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+def plot_binary_images(image: np.ndarray, thresholds: list):
+    thresholds = [32,64,128]
+    images = [img3]
+    for t in thresholds:
+        _, img = cv2.threshold(img3, thresh=t, maxval=np.max(img3), type=cv2.THRESH_BINARY)
+        images.append(img)
+    titles = [f"Binary Image T={t}" for t in thresholds]
+    titles = ["Original Image"] + titles
+    title = "Binary Thresholding at Various Threshold Values"
+    return plot_images(images=images, titles=titles, title=title)
+
+thresholds = [32,64,128]
+fig = plot_binary_images(image=img3, thresholds=thresholds)    
 ```
 
 ## Manual Thresholding
