@@ -493,14 +493,20 @@ document.write(`
 <section id="critical-importance-of-threshold">
 <h2><span class="section-number">3.1.2. </span>Critical Importance of Threshold<a class="headerlink" href="#critical-importance-of-threshold" title="Permalink to this heading">#</a></h2>
 <p>The selection of the threshold critically determines the quality of the thresholding result.</p>
-<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">various_thresholds_fig</span></code> illustrates the impact of various threshold values on the binarization result.  As the threshold value increases from <span class="math notranslate nohighlight">\(T=32\)</span> to <span class="math notranslate nohighlight">\(T=128\)</span>, we notice a few things:</p>
+<figure class="align-center" id="various-thresholds-fig">
+<img alt="../../../_images/92fafb5392451d0c21d47a7f2f11ff893f1c3c8313b39e68b95184eaf4ddb035.png" src="../../../_images/92fafb5392451d0c21d47a7f2f11ff893f1c3c8313b39e68b95184eaf4ddb035.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Impact of Threshold Value on Binarization</span><a class="headerlink" href="#various-thresholds-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> illustrates the impact of various threshold values on the binarization result.  As the threshold value increases from <span class="math notranslate nohighlight">\(T=32\)</span> to <span class="math notranslate nohighlight">\(T=128\)</span>, we notice a few things:</p>
 <ul class="simple">
 <li><p><strong>Border Smoothness</strong>:  Borders tend to become increasingly rough as threshold value increases.</p></li>
-<li><p><strong>Information Loss</strong>.  Threshold value and information loss are positively correlated. High thresholds can shrink objects to the background as indicated in <code class="xref std std-numref docutils literal notranslate"><span class="pre">various_thresholds_fig</span></code>  (d).</p></li>
-<li><p><strong>Artifact Removal</strong>: “Beauty is in the eye of the beholder” <span id="id1">[]</span>. Some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.</p></li>
+<li><p><strong>Information Loss</strong>.  Threshold value and information loss are positively correlated. High thresholds can shrink objects to the background as indicated in <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a>  (d).</p></li>
+<li><p><strong>Artifact Removal</strong>: “Beauty is in the eye of the beholder” <span id="id1">[<a class="reference internal" href="../../99_references.html#id372" title="Margaret Hungerford. Molly bawn. Smith, Elder, &amp; Company, 1886. URL: https://books.google.com/books?id=dgM1AAAAMAAJ.">33</a>]</span>. Some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.</p></li>
 </ul>
-<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">various_thresholds_fig</span></code> also illustrates the trade-off between artifact removal and information loss. Lower thresholds leave a larger pixel intensity distribution to the foreground, which may include certain artifacts. As the threshold increases, more artifact removal is extant, at the expense of some information loss.</p>
-<p>As <code class="xref std std-numref docutils literal notranslate"><span class="pre">various_thresholds_fig</span></code> clearly illustrates, the selection of the threshold value is a determining factor in threshold-based segmentation.</p>
+<p><a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> also illustrates the trade-off between artifact removal and information loss. Lower thresholds leave a larger pixel intensity distribution to the foreground, which may include certain artifacts. As the threshold increases, more artifact removal is extant, at the expense of some information loss.</p>
+<p>As <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> clearly illustrates, the selection of the threshold value is a determining factor in threshold-based segmentation.</p>
 </section>
 </section>
 

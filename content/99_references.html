@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="3.1. Threshold-Based Segmentation" href="02_image_prep/02_segmentation/01_threshold.html" />
+    <link rel="prev" title="3.1. Thresholding" href="02_image_prep/02_artifact/01_threshold.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -183,8 +183,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="02_image_prep/02_segmentation/00_intro.html">3. Breast Segmentation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="02_image_prep/02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="02_image_prep/02_artifact/00_intro.html">3. Artifact Removal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_prep/02_artifact/01_threshold.html">3.1. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -530,17 +530,13 @@ document.write(`
 <span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
 <p>Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. <em>IEEE Transactions on Image Processing</em>, 13(4):600–612, April 2004. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1284395/">http://ieeexplore.ieee.org/document/1284395/</a> (visited on 2023-11-22), <a class="reference external" href="https://doi.org/10.1109/TIP.2003.819861">doi:10.1109/TIP.2003.819861</a>.</p>
 </div>
-<div class="citation" id="id362" role="doc-biblioentry">
+<div class="citation" id="id371" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
-<p>D.H. Wolpert and W.G. Macready. No free lunch theorems for optimization. <em>IEEE Transactions on Evolutionary Computation</em>, 1(1):67–82, April 1997. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/585893/">http://ieeexplore.ieee.org/document/585893/</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1109/4235.585893">doi:10.1109/4235.585893</a>.</p>
+<p>Satoshi Suzuki and KeiichiA Be. Topological structural analysis of digitized binary images by border following. <em>Computer Vision, Graphics, and Image Processing</em>, 30(1):32–46, April 1985. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/0734189X85900167">https://linkinghub.elsevier.com/retrieve/pii/0734189X85900167</a> (visited on 2023-12-17), <a class="reference external" href="https://doi.org/10.1016/0734-189X(85)90016-7">doi:10.1016/0734-189X(85)90016-7</a>.</p>
 </div>
-<div class="citation" id="id367" role="doc-biblioentry">
+<div class="citation" id="id372" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
-<p>Bu¨lent Sankur. Survey over image thresholding techniques and quantitative performance evaluation. <em>Journal of Electronic Imaging</em>, 13(1):146, January 2004. URL: <a class="reference external" href="http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315">http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1117/1.1631315">doi:10.1117/1.1631315</a>.</p>
-</div>
-<div class="citation" id="id369" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
-<p>Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, 9(1):62–66, January 1979. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/4310076/">http://ieeexplore.ieee.org/document/4310076/</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1109/TSMC.1979.4310076">doi:10.1109/TSMC.1979.4310076</a>.</p>
+<p>Margaret Hungerford. <em>Molly bawn</em>. Smith, Elder, &amp; Company, 1886. URL: <a class="reference external" href="https://books.google.com/books?id=dgM1AAAAMAAJ">https://books.google.com/books?id=dgM1AAAAMAAJ</a>.</p>
 </div>
 </div>
 </div>
@@ -578,12 +574,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="02_image_prep/02_segmentation/01_threshold.html"
+       href="02_image_prep/02_artifact/01_threshold.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">3.1. </span>Threshold-Based Segmentation</p>
+        <p class="prev-next-title"><span class="section-number">3.1. </span>Thresholding</p>
       </div>
     </a>
 </div></div>
