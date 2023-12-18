@@ -186,8 +186,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/02_segmentation/00_overview.html">3. Image Segmentation for Mammography</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/02_segmentation/01_threshold.html">3.1. Threshold-Based Segmentation (TBS) for Artifact Removal</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/02_artifact/00_intro.html">3. Artifact Removal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/02_artifact/01_threshold.html">3.1. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -1013,31 +1013,63 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>1495</th>
-      <td>Calcification-Train_P_02368_RIGHT_CC_1</td>
-      <td>P_02368</td>
-      <td>3</td>
+      <th>707</th>
+      <td>Calcification-Train_P_00895_RIGHT_CC_1</td>
+      <td>P_00895</td>
+      <td>2</td>
       <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
-      <td>PUNCTATE</td>
-      <td>CLUSTERED</td>
-      <td>0</td>
-      <td>MALIGNANT</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
       <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1511</th>
+      <td>Calcification-Train_P_02424_RIGHT_CC_1</td>
+      <td>P_02424</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>FINE_LINEAR_BRANCHING</td>
+      <td>SEGMENTAL</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>105</th>
-      <td>Calcification-Train_P_00112_RIGHT_CC_1</td>
-      <td>P_00112</td>
-      <td>3</td>
-      <td>RIGHT</td>
+      <th>803</th>
+      <td>Calcification-Train_P_01034_LEFT_CC_1</td>
+      <td>P_01034</td>
+      <td>2</td>
+      <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
-      <td>ROUND_AND_REGULAR-EGGSHELL</td>
-      <td>SEGMENTAL</td>
+      <td>PLEOMORPHIC</td>
+      <td>REGIONAL-REGIONAL</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Calcification-Train_P_00008_RIGHT_MLO_5</td>
+      <td>P_00008</td>
+      <td>1</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>5</td>
+      <td>AMORPHOUS</td>
+      <td>REGIONAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>3</td>
@@ -1045,52 +1077,20 @@ The section has the following python package dependencies:</p>
       <td>False</td>
     </tr>
     <tr>
-      <th>662</th>
-      <td>Calcification-Train_P_00834_LEFT_MLO_1</td>
-      <td>P_00834</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>MLO</td>
+      <th>468</th>
+      <td>Calcification-Train_P_00585_LEFT_CC_1</td>
+      <td>P_00585</td>
       <td>1</td>
-      <td>PUNCTATE-PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>3</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1505</th>
-      <td>Calcification-Train_P_02405_RIGHT_CC_1</td>
-      <td>P_02405</td>
-      <td>3</td>
-      <td>RIGHT</td>
+      <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
       <td>PLEOMORPHIC</td>
       <td>CLUSTERED</td>
-      <td>0</td>
-      <td>MALIGNANT</td>
+      <td>4</td>
+      <td>BENIGN</td>
       <td>4</td>
       <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>893</th>
-      <td>Calcification-Train_P_01136_RIGHT_MLO_1</td>
-      <td>P_01136</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>train</td>
-      <td>True</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -1129,82 +1129,82 @@ The section has the following python package dependencies:</p>
   </thead>
   <tbody>
     <tr>
-      <th>3009</th>
-      <td>Mass-Train_P_01641_LEFT_MLO_1</td>
-      <td>P_01641</td>
+      <th>2713</th>
+      <td>Mass-Train_P_01212_RIGHT_CC_1</td>
+      <td>P_01212</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>LOBULATED</td>
+      <td>ILL_DEFINED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>2</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2306</th>
+      <td>Mass-Train_P_00626_LEFT_MLO_1</td>
+      <td>P_00626</td>
       <td>2</td>
       <td>LEFT</td>
       <td>MLO</td>
+      <td>1</td>
+      <td>LOBULATED</td>
+      <td>OBSCURED</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>3</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2193</th>
+      <td>Mass-Train_P_00442_RIGHT_MLO_1</td>
+      <td>P_00442</td>
+      <td>1</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>LOBULATED</td>
+      <td>CIRCUMSCRIBED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2070</th>
+      <td>Mass-Train_P_00298_LEFT_CC_1</td>
+      <td>P_00298</td>
+      <td>3</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>ROUND</td>
+      <td>ILL_DEFINED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2605</th>
+      <td>Mass-Train_P_01070_LEFT_CC_1</td>
+      <td>P_01070</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>CC</td>
       <td>1</td>
       <td>IRREGULAR</td>
       <td>ILL_DEFINED</td>
       <td>4</td>
       <td>MALIGNANT</td>
       <td>4</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2666</th>
-      <td>Mass-Train_P_01152_RIGHT_CC_3</td>
-      <td>P_01152</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>CC</td>
-      <td>3</td>
-      <td>OVAL</td>
-      <td>OBSCURED</td>
-      <td>3</td>
-      <td>BENIGN</td>
-      <td>4</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3090</th>
-      <td>Mass-Train_P_01751_LEFT_MLO_1</td>
-      <td>P_01751</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>OVAL</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>3</td>
-      <td>BENIGN</td>
-      <td>4</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2544</th>
-      <td>Mass-Train_P_00972_LEFT_CC_1</td>
-      <td>P_00972</td>
-      <td>1</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>LOBULATED</td>
-      <td>ILL_DEFINED</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>4</td>
-      <td>train</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2350</th>
-      <td>Mass-Train_P_00698_RIGHT_MLO_1</td>
-      <td>P_00698</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>ARCHITECTURAL_DISTORTION</td>
-      <td>ILL_DEFINED</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
       <td>train</td>
       <td>True</td>
     </tr>
@@ -3752,7 +3752,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5d3b92de47eda73cde13b95bc44060f6d380b740b6d7930b90828928adb7895f.png" src="../../_images/5d3b92de47eda73cde13b95bc44060f6d380b740b6d7930b90828928adb7895f.png" />
+<img alt="../../_images/e0400029b08f2363778ffcd6353caee7e9e2c2f70d7c8d9f6c604af829fa48f4.png" src="../../_images/e0400029b08f2363778ffcd6353caee7e9e2c2f70d7c8d9f6c604af829fa48f4.png" />
 </div>
 </div>
 </section>
@@ -3767,7 +3767,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a8fdd586c3e4d1567be54b8be5017a94353bf5579bb1f30c8b4b9fc6f90f2e37.png" src="../../_images/a8fdd586c3e4d1567be54b8be5017a94353bf5579bb1f30c8b4b9fc6f90f2e37.png" />
+<img alt="../../_images/0859d891be2fc7ed0495a8bb6d340db442cfb9bd4a1782c6e9cf692c894d0b78.png" src="../../_images/0859d891be2fc7ed0495a8bb6d340db442cfb9bd4a1782c6e9cf692c894d0b78.png" />
 </div>
 </div>
 </section>
@@ -3782,7 +3782,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/6e1d534d07aea378bbb8c73383e173ad336610ea10cbc4c2ed7e490b18067f96.png" src="../../_images/6e1d534d07aea378bbb8c73383e173ad336610ea10cbc4c2ed7e490b18067f96.png" />
+<img alt="../../_images/5ce67c670b6fee61907563faa028356b64c1e43c69c735ead74081c3f92ddf37.png" src="../../_images/5ce67c670b6fee61907563faa028356b64c1e43c69c735ead74081c3f92ddf37.png" />
 </div>
 </div>
 </section>
@@ -3797,7 +3797,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/77fdc43958d09744152b172f50c46a574388fab2584cd311f22e84806307a245.png" src="../../_images/77fdc43958d09744152b172f50c46a574388fab2584cd311f22e84806307a245.png" />
+<img alt="../../_images/e6617aa3241fe52c1d1d90a8fdda519bf4b579e69fc91a53bf5c8a7447b716fa.png" src="../../_images/e6617aa3241fe52c1d1d90a8fdda519bf4b579e69fc91a53bf5c8a7447b716fa.png" />
 </div>
 </div>
 </section>
@@ -3815,7 +3815,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c04423f9df71dddd4440d62977076feb3caf36c892eadcd9467b3bf7af9414a2.png" src="../../_images/c04423f9df71dddd4440d62977076feb3caf36c892eadcd9467b3bf7af9414a2.png" />
+<img alt="../../_images/941f5392524c18d4e35f036ce752c2c4f5a8084ffab29ceb016104475c716998.png" src="../../_images/941f5392524c18d4e35f036ce752c2c4f5a8084ffab29ceb016104475c716998.png" />
 </div>
 </div>
 </section>
@@ -3830,7 +3830,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b2704cb1c958a433f5c15eff9a5477a7be772a6f3b313025f1d4b560889ea755.png" src="../../_images/b2704cb1c958a433f5c15eff9a5477a7be772a6f3b313025f1d4b560889ea755.png" />
+<img alt="../../_images/dae4f74af324188db0b032a4824215bfe2c35c5e5d9cfcde996443256caf1a11.png" src="../../_images/dae4f74af324188db0b032a4824215bfe2c35c5e5d9cfcde996443256caf1a11.png" />
 </div>
 </div>
 </section>
@@ -3845,7 +3845,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b37adf6fb80c8a23f6ffde1863376b69a72a690f0a3a08267b9108c50a516746.png" src="../../_images/b37adf6fb80c8a23f6ffde1863376b69a72a690f0a3a08267b9108c50a516746.png" />
+<img alt="../../_images/e632c9a580d6bccfab95c7df889b379d034fb28b216fe4a569ff3e0dc5265ac8.png" src="../../_images/e632c9a580d6bccfab95c7df889b379d034fb28b216fe4a569ff3e0dc5265ac8.png" />
 </div>
 </div>
 </section>
@@ -3860,7 +3860,7 @@ All images have 1 sample(s) per pixel.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/573183436152558150471af49ec6cb48ec43a252d4679d7c3706b2232567a642.png" src="../../_images/573183436152558150471af49ec6cb48ec43a252d4679d7c3706b2232567a642.png" />
+<img alt="../../_images/c5170b147460bf61f8691f977e1ba325f3560cc3ed32756b8ba688feda33e9ca.png" src="../../_images/c5170b147460bf61f8691f977e1ba325f3560cc3ed32756b8ba688feda33e9ca.png" />
 </div>
 </div>
 </section>
