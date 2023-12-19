@@ -325,7 +325,7 @@ and $m$ is the number of gray levels in the image, $p_i$ is the probability of t
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
 
-analyzer = ThresholdAnalyzer(show_histograms=False)
+analyzer = ThresholdAnalyzer()
 threshold = ThresholdYen()
 fig = analyzer.analyze(images=images, threshold=threshold)
 
