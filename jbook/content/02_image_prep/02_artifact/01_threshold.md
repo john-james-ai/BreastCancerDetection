@@ -101,7 +101,7 @@ Sezgin and Sankur {cite}sankurSurveyImageThresholding2004 cast the space of auto
 - **The spatial methods** use higher-order probability distribution and/or correlation between pixels
 - **Local methods adapt** the threshold value on each pixel to the local image characteristics.
 
-[^thresholds]: For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}otsuThresholdSelectionMethod1979 can be categorized as both a histogram shape-based method and a clustering-based method.
+[^thresholds]: For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}`otsuThresholdSelectionMethod1979` can be categorized as both a histogram shape-based method and a clustering-based method.
 
 For this effort, eight automated thresholding techniques {numref}`auto-thresh-tbl` were selected based on the intrinsic properties of the CBIS-DDSM dataset.
 
@@ -115,8 +115,8 @@ For this effort, eight automated thresholding techniques {numref}`auto-thresh-tb
 | 3 | Histogram/Cluster-Based | Otsu's Method                        | Nobuyuki Otsu (1979)                                 | A threshold selection method from gray-level histograms      |
 | 4 | Entropy-Based           | Li's Minimum Cross-Entropy Method    | Li C.H. and Lee C.K. (1993)                          | Minimum Cross Entropy Thresholding                           |
 | 5 | Spatial-Based           | Yen's Multilevel Thresholding Method | Jui-Cheng Yen, Fu-Juay Chang, and Shyang Chang (1995) | A new criterion for automatic multilevel thresholding        |
-| 7 | Local                   | Adaptive Gaussian Method             | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |
-| 8 |                         | Adaptive Mean Method                 | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image
+| 7 | Local                   | Adaptive Mean Method             | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |
+| 8 |                         | Adaptive Gaussian Method                 | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image
 
 ```
 
@@ -278,16 +278,130 @@ The Otsu method performs well when the image histogram is bimodal with a deep an
 
 ### Li's Minimum Cross-Entropy Method
 
-the most
+Probably the most popular entropy-based threshold method was proposed in 1993 by Li and Lee {cite}`liMinimumCrossEntropy1993`. It finds the 'optimal' threshold to distinguish between background and foreground by exhaustively searching for the threshold that minimized the *cross-entropy* between the foreground and the foreground mean and between the background and the background mean.
+
+In 1998, Li and Tam implemented a faster adaptation that used the *slope* of the cross-entropy instead {cite}`liIterativeAlgorithmMinimum1998`. This version, implemented in the scikit-image package, was employed on our test images.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdLi()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_li", fig)
+```
+
+```{glue:figure} threshold_li
+---
+align: center
+name: threshold_li_fig
+---
+Li's Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+Li's method selected slightly lower thresholds in [23, 17, 33, 29] than those of Otsu and ISODATA. At these lower thresholds, we see slightly more smoothness on the edges.
+
+This method works well when the image histograms are convex; however, when the pixel distributions are not convex, gradient descent could yield a threshold that is not optimal.
 
 ### Yen's Multilevel Method
 
-pending
+Yen's Automatic Multilevel Threshold algorithm was proposed in 1995 {cite}`jui-chengyenNewCriterionAutomatic1995` based on two criteria. The first one is the discrepancy between the thresholded and original images, and the second is the number of bits required to represent the thresholded image.  The discrepancy is defined in terms of a maximum entropic correlation criterion EC for bilevel thresholding given by:
 
-### Adaptive Mean Method
+```{math}
+:label: yen_ec
+EC(s) = -\text{ln}(G(s)\cdot G^{\prime}(s)) + 2\text{ln}(P(s)\cdot(1-P(s)))
+```
 
-pending
+where:
 
-### Adaptive Gaussian Method
+```{math}
+:label: yen_g
+G(S)=\displaystyle\sum{i=0}^{s-1}p_i^2,\\
+G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,
+```
 
-pending
+and $m$ is the number of gray levels in the image, $p_i$ is the probability of the gray level $i$ and $P(s)=\displaystyle\sum_{i=0}^{s-1} p_i$ is the total probability up to gray level $(s-1)$.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdYen()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_yen", fig)
+```
+
+```{glue:figure} threshold_yen
+---
+align: center
+name: threshold_yen_fig
+---
+Yen's Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+In {numref}`threshold_yen_fig`, Yen's algorithm performed fairly well on three of the images; however, the threshold of 153 in (e) pushed almost the entire region of interest into the background.
+
+Yen's multilevel thresholding has several advantages and disadvantages. It allows for better image segmentation for complex images. However, it can be computationally expensive as obtaining the optimal threshold through exhaustive search increases exponentially, especially when a large number of thresholds are needed.
+
+### Adaptive Methods
+
+The threshold algorithms above are known as global threshold techniques. They compute a single threshold for the entire image, which may not be optimal for situations when the lighting is non-uniform across the image.
+
+Adaptive methods, by contrast, compute thresholds for each pixel based on the intensity values in its neighborhood.  The underlying assumption of all adaptive or *local* methods is that smaller regions of an image are more likely to have approximately homogeneous illumination as opposed to the image as a whole.
+
+Setting an appropriate neighborhood size is crucial. One that is too large would produce segmentation results similar to that of a global threshold algorithm. Neighborhood sizes are odd numbers such as 3, 5, 7, or 11.
+
+The general formula for the adaptive method is:
+
+```{math}
+:label: adaptive
+T = \text{mean}(I_L)-C
+```
+
+where the mean is either the arithmetic mean or the Gaussian mean and $I_L$ is the local neighborhood of the image $I$. The constant $C$ can be used to fine-tune the threshold value $t$.
+
+Let's examine the performance of the adaptive mean and Gaussian methods with a neighborhood size of 5.
+
+#### Adaptive Mean Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdAdaptiveMean()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_local_mean", fig)
+```
+
+```{glue:figure} threshold_local_mean
+---
+align: center
+name: threshold_local_mean_fig
+---
+Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+#### Adaptive Gaussian Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdAdaptiveGaussian()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_local_gaussian", fig)
+```
+
+```{glue:figure} threshold_local_gaussian
+---
+align: center
+name: threshold_local_gaussian_fig
+---
+Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+{numref}`threshold_local_mean_fig` and {numref}`threshold_local_gaussian_fig` indicate that the adaptive methods are not particularly well suited for images with relatively uniform pixel distributions.

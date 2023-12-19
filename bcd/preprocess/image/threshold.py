@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday November 23rd 2023 12:45:30 pm                                             #
-# Modified   : Saturday December 16th 2023 01:22:43 am                                             #
+# Modified   : Tuesday December 19th 2023 10:16:21 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -512,7 +512,7 @@ class ThresholdAdaptiveMean(Threshold):
         self,
         name: str = "Adaptive Mean Threshold",
         global_threshold: bool = False,
-        blocksize: int = 11,
+        blocksize: int = 5,
         c: int = 0,
     ) -> None:
         super().__init__(name=name, global_threshold=global_threshold)
