@@ -133,7 +133,29 @@ Triangle Thresholding Method
 
 {numref}`triangle` was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram to values in [0,1]. A line is then constructed between the histogram peak and the tip of the long tail. Point A is selected at the base of the histogram bin that has the maximum perpendicular distance from the ‘peak-to-tip’ line. The threshold is set to A $+\delta \ge 0$.
 
-The triangle method assumes pixel intensity distributions with a maximum peak near one end of the histogram and searches for thresholds towards the other end. Hence, this method is particularly well suited for images with highly skewed pixel intensity distributions with a single dominant peak and one or more weak peaks.
+This method was applied to four test images of varying breast densities, contrast, abnormalities, and diagnoses. {numref}`threshold_triangle_fig` shows the original images (a)-(d), the binary images (e)-(h), the segmentation results (i)-(l), and the triangle histograms with thresholds annotated (m)-(p).
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdTriangleAnalyzer()
+threshold = ThresholdTriangle()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_triangle", fig)
+```
+
+```{glue:figure} threshold_triangle
+---
+align: center
+name: threshold_triangle_fig
+---
+Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)
+```
+
+Several observations can be made. First, all images had the same threshold $T=2$, despite varying levels of contrast, illumination, and breast density. Second, at $T=2$, we have little to no artifact removal as their pixel intensities are not distinguished from other foreground structures. Overall, the algorithm effectively distinguished the breast tissue from the background with no apparent loss of information.
+
+The triangle method assumes pixel intensity distributions with a maximum peak near one end of the histogram and searches for thresholds towards the other end. Hence, this method is particularly well suited for images with highly skewed pixel intensity distributions with a single dominant peak and one or more weak peaks as we see here.
 
 ### ISODATA Method
 
@@ -141,7 +163,29 @@ The ISODATA method is an iterative approach based upon the Iterative Self-Organi
 
 In general, it first assigns an initial threshold $T$, usually the average of the pixel intensities in the image. The second step classifies each pixel to the closest class. In the third step, the mean values $\mu_1$ and $\mu_2$ for each class are estimated using a Gaussian distribution. Next, a new threshold is selected as the average of $\mu_1$ and $\mu_2$ {cite}`el-zaartImagesThresholdingUsing2010`.  Steps two and three are repeated until the change in threshold is less than a predesignated parameter.
 
-An advantage of the ISOData method is that one doesn't need to know much about the properties of the image in advance.  On the other hand, the ISODATA algorithm assumes a symmetric Gaussian pixel distribution and may not perform well with images with a non-symmetric histogram. It can also be time-consuming and computationally expensive for large images.
+In {numref}`threshold_isodata_fig` we have the segmentation results for the ISODATA method applied to our test images.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdISOData()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_isodata", fig)
+```
+
+```{glue:figure} threshold_isodata
+---
+align: center
+name: threshold_isodata_fig
+---
+ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+The ISODATA method generated higher thresholds in [63, 54, 92, 79] with slightly more roughness along the edges.
+
+An advantage of the ISOData method is that one doesn't need to know much about the properties of the image in advance.  On the other hand, the ISODATA algorithm assumes a symmetric Gaussian pixel distribution and may not perform well with images with a non-symmetric histogram as we've observed here.
 
 ### Otsu's Method
 
@@ -196,6 +240,8 @@ The second method is to maximize inter-class variance as follows:
 \sigma_b^2(t) =w_0(t)w_1(t)[\mu_0(t)-\mu_1(t)]^2
 ```
 
+The method we will be using minimizes the **intra-class variance**.
+
 Hence, the general algorithm for minimizing the intra-class variance is given by:
 
 1. Initialize threshold $t=0$
@@ -205,6 +251,26 @@ Hence, the general algorithm for minimizing the intra-class variance is given by
    - Update values of $w_i,\mu_i,$ where $w_i$ is the weighted probability and $\mu_i$ is the mean of class $i$.
    - Calculate the intra-class variance value $\sigma_w^2(t)$
 5. The final threshold is that which minimizes $\sigma_w^2(t)$
+
+Let's examine Otsu's method on our test images.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdOTSU()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_otsu", fig)
+```
+
+```{glue:figure} threshold_otsu
+---
+align: center
+name: threshold_otsu_fig
+---
+OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
 
 The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks {cite}`kittlerThresholdSelectionUsing1985`.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method {cite}`kittlerMinimumErrorThresholding1986`.
 
