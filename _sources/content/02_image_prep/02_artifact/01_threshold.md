@@ -272,20 +272,82 @@ name: threshold_otsu_fig
 OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
 ```
 
+What stands out immediately, is that the selected thresholds for the Otsu method and the ISODATA method on our test set are precisely the same.
+
 The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks {cite}`kittlerThresholdSelectionUsing1985`.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method {cite}`kittlerMinimumErrorThresholding1986`.
 
 ### Li's Minimum Cross-Entropy Method
 
+Probably the most popular entropy-based threshold method was proposed in 1993 by Li and Lee {cite}`liMinimumCrossEntropy1993`. It finds the 'optimal' threshold to distinguish between background and foreground by exhaustively searching for the threshold that minimized the *cross-entropy* between the foreground and the foreground mean and between the background and the background mean.
+
+In 1998, Li and Tam implemented a faster adaptation that used the *slope* of the cross-entropy instead {cite}`liIterativeAlgorithmMinimum1998`. This version, implemented in the scikit-image package, was employed on our test images.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdLi()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_li", fig)
+```
+
+```{glue:figure} threshold_li
+---
+align: center
+name: threshold_li_fig
+---
+Li's Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+Li's method selected slightly lower thresholds in [23, 17, 33, 29] than those of Otsu and ISODATA. At these lower thresholds, we see slightly more smoothness on the edges.
+
+This method works well when the image histograms are convex; however, when the pixel distributions are not convex, gradient descent could yield a threshold that is not optimal.
+
+### Yen's Multilevel Method
+
+Yen's Automatic Multilevel Threshold algorithm was proposed in 1995 {cite}`jui-chengyenNewCriterionAutomatic1995` based on two criteria. The first one is the discrepancy between the thresholded and original images, and the second is the number of bits required to represent the thresholded image.  The discrepancy is defined in terms of a maximum entropic correlation criterion EC for bilevel thresholding given by:
+
+```{math}
+:label: yen_ec
+EC(s) = -\text{ln}(G(s)\cdot G^{\prime}(s)) + 2\text{ln}(P(s)\cdot(1-P(s)))
+```
+
+where:
+
+```{math}
+:label: yen_g
+G(S)=\displaystyle\sum{i=0}^{s-1}p_i^2, G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,
+```
+
+and $m$ is the number of gray levels in the image, $p_i$ is the probability of the gray level $i$ and $P(s)=\displaystyle\sum_{i=0}^{s-1} p_i$ is the total probability up to gray level $(s-1)$.
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdYen()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_yen", fig)
+```
+
+```{glue:figure} threshold_yen
+---
+align: center
+name: threshold_yen_fig
+---
+Yen's Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+In {numref}`threshold_yen_fig`, Yen's algorithm performed fairly well on three of the images; however, the threshold of 153 in (e) pushed almost the entire region of interest into the background.
+
+Yen's multilevel thresholding has several advantages and disadvantages. It allows for better image segmentation for complex images. However, it can be computationally expensive as obtaining the optimal threshold through exhaustive search increases exponentially, especially when a large number of thresholds are needed.
+
+### Adaptive Mean Method
+
 pending
 
-### Yen's Multilevel Thresholding Method
-
-pending
-
-### Adaptive Mean Thresholding Method
-
-pending
-
-### Adaptive Gaussian Thresholding Method
+### Adaptive Gaussian Method
 
 pending

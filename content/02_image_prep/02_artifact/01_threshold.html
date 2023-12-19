@@ -477,9 +477,9 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISODATA Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">Yen’s Multilevel Thresholding Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">Adaptive Mean Thresholding Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">Adaptive Gaussian Thresholding Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-method">Yen’s Multilevel Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-method">Adaptive Mean Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-method">Adaptive Gaussian Method</a></li>
 </ul>
 </li>
 </ul>
@@ -668,22 +668,46 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <p><span class="caption-number">Fig. 3.6 </span><span class="caption-text">OTSU’s Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-otsu-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p>What stands out immediately, is that the selected thresholds for the Otsu method and the ISODATA method on our test set are precisely the same.</p>
 <p>The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks <span id="id7">[<a class="reference internal" href="../../99_references.html#id375" title="J. Kittler and J. Illingworth. On threshold selection using clustering criteria. IEEE Transactions on Systems, Man, and Cybernetics, SMC-15(5):652–655, September 1985. URL: http://ieeexplore.ieee.org/document/6313443/ (visited on 2023-12-19), doi:10.1109/TSMC.1985.6313443.">37</a>]</span>.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method <span id="id8">[<a class="reference internal" href="../../99_references.html#id376" title="J. Kittler and J. Illingworth. Minimum error thresholding. Pattern Recognition, 19(1):41–47, January 1986. URL: https://linkinghub.elsevier.com/retrieve/pii/0031320386900300 (visited on 2023-12-19), doi:10.1016/0031-3203(86)90030-0.">38</a>]</span>.</p>
 </section>
 <section id="li-s-minimum-cross-entropy-method">
 <h3>Li’s Minimum Cross-Entropy Method<a class="headerlink" href="#li-s-minimum-cross-entropy-method" title="Permalink to this heading">#</a></h3>
+<p>Probably the most popular entropy-based threshold method was proposed in 1993 by Li and Lee <span id="id9">[]</span>. It finds the ‘optimal’ threshold to distinguish between background and foreground by exhaustively searching for the threshold that minimized the <em>cross-entropy</em> between the foreground and the foreground mean and between the background and the background mean.</p>
+<p>In 1998, Li and Tam implemented a faster adaptation that used the <em>slope</em> of the cross-entropy instead <span id="id10">[]</span>. This version, implemented in the scikit-image package, was employed on our test images.</p>
+<figure class="align-center" id="threshold-li-fig">
+<img alt="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" src="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Li’s Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-li-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Li’s method selected slightly lower thresholds in [23, 17, 33, 29] than those of Otsu and ISODATA. At these lower thresholds, we see slightly more smoothness on the edges.</p>
+<p>This method works well when the image histograms are convex; however, when the pixel distributions are not convex, gradient descent could yield a threshold that is not optimal.</p>
+</section>
+<section id="yen-s-multilevel-method">
+<h3>Yen’s Multilevel Method<a class="headerlink" href="#yen-s-multilevel-method" title="Permalink to this heading">#</a></h3>
+<p>Yen’s Automatic Multilevel Threshold algorithm was proposed in 1995 <span id="id11">[]</span> based on two criteria. The first one is the discrepancy between the thresholded and original images, and the second is the number of bits required to represent the thresholded image.  The discrepancy is defined in terms of a maximum entropic correlation criterion EC for bilevel thresholding given by:</p>
+<div class="math notranslate nohighlight" id="equation-yen-ec">
+<span class="eqno">(3.7)<a class="headerlink" href="#equation-yen-ec" title="Permalink to this equation">#</a></span>\[EC(s) = -\text{ln}(G(s)\cdot G^{\prime}(s)) + 2\text{ln}(P(s)\cdot(1-P(s)))\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight" id="equation-yen-g">
+<span class="eqno">(3.8)<a class="headerlink" href="#equation-yen-g" title="Permalink to this equation">#</a></span>\[G(S)=\displaystyle\sum{i=0}^{s-1}p_i^2, G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\]</div>
+<p>and <span class="math notranslate nohighlight">\(m\)</span> is the number of gray levels in the image, <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of the gray level <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(P(s)=\displaystyle\sum_{i=0}^{s-1} p_i\)</span> is the total probability up to gray level <span class="math notranslate nohighlight">\((s-1)\)</span>.</p>
+<figure class="align-center" id="threshold-yen-fig">
+<img alt="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" src="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Yen’s Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-yen-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In <a class="reference internal" href="#threshold-yen-fig"><span class="std std-numref">Fig. 3.8</span></a>, Yen’s algorithm performed fairly well on three of the images; however, the threshold of 153 in (e) pushed almost the entire region of interest into the background.</p>
+<p>Yen’s multilevel thresholding has several advantages and disadvantages. It allows for better image segmentation for complex images. However, it can be computationally expensive as obtaining the optimal threshold through exhaustive search increases exponentially, especially when a large number of thresholds are needed.</p>
+</section>
+<section id="adaptive-mean-method">
+<h3>Adaptive Mean Method<a class="headerlink" href="#adaptive-mean-method" title="Permalink to this heading">#</a></h3>
 <p>pending</p>
 </section>
-<section id="yen-s-multilevel-thresholding-method">
-<h3>Yen’s Multilevel Thresholding Method<a class="headerlink" href="#yen-s-multilevel-thresholding-method" title="Permalink to this heading">#</a></h3>
-<p>pending</p>
-</section>
-<section id="adaptive-mean-thresholding-method">
-<h3>Adaptive Mean Thresholding Method<a class="headerlink" href="#adaptive-mean-thresholding-method" title="Permalink to this heading">#</a></h3>
-<p>pending</p>
-</section>
-<section id="adaptive-gaussian-thresholding-method">
-<h3>Adaptive Gaussian Thresholding Method<a class="headerlink" href="#adaptive-gaussian-thresholding-method" title="Permalink to this heading">#</a></h3>
+<section id="adaptive-gaussian-method">
+<h3>Adaptive Gaussian Method<a class="headerlink" href="#adaptive-gaussian-method" title="Permalink to this heading">#</a></h3>
 <p>pending</p>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="thresholds" role="note">
@@ -768,9 +792,9 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISODATA Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">Yen’s Multilevel Thresholding Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">Adaptive Mean Thresholding Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">Adaptive Gaussian Thresholding Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-method">Yen’s Multilevel Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-method">Adaptive Mean Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-method">Adaptive Gaussian Method</a></li>
 </ul>
 </li>
 </ul>
