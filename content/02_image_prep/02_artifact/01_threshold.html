@@ -472,6 +472,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-in-digital-mammography">3.1.1. Thresholding in Digital Mammography</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-importance-of-threshold">3.1.2. Critical Importance of Threshold</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">3.1.3. Automated Thresholding Algorithms</a></li>
 </ul>
             </nav>
         </div>
@@ -503,10 +504,83 @@ document.write(`
 <ul class="simple">
 <li><p><strong>Border Smoothness</strong>:  Borders tend to become increasingly rough as threshold value increases.</p></li>
 <li><p><strong>Information Loss</strong>.  Threshold value and information loss are positively correlated. High thresholds can shrink objects to the background as indicated in <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a>  (d).</p></li>
-<li><p><strong>Artifact Removal</strong>: “Beauty is in the eye of the beholder” <span id="id1">[<a class="reference internal" href="../../99_references.html#id372" title="Margaret Hungerford. Molly bawn. Smith, Elder, &amp; Company, 1886. URL: https://books.google.com/books?id=dgM1AAAAMAAJ.">33</a>]</span>. Some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.</p></li>
+<li><p><strong>Artifact Removal</strong>: On the other hand, some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.</p></li>
 </ul>
-<p><a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> also illustrates the trade-off between artifact removal and information loss. Lower thresholds leave a larger pixel intensity distribution to the foreground, which may include certain artifacts. As the threshold increases, more artifact removal is extant, at the expense of some information loss.</p>
-<p>As <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> clearly illustrates, the selection of the threshold value is a determining factor in threshold-based segmentation.</p>
+<p>And there’s the trade-off. <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> clearly illustrates the importance of selecting an appropriate threshold, what principled techniques exist for selecting thresholds that balance information capture and artifact removal?</p>
+<p>Well, manual techniques can be tedious, and time-consuming, and don’t reflect the inherent variability in digital mammography. No single threshold value will perform consistently across all images.  And though no universally superior <em>automated</em> thresholding method exists, several techniques have been proposed, each with distinct performance characteristics, strengths, and weaknesses, that have broad applicability across a range of image analysis and processing domains. We’ll examine those next.</p>
+</section>
+<section id="automated-thresholding-algorithms">
+<h2><span class="section-number">3.1.3. </span>Automated Thresholding Algorithms<a class="headerlink" href="#automated-thresholding-algorithms" title="Permalink to this heading">#</a></h2>
+<p>Sezgin and Sankur {cite}sankurSurveyImageThresholding2004 cast the space of automated thresholding techniques as follows: <a class="footnote-reference brackets" href="#thresholds" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<ul class="simple">
+<li><p><strong>Histogram shape-based</strong> methods that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.</p></li>
+<li><p><strong>Clustering-based methods</strong> cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.</p></li>
+<li><p><strong>Entropy-based methods</strong> use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.</p></li>
+<li><p><strong>Object attribute-based</strong> methods that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.</p></li>
+<li><p><strong>The spatial methods</strong> use higher-order probability distribution and/or correlation between pixels</p></li>
+<li><p><strong>Local methods adapt</strong> the threshold value on each pixel to the local image characteristics.</p></li>
+</ul>
+<p>For this effort, eight automated thresholding techniques (<code class="xref std std-numref docutils literal notranslate"><span class="pre">aut-thresh-tbl</span></code>) were selected based on the intrinsic properties of the CBIS-DDSM dataset.</p>
+<table class="table" id="auto-thresh-tbl">
+<caption><span class="caption-number">Table 3.1 </span><span class="caption-text">Automated Threshold Methods</span><a class="headerlink" href="#auto-thresh-tbl" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Method</p></th>
+<th class="head"><p>Author(s)</p></th>
+<th class="head"><p>Publication</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Histogram-Based</p></td>
+<td><p>Triangle Method</p></td>
+<td><p>Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,</p></td>
+<td><p>Automatic Measurement of Sister Chromatid Exchange Frequency</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Cluster-Based</p></td>
+<td><p>ISOData Method</p></td>
+<td><p>Ridler, TW &amp; Calvard, S (1978)</p></td>
+<td><p>Picture thresholding using an iterative selection method</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Histogram/Cluster-Based</p></td>
+<td><p>Otsu’s Method</p></td>
+<td><p>Nobuyuki Otsu (1979)</p></td>
+<td><p>A threshold selection method from gray-level histograms</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Entropy-Based</p></td>
+<td><p>Li’s Minimum Cross-Entropy Method</p></td>
+<td><p>Li C.H. and Lee C.K. (1993)</p></td>
+<td><p>Minimum Cross Entropy Thresholding</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Spatial-Based</p></td>
+<td><p>Yen’s Multilevel Thresholding Method</p></td>
+<td><p>Jui-Cheng Yen, Fu-Juay Chang, and Shyang Chang (1995)</p></td>
+<td><p>A new criterion for automatic multilevel thresholding</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>Local</p></td>
+<td><p>Adaptive Gaussian Method</p></td>
+<td><p>Bradley, D., G. Roth 2007</p></td>
+<td><p>Adapting Thresholding Using the Integral Image</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p></p></td>
+<td><p>Adaptive Mean Method</p></td>
+<td><p>Bradley, D., G. Roth 2007</p></td>
+<td><p>Adapting Thresholding Using the Integral Image</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="footnotes docutils" />
+<aside class="footnote brackets" id="thresholds" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}otsuThresholdSelectionMethod1979 can be categorized as both a histogram shape-based method and a clustering-based method.</p>
+</aside>
 </section>
 </section>
 
@@ -579,6 +653,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-in-digital-mammography">3.1.1. Thresholding in Digital Mammography</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-importance-of-threshold">3.1.2. Critical Importance of Threshold</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">3.1.3. Automated Thresholding Algorithms</a></li>
 </ul>
   </nav></div>
 

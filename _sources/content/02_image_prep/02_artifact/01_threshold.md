@@ -85,8 +85,38 @@ Impact of Threshold Value on Binarization
 
 - **Border Smoothness**:  Borders tend to become increasingly rough as threshold value increases.
 - **Information Loss**.  Threshold value and information loss are positively correlated. High thresholds can shrink objects to the background as indicated in {numref}`various_thresholds_fig`  (d).
-- **Artifact Removal**: “Beauty is in the eye of the beholder” {cite}`1886molly`. Some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.
+- **Artifact Removal**: On the other hand, some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.
 
-{numref}`various_thresholds_fig` also illustrates the trade-off between artifact removal and information loss. Lower thresholds leave a larger pixel intensity distribution to the foreground, which may include certain artifacts. As the threshold increases, more artifact removal is extant, at the expense of some information loss.
+And there's the trade-off. {numref}`various_thresholds_fig` clearly illustrates the importance of selecting an appropriate threshold, what principled techniques exist for selecting thresholds that balance information capture and artifact removal?
 
-As {numref}`various_thresholds_fig` clearly illustrates, the selection of the threshold value is a determining factor in threshold-based segmentation.
+Well, manual techniques can be tedious, and time-consuming, and don’t reflect the inherent variability in digital mammography. No single threshold value will perform consistently across all images.  And though no universally superior *automated* thresholding method exists, several techniques have been proposed, each with distinct performance characteristics, strengths, and weaknesses, that have broad applicability across a range of image analysis and processing domains. We’ll examine those next.
+
+## Automated Thresholding Algorithms
+
+Sezgin and Sankur {cite}sankurSurveyImageThresholding2004 cast the space of automated thresholding techniques as follows: [^thresholds]
+
+- **Histogram shape-based** methods that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.
+- **Clustering-based methods** cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.
+- **Entropy-based methods** use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.
+- **Object attribute-based** methods that analyze the similarity between the gray-level and the binarized images, such as fuzzy shape similarity, edge coincidence, etc.
+- **The spatial methods** use higher-order probability distribution and/or correlation between pixels
+- **Local methods adapt** the threshold value on each pixel to the local image characteristics.
+
+[^thresholds]: For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}otsuThresholdSelectionMethod1979 can be categorized as both a histogram shape-based method and a clustering-based method.
+
+For this effort, eight automated thresholding techniques ({numref}`aut-thresh-tbl`) were selected based on the intrinsic properties of the CBIS-DDSM dataset.
+
+```{table} Automated Threshold Methods
+:name: auto-thresh-tbl
+
+| # | Type                    | Method                               | Author(s)                                            | Publication                                                  |
+|---|-------------------------|--------------------------------------|------------------------------------------------------|--------------------------------------------------------------|
+| 1 | Histogram-Based         | Triangle Method                      | Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,    | Automatic Measurement of Sister Chromatid Exchange Frequency |
+| 2 | Cluster-Based           | ISOData Method                       | Ridler, TW & Calvard, S (1978)                       | Picture thresholding using an iterative selection method     |
+| 3 | Histogram/Cluster-Based | Otsu's Method                        | Nobuyuki Otsu (1979)                                 | A threshold selection method from gray-level histograms      |
+| 4 | Entropy-Based           | Li's Minimum Cross-Entropy Method    | Li C.H. and Lee C.K. (1993)                          | Minimum Cross Entropy Thresholding                           |
+| 5 | Spatial-Based           | Yen's Multilevel Thresholding Method | Jui-Cheng Yen, Fu-Juay Chang, and Shyang Chang (1995) | A new criterion for automatic multilevel thresholding        |
+| 7 | Local                   | Adaptive Gaussian Method             | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |
+| 8 |                         | Adaptive Mean Method                 | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image
+
+```
