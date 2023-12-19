@@ -478,8 +478,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-method">Yen’s Multilevel Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-method">Adaptive Mean Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-method">Adaptive Gaussian Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-methods">Adaptive Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-method">Adaptive Mean Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-method">Adaptive Gaussian Method</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -575,13 +578,13 @@ document.write(`
 </tr>
 <tr class="row-odd"><td><p>7</p></td>
 <td><p>Local</p></td>
-<td><p>Adaptive Gaussian Method</p></td>
+<td><p>Adaptive Mean Method</p></td>
 <td><p>Bradley, D., G. Roth 2007</p></td>
 <td><p>Adapting Thresholding Using the Integral Image</p></td>
 </tr>
 <tr class="row-even"><td><p>8</p></td>
 <td><p></p></td>
-<td><p>Adaptive Mean Method</p></td>
+<td><p>Adaptive Gaussian Method</p></td>
 <td><p>Bradley, D., G. Roth 2007</p></td>
 <td><p>Adapting Thresholding Using the Integral Image</p></td>
 </tr>
@@ -691,7 +694,8 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <span class="eqno">(3.7)<a class="headerlink" href="#equation-yen-ec" title="Permalink to this equation">#</a></span>\[EC(s) = -\text{ln}(G(s)\cdot G^{\prime}(s)) + 2\text{ln}(P(s)\cdot(1-P(s)))\]</div>
 <p>where:</p>
 <div class="math notranslate nohighlight" id="equation-yen-g">
-<span class="eqno">(3.8)<a class="headerlink" href="#equation-yen-g" title="Permalink to this equation">#</a></span>\[G(S)=\displaystyle\sum{i=0}^{s-1}p_i^2, G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\]</div>
+<span class="eqno">(3.8)<a class="headerlink" href="#equation-yen-g" title="Permalink to this equation">#</a></span>\[\begin{split}G(S)=\displaystyle\sum{i=0}^{s-1}p_i^2,\\
+G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
 <p>and <span class="math notranslate nohighlight">\(m\)</span> is the number of gray levels in the image, <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of the gray level <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(P(s)=\displaystyle\sum_{i=0}^{s-1} p_i\)</span> is the total probability up to gray level <span class="math notranslate nohighlight">\((s-1)\)</span>.</p>
 <figure class="align-center" id="threshold-yen-fig">
 <img alt="../../../_images/bcd5590d977b21292d6dc741a5bcd5a36c47ea8400abba5112c434b2ea19d88c.png" src="../../../_images/bcd5590d977b21292d6dc741a5bcd5a36c47ea8400abba5112c434b2ea19d88c.png" />
@@ -702,18 +706,40 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <p>In <a class="reference internal" href="#threshold-yen-fig"><span class="std std-numref">Fig. 3.8</span></a>, Yen’s algorithm performed fairly well on three of the images; however, the threshold of 153 in (e) pushed almost the entire region of interest into the background.</p>
 <p>Yen’s multilevel thresholding has several advantages and disadvantages. It allows for better image segmentation for complex images. However, it can be computationally expensive as obtaining the optimal threshold through exhaustive search increases exponentially, especially when a large number of thresholds are needed.</p>
 </section>
+<section id="adaptive-methods">
+<h3>Adaptive Methods<a class="headerlink" href="#adaptive-methods" title="Permalink to this heading">#</a></h3>
+<p>The threshold algorithms above are known as global threshold techniques. They compute a single threshold for the entire image, which may not be optimal for situations when the lighting is non-uniform across the image.</p>
+<p>Adaptive methods, by contrast, compute thresholds for each pixel based on the intensity values in its neighborhood.  The underlying assumption of all adaptive or <em>local</em> methods is that smaller regions of an image are more likely to have approximately homogeneous illumination as opposed to the image as a whole.</p>
+<p>Setting an appropriate neighborhood size is crucial. One that is too large would produce segmentation results similar to that of a global threshold algorithm. Neighborhood sizes are odd numbers such as 3, 5, 7, or 11.</p>
+<p>The general formula for the adaptive method is:</p>
+<div class="math notranslate nohighlight" id="equation-adaptive">
+<span class="eqno">(3.9)<a class="headerlink" href="#equation-adaptive" title="Permalink to this equation">#</a></span>\[T = \text{mean}(I_L)-C\]</div>
+<p>where the mean is either the arithmetic mean or the Gaussian mean and <span class="math notranslate nohighlight">\(I_L\)</span> is the local neighborhood of the image <span class="math notranslate nohighlight">\(I\)</span>. The constant <span class="math notranslate nohighlight">\(C\)</span> can be used to fine-tune the threshold value <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>Let’s examine the performance of the adaptive mean and Gaussian methods with a neighborhood size of 5.</p>
 <section id="adaptive-mean-method">
-<h3>Adaptive Mean Method<a class="headerlink" href="#adaptive-mean-method" title="Permalink to this heading">#</a></h3>
-<p>pending</p>
+<h4>Adaptive Mean Method<a class="headerlink" href="#adaptive-mean-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-local-mean-fig">
+<img alt="../../../_images/47b840fbfccae79f114a84c5b8af10e459de78833e97ebc5f1d4370f5e83583c.png" src="../../../_images/47b840fbfccae79f114a84c5b8af10e459de78833e97ebc5f1d4370f5e83583c.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-mean-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="adaptive-gaussian-method">
-<h3>Adaptive Gaussian Method<a class="headerlink" href="#adaptive-gaussian-method" title="Permalink to this heading">#</a></h3>
-<p>pending</p>
+<h4>Adaptive Gaussian Method<a class="headerlink" href="#adaptive-gaussian-method" title="Permalink to this heading">#</a></h4>
+<figure class="align-center" id="threshold-local-gaussian-fig">
+<img alt="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" src="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-gaussian-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#threshold-local-mean-fig"><span class="std std-numref">Fig. 3.9</span></a> and <a class="reference internal" href="#threshold-local-gaussian-fig"><span class="std std-numref">Fig. 3.10</span></a> indicate that the adaptive methods are not particularly well suited for images with relatively uniform pixel distributions.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="thresholds" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}otsuThresholdSelectionMethod1979 can be categorized as both a histogram shape-based method and a clustering-based method.</p>
+<p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method <span id="id12">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">36</a>]</span> can be categorized as both a histogram shape-based method and a clustering-based method.</p>
 </aside>
+</section>
 </section>
 </section>
 </section>
@@ -793,8 +819,11 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-method">Yen’s Multilevel Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-method">Adaptive Mean Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-method">Adaptive Gaussian Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-methods">Adaptive Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-method">Adaptive Mean Method</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-method">Adaptive Gaussian Method</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
