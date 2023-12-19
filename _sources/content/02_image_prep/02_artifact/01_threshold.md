@@ -120,9 +120,9 @@ For this effort, eight automated thresholding techniques {numref}`auto-thresh-tb
 
 ```
 
-## Triangle Method
+### Triangle Method
 
-The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`. It is particularly well suited for images that have a pixel intensity distribution dominated by a single peak and a long tail.
+The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`.
 
 ```{figure} ../../../figures/triangle_zack.png
 ---
@@ -135,71 +135,75 @@ Triangle Thresholding Method
 
 The triangle method assumes pixel intensity distributions with a maximum peak near one end of the histogram and searches for thresholds towards the other end. Hence, this method is particularly well suited for images with highly skewed pixel intensity distributions with a single dominant peak and one or more weak peaks.
 
-This method was applied to four test images of varying breast densities, contrast, abnormalities, and diagnoses. {numref}`threshold_triangle_fig` shows the original images (a)-(d), the binary images (e)-(h), the segmentation results (i)-(l), and the triangle histograms with thresholds annotated (m)-(p).
+### ISODATA Method
 
-```{code-cell} ipython3
-:tags: [remove-input, remove-output]
-
-analyzer = ThresholdTriangleAnalyzer()
-threshold = ThresholdTriangle()
-fig = analyzer.analyze(images=images, threshold=threshold)
-
-glue("threshold_triangle", fig)
-```
-
-```{glue:figure} threshold_triangle
----
-align: center
-name: threshold_triangle_fig
----
-Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)
-```
-
-Several observations can be made. First, all images had the same threshold $T=2$, despite varying levels of contrast, illumination, and breast density. Second, at $T=2$, we have little to no artifact removal as their pixel intensities are not distinguished from other foreground structures. Overall, the algorithm effectively distinguished the breast tissue from the background with no apparent loss of information.
-
-## ISOData Method
-
-The ISOData method is an iterative approach based upon the ISODATA algorithm {cite}`ridlerPictureThresholdingUsing1978` and is commonly used in biomedical imaging.
+The ISODATA method is an iterative approach based upon the Iterative Self-Organizing Data Analysis algorithm (ISODATA) algorithm {cite}`ridlerPictureThresholdingUsing1978` and is commonly used in biomedical imaging.
 
 In general, it first assigns an initial threshold $T$, usually the average of the pixel intensities in the image. The second step classifies each pixel to the closest class. In the third step, the mean values $\mu_1$ and $\mu_2$ for each class are estimated using a Gaussian distribution. Next, a new threshold is selected as the average of $\mu_1$ and $\mu_2$ {cite}`zaartImagesThresholdingUsing2010`.  Steps two and three are repeated until the change in threshold is less than a predesignated parameter.
 
-```{code-cell} ipython3
-:tags: [remove-input, remove-output]
+An advantage of the ISOData method is that one doesn't need to know much about the properties of the image in advance.  On the other hand, the ISODATA algorithm assumes a symmetric Gaussian pixel distribution and may not perform well with images with a non-symmetric histogram. It can also be time-consuming and computationally expensive for large images.
 
-analyzer = ThresholdAnalyzer()
-threshold = ThresholdISOData()
-fig = analyzer.analyze(images=images, threshold=threshold)
+### OTSU's Method
 
-glue("threshold_isodata", fig)
+Otsu's Method {cite}`otsuThresholdSelectionMethod1979`  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as $\sigma^2_w(t)$. Let’s build this from the bottom up.
+The Otsu method initializes the threshold $t=0$, then computes the image histogram and probabilities of each intensity level $p(i)$ denoted as:
+
+```{math}
+:label: otsu_prob
+p(i) = \frac{n_i}{n}
 ```
 
-```{glue:figure} threshold_isodata
----
-align: center
-name: threshold_isodata_fig
----
-ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+where  $i$ is a pixel intensity level, $n_i$ is the number of pixels with intensity level $i$, and $n$ is the total number of pixels.
+Next, the image is split into two classes: $C_0$  containing all pixels with intensity in the range [0,t), and $C_1$ which contains all pixels with intensity in the range [t, L], where L is the number of bins in the histogram.
+The next step is to obtain weights for $C_0, and $C_1$, denoted $w_0(t)$ and $w_1(t)$, respectively.
+
+```{math}
+:label: otsu_weights
+w_0(t) = \sum_{i=0}^{t-1} p(i),
+w_1(t) = \sum_{i=t}^{L-1} p(i),
 ```
 
-## OTSU's Method
+Next, the means for $C_0$ and $C_1$, denoted $\mu_0$ and $\mu_1$, respectively:
 
-```{code-cell} ipython3
-:tags: [remove-input, remove-output]
-
-analyzer = ThresholdAnalyzer()
-threshold = ThresholdOTSU()
-fig = analyzer.analyze(images=images, threshold=threshold)
-
-glue("threshold_otsu", fig)
+```{math}
+:label: otsu_means
+\mu_0(t) = \frac{\sum_{i=0}^{t-1} ip(i)}{w_0{t}},
+\mu_1(t) = \frac{\sum_{i=t}^{L-1} ip(i)}{w_1{t}},
 ```
 
-```{glue:figure} threshold_otsu
----
-align: center
-name: threshold_otsu_fig
----
-OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+Now, we compute the weighted variance of each class, denoted as $\sigma_0^2$, and $\sigma_1^2$:
+
+```{math}
+:label: otsu_cvar
+\sigma_0^2(t) = \sum{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)}
+\sigma_1^2(t) =  \sum{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}
 ```
+
+From {cite}`otsuThresholdSelectionMethod1979`  we have two options to find the threshold. The first is to minimize intra-class variance as follows:
+
+```{math}
+:label: otsu_ivar
+\sigma_w^2(t) =w_0(t)\sigma^2_0(t)+w_1(t)\sigma^2_1(t).
+```
+
+The second method is to maximize inter-class variance as follows:
+
+```{math}
+:label: otsu_bvar
+\sigma_b^2(t) =w_0(t)w_1(t)[\mu_0(t)-\mu_1(t)]^2
+```
+
+Hence, the general algorithm for minimizing the intra-class variance is given by:
+
+1. Initialize threshold $t=0$
+2. Calculate the histogram and intensity level probabilities $p(i)$
+3. Initialize $w_0(0)$ and $w_1(0)$
+4. FOR t in range (0,L-1)
+   - Update values of $w_i,\mu_i,$ where $w_i$ is the weighted probability and $\mu_i$ is the mean of class $i$.
+   - Calculate the intra-class variance value $\sigma_w^2(t)$
+5. The final threshold is that which minimizes $\sigma_w^2(t)$
+
+The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks {cite}`kittlerThresholdSelectionUsing1985`.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method {cite}`kittlerMinimumErrorThresholding1986`.
 
 ## Li's Minimum Cross-Entropy Method
 
