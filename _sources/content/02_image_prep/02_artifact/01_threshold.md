@@ -104,7 +104,7 @@ Sezgin and Sankur {cite}sankurSurveyImageThresholding2004 cast the space of auto
 
 [^thresholds]: For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}otsuThresholdSelectionMethod1979 can be categorized as both a histogram shape-based method and a clustering-based method.
 
-For this effort, eight automated thresholding techniques ({numref}`aut-thresh-tbl`) were selected based on the intrinsic properties of the CBIS-DDSM dataset.
+For this effort, eight automated thresholding techniques {numref}`auto-thresh-tbl` were selected based on the intrinsic properties of the CBIS-DDSM dataset.
 
 ```{table} Automated Threshold Methods
 :name: auto-thresh-tbl
@@ -119,4 +119,166 @@ For this effort, eight automated thresholding techniques ({numref}`aut-thresh-tb
 | 7 | Local                   | Adaptive Gaussian Method             | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image               |
 | 8 |                         | Adaptive Mean Method                 | Bradley, D., G. Roth 2007                            | Adapting Thresholding Using the Integral Image
 
+```
+
+## Triangle Method
+
+The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`. It is particularly well suited for images that have a pixel intensity distribution dominated by a single peak and a long tail.
+
+```{figure} ../../../figures/triangle_zack.png
+---
+name: triangle
+---
+Triangle Thresholding Method
+```
+
+{numref}`triangle` was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram to values in [0,1]. A line is then constructed between the histogram peak and the tip of the long tail. Point A is selected at the base of the histogram bin that has the maximum perpendicular distance from the ‘peak-to-tip’ line. The threshold is set to A $+\delta \ge 0$.
+
+The triangle method assumes pixel intensity distributions with a maximum peak near one end of the histogram and searches for thresholds towards the other end. Hence, this method is particularly well suited for images with highly skewed pixel intensity distributions with a single dominant peak and one or more weak peaks.
+
+This method was applied to four test images of varying breast densities, contrast, abnormalities, and diagnoses. {numref}`threshold_triangle_fig` shows the original images (a)-(d), the binary images (e)-(h), the segmentation results (i)-(l), and the triangle histograms with thresholds annotated (m)-(p).
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdTriangleAnalyzer()
+threshold = ThresholdTriangle()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_triangle", fig)
+```
+
+```{glue:figure} threshold_triangle
+---
+align: center
+name: threshold_triangle_fig
+---
+Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)
+```
+
+Several observations can be made. First, all images had the same threshold $T=2$, despite varying levels of contrast, illumination, and breast density. Second, at $T=2$, we have little to no artifact removal as their pixel intensities are not distinguished from other foreground structures. Overall, the algorithm effectively distinguished the breast tissue from the background with no apparent loss of information.
+
+## ISOData Method
+
+The ISOData method is an iterative approach based upon the ISODATA algorithm {cite}`ridlerPictureThresholdingUsing1978` and is commonly used in biomedical imaging.
+
+In general, it first assigns an initial threshold $T$, usually the average of the pixel intensities in the image. The second step classifies each pixel to the closest class. In the third step, the mean values $\mu_1$ and $\mu_2$ for each class are estimated using a Gaussian distribution. Next, a new threshold is selected as the average of $\mu_1$ and $\mu_2$ {cite}`zaartImagesThresholdingUsing2010`.  Steps two and three are repeated until the change in threshold is less than a predesignated parameter.
+
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdISOData()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_isodata", fig)
+```
+
+```{glue:figure} threshold_isodata
+---
+align: center
+name: threshold_isodata_fig
+---
+ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+## OTSU's Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer()
+threshold = ThresholdOTSU()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_otsu", fig)
+```
+
+```{glue:figure} threshold_otsu
+---
+align: center
+name: threshold_otsu_fig
+---
+OTSU's Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+## Li's Minimum Cross-Entropy Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdLi()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_li", fig)
+```
+
+```{glue:figure} threshold_li
+---
+align: center
+name: threshold_li_fig
+---
+Li's Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+## Yen's Multilevel Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdYen()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_yen", fig)
+```
+
+```{glue:figure} threshold_yen
+---
+align: center
+name: threshold_yen_fig
+---
+Yen's Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+## Adaptive Mean Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdAdaptiveMean()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_local_mean", fig)
+```
+
+```{glue:figure} threshold_local_mean
+---
+align: center
+name: threshold_local_mean_fig
+---
+Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
+```
+
+## Adaptive Gaussian Thresholding Method
+
+```{code-cell} ipython3
+:tags: [remove-input, remove-output]
+
+analyzer = ThresholdAnalyzer(show_histograms=False)
+threshold = ThresholdAdaptiveGaussian()
+fig = analyzer.analyze(images=images, threshold=threshold)
+
+glue("threshold_local_gaussian", fig)
+```
+
+```{glue:figure} threshold_local_gaussian
+---
+align: center
+name: threshold_local_gaussian_fig
+---
+Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
 ```
