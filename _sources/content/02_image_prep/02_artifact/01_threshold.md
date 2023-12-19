@@ -210,11 +210,16 @@ The Otsu method performs well when the image histogram is bimodal with a deep an
 
 ### Li's Minimum Cross-Entropy Method
 
+pending
 
 ### Yen's Multilevel Thresholding Method
 
+pending
 
 ### Adaptive Mean Thresholding Method
 
+pending
+
 ### Adaptive Gaussian Thresholding Method
 
+pending
