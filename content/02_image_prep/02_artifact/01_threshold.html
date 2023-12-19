@@ -475,13 +475,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">3.1.3. Automated Thresholding Algorithms</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISODATA Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">OTSU’s Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">Yen’s Multilevel Thresholding Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">Adaptive Mean Thresholding Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">Adaptive Gaussian Thresholding Method</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">3.1.4. Li’s Minimum Cross-Entropy Method</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">3.1.5. Yen’s Multilevel Thresholding Method</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">3.1.6. Adaptive Mean Thresholding Method</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">3.1.7. Adaptive Gaussian Thresholding Method</a></li>
 </ul>
             </nav>
         </div>
@@ -606,7 +606,7 @@ document.write(`
 <p>An advantage of the ISOData method is that one doesn’t need to know much about the properties of the image in advance.  On the other hand, the ISODATA algorithm assumes a symmetric Gaussian pixel distribution and may not perform well with images with a non-symmetric histogram. It can also be time-consuming and computationally expensive for large images.</p>
 </section>
 <section id="otsu-s-method">
-<h3>OTSU’s Method<a class="headerlink" href="#otsu-s-method" title="Permalink to this heading">#</a></h3>
+<h3>Otsu’s Method<a class="headerlink" href="#otsu-s-method" title="Permalink to this heading">#</a></h3>
 <p>Otsu’s Method <span id="id5">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">36</a>]</span>  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as <span class="math notranslate nohighlight">\(\sigma^2_w(t)\)</span>. Let’s build this from the bottom up.</p>
 <p>The Otsu method initializes the threshold <span class="math notranslate nohighlight">\(t=0\)</span>, then computes the image histogram and probabilities of each intensity level <span class="math notranslate nohighlight">\(p(i)\)</span> denoted as:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-prob">
@@ -623,8 +623,8 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 \mu_1(t) = \frac{\sum_{i=t}^{L-1} ip(i)}{w_1{t}},\end{split}\]</div>
 <p>Now, we compute the weighted variance of each class, denoted as <span class="math notranslate nohighlight">\(\sigma_0^2\)</span>, and <span class="math notranslate nohighlight">\(\sigma_1^2\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-cvar">
-<span class="eqno">(3.4)<a class="headerlink" href="#equation-otsu-cvar" title="Permalink to this equation">#</a></span>\[\begin{split}\sigma_0^2(t) = \sum{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
-\sigma_1^2(t) =  \sum{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}\end{split}\]</div>
+<span class="eqno">(3.4)<a class="headerlink" href="#equation-otsu-cvar" title="Permalink to this equation">#</a></span>\[\begin{split}\sigma_0^2(t) = \sum_{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
+\sigma_1^2(t) =  \sum_{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}\end{split}\]</div>
 <p>From <span id="id6">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">36</a>]</span>  we have two options to find the threshold. The first is to minimize intra-class variance as follows:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-ivar">
 <span class="eqno">(3.5)<a class="headerlink" href="#equation-otsu-ivar" title="Permalink to this equation">#</a></span>\[\sigma_w^2(t) =w_0(t)\sigma^2_0(t)+w_1(t)\sigma^2_1(t).\]</div>
@@ -646,47 +646,23 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 </ol>
 <p>The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks <span id="id7">[<a class="reference internal" href="../../99_references.html#id375" title="J. Kittler and J. Illingworth. On threshold selection using clustering criteria. IEEE Transactions on Systems, Man, and Cybernetics, SMC-15(5):652–655, September 1985. URL: http://ieeexplore.ieee.org/document/6313443/ (visited on 2023-12-19), doi:10.1109/TSMC.1985.6313443.">37</a>]</span>.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method <span id="id8">[<a class="reference internal" href="../../99_references.html#id376" title="J. Kittler and J. Illingworth. Minimum error thresholding. Pattern Recognition, 19(1):41–47, January 1986. URL: https://linkinghub.elsevier.com/retrieve/pii/0031320386900300 (visited on 2023-12-19), doi:10.1016/0031-3203(86)90030-0.">38</a>]</span>.</p>
 </section>
-</section>
 <section id="li-s-minimum-cross-entropy-method">
-<h2><span class="section-number">3.1.4. </span>Li’s Minimum Cross-Entropy Method<a class="headerlink" href="#li-s-minimum-cross-entropy-method" title="Permalink to this heading">#</a></h2>
-<figure class="align-center" id="threshold-li-fig">
-<img alt="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" src="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Li’s Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-li-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<h3>Li’s Minimum Cross-Entropy Method<a class="headerlink" href="#li-s-minimum-cross-entropy-method" title="Permalink to this heading">#</a></h3>
 </section>
 <section id="yen-s-multilevel-thresholding-method">
-<h2><span class="section-number">3.1.5. </span>Yen’s Multilevel Thresholding Method<a class="headerlink" href="#yen-s-multilevel-thresholding-method" title="Permalink to this heading">#</a></h2>
-<figure class="align-center" id="threshold-yen-fig">
-<img alt="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" src="../../../_images/a539ca220d42c014674ed34b4f4af402e20760191f4cf529a29193154bd7df1e.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.5 </span><span class="caption-text">Yen’s Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-yen-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<h3>Yen’s Multilevel Thresholding Method<a class="headerlink" href="#yen-s-multilevel-thresholding-method" title="Permalink to this heading">#</a></h3>
 </section>
 <section id="adaptive-mean-thresholding-method">
-<h2><span class="section-number">3.1.6. </span>Adaptive Mean Thresholding Method<a class="headerlink" href="#adaptive-mean-thresholding-method" title="Permalink to this heading">#</a></h2>
-<figure class="align-center" id="threshold-local-mean-fig">
-<img alt="../../../_images/b873d260f8472869aef2852651c8b4944724bb65648c2da52adf911db5d8687c.png" src="../../../_images/b873d260f8472869aef2852651c8b4944724bb65648c2da52adf911db5d8687c.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.6 </span><span class="caption-text">Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-mean-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<h3>Adaptive Mean Thresholding Method<a class="headerlink" href="#adaptive-mean-thresholding-method" title="Permalink to this heading">#</a></h3>
 </section>
 <section id="adaptive-gaussian-thresholding-method">
-<h2><span class="section-number">3.1.7. </span>Adaptive Gaussian Thresholding Method<a class="headerlink" href="#adaptive-gaussian-thresholding-method" title="Permalink to this heading">#</a></h2>
-<figure class="align-center" id="threshold-local-gaussian-fig">
-<img alt="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" src="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-gaussian-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<h3>Adaptive Gaussian Thresholding Method<a class="headerlink" href="#adaptive-gaussian-thresholding-method" title="Permalink to this heading">#</a></h3>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="thresholds" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method {cite}otsuThresholdSelectionMethod1979 can be categorized as both a histogram shape-based method and a clustering-based method.</p>
 </aside>
+</section>
 </section>
 </section>
 
@@ -762,13 +738,13 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">3.1.3. Automated Thresholding Algorithms</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISODATA Method</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">OTSU’s Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">Li’s Minimum Cross-Entropy Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">Yen’s Multilevel Thresholding Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">Adaptive Mean Thresholding Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">Adaptive Gaussian Thresholding Method</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#li-s-minimum-cross-entropy-method">3.1.4. Li’s Minimum Cross-Entropy Method</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#yen-s-multilevel-thresholding-method">3.1.5. Yen’s Multilevel Thresholding Method</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-mean-thresholding-method">3.1.6. Adaptive Mean Thresholding Method</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-gaussian-thresholding-method">3.1.7. Adaptive Gaussian Thresholding Method</a></li>
 </ul>
   </nav></div>
 

@@ -143,7 +143,7 @@ In general, it first assigns an initial threshold $T$, usually the average of th
 
 An advantage of the ISOData method is that one doesn't need to know much about the properties of the image in advance.  On the other hand, the ISODATA algorithm assumes a symmetric Gaussian pixel distribution and may not perform well with images with a non-symmetric histogram. It can also be time-consuming and computationally expensive for large images.
 
-### OTSU's Method
+### Otsu's Method
 
 Otsu's Method {cite}`otsuThresholdSelectionMethod1979`  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as $\sigma^2_w(t)$. Let’s build this from the bottom up.
 
@@ -178,8 +178,8 @@ Now, we compute the weighted variance of each class, denoted as $\sigma_0^2$, an
 
 ```{math}
 :label: otsu_cvar
-\sigma_0^2(t) = \sum{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
-\sigma_1^2(t) =  \sum{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}
+\sigma_0^2(t) = \sum_{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
+\sigma_1^2(t) =  \sum_{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}
 ```
 
 From {cite}`otsuThresholdSelectionMethod1979`  we have two options to find the threshold. The first is to minimize intra-class variance as follows:
@@ -208,82 +208,13 @@ Hence, the general algorithm for minimizing the intra-class variance is given by
 
 The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks {cite}`kittlerThresholdSelectionUsing1985`.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method {cite}`kittlerMinimumErrorThresholding1986`.
 
-## Li's Minimum Cross-Entropy Method
+### Li's Minimum Cross-Entropy Method
 
-```{code-cell} ipython3
-:tags: [remove-input, remove-output]
 
-analyzer = ThresholdAnalyzer(show_histograms=False)
-threshold = ThresholdLi()
-fig = analyzer.analyze(images=images, threshold=threshold)
+### Yen's Multilevel Thresholding Method
 
-glue("threshold_li", fig)
-```
 
-```{glue:figure} threshold_li
----
-align: center
-name: threshold_li_fig
----
-Li's Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
-```
+### Adaptive Mean Thresholding Method
 
-## Yen's Multilevel Thresholding Method
+### Adaptive Gaussian Thresholding Method
 
-```{code-cell} ipython3
-:tags: [remove-input, remove-output]
-
-analyzer = ThresholdAnalyzer(show_histograms=False)
-threshold = ThresholdYen()
-fig = analyzer.analyze(images=images, threshold=threshold)
-
-glue("threshold_yen", fig)
-```
-
-```{glue:figure} threshold_yen
----
-align: center
-name: threshold_yen_fig
----
-Yen's Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
-```
-
-## Adaptive Mean Thresholding Method
-
-```{code-cell} ipython3
-:tags: [remove-input, remove-output]
-
-analyzer = ThresholdAnalyzer(show_histograms=False)
-threshold = ThresholdAdaptiveMean()
-fig = analyzer.analyze(images=images, threshold=threshold)
-
-glue("threshold_local_mean", fig)
-```
-
-```{glue:figure} threshold_local_mean
----
-align: center
-name: threshold_local_mean_fig
----
-Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
-```
-
-## Adaptive Gaussian Thresholding Method
-
-```{code-cell} ipython3
-:tags: [remove-input, remove-output]
-
-analyzer = ThresholdAnalyzer(show_histograms=False)
-threshold = ThresholdAdaptiveGaussian()
-fig = analyzer.analyze(images=images, threshold=threshold)
-
-glue("threshold_local_gaussian", fig)
-```
-
-```{glue:figure} threshold_local_gaussian
----
-align: center
-name: threshold_local_gaussian_fig
----
-Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.
-```
