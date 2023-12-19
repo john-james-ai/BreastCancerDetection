@@ -13,7 +13,7 @@ kernelspec:
 # Thresholding
 
 ```{code-cell} ipython3
-:tags: [remove-input, remove-output]
+:tags: [remove-input]
 
 import os
 import os
@@ -52,7 +52,6 @@ Segmentation based on pixel intensity thresholds is justified in digital mammogr
 ## Critical Importance of Threshold
 
 The selection of the threshold critically determines the quality of the thresholding result.
-
 
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
@@ -163,7 +162,6 @@ Several observations can be made. First, all images had the same threshold $T=2$
 The ISOData method is an iterative approach based upon the ISODATA algorithm {cite}`ridlerPictureThresholdingUsing1978` and is commonly used in biomedical imaging.
 
 In general, it first assigns an initial threshold $T$, usually the average of the pixel intensities in the image. The second step classifies each pixel to the closest class. In the third step, the mean values $\mu_1$ and $\mu_2$ for each class are estimated using a Gaussian distribution. Next, a new threshold is selected as the average of $\mu_1$ and $\mu_2$ {cite}`zaartImagesThresholdingUsing2010`.  Steps two and three are repeated until the change in threshold is less than a predesignated parameter.
-
 
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
