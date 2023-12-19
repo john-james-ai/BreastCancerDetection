@@ -607,24 +607,24 @@ document.write(`
 </section>
 <section id="otsu-s-method">
 <h3>OTSU’s Method<a class="headerlink" href="#otsu-s-method" title="Permalink to this heading">#</a></h3>
-<p>Otsu’s Method <span id="id5">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">36</a>]</span>  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as <span class="math notranslate nohighlight">\(\sigma^2_w(t)\)</span>. Let’s build this from the bottom up.
-The Otsu method initializes the threshold <span class="math notranslate nohighlight">\(t=0\)</span>, then computes the image histogram and probabilities of each intensity level <span class="math notranslate nohighlight">\(p(i)\)</span> denoted as:</p>
+<p>Otsu’s Method <span id="id5">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">36</a>]</span>  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as <span class="math notranslate nohighlight">\(\sigma^2_w(t)\)</span>. Let’s build this from the bottom up.</p>
+<p>The Otsu method initializes the threshold <span class="math notranslate nohighlight">\(t=0\)</span>, then computes the image histogram and probabilities of each intensity level <span class="math notranslate nohighlight">\(p(i)\)</span> denoted as:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-prob">
 <span class="eqno">(3.1)<a class="headerlink" href="#equation-otsu-prob" title="Permalink to this equation">#</a></span>\[p(i) = \frac{n_i}{n}\]</div>
-<p>where  <span class="math notranslate nohighlight">\(i\)</span> is a pixel intensity level, <span class="math notranslate nohighlight">\(n_i\)</span> is the number of pixels with intensity level <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(n\)</span> is the total number of pixels.
-Next, the image is split into two classes: <span class="math notranslate nohighlight">\(C_0\)</span>  containing all pixels with intensity in the range [0,t), and <span class="math notranslate nohighlight">\(C_1\)</span> which contains all pixels with intensity in the range [t, L], where L is the number of bins in the histogram.
-The next step is to obtain weights for <span class="math notranslate nohighlight">\(C_0, and \)</span>C_1<span class="math notranslate nohighlight">\(, denoted \)</span>w_0(t)<span class="math notranslate nohighlight">\( and \)</span>w_1(t)$, respectively.</p>
+<p>where  <span class="math notranslate nohighlight">\(i\)</span> is a pixel intensity level, <span class="math notranslate nohighlight">\(n_i\)</span> is the number of pixels with intensity level <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(n\)</span> is the total number of pixels.</p>
+<p>Next, the image is split into two classes: <span class="math notranslate nohighlight">\(C_0\)</span>  containing all pixels with intensity in the range [0,t), and <span class="math notranslate nohighlight">\(C_1\)</span> which contains all pixels with intensity in the range [t, L], where L is the number of bins in the histogram.</p>
+<p>The next step is to obtain weights for <span class="math notranslate nohighlight">\(C_0, and \)</span>C_1<span class="math notranslate nohighlight">\(, denoted \)</span>w_0(t)<span class="math notranslate nohighlight">\( and \)</span>w_1(t)$, respectively.</p>
 <div class="math notranslate nohighlight" id="equation-otsu-weights">
-<span class="eqno">(3.2)<a class="headerlink" href="#equation-otsu-weights" title="Permalink to this equation">#</a></span>\[w_0(t) = \sum_{i=0}^{t-1} p(i),
-w_1(t) = \sum_{i=t}^{L-1} p(i),\]</div>
+<span class="eqno">(3.2)<a class="headerlink" href="#equation-otsu-weights" title="Permalink to this equation">#</a></span>\[\begin{split}w_0(t) = \sum_{i=0}^{t-1} p(i), \\
+w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <p>Next, the means for <span class="math notranslate nohighlight">\(C_0\)</span> and <span class="math notranslate nohighlight">\(C_1\)</span>, denoted <span class="math notranslate nohighlight">\(\mu_0\)</span> and <span class="math notranslate nohighlight">\(\mu_1\)</span>, respectively:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-means">
-<span class="eqno">(3.3)<a class="headerlink" href="#equation-otsu-means" title="Permalink to this equation">#</a></span>\[\mu_0(t) = \frac{\sum_{i=0}^{t-1} ip(i)}{w_0{t}},
-\mu_1(t) = \frac{\sum_{i=t}^{L-1} ip(i)}{w_1{t}},\]</div>
+<span class="eqno">(3.3)<a class="headerlink" href="#equation-otsu-means" title="Permalink to this equation">#</a></span>\[\begin{split}\mu_0(t) = \frac{\sum_{i=0}^{t-1} ip(i)}{w_0{t}}, \\
+\mu_1(t) = \frac{\sum_{i=t}^{L-1} ip(i)}{w_1{t}},\end{split}\]</div>
 <p>Now, we compute the weighted variance of each class, denoted as <span class="math notranslate nohighlight">\(\sigma_0^2\)</span>, and <span class="math notranslate nohighlight">\(\sigma_1^2\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-cvar">
-<span class="eqno">(3.4)<a class="headerlink" href="#equation-otsu-cvar" title="Permalink to this equation">#</a></span>\[\sigma_0^2(t) = \sum{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)}
-\sigma_1^2(t) =  \sum{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}\]</div>
+<span class="eqno">(3.4)<a class="headerlink" href="#equation-otsu-cvar" title="Permalink to this equation">#</a></span>\[\begin{split}\sigma_0^2(t) = \sum{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
+\sigma_1^2(t) =  \sum{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}\end{split}\]</div>
 <p>From <span id="id6">[<a class="reference internal" href="../../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">36</a>]</span>  we have two options to find the threshold. The first is to minimize intra-class variance as follows:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-ivar">
 <span class="eqno">(3.5)<a class="headerlink" href="#equation-otsu-ivar" title="Permalink to this equation">#</a></span>\[\sigma_w^2(t) =w_0(t)\sigma^2_0(t)+w_1(t)\sigma^2_1(t).\]</div>

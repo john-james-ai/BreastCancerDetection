@@ -146,6 +146,7 @@ An advantage of the ISOData method is that one doesn't need to know much about t
 ### OTSU's Method
 
 Otsu's Method {cite}`otsuThresholdSelectionMethod1979`  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as $\sigma^2_w(t)$. Let’s build this from the bottom up.
+
 The Otsu method initializes the threshold $t=0$, then computes the image histogram and probabilities of each intensity level $p(i)$ denoted as:
 
 ```{math}
@@ -154,12 +155,14 @@ p(i) = \frac{n_i}{n}
 ```
 
 where  $i$ is a pixel intensity level, $n_i$ is the number of pixels with intensity level $i$, and $n$ is the total number of pixels.
+
 Next, the image is split into two classes: $C_0$  containing all pixels with intensity in the range [0,t), and $C_1$ which contains all pixels with intensity in the range [t, L], where L is the number of bins in the histogram.
+
 The next step is to obtain weights for $C_0, and $C_1$, denoted $w_0(t)$ and $w_1(t)$, respectively.
 
 ```{math}
 :label: otsu_weights
-w_0(t) = \sum_{i=0}^{t-1} p(i),
+w_0(t) = \sum_{i=0}^{t-1} p(i), \\
 w_1(t) = \sum_{i=t}^{L-1} p(i),
 ```
 
@@ -167,7 +170,7 @@ Next, the means for $C_0$ and $C_1$, denoted $\mu_0$ and $\mu_1$, respectively:
 
 ```{math}
 :label: otsu_means
-\mu_0(t) = \frac{\sum_{i=0}^{t-1} ip(i)}{w_0{t}},
+\mu_0(t) = \frac{\sum_{i=0}^{t-1} ip(i)}{w_0{t}}, \\
 \mu_1(t) = \frac{\sum_{i=t}^{L-1} ip(i)}{w_1{t}},
 ```
 
@@ -175,7 +178,7 @@ Now, we compute the weighted variance of each class, denoted as $\sigma_0^2$, an
 
 ```{math}
 :label: otsu_cvar
-\sigma_0^2(t) = \sum{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)}
+\sigma_0^2(t) = \sum{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
 \sigma_1^2(t) =  \sum{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}
 ```
 
