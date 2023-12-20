@@ -16,7 +16,6 @@ kernelspec:
 :tags: [remove-input]
 
 import os
-import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../../..")))
 
