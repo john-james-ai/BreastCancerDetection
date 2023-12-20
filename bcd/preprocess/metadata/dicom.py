@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Saturday October 28th 2023 10:57:31 pm                                              #
+# Modified   : Tuesday December 19th 2023 08:00:48 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -77,7 +77,9 @@ class DicomPrep(DataPrep):
         if result:
             return pd.read_csv(dicom_fp)
 
-    def merge_case_data(self, case_fp: str, dicom_fp: str, xref_fp: str, dicom_out_fp: str) -> None:
+    def merge_case_data(
+        self, case_fp: str, dicom_fp: str, xref_fp: str, dicom_out_fp: str
+    ) -> None:
         """Merges case data into the DICOM metadata
 
         Args:
@@ -91,7 +93,9 @@ class DicomPrep(DataPrep):
             "left_or_right_breast",
             "image_view",
             "abnormality_type",
+            "abnormality_id",
             "assessment",
+            "subtlety",
             "breast_density",
             "calc_type",
             "calc_distribution",
@@ -148,6 +152,16 @@ class DicomPrep(DataPrep):
                     filtered_filepaths.append(filepath)
         return filtered_filepaths
 
+    def _extract_dicom_data(self, filepaths: list, n_jobs: int = 6) -> pd.DataFrame:
+        """Extracts dicom data and returns a DataFrame."""
+        dicom_data = joblib.Parallel(n_jobs=n_jobs)(
+            joblib.delayed(self._read_dicom_data)(filepath)
+            for filepath in tqdm(filepaths)
+        )
+        dicom_data = pd.DataFrame(data=dicom_data)
+
+        return dicom_data
+
     def _read_dicom_data(self, filepath) -> dict:
         """Reads dicom data from a file."""
 
@@ -175,12 +189,3 @@ class DicomPrep(DataPrep):
         dcm_data["std_pixel_value"] = np.std(img, axis=None)
 
         return dcm_data
-
-    def _extract_dicom_data(self, filepaths: list, n_jobs: int = 6) -> pd.DataFrame:
-        """Extracts dicom data and returns a DataFrame."""
-        dicom_data = joblib.Parallel(n_jobs=n_jobs)(
-            joblib.delayed(self._read_dicom_data)(filepath) for filepath in tqdm(filepaths)
-        )
-        dicom_data = pd.DataFrame(data=dicom_data)
-
-        return dicom_data

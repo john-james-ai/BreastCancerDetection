@@ -19,7 +19,7 @@ logging:
     console:
       class: logging.StreamHandler
       formatter: console
-      level: DEBUG
+      level: INFO
       stream: ext://sys.stderr
     file:
       backupCount: 0

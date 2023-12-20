@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Sunday December 17th 2023 04:28:18 pm                                               #
+# Modified   : Wednesday December 20th 2023 04:53:42 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -55,7 +55,7 @@ def mode():
 # ------------------------------------------------------------------------------------------------ #
 #                             SET LOGGING LEVEL TO DEBUG                                           #
 # ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session", autouse=False)
 def log_level():
     """Sets the log level to DEBUG"""
     prior_level = Config.get_log_level()
@@ -120,3 +120,15 @@ def images():
     img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
 
     return [img1, img2, img3, img4]
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                        IMAGE META                                                #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="module", autouse=False)
+def image_meta():
+    """Returns a dictionary containing a randomly selected case from the DICOM metadata dataset."""
+    df = pd.read_csv(IMAGE_FP)
+    s = df.sample(n=1)
+    s = s.squeeze()
+    return s.to_dict()
