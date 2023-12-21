@@ -30,17 +30,34 @@ from bcd.explore.image.eda_image import ImageExplorer
 warnings.filterwarnings("ignore")
 ```
 
+## Summary
+
+The CBIS-DDSM contains a total of 3565 full mammography images, not counting a case for which the DICOM file was corrupt {numref}`edai_summary_fig`.
+
 ```{code-cell} ipython3
 :tags: [remove-input, remove-output]
 x = ImageExplorer()
-ax = x.summary()
-glue("edai_summary", ax)
+ax, stats = x.summary()
+glue("edai_summary_ax", ax)
+glue("edai_summary_stats", stats)
 ```
 
-```{glue:figure} edai_summary
+```{glue:figure} edai_summary_ax
 ---
 align: center
 name: edai_summary_fig
 ---
-CBIS-DDSM Dataset Summary
+**CBIS-DDSM Dataset Summary**: A total of 3565 total mammography images with a 80/20 train test split.
 ```
+
+As indicated in {numref}`edai_summary_stats_fig`, approximately 40% of the cases were malignant.
+
+```{glue:figure} edai_summary_stats
+---
+align: center
+name: edai_summary_stats_fig
+---
+CBIS-DDSM Dataset Stats
+```
+
+Class imbalance can lead to biased predictions. Augmenting the malignant class with various transformations will mitigate bias induced by class imbalance.
