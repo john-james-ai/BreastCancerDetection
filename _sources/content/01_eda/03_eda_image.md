@@ -22,7 +22,7 @@ In this section, we conduct an exploratory data analysis of the CBIS-DDSM full m
 
 import os
 if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../../../..")))
+    os.chdir(os.path.abspath(os.path.join("../../..")))
 
 from myst_nb import glue
 import warnings
