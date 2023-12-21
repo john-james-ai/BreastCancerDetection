@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 2nd 2023 08:22:42 am                                                 #
-# Modified   : Monday November 6th 2023 12:16:14 am                                                #
+# Modified   : Wednesday December 20th 2023 05:17:09 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -28,8 +28,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 
-from bcd.analyze.explore.multivariate.pipeline import PipelineBuilder
-from bcd.analyze.explore.multivariate.selection import ModelSelector
+from bcd.explore.meta.multivariate.pipeline import PipelineBuilder
+from bcd.explore.meta.multivariate.selection import ModelSelector
 
 CASE_FP = os.path.abspath("data/meta/3_cooked/cases.csv")
 # ------------------------------------------------------------------------------------------------ #
@@ -115,7 +115,9 @@ class TestModelSelector:  # pragma: no cover
         # Add Logistic Regression
         c = [1.0, 0.5, 0.1]
         classifier = LogisticRegression(random_state=5)
-        params = [{"clf__penalty": ["l1", "l2"], "clf__C": c, "clf__solver": ["liblinear"]}]
+        params = [
+            {"clf__penalty": ["l1", "l2"], "clf__C": c, "clf__solver": ["liblinear"]}
+        ]
         pb.set_classifier(classifier=classifier, params=params)
         pb.set_scorer(scorer="accuracy")
         pb.build_gridsearch_cv()
@@ -141,7 +143,9 @@ class TestModelSelector:  # pragma: no cover
         selector = ModelSelector(filepath="tests/data/best_model.pkl")
         selector.add_pipeline(pipeline=lr, name="Logistic Regression")
         selector.add_pipeline(pipeline=svc, name="Support Vector Classifier")
-        selector.run(X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, force=True)
+        selector.run(
+            X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, force=True
+        )
         y_pred = selector.predict(X)
         selector.score(y_true=y, y_pred=y_pred)
         clf = selector.best_estimator
