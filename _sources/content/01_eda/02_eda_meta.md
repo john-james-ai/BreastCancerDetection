@@ -376,13 +376,13 @@ A BI-RADS assessment is based upon a thorough evaluation of the mammographic fea
 
 fig, ax = plt.subplots(figsize=(12,4))
 ax = cases.plot.countplot(x='assessment', ax=ax, title ="Distribution of BI-RADS Assessment in CBIS-DDSM", plot_counts=True)
-glue("eda1_univariate_birads", ax)
+glue("eda1_univariate_birads_plot", ax)
 ```
 
-```{glue:figure} eda1_univariate_birads
+```{glue:figure} eda1_univariate_birads_plot
 ---
 align: center
-name: eda1_univariate_birads_fig
+name: eda1_univariate_birads_plot_fig
 ---
 Distribution of BI-RADS Assessment in CBIS-DDSM
 ```
