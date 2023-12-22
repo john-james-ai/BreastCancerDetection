@@ -21,16 +21,12 @@ In this section, we conduct an exploratory data analysis of the CBIS-DDSM Case a
 2. Explore the nature of the relationships between the features and the diagnostic target.
 3. Identify features that have the greatest influence classification accuracy.
 
-## The Datasets
+## The Dataset
 
-This analysis will involve the following datasets:
+In this section, we will be analyzing the Case Dataset: calcification and mass datasets containing patient, abnormality, BI-RADS assessment, image image_view, breast density, subtlety, and pathology (diagnosis) information. The dataset dictionary is outlined in {numref}`eda1_case_dataset`.
 
-- Case Dataset: Calcification and mass datasets containing patient, abnormality, BI-RADS assessment, image image_view, breast density, subtlety, and pathology (diagnosis) information.
-- DICOM Dataset: Contains image properties, i.e., image size, shape, bit-depth, aspect ratio, and photometric interpretation.
-- DICOM Images: The mammography, ROI masks, and cropped images in DICOM format.
-
-
-### Case Dataset Dictionary
+```{table} Case Dataset Dictionary
+:name: eda1_case_dataset
 
 | #  | Variable             | Type        | Description                                                                                                                  |
 |----|----------------------|-------------|------------------------------------------------------------------------------------------------------------------------------|
@@ -50,37 +46,11 @@ This analysis will involve the following datasets:
 | 14 | fileset              | Nominal     | Indicates training or test set.                                                                                              |
 | 15 | case_id              | Nominal     | Unique identifier for the case.                                                                                              |
 | 16 | cancer               | Dichotomous | Indicates whether the cancer is diagnosed.                                                                                   |
+```
 
-As described in the prior section, compound morphological categories for calc_type, calc_distribution, mass_shape, and mass_margins, were separated into unary categories and dummy encoded.
+## Guiding Questions
 
-### DICOM Dataset Dictionary
-
-| #  | Variable                   | Type        | Description                                                               |
-|----|----------------------------|-------------|---------------------------------------------------------------------------|
-| 1  | series_uid                 | Nominal     | Unique identifier for a series of images.                                 |
-| 2  | filepath                   | Nominal     | The path to the image.                                                    |
-| 3  | patient_id                 | Nominal     | Unique identifier for each patient.                                       |
-| 4  | side                       | Nominal     | Which breast was imaged.                                                  |
-| 5  | image_view                 | Dichotomous | Either cranialcaudal or mediolateral oblique image_view.                         |
-| 6  | photometric_interpretation | Nominal     | Intended interpretation of the pixel data.                                |
-| 7  | samples_per_pixel          | Discrete    | Number of samples (planes) in this image.                                 |
-| 8  | height                     | Discrete    | Number of rows in the image.                                              |
-| 9  | width                      | Discrete    | Number of columns in the image.                                           |
-| 10 | size                       | Discrete    | Number of pixels in the image.                                            |
-| 11 | aspect_ratio               | Continuous  | Ratio of vertical and horizontal size.                                    |
-| 12 | bit_depth                       | Discrete    | Number of bit_depth stored for each pixel sample.                              |
-| 13 | min_pixel_value       | Discrete    | The minimum actual pixel value encountered in the image.                  |
-| 14 | largest_image_pixel        | Discrete    | The maximum actual pixel value encountered in the image.                  |
-| 15 | range_pixel_values          | Discrete    | Difference between largest and smallest image pixel.                      |
-| 16 | series_description         | Nominal     | Whether the series contains full mammography, ROI mask, or cropped images. |
-
-The DICOM dataset also includes case data for each DICOM series.
-
-## Approach
-
-### Guiding Questions
-
-```{tip} On Guiding Questions...
+```{tip}
 “Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.” — John Tukey
 ```
 
@@ -91,7 +61,7 @@ Here, we'll put forward a set of questions to motivate and guide the discovery p
 3. Are certain abnormalities more or less subtle?
 4. What are the relative features of importance concerning screening?
 
-### Exploratory Data Analysis Plan
+## Exploratory Data Analysis Plan
 
 The EDA will be conducted in three primary stages:
 
@@ -99,21 +69,7 @@ The EDA will be conducted in three primary stages:
 2. **Bivariate**: Evaluate the relations among the features and between the features and the target.
 3. **Multivariate**: Discover feature importance w.r.t. screening and diagnosis.
 
-The section table of contents is as follows:
-
-```{tableofcontents}
-```
-
 +++ {"tags": ["remove-output", "hide-input"]}
-
-**Preliminaries**
-
-The section has the following python package dependencies:
-- **Pandas**: Tabular data processing and analysis
-- **Numpy**: Numerical processing
-- **Matplotlib** and **Seaborn**: Data visualization
-- **Scipy**: Statistical analysis
-- **StudioAI**: Data visualization and statistical analysis
 
 ```{code-cell}
 :tags: [remove-cell, hide-input]
@@ -121,13 +77,13 @@ The section has the following python package dependencies:
 import sys
 import os
 if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../../..")))
+    os.chdir(os.path.abspath(os.path.join("../../../..")))
 import warnings
 warnings.filterwarnings("ignore")
 ```
 
 ```{code-cell}
-:tags: [remove-output, hide-input]
+:tags: [hide-input]
 
 import pandas as pd
 from scipy import stats
@@ -157,7 +113,7 @@ CASE_FP = "data/meta/3_cooked/cases.csv"
 ```
 
 ```{code-cell}
-:tags: [hide-cell, hide-input]
+:tags: [hide-input]
 
 cases = CaseExplorer(filepath=CASE_FP)
 calc = CaseExplorer(df=cases.get_calc_data())
@@ -166,16 +122,23 @@ mass = CaseExplorer(df=cases.get_mass_data())
 
 +++ {"tags": ["hide-input"]}
 
-## Case EDA
-This stage will comprise univariate, bivariate, and multivariate analyses of the case data.
-### Case Univariate Analysis
+## Univariate Analysis
+
 Let's get an overall sense of the data.
 
 ```{code-cell}
-:tags: [hide-cell, hide-input]
+:tags: [remove-output]
 
 summary = cases.summary()
-summary
+glue("eda1_summary", summary)
+```
+
+```{glue:figure} eda1_summary
+---
+align: center
+name: eda1_summary_df
+---
+CBIS-DDSM Dataset Summary
 ```
 
 ```{code-cell}
@@ -189,29 +152,40 @@ pct_calc_bn = round(st['Calcification Cases - Benign'] / st['Calcification Cases
 pct_mass_mal = round(st['Mass Cases - Malignant'] / st['Mass Cases'] * 100,2).values[0]
 pct_mass_bn = round(st['Mass Cases - Benign'] / st['Mass Cases'] * 100,2).values[0]
 cases_per_patient = round(st['Cases'] / st['Patients'],2).values[0]
-msg = f"Key Observations\n"
-msg += f"1.\tThe number of patients, {st['Patients'].values[0]} comports with the TCIA data description.\n"
-msg += f"2.\tWe have {st['Cases'].values[0]} cases, {pct_calc}% are calcification cases and {pct_mass}% are mass cases.\n"
-msg += f"3.\tOf the calcification cases, {pct_calc_bn}% are benign, {pct_calc_mal} or malignant.\n"
-msg += f"4.\tOf the mass cases, {pct_mass_bn}% are benign, {pct_mass_mal} or malignant.\n"
-msg += f"5\tOn average we have approximately {cases_per_patient} cases per patient."
-print(msg)
+
+glue("pct_calc", pct_calc)
+glue("pct_mass", pct_mass)
+glue("pct_calc_mal", pct_calc_mal)
+glue("pct_calc_bn", pct_calc_bn)
+glue("pct_mass_mal", pct_mass_mal)
+glue("pct_mass_bn", pct_mass_bn)
+glue("cases_per_patient", cases_per_patient)
 ```
 
-+++ {"tags": ["hide-input"]}
+From {numref}`eda1_summary_df`, several observations can be made:
+
+1. We have 3566 cases, {glue:}`pct_calc`% are calcification cases and {glue:}`pct_mass`% are mass cases.
+2. Of the calcification cases, {glue:}`pct_calc_bn`% are benign and {glue:}`pct_calc_mal`% are malignant.
+3. Of the mass cases, {glue:}`pct_mass_bn`% are benign and {glue:}`pct_mass_mal`% are malignant.
+4. On average, we have approximately {glue:}`cases_per_patient` cases per patient.
+
+Case, as defined in {cite}`leeCuratedMammographyData2017`, indicates a particular abnormality, seen on the craniocaudal (CC) and/or mediolateral oblique (MLO) views.
+
++++
 
 Let's take a look at the calcification and mass data.
 
 ```{code-cell}
-:tags: [hide-cell, hide-input]
+:tags: [hide-input]
 
 cases.get_calc_data().sample(5)
 cases.get_mass_data().sample(5)
 ```
 
-+++ {"tags": ["hide-input"]}
++++
 
 Our univariate analysis will cover:
+
 - Breast Density
 - Left or Right Breast
 - Image View
@@ -226,9 +200,10 @@ Our univariate analysis will cover:
 - Pathology
 - Cancer (Target)
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Breast Density
+### Breast Density
+
 Radiologists classify breast density using a 4-level density scale {cite}`americancollegeofradiologyACRBIRADSAtlas2013`:
 
 1. Almost entirely fatty
@@ -239,62 +214,95 @@ Radiologists classify breast density using a 4-level density scale {cite}`americ
 Note: the corresponding BI-RADS breast density categories are a, b, c, and d (not 1,2,3, and 4 as listed above) so as not to be confused with the BI-RADS assessment categories. Notwithstanding, CBIS-DDSM data encodes these values as ordinal numeric variables.   The following chart illustrates the distribution of BI-RADS breast density categories within the CBIS-DDSM.
 
 ```{code-cell}
-:tags: [hide-cell, remove-output, hide-input]
+:tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='breast_density', ax=ax, title ="Distribution of Breast Density in CBIS-DDSM", plot_counts=True)
+ax = cases.plot.countplot(x='breast_density', ax=ax, title ="Distribution of Breast Density in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_breast_density", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_breast_density
+---
+align: center
+name: eda1_univariate_breast_density_fig
+---
+Breast Density Distribution in the CBIS-DDSM dataset.
+```
 
-#### Left or Right Side
++++
+
+### Left or Right Side
 
 ```{code-cell}
-:tags: [hide-cell, remove-output, hide-input]
+:tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='left_or_right_breast', ax=ax, title ="Distribution of Left/Right Breasts in CBIS-DDSM", plot_counts=True)
+ax = cases.plot.countplot(x='left_or_right_breast', ax=ax, title ="Distribution of Left/Right Breasts in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_breast_density", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_breast_density
+---
+align: center
+name: eda1_univariate_breast_density_fig
+---
+Breast Density Distribution in the CBIS-DDSM dataset.
+```
 
 The dataset is approximately balanced with respect to left or right breast images.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Image View
+### Image View
+
 CBIS-DDSM contains digital mammography images in two different image_views: cranial-caudal (CC) and mediolateral oblique (MLO). The CC image_view is taken from above the breast, and best visualizes the subarcolar, central, medial, and posteromedial aspects of the breast. The MLO projection (side-image_view) images the breast in its entirety and best visualizes the posterior and upper-outer quadrants of the breast {cite}`lilleMammographicImagingPractical2019`.
 
 ```{code-cell}
-:tags: [hide-cell, remove-output, hide-input]
+:tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='image_view', ax=ax, title ="Distribution of Image View in CBIS-DDSM", plot_counts=True)
+ax = cases.plot.countplot(x='image_view', ax=ax, title ="Distribution of Image View in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_view", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_view
+---
+align: center
+name: eda1_univariate_view_fig
+---
+CBIS-DDSM Image Views
+```
 
 The proportions of CC and MLO image_views are approximately 47% and 53% respectively.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Abnormality Id
+### Abnormality Id
+
 The abnormality id is a sequence number assigned to each abnormality for a patient.
 
 ```{code-cell}
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='abnormality_id', ax=ax, title ="Distribution of Abnormality Counts per Patient in CBIS-DDSM", plot_counts=True)
+ax = cases.plot.countplot(x='abnormality_id', ax=ax, title ="Distribution of Abnormality Counts per Patient in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_ab_id", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_ab_id
+---
+align: center
+name: eda1_univariate_ab_id_fig
+---
+Distribution of Abnormality Counts per Patient in CBIS-DDSM
+```
 
 The vast majority of patients present with a single abnormality; although, a considerable number have two or more.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Abnormality Type
+### Abnormality Type
+
 CBIS-DDSM contains two abnormality types: calcification and mass.
 
 Calcifications, common on mammograms, especially after age 50, are calcium deposits within the breast tissue. Typically benign, calcifications show up as either macrocalcifications or microcalcifications. Macrocalcifications appear as large white dots or dashes which are almost always noncancerous, requiring no further testing or follow-up. Microcalcifications show up as fine, white specks, similar to grains of salt. Usually noncancerous, but certain patterns can be an early sign of cancer.
@@ -307,30 +315,50 @@ As shown below, the dataset contains a balance of calcification and mass cases.
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='abnormality_type', ax=ax, title ="Distribution of Abnormality Types in CBIS-DDSM", plot_counts=True)
+ax = cases.plot.countplot(x='abnormality_type', ax=ax, title ="Distribution of Abnormality Types in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_ab_type", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_ab_type
+---
+align: center
+name: eda1_univariate_ab_type_fig
+---
+Distribution of Abnormality Types in CBIS-DDSM
+```
 
-#### Subtlety
++++
+
+### Subtlety
+
 Subtlety is a measure of the degree to which a particular case is difficult to diagnose. Values range from 1 (highly subtle) to 5 (obvious).
 
 ```{code-cell}
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='subtlety', ax=ax, title ="Distribution of Subtlety in CBIS-DDSM", plot_counts=True)
+ax = cases.plot.countplot(x='subtlety', ax=ax, title ="Distribution of Subtlety in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_subtlety", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_subtlety
+---
+align: center
+name: eda1_univariate_subtlety_fig
+---
+Distribution of Subtlety in CBIS-DDSM
+```
 
 Approximately 17% of the cases are highly subtle (1,2). A plurality of cases are moderately to slightly subtle and nearly a 1/3rd of the cases are considered obvious.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### BI-RADS Assessment
+### BI-RADS Assessment
+
 A BI-RADS assessment is based upon a thorough evaluation of the mammographic features of concern and has the following six categories {cite}`americancollegeofradiologyACRBIRADSAtlas2013`:
 
+```{table} BI-RADS Assessment
+:name: eda1_univariate_birads
 | Category | Definition                                                                                                                                                         |
 |----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 0        | Means the findings are unclear. The radiologist will need more images to determine a score                                                                       |
@@ -341,19 +369,32 @@ A BI-RADS assessment is based upon a thorough evaluation of the mammographic fea
 | 5        | Means cancer is highly suspected. Findings have a 95% chance or higher of being cancerous.                                                                       |
 | 6        | Cancer was previously diagnosed using a biopsy.
                                                                                                                   |
+```
 
 ```{code-cell}
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='assessment', ax=ax, title ="Distribution of BI-RADS Assessment in CBIS-DDSM", plot_counts=True)
+ax = cases.plot.countplot(x='assessment', ax=ax, title ="Distribution of BI-RADS Assessment in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_birads", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_birads
+---
+align: center
+name: eda1_univariate_birads_fig
+---
+Distribution of BI-RADS Assessment in CBIS-DDSM
+```
 
-#### Calcification Type
++++
+
+### Calcification Type
+
 Calcification type describes the morphology of a case and is the most important factor in the differentiation between benign and malignant cases. There are over 40 different categories of calc_type in the dataset; and, the some of the main categories are {cite}`americancollegeofradiologyACRBIRADSAtlas2013`:
 
+```{table} BI-RADS Assessment
+:name: eda1_univariate_calc_type
 | #  | Morphology            |                                                                                                                | Assessment     |
 |----|-----------------------|----------------------------------------------------------------------------------------------------------------|----------------|
 | 1  | Amorphous             | Indistinct calcifications, without clearly defined shape, small and/or   hazy in appearance                    | BI-RADS 4B     |
@@ -368,22 +409,32 @@ Calcification type describes the morphology of a case and is the most important 
 | 10 | Punctate              | Round calcifications 0.5-1 mm in size.                                                                         | BI-RADS 2,3,4  |
 | 11 | Skin                  | Skin calcifications, usually lucent-centered deposits                                                          | BI-RADS 1 or 2 |
 | 12 | Vascular              | Linear or form parallel tracks, usually associated with blood vessels.                                         | BI-RADS 1 or 2 |
+```
 
 ```{code-cell}
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,10))
-calc.plot.countplot(y='calc_type', ax=ax, title ="Distribution of Calcification Types in CBIS-DDSM", plot_counts=True, order_by_count=True)
+ax = calc.plot.countplot(y='calc_type', ax=ax, title ="Distribution of Calcification Types in CBIS-DDSM", plot_counts=True, order_by_count=True)
+glue("eda1_univariate_calc_type", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_calc_type
+---
+align: center
+name: eda1_univariate_calc_type_fig
+---
+Distribution of Calcification Types in CBIS-DDSM
+```
 
 Pleomorphic and amorphous calcifications account for over half of the calcification cases in the dataset. Nearly 75% of the calcification cases are represented by five types.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Calcification Distribution
+### Calcification Distribution
+
 Calcification distribution refers to the arrangement of the calcifications inside the breast. BI-RADS describes the following categories of calcification distribution {cite}`americancollegeofradiologyACRBIRADSAtlas2013`:
+
 1. Diffuse or Scattered: Calcifications throughout the whole breast.
 2. Regional: Scattered in a larger volume (> 2 cc) of breast tissue and not in the expected ductal distribution.
 3. Clustered: Groups of at least 5 calcifications in a small volume of tissue
@@ -393,16 +444,24 @@ Calcification distribution refers to the arrangement of the calcifications insid
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,6))
-calc.plot.countplot(y='calc_distribution', ax=ax, title ="Distribution of Calcification Distributions in CBIS-DDSM", plot_counts=True, order_by_count=True)
+ax = calc.plot.countplot(y='calc_distribution', ax=ax, title ="Distribution of Calcification Distributions in CBIS-DDSM", plot_counts=True, order_by_count=True)
+glue("eda1_univariate_calc_dist", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_calc_dist
+---
+align: center
+name: eda1_univariate_calc_dist_fig
+---
+Distribution of Calcification Distributions in CBIS-DDSM
+```
 
 Over 80% of the calfication cases have either clustered or segmental distributions.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Mass Shape
+### Mass Shape
+
 The BI-RADS lexicon defines three mass shapes {cite}`americancollegeofradiologyACRBIRADSAtlas2013`:
 1. Round
 2. Oval
@@ -414,13 +473,24 @@ The CBIS-DDSM; however, includes additional categories that further describe the
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,6))
-mass.plot.countplot(y='mass_shape', ax=ax, title ="Distribution of Mass Shapes in CBIS-DDSM", plot_counts=True, order_by_count=True)
+ax = mass.plot.countplot(y='mass_shape', ax=ax, title ="Distribution of Mass Shapes in CBIS-DDSM", plot_counts=True, order_by_count=True)
+glue("eda1_univariate_mass_shape", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_mass_shape
+---
+align: center
+name: eda1_univariate_mass_shape_fig
+---
+Distribution of Mass Shapes in CBIS-DDSM
+```
 
-#### Mass Margins
++++
+
+### Mass Margins
+
 Mass margins are features that separate the mass from the adjacent breast parenchyma. Mass margins can be {cite}`americancollegeofradiologyACRBIRADSAtlas2013`:
+
 1. Circumscribed: Low probability of malignancy.
 2. Obscured: Undetermined likelihood of malignancy.
 3. Spiculated: Higher likelihood of malignancy.
@@ -431,45 +501,72 @@ Mass margins are features that separate the mass from the adjacent breast parenc
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,6))
-mass.plot.countplot(y='mass_margins', ax=ax, title ="Distribution of Mass Margins in CBIS-DDSM", plot_counts=True, order_by_count=True)
+ax = mass.plot.countplot(y='mass_margins', ax=ax, title ="Distribution of Mass Margins in CBIS-DDSM", plot_counts=True, order_by_count=True)
+glue("eda1_univariate_mass_margins", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_mass_margins
+---
+align: center
+name: eda1_univariate_mass_margins_fig
+---
+Distribution of Mass Margins in CBIS-DDSM
+```
 
 Spiculated, circumscribed and ill-defined make up nearly 70% of the mass abnormalities.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Pathology
+### Pathology
+
 The dataset distinguishes three outcomes: malignant, benign, and benign without callback. The latter indicates that the region may be suspicious, and should be monitored, but no further investigation is required.
 
 ```{code-cell}
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='pathology', ax=ax, title ="Distribution of Pathology in CBIS-DDSM", plot_counts=True, order_by_count=True)
+ax = cases.plot.countplot(x='pathology', ax=ax, title ="Distribution of Pathology in CBIS-DDSM", plot_counts=True, order_by_count=True)
+glue("eda1_univariate_pathology", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_pathology
+---
+align: center
+name: eda1_univariate_pathology_fig
+---
+Distribution of Pathology in CBIS-DDSM
+```
 
 The majority of cases are benign; although, benign without callback represents a considerable proportion of the cases.
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Cancer
+### Cancer
+
 Here, we collapse BENIGN and BENIGN_WITHOUT_CALLBACK into a single category.
 
 ```{code-cell}
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-cases.plot.countplot(x='cancer', ax=ax, title ="Distribution of Cancer Diagnoses in CBIS-DDSM")
+ax = cases.plot.countplot(x='cancer', ax=ax, title ="Distribution of Cancer Diagnoses in CBIS-DDSM")
+glue("eda1_univariate_cancer", ax)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_univariate_cancer
+---
+align: center
+name: eda1_univariate_cancer_fig
+---
+Distribution of Cancer Diagnoses in CBIS-DDSM
+```
 
-#### Summary CBIS-DDSM Case Univariate Analysis
++++
+
+### Summary CBIS-DDSM Case Univariate Analysis
+
 Several observations can be made at this stage.
+
 1. The CBIS-DDSM is well-balanced with respect to breast density, morphology, subtlety, BI-RADS assessment, and pathology.
 2. Over 40 calcification types are represented; however, the majority of cases fall into one of five types.
 3. Similarly, there are nearly 20 categories of mass margins; yet, but most cases fall into one of the five major classes:
@@ -482,8 +579,9 @@ Next up? Bivariate analysis.
 
 +++ {"tags": ["hide-input"]}
 
-### Case Bivariate Analysis
-This bivariate analysis will comprise a dependency analysis, and an inter-dependence analysis.  The former assesses the degree to which a cancer diagnosis depends upon the values of the explanatory variables, such as breast density, type and distribution of calcifications, and the shape and margins of masses. The inter-dependence analysis explores the association between two independent variables.
+## Case Bivariate Analysis
+
+This bivariate analysis will comprise a dependency analysis and an inter-dependence analysis.  The former assesses the degree to which a cancer diagnosis depends upon the values of the explanatory variables, such as breast density, type and distribution of calcifications, and the shape and margins of masses. The inter-dependence analysis explores the association between two independent variables.
 
 ```{code-cell}
 :tags: [hide-input]
@@ -491,32 +589,44 @@ This bivariate analysis will comprise a dependency analysis, and an inter-depend
 df = cases.as_df(categorize_ordinals=True)
 ```
 
-+++ {"tags": ["hide-input"]}
++++
 
-#### Bivariate Target Variable Association Analysis
+### Bivariate Target Variable Association Analysis
 
-+++ {"tags": ["hide-input"]}
-
-##### Cancer Diagnosis by Breast Density
+#### Cancer Diagnosis by Breast Density
 
 ```{code-cell}
-:tags: [hide-input]
+:tags: [hide-input, remove-output]
 
-sns.objects.Plot(df, x='breast_density', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast Density").layout(size=(12,4), engine='tight')
+p = sns.objects.Plot(df, x='breast_density', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast Density").layout(size=(12,4), engine='tight')
+glue("eda1_bivariate_diagnosis_density", p)
 ```
 
-+++ {"tags": ["remove-output", "hide-input"]}
+```{glue:figure} eda1_bivariate_diagnosis_density
+---
+align: center
+name: eda1_bivariate_diagnosis_density_fig
+---
+Diagnosis by Breast Density
+```
 
 It's rather difficult to assess the degree to which breast density related to a diagnosis. Let's plot the relative proportions.
 
 ```{code-cell}
-:tags: [hide-input]
+:tags: [hide-input, remove-output]
 
 prop = df[['breast_density', 'cancer']].groupby(by=['breast_density']).value_counts(normalize=True).to_frame().reset_index().sort_values(by=['breast_density','cancer'])
-sns.objects.Plot(prop, x='breast_density', y='proportion', color='cancer').add(so.Bar(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast Density").layout(size=(12,4), engine='tight')
+p = sns.objects.Plot(prop, x='breast_density', y='proportion', color='cancer').add(so.Bar(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast Density").layout(size=(12,4), engine='tight')
+glue("eda1_bivariate_diagnosis_density_prop", p)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_bivariate_diagnosis_density_prop
+---
+align: center
+name: eda1_bivariate_diagnosis_density_prop_fig
+---
+Diagnosis by Breast Density
+```
 
 Breast density is considered a risk factor for breast cancer, as women with dense breasts have a higher risk of breast cancer than women with fatty breasts {cite}`DenseBreastsAnswers2018`. Notwithstanding, the CBIS-DDSM data don't reveal a strong relationship between breast density and diagnosis. Let's see if a test of association supports our inference.
 
@@ -527,22 +637,28 @@ kt = cases.stats.kendallstau(a='breast_density', b='cancer')
 print(kt)
 ```
 
-+++ {"tags": ["hide-input"]}
-
 The Kendall's Tau test measuring the association between breast density and malignancy indicated a non-significant association of weak effect, ($\phi_\tau$ = 0.01, p = 0.54).
 
-+++ {"tags": ["hide-input"]}
++++
 
-##### Cancer Diagnosis by Breast
+#### Cancer Diagnosis by Breast Side
+
 A 2022 study published in Nature {cite}`abdouLeftSidedBreast2022` suggests that breast cancer is slightly more prevalent on the left side of the body than it is on the right. Do the CBIS-DDSM data support this finding?
 
 ```{code-cell}
 :tags: [hide-input]
 
-sns.objects.Plot(df, x='left_or_right_breast', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast").layout(size=(12,4), engine='tight')
+p = sns.objects.Plot(df, x='left_or_right_breast', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast Side").layout(size=(12,4), engine='tight')
+glue("eda1_bivariate_diagnosis_side", p)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_bivariate_diagnosis_side
+---
+align: center
+name: eda1_bivariate_diagnosis_side_fig
+---
+Diagnosis by Breast Side
+```
 
 If there is a slightly greater risk of cancer in the left breast, it would not be evident in the CBIS-DDSM data.
 
@@ -553,28 +669,43 @@ cv = cases.stats.cramersv(a='left_or_right_breast', b='cancer')
 print(cv)
 ```
 
-+++ {"tags": ["hide-input"]}
-
 The chi-square test above, indicates a non-significant association of negligible effect between breast and diagnosis, ($X^2$ (1,n=3566)=2.97 p=0.08, $\phi$=.03).
 
-+++ {"tags": ["hide-input"]}
++++
 
-##### Cancer by Image View
+#### Cancer by Image View
+
 A study published in RSNA Journals {cite}`korhonenBreastCancerConspicuity2019` analyzed breast cancer conspicuity by image_view and determined that cancers were more likely to have high conspicuity in the craniocaudal (CC) than the mediolateral oblique (MLO) image_view.  Let's see what our data suggest.
 
 ```{code-cell}
 :tags: [hide-input]
 
-sns.objects.Plot(df, x='image_view', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Image View").layout(size=(12,4), engine='tight')
+p = sns.objects.Plot(df, x='image_view', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Image View").layout(size=(12,4), engine='tight')
+glue("eda1_bivariate_diagnosis_view", p)
+```
+
+```{glue:figure} eda1_bivariate_diagnosis_view
+---
+align: center
+name: eda1_bivariate_diagnosis_view_fig
+---
+Diagnosis by Image View
 ```
 
 ```{code-cell}
-:tags: [hide-input]
+:tags: [hide-input, remove-output]
 
-df[[ 'cancer', 'image_view']].groupby(by=['image_view']).value_counts(normalize=True).to_frame()
+df_cancer_by_view = df[[ 'cancer', 'image_view']].groupby(by=['image_view']).value_counts(normalize=True).to_frame()
+glue("eda1_bivariate_cancer_by_view", df_cancer_by_view)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_bivariate_cancer_by_view
+---
+align: center
+name: eda1_bivariate_cancer_by_view_fig
+---
+Diagnosis by Image View
+```
 
 Both image_views have the same proportion of malignancies suggesting no association between image image_view and the diagnosis.
 
@@ -585,28 +716,43 @@ cv = cases.stats.cramersv(a='image_view', b='cancer')
 print(cv)
 ```
 
-+++ {"tags": ["hide-input"]}
-
 The chi-square test above, indicates a non-significant association of negligible effect between image image_view and diagnosis, ($X^2$ (1,n=3566)=0.007 p=0.93, $\phi$=.002).
 
-+++ {"tags": ["hide-input"]}
++++
 
-##### Cancer by Abnormality Type
-Is abnormality type an indicator of malignancy?
+#### Cancer by Abnormality Type
+
+Are masses more or less malignant than calcifications?
 
 ```{code-cell}
 :tags: [hide-input]
 
-sns.objects.Plot(df, x='abnormality_type', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Abnormality Type").layout(size=(12,4), engine='tight')
+p = sns.objects.Plot(df, x='abnormality_type', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Abnormality Type").layout(size=(12,4), engine='tight')
+glue("eda1_bivariate_cancer_by_view)
+```
+
+```{glue:figure} eda1_bivariate_cancer_by_view
+---
+align: center
+name: eda1_bivariate_cancer_by_view_fig
+---
+Diagnosis by Abnormality Type
 ```
 
 ```{code-cell}
 :tags: [hide-input]
 
-df[[ 'cancer', 'abnormality_type']].groupby(by=['cancer']).value_counts(normalize=True).to_frame()
+df_cancer_by_ab_type = df[[ 'cancer', 'abnormality_type']].groupby(by=['cancer']).value_counts(normalize=True).to_frame()
+glue("eda1_bivariate_cancer_by_ab_type", df_cancer_by_ab_type)
 ```
 
-+++ {"tags": ["hide-input"]}
+```{glue:figure} eda1_bivariate_cancer_by_ab_type
+---
+align: center
+name: eda1_bivariate_cancer_by_ab_type_fig
+---
+Diagnosis by Abnormality Type
+```
 
 These data indicate that the probability of a malignancy is slightly higher for masses than calcifications. Is this significant?
 
@@ -617,14 +763,16 @@ cv = cases.stats.cramersv(a='abnormality_type', b='cancer')
 print(cv)
 ```
 
-+++ {"tags": ["hide-input"]}
-
 The chi-square test above, indicates a significant association of small effect between abnormality type and diagnosis, ($X^2$ (1,n=3566)=38.85 p<0.01, $\phi$=.10). More malignancies were diagnosed among the mass cases, compared to calcifications (54% vs 46%).
 
-+++ {"tags": ["hide-input"]}
++++
 
-##### BI-RADS Assessment and Cancer
+#### BI-RADS Assessment and Cancer
+
 To what degree is there (dis)agreement between the BI-RADS assessment the diagnosis. The BI-RADS assessment is an overall summary of the mammography report and has seven categories.
+
+```{table} BI-RADS Assessments
+:name: eda1_birads_assessment
 
 | Label | Description                                                                              | Likelihood of Cancer                                                        |
 | ----- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
@@ -635,6 +783,7 @@ To what degree is there (dis)agreement between the BI-RADS assessment the diagno
 | 4     | Suspicious                                                                               | Low: 2% to ≤ 10%      Moderate: > 10% to ≤ 50%       High: > 50% to < 95% |
 | 5     | Highly Suggestive of Malignancy                                                          | > 95% likelihood of malignancy                                              |
 | 6     | Known Biopsy-Proven Malignancy                                                           | NA                                                                          |
+```
 
 To what degree is there agreement between the BI-RADS assessments and diagnosis.
 

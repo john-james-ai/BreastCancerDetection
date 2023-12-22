@@ -46,22 +46,36 @@ warnings.filterwarnings("ignore")
 
 ## Overview
 
-There are 3565 full mammogram images, not counting one for which the DICOM file was corrupt. {numref}`edai_summary_fig` shows the number of images in the training and test sets by pathology.
+There are 3565 full mammogram images, not counting one for which the DICOM file was corrupt. {numref}`edai_stats_fig` shows the number of images in the training and test sets by pathology.
 
 ```{code-cell} ipython3
-:tags: [hide-cell]
+:tags: [hide-cell, remove-output]
 
 x = ImageExplorer()
-_, stats = x.summary()
+fig, stats = x.summary()
+glue("edai_stats_df)
+glue("edai_stats_plot", fig)
 ```
 
-```{code-cell} ipython3
-:tags: [hide-cell]
-
-stats
+```{glue:figure} edai_stats_plot
+---
+align: center
+name: edai_stats_plot_fig
+---
+Overview of CBIS-DDSM Training and Test Sets
 ```
 
-As shown in {numref}`eda_summary_fig` and {numref}`edai_summary_table`, we have a training test split of 80/20 where malignancy was found in approximately 40% of the cases.
+```{glue:figure} edai_stats_df
+---
+align: center
+name: edai_stats_df_fig
+---
+CBIS-DDSM Training and Test Set Statistics
+```
+
+
+
+As shown in {numref}`edai_stats_plot_fig` and {numref}`edai_stats_df_fig`, we have a training test split of 80/20 where malignancy was found in approximately 40% of the cases.
 
 Class imbalance can lead to biased predictions. Augmenting the malignant class with various transformations will mitigate bias introduced by class imbalance.
 
@@ -74,18 +88,31 @@ Optimal resolution is essential to distinguish malignancy in subtle radiological
 ```{code-cell} ipython3
 :tags: [remove-output, hide-cell]
 
-_, stats = x.analyze_resolution()
+fig, stats = x.analyze_resolution()
+
+glue("edai_resolutions_df)
+glue("edai_resolutions_plot", fig)
 ```
 
-```{code-cell} ipython3
-:tags: [hide-cell]
-
-stats
+```{glue:figure} edai_resolutions_plot
+---
+align: center
+name: edai_resolutions_plot_fig
+---
+Analysis of Image Resolution and Aspect Ratio
 ```
 
-+++ {"tags": ["hide-cell"]}
+```{glue:figure} edai_resolutions_df
+---
+align: center
+name: edai_resolutions_df_fig
+---
+Descriptive Statistics for Resolution and Aspect Ratio
+```
 
-{numref}`edia_resolution_fig` and {numref}`edia_resolution_stats` indicate high-resolution images with heights ranging from 3256 to 7111 pixels and widths of 1531 to 5431 pixels. The mean aspect ratio is 0.6 and ranges from 0.3 to 0.83.
++++
+
+{numref}`edai_resolutions_plot_fig` and {numref}`edai_resolutions_df_fig` indicate high-resolution images with heights ranging from 3256 to 7111 pixels and widths of 1531 to 5431 pixels. The mean aspect ratio is 0.6 and ranges from 0.3 to 0.83.
 
 Images will be resized to 256x256 for the convolutional neural network model. Generally, there are two approaches to resizing:
 
@@ -104,17 +131,29 @@ Pixel intensity value is the property that defines the spatial characteristics o
 :tags: [remove-output, hide-cell]
 
 _, stats = x.analyze_pixel_values()
+glue("edai_pixels_df)
+glue("edai_pixels_plot", fig)
 ```
 
-```{code-cell} ipython3
-:tags: [hide-cell]
-
-stats
+```{glue:figure} edai_pixels_plot
+---
+align: center
+name: edai_pixels_plot_fig
+---
+Analysis of Image Pixel Intensity Statistics
 ```
 
-+++ {"tags": ["hide-cell"]}
+```{glue:figure} edai_pixels_df
+---
+align: center
+name: edai_pixels_df_fig
+---
+Descriptive Statistics for Average Image Pixel Intensity
+```
 
-Several observations can be made based upon {numref}`edai_pixels_fig` and {numref}`edai_pixels_stats`:
++++
+
+Several observations can be made based upon {numref}`edai_pixels_plot_fig` and {numref}`edai_pixels_df_fig`:
 
 1. Standard deviation and mean appear to be positively and linearly associated.
 2. Though from a statistical perspective, outliers are extant at 3 * the standard deviation from the average mean, the maximum values are approximately half of the maximum pixel value for 16-bit images.
@@ -175,7 +214,7 @@ Pixel Intensity Histograms for Sample Mammograms
 
 We've converted the 16-bit images to 8-bit unsigned grauyscale format so that the pixel values would be normalized between 0 and 255.
 
-{numref}`edai_histograms` shows histograms dominated by a single peak near the black end of the spectrum, with barely discernable weaker peaks at various points within
+{numref}`edai_histograms_fig` shows histograms dominated by a single peak near the black end of the spectrum, with barely discernable weaker peaks at various points within
 
 +++
 

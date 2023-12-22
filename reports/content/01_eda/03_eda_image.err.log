@@ -17,41 +17,16 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Create a lambda expression to filter the data
-cond_benign = lambda x: x['cancer'] == False
-cond_malignant = lambda x: x['cancer'] == True
-
-# Obtain the mean_pixel_values for each pathology
-benign_pixels_averages = x.get_data(x='mean_pixel_value', condition=cond_benign)
-malignant_pixels_averages = x.get_data(x='mean_pixel_value', condition=cond_malignant)
-
-benign_mean = np.mean(benign_pixels_averages)
-benign_std = np.std(benign_pixels_averages)
-malignant_mean = np.mean(malignant_pixels_averages)
-malignant_std = np.std(malignant_pixels_averages)
-
-# Conduct a Student's T-Test
-t, pvalue = x.test_centrality(a=benign_pixels_averages, b=malignant_pixels_averages, alternative='less')
-df = len(benign_pixels_averages) + len(malignant_pixels_averages) - 2
-
-glue("benign_mean", benign_mean)
-glue("benign_std", benign_std)
-glue("malignant_mean", malignant_mean)
-glue("malignant_std", malignant_std)
-glue("t_statistic", t)
-glue("pvalue", pvalue)
-glue("degrees_of_freedom", df)
+x = ImageExplorer()
+fig, stats = x.summary()
+glue("edai_stats_df)
+glue("edai_stats_plot", fig)
 ------------------
 
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[8], line 9[0m
-[1;32m      6[0m benign_pixels_averages [38;5;241m=[39m x[38;5;241m.[39mget_data(x[38;5;241m=[39m[38;5;124m'[39m[38;5;124mmean_pixel_value[39m[38;5;124m'[39m, condition[38;5;241m=[39mcond_benign)
-[1;32m      7[0m malignant_pixels_averages [38;5;241m=[39m x[38;5;241m.[39mget_data(x[38;5;241m=[39m[38;5;124m'[39m[38;5;124mmean_pixel_value[39m[38;5;124m'[39m, condition[38;5;241m=[39mcond_malignant)
-[0;32m----> 9[0m benign_mean [38;5;241m=[39m [43mnp[49m[38;5;241m.[39mmean(benign_pixels_averages)
-[1;32m     10[0m benign_std [38;5;241m=[39m np[38;5;241m.[39mstd(benign_pixels_averages)
-[1;32m     11[0m malignant_mean [38;5;241m=[39m np[38;5;241m.[39mmean(malignant_pixels_averages)
+[0;36m  Cell [0;32mIn[2], line 3[0;36m[0m
+[0;31m    glue("edai_stats_df)[0m
+[0m         ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m unterminated string literal (detected at line 3)
 
-[0;31mNameError[0m: name 'np' is not defined
-NameError: name 'np' is not defined
+SyntaxError: unterminated string literal (detected at line 3) (3433531817.py, line 3)
 
