@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>1. Overview &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>1. Image Preprocessing Overview &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -168,12 +168,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../01_eda/00_data.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01_eda/01_data_prep.html">2. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA) 1.0 - Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../01_eda/03_eda_image.html">4. Exploratory Data Analysis of Images</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Overview</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Image Preprocessing Overview</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
@@ -459,7 +459,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Overview</h1>
+    <h1>Image Preprocessing Overview</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -481,8 +481,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="overview">
-<h1><span class="section-number">1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="image-preprocessing-overview">
+<h1><span class="section-number">1. </span>Image Preprocessing Overview<a class="headerlink" href="#image-preprocessing-overview" title="Permalink to this heading">#</a></h1>
 <p>Precise and accurate diagnosis of breast cancer rests upon the discriminatory power of mathematical models designed to detect and classify structural abnormalities in breast tissue from biomedical imaging. Advances in artificial intelligence and computer vision, fueled by an explosion in AI task-specific computational power, have given rise to dense image recognition models capable of distinguishing increasingly complex patterns and structures in biomedical images. Still, the diagnostic performance and clinical applicability of such models rests upon the availability of large datasets containing high-quality, high-resolution images that are clear, sharp, and free of noise and artifacts.</p>
 <p>Exploratory analysis of the CBIS-DDSM mammograph illuminated several issues that compromise the discriminatory power of image detection and recognition models.</p>
 <ul class="simple">

@@ -31,7 +31,7 @@ This is an assessment category in the overall summary of the mammography report.
 
 ### Breast Density
 
-This is an overall assessment of the volume of attenuating tissues in the breast, to help indicate the relative possibility that a lesion could be obscured by normal tissue and that the sensitivity of examination thereby may be compromised by dense breast tissue. The following four categories of breast composition are defined by the visually estimated content of fibroglandular-density tissue within the breasts. {cite}`BreastImagingReportinga`.
+This is an overall assessment of the volume of attenuating tissues in the breast, to help indicate the relative possibility that a lesion could be obscured by normal tissue and that the sensitivity of examination thereby may be compromised by dense breast tissue. The following four categories of breast composition are defined by the visually estimated content of fibroglandular-density tissue within the breasts. {cite}`americancollegeofradiologyACRBIRADSAtlas2013a`.
 
 | Label | Description                                                                    |
 | ----- | ------------------------------------------------------------------------------ |

@@ -163,17 +163,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/00_preface.html">1. Preface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/01_intro.html">2. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/02_toc.html">3. Table of Contents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/03_dependencies.html">4. Dependency Version and Hardware</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/00_data.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/01_data_prep.html">2. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA) 1.0 - Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/03_eda_image.html">4. Exploratory Data Analysis of Images</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../00_overview.html">1. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_overview.html">1. Image Preprocessing Overview</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
@@ -486,7 +487,7 @@ document.write(`
 <p>In this section, we describe a two-step process for removing artifacts.</p>
 <ol class="arabic simple">
 <li><p><strong>Thresholding</strong>: Partition the original grayscale image a binary image with two regions: a foreground region containing the breast region of interest, and a background region, using thresholding and binarization.</p></li>
-<li><p><strong>Breast Segmentation</strong>: From the binary image, detect the breast contours using a border following algorithm <span id="id1">[<a class="reference internal" href="../../99_references.html#id371" title="Satoshi Suzuki and KeiichiA Be. Topological structural analysis of digitized binary images by border following. Computer Vision, Graphics, and Image Processing, 30(1):32–46, April 1985. URL: https://linkinghub.elsevier.com/retrieve/pii/0734189X85900167 (visited on 2023-12-17), doi:10.1016/0734-189X(85)90016-7.">32</a>]</span> and segment the breast from artifacts.</p></li>
+<li><p><strong>Breast Segmentation</strong>: From the binary image, detect the breast contours using a border following algorithm <span id="id1">[<a class="reference internal" href="../../99_references.html#id371" title="Satoshi Suzuki and KeiichiA Be. Topological structural analysis of digitized binary images by border following. Computer Vision, Graphics, and Image Processing, 30(1):32–46, April 1985. URL: https://linkinghub.elsevier.com/retrieve/pii/0734189X85900167 (visited on 2023-12-17), doi:10.1016/0734-189X(85)90016-7.">35</a>]</span> and segment the breast from artifacts.</p></li>
 </ol>
 <div class="toctree-wrapper compound">
 </div>

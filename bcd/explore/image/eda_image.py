@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday December 19th 2023 03:49:16 pm                                              #
-# Modified   : Thursday December 21st 2023 05:29:15 pm                                             #
+# Modified   : Friday December 22nd 2023 01:57:23 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -49,7 +49,7 @@ class ImageExplorer:
         self._average_mean_pixel_value = None
         self._average_mean_pixel_value_std = None
 
-    def summary(self) -> pd.DataFrame:
+    def summary(self) -> Union[plt.Figure, pd.DataFrame]:
         """Provides a summary of counts by fileset, label and abnormality type."""
         # Summarizing number of images by pathology and train vs test set
         features = ["fileset", "cancer"]
@@ -121,7 +121,7 @@ class ImageExplorer:
         t, pvalue = ttest_ind(a=a, b=b, equal_var=False, alternative=alternative)
         return t, pvalue
 
-    def analyze_resolution(self) -> plt.Figure:
+    def analyze_resolution(self) -> Union[plt.Figure, pd.DataFrame]:
         """Plots height vs width, and aspect ratio"""
 
         features = ["height", "width", "aspect_ratio"]
@@ -149,7 +149,9 @@ class ImageExplorer:
 
         return fig, stats
 
-    def analyze_pixel_values(self, by: str = "cancer") -> plt.Figure:
+    def analyze_pixel_values(
+        self, by: str = "cancer"
+    ) -> Union[plt.Figure, pd.DataFrame]:
         """Plots mean and standard deviation of pixel values and returns statistics."""
         fig = plt.figure(tight_layout=True, figsize=(12, 8))
         gs = gridspec.GridSpec(2, 2)
@@ -207,10 +209,10 @@ class ImageExplorer:
         n: int = 50,
         height: int = 9,
         width: int = 12,
-        cmap: str = "jet",
+        cmap: str = "bone",
         sort_by: Union[str, list] = None,
-        label: str = "case_id",
         histogram: bool = False,
+        title: str = None,
         random_state: int = None,
     ) -> plt.Figure:
         """Plots a grid of images
@@ -221,10 +223,11 @@ class ImageExplorer:
             height (int): Height of image in inches.
             width (int): Width of image in inches.
             cmap (str): Color map for matplotlib. Default = 'gray'.
-            random_state (int): Seed for pseudo random sampling
+            sort_by (str): Value to sort the images by.
             label (str): The label to use for each image.
             histogram (bool): Whether to plot the image histogram, instead of the image.
-            sort_by (str): Value to sort the images by.
+            title (str): Title of the plot.
+            random_state (int): Seed for pseudo random sampling
         """
 
         df = self._meta
@@ -257,9 +260,10 @@ class ImageExplorer:
                 ax.plot(hist)
             else:
                 ax.imshow(img, cmap=cmap, aspect="auto")
-            ax.set_title(f"{row[label]}\n{row['pathology']}", fontsize=4)
+            ax.set_title(f"{row['patient_id']}\n{row['pathology']}", fontsize=8)
             ax.axis("off")
 
-        fig.suptitle("CBIS-DDSM")
+        title = title or "CBIS-DDSM"
+        fig.suptitle(title)
         plt.tight_layout()
         return fig

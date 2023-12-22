@@ -11,22 +11,24 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Saturday October 28th 2023 02:23:59 pm                                              #
+# Modified   : Thursday December 21st 2023 11:44:26 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Case Data Prep Module"""
 from __future__ import annotations
+
 import os
 from typing import Union
 
-import pandas as pd
 import numpy as np
-from studioai.preprocessing.encode import RankFrequencyEncoder
+import pandas as pd
+
 # pylint: disable=unused-import
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
+from studioai.preprocessing.encode import RankFrequencyEncoder
 
 from bcd.preprocess.metadata.base import DataPrep
 
@@ -34,6 +36,7 @@ from bcd.preprocess.metadata.base import DataPrep
 # ------------------------------------------------------------------------------------------------ #
 class CasePrep(DataPrep):
     """Performs Case metadata preparation."""
+
     # pylint: disable=arguments-differ
 
     def prep(
@@ -77,8 +80,12 @@ class CasePrep(DataPrep):
 
             df_cases = self._assign_case_id(df=df_cases)
 
-            # Transform 'BENIGN WITHOUT CALLBACK' to 'BENIGN'
-            df_cases["cancer"] = np.where(df_cases["pathology"] == "MALIGNANT", True, False)
+            # Replace 'BENIGN WITHOUT CALLBACK' with 'BENIGN'
+            df_cases["pathology"].replace("BENIGN_WITHOUT_CALLBACK", "BENIGN")
+            # Create a binary target. Faster than comparing strings.
+            df_cases["cancer"] = np.where(
+                df_cases["pathology"] == "MALIGNANT", True, False
+            )
 
             # Create the series/ case cross-reference file
             df_cases, df_case_series = self._create_case_series_xref(df=df_cases)
@@ -120,11 +127,17 @@ class CasePrep(DataPrep):
         df_mass_train = self._format_column_names(df=df_mass_train)
         df_mass_test = self._format_column_names(df=df_mass_test)
 
-        df = pd.concat([df_calc_train, df_calc_test, df_mass_train, df_mass_test], axis=0)
+        df = pd.concat(
+            [df_calc_train, df_calc_test, df_mass_train, df_mass_test], axis=0
+        )
         df.loc[df["abnormality_type"] == "mass", "calc_type"] = "NOT APPLICABLE"
         df.loc[df["abnormality_type"] == "mass", "calc_distribution"] = "NOT APPLICABLE"
-        df.loc[df["abnormality_type"] == "calcification", "mass_shape"] = "NOT APPLICABLE"
-        df.loc[df["abnormality_type"] == "calcification", "mass_margins"] = "NOT APPLICABLE"
+        df.loc[
+            df["abnormality_type"] == "calcification", "mass_shape"
+        ] = "NOT APPLICABLE"
+        df.loc[
+            df["abnormality_type"] == "calcification", "mass_margins"
+        ] = "NOT APPLICABLE"
         return df
 
     def _assign_case_id(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -145,7 +158,9 @@ class CasePrep(DataPrep):
 
         return df
 
-    def _create_case_series_xref(self, df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    def _create_case_series_xref(
+        self, df: pd.DataFrame
+    ) -> tuple[pd.DataFrame, pd.DataFrame]:
         """Creates a case series cross-reference"""
 
         def extract_series_uid(filepath) -> str:
@@ -167,7 +182,9 @@ class CasePrep(DataPrep):
         csxc = csxc.drop(columns=["cropped_image_file_path"])
 
         df_case_series = pd.concat([csxi, csxr, csxc], axis=0)
-        df_case_series = df_case_series.drop_duplicates(subset=["series_uid", "case_id"])
+        df_case_series = df_case_series.drop_duplicates(
+            subset=["series_uid", "case_id"]
+        )
         df_cases = df.drop(
             columns=["image_file_path", "ROI_mask_file_path", "cropped_image_file_path"]
         )
@@ -190,7 +207,10 @@ class CaseImputer:
     """
 
     def __init__(
-        self, max_iter: int = 50, initial_strategy: str = "most_frequent", random_state: int = None
+        self,
+        max_iter: int = 50,
+        initial_strategy: str = "most_frequent",
+        random_state: int = None,
     ) -> None:
         self._max_iter = max_iter
         self._initial_strategy = initial_strategy
@@ -275,7 +295,13 @@ CALC_TYPES = [
     "SKIN",
     "VASCULAR",
 ]
-CALC_DISTRIBUTIONS = ["CLUSTERED", "LINEAR", "REGIONAL", "DIFFUSELY_SCATTERED", "SEGMENTAL"]
+CALC_DISTRIBUTIONS = [
+    "CLUSTERED",
+    "LINEAR",
+    "REGIONAL",
+    "DIFFUSELY_SCATTERED",
+    "SEGMENTAL",
+]
 MASS_SHAPES = [
     "IRREGULAR",
     "ARCHITECTURAL_DISTORTION",
@@ -286,7 +312,13 @@ MASS_SHAPES = [
     "ROUND",
     "ASYMMETRIC_BREAST_TISSUE",
 ]
-MASS_MARGINS = ["SPICULATED", "ILL_DEFINED", "CIRCUMSCRIBED", "OBSCURED", "MICROLOBULATED"]
+MASS_MARGINS = [
+    "SPICULATED",
+    "ILL_DEFINED",
+    "CIRCUMSCRIBED",
+    "OBSCURED",
+    "MICROLOBULATED",
+]
 
 ENC_VARS = {
     "abnormality_type": {"prefix": "AT", "values": ["calcification", "mass"]},
@@ -331,7 +363,9 @@ class CaseTransformer:
     def _encode_dataset(self, df: pd.DataFrame) -> pd.DataFrame:
         for feature, data in ENC_VARS.items():
             for value in data["values"]:
-                df = self._encode_column(df=df, prefix=data["prefix"], col=feature, value=value)
+                df = self._encode_column(
+                    df=df, prefix=data["prefix"], col=feature, value=value
+                )
         return df
 
     def _encode_column(self, df, prefix, col, value):

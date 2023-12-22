@@ -170,12 +170,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/00_data.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/01_data_prep.html">2. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA) 1.0 - Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/03_eda_image.html">4. Exploratory Data Analysis of Images</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../00_overview.html">1. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_overview.html">1. Image Preprocessing Overview</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../01_denoise.html">2. Denoise</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">2.1. Noise Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01_noise_types.html">2.2. Noise Types</a></li>
@@ -500,7 +500,7 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(s(x,y)\)</span> is the noise-free image signal which has been corrupted by a noise process;</p></li>
 <li><p><span class="math notranslate nohighlight">\(n(x,y)\)</span> is the signal-independent, random noise that is added to the original noise-free image.</p></li>
 </ul>
-<p>Additive noise, the most common decomposition, can arise from numerous sources, including radiation scatter from the surface before the image is sensed; electrical noise in image sensors, random charge fluctuations induced by thermal noise, environmental electromagnetic interference, and noise associated with the acquisition system. However, dominant source of additive noise in X-ray mammography is the digitization process <span id="id1">[<a class="reference internal" href="../../99_references.html#id332" title="Alan C. Bovik, editor. Handbook of image and video processing. Academic Press series in communications, networking and multimedia. Academic Press, San Diego, 2000. ISBN 978-0-12-119790-2.">14</a>]</span>.</p>
+<p>Additive noise, the most common decomposition, can arise from numerous sources, including radiation scatter from the surface before the image is sensed; electrical noise in image sensors, random charge fluctuations induced by thermal noise, environmental electromagnetic interference, and noise associated with the acquisition system. However, dominant source of additive noise in X-ray mammography is the digitization process <span id="id1">[<a class="reference internal" href="../../99_references.html#id332" title="Alan C. Bovik, editor. Handbook of image and video processing. Academic Press series in communications, networking and multimedia. Academic Press, San Diego, 2000. ISBN 978-0-12-119790-2.">17</a>]</span>.</p>
 </section>
 <section id="multiplicative-noise-model">
 <h2><span class="section-number">2.1.2. </span>Multiplicative Noise Model<a class="headerlink" href="#multiplicative-noise-model" title="Permalink to this heading">#</a></h2>

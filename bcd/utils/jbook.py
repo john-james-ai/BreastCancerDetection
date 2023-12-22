@@ -11,16 +11,17 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 10:11:34 pm                                               #
-# Modified   : Tuesday September 26th 2023 07:48:08 pm                                             #
+# Modified   : Friday December 22nd 2023 04:11:34 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+import logging
 import os
 from glob import glob
-import logging
 
 import jupytext
+import nbformat as nbf
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -49,11 +50,15 @@ class DocConverter:
 
     def get_jbook_filepaths(self) -> list:
         """Returns a list of jbook filepaths containing convertable content."""
-        return glob(pathname=self._jbook_search_path, root_dir=os.getcwd(), recursive=True)
+        return glob(
+            pathname=self._jbook_search_path, root_dir=os.getcwd(), recursive=True
+        )
 
     def get_notebook_filepaths(self) -> list:
         """Returns a list of notebook filepaths containing convertable content."""
-        return glob(pathname=self._notebook_search_path, root_dir=os.getcwd(), recursive=True)
+        return glob(
+            pathname=self._notebook_search_path, root_dir=os.getcwd(), recursive=True
+        )
 
     def to_notebook(self, force: bool = False) -> None:
         """Converts myst markdown files on the jbook search path to jupyter notebooks on the notebook search path.
@@ -65,7 +70,9 @@ class DocConverter:
         """
         sources = self.get_jbook_filepaths()
         dests = [fp.replace(".md", ".ipynb") for fp in sources]
-        dests = [dest.replace(self._jbook_module, self._notebook_module) for dest in dests]
+        dests = [
+            dest.replace(self._jbook_module, self._notebook_module) for dest in dests
+        ]
 
         for source, dest in zip(sources, dests):
             os.makedirs(os.path.dirname(dest), exist_ok=True)
@@ -85,7 +92,9 @@ class DocConverter:
         """
         sources = self.get_notebook_filepaths()
         dests = [fp.replace(".ipynb", ".md") for fp in sources]
-        dests = [dest.replace(self._notebook_module, self._jbook_module) for dest in dests]
+        dests = [
+            dest.replace(self._notebook_module, self._jbook_module) for dest in dests
+        ]
 
         for source, dest in zip(sources, dests):
             os.makedirs(os.path.dirname(dest), exist_ok=True)
@@ -114,3 +123,48 @@ class DocConverter:
         nb = jupytext.read(source)
         jupytext.write(nb, dest, fmt="md:myst")
         logger.info(f"JBook markdown converted from {source} to {dest}")
+
+
+# ------------------------------------------------------------------------------------------------ #
+class Tagger:
+    """Class automates the process of tagging notebooks."""
+
+    def addtags(self, filepath: str, search_dict: dict):
+        """Adds tags specified in the search_dict to the notebook designated by the filepath
+
+        Args:
+            (filepath): str = Relative path to file.
+            (search_dict): Dictionary containing search terms and assocated tags
+        """
+        abspath = os.path.abspath(filepath)
+        ntbk = nbf.read(abspath, nbf.NO_CONVERT)
+
+        for cell in ntbk.cells:
+            cell_tags = cell.get("metadata", {}).get("tags", [])
+            for key, val in search_dict.items():
+                if key in cell["source"]:
+                    if val not in cell_tags:
+                        cell_tags.append(val)
+            if len(cell_tags) > 0:
+                cell["metadata"]["tags"] = cell_tags
+
+        nbf.write(ntbk, abspath)
+
+    def addtagall(self, filepath, tag):
+        """Adds a tag to all cells in the notebook
+
+        Args:
+            filepath (str): Relative path to file
+            tag (str): Tag to add to all cells.
+        """
+        abspath = os.path.abspath(filepath)
+        ntbk = nbf.read(abspath, nbf.NO_CONVERT)
+
+        for cell in ntbk.cells:
+            cell_tags = cell.get("metadata", {}).get("tags", [])
+            if tag not in cell_tags:
+                cell_tags.append(tag)
+            if len(cell_tags) > 0:
+                cell["metadata"]["tags"] = cell_tags
+
+        nbf.write(ntbk, abspath)
