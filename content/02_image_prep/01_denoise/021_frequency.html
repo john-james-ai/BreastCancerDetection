@@ -170,12 +170,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/00_data.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/01_data_prep.html">2. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA) 1.0 - Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_eda/03_eda_image.html">4. Exploratory Data Analysis of Images</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../00_overview.html">1. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../00_overview.html">1. Image Preprocessing Overview</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../01_denoise.html">2. Denoise</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="00_noise_models.html">2.1. Noise Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01_noise_types.html">2.2. Noise Types</a></li>
@@ -499,7 +499,7 @@ document.write(`
 <h1><span class="section-number">2.3.2. </span>Frequency Domain Filtering<a class="headerlink" href="#frequency-domain-filtering" title="Permalink to this heading">#</a></h1>
 <p>Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some denoising operations are complicated, or impossible to perform in the spatial domain.</p>
 <p>The frequency domain is a space in which images are represented in terms of frequency rather than time. As such, the frequency domain representation reveals information about an image that is otherwise difficult to see, or not visible in the spatial domain. In particular, the frequency domain reveals the frequency with which pixel values change, information that is used as the basis for low-pass denoising algorithms. Many mathematical operations in the time domain have corresponding, and often simpler, operations in the frequency domain. For instance, convolution and differentiation in the time domain correspond to multiplication in the frequency domain.</p>
-<p>We convert signals from the time domain into the frequency domain using a mathematical operation called the Fourier transform <span id="id1">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">23</a>]</span>. Introduced by French mathematician Jean Baptiste Joseph Fourier in his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) <span id="id2">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">23</a>]</span>, the Fourier transform allows any periodic function, no matter how complicated, to be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient. Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.</p>
+<p>We convert signals from the time domain into the frequency domain using a mathematical operation called the Fourier transform <span id="id1">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">26</a>]</span>. Introduced by French mathematician Jean Baptiste Joseph Fourier in his 1822 book, La Théorie Analitique de la Chaleur (The Analytic Theory of Heat) <span id="id2">[<a class="reference internal" href="../../99_references.html#id338" title="Jean-Baptiste-Joseph Fourier. The analytical theory of heat. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.">26</a>]</span>, the Fourier transform allows any periodic function, no matter how complicated, to be expressed as the sum of sines and/or cosines of different frequencies, each multiplied by a different coefficient. Functions that are not periodic, but have finite area under the curve, can be expressed as the integral of sines and/or cosines multiplied by a weighting function.</p>
 <p>Consequently, a function expressed as a Fourier transform can be reconstructed by an inverse transform in the spatial domain with no loss of information.</p>
 <section id="discrete-fourier-transform-dft">
 <h2>Discrete Fourier Transform (DFT)<a class="headerlink" href="#discrete-fourier-transform-dft" title="Permalink to this heading">#</a></h2>
@@ -658,7 +658,7 @@ document.write(`
 </section>
 <section id="butterworth-lowpass-filter">
 <h2>Butterworth Lowpass Filter<a class="headerlink" href="#butterworth-lowpass-filter" title="Permalink to this heading">#</a></h2>
-<p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id4">[<a class="reference internal" href="../../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">24</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
+<p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id4">[<a class="reference internal" href="../../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">27</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
 <p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 2.21</span></a></p>
 <figure class="align-default" id="butterworth-ideal">
 <img alt="../../../_images/butterworth.png" src="../../../_images/butterworth.png" />
@@ -689,7 +689,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-characteristics-fig">
-<img alt="../../../_images/198883081b2c5df17a578688989eb50ffb356fd5b1de9669ea532096680ee622.png" src="../../../_images/198883081b2c5df17a578688989eb50ffb356fd5b1de9669ea532096680ee622.png" />
+<img alt="../../../_images/371f744053c4930d38f21c3d446caf2e9d52826a8b7c2ca1fd664a3136987056.png" src="../../../_images/371f744053c4930d38f21c3d446caf2e9d52826a8b7c2ca1fd664a3136987056.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Butterworth Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#butterworth-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -710,7 +710,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="butterworth-analysis-fig">
-<img alt="../../../_images/d630da7fb0b777c1b387e2ded980dc65eabed09af77413822a209b78c322ec4f.png" src="../../../_images/d630da7fb0b777c1b387e2ded980dc65eabed09af77413822a209b78c322ec4f.png" />
+<img alt="../../../_images/820bfabeadb3cbaf3ee5e4374e8c4d9f11c5d977e0df43edea12cbbc181da281.png" src="../../../_images/820bfabeadb3cbaf3ee5e4374e8c4d9f11c5d977e0df43edea12cbbc181da281.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">Butterworth Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#butterworth-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -745,7 +745,7 @@ document.write(`
 <p>Thresholding is the next step in wavelet image denoising. Core to wavelet denoising, threshold selection is the crucial ingredient in this procedure. Many threshold selection techniques have been proposed; withal, we will be exploring two methods commonly used in biomedical image processing: VisuShrink, and BayesShrink.</p>
 <section id="visushrink">
 <h4>VisuShrink<a class="headerlink" href="#visushrink" title="Permalink to this heading">#</a></h4>
-<p>VisuShrink <span id="id5">[<a class="reference internal" href="../../99_references.html#id355" title="David L Donoho and Iain M Johnstone. Ideal spatial adaptation by wavelet shrinkage. Biometrika, 81(3):425–455, September 1994. URL: https://academic.oup.com/biomet/article/81/3/425/256924 (visited on 2023-11-29), doi:10.1093/biomet/81.3.425.">25</a>]</span>  uses a threshold <span class="math notranslate nohighlight">\(t\)</span> that is proportional to the standard deviation of the noise. It is a hard threshold, and is defined by:</p>
+<p>VisuShrink <span id="id5">[<a class="reference internal" href="../../99_references.html#id355" title="David L Donoho and Iain M Johnstone. Ideal spatial adaptation by wavelet shrinkage. Biometrika, 81(3):425–455, September 1994. URL: https://academic.oup.com/biomet/article/81/3/425/256924 (visited on 2023-11-29), doi:10.1093/biomet/81.3.425.">28</a>]</span>  uses a threshold <span class="math notranslate nohighlight">\(t\)</span> that is proportional to the standard deviation of the noise. It is a hard threshold, and is defined by:</p>
 <div class="math notranslate nohighlight" id="equation-visushrink">
 <span class="eqno">(2.24)<a class="headerlink" href="#equation-visushrink" title="Permalink to this equation">#</a></span>\[t_v = \sigma \sqrt{2 log M}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is the noise standard deviation present in the signal and <span class="math notranslate nohighlight">\(M\)</span> represents the number of pixels in the image.</p>
@@ -773,7 +773,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="wavelet-visushrink-characteristics-fig">
-<img alt="../../../_images/cfc10bb6add42ab2b9f5639ebae811f7f4766055e7580911d1d6607d866975d5.png" src="../../../_images/cfc10bb6add42ab2b9f5639ebae811f7f4766055e7580911d1d6607d866975d5.png" />
+<img alt="../../../_images/eca1e647a8db3b59df8a63a3d07bf69b1cc801f31b5cd8b3821f5c60d49d0056.png" src="../../../_images/eca1e647a8db3b59df8a63a3d07bf69b1cc801f31b5cd8b3821f5c60d49d0056.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.25 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with VisuShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-visushrink-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -781,7 +781,7 @@ document.write(`
 </section>
 <section id="bayesshrink">
 <h4>BayesShrink<a class="headerlink" href="#bayesshrink" title="Permalink to this heading">#</a></h4>
-<p>The BayesShrink method <span id="id6">[<a class="reference internal" href="../../99_references.html#id356" title="S.G. Chang, Bin Yu, and M. Vetterli. Adaptive wavelet thresholding for image denoising and compression. IEEE Transactions on Image Processing, 9(9):1532–1546, September 2000. URL: http://ieeexplore.ieee.org/document/862633/ (visited on 2023-11-29), doi:10.1109/83.862633.">26</a>]</span> minimizes the Bayesian risk, hence the name. It is a subband-dependent, soft threshold, which means that the threshold is adapted to each band of resolution in the wavelet decomposition.  The BayesShrink threshold is given by:</p>
+<p>The BayesShrink method <span id="id6">[<a class="reference internal" href="../../99_references.html#id356" title="S.G. Chang, Bin Yu, and M. Vetterli. Adaptive wavelet thresholding for image denoising and compression. IEEE Transactions on Image Processing, 9(9):1532–1546, September 2000. URL: http://ieeexplore.ieee.org/document/862633/ (visited on 2023-11-29), doi:10.1109/83.862633.">29</a>]</span> minimizes the Bayesian risk, hence the name. It is a subband-dependent, soft threshold, which means that the threshold is adapted to each band of resolution in the wavelet decomposition.  The BayesShrink threshold is given by:</p>
 <div class="math notranslate nohighlight" id="equation-bayesshrink">
 <span class="eqno">(2.26)<a class="headerlink" href="#equation-bayesshrink" title="Permalink to this equation">#</a></span>\[t_b = \frac{\sigma^2}{\sigma_s}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\sigma^2\)</span> is the noise variance and <span class="math notranslate nohighlight">\(\sigma_s\)</span> is the signal variance without noise. As with VisuShrink, the noise variance is estimated from the subband <span class="math notranslate nohighlight">\(HH^1\)</span></p>
@@ -804,7 +804,7 @@ document.write(`
 </details>
 </div>
 <figure class="align-center" id="wavelet-bayesshrink-characteristics-fig">
-<img alt="../../../_images/c1db8d5b698bbacc74a056725baaf3376af7a3d985404d5434c6c8843475f2de.png" src="../../../_images/c1db8d5b698bbacc74a056725baaf3376af7a3d985404d5434c6c8843475f2de.png" />
+<img alt="../../../_images/1fe4326e4b798254096efd7f0b14a86482e6d8d28614ff31e21c7374257389bd.png" src="../../../_images/1fe4326e4b798254096efd7f0b14a86482e6d8d28614ff31e21c7374257389bd.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 2.26 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-bayesshrink-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>

@@ -19,7 +19,7 @@ In the prior section, we obtained the CBIS-DDSM data from [The Cancer Imaging Ar
 | 1 | calc_cases.csv       | Calcification cases from the training and test sets.                         |
 | 2 | mass_cases.csv       | Mass cases from the training and test sets.                                  |
 | 3 | case_series_xref.csv | Case / Series Cross-Reference                                                |
-| 4 | dicom.csv            | DICOM dataset containing properties, and quality assessments for each image. |
+| 4 | dicom.csv            | DICOM dataset containing resolution and pixel properties each image. |
 
 First, we'll build the case datasets (1,2,3), then we'll construct the DICOM image metadata and quality assessment dataset (4).
 
