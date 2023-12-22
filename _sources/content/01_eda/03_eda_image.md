@@ -24,12 +24,17 @@ In this section, we conduct an exploratory data analysis of the CBIS-DDSM full m
 3. Examine pixel intensity distributions by class.
 4. Visually characterize image texture and contrast vis-a-vis case pathology, abnormality type, and morphology.
 
+This analysis is organized as follows:
+
+1. Overview: Describes how benign and malignant images are organized in the training and test sets.
+2. Resolution and Aspect Ratio: Analyze resolution and aspect ratios
+3. Pixel Value Distribution: Evaluate the distribution of pixel values between benign and malignant cases
+4. Image Quality Analysis: Visualize and assess image quality with respect to text, labels, and artifacts
+5. Calcification Case Analysis: Examine calcification case images for the various morphologies
+6. Mass Case Analysis: Review mass case images of various shapes and margins.
+7. Summary and Key Takeaways: Review key observations and takeaways.
+
 +++
-
-## Section Table of Contents
-
-```{tableofcontents}
-```
 
 ```{code-cell} ipython3
 :tags: [hide-cell]
