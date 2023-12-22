@@ -28,7 +28,7 @@ In this section, we conduct an exploratory data analysis of the CBIS-DDSM full m
 
 ## Section Table of Contents
 
-```{tableofcotents}
+```{tableofcontents}
 ```
 
 ```{code-cell} ipython3
@@ -38,6 +38,7 @@ import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
 import warnings
+import numpy as np
 from myst_nb import glue
 from bcd.explore.image.eda_image import ImageExplorer
 warnings.filterwarnings("ignore")
@@ -217,7 +218,6 @@ A calcification is a calcium deposit that develops in the breast. They usually a
 Morphology defines the form of calcifications.  It is the most important factor in differentiating between benign and malignant calcifications. Here, we examine the most common calcification morphologies {numref}`calcification_morphologies` in the CBIS-DDSM dataset.
 
 ```{table} Calcification Morphologies
-:header-rows: 1
 :name: calcification_morphologies
 
 | Morphology            | BI-RADS   Assessment                                   |
@@ -356,7 +356,6 @@ Calcification Cases Fine Linear Branching Calcification Type
 Calcification Distribution can be described as how an abnormality spatially presents within the breast tissue. We will be analyzing the following five calcification distributions in {numref}`calcification_distributions`.
 
 ```{table} Calcification Distributions
-:header-rows: 1
 :name: calcification_distributions
 | Distribution        | BI-RADS Assessment                                    |
 |---------------------|-------------------------------------------------------|
@@ -495,14 +494,13 @@ Breast masses, usually non-cancerous, are three-dimensional, space-occupying les
 Masses can present in a variety of shapes, the most common are listed in  {numref}`mass_shapes`:
 
 ```{table} Mass Shapes
-:header-rows: 1
 :name: mass_shapes
 | Shape     | BI-RADS Assessment           |
 |-----------|------------------------------|
 | Round     | BI-RADS 3 - Probably Benign  |
 | Oval      | BI-RADS 3 - Probably Benign  |
 | Lobulated | BI-RADS 3 - Probably Benign  |
-| Irregular | BI-RADS 5 -Highly Suspicious |
+| Irregular | BI-RADS 5 - Highly Suspicious |
 ```
 
 +++
@@ -597,7 +595,6 @@ The mass margin is the edge or border of the lesion and indicates a demarcation 
 Our visualization analysis will include the following five mass margins defined in the standard BI-RADS terminology.
 
 ```{table} Mass Margins
-:header-rows: 1
 :name: mass_margins
 | Margin         | BI-RADS Assessment            |
 |----------------|-------------------------------|
