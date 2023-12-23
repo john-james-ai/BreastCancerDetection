@@ -95,7 +95,7 @@ Optimal resolution is essential to distinguish malignancy in subtle radiological
 
 fig, stats = x.analyze_resolution()
 
-glue("edai_resolutions_df)
+glue("edai_resolutions_df", stats)
 glue("edai_resolutions_plot", fig)
 ```
 
@@ -135,8 +135,8 @@ Pixel intensity value is the property that defines the spatial characteristics o
 ```{code-cell} ipython3
 :tags: [remove-output, hide-cell]
 
-_, stats = x.analyze_pixel_values()
-glue("edai_pixels_df)
+fig, stats = x.analyze_pixel_values()
+glue("edai_pixels_df", stats)
 glue("edai_pixels_plot", fig)
 ```
 
