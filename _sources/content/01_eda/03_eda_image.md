@@ -58,7 +58,7 @@ There are 3565 full mammogram images, not counting one for which the DICOM file 
 
 x = ImageExplorer()
 fig, stats = x.summary()
-glue("edai_stats_df)
+glue("edai_stats_df", stats)
 glue("edai_stats_plot", fig)
 ```
 

@@ -513,16 +513,16 @@ document.write(`
 <figure class="align-center" id="various-thresholds-fig">
 <img alt="../../../_images/92fafb5392451d0c21d47a7f2f11ff893f1c3c8313b39e68b95184eaf4ddb035.png" src="../../../_images/92fafb5392451d0c21d47a7f2f11ff893f1c3c8313b39e68b95184eaf4ddb035.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Impact of Threshold Value on Binarization</span><a class="headerlink" href="#various-thresholds-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Impact of Threshold Value on Binarization</span><a class="headerlink" href="#various-thresholds-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> illustrates the impact of various threshold values on the binarization result.  As the threshold value increases from <span class="math notranslate nohighlight">\(T=32\)</span> to <span class="math notranslate nohighlight">\(T=128\)</span>, we notice a few things:</p>
+<p><a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.3</span></a> illustrates the impact of various threshold values on the binarization result.  As the threshold value increases from <span class="math notranslate nohighlight">\(T=32\)</span> to <span class="math notranslate nohighlight">\(T=128\)</span>, we notice a few things:</p>
 <ul class="simple">
 <li><p><strong>Border Smoothness</strong>:  Borders tend to become increasingly rough as threshold value increases.</p></li>
-<li><p><strong>Information Loss</strong>.  Threshold value and information loss are positively correlated. High thresholds can shrink objects to the background as indicated in <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a>  (d).</p></li>
+<li><p><strong>Information Loss</strong>.  Threshold value and information loss are positively correlated. High thresholds can shrink objects to the background as indicated in <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.3</span></a>  (d).</p></li>
 <li><p><strong>Artifact Removal</strong>: On the other hand, some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.</p></li>
 </ul>
-<p>And there’s the trade-off. <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.2</span></a> clearly illustrates the importance of selecting an appropriate threshold, what principled techniques exist for selecting thresholds that balance information capture and artifact removal?</p>
+<p>And there’s the trade-off. <a class="reference internal" href="#various-thresholds-fig"><span class="std std-numref">Fig. 3.3</span></a> clearly illustrates the importance of selecting an appropriate threshold, what principled techniques exist for selecting thresholds that balance information capture and artifact removal?</p>
 <p>Well, manual techniques can be tedious, and time-consuming, and don’t reflect the inherent variability in digital mammography. No single threshold value will perform consistently across all images.  And though no universally superior <em>automated</em> thresholding method exists, several techniques have been proposed, each with distinct performance characteristics, strengths, and weaknesses, that have broad applicability across a range of image analysis and processing domains. We’ll examine those next.</p>
 </section>
 <section id="automated-thresholding-algorithms">
@@ -598,15 +598,15 @@ document.write(`
 <figure class="align-default" id="triangle">
 <img alt="../../../_images/triangle_zack.png" src="../../../_images/triangle_zack.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Triangle Thresholding Method</span><a class="headerlink" href="#triangle" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Triangle Thresholding Method</span><a class="headerlink" href="#triangle" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#triangle"><span class="std std-numref">Fig. 3.3</span></a> was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram to values in [0,1]. A line is then constructed between the histogram peak and the tip of the long tail. Point A is selected at the base of the histogram bin that has the maximum perpendicular distance from the ‘peak-to-tip’ line. The threshold is set to A <span class="math notranslate nohighlight">\(+\delta \ge 0\)</span>.</p>
-<p>This method was applied to four test images of varying breast densities, contrast, abnormalities, and diagnoses. <a class="reference internal" href="#threshold-triangle-fig"><span class="std std-numref">Fig. 3.4</span></a> shows the original images (a)-(d), the binary images (e)-(h), the segmentation results (i)-(l), and the triangle histograms with thresholds annotated (m)-(p).</p>
+<p><a class="reference internal" href="#triangle"><span class="std std-numref">Fig. 3.4</span></a> was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram to values in [0,1]. A line is then constructed between the histogram peak and the tip of the long tail. Point A is selected at the base of the histogram bin that has the maximum perpendicular distance from the ‘peak-to-tip’ line. The threshold is set to A <span class="math notranslate nohighlight">\(+\delta \ge 0\)</span>.</p>
+<p>This method was applied to four test images of varying breast densities, contrast, abnormalities, and diagnoses. <a class="reference internal" href="#threshold-triangle-fig"><span class="std std-numref">Fig. 3.5</span></a> shows the original images (a)-(d), the binary images (e)-(h), the segmentation results (i)-(l), and the triangle histograms with thresholds annotated (m)-(p).</p>
 <figure class="align-center" id="threshold-triangle-fig">
 <img alt="../../../_images/82ebaec8f3b61e4034dbd96bbabf408f40cd08e88d990350c08f6d2298c6b59c.png" src="../../../_images/82ebaec8f3b61e4034dbd96bbabf408f40cd08e88d990350c08f6d2298c6b59c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)</span><a class="headerlink" href="#threshold-triangle-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.5 </span><span class="caption-text">Triangle Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, (i) through (l) are the segmented images and the normalized histograms and thresholds are presented at (m) through (p)</span><a class="headerlink" href="#threshold-triangle-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Several observations can be made. First, all images had the same threshold <span class="math notranslate nohighlight">\(T=2\)</span>, despite varying levels of contrast, illumination, and breast density. Second, at <span class="math notranslate nohighlight">\(T=2\)</span>, we have little to no artifact removal as their pixel intensities are not distinguished from other foreground structures. Overall, the algorithm effectively distinguished the breast tissue from the background with no apparent loss of information.</p>
@@ -616,11 +616,11 @@ document.write(`
 <h3>ISODATA Method<a class="headerlink" href="#isodata-method" title="Permalink to this heading">#</a></h3>
 <p>The ISODATA method is an iterative approach based upon the Iterative Self-Organizing Data Analysis algorithm (ISODATA) algorithm <span id="id3">[<a class="reference internal" href="../../99_references.html#id358" title="Ridler and Calvard. Picture Thresholding Using an Iterative Selection Method. IEEE Transactions on Systems, Man, and Cybernetics, 8(8):630–632, 1978. URL: http://ieeexplore.ieee.org/document/4310039/ (visited on 2023-12-11), doi:10.1109/TSMC.1978.4310039.">28</a>]</span> and is commonly used in biomedical imaging.</p>
 <p>In general, it first assigns an initial threshold <span class="math notranslate nohighlight">\(T\)</span>, usually the average of the pixel intensities in the image. The second step classifies each pixel to the closest class. In the third step, the mean values <span class="math notranslate nohighlight">\(\mu_1\)</span> and <span class="math notranslate nohighlight">\(\mu_2\)</span> for each class are estimated using a Gaussian distribution. Next, a new threshold is selected as the average of <span class="math notranslate nohighlight">\(\mu_1\)</span> and <span class="math notranslate nohighlight">\(\mu_2\)</span> <span id="id4">[<a class="reference internal" href="../../99_references.html#id374" title="A. El-Zaart. Images thresholding using ISODATA technique with gamma distribution. Pattern Recognition and Image Analysis, 20(1):29–41, March 2010. URL: http://link.springer.com/10.1134/S1054661810010037 (visited on 2023-12-19), doi:10.1134/S1054661810010037.">29</a>]</span>.  Steps two and three are repeated until the change in threshold is less than a predesignated parameter.</p>
-<p>In <a class="reference internal" href="#threshold-isodata-fig"><span class="std std-numref">Fig. 3.5</span></a> we have the segmentation results for the ISODATA method applied to our test images.</p>
+<p>In <a class="reference internal" href="#threshold-isodata-fig"><span class="std std-numref">Fig. 3.6</span></a> we have the segmentation results for the ISODATA method applied to our test images.</p>
 <figure class="align-center" id="threshold-isodata-fig">
 <img alt="../../../_images/13cd8f12bc5b24e7f9ca9acdf3500ed80e6d3c25e0d2eb954ab38c2b2b0590a6.png" src="../../../_images/13cd8f12bc5b24e7f9ca9acdf3500ed80e6d3c25e0d2eb954ab38c2b2b0590a6.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.5 </span><span class="caption-text">ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-isodata-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.6 </span><span class="caption-text">ISOData Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-isodata-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The ISODATA method generated higher thresholds in [63, 54, 92, 79] with slightly more roughness along the edges.</p>
@@ -670,7 +670,7 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <figure class="align-center" id="threshold-otsu-fig">
 <img alt="../../../_images/fa181c775de666fbd3f5957ed26acc1e8e6a3c528812fbbce0d7d3d0fae67217.png" src="../../../_images/fa181c775de666fbd3f5957ed26acc1e8e6a3c528812fbbce0d7d3d0fae67217.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.6 </span><span class="caption-text">OTSU’s Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-otsu-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">OTSU’s Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-otsu-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>What stands out immediately, is that the selected thresholds for the Otsu method and the ISODATA method on our test set are precisely the same.</p>
@@ -683,7 +683,7 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <figure class="align-center" id="threshold-li-fig">
 <img alt="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" src="../../../_images/d6e7d4d4faf8f922edca785ff779887bcfd51b0f5fe1f3c62aba6fac27462ffb.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Li’s Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-li-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Li’s Minimum Cross-Entropy Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-li-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Li’s method selected slightly lower thresholds in [23, 17, 33, 29] than those of Otsu and ISODATA. At these lower thresholds, we see slightly more smoothness on the edges.</p>
@@ -702,10 +702,10 @@ G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
 <figure class="align-center" id="threshold-yen-fig">
 <img alt="../../../_images/bcd5590d977b21292d6dc741a5bcd5a36c47ea8400abba5112c434b2ea19d88c.png" src="../../../_images/bcd5590d977b21292d6dc741a5bcd5a36c47ea8400abba5112c434b2ea19d88c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Yen’s Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-yen-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Yen’s Multilevel Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-yen-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In <a class="reference internal" href="#threshold-yen-fig"><span class="std std-numref">Fig. 3.8</span></a>, Yen’s algorithm performed fairly well on three of the images; however, the threshold of 153 in (e) pushed almost the entire region of interest into the background.</p>
+<p>In <a class="reference internal" href="#threshold-yen-fig"><span class="std std-numref">Fig. 3.9</span></a>, Yen’s algorithm performed fairly well on three of the images; however, the threshold of 153 in (e) pushed almost the entire region of interest into the background.</p>
 <p>Yen’s multilevel thresholding has several advantages and disadvantages. It allows for better image segmentation for complex images. However, it can be computationally expensive as obtaining the optimal threshold through exhaustive search increases exponentially, especially when a large number of thresholds are needed.</p>
 </section>
 <section id="adaptive-methods">
@@ -723,7 +723,7 @@ G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
 <figure class="align-center" id="threshold-local-mean-fig">
 <img alt="../../../_images/47b840fbfccae79f114a84c5b8af10e459de78833e97ebc5f1d4370f5e83583c.png" src="../../../_images/47b840fbfccae79f114a84c5b8af10e459de78833e97ebc5f1d4370f5e83583c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-mean-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Adaptive Mean Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-mean-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -732,10 +732,10 @@ G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
 <figure class="align-center" id="threshold-local-gaussian-fig">
 <img alt="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" src="../../../_images/0c28bb36954884b1072d2b9c1fcf4ac5568c6a29a8f2fb1c5af74b005c7deefc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-gaussian-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.11 </span><span class="caption-text">Adaptive Gaussian Threshold Segmentation Method. (a) through (d) are the original images, (e) through (h) are the binary masks, and (i) through (l) are the segmented images.</span><a class="headerlink" href="#threshold-local-gaussian-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#threshold-local-mean-fig"><span class="std std-numref">Fig. 3.9</span></a> and <a class="reference internal" href="#threshold-local-gaussian-fig"><span class="std std-numref">Fig. 3.10</span></a> indicate that the adaptive methods are not particularly well suited for images with relatively uniform pixel distributions.</p>
+<p><a class="reference internal" href="#threshold-local-mean-fig"><span class="std std-numref">Fig. 3.10</span></a> and <a class="reference internal" href="#threshold-local-gaussian-fig"><span class="std std-numref">Fig. 3.11</span></a> indicate that the adaptive methods are not particularly well suited for images with relatively uniform pixel distributions.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="thresholds" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>

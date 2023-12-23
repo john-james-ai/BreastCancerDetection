@@ -91,6 +91,7 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from myst_nb import glue
 import seaborn.objects as so
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression

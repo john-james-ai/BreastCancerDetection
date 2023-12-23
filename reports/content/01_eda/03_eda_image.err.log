@@ -17,16 +17,16 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-x = ImageExplorer()
-fig, stats = x.summary()
-glue("edai_stats_df)
-glue("edai_stats_plot", fig)
+fig, stats = x.analyze_resolution()
+
+glue("edai_resolutions_df)
+glue("edai_resolutions_plot", fig)
 ------------------
 
-[0;36m  Cell [0;32mIn[2], line 3[0;36m[0m
-[0;31m    glue("edai_stats_df)[0m
+[0;36m  Cell [0;32mIn[3], line 3[0;36m[0m
+[0;31m    glue("edai_resolutions_df)[0m
 [0m         ^[0m
 [0;31mSyntaxError[0m[0;31m:[0m unterminated string literal (detected at line 3)
 
-SyntaxError: unterminated string literal (detected at line 3) (3433531817.py, line 3)
+SyntaxError: unterminated string literal (detected at line 3) (1650016877.py, line 3)
 

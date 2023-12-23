@@ -624,6 +624,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 <span class="kn">import</span> <span class="nn">seaborn.objects</span> <span class="k">as</span> <span class="nn">so</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -669,6 +670,67 @@ document.write(`
 </div>
 </div>
 </div>
+<figure class="align-center" id="eda1-summary-df">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Patients</th>
+      <td>1566</td>
+    </tr>
+    <tr>
+      <th>Cases</th>
+      <td>3566</td>
+    </tr>
+    <tr>
+      <th>Calcification Cases</th>
+      <td>1872</td>
+    </tr>
+    <tr>
+      <th>Calcification Cases - Benign</th>
+      <td>1199</td>
+    </tr>
+    <tr>
+      <th>Calcification Cases - Malignant</th>
+      <td>673</td>
+    </tr>
+    <tr>
+      <th>Mass Cases</th>
+      <td>1694</td>
+    </tr>
+    <tr>
+      <th>Mass Cases - Benign</th>
+      <td>910</td>
+    </tr>
+    <tr>
+      <th>Mass Cases - Malignant</th>
+      <td>784</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><figcaption>
+<p><span class="caption-number">Fig. 3.1 </span><span class="caption-text">CBIS-DDSM Dataset Summary</span><a class="headerlink" href="#eda1-summary-df" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -696,13 +758,36 @@ document.write(`
 </div>
 </div>
 </details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>52.5
+</pre></div>
 </div>
-<p>From <code class="xref std std-numref docutils literal notranslate"><span class="pre">eda1_summary_df</span></code>, several observations can be made:</p>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.5
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>35.95
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>64.05
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>46.28
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>53.72
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.28
+</pre></div>
+</div>
+</div>
+</div>
+<p>From <a class="reference internal" href="#eda1-summary-df"><span class="std std-numref">Fig. 3.1</span></a>, several observations can be made:</p>
 <ol class="arabic simple">
-<li><p>We have 3566 cases, % are calcification cases and % are mass cases.</p></li>
-<li><p>Of the calcification cases, % are benign and % are malignant.</p></li>
-<li><p>Of the mass cases, % are benign and % are malignant.</p></li>
-<li><p>On average, we have approximately  cases per patient.</p></li>
+<li><p>We have 3566 cases, <span class="output text_plain">52.5</span>% are calcification cases and <span class="output text_plain">47.5</span>% are mass cases.</p></li>
+<li><p>Of the calcification cases, <span class="output text_plain">64.05</span>% are benign and <span class="output text_plain">35.95</span>% are malignant.</p></li>
+<li><p>Of the mass cases, <span class="output text_plain">53.72</span>% are benign and <span class="output text_plain">46.28</span>% are malignant.</p></li>
+<li><p>On average, we have approximately <span class="output text_plain">2.28</span> cases per patient.</p></li>
 </ol>
 <p>Case, as defined in <span id="id1">[<a class="reference internal" href="../99_references.html#id136" title="Rebecca Sawyer Lee, Francisco Gimenez, Assaf Hoogi, Kanae Kawai Miyake, Mia Gorovoy, and Daniel L. Rubin. A curated mammography data set for use in computer-aided detection and diagnosis research. Scientific Data, 4(1):170177, December 2017. URL: https://www.nature.com/articles/sdata2017177 (visited on 2023-05-24), doi:10.1038/sdata.2017.177.">2</a>]</span>, indicates a particular abnormality, seen on the craniocaudal (CC) and/or mediolateral oblique (MLO) views.</p>
 <p>Let’s take a look at the calcification and mass data.</p>
@@ -719,6 +804,240 @@ document.write(`
 </div>
 </div>
 </details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>case_id</th>
+      <th>patient_id</th>
+      <th>breast_density</th>
+      <th>left_or_right_breast</th>
+      <th>image_view</th>
+      <th>abnormality_id</th>
+      <th>calc_type</th>
+      <th>calc_distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>subtlety</th>
+      <th>fileset</th>
+      <th>cancer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>48</th>
+      <td>Calcification-Train_P_00031_LEFT_CC_1</td>
+      <td>P_00031</td>
+      <td>4</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>1</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1553</th>
+      <td>Calcification-Test_P_00041_LEFT_MLO_2</td>
+      <td>P_00041</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>5</td>
+      <td>test</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Calcification-Train_P_00030_RIGHT_CC_1</td>
+      <td>P_00030</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>4</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1804</th>
+      <td>Calcification-Test_P_01635_RIGHT_MLO_2</td>
+      <td>P_01635</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>AMORPHOUS-PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
+      <td>test</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>318</th>
+      <td>Calcification-Train_P_00455_LEFT_CC_1</td>
+      <td>P_00455</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>case_id</th>
+      <th>patient_id</th>
+      <th>breast_density</th>
+      <th>left_or_right_breast</th>
+      <th>image_view</th>
+      <th>abnormality_id</th>
+      <th>mass_shape</th>
+      <th>mass_margins</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>subtlety</th>
+      <th>fileset</th>
+      <th>cancer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2060</th>
+      <td>Mass-Train_P_00279_LEFT_CC_1</td>
+      <td>P_00279</td>
+      <td>3</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>ROUND</td>
+      <td>OBSCURED</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>4</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1952</th>
+      <td>Mass-Train_P_00106_LEFT_CC_3</td>
+      <td>P_00106</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>3</td>
+      <td>LYMPH_NODE</td>
+      <td>CIRCUMSCRIBED</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>4</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2347</th>
+      <td>Mass-Train_P_00695_RIGHT_CC_1</td>
+      <td>P_00695</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>ASYMMETRIC_BREAST_TISSUE</td>
+      <td>ILL_DEFINED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2650</th>
+      <td>Mass-Train_P_01134_RIGHT_CC_1</td>
+      <td>P_01134</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
+      <td>SPICULATED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2758</th>
+      <td>Mass-Train_P_01268_RIGHT_MLO_1</td>
+      <td>P_01268</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>LOBULATED</td>
+      <td>OBSCURED</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Our univariate analysis will cover:</p>
 <ul class="simple">
