@@ -51,7 +51,7 @@ warnings.filterwarnings("ignore")
 
 ## Overview
 
-There are 3565 full mammogram images, not counting one for which the DICOM file was corrupt. {numref}`edai_stats_fig` shows the number of images in the training and test sets by pathology.
+There are 3565 full mammogram images, not counting one for which the DICOM file was corrupt. {numref}`edai_stats_plot_fig` shows the number of images in the training and test sets by pathology.
 
 ```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
@@ -88,7 +88,7 @@ Class imbalance can lead to biased predictions. Augmenting the malignant class w
 
 ## Resolution and Aspect Ratio
 
-Optimal resolution is essential to distinguish malignancy in subtle radiological masses and calcifications. {numref}`edai_resolution_fig` illuminates the distribution of resolution in the CBIS-DDSM dataset.
+Optimal resolution is essential to distinguish malignancy in subtle radiological masses and calcifications. {numref}`edai_resolutions_plot_fig` illuminates the distribution of resolution in the CBIS-DDSM dataset.
 
 ```{code-cell} ipython3
 :tags: [remove-output, hide-cell]
