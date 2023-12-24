@@ -43,7 +43,7 @@ To get some intuition into the Fourier transform (FT) and the frequency domain r
 :tags: [hide-cell, remove-output]
 import os
 if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../..")))
+    os.chdir(os.path.abspath(os.path.join("../../..")))
 
 import cv2
 import matplotlib.pyplot as plt
