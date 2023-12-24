@@ -510,6 +510,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <p>The mean filter works by convolving the kernel over the image as follows. Let w(x,y) represent a set of coordinates in a  m x n rectangular window in the image, centered at point (x,y). The mean filtering process computes the average value of the corrupted image g(x,y) in the area defined by w(x,y). The value of the restored image at any point (x,y) is:</p>
 <div class="math notranslate nohighlight" id="equation-mean-filter">
 <span class="eqno">(6.12)<a class="headerlink" href="#equation-mean-filter" title="Permalink to this equation">#</a></span>\[^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)\]</div>
+<div class="admonition-kernel-coefficients admonition">
+<p class="admonition-title">Kernel Coefficients</p>
+<p>Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  <span class="math notranslate nohighlight">\(\frac{1}{mn}\)</span>, is applied at the end.</p>
+</div>
 <p>The process of convolving with a 3x3 mean filter is as follows:
 <img alt="MeanFilter" src="../../_images/02_mean_filter.gif" /></p>
 <p><a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.7</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
