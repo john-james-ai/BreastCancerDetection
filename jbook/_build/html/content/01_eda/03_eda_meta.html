@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>4. EDA Part I: Case Dataset &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>4. EDA Part 3: Case Dataset Analysis &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -68,8 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5. EDA Part II: Images" href="04_eda_image.html" />
-    <link rel="prev" title="3. Data Preparation" href="02_data_prep.html" />
+    <link rel="next" title="5. EDA Part 4: Image Analysis" href="04_eda_image.html" />
+    <link rel="prev" title="3. EDA Part 2: Data Preparation" href="02_data_prep.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -170,28 +170,21 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. EDA Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_data.html">2. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">3. Data Preparation</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. EDA Part I: Case Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">5. EDA Part II: Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_eda_methods.html">6. EDA Part III: Algorithm Selection</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../02_image_prep/00_overview.html">1. Image Preprocessing Overview</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../02_image_prep/01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_data.html">2. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">3. EDA Part 2: Data Preparation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. EDA Part 3: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">5. EDA Part 4: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="05_eda_methods.html">6. EDA Part 5: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="051_denoise.html">6.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">6.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">6.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">6.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05131_spatial.html">6.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">6.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0514_experiment.html">6.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/02_artifact/00_intro.html">3. Artifact Removal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/02_artifact/01_threshold.html">3.1. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">6.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -464,7 +457,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>EDA Part I: Case Dataset</h1>
+    <h1>EDA Part 3: Case Dataset Analysis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -567,8 +560,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="eda-part-i-case-dataset">
-<span id="eda1"></span><h1><span class="section-number">4. </span>EDA Part I: Case Dataset<a class="headerlink" href="#eda-part-i-case-dataset" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="eda-part-3-case-dataset-analysis">
+<span id="eda3"></span><h1><span class="section-number">4. </span>EDA Part 3: Case Dataset Analysis<a class="headerlink" href="#eda-part-3-case-dataset-analysis" title="Permalink to this heading">#</a></h1>
 <p>In this section, we will be analyzing the Case Dataset (<a class="reference internal" href="#eda1-case-dataset"><span class="std std-numref">Table 4.1</span></a>): calcification and mass datasets containing patient, abnormality, BI-RADS assessment, image image_view, breast density, subtlety, and pathology (diagnosis) information. We aim to obtain insight into the CBIS-DATASET, specifically regarding factors that distinguish benign from malignant diagnoses in digital mammography screening.</p>
 <table class="table" id="eda1-case-dataset">
 <caption><span class="caption-number">Table 4.1 </span><span class="caption-text">Case Dataset Dictionary</span><a class="headerlink" href="#eda1-case-dataset" title="Permalink to this table">#</a></caption>
@@ -910,84 +903,84 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>1570</th>
-      <td>Calcification-Test_P_00140_RIGHT_CC_2</td>
-      <td>P_00140</td>
+      <th>1332</th>
+      <td>Calcification-Train_P_01740_RIGHT_CC_2</td>
+      <td>P_01740</td>
       <td>2</td>
       <td>RIGHT</td>
       <td>CC</td>
       <td>2</td>
-      <td>PUNCTATE</td>
+      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
       <td>SEGMENTAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>5</td>
-      <td>test</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1863</th>
-      <td>Calcification-Test_P_02420_RIGHT_MLO_1</td>
-      <td>P_02420</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>3</td>
-      <td>MALIGNANT</td>
-      <td>4</td>
-      <td>test</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1169</th>
-      <td>Calcification-Train_P_01457_RIGHT_MLO_1</td>
-      <td>P_01457</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>COARSE</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>3</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>711</th>
-      <td>Calcification-Train_P_00899_RIGHT_CC_1</td>
-      <td>P_00899</td>
+      <th>1854</th>
+      <td>Calcification-Test_P_02176_RIGHT_CC_1</td>
+      <td>P_02176</td>
       <td>4</td>
       <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>2</td>
-      <td>train</td>
-      <td>False</td>
+      <td>AMORPHOUS-PLEOMORPHIC</td>
+      <td>REGIONAL</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>test</td>
+      <td>True</td>
     </tr>
     <tr>
-      <th>574</th>
-      <td>Calcification-Train_P_00713_LEFT_CC_1</td>
-      <td>P_00713</td>
-      <td>1</td>
+      <th>1082</th>
+      <td>Calcification-Train_P_01397_LEFT_CC_1</td>
+      <td>P_01397</td>
+      <td>4</td>
       <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
       <td>PLEOMORPHIC</td>
       <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>3</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1007</th>
+      <td>Calcification-Train_P_01300_LEFT_CC_2</td>
+      <td>P_01300</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>399</th>
+      <td>Calcification-Train_P_00523_RIGHT_CC_1</td>
+      <td>P_00523</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
       <td>4</td>
       <td>train</td>
-      <td>False</td>
+      <td>True</td>
     </tr>
   </tbody>
 </table>
@@ -1026,82 +1019,82 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>1970</th>
-      <td>Mass-Train_P_00110_RIGHT_CC_1</td>
-      <td>P_00110</td>
-      <td>3</td>
+      <th>3069</th>
+      <td>Mass-Train_P_01715_RIGHT_MLO_1</td>
+      <td>P_01715</td>
+      <td>2</td>
       <td>RIGHT</td>
-      <td>CC</td>
+      <td>MLO</td>
       <td>1</td>
+      <td>IRREGULAR</td>
+      <td>OBSCURED</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>5</td>
+      <td>train</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1940</th>
+      <td>Mass-Train_P_00092_LEFT_MLO_2</td>
+      <td>P_00092</td>
+      <td>2</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>2</td>
       <td>ROUND</td>
-      <td>ILL_DEFINED</td>
+      <td>CIRCUMSCRIBED</td>
       <td>4</td>
       <td>MALIGNANT</td>
-      <td>3</td>
+      <td>5</td>
       <td>train</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>2018</th>
-      <td>Mass-Train_P_00215_RIGHT_CC_1</td>
-      <td>P_00215</td>
+      <th>3041</th>
+      <td>Mass-Train_P_01675_RIGHT_MLO_1</td>
+      <td>P_01675</td>
       <td>3</td>
       <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
+      <td>ILL_DEFINED</td>
+      <td>0</td>
+      <td>MALIGNANT</td>
+      <td>4</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2235</th>
+      <td>Mass-Train_P_00517_LEFT_CC_1</td>
+      <td>P_00517</td>
+      <td>3</td>
+      <td>LEFT</td>
       <td>CC</td>
       <td>1</td>
-      <td>ROUND</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>3</td>
-      <td>BENIGN</td>
-      <td>5</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2604</th>
-      <td>Mass-Train_P_01062_RIGHT_MLO_1</td>
-      <td>P_01062</td>
-      <td>3</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>ROUND</td>
-      <td>CIRCUMSCRIBED-ILL_DEFINED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>4</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2409</th>
-      <td>Mass-Train_P_00775_LEFT_MLO_1</td>
-      <td>P_00775</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>ASYMMETRIC_BREAST_TISSUE</td>
+      <td>FOCAL_ASYMMETRIC_DENSITY</td>
       <td>SPICULATED</td>
-      <td>3</td>
+      <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>5</td>
+      <td>4</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>3085</th>
-      <td>Mass-Train_P_01744_LEFT_MLO_1</td>
-      <td>P_01744</td>
-      <td>2</td>
-      <td>LEFT</td>
-      <td>MLO</td>
+      <th>2700</th>
+      <td>Mass-Train_P_01189_LEFT_CC_1</td>
+      <td>P_01189</td>
       <td>1</td>
-      <td>OVAL</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>4</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
+      <td>SPICULATED</td>
+      <td>5</td>
       <td>MALIGNANT</td>
-      <td>3</td>
+      <td>4</td>
       <td>train</td>
       <td>True</td>
     </tr>
@@ -2714,7 +2707,7 @@ document.write(`
 <span class="c1"># Build Logistic Regression Pipeline</span>
 <span class="n">params_lr</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;clf__penalty&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="s1">&#39;l2&#39;</span><span class="p">],</span>
 		      <span class="s1">&#39;clf__C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
-		      <span class="s1">&#39;clf__solver&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;liblinear&#39;</span><span class="p">]}]</span> 
+		      <span class="s1">&#39;clf__solver&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;liblinear&#39;</span><span class="p">]}]</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">pb</span><span class="o">.</span><span class="n">set_classifier</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_lr</span><span class="p">)</span>
 <span class="n">pb</span><span class="o">.</span><span class="n">build_gridsearch_cv</span><span class="p">()</span>
@@ -2722,7 +2715,7 @@ document.write(`
 
 <span class="c1"># Build SVM Pipeline</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">params_svc</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;clf__kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">],</span> 
+<span class="n">params_svc</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;clf__kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">],</span>
 		       <span class="s1">&#39;clf__C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}]</span>
 <span class="n">pb</span><span class="o">.</span><span class="n">set_classifier</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_svc</span><span class="p">)</span>
 <span class="n">pb</span><span class="o">.</span><span class="n">build_gridsearch_cv</span><span class="p">()</span>
@@ -2734,7 +2727,7 @@ document.write(`
 <span class="n">params_rf</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;clf__criterion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">],</span>
 		      <span class="s1">&#39;clf__min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">,</span>
 		      <span class="s1">&#39;clf__max_depth&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">,</span>
-		      <span class="s1">&#39;clf__min_samples_split&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">[</span><span class="mi">1</span><span class="p">:]}]</span>  
+		      <span class="s1">&#39;clf__min_samples_split&#39;</span><span class="p">:</span> <span class="n">param_range</span><span class="p">[</span><span class="mi">1</span><span class="p">:]}]</span>
 <span class="n">pb</span><span class="o">.</span><span class="n">set_classifier</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="n">clf</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params_rf</span><span class="p">)</span>
 <span class="n">pb</span><span class="o">.</span><span class="n">build_gridsearch_cv</span><span class="p">()</span>
 <span class="n">rf</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">pipeline</span>
@@ -3054,7 +3047,7 @@ weighted avg       0.80      0.79      0.79      1694
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Data Preparation</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>EDA Part 2: Data Preparation</p>
       </div>
     </a>
     <a class="right-next"
@@ -3062,7 +3055,7 @@ weighted avg       0.80      0.79      0.79      1694
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>EDA Part II: Images</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>EDA Part 4: Image Analysis</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

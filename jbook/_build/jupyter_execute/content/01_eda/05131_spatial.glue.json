@@ -1,0 +1,1 @@
+{"mean_gaussian_characteristics": {"output_type": "display_data", "metadata": {"scrapbook": {"name": "mean_gaussian_characteristics", "mime_prefix": ""}}, "data": {"text/plain": "<function __main__.evaluate_mean_filter(kernel: int = 3)>"}}}

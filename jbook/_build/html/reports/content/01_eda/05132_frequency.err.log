@@ -1,0 +1,109 @@
+Traceback (most recent call last):
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../..")))
+
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+from bcd.utils.image import convert_uint8
+from myst_nb import glue
+
+FP_WHITE = "jbook/figures/frequency_white.jpg"
+FP_MMG = "jbook/figures/mammogram.png"
+
+def create_image(wavelength = 200, angle = 0):
+    x = np.arange(-500,501,1)
+    X,Y = np.meshgrid(x,x)
+    return np.sin(2*np.pi*(X*np.cos(angle) + Y*np.sin(angle)) / wavelength)
+
+def get_image(fp: str, size: int = 200):
+    img = cv2.imread(fp, cv2.IMREAD_GRAYSCALE)
+    return cv2.resize(img, (size,size))
+
+def transform_image(img, log: bool = False, clip: bool = False):
+    # Shift the input
+    img = np.fft.ifftshift(img)
+    # Compute fourier transformation
+    img = np.fft.fft2(img)
+    # Shift the zero-frequency to the center
+    img = np.fft.fftshift(img)
+    # Compute amplitude
+    img = np.abs(img)
+    # Convert to log to scale the image
+    if log:
+        img = np.log(img)
+    # Clip the image for photos.
+    if clip:
+        img = np.clip(img, a_min=0, a_max=50000)
+
+    return img
+
+
+img_white = get_image(fp=FP_WHITE)
+img_hline = create_image()
+img_vline = create_image(angle=2 * np.pi / 4, wavelength=100)
+img_mmg = get_image(fp=FP_MMG)
+
+img_white_fft = transform_image(img_white)
+img_hline_fft = transform_image(img_hline)
+img_vline_fft = transform_image(img_vline)
+img_mmg_fft = transform_image(img_mmg, clip=True)
+
+fig, axes = plt.subplots(nrows=2, ncols=4, figsize=(12,6))
+_ = axes[0,0].imshow(img_white, cmap='gray')
+_ = axes[0,1].imshow(img_hline, cmap='gray')
+_ = axes[0,2].imshow(img_vline, cmap='gray')
+_ = axes[0,3].imshow(img_mmg, cmap='gray')
+
+_ = axes[1,0].imshow(img_white_fft, cmap='gray')
+_ = axes[1,1].imshow(img_hline_fft, cmap='gray')
+_ = axes[1,1].set_xlim([480,520])
+_ = axes[1,1].set_ylim([520,480])
+_ = axes[1,2].imshow(img_vline_fft, cmap='gray')
+_ = axes[1,2].set_xlim([520,480])
+_ = axes[1,2].set_ylim([480,520])
+_ = axes[1,3].imshow(img_mmg_fft, cmap='gray')
+
+labels = np.array([["(a)", "(b)", "(c)", "(d)"], ["(e)", "(f)", "(g)", "(h)"]])
+for i in range(2):
+    for j in range(4):
+        _ = axes[i,j].set_xlabel(labels[i,j])
+        _ = axes[i,j].set_xticks([])
+        _ = axes[i,j].set_yticks([])
+
+plt.tight_layout()
+
+glue("fft", fig)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 8[0m
+[1;32m      6[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[1;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[0;32m----> 8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mbcd[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01mimage[39;00m [38;5;28;01mimport[39;00m convert_uint8
+[1;32m      9[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmyst_nb[39;00m [38;5;28;01mimport[39;00m glue
+[1;32m     11[0m FP_WHITE [38;5;241m=[39m [38;5;124m"[39m[38;5;124mjbook/figures/frequency_white.jpg[39m[38;5;124m"[39m
+
+[0;31mModuleNotFoundError[0m: No module named 'bcd'
+ModuleNotFoundError: No module named 'bcd'
+

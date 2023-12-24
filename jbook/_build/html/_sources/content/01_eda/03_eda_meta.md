@@ -12,23 +12,23 @@ kernelspec:
   name: python3
 ---
 
-(eda1)=
-# EDA Part I: Case Dataset
+(eda3)=
+# EDA Part 3: Case Dataset Analysis
 
 In this section, we will be analyzing the Case Dataset ({numref}`eda1_case_dataset`): calcification and mass datasets containing patient, abnormality, BI-RADS assessment, image image_view, breast density, subtlety, and pathology (diagnosis) information. We aim to obtain insight into the CBIS-DATASET, specifically regarding factors that distinguish benign from malignant diagnoses in digital mammography screening.
 
 ```{table} Case Dataset Dictionary
 :name: eda1_case_dataset
-| #  | Variable             | Type        | Description                                                                                                                  | 
+| #  | Variable             | Type        | Description                                                                                                                  |
 |----|----------------------|-------------|------------------------------------------------------------------------------------------------------------------------------|
 | 1  | patient_id           | Nominal     | Unique identifier for each patient.                                                                                          |
 | 2  | breast_density       | Discrete    | BI-RADS overall assessment of the volume of attenuating tissues in the breast.                                             |
 | 3  | left_or_right_breast | Nominal     | Which breast was imaged.                                                                                                     |
 | 4  | image_view           | Dichotomous | Either cranialcaudal or mediolateral oblique image_view.                                                                            |
 | 5  | abnormality_id       | Discrete    | Number of abnormalities for the patient.                                                                                       |
-| 6  | abnormality_type     | Dichotomous | BI-RADS category of the abnormality.                                                                                         | 
-| 7  | calc_type            | Nominal     | Characterization of the type of calcification (where applicable)                                                             | 
-| 8  | calc_distribution    | Nominal     | The arrangement of the calcifications inside the breast and, relative to the probability of malignancy. (where applicable) | 
+| 6  | abnormality_type     | Dichotomous | BI-RADS category of the abnormality.                                                                                         |
+| 7  | calc_type            | Nominal     | Characterization of the type of calcification (where applicable)                                                             |
+| 8  | calc_distribution    | Nominal     | The arrangement of the calcifications inside the breast and, relative to the probability of malignancy. (where applicable) |
 | 9  | mass_shape           | Nominal     | Shape of the mass                                                                                                            |
 | 10 | mass_margins         | Nominal     | Feature that separates the mass from the adjacent breast parenchyma.                                                         |
 | 11 | assessment           | Discrete    | Overall BI-RADS assessment of the mammography                                                                                |
@@ -265,7 +265,7 @@ As shown in {numref}`eda1_univariate_view_fig`, the proportions of CC and MLO im
 +++
 
 ### Abnormality Id
-The abnormality id is a sequence number assigned to each abnormality for a patient. 
+The abnormality id is a sequence number assigned to each abnormality for a patient.
 
 ```{code-cell} ipython3
 :tags: [remove-output, hide-input]
@@ -290,11 +290,11 @@ As indicated in {numref}`eda1_univariate_abnormality_id_fig`, the vast majority 
 +++
 
 ### Abnormality Type
-CBIS-DDSM contains two abnormality types: calcification and mass. 
+CBIS-DDSM contains two abnormality types: calcification and mass.
 
 Calcifications, common on mammograms, especially after age 50, are calcium deposits within the breast tissue. Typically benign, calcifications show up as either macrocalcifications or microcalcifications. Macrocalcifications appear as large white dots or dashes which are almost always noncancerous, requiring no further testing or follow-up. Microcalcifications show up as fine, white specks, similar to grains of salt. Usually noncancerous, but certain patterns can be an early sign of cancer.
 
-Masses are also common, particularly among women of reproductive age. For the 25% of women affected by breast disease in their lifetime, the vast majority will present initially with a new breast mass in the primary care setting. Breast masses have a wide range of causes, from physiological adenosis to highly aggressive malignancy.  
+Masses are also common, particularly among women of reproductive age. For the 25% of women affected by breast disease in their lifetime, the vast majority will present initially with a new breast mass in the primary care setting. Breast masses have a wide range of causes, from physiological adenosis to highly aggressive malignancy.
 
 ```{code-cell} ipython3
 :tags: [remove-output, hide-input]
@@ -354,7 +354,7 @@ A BI-RADS assessment is based upon a thorough evaluation of the mammographic fea
 | 3        | Means the findings are probably benign. While a mass, calcification, or other abnormality may have been found, it’s most likely not cancerous.                    |
 | 4        | Means cancer is suspected. Four subcategories relate the probability of a malignancy: 4A (2-10%) 4B (10-50%) 4C (50-95%)                       |
 | 5        | Means cancer is highly suspected. Findings have a 95% chance or higher of being cancerous.                                                                       |
-| 6        | Cancer was previously diagnosed using a biopsy.       
+| 6        | Cancer was previously diagnosed using a biopsy.
                                                                                                                   |
 
 ```{code-cell} ipython3
@@ -375,7 +375,7 @@ Distribution of BI-RADS Assessment in CBIS-DDSM
 
 +++
 
-{numref}`eda1_univariate_assessment_fig` indicates a majority of cases in the CBIS-DDSM are suspected or highly suspected of malignancy. 
+{numref}`eda1_univariate_assessment_fig` indicates a majority of cases in the CBIS-DDSM are suspected or highly suspected of malignancy.
 
 +++
 
@@ -416,7 +416,7 @@ Distribution of Calcification Types in CBIS-DDSM
 
 +++
 
-As shown in {numref}`eda1_univariate_calc_types_fig`, pleomorphic and amorphous calcifications account for over half of the calcification cases in the dataset. Nearly 75% of the calcification cases are represented by five types. 
+As shown in {numref}`eda1_univariate_calc_types_fig`, pleomorphic and amorphous calcifications account for over half of the calcification cases in the dataset. Nearly 75% of the calcification cases are represented by five types.
 
 +++
 
@@ -477,7 +477,7 @@ Distribution of Mass Shapes in CBIS-DDSM
 
 +++
 
-As shown in {numref}`eda1_univariate_mass_shape_fig` the vast majority of mass shapes (84%) are irregular, oval, lobulated, or round. 
+As shown in {numref}`eda1_univariate_mass_shape_fig` the vast majority of mass shapes (84%) are irregular, oval, lobulated, or round.
 
 +++
 
@@ -488,8 +488,8 @@ Mass margins are features that separate the mass from the adjacent breast parenc
 1. Circumscribed: Low probability of malignancy.
 2. Obscured: Undetermined likelihood of malignancy.
 3. Spiculated: Higher likelihood of malignancy.
-4. Microlobulated: Suspicious for breast carcinoma: 
-5. Ill-Defined: Also called 'indistinct'. Generally suspicious of malignancy.     
+4. Microlobulated: Suspicious for breast carcinoma:
+5. Ill-Defined: Also called 'indistinct'. Generally suspicious of malignancy.
 
 ```{code-cell} ipython3
 :tags: [remove-output, hide-input]
@@ -509,7 +509,7 @@ Distribution of Mass Margins in CBIS-DDSM
 
 +++
 
-As depicted in {numref}`eda1_univariate_mass_margins_fig`, spiculated, circumscribed and ill-defined make up nearly 70% of the mass margins in the dataset. 
+As depicted in {numref}`eda1_univariate_mass_margins_fig`, spiculated, circumscribed and ill-defined make up nearly 70% of the mass margins in the dataset.
 
 +++
 
@@ -563,16 +563,16 @@ Distribution of Cancer Diagnoses in CBIS-DDSM
 
 Several observations can be made at this stage.
 
-1. The CBIS-DDSM is well-balanced for breast side, image view, and abnormality type. 
-2. The majority (~70%) of cases have BI-RADS b and c breast densities, the remainder is evenly split between BI-RADS a and d densities.  
+1. The CBIS-DDSM is well-balanced for breast side, image view, and abnormality type.
+2. The majority (~70%) of cases have BI-RADS b and c breast densities, the remainder is evenly split between BI-RADS a and d densities.
 3. Calcification Cases
-   1. Pleomorphic, amorphous, punctate, lucent-centered, and fine linear branching calcification types account for ~75% of the calcification case types in the dataset. Pleomorphic calcifications represent a plurality (~44%). 
-   2. Clustered and segmental calcification distributions account for ~85% of the calcification distributions in the dataset. 
+   1. Pleomorphic, amorphous, punctate, lucent-centered, and fine linear branching calcification types account for ~75% of the calcification case types in the dataset. Pleomorphic calcifications represent a plurality (~44%).
+   2. Clustered and segmental calcification distributions account for ~85% of the calcification distributions in the dataset.
 4. Mass Cases
    1. Irregular, oval, lobulated, and round masses account for ~85% of the mass cases.
    2. Spiculated, circumscribed, ill-defined, obscured, and microlobulated mass margins account for ~93% of the mass margins in the dataset.
-5. Approximately 60% of the cases are benign, indicating a slight class imbalance which could lead to biased predictions.  
- 
+5. Approximately 60% of the cases are benign, indicating a slight class imbalance which could lead to biased predictions.
+
 Next up? Bivariate analysis.
 
 +++
@@ -655,7 +655,7 @@ cv = cases.stats.cramersv(a='left_or_right_breast', b='cancer')
 print(cv)
 ```
 
-The chi-square test above, indicates a non-significant association of negligible effect between breast and diagnosis, ($X^2$ (1,n=3566)=2.97 p=0.08, $\phi$=.03). 
+The chi-square test above, indicates a non-significant association of negligible effect between breast and diagnosis, ($X^2$ (1,n=3566)=2.97 p=0.08, $\phi$=.03).
 
 +++
 
@@ -681,7 +681,7 @@ Diagnosis by Image View
 
 +++
 
-{numref}`eda1_bivariate_view_fig` suggests no difference in malignancies detected in the CC and MLO views. 
+{numref}`eda1_bivariate_view_fig` suggests no difference in malignancies detected in the CC and MLO views.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -690,7 +690,7 @@ cv = cases.stats.cramersv(a='image_view', b='cancer')
 print(cv)
 ```
 
-The chi-square test above, indicates a non-significant association of negligible effect between image image_view and diagnosis, ($X^2$ (1,n=3566)=0.007 p=0.93, $\phi$=.002). 
+The chi-square test above, indicates a non-significant association of negligible effect between image image_view and diagnosis, ($X^2$ (1,n=3566)=0.007 p=0.93, $\phi$=.002).
 
 +++
 
@@ -831,7 +831,7 @@ The Kendall's Tau test measuring the association between subtlety and malignancy
 +++
 
 #### Calcification Type and Cancer
-What is the association between calcification type and malignancy. For this analysis, we'll focus on the top five calcification types in the CBIS-DDSM: pleomorphic, amorphous, pnctate, lucent-centered and fine linear branching. 
+What is the association between calcification type and malignancy. For this analysis, we'll focus on the top five calcification types in the CBIS-DDSM: pleomorphic, amorphous, pnctate, lucent-centered and fine linear branching.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -867,7 +867,7 @@ Cramer's V indicates a large effect ($X^2$(1,n=1872)=539.69 p<0.01, $V$=0.54).
 
 +++ {"tags": ["hide-input"]}
 
-{numref}`eda1_bivariate_calc_types_top_10_fig` lists the top 10 most malignant calcification types by proportion in the CBIS-DDSM. 
+{numref}`eda1_bivariate_calc_types_top_10_fig` lists the top 10 most malignant calcification types by proportion in the CBIS-DDSM.
 
 ```{code-cell} ipython3
 :tags: [remove-output, hide-input]
@@ -952,7 +952,7 @@ Diagnosis by Mass Shape
 
 +++
 
-Irregular, and architectural distortion masses tend to indicate malignancy. Lobulated, oval and round masses appear to suggest intermediate concern of malignancy. 
+Irregular, and architectural distortion masses tend to indicate malignancy. Lobulated, oval and round masses appear to suggest intermediate concern of malignancy.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -967,7 +967,7 @@ This chi-square test of independence between mass shape and diagnosis indicates 
 
 #### Mass Margins and Cancer
 
-Mass margins, a feature that separates the mass from the adjacent breast parenchyma, is often the feature which enables differentiation between benign and malignant. 
+Mass margins, a feature that separates the mass from the adjacent breast parenchyma, is often the feature which enables differentiation between benign and malignant.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -1087,12 +1087,12 @@ Abnormality Type and BI-RADS Assessment (Proportion)
 
 +++
 
-{numref}`eda1_bivariate_abtype_assessment_count_fig` and {numref}`eda1_bivariate_abtype_assessment_prop_fig`  illuminate the relationship between abnormality type and BI-RADS assessment. Since we have less than five BI-RADS 1 (b) assessments, we'll ignore those for now. Masses appear to have a majority the  BI-RADS 0, 3, and 5 assessments; whereas, calcification cases are most prevalent in BI-RADS 2 and 4 assessments. However, the effect is moderate and so this may be an aspect specific to the CBIS-DDSM dataset. 
+{numref}`eda1_bivariate_abtype_assessment_count_fig` and {numref}`eda1_bivariate_abtype_assessment_prop_fig`  illuminate the relationship between abnormality type and BI-RADS assessment. Since we have less than five BI-RADS 1 (b) assessments, we'll ignore those for now. Masses appear to have a majority the  BI-RADS 0, 3, and 5 assessments; whereas, calcification cases are most prevalent in BI-RADS 2 and 4 assessments. However, the effect is moderate and so this may be an aspect specific to the CBIS-DDSM dataset.
 
 +++
 
 #### Calcification Type and Calcification Distribution
-Which calcification types and distributions co-occur most frequently? 
+Which calcification types and distributions co-occur most frequently?
 
 ```{code-cell} ipython3
 fig, _ = cases.compare_morphology(m1='calc_type', m2='calc_distribution', figsize=(12,12))
@@ -1109,7 +1109,7 @@ Calcification Type and Distribution
 
 +++
 
-{numref}`eda1_bivariate_calc_type_dist_fig` illuminates the calcification types and distributions that co-occur with greater than 50% probability. 
+{numref}`eda1_bivariate_calc_type_dist_fig` illuminates the calcification types and distributions that co-occur with greater than 50% probability.
 
 Segmental distributions tended to co-occur with a range of calcification types, including Coarse, Eggshell, Lucent-Centered, Round and Regular, Skin, and Vascular calcification types. Clustered distributions tended to present with Amorphous, Dystrophic, Milk of Calcium, Pleomorphic, and Punctate calcification types. Finally, Regional / Large Rodlike calcifications presented together in the CBIS-DDSM.
 
@@ -1157,7 +1157,7 @@ Calcification Distribution and BI-RADS Assessment
 
 +++
 
-{numref}`eda1_bivariate_calc_dist_assessment_fig` displays the proportional relationships between calcification distribution and BI-RADS assessment. 
+{numref}`eda1_bivariate_calc_dist_assessment_fig` displays the proportional relationships between calcification distribution and BI-RADS assessment.
 
 Segmental and diffusely scattered calcifications presented with BI-RADS 2 - Benign and clustered and linear calcifications were assessed as suspicious (BI-RADS 4) with greater than 60% probablity. Regional calcifications had assessments ranging from benign to highly suspicous of malignancy.
 
@@ -1192,7 +1192,7 @@ Our bivariate analysis was conducted in two parts:
 1. Bivariate Target Variable Association Analysis
 2. Bivariate Feature Association Analysis
 
-The former examined the relationships between the features and the target variable, 'cancer' and the latter explored the relationships between feature pairs.  
+The former examined the relationships between the features and the target variable, 'cancer' and the latter explored the relationships between feature pairs.
 
 ```{code-cell} ipython3
 :tags: [remove-output, hide-input]
@@ -1217,7 +1217,7 @@ Mass Shape and Mass Margins
 
 1. There was strong agreement between the BI-RADS assessments and the pathology ($\tau$=0.60, p<0.01); an expected finding as many of the BI-RADS assessments were likely updated as additional information was gathered by the physician {cite}`leeCuratedMammographyData2017`.
 2. Of the morphological features, mass margins had the strongest association with the diagnostic outcome. ($X^2$(1,n=1694)=588.62 p<0.01, $V$=0.59). The margins most associated with malignancy were ill-defined, microlobulated, and spiculated.
-3. Calcification type was also strongly associated with pathology ($X^2$(1,n=1872)=539.69 p<0.01, $V$=0.54). Pleomorphic and fine linear branching were most highly associated with malignancy. 
+3. Calcification type was also strongly associated with pathology ($X^2$(1,n=1872)=539.69 p<0.01, $V$=0.54). Pleomorphic and fine linear branching were most highly associated with malignancy.
 4. Mass shape had a large and significant effect on pathology in the dataset ($X^2$(1,n=1694)=440.92 p<0.01, $V$=0.51). Lobulated, round, and oval masses had malignancy rates exceeding 60% in the CBIS-DDSM dataset.
 5. Calcification distribution had a moderate effect on pathology.  ($X^2$(1,n=1872)=198.56 p<0.01, $V$=0.33). Linear calcifications had the greatest rate of malignancy, followed by regional, clustered calcifications. Segmental and diffusely scattered calcifications were more indicative of a benign pathology.
 6. Subtlety, abnormality type, breast, breast density, and image image_view were all weakly associated with pathology.
@@ -1226,14 +1226,14 @@ Mass Shape and Mass Margins
 
 #### Bivariate Feature Association Analysis Summary
 Cramer's V was used to measure the degree of association between the features. We observed several strong associations in both calcification and mass cases:
-1. Calcification Cases: 
-   1. There was a strong association (V=0.54) between calcification type and BI-RADS assessment. 
+1. Calcification Cases:
+   1. There was a strong association (V=0.54) between calcification type and BI-RADS assessment.
    2. Moderate associations were observed between:
       1. breast density and calcification type
       2. calcification type and distribution
       3. calcification type and subtlety
       4. calcification distribution and BI-RADS assessment
-   3. The other features were weakly associated. 
+   3. The other features were weakly associated.
 2. Mass Cases:
    1. No strong associations were observed among the features in the mass dataset.
    2. Moderate associations were observed between:
@@ -1259,13 +1259,13 @@ We begin with the morphological feature analysis.
 
 ### Morphological Analysis
 
-The morphology, the form and structure of the abnormality, is the most important factor in the differentiation between a benign and malignant diagnosis. Here, we explore the relationship between the morphological factors and the diagnostic outcome. Concretely, we ask which combinations of morphologies are most malignant. 
+The morphology, the form and structure of the abnormality, is the most important factor in the differentiation between a benign and malignant diagnosis. Here, we explore the relationship between the morphological factors and the diagnostic outcome. Concretely, we ask which combinations of morphologies are most malignant.
 
 We’ll start with mass shape and margins.
 
 +++
 
-#### Probability of Malignancy by Mass Shape and Margin 
+#### Probability of Malignancy by Mass Shape and Margin
 
 ```{code-cell} ipython3
 ax = cases.morphology_analysis(a='mass_shape', b='mass_margins')
@@ -1277,16 +1277,16 @@ glue("eda1_multivariate_mass_analysis", ax)
 align: center
 name: eda1_multivariate_mass_analysis_fig
 ---
-Probability of Malignancy by Mass Shape and Margin 
+Probability of Malignancy by Mass Shape and Margin
 ```
 
 +++
 
-{numref}`eda1_multivariate_mass_analysis_fig` shows a heat map of probabilities of malignancy by mass shape and margin. 
+{numref}`eda1_multivariate_mass_analysis_fig` shows a heat map of probabilities of malignancy by mass shape and margin.
 
 Note: this analysis was restricted to the five most frequently occurring mass shapes and margins which account for ~87% and ~93% of the cases respectively.
 
-The values in the heat map are the sum of the boolean cancer variable for each mass shape/mass margin combination, normalized by the total number of observations in the subset. 
+The values in the heat map are the sum of the boolean cancer variable for each mass shape/mass margin combination, normalized by the total number of observations in the subset.
 
 Irregular masses have a ~48% chance of malignancy as indicated by our data. Of the irregular masses, those with a spiculated and ill-defined margin have a probability of malignancy of ~31% and ~17% respectively.
 
@@ -1304,14 +1304,14 @@ glue("eda1_multivariate_calc_analysis", ax)
 align: center
 name: eda1_multivariate_calc_analysis_fig
 ---
-Probability of Malignancy by Calcification Type and Distribution 
+Probability of Malignancy by Calcification Type and Distribution
 ```
 
 +++
 
-{numref}`eda1_multivariate_mass_analysis_fig` shows a heat map of probabilities of malignancy by calcification type and distribution. 
+{numref}`eda1_multivariate_mass_analysis_fig` shows a heat map of probabilities of malignancy by calcification type and distribution.
 
-Again, we've restricted the analysis to the most frequently occurring calcification types and distributions which represent ~80% and ~97% of the cases respectively. 
+Again, we've restricted the analysis to the most frequently occurring calcification types and distributions which represent ~80% and ~97% of the cases respectively.
 
 Pleomorphic calcifications account for ~60% of the malignancies in the CBIS-DDSM dataset. Of those, clustered and segmental distributions represent malignancies at probabilities of ~47% and ~13% respectively.
 
@@ -1319,9 +1319,9 @@ Pleomorphic calcifications account for ~60% of the malignancies in the CBIS-DDSM
 
 ### Model Selection
 
- Logistic Regression, Support Vector Machines, and Random Forests classifiers will be trained on the calcification and mass training data separately. The models will be evaluated on unseen test data and the best performing algorithm will provide feature importances. 
+ Logistic Regression, Support Vector Machines, and Random Forests classifiers will be trained on the calcification and mass training data separately. The models will be evaluated on unseen test data and the best performing algorithm will provide feature importances.
 
- Given the high cost of a false negative, we will use recall as the metric for evaluating model performance. 
+ Given the high cost of a false negative, we will use recall as the metric for evaluating model performance.
 
 ```{code-cell} ipython3
 :tags: [remove-cell, hide-input]
@@ -1345,7 +1345,7 @@ pb.set_scorer('accuracy')
 # Build Logistic Regression Pipeline
 params_lr = [{'clf__penalty': ['l1', 'l2'],
 		      'clf__C': [1.0, 0.5, 0.1],
-		      'clf__solver': ['liblinear']}] 
+		      'clf__solver': ['liblinear']}]
 clf = LogisticRegression(random_state=5)
 pb.set_classifier(classifier=clf, params=params_lr)
 pb.build_gridsearch_cv()
@@ -1353,7 +1353,7 @@ lr = pb.pipeline
 
 # Build SVM Pipeline
 clf = SVC(random_state=5)
-params_svc = [{'clf__kernel': ['linear'], 
+params_svc = [{'clf__kernel': ['linear'],
 		       'clf__C': [1,2,3,4,5, 6, 7, 8, 9, 10]}]
 pb.set_classifier(classifier=clf, params=params_svc)
 pb.build_gridsearch_cv()
@@ -1365,7 +1365,7 @@ param_range = [1,2,3,4,5]
 params_rf = [{'clf__criterion': ['gini', 'entropy'],
 		      'clf__min_samples_leaf': param_range,
 		      'clf__max_depth': param_range,
-		      'clf__min_samples_split': param_range[1:]}]  
+		      'clf__min_samples_split': param_range[1:]}]
 pb.set_classifier(classifier=clf, params=params_rf)
 pb.build_gridsearch_cv()
 rf = pb.pipeline
@@ -1426,7 +1426,7 @@ The Support Vector Classifier outperformed Random Forest and Logistic Regression
 
 +++
 
-The magnitude of the model coefficients indicate the importance of the feature to the prediction task. A positive value provides evidence that the instance being classified belongs to the positive or malignant class; whereas, a negative value provides evidence that the instance being classified belongs to the negative or benign class. Let's take a look.  
+The magnitude of the model coefficients indicate the importance of the feature to the prediction task. A positive value provides evidence that the instance being classified belongs to the positive or malignant class; whereas, a negative value provides evidence that the instance being classified belongs to the negative or benign class. Let's take a look.
 
 ```{code-cell} ipython3
 :tags: [remove-output, hide-input]
@@ -1494,7 +1494,7 @@ y_pred = mass_ms.predict(X=X)
 mass_ms.score(y_true=y, y_pred=y_pred)
 ```
 
-Again, the Support Vector Classifier performed best on the mass dataset with accuracy and recall of 0.88 and 0.88 respectively. 
+Again, the Support Vector Classifier performed best on the mass dataset with accuracy and recall of 0.88 and 0.88 respectively.
 
 Let's examine feature importance.
 
@@ -1521,7 +1521,7 @@ Feature Importance for Mass Cases in the CBIS-DDSM Dataset
 
 +++
 
-As shown in {numref}`eda1_multivariate_mass_feature_importance_fig`, ill-defined, spiculated, and microlobulated mass margins were the most important features, followed by lymph node and focal asymmetric density mass shapes. 
+As shown in {numref}`eda1_multivariate_mass_feature_importance_fig`, ill-defined, spiculated, and microlobulated mass margins were the most important features, followed by lymph node and focal asymmetric density mass shapes.
 
 This concludes the multivariate analysis portion of the exploratory data analysis part 1. Let's summarize our findings.
 
@@ -1533,12 +1533,12 @@ Our aim for this section was to acquire insight into the CBIS-DDSM dataset and t
 
 ### Distribution of Data
 
-1.	Approximately 60% of the cases are benign, indicating a slight class imbalance which could lead to biased predictions.  
+1.	Approximately 60% of the cases are benign, indicating a slight class imbalance which could lead to biased predictions.
 2.	For calcification cases, pleomorphic, amorphous, punctate, lucent-centered, and fine linear branching calcification types account for ~75% of the calcification case types.
 3.	Approximately 85% of the calcification cases had either clustered or segmental classification distributions.
 4.	For mass cases, irregular, oval, lobulated, and round masses represented ~85% of all mass cases.
 5.	The five most frequently encountered mass margins: spiculated, circumscribed, ill-defined, obscured, and microlobulated, covered over 93% of the mass cases.
-6.	The majority (~70%) of cases have BI-RADS b and c breast densities, the remainder is evenly split between BI-RADS a and d densities.  
+6.	The majority (~70%) of cases have BI-RADS b and c breast densities, the remainder is evenly split between BI-RADS a and d densities.
 
 ### Feature and Target Associations
 
@@ -1550,6 +1550,6 @@ Our aim for this section was to acquire insight into the CBIS-DDSM dataset and t
 ### Feature Importance
 
 1.	The three most important features for mass differential diagnoses were ill-defined, spiculated, and microlobulated mass margins. Lymph node, focal asymmetrical density, and asymmetric breast tissue were three mass shapes that had a strong, but lesser degree of importance than the mass margins.
-2.	For calcification cases, calcification type dominated the feature list in terms of importance. The top five included lucent-centered, punctate, amorphous, round and regular, and vascular calcification types. 
+2.	For calcification cases, calcification type dominated the feature list in terms of importance. The top five included lucent-centered, punctate, amorphous, round and regular, and vascular calcification types.
 
 This concludes part 1 of the exploratory analysis. Next, we analyze the CBIS-DDSM imaging data.

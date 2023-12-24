@@ -11,8 +11,8 @@ kernelspec:
   name: python3
 ---
 
-(eda0)=
-# Data Preparation
+(eda2)=
+# EDA Part 2: Data Preparation
 
 In the prior section, we obtained the CBIS-DDSM data from [The Cancer Imaging Archive](https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629) (TCIA). This brief section aims to convert the data to a form well suited for exploratory data analyses.
 

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 03:42:38 pm                                               #
-# Modified   : Saturday December 23rd 2023 11:48:30 pm                                             #
+# Modified   : Sunday December 24th 2023 01:01:57 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,23 +38,16 @@ parts:
   - file: content/01_eda/03_eda_meta
   - file: content/01_eda/04_eda_image
   - file: content/01_eda/05_eda_methods
-- caption: Image Preprocessing
-  numbered: 3
-  chapters:
-  - file: content/02_image_prep/00_overview
-  - file: content/02_image_prep/01_denoise
     sections:
-    - file: content/02_image_prep/01_denoise/00_noise_models
-    - file: content/02_image_prep/01_denoise/01_noise_types
-    - file: content/02_image_prep/01_denoise/02_denoisers
+    - file: content/01_eda/051_denoise
       sections:
-      - file: content/02_image_prep/01_denoise/020_spatial
-      - file: content/02_image_prep/01_denoise/021_frequency
-    - file: content/02_image_prep/01_denoise/03_experiment
-  - file: content/02_image_prep/02_artifact/00_intro
-    sections:
-    - file: content/02_image_prep/02_artifact/01_threshold
-
+      - file: content/01_eda/0511_noise_models
+      - file: content/01_eda/0512_noise_types
+      - file: content/01_eda/0513_denoisers
+      - file: content/01_eda/05131_spatial
+      - file: content/01_eda/05132_frequency
+      - file: content/01_eda/0514_experiment
+    - file: content/01_eda/052_threshold
 - caption: References
   numbered: false
   chapters:
