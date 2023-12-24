@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>5. Exploratory Data Analysis of Images &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>5. EDA Part II: Images &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -66,8 +66,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="1. Image Preprocessing Overview" href="../02_image_prep/00_overview.html" />
-    <link rel="prev" title="4. EDA Case Dataset" href="03_eda_meta.html" />
+    <link rel="next" title="6. EDA Part III: Algorithm Selection" href="05_eda_methods.html" />
+    <link rel="prev" title="4. EDA Part I: Case Dataset" href="03_eda_meta.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -170,8 +170,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. EDA Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_data.html">2. <strong>CBIS-DDSM</strong> Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">3. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">4. EDA Case Dataset</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Exploratory Data Analysis of Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">4. EDA Part I: Case Dataset</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. EDA Part II: Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_eda_methods.html">6. EDA Part III: Algorithm Selection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="nav bd-sidenav">
@@ -461,7 +462,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Exploratory Data Analysis of Images</h1>
+    <h1>EDA Part II: Images</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -524,8 +525,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis-of-images">
-<h1><span class="section-number">5. </span>Exploratory Data Analysis of Images<a class="headerlink" href="#exploratory-data-analysis-of-images" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="eda-part-ii-images">
+<span id="eda2"></span><h1><span class="section-number">5. </span>EDA Part II: Images<a class="headerlink" href="#eda-part-ii-images" title="Permalink to this heading">#</a></h1>
 <p>Image quality factors such as resolution, the presence of noise and artifacts, contrast, and size affect the visual information contained in mammography, and crucially determine the performance of deep learning classification models.</p>
 <p>In this section, we conduct an exploratory data analysis of the CBIS-DDSM full mammogram imaging data with several objectives in mind:</p>
 <ol class="arabic simple">
@@ -1690,15 +1691,15 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>EDA Case Dataset</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>EDA Part I: Case Dataset</p>
       </div>
     </a>
     <a class="right-next"
-       href="../02_image_prep/00_overview.html"
+       href="05_eda_methods.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>Image Preprocessing Overview</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>EDA Part III: Algorithm Selection</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

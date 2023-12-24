@@ -12,7 +12,8 @@ kernelspec:
   name: python3
 ---
 
-# EDA Case Dataset
+(eda1)=
+# EDA Part I: Case Dataset
 
 In this section, we will be analyzing the Case Dataset ({numref}`eda1_case_dataset`): calcification and mass datasets containing patient, abnormality, BI-RADS assessment, image image_view, breast density, subtlety, and pathology (diagnosis) information. We aim to obtain insight into the CBIS-DATASET, specifically regarding factors that distinguish benign from malignant diagnoses in digital mammography screening.
 
@@ -1446,7 +1447,7 @@ Feature Importance for Calcification Cases in the CBIS-DDSM Dataset
 
 +++
 
-In {numref}`eda1_multivariate_feature_importance_fig`, we see that calcification types have the greatest impact on the classification task. Further, the feature weight of evidence aligns with current literature on the differential of breast calcifications. For instance, lucent-centered, punctate, amorphous, and vascular calcifications are typically classified as BI-RADS 2, benign.
+In {numref}`eda1_multivariate_calc_feature_importance_fig`, we see that calcification types have the greatest impact on the classification task. Further, the feature weight of evidence aligns with current literature on the differential of breast calcifications. For instance, lucent-centered, punctate, amorphous, and vascular calcifications are typically classified as BI-RADS 2, benign.
 
 +++ {"tags": ["hide-input"]}
 

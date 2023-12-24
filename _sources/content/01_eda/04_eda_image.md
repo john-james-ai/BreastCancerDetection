@@ -11,7 +11,8 @@ kernelspec:
   name: python3
 ---
 
-# Exploratory Data Analysis of Images
+(eda2)=
+# EDA Part II: Images
 
 +++
 
