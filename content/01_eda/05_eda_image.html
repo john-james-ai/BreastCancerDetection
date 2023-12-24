@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3. EDA Part 5: Image Analysis &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>5. EDA Part 5: Image Analysis &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -66,8 +66,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4. EDA Part 6: Algorithm Selection" href="06_eda_methods.html" />
-    <link rel="prev" title="2. EDA Part 4: Case Dataset Analysis" href="04_eda_meta.html" />
+    <link rel="next" title="6. EDA Part 6: Algorithm Selection" href="06_eda_methods.html" />
+    <link rel="prev" title="4. EDA Part 4: Case Dataset Analysis" href="04_eda_meta.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -167,20 +167,22 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="03_data_prep.html">1. EDA Part 3: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_meta.html">2. EDA Part 4: Case Dataset Analysis</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. EDA Part 5: Image Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="06_eda_methods.html">4. EDA Part 6: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="061_denoise.html">4.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="0611_noise_models.html">4.1.1. Noise Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0612_noise_types.html">4.1.2. Noise Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0613_denoisers.html">4.1.3. Denoiser Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="06131_spatial.html">4.1.4. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="06132_frequency.html">4.1.5. Frequency Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0614_experiment.html">4.1.6. Denoising Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">1. EDA Part 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_data.html">2. EDA Part 2: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_data_prep.html">3. EDA Part 3: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_meta.html">4. EDA Part 4: Case Dataset Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. EDA Part 5: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="06_eda_methods.html">6. EDA Part 6: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="061_denoise.html">6.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="0611_noise_models.html">6.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0612_noise_types.html">6.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0613_denoisers.html">6.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06131_spatial.html">6.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06132_frequency.html">6.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0614_experiment.html">6.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="062_threshold.html">4.2. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="062_threshold.html">6.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -463,12 +465,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">3.1. Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-aspect-ratio">3.2. Resolution and Aspect Ratio</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-value-distribution">3.3. Pixel Value Distribution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-analysis">3.4. Image Quality Analysis</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-analysis">3.5. Calcification Case Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-morphology">3.5.1. Calcification Morphology</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">5.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-aspect-ratio">5.2. Resolution and Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-value-distribution">5.3. Pixel Value Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-analysis">5.4. Image Quality Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-analysis">5.5. Calcification Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-morphology">5.5.1. Calcification Morphology</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lucent-centered">Lucent-Centered</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#punctate">Punctate</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pleomorphic">Pleomorphic</a></li>
@@ -476,7 +478,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-linear-branching">Fine Linear Branching</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">3.5.2. Calcification Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">5.5.2. Calcification Distribution</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustered">Clustered</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear">Linear</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusely-scattered">Diffusely Scattered</a></li>
@@ -486,15 +488,15 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-analysis">3.6. Mass Case Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-analysis">3.6.1. Mass Shape Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-analysis">5.6. Mass Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-analysis">5.6.1. Mass Shape Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#round-masses">Round Masses</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#oval-masses">Oval Masses</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lobulated-masses">Lobulated Masses</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#irregular">Irregular</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margin-analysis">3.6.2. Mass Margin Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margin-analysis">5.6.2. Mass Margin Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#circumscribed">Circumscribed</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ill-defined">Ill-Defined</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#microlobulated">Microlobulated</a></li>
@@ -504,7 +506,7 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-key-takeaways">3.7. Summary and Key Takeaways</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-key-takeaways">5.7. Summary and Key Takeaways</a></li>
 </ul>
             </nav>
         </div>
@@ -517,7 +519,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="eda-part-5-image-analysis">
-<span id="eda5"></span><h1><span class="section-number">3. </span>EDA Part 5: Image Analysis<a class="headerlink" href="#eda-part-5-image-analysis" title="Permalink to this heading">#</a></h1>
+<span id="eda5"></span><h1><span class="section-number">5. </span>EDA Part 5: Image Analysis<a class="headerlink" href="#eda-part-5-image-analysis" title="Permalink to this heading">#</a></h1>
 <p>Image quality factors such as resolution, the presence of noise and artifacts, contrast, and size affect the visual information contained in mammography, and crucially determine the performance of deep learning classification models.</p>
 <p>In this section, we conduct an exploratory data analysis of the CBIS-DDSM full mammogram imaging data with several objectives in mind:</p>
 <ol class="arabic simple">
@@ -557,8 +559,8 @@ document.write(`
 </details>
 </div>
 <section id="overview">
-<h2><span class="section-number">3.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
-<p>There are 3565 full mammogram images, not counting one for which the DICOM file was corrupt. <a class="reference internal" href="#edai-stats-plot-fig"><span class="std std-numref">Fig. 3.1</span></a> shows the number of images in the training and test sets by pathology.</p>
+<h2><span class="section-number">5.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>There are 3565 full mammogram images, not counting one for which the DICOM file was corrupt. <a class="reference internal" href="#edai-stats-plot-fig"><span class="std std-numref">Fig. 5.1</span></a> shows the number of images in the training and test sets by pathology.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -578,7 +580,7 @@ document.write(`
 <figure class="align-center" id="edai-stats-plot-fig">
 <img alt="../../_images/ecd3f8b70abb1ec1aa7294f69f8b1c09815a9b56e03093721f73fcea653d842b.png" src="../../_images/ecd3f8b70abb1ec1aa7294f69f8b1c09815a9b56e03093721f73fcea653d842b.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Overview of CBIS-DDSM Training and Test Sets</span><a class="headerlink" href="#edai-stats-plot-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.1 </span><span class="caption-text">Overview of CBIS-DDSM Training and Test Sets</span><a class="headerlink" href="#edai-stats-plot-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="edai-stats-df-fig">
@@ -639,15 +641,15 @@ document.write(`
   </tbody>
 </table>
 </div></div><figcaption>
-<p><span class="caption-number">Fig. 3.2 </span><span class="caption-text">CBIS-DDSM Training and Test Set Statistics</span><a class="headerlink" href="#edai-stats-df-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.2 </span><span class="caption-text">CBIS-DDSM Training and Test Set Statistics</span><a class="headerlink" href="#edai-stats-df-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="#edai-stats-plot-fig"><span class="std std-numref">Fig. 3.1</span></a> and <a class="reference internal" href="#edai-stats-df-fig"><span class="std std-numref">Fig. 3.2</span></a>, we have a training test split of 80/20 where malignancy was found in approximately 40% of the cases.</p>
+<p>As shown in <a class="reference internal" href="#edai-stats-plot-fig"><span class="std std-numref">Fig. 5.1</span></a> and <a class="reference internal" href="#edai-stats-df-fig"><span class="std std-numref">Fig. 5.2</span></a>, we have a training test split of 80/20 where malignancy was found in approximately 40% of the cases.</p>
 <p>Class imbalance can lead to biased predictions. Augmenting the malignant class with various transformations will mitigate bias introduced by class imbalance.</p>
 </section>
 <section id="resolution-and-aspect-ratio">
-<h2><span class="section-number">3.2. </span>Resolution and Aspect Ratio<a class="headerlink" href="#resolution-and-aspect-ratio" title="Permalink to this heading">#</a></h2>
-<p>Optimal resolution is essential to distinguish malignancy in subtle radiological masses and calcifications. <a class="reference internal" href="#edai-resolutions-plot-fig"><span class="std std-numref">Fig. 3.3</span></a> illuminates the distribution of resolution in the CBIS-DDSM dataset.</p>
+<h2><span class="section-number">5.2. </span>Resolution and Aspect Ratio<a class="headerlink" href="#resolution-and-aspect-ratio" title="Permalink to this heading">#</a></h2>
+<p>Optimal resolution is essential to distinguish malignancy in subtle radiological masses and calcifications. <a class="reference internal" href="#edai-resolutions-plot-fig"><span class="std std-numref">Fig. 5.3</span></a> illuminates the distribution of resolution in the CBIS-DDSM dataset.</p>
 <div class="cell tag_remove-output tag_hide-cell docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -667,7 +669,7 @@ document.write(`
 <figure class="align-center" id="edai-resolutions-plot-fig">
 <img alt="../../_images/79616e741e6e237c98d16de89b3e0dc75ec9a15018d726527f6c6ffb48e05dfd.png" src="../../_images/79616e741e6e237c98d16de89b3e0dc75ec9a15018d726527f6c6ffb48e05dfd.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Analysis of Image Resolution and Aspect Ratio</span><a class="headerlink" href="#edai-resolutions-plot-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.3 </span><span class="caption-text">Analysis of Image Resolution and Aspect Ratio</span><a class="headerlink" href="#edai-resolutions-plot-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="edai-resolutions-df-fig">
@@ -736,10 +738,10 @@ document.write(`
   </tbody>
 </table>
 </div></div><figcaption>
-<p><span class="caption-number">Fig. 3.4 </span><span class="caption-text">Descriptive Statistics for Resolution and Aspect Ratio</span><a class="headerlink" href="#edai-resolutions-df-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.4 </span><span class="caption-text">Descriptive Statistics for Resolution and Aspect Ratio</span><a class="headerlink" href="#edai-resolutions-df-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-resolutions-plot-fig"><span class="std std-numref">Fig. 3.3</span></a> and <a class="reference internal" href="#edai-resolutions-df-fig"><span class="std std-numref">Fig. 3.4</span></a> indicate high-resolution images with heights ranging from 3256 to 7111 pixels and widths of 1531 to 5431 pixels. The mean aspect ratio is 0.6 and ranges from 0.3 to 0.83.</p>
+<p><a class="reference internal" href="#edai-resolutions-plot-fig"><span class="std std-numref">Fig. 5.3</span></a> and <a class="reference internal" href="#edai-resolutions-df-fig"><span class="std std-numref">Fig. 5.4</span></a> indicate high-resolution images with heights ranging from 3256 to 7111 pixels and widths of 1531 to 5431 pixels. The mean aspect ratio is 0.6 and ranges from 0.3 to 0.83.</p>
 <p>Images will be resized to 256x256 for the convolutional neural network model. Generally, there are two approaches to resizing:</p>
 <ul class="simple">
 <li><p><strong>Destructive Resizing</strong>: The image is resized without retaining the original aspect ratio.</p></li>
@@ -748,7 +750,7 @@ document.write(`
 <p>We will be experimenting with both methods to determine which results in higher classification accuracy, and recall.</p>
 </section>
 <section id="pixel-value-distribution">
-<h2><span class="section-number">3.3. </span>Pixel Value Distribution<a class="headerlink" href="#pixel-value-distribution" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">5.3. </span>Pixel Value Distribution<a class="headerlink" href="#pixel-value-distribution" title="Permalink to this heading">#</a></h2>
 <p>Pixel intensity value is the property that defines the spatial characteristics of the breast and abnormalities in mammography. Here, we examine the centrality and variation (standard deviation) of pixel values for benign and malignant cases.</p>
 <div class="cell tag_remove-output tag_hide-cell docutils container">
 <details class="hide above-input">
@@ -768,7 +770,7 @@ document.write(`
 <figure class="align-center" id="edai-pixels-plot-fig">
 <img alt="../../_images/a5e470e9cc359e4d4dbeac15eaf9471c251e346e98b44278928ab8ef730a92c0.png" src="../../_images/a5e470e9cc359e4d4dbeac15eaf9471c251e346e98b44278928ab8ef730a92c0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.5 </span><span class="caption-text">Analysis of Image Pixel Intensity Statistics</span><a class="headerlink" href="#edai-pixels-plot-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.5 </span><span class="caption-text">Analysis of Image Pixel Intensity Statistics</span><a class="headerlink" href="#edai-pixels-plot-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="edai-pixels-df-fig">
@@ -878,10 +880,10 @@ document.write(`
   </tbody>
 </table>
 </div></div><figcaption>
-<p><span class="caption-number">Fig. 3.6 </span><span class="caption-text">Descriptive Statistics for Average Image Pixel Intensity</span><a class="headerlink" href="#edai-pixels-df-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.6 </span><span class="caption-text">Descriptive Statistics for Average Image Pixel Intensity</span><a class="headerlink" href="#edai-pixels-df-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Several observations can be made based upon <a class="reference internal" href="#edai-pixels-plot-fig"><span class="std std-numref">Fig. 3.5</span></a> and <a class="reference internal" href="#edai-pixels-df-fig"><span class="std std-numref">Fig. 3.6</span></a>:</p>
+<p>Several observations can be made based upon <a class="reference internal" href="#edai-pixels-plot-fig"><span class="std std-numref">Fig. 5.5</span></a> and <a class="reference internal" href="#edai-pixels-df-fig"><span class="std std-numref">Fig. 5.6</span></a>:</p>
 <ol class="arabic simple">
 <li><p>Standard deviation and mean appear to be positively and linearly associated.</p></li>
 <li><p>Though from a statistical perspective, outliers are extant at 3 * the standard deviation from the average mean, the maximum values are approximately half of the maximum pixel value for 16-bit images.</p></li>
@@ -968,14 +970,14 @@ document.write(`
 <figure class="align-center" id="edai-histograms-fig">
 <img alt="../../_images/14f15b523517ec5b6f65c751ce6805dd9f1747601d86f3bc8bab394ebafefcc3.png" src="../../_images/14f15b523517ec5b6f65c751ce6805dd9f1747601d86f3bc8bab394ebafefcc3.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.7 </span><span class="caption-text">Pixel Intensity Histograms for Sample Mammograms</span><a class="headerlink" href="#edai-histograms-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.7 </span><span class="caption-text">Pixel Intensity Histograms for Sample Mammograms</span><a class="headerlink" href="#edai-histograms-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We’ve converted the 16-bit images to 8-bit unsigned grauyscale format so that the pixel values would be normalized between 0 and 255.</p>
-<p><a class="reference internal" href="#edai-histograms-fig"><span class="std std-numref">Fig. 3.7</span></a> shows histograms dominated by a single peak near the black end of the spectrum, with barely discernable weaker peaks at various points within</p>
+<p><a class="reference internal" href="#edai-histograms-fig"><span class="std std-numref">Fig. 5.7</span></a> shows histograms dominated by a single peak near the black end of the spectrum, with barely discernable weaker peaks at various points within</p>
 </section>
 <section id="image-quality-analysis">
-<h2><span class="section-number">3.4. </span>Image Quality Analysis<a class="headerlink" href="#image-quality-analysis" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">5.4. </span>Image Quality Analysis<a class="headerlink" href="#image-quality-analysis" title="Permalink to this heading">#</a></h2>
 <p>Here, we examine the quality of the mammography in terms of artifacts, text, and other anomalies that may influence the classification task.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -994,10 +996,10 @@ document.write(`
 <figure class="align-center" id="edai-dqa-fig">
 <img alt="../../_images/e537a80b1fdcff0bc5c2f607bf4295dc421ff6c46b0ac691f982c477ce4b0035.png" src="../../_images/e537a80b1fdcff0bc5c2f607bf4295dc421ff6c46b0ac691f982c477ce4b0035.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.8 </span><span class="caption-text">Pixel Intensity Histograms for Sample Mammograms</span><a class="headerlink" href="#edai-dqa-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.8 </span><span class="caption-text">Pixel Intensity Histograms for Sample Mammograms</span><a class="headerlink" href="#edai-dqa-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-dqa-fig"><span class="std std-numref">Fig. 3.8</span></a> shows a random sampling of 50 mammogram images from the CBIS-DDSM. We make note of the following:</p>
+<p><a class="reference internal" href="#edai-dqa-fig"><span class="std std-numref">Fig. 5.8</span></a> shows a random sampling of 50 mammogram images from the CBIS-DDSM. We make note of the following:</p>
 <ol class="arabic simple">
 <li><p>Artifacts and/or lines were found in 44 out of 50 (88%) images.</p></li>
 <li><p>Pectoral muscle, evident in 19 (38%) of the images in the sample, has similar density and pixel intensity values as the dense tissues of interest. Image preprocessing must identify and remove both artifacts and pectoral muscles from the images.</p></li>
@@ -1006,13 +1008,13 @@ document.write(`
 </ol>
 </section>
 <section id="calcification-case-analysis">
-<h2><span class="section-number">3.5. </span>Calcification Case Analysis<a class="headerlink" href="#calcification-case-analysis" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">5.5. </span>Calcification Case Analysis<a class="headerlink" href="#calcification-case-analysis" title="Permalink to this heading">#</a></h2>
 <p>A calcification is a calcium deposit that develops in the breast. They usually appear as white, opaque markings on mammograms. Diagnosing breast calcifications involves analyzing the morphology and distribution of calcifications. Here, we examine the most common calcification morphologies and distributions in the CBIS-DDSM dataset.</p>
 <section id="calcification-morphology">
-<h3><span class="section-number">3.5.1. </span>Calcification Morphology<a class="headerlink" href="#calcification-morphology" title="Permalink to this heading">#</a></h3>
-<p>Morphology defines the form of calcifications.  It is the most important factor in differentiating between benign and malignant calcifications. Here, we examine the most common calcification morphologies <a class="reference internal" href="#calcification-morphologies"><span class="std std-numref">Table 3.1</span></a> in the CBIS-DDSM dataset.</p>
+<h3><span class="section-number">5.5.1. </span>Calcification Morphology<a class="headerlink" href="#calcification-morphology" title="Permalink to this heading">#</a></h3>
+<p>Morphology defines the form of calcifications.  It is the most important factor in differentiating between benign and malignant calcifications. Here, we examine the most common calcification morphologies <a class="reference internal" href="#calcification-morphologies"><span class="std std-numref">Table 5.1</span></a> in the CBIS-DDSM dataset.</p>
 <table class="table" id="calcification-morphologies">
-<caption><span class="caption-number">Table 3.1 </span><span class="caption-text">Calcification Morphologies</span><a class="headerlink" href="#calcification-morphologies" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 5.1 </span><span class="caption-text">Calcification Morphologies</span><a class="headerlink" href="#calcification-morphologies" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Morphology</p></th>
 <th class="head"><p>BI-RADS   Assessment</p></th>
@@ -1038,7 +1040,7 @@ document.write(`
 </table>
 <section id="lucent-centered">
 <h4>Lucent-Centered<a class="headerlink" href="#lucent-centered" title="Permalink to this heading">#</a></h4>
-<p>Lucent-Centered calcifications are round or oval, ranging from 1mm to over a centimeter. They are the result of fat necrosis, calcified debris in ducts, and occasional fibroadenomas. Lucent-centered calcifications are assessed as BI-RADS 2 – Benign <span id="id1">[<a class="reference internal" href="../99_references.html#id306" title="Robin Smithuis and Frank Smithuis. The Radiology Assistant : Differential of Breast Calcifications. URL: https://radiologyassistant.nl/breast/calcifications/differential-of-breast-calcifications#diagnostic-approach-distribution (visited on 2023-09-28).">8</a>]</span>.</p>
+<p>Lucent-Centered calcifications are round or oval, ranging from 1mm to over a centimeter. They are the result of fat necrosis, calcified debris in ducts, and occasional fibroadenomas. Lucent-centered calcifications are assessed as BI-RADS 2 – Benign <span id="id1">[<a class="reference internal" href="../99_references.html#id306" title="Robin Smithuis and Frank Smithuis. The Radiology Assistant : Differential of Breast Calcifications. URL: https://radiologyassistant.nl/breast/calcifications/differential-of-breast-calcifications#diagnostic-approach-distribution (visited on 2023-09-28).">10</a>]</span>.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1058,10 +1060,10 @@ document.write(`
 <figure class="align-center" id="edai-lucent-fig">
 <img alt="../../_images/fa1d97c251db7b9b8f7d7d955da1caea2cbfd0bc54ace3efedab128330c24e37.png" src="../../_images/fa1d97c251db7b9b8f7d7d955da1caea2cbfd0bc54ace3efedab128330c24e37.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.9 </span><span class="caption-text">Calcification Cases Lucent-Centered Calcification Type</span><a class="headerlink" href="#edai-lucent-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.9 </span><span class="caption-text">Calcification Cases Lucent-Centered Calcification Type</span><a class="headerlink" href="#edai-lucent-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-lucent-fig"><span class="std std-numref">Fig. 3.9</span></a> displays sample calcification cases with lucent-centered calcifications.</p>
+<p><a class="reference internal" href="#edai-lucent-fig"><span class="std std-numref">Fig. 5.9</span></a> displays sample calcification cases with lucent-centered calcifications.</p>
 </section>
 <section id="punctate">
 <h4>Punctate<a class="headerlink" href="#punctate" title="Permalink to this heading">#</a></h4>
@@ -1089,10 +1091,10 @@ document.write(`
 <figure class="align-center" id="edai-punctate-fig">
 <img alt="../../_images/4eba1a9369aeae2d5255c3acf56a78db53e0a158a5e3ade8c7a3394ad194a620.png" src="../../_images/4eba1a9369aeae2d5255c3acf56a78db53e0a158a5e3ade8c7a3394ad194a620.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.10 </span><span class="caption-text">Calcification Cases Punctate Calcification Type</span><a class="headerlink" href="#edai-punctate-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.10 </span><span class="caption-text">Calcification Cases Punctate Calcification Type</span><a class="headerlink" href="#edai-punctate-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-punctate-fig"><span class="std std-numref">Fig. 3.10</span></a> shows calcification cases with punctate calcifications.</p>
+<p><a class="reference internal" href="#edai-punctate-fig"><span class="std std-numref">Fig. 5.10</span></a> shows calcification cases with punctate calcifications.</p>
 </section>
 <section id="pleomorphic">
 <h4>Pleomorphic<a class="headerlink" href="#pleomorphic" title="Permalink to this heading">#</a></h4>
@@ -1116,14 +1118,14 @@ document.write(`
 <figure class="align-center" id="edai-pleomorphic-fig">
 <img alt="../../_images/7ca195749e2cfed37b15a97caace9ebde380e7813cfbfa4c29dccbb2b5774add.png" src="../../_images/7ca195749e2cfed37b15a97caace9ebde380e7813cfbfa4c29dccbb2b5774add.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.11 </span><span class="caption-text">Calcification Cases Pleomorphic Calcification Type</span><a class="headerlink" href="#edai-pleomorphic-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.11 </span><span class="caption-text">Calcification Cases Pleomorphic Calcification Type</span><a class="headerlink" href="#edai-pleomorphic-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-pleomorphic-fig"><span class="std std-numref">Fig. 3.11</span></a> shows calcification cases with pleomorphic calcifications.</p>
+<p><a class="reference internal" href="#edai-pleomorphic-fig"><span class="std std-numref">Fig. 5.11</span></a> shows calcification cases with pleomorphic calcifications.</p>
 </section>
 <section id="amorphous">
 <h4>Amorphous<a class="headerlink" href="#amorphous" title="Permalink to this heading">#</a></h4>
-<p>Amorphous calcifications are defined as ‘without clearly defined shape or form’. They are typically small and/or hazy in appearance. The majority of cases are benign (60%), with the remainder of cases presenting as high-risk (20%) or malignant (20%) <span id="id2">[<a class="reference internal" href="../99_references.html#id306" title="Robin Smithuis and Frank Smithuis. The Radiology Assistant : Differential of Breast Calcifications. URL: https://radiologyassistant.nl/breast/calcifications/differential-of-breast-calcifications#diagnostic-approach-distribution (visited on 2023-09-28).">8</a>]</span>.</p>
+<p>Amorphous calcifications are defined as ‘without clearly defined shape or form’. They are typically small and/or hazy in appearance. The majority of cases are benign (60%), with the remainder of cases presenting as high-risk (20%) or malignant (20%) <span id="id2">[<a class="reference internal" href="../99_references.html#id306" title="Robin Smithuis and Frank Smithuis. The Radiology Assistant : Differential of Breast Calcifications. URL: https://radiologyassistant.nl/breast/calcifications/differential-of-breast-calcifications#diagnostic-approach-distribution (visited on 2023-09-28).">10</a>]</span>.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1143,10 +1145,10 @@ document.write(`
 <figure class="align-center" id="edai-amorphous-fig">
 <img alt="../../_images/197d320391df202f6af672035682a70a95be0b7cbc982a9124af38ca573a1da3.png" src="../../_images/197d320391df202f6af672035682a70a95be0b7cbc982a9124af38ca573a1da3.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.12 </span><span class="caption-text">Calcification Cases Amorphous Calcification Type</span><a class="headerlink" href="#edai-amorphous-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.12 </span><span class="caption-text">Calcification Cases Amorphous Calcification Type</span><a class="headerlink" href="#edai-amorphous-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-amorphous-fig"><span class="std std-numref">Fig. 3.12</span></a> shows calcification cases with amorphous calcifications.</p>
+<p><a class="reference internal" href="#edai-amorphous-fig"><span class="std std-numref">Fig. 5.12</span></a> shows calcification cases with amorphous calcifications.</p>
 </section>
 <section id="fine-linear-branching">
 <h4>Fine Linear Branching<a class="headerlink" href="#fine-linear-branching" title="Permalink to this heading">#</a></h4>
@@ -1170,17 +1172,17 @@ document.write(`
 <figure class="align-center" id="edai-flb-fig">
 <img alt="../../_images/6e370aeb0f72d73fd67cd3826df9fad2c1794029d8fbe86a72c10381c8e4eec0.png" src="../../_images/6e370aeb0f72d73fd67cd3826df9fad2c1794029d8fbe86a72c10381c8e4eec0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.13 </span><span class="caption-text">Calcification Cases Fine Linear Branching Calcification Type</span><a class="headerlink" href="#edai-flb-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.13 </span><span class="caption-text">Calcification Cases Fine Linear Branching Calcification Type</span><a class="headerlink" href="#edai-flb-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-flb-fig"><span class="std std-numref">Fig. 3.13</span></a> shows calcification cases with fine linear branching calcifications.</p>
+<p><a class="reference internal" href="#edai-flb-fig"><span class="std std-numref">Fig. 5.13</span></a> shows calcification cases with fine linear branching calcifications.</p>
 </section>
 </section>
 <section id="calcification-distribution">
-<h3><span class="section-number">3.5.2. </span>Calcification Distribution<a class="headerlink" href="#calcification-distribution" title="Permalink to this heading">#</a></h3>
-<p>Calcification Distribution can be described as how an abnormality spatially presents within the breast tissue. We will be analyzing the following five calcification distributions in <a class="reference internal" href="#calcification-distributions"><span class="std std-numref">Table 3.2</span></a>.</p>
+<h3><span class="section-number">5.5.2. </span>Calcification Distribution<a class="headerlink" href="#calcification-distribution" title="Permalink to this heading">#</a></h3>
+<p>Calcification Distribution can be described as how an abnormality spatially presents within the breast tissue. We will be analyzing the following five calcification distributions in <a class="reference internal" href="#calcification-distributions"><span class="std std-numref">Table 5.2</span></a>.</p>
 <table class="table" id="calcification-distributions">
-<caption><span class="caption-number">Table 3.2 </span><span class="caption-text">Calcification Distributions</span><a class="headerlink" href="#calcification-distributions" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 5.2 </span><span class="caption-text">Calcification Distributions</span><a class="headerlink" href="#calcification-distributions" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Distribution</p></th>
 <th class="head"><p>BI-RADS Assessment</p></th>
@@ -1226,14 +1228,14 @@ document.write(`
 <figure class="align-center" id="edai-clustered-fig">
 <img alt="../../_images/7c91af8aa27d988b5e5b9b6bbeadcdcd9e8d2a25fb02d6b224b4a6809218bcff.png" src="../../_images/7c91af8aa27d988b5e5b9b6bbeadcdcd9e8d2a25fb02d6b224b4a6809218bcff.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.14 </span><span class="caption-text">Calcification Cases Clustered Calcification Distribution</span><a class="headerlink" href="#edai-clustered-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.14 </span><span class="caption-text">Calcification Cases Clustered Calcification Distribution</span><a class="headerlink" href="#edai-clustered-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-clustered-fig"><span class="std std-numref">Fig. 3.14</span></a> shows calcification cases with clustered calcifications.</p>
+<p><a class="reference internal" href="#edai-clustered-fig"><span class="std std-numref">Fig. 5.14</span></a> shows calcification cases with clustered calcifications.</p>
 </section>
 <section id="linear">
 <h4>Linear<a class="headerlink" href="#linear" title="Permalink to this heading">#</a></h4>
-<p>Linear calcifications, as the name suggests, appear in a linear fashion in the breast. This distribution can indicate benign, probably benign, or suspicious. Benign linear calcifications include vascular calcifications, one of the most common findings encountered in mammography. Linear branching calcifications that follow a ductal distribution are associated with ductal carcinoma in situ (DCIS) and invasive ductal carcinoma and are highly suspicious. They have a more delicate appearance and show a finer more interrupted dot-dash pattern <span id="id3">[<a class="reference internal" href="../99_references.html#id380" title="Kenny C. Lai, Priscilla J. Slanetz, and Ronald L. Eisenberg. Linear Breast Calcifications. American Journal of Roentgenology, 199(2):W151–W157, August 2012. URL: https://www.ajronline.org/doi/10.2214/AJR.11.7153 (visited on 2023-12-22), doi:10.2214/AJR.11.7153.">9</a>]</span>.</p>
+<p>Linear calcifications, as the name suggests, appear in a linear fashion in the breast. This distribution can indicate benign, probably benign, or suspicious. Benign linear calcifications include vascular calcifications, one of the most common findings encountered in mammography. Linear branching calcifications that follow a ductal distribution are associated with ductal carcinoma in situ (DCIS) and invasive ductal carcinoma and are highly suspicious. They have a more delicate appearance and show a finer more interrupted dot-dash pattern <span id="id3">[<a class="reference internal" href="../99_references.html#id380" title="Kenny C. Lai, Priscilla J. Slanetz, and Ronald L. Eisenberg. Linear Breast Calcifications. American Journal of Roentgenology, 199(2):W151–W157, August 2012. URL: https://www.ajronline.org/doi/10.2214/AJR.11.7153 (visited on 2023-12-22), doi:10.2214/AJR.11.7153.">11</a>]</span>.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1253,10 +1255,10 @@ document.write(`
 <figure class="align-center" id="edai-linear-fig">
 <img alt="../../_images/3565708f2bba5e803a0ff255beed3647f7ff84b26d4086127cf5b581005cc8ea.png" src="../../_images/3565708f2bba5e803a0ff255beed3647f7ff84b26d4086127cf5b581005cc8ea.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.15 </span><span class="caption-text">Calcification Cases Linear Calcification Distribution</span><a class="headerlink" href="#edai-linear-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.15 </span><span class="caption-text">Calcification Cases Linear Calcification Distribution</span><a class="headerlink" href="#edai-linear-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-linear-fig"><span class="std std-numref">Fig. 3.15</span></a> shows calcification cases with linear calcifications.</p>
+<p><a class="reference internal" href="#edai-linear-fig"><span class="std std-numref">Fig. 5.15</span></a> shows calcification cases with linear calcifications.</p>
 </section>
 <section id="diffusely-scattered">
 <h4>Diffusely Scattered<a class="headerlink" href="#diffusely-scattered" title="Permalink to this heading">#</a></h4>
@@ -1280,7 +1282,7 @@ document.write(`
 <figure class="align-center" id="edai-ds-fig">
 <img alt="../../_images/8dbf9501f43c808c9a9ef9318ec9d7d4c9b7b74e6c15041b8f834afcf8ba2b91.png" src="../../_images/8dbf9501f43c808c9a9ef9318ec9d7d4c9b7b74e6c15041b8f834afcf8ba2b91.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.16 </span><span class="caption-text">Calcification Cases Diffusely Scattered Calcification Distribution</span><a class="headerlink" href="#edai-ds-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.16 </span><span class="caption-text">Calcification Cases Diffusely Scattered Calcification Distribution</span><a class="headerlink" href="#edai-ds-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1306,14 +1308,14 @@ document.write(`
 <figure class="align-center" id="edai-regional-fig">
 <img alt="../../_images/98b07d7a46718942128c8de86ae9210b51745b4add35cf9764148a278e5fdc0a.png" src="../../_images/98b07d7a46718942128c8de86ae9210b51745b4add35cf9764148a278e5fdc0a.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.17 </span><span class="caption-text">Calcification Cases Regional Calcification Distribution</span><a class="headerlink" href="#edai-regional-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.17 </span><span class="caption-text">Calcification Cases Regional Calcification Distribution</span><a class="headerlink" href="#edai-regional-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-regional-fig"><span class="std std-numref">Fig. 3.17</span></a> shows calcification cases with regional calcifications.</p>
+<p><a class="reference internal" href="#edai-regional-fig"><span class="std std-numref">Fig. 5.17</span></a> shows calcification cases with regional calcifications.</p>
 </section>
 <section id="segmental">
 <h4>Segmental<a class="headerlink" href="#segmental" title="Permalink to this heading">#</a></h4>
-<p>Segmental calcifications are calcium deposits that follow the expected distribution of one or more ducts and their branches. They can have a branching appearance or cover a triangular region, with the most acute angle pointing to the nipple. Whereas segmental calcifications often can be characterized as benign, microcalcifications following a segmental distribution are often suspicious for malignancy because of their anatomic relationship with the ductal system <span id="id4">[<a class="reference internal" href="../99_references.html#id381" title="Po-Hao Chen, Erica T. Ghosh, Priscilla J. Slanetz, and Ronald L. Eisenberg. Segmental Breast Calcifications. American Journal of Roentgenology, 199(5):W532–W542, November 2012. URL: https://www.ajronline.org/doi/10.2214/AJR.11.8198 (visited on 2023-12-22), doi:10.2214/AJR.11.8198.">10</a>]</span>.</p>
+<p>Segmental calcifications are calcium deposits that follow the expected distribution of one or more ducts and their branches. They can have a branching appearance or cover a triangular region, with the most acute angle pointing to the nipple. Whereas segmental calcifications often can be characterized as benign, microcalcifications following a segmental distribution are often suspicious for malignancy because of their anatomic relationship with the ductal system <span id="id4">[<a class="reference internal" href="../99_references.html#id381" title="Po-Hao Chen, Erica T. Ghosh, Priscilla J. Slanetz, and Ronald L. Eisenberg. Segmental Breast Calcifications. American Journal of Roentgenology, 199(5):W532–W542, November 2012. URL: https://www.ajronline.org/doi/10.2214/AJR.11.8198 (visited on 2023-12-22), doi:10.2214/AJR.11.8198.">12</a>]</span>.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1333,22 +1335,22 @@ document.write(`
 <figure class="align-center" id="edai-segmental-fig">
 <img alt="../../_images/2982f848b5524cfb0538c812c591839a01b1f50c661a7f0d301490ec4d49191f.png" src="../../_images/2982f848b5524cfb0538c812c591839a01b1f50c661a7f0d301490ec4d49191f.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.18 </span><span class="caption-text">Calcification Cases Segmental Calcification Distribution</span><a class="headerlink" href="#edai-segmental-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.18 </span><span class="caption-text">Calcification Cases Segmental Calcification Distribution</span><a class="headerlink" href="#edai-segmental-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-segmental-fig"><span class="std std-numref">Fig. 3.18</span></a> shows calcification cases with segmental calcifications.</p>
+<p><a class="reference internal" href="#edai-segmental-fig"><span class="std std-numref">Fig. 5.18</span></a> shows calcification cases with segmental calcifications.</p>
 <p>This concludes our analysis of calcification cases. Next we examine mass cases and their shapes and margins.</p>
 </section>
 </section>
 </section>
 <section id="mass-case-analysis">
-<h2><span class="section-number">3.6. </span>Mass Case Analysis<a class="headerlink" href="#mass-case-analysis" title="Permalink to this heading">#</a></h2>
-<p>Breast masses, usually non-cancerous, are three-dimensional, space-occupying lesions found in the breast in two different mammograms. The BI-RADS <span id="id5">[<a class="reference internal" href="../99_references.html#id382" title="American College of Radiology, Carl J. D'Orsi, Edward A. Sickles, Ellen B. Mendelson, and Elizabeth A. Morris, editors. ACR BI-RADS atlas: breast imaging reporting and data system ; mammography, ultrasound, magnetic resonance imaging, follow-up and outcome monitoring, data dictionary. ACR, American College of Radiology, Reston, Va., 5th edition edition, 2013. ISBN 978-1-55903-016-8.">11</a>]</span> lexicon describes masses in terms of their shape and margin. In this section, we visually examine the mass cases in terms of their shape and margin characteristics.</p>
+<h2><span class="section-number">5.6. </span>Mass Case Analysis<a class="headerlink" href="#mass-case-analysis" title="Permalink to this heading">#</a></h2>
+<p>Breast masses, usually non-cancerous, are three-dimensional, space-occupying lesions found in the breast in two different mammograms. The BI-RADS <span id="id5">[<a class="reference internal" href="../99_references.html#id382" title="American College of Radiology, Carl J. D'Orsi, Edward A. Sickles, Ellen B. Mendelson, and Elizabeth A. Morris, editors. ACR BI-RADS atlas: breast imaging reporting and data system ; mammography, ultrasound, magnetic resonance imaging, follow-up and outcome monitoring, data dictionary. ACR, American College of Radiology, Reston, Va., 5th edition edition, 2013. ISBN 978-1-55903-016-8.">13</a>]</span> lexicon describes masses in terms of their shape and margin. In this section, we visually examine the mass cases in terms of their shape and margin characteristics.</p>
 <section id="mass-shape-analysis">
-<h3><span class="section-number">3.6.1. </span>Mass Shape Analysis<a class="headerlink" href="#mass-shape-analysis" title="Permalink to this heading">#</a></h3>
-<p>Masses can present in a variety of shapes, the most common are listed in  <a class="reference internal" href="#mass-shapes"><span class="std std-numref">Table 3.3</span></a>:</p>
+<h3><span class="section-number">5.6.1. </span>Mass Shape Analysis<a class="headerlink" href="#mass-shape-analysis" title="Permalink to this heading">#</a></h3>
+<p>Masses can present in a variety of shapes, the most common are listed in  <a class="reference internal" href="#mass-shapes"><span class="std std-numref">Table 5.3</span></a>:</p>
 <table class="table" id="mass-shapes">
-<caption><span class="caption-number">Table 3.3 </span><span class="caption-text">Mass Shapes</span><a class="headerlink" href="#mass-shapes" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 5.3 </span><span class="caption-text">Mass Shapes</span><a class="headerlink" href="#mass-shapes" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Shape</p></th>
 <th class="head"><p>BI-RADS Assessment</p></th>
@@ -1391,10 +1393,10 @@ document.write(`
 <figure class="align-center" id="edai-round-fig">
 <img alt="../../_images/759c647a68d04836a9d9f9f1358999e19b9559f2ad15dbc6424dad3182e75d31.png" src="../../_images/759c647a68d04836a9d9f9f1358999e19b9559f2ad15dbc6424dad3182e75d31.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.19 </span><span class="caption-text">Mass Cases Round Mass Shape</span><a class="headerlink" href="#edai-round-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.19 </span><span class="caption-text">Mass Cases Round Mass Shape</span><a class="headerlink" href="#edai-round-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-round-fig"><span class="std std-numref">Fig. 3.19</span></a> shows round mass cases.</p>
+<p><a class="reference internal" href="#edai-round-fig"><span class="std std-numref">Fig. 5.19</span></a> shows round mass cases.</p>
 </section>
 <section id="oval-masses">
 <h4>Oval Masses<a class="headerlink" href="#oval-masses" title="Permalink to this heading">#</a></h4>
@@ -1437,14 +1439,14 @@ document.write(`
 <figure class="align-center" id="edai-oval-fig">
 <img alt="../../_images/b1d95a2b4571837241f269525af720fa62e4140477337fe6ffd1f11c4b34c706.png" src="../../_images/b1d95a2b4571837241f269525af720fa62e4140477337fe6ffd1f11c4b34c706.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.20 </span><span class="caption-text">Mass Cases Oval Mass Shape</span><a class="headerlink" href="#edai-oval-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.20 </span><span class="caption-text">Mass Cases Oval Mass Shape</span><a class="headerlink" href="#edai-oval-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-oval-fig"><span class="std std-numref">Fig. 3.20</span></a> shows oval mass cases.</p>
+<p><a class="reference internal" href="#edai-oval-fig"><span class="std std-numref">Fig. 5.20</span></a> shows oval mass cases.</p>
 </section>
 <section id="irregular">
 <h4>Irregular<a class="headerlink" href="#irregular" title="Permalink to this heading">#</a></h4>
-<p>An irregular mass is uneven in shape and cannot be characterized as round, oval, or lobulated <span id="id6">[<a class="reference internal" href="../99_references.html#id382" title="American College of Radiology, Carl J. D'Orsi, Edward A. Sickles, Ellen B. Mendelson, and Elizabeth A. Morris, editors. ACR BI-RADS atlas: breast imaging reporting and data system ; mammography, ultrasound, magnetic resonance imaging, follow-up and outcome monitoring, data dictionary. ACR, American College of Radiology, Reston, Va., 5th edition edition, 2013. ISBN 978-1-55903-016-8.">11</a>]</span>.</p>
+<p>An irregular mass is uneven in shape and cannot be characterized as round, oval, or lobulated <span id="id6">[<a class="reference internal" href="../99_references.html#id382" title="American College of Radiology, Carl J. D'Orsi, Edward A. Sickles, Ellen B. Mendelson, and Elizabeth A. Morris, editors. ACR BI-RADS atlas: breast imaging reporting and data system ; mammography, ultrasound, magnetic resonance imaging, follow-up and outcome monitoring, data dictionary. ACR, American College of Radiology, Reston, Va., 5th edition edition, 2013. ISBN 978-1-55903-016-8.">13</a>]</span>.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1464,18 +1466,18 @@ document.write(`
 <figure class="align-center" id="edai-irregular-fig">
 <img alt="../../_images/4ed8d5af9fc8693390f9b06f79ef54c15738620fdc145a96bc53b749cba703db.png" src="../../_images/4ed8d5af9fc8693390f9b06f79ef54c15738620fdc145a96bc53b749cba703db.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.21 </span><span class="caption-text">Mass Cases Irregular Mass Shape</span><a class="headerlink" href="#edai-irregular-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.21 </span><span class="caption-text">Mass Cases Irregular Mass Shape</span><a class="headerlink" href="#edai-irregular-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-irregular-fig"><span class="std std-numref">Fig. 3.21</span></a> shows masses with irregular shapes.</p>
+<p><a class="reference internal" href="#edai-irregular-fig"><span class="std std-numref">Fig. 5.21</span></a> shows masses with irregular shapes.</p>
 </section>
 </section>
 <section id="mass-margin-analysis">
-<h3><span class="section-number">3.6.2. </span>Mass Margin Analysis<a class="headerlink" href="#mass-margin-analysis" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">5.6.2. </span>Mass Margin Analysis<a class="headerlink" href="#mass-margin-analysis" title="Permalink to this heading">#</a></h3>
 <p>The mass margin is the edge or border of the lesion and indicates a demarcation from the adjacent normal breast parenchyma. Mass margin is an important predictor of whether a mass is benign or malignant.</p>
 <p>Our visualization analysis will include the following five mass margins defined in the standard BI-RADS terminology.</p>
 <table class="table" id="mass-margins">
-<caption><span class="caption-number">Table 3.4 </span><span class="caption-text">Mass Margins</span><a class="headerlink" href="#mass-margins" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 5.4 </span><span class="caption-text">Mass Margins</span><a class="headerlink" href="#mass-margins" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Margin</p></th>
 <th class="head"><p>BI-RADS Assessment</p></th>
@@ -1540,10 +1542,10 @@ document.write(`
 <figure class="align-center" id="edai-ill-defined-fig">
 <img alt="../../_images/883a49c5817e9b7fa0325a7c522f7f2f418bbe95462140df00af4c3184b2d75d.png" src="../../_images/883a49c5817e9b7fa0325a7c522f7f2f418bbe95462140df00af4c3184b2d75d.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.22 </span><span class="caption-text">Mass Cases Ill-Defined Mass Margin</span><a class="headerlink" href="#edai-ill-defined-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.22 </span><span class="caption-text">Mass Cases Ill-Defined Mass Margin</span><a class="headerlink" href="#edai-ill-defined-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-ill-defined-fig"><span class="std std-numref">Fig. 3.22</span></a> shows masses with ill-defined margins.</p>
+<p><a class="reference internal" href="#edai-ill-defined-fig"><span class="std std-numref">Fig. 5.22</span></a> shows masses with ill-defined margins.</p>
 </section>
 <section id="microlobulated">
 <h4>Microlobulated<a class="headerlink" href="#microlobulated" title="Permalink to this heading">#</a></h4>
@@ -1567,10 +1569,10 @@ document.write(`
 <figure class="align-center" id="edai-microlobulated-fig">
 <img alt="../../_images/97d93fba9327bd744a48c2e853527c4c126b133644d5d6aa832803f4f700d2c7.png" src="../../_images/97d93fba9327bd744a48c2e853527c4c126b133644d5d6aa832803f4f700d2c7.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.23 </span><span class="caption-text">Mass Cases Microlobulated Mass Margin</span><a class="headerlink" href="#edai-microlobulated-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.23 </span><span class="caption-text">Mass Cases Microlobulated Mass Margin</span><a class="headerlink" href="#edai-microlobulated-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-microlobulated-fig"><span class="std std-numref">Fig. 3.23</span></a> shows masses with microlobulated margins.</p>
+<p><a class="reference internal" href="#edai-microlobulated-fig"><span class="std std-numref">Fig. 5.23</span></a> shows masses with microlobulated margins.</p>
 </section>
 <section id="spiculated">
 <h4>Spiculated<a class="headerlink" href="#spiculated" title="Permalink to this heading">#</a></h4>
@@ -1595,10 +1597,10 @@ document.write(`
 <figure class="align-center" id="edai-spiculated-fig">
 <img alt="../../_images/31aba7a592a5f53ccb13cbaeacfc60552eb981a872ecd4da654760d44f5988bf.png" src="../../_images/31aba7a592a5f53ccb13cbaeacfc60552eb981a872ecd4da654760d44f5988bf.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.24 </span><span class="caption-text">Mass Cases Spiculated Mass Margin</span><a class="headerlink" href="#edai-spiculated-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.24 </span><span class="caption-text">Mass Cases Spiculated Mass Margin</span><a class="headerlink" href="#edai-spiculated-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-spiculated-fig"><span class="std std-numref">Fig. 3.24</span></a> shows masses with spiculated margins.</p>
+<p><a class="reference internal" href="#edai-spiculated-fig"><span class="std std-numref">Fig. 5.24</span></a> shows masses with spiculated margins.</p>
 </section>
 <section id="obscured">
 <h4>Obscured<a class="headerlink" href="#obscured" title="Permalink to this heading">#</a></h4>
@@ -1622,15 +1624,15 @@ document.write(`
 <figure class="align-center" id="edai-obscured-fig">
 <img alt="../../_images/cc68ece9f89c8eb349d64f4fc5062ecbf18e28ff054f75268ca7968b62e3c65b.png" src="../../_images/cc68ece9f89c8eb349d64f4fc5062ecbf18e28ff054f75268ca7968b62e3c65b.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.25 </span><span class="caption-text">Mass Cases Obscured Mass Margin</span><a class="headerlink" href="#edai-obscured-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5.25 </span><span class="caption-text">Mass Cases Obscured Mass Margin</span><a class="headerlink" href="#edai-obscured-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#edai-obscured-fig"><span class="std std-numref">Fig. 3.25</span></a> shows masses with obscured margins.</p>
+<p><a class="reference internal" href="#edai-obscured-fig"><span class="std std-numref">Fig. 5.25</span></a> shows masses with obscured margins.</p>
 </section>
 </section>
 </section>
 <section id="summary-and-key-takeaways">
-<h2><span class="section-number">3.7. </span>Summary and Key Takeaways<a class="headerlink" href="#summary-and-key-takeaways" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">5.7. </span>Summary and Key Takeaways<a class="headerlink" href="#summary-and-key-takeaways" title="Permalink to this heading">#</a></h2>
 <p>The purpose of this section was to conduct an exploratory data analysis of the CBIS-DDSM full mammogram imaging data. We evaluated image quality in terms of annotations, artifacts, and labeling in the dataset, inspected image resolutions, analyzed the distribution of pixel intensities vis-a-vis pathology, and visually characterized image texture and contrast for masses and calcifications.</p>
 <p>From this analysis, several key takeaways emerged:</p>
 <ol class="arabic simple">
@@ -1682,7 +1684,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>EDA Part 4: Case Dataset Analysis</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>EDA Part 4: Case Dataset Analysis</p>
       </div>
     </a>
     <a class="right-next"
@@ -1690,7 +1692,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>EDA Part 6: Algorithm Selection</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>EDA Part 6: Algorithm Selection</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1712,12 +1714,12 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">3.1. Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-aspect-ratio">3.2. Resolution and Aspect Ratio</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-value-distribution">3.3. Pixel Value Distribution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-analysis">3.4. Image Quality Analysis</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-analysis">3.5. Calcification Case Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-morphology">3.5.1. Calcification Morphology</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">5.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-aspect-ratio">5.2. Resolution and Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pixel-value-distribution">5.3. Pixel Value Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-quality-analysis">5.4. Image Quality Analysis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-case-analysis">5.5. Calcification Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-morphology">5.5.1. Calcification Morphology</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lucent-centered">Lucent-Centered</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#punctate">Punctate</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pleomorphic">Pleomorphic</a></li>
@@ -1725,7 +1727,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-linear-branching">Fine Linear Branching</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">3.5.2. Calcification Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calcification-distribution">5.5.2. Calcification Distribution</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustered">Clustered</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear">Linear</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusely-scattered">Diffusely Scattered</a></li>
@@ -1735,15 +1737,15 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-analysis">3.6. Mass Case Analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-analysis">3.6.1. Mass Shape Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-case-analysis">5.6. Mass Case Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-shape-analysis">5.6.1. Mass Shape Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#round-masses">Round Masses</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#oval-masses">Oval Masses</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lobulated-masses">Lobulated Masses</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#irregular">Irregular</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margin-analysis">3.6.2. Mass Margin Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-margin-analysis">5.6.2. Mass Margin Analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#circumscribed">Circumscribed</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ill-defined">Ill-Defined</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#microlobulated">Microlobulated</a></li>
@@ -1753,7 +1755,7 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-key-takeaways">3.7. Summary and Key Takeaways</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-key-takeaways">5.7. Summary and Key Takeaways</a></li>
 </ul>
   </nav></div>
 

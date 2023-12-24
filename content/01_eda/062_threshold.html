@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>4.2. Thresholding &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>6.2. Thresholding &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -69,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="References" href="../99_references.html" />
-    <link rel="prev" title="4.1.6. Denoising Experiment" href="0614_experiment.html" />
+    <link rel="prev" title="6.1.6. Denoising Experiment" href="0614_experiment.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -169,20 +169,22 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="03_data_prep.html">1. EDA Part 3: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_meta.html">2. EDA Part 4: Case Dataset Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_eda_image.html">3. EDA Part 5: Image Analysis</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="06_eda_methods.html">4. EDA Part 6: Algorithm Selection</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="061_denoise.html">4.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="0611_noise_models.html">4.1.1. Noise Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0612_noise_types.html">4.1.2. Noise Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0613_denoisers.html">4.1.3. Denoiser Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="06131_spatial.html">4.1.4. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="06132_frequency.html">4.1.5. Frequency Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0614_experiment.html">4.1.6. Denoising Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_intro.html">1. EDA Part 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_data.html">2. EDA Part 2: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_data_prep.html">3. EDA Part 3: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_meta.html">4. EDA Part 4: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_eda_image.html">5. EDA Part 5: Image Analysis</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="06_eda_methods.html">6. EDA Part 6: Algorithm Selection</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="061_denoise.html">6.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="0611_noise_models.html">6.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0612_noise_types.html">6.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0613_denoisers.html">6.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06131_spatial.html">6.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06132_frequency.html">6.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0614_experiment.html">6.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">4.2. Thresholding</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">6.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -465,9 +467,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-in-digital-mammography">4.2.1. Thresholding in Digital Mammography</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-importance-of-threshold">4.2.2. Critical Importance of Threshold</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">4.2.3. Automated Thresholding Algorithms</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-in-digital-mammography">6.2.1. Thresholding in Digital Mammography</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-importance-of-threshold">6.2.2. Critical Importance of Threshold</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">6.2.3. Automated Thresholding Algorithms</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISODATA Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
@@ -492,16 +494,16 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="thresholding">
-<span id="eda62"></span><h1><span class="section-number">4.2. </span>Thresholding<a class="headerlink" href="#thresholding" title="Permalink to this heading">#</a></h1>
+<span id="eda62"></span><h1><span class="section-number">6.2. </span>Thresholding<a class="headerlink" href="#thresholding" title="Permalink to this heading">#</a></h1>
 <div class="cell tag_remove-input docutils container">
 </div>
 <p>In digital mammography preprocessing, thresholding separates structures, features, and regions of interest (ROIs) from the image background based on pixel intensity values and a designated cut-off value or threshold.  From a grayscale image, a binary image is created where the pixel intensity values in the grayscale image are reduced to just two pixel intensity values in the binary image: 0 corresponding to all pixels in the grayscale image that are less than or equal to the threshold, and 1 (or 255 for 8-bit grayscale binary images) corresponding to all pixels in the grayscale image that are greater than the threshold.</p>
 <section id="thresholding-in-digital-mammography">
-<h2><span class="section-number">4.2.1. </span>Thresholding in Digital Mammography<a class="headerlink" href="#thresholding-in-digital-mammography" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">6.2.1. </span>Thresholding in Digital Mammography<a class="headerlink" href="#thresholding-in-digital-mammography" title="Permalink to this heading">#</a></h2>
 <p>Segmentation based on pixel intensity thresholds is justified in digital mammography where pixel intensity is the parameter that most directly relates to the spatial characteristics of the structures within a mammogram. For this reason, threshold-based algorithm segmentation is a crucial early step in almost any digital mammography image analysis and preprocessing workflow.</p>
 </section>
 <section id="critical-importance-of-threshold">
-<h2><span class="section-number">4.2.2. </span>Critical Importance of Threshold<a class="headerlink" href="#critical-importance-of-threshold" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">6.2.2. </span>Critical Importance of Threshold<a class="headerlink" href="#critical-importance-of-threshold" title="Permalink to this heading">#</a></h2>
 <p>The selection of the threshold critically determines the quality of the thresholding result.</p>
 <p><code class="xref std std-numref docutils literal notranslate"><span class="pre">various_thresholds_fig</span></code> illustrates the impact of various threshold values on the binarization result.  As the threshold value increases from <span class="math notranslate nohighlight">\(T=32\)</span> to <span class="math notranslate nohighlight">\(T=128\)</span>, we notice a few things:</p>
 <ul class="simple">
@@ -513,7 +515,7 @@ document.write(`
 <p>Well, manual techniques can be tedious, and time-consuming, and don’t reflect the inherent variability in digital mammography. No single threshold value will perform consistently across all images.  And though no universally superior <em>automated</em> thresholding method exists, several techniques have been proposed, each with distinct performance characteristics, strengths, and weaknesses, that have broad applicability across a range of image analysis and processing domains. We’ll examine those next.</p>
 </section>
 <section id="automated-thresholding-algorithms">
-<h2><span class="section-number">4.2.3. </span>Automated Thresholding Algorithms<a class="headerlink" href="#automated-thresholding-algorithms" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">6.2.3. </span>Automated Thresholding Algorithms<a class="headerlink" href="#automated-thresholding-algorithms" title="Permalink to this heading">#</a></h2>
 <p>Sezgin and Sankur {cite}sankurSurveyImageThresholding2004 cast the space of automated thresholding techniques as follows: <a class="footnote-reference brackets" href="#thresholds" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
 <ul class="simple">
 <li><p><strong>Histogram shape-based</strong> methods that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.</p></li>
@@ -580,7 +582,7 @@ document.write(`
 </table>
 <section id="triangle-method">
 <h3>Triangle Method<a class="headerlink" href="#triangle-method" title="Permalink to this heading">#</a></h3>
-<p>The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes <span id="id2">[<a class="reference internal" href="../99_references.html#id370" title="G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. Journal of Histochemistry &amp; Cytochemistry, 25(7):741–753, July 1977. URL: http://journals.sagepub.com/doi/10.1177/25.7.70454 (visited on 2023-12-15), doi:10.1177/25.7.70454.">30</a>]</span>.</p>
+<p>The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes <span id="id2">[<a class="reference internal" href="../99_references.html#id370" title="G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. Journal of Histochemistry &amp; Cytochemistry, 25(7):741–753, July 1977. URL: http://journals.sagepub.com/doi/10.1177/25.7.70454 (visited on 2023-12-15), doi:10.1177/25.7.70454.">32</a>]</span>.</p>
 <p><code class="xref std std-numref docutils literal notranslate"><span class="pre">triangle</span></code> was taken from the original paper and geometrically depicts the triangle threshold method. The threshold is selected by first normalizing the dynamic range and the counts of the intensity histogram to values in [0,1]. A line is then constructed between the histogram peak and the tip of the long tail. Point A is selected at the base of the histogram bin that has the maximum perpendicular distance from the ‘peak-to-tip’ line. The threshold is set to A <span class="math notranslate nohighlight">\(+\delta \ge 0\)</span>.</p>
 <p>This method was applied to four test images of varying breast densities, contrast, abnormalities, and diagnoses. <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_triangle_fig</span></code> shows the original images (a)-(d), the binary images (e)-(h), the segmentation results (i)-(l), and the triangle histograms with thresholds annotated (m)-(p).</p>
 <p>Several observations can be made. First, all images had the same threshold <span class="math notranslate nohighlight">\(T=2\)</span>, despite varying levels of contrast, illumination, and breast density. Second, at <span class="math notranslate nohighlight">\(T=2\)</span>, we have little to no artifact removal as their pixel intensities are not distinguished from other foreground structures. Overall, the algorithm effectively distinguished the breast tissue from the background with no apparent loss of information.</p>
@@ -588,38 +590,38 @@ document.write(`
 </section>
 <section id="isodata-method">
 <h3>ISODATA Method<a class="headerlink" href="#isodata-method" title="Permalink to this heading">#</a></h3>
-<p>The ISODATA method is an iterative approach based upon the Iterative Self-Organizing Data Analysis algorithm (ISODATA) algorithm <span id="id3">[<a class="reference internal" href="../99_references.html#id358" title="Ridler and Calvard. Picture Thresholding Using an Iterative Selection Method. IEEE Transactions on Systems, Man, and Cybernetics, 8(8):630–632, 1978. URL: http://ieeexplore.ieee.org/document/4310039/ (visited on 2023-12-11), doi:10.1109/TSMC.1978.4310039.">31</a>]</span> and is commonly used in biomedical imaging.</p>
-<p>In general, it first assigns an initial threshold <span class="math notranslate nohighlight">\(T\)</span>, usually the average of the pixel intensities in the image. The second step classifies each pixel to the closest class. In the third step, the mean values <span class="math notranslate nohighlight">\(\mu_1\)</span> and <span class="math notranslate nohighlight">\(\mu_2\)</span> for each class are estimated using a Gaussian distribution. Next, a new threshold is selected as the average of <span class="math notranslate nohighlight">\(\mu_1\)</span> and <span class="math notranslate nohighlight">\(\mu_2\)</span> <span id="id4">[<a class="reference internal" href="../99_references.html#id374" title="A. El-Zaart. Images thresholding using ISODATA technique with gamma distribution. Pattern Recognition and Image Analysis, 20(1):29–41, March 2010. URL: http://link.springer.com/10.1134/S1054661810010037 (visited on 2023-12-19), doi:10.1134/S1054661810010037.">32</a>]</span>.  Steps two and three are repeated until the change in threshold is less than a predesignated parameter.</p>
+<p>The ISODATA method is an iterative approach based upon the Iterative Self-Organizing Data Analysis algorithm (ISODATA) algorithm <span id="id3">[<a class="reference internal" href="../99_references.html#id358" title="Ridler and Calvard. Picture Thresholding Using an Iterative Selection Method. IEEE Transactions on Systems, Man, and Cybernetics, 8(8):630–632, 1978. URL: http://ieeexplore.ieee.org/document/4310039/ (visited on 2023-12-11), doi:10.1109/TSMC.1978.4310039.">33</a>]</span> and is commonly used in biomedical imaging.</p>
+<p>In general, it first assigns an initial threshold <span class="math notranslate nohighlight">\(T\)</span>, usually the average of the pixel intensities in the image. The second step classifies each pixel to the closest class. In the third step, the mean values <span class="math notranslate nohighlight">\(\mu_1\)</span> and <span class="math notranslate nohighlight">\(\mu_2\)</span> for each class are estimated using a Gaussian distribution. Next, a new threshold is selected as the average of <span class="math notranslate nohighlight">\(\mu_1\)</span> and <span class="math notranslate nohighlight">\(\mu_2\)</span> <span id="id4">[<a class="reference internal" href="../99_references.html#id374" title="A. El-Zaart. Images thresholding using ISODATA technique with gamma distribution. Pattern Recognition and Image Analysis, 20(1):29–41, March 2010. URL: http://link.springer.com/10.1134/S1054661810010037 (visited on 2023-12-19), doi:10.1134/S1054661810010037.">34</a>]</span>.  Steps two and three are repeated until the change in threshold is less than a predesignated parameter.</p>
 <p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_isodata_fig</span></code> we have the segmentation results for the ISODATA method applied to our test images.</p>
 <p>The ISODATA method generated higher thresholds in [63, 54, 92, 79] with slightly more roughness along the edges.</p>
 <p>An advantage of the ISOData method is that one doesn’t need to know much about the properties of the image in advance.  On the other hand, the ISODATA algorithm assumes a symmetric Gaussian pixel distribution and may not perform well with images with a non-symmetric histogram as we’ve observed here.</p>
 </section>
 <section id="otsu-s-method">
 <h3>Otsu’s Method<a class="headerlink" href="#otsu-s-method" title="Permalink to this heading">#</a></h3>
-<p>Otsu’s Method <span id="id5">[<a class="reference internal" href="../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">33</a>]</span>  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as <span class="math notranslate nohighlight">\(\sigma^2_w(t)\)</span>. Let’s build this from the bottom up.</p>
+<p>Otsu’s Method <span id="id5">[<a class="reference internal" href="../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">35</a>]</span>  is a very popular image thresholding technique that separates images into two classes by minimizing the intra-class variance, denoted as <span class="math notranslate nohighlight">\(\sigma^2_w(t)\)</span>. Let’s build this from the bottom up.</p>
 <p>The Otsu method initializes the threshold <span class="math notranslate nohighlight">\(t=0\)</span>, then computes the image histogram and probabilities of each intensity level <span class="math notranslate nohighlight">\(p(i)\)</span> denoted as:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-prob">
-<span class="eqno">(4.35)<a class="headerlink" href="#equation-otsu-prob" title="Permalink to this equation">#</a></span>\[p(i) = \frac{n_i}{n}\]</div>
+<span class="eqno">(6.35)<a class="headerlink" href="#equation-otsu-prob" title="Permalink to this equation">#</a></span>\[p(i) = \frac{n_i}{n}\]</div>
 <p>where  <span class="math notranslate nohighlight">\(i\)</span> is a pixel intensity level, <span class="math notranslate nohighlight">\(n_i\)</span> is the number of pixels with intensity level <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(n\)</span> is the total number of pixels.</p>
 <p>Next, the image is split into two classes: <span class="math notranslate nohighlight">\(C_0\)</span>  containing all pixels with intensity in the range [0,t), and <span class="math notranslate nohighlight">\(C_1\)</span> which contains all pixels with intensity in the range [t, L], where L is the number of bins in the histogram.</p>
 <p>The next step is to obtain weights for <span class="math notranslate nohighlight">\(C_0, and \)</span>C_1<span class="math notranslate nohighlight">\(, denoted \)</span>w_0(t)<span class="math notranslate nohighlight">\( and \)</span>w_1(t)$, respectively.</p>
 <div class="math notranslate nohighlight" id="equation-otsu-weights">
-<span class="eqno">(4.36)<a class="headerlink" href="#equation-otsu-weights" title="Permalink to this equation">#</a></span>\[\begin{split}w_0(t) = \sum_{i=0}^{t-1} p(i), \\
+<span class="eqno">(6.36)<a class="headerlink" href="#equation-otsu-weights" title="Permalink to this equation">#</a></span>\[\begin{split}w_0(t) = \sum_{i=0}^{t-1} p(i), \\
 w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 <p>Next, the means for <span class="math notranslate nohighlight">\(C_0\)</span> and <span class="math notranslate nohighlight">\(C_1\)</span>, denoted <span class="math notranslate nohighlight">\(\mu_0\)</span> and <span class="math notranslate nohighlight">\(\mu_1\)</span>, respectively:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-means">
-<span class="eqno">(4.37)<a class="headerlink" href="#equation-otsu-means" title="Permalink to this equation">#</a></span>\[\begin{split}\mu_0(t) = \frac{\sum_{i=0}^{t-1} ip(i)}{w_0{t}}, \\
+<span class="eqno">(6.37)<a class="headerlink" href="#equation-otsu-means" title="Permalink to this equation">#</a></span>\[\begin{split}\mu_0(t) = \frac{\sum_{i=0}^{t-1} ip(i)}{w_0{t}}, \\
 \mu_1(t) = \frac{\sum_{i=t}^{L-1} ip(i)}{w_1{t}},\end{split}\]</div>
 <p>Now, we compute the weighted variance of each class, denoted as <span class="math notranslate nohighlight">\(\sigma_0^2\)</span>, and <span class="math notranslate nohighlight">\(\sigma_1^2\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-cvar">
-<span class="eqno">(4.38)<a class="headerlink" href="#equation-otsu-cvar" title="Permalink to this equation">#</a></span>\[\begin{split}\sigma_0^2(t) = \sum_{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
+<span class="eqno">(6.38)<a class="headerlink" href="#equation-otsu-cvar" title="Permalink to this equation">#</a></span>\[\begin{split}\sigma_0^2(t) = \sum_{i=0}^{t-1}[i-\mu_0(t)]^2 \frac{p(i)}{w_0(t)} \\
 \sigma_1^2(t) =  \sum_{i=t}^{L-1}[i-\mu_1(t)]^2 \frac{p(i)}{w_1(t)}\end{split}\]</div>
-<p>From <span id="id6">[<a class="reference internal" href="../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">33</a>]</span>  we have two options to find the threshold. The first is to minimize intra-class variance as follows:</p>
+<p>From <span id="id6">[<a class="reference internal" href="../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">35</a>]</span>  we have two options to find the threshold. The first is to minimize intra-class variance as follows:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-ivar">
-<span class="eqno">(4.39)<a class="headerlink" href="#equation-otsu-ivar" title="Permalink to this equation">#</a></span>\[\sigma_w^2(t) =w_0(t)\sigma^2_0(t)+w_1(t)\sigma^2_1(t).\]</div>
+<span class="eqno">(6.39)<a class="headerlink" href="#equation-otsu-ivar" title="Permalink to this equation">#</a></span>\[\sigma_w^2(t) =w_0(t)\sigma^2_0(t)+w_1(t)\sigma^2_1(t).\]</div>
 <p>The second method is to maximize inter-class variance as follows:</p>
 <div class="math notranslate nohighlight" id="equation-otsu-bvar">
-<span class="eqno">(4.40)<a class="headerlink" href="#equation-otsu-bvar" title="Permalink to this equation">#</a></span>\[\sigma_b^2(t) =w_0(t)w_1(t)[\mu_0(t)-\mu_1(t)]^2\]</div>
+<span class="eqno">(6.40)<a class="headerlink" href="#equation-otsu-bvar" title="Permalink to this equation">#</a></span>\[\sigma_b^2(t) =w_0(t)w_1(t)[\mu_0(t)-\mu_1(t)]^2\]</div>
 <p>The method we will be using minimizes the <strong>intra-class variance</strong>.</p>
 <p>Hence, the general algorithm for minimizing the intra-class variance is given by:</p>
 <ol class="arabic simple">
@@ -636,23 +638,23 @@ w_1(t) = \sum_{i=t}^{L-1} p(i),\end{split}\]</div>
 </ol>
 <p>Let’s examine Otsu’s method on our test images.</p>
 <p>What stands out immediately, is that the selected thresholds for the Otsu method and the ISODATA method on our test set are precisely the same.</p>
-<p>The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks <span id="id7">[<a class="reference internal" href="../99_references.html#id375" title="J. Kittler and J. Illingworth. On threshold selection using clustering criteria. IEEE Transactions on Systems, Man, and Cybernetics, SMC-15(5):652–655, September 1985. URL: http://ieeexplore.ieee.org/document/6313443/ (visited on 2023-12-19), doi:10.1109/TSMC.1985.6313443.">34</a>]</span>.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method <span id="id8">[<a class="reference internal" href="../99_references.html#id376" title="J. Kittler and J. Illingworth. Minimum error thresholding. Pattern Recognition, 19(1):41–47, January 1986. URL: https://linkinghub.elsevier.com/retrieve/pii/0031320386900300 (visited on 2023-12-19), doi:10.1016/0031-3203(86)90030-0.">35</a>]</span>.</p>
+<p>The Otsu method performs well when the image histogram is bimodal with a deep and sharp valley between two peaks <span id="id7">[<a class="reference internal" href="../99_references.html#id375" title="J. Kittler and J. Illingworth. On threshold selection using clustering criteria. IEEE Transactions on Systems, Man, and Cybernetics, SMC-15(5):652–655, September 1985. URL: http://ieeexplore.ieee.org/document/6313443/ (visited on 2023-12-19), doi:10.1109/TSMC.1985.6313443.">36</a>]</span>.  However, the method isn’t the best choice in the presence of heavy noise,  large variances in lighting, or when intra-class variance is larger than inter-class variance.  In such cases, adaptations have been proposed such as the  Kittler-Illingworth method <span id="id8">[<a class="reference internal" href="../99_references.html#id376" title="J. Kittler and J. Illingworth. Minimum error thresholding. Pattern Recognition, 19(1):41–47, January 1986. URL: https://linkinghub.elsevier.com/retrieve/pii/0031320386900300 (visited on 2023-12-19), doi:10.1016/0031-3203(86)90030-0.">37</a>]</span>.</p>
 </section>
 <section id="li-s-minimum-cross-entropy-method">
 <h3>Li’s Minimum Cross-Entropy Method<a class="headerlink" href="#li-s-minimum-cross-entropy-method" title="Permalink to this heading">#</a></h3>
-<p>Probably the most popular entropy-based threshold method was proposed in 1993 by Li and Lee <span id="id9">[<a class="reference internal" href="../99_references.html#id377" title="C.H. Li and C.K. Lee. Minimum cross entropy thresholding. Pattern Recognition, 26(4):617–625, April 1993. URL: https://linkinghub.elsevier.com/retrieve/pii/003132039390115D (visited on 2023-12-19), doi:10.1016/0031-3203(93)90115-D.">36</a>]</span>. It finds the ‘optimal’ threshold to distinguish between background and foreground by exhaustively searching for the threshold that minimized the <em>cross-entropy</em> between the foreground and the foreground mean and between the background and the background mean.</p>
-<p>In 1998, Li and Tam implemented a faster adaptation that used the <em>slope</em> of the cross-entropy instead <span id="id10">[<a class="reference internal" href="../99_references.html#id378" title="C.H. Li and P.K.S. Tam. An iterative algorithm for minimum cross entropy thresholding. Pattern Recognition Letters, 19(8):771–776, June 1998. URL: https://linkinghub.elsevier.com/retrieve/pii/S0167865598000579 (visited on 2023-12-19), doi:10.1016/S0167-8655(98)00057-9.">37</a>]</span>. This version, implemented in the scikit-image package, was employed on our test images.</p>
+<p>Probably the most popular entropy-based threshold method was proposed in 1993 by Li and Lee <span id="id9">[<a class="reference internal" href="../99_references.html#id377" title="C.H. Li and C.K. Lee. Minimum cross entropy thresholding. Pattern Recognition, 26(4):617–625, April 1993. URL: https://linkinghub.elsevier.com/retrieve/pii/003132039390115D (visited on 2023-12-19), doi:10.1016/0031-3203(93)90115-D.">38</a>]</span>. It finds the ‘optimal’ threshold to distinguish between background and foreground by exhaustively searching for the threshold that minimized the <em>cross-entropy</em> between the foreground and the foreground mean and between the background and the background mean.</p>
+<p>In 1998, Li and Tam implemented a faster adaptation that used the <em>slope</em> of the cross-entropy instead <span id="id10">[<a class="reference internal" href="../99_references.html#id378" title="C.H. Li and P.K.S. Tam. An iterative algorithm for minimum cross entropy thresholding. Pattern Recognition Letters, 19(8):771–776, June 1998. URL: https://linkinghub.elsevier.com/retrieve/pii/S0167865598000579 (visited on 2023-12-19), doi:10.1016/S0167-8655(98)00057-9.">39</a>]</span>. This version, implemented in the scikit-image package, was employed on our test images.</p>
 <p>Li’s method selected slightly lower thresholds in [23, 17, 33, 29] than those of Otsu and ISODATA. At these lower thresholds, we see slightly more smoothness on the edges.</p>
 <p>This method works well when the image histograms are convex; however, when the pixel distributions are not convex, gradient descent could yield a threshold that is not optimal.</p>
 </section>
 <section id="yen-s-multilevel-method">
 <h3>Yen’s Multilevel Method<a class="headerlink" href="#yen-s-multilevel-method" title="Permalink to this heading">#</a></h3>
-<p>Yen’s Automatic Multilevel Threshold algorithm was proposed in 1995 <span id="id11">[<a class="reference internal" href="../99_references.html#id379" title="Jui-Cheng Yen, Fu-Juay Chang, and Shyang Chang. A new criterion for automatic multilevel thresholding. IEEE Transactions on Image Processing, 4(3):370–378, March 1995. URL: http://ieeexplore.ieee.org/document/366472/ (visited on 2023-12-19), doi:10.1109/83.366472.">38</a>]</span> based on two criteria. The first one is the discrepancy between the thresholded and original images, and the second is the number of bits required to represent the thresholded image.  The discrepancy is defined in terms of a maximum entropic correlation criterion EC for bilevel thresholding given by:</p>
+<p>Yen’s Automatic Multilevel Threshold algorithm was proposed in 1995 <span id="id11">[<a class="reference internal" href="../99_references.html#id379" title="Jui-Cheng Yen, Fu-Juay Chang, and Shyang Chang. A new criterion for automatic multilevel thresholding. IEEE Transactions on Image Processing, 4(3):370–378, March 1995. URL: http://ieeexplore.ieee.org/document/366472/ (visited on 2023-12-19), doi:10.1109/83.366472.">40</a>]</span> based on two criteria. The first one is the discrepancy between the thresholded and original images, and the second is the number of bits required to represent the thresholded image.  The discrepancy is defined in terms of a maximum entropic correlation criterion EC for bilevel thresholding given by:</p>
 <div class="math notranslate nohighlight" id="equation-yen-ec">
-<span class="eqno">(4.41)<a class="headerlink" href="#equation-yen-ec" title="Permalink to this equation">#</a></span>\[EC(s) = -\text{ln}(G(s)\cdot G^{\prime}(s)) + 2\text{ln}(P(s)\cdot(1-P(s)))\]</div>
+<span class="eqno">(6.41)<a class="headerlink" href="#equation-yen-ec" title="Permalink to this equation">#</a></span>\[EC(s) = -\text{ln}(G(s)\cdot G^{\prime}(s)) + 2\text{ln}(P(s)\cdot(1-P(s)))\]</div>
 <p>where:</p>
 <div class="math notranslate nohighlight" id="equation-yen-g">
-<span class="eqno">(4.42)<a class="headerlink" href="#equation-yen-g" title="Permalink to this equation">#</a></span>\[\begin{split}G(S)=\displaystyle\sum{i=0}^{s-1}p_i^2,\\
+<span class="eqno">(6.42)<a class="headerlink" href="#equation-yen-g" title="Permalink to this equation">#</a></span>\[\begin{split}G(S)=\displaystyle\sum{i=0}^{s-1}p_i^2,\\
 G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
 <p>and <span class="math notranslate nohighlight">\(m\)</span> is the number of gray levels in the image, <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of the gray level <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(P(s)=\displaystyle\sum_{i=0}^{s-1} p_i\)</span> is the total probability up to gray level <span class="math notranslate nohighlight">\((s-1)\)</span>.</p>
 <p>In <code class="xref std std-numref docutils literal notranslate"><span class="pre">threshold_yen_fig</span></code>, Yen’s algorithm performed fairly well on three of the images; however, the threshold of 153 in (e) pushed almost the entire region of interest into the background.</p>
@@ -665,7 +667,7 @@ G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
 <p>Setting an appropriate neighborhood size is crucial. One that is too large would produce segmentation results similar to that of a global threshold algorithm. Neighborhood sizes are odd numbers such as 3, 5, 7, or 11.</p>
 <p>The general formula for the adaptive method is:</p>
 <div class="math notranslate nohighlight" id="equation-adaptive">
-<span class="eqno">(4.43)<a class="headerlink" href="#equation-adaptive" title="Permalink to this equation">#</a></span>\[T = \text{mean}(I_L)-C\]</div>
+<span class="eqno">(6.43)<a class="headerlink" href="#equation-adaptive" title="Permalink to this equation">#</a></span>\[T = \text{mean}(I_L)-C\]</div>
 <p>where the mean is either the arithmetic mean or the Gaussian mean and <span class="math notranslate nohighlight">\(I_L\)</span> is the local neighborhood of the image <span class="math notranslate nohighlight">\(I\)</span>. The constant <span class="math notranslate nohighlight">\(C\)</span> can be used to fine-tune the threshold value <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>Let’s examine the performance of the adaptive mean and Gaussian methods with a neighborhood size of 5.</p>
 <section id="adaptive-mean-method">
@@ -677,7 +679,7 @@ G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
 <hr class="footnotes docutils" />
 <aside class="footnote brackets" id="thresholds" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method <span id="id12">[<a class="reference internal" href="../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">33</a>]</span> can be categorized as both a histogram shape-based method and a clustering-based method.</p>
+<p>For the taxonomist, Sezgin’s framework is not mutually exclusive and collectively exhaustive (MECE). For instance, Otsu’s Method <span id="id12">[<a class="reference internal" href="../99_references.html#id369" title="Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. IEEE Transactions on Systems, Man, and Cybernetics, 9(1):62–66, January 1979. URL: http://ieeexplore.ieee.org/document/4310076/ (visited on 2023-12-15), doi:10.1109/TSMC.1979.4310076.">35</a>]</span> can be categorized as both a histogram shape-based method and a clustering-based method.</p>
 </aside>
 </section>
 </section>
@@ -721,7 +723,7 @@ G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">4.1.6. </span>Denoising Experiment</p>
+        <p class="prev-next-title"><span class="section-number">6.1.6. </span>Denoising Experiment</p>
       </div>
     </a>
     <a class="right-next"
@@ -751,9 +753,9 @@ G^{\prime}(s)= \displaystyle\sum{i=s}^{m-1}p_i^2,\end{split}\]</div>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-in-digital-mammography">4.2.1. Thresholding in Digital Mammography</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-importance-of-threshold">4.2.2. Critical Importance of Threshold</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">4.2.3. Automated Thresholding Algorithms</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thresholding-in-digital-mammography">6.2.1. Thresholding in Digital Mammography</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-importance-of-threshold">6.2.2. Critical Importance of Threshold</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-thresholding-algorithms">6.2.3. Automated Thresholding Algorithms</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-method">Triangle Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#isodata-method">ISODATA Method</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otsu-s-method">Otsu’s Method</a></li>
