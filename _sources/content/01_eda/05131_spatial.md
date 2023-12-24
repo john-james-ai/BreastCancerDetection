@@ -16,7 +16,7 @@ kernelspec:
 :tags: [remove-cell]
 import os
 if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../../../..")))
+    os.chdir(os.path.abspath(os.path.join("../../..")))
 
 import cv2
 from matplotlib import pyplot as plt
@@ -40,7 +40,7 @@ Most commonly used to reduce additive Gaussian noise, the mean filter is a simpl
 
 The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
 
-```{figure} ../../../figures/kernel.png
+```{figure} ../../figures/kernel.png
 ---
 name: kernel
 ---
@@ -59,7 +59,7 @@ Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is com
 ```
 
 The process of convolving with a 3x3 mean filter is as follows:
-![MeanFilter](../../../figures/gif/02_mean_filter.gif)
+![MeanFilter](../../figures/gif/02_mean_filter.gif)
 
 {numref}`mean_gaussian_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.
 
@@ -118,7 +118,7 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
 
 {numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
-```{figure} ../../../figures/gaussian_kernel.png
+```{figure} ../../figures/gaussian_kernel.png
 ---
 name: gaussian_kernel
 ---

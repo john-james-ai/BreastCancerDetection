@@ -42,7 +42,7 @@ To get some intuition into the Fourier transform (FT) and the frequency domain r
 :tags: [hide-cell, remove-output]
 import os
 if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../../../..")))
+    os.chdir(os.path.abspath(os.path.join("../..")))
 
 import cv2
 import matplotlib.pyplot as plt
@@ -183,7 +183,7 @@ where $P=2M$ and $Q=2N$ are the padded sizes of the image.
 
 {numref}`ideal_filter` shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius $D_0$ are passed; whereas, all frequencies outside the circle are completely attenuated.
 
-```{figure} ../../../figures/ideal_filter.jpg
+```{figure} ../../figures/ideal_filter.jpg
 ---
 name: ideal_filter
 ---
@@ -202,7 +202,7 @@ A 1930 paper by Stephen Butterworth, a British engineer and physicist {cite}`ctx
 
 The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the *order* of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in {numref}`butterworth_ideal`
 
-```{figure} ../../../figures/butterworth.png
+```{figure} ../../figures/butterworth.png
 ---
 name: butterworth_ideal
 ---
@@ -266,7 +266,7 @@ Wavelet denoising is a non-parametric method that attempts to remove noise and r
 
 The Discrete Wavelet Transform (DWT) is the first step in image denoising; whereby, an image is decomposed into a sequence of low-frequency and high-frequency bands.
 
-```{figure} ../../../figures/dwt.png
+```{figure} ../../figures/dwt.png
 ---
 name: dwt
 ---

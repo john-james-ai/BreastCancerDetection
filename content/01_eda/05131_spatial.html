@@ -501,7 +501,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. It’s based on the idea that random noise consists of “sharp” transitions in the intensity of the signal. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. By doing so, the “sharp” transitions in the intensities are reduced.</p>
 <p>The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  <a class="reference internal" href="#kernel"><span class="std std-numref">Fig. 5.6</span></a> illustrates a 3 x 3 kernel.</p>
 <figure class="align-default" id="kernel">
-<img alt="../figures/kernel.png" src="../figures/kernel.png" />
+<img alt="../../_images/kernel.png" src="../../_images/kernel.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.6 </span><span class="caption-text">3 x 3 Mean Filter Kernel</span><a class="headerlink" href="#kernel" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -514,7 +514,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <p>Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  <span class="math notranslate nohighlight">\(\frac{1}{mn}\)</span>, is applied at the end.</p>
 </div>
 <p>The process of convolving with a 3x3 mean filter is as follows:
-<img alt="MeanFilter" src="../figures/gif/02_mean_filter.gif" /></p>
+<img alt="MeanFilter" src="../../_images/02_mean_filter.gif" /></p>
 <p><a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.7</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -533,7 +533,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-characteristics-fig">
-<img alt="../../_images/19d4d4d4d3ac236aea704eb25387c61464a030973c6f3e4684056c33583438a8.png" src="../../_images/19d4d4d4d3ac236aea704eb25387c61464a030973c6f3e4684056c33583438a8.png" />
+<img alt="../../_images/b39b120aac49bc3a86d6869c45dd36f4adf4b393e0a83dd1d5c5bcdc894530b0.png" src="../../_images/b39b120aac49bc3a86d6869c45dd36f4adf4b393e0a83dd1d5c5bcdc894530b0.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.7 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -555,7 +555,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="mean-gaussian-analysis-fig">
-<img alt="../../_images/132061a0c7a9f060d32cb802fa39da152c4bc206676a8816f73f42eeeaff51c8.png" src="../../_images/132061a0c7a9f060d32cb802fa39da152c4bc206676a8816f73f42eeeaff51c8.png" />
+<img alt="../../_images/25056bafbd5f0e7e2e1f8f3b2b3c25faabb2e2cde2ae6583e1b9ab744f17c9bd.png" src="../../_images/25056bafbd5f0e7e2e1f8f3b2b3c25faabb2e2cde2ae6583e1b9ab744f17c9bd.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.8 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -575,7 +575,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <span class="eqno">(5.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
 <p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 5.9</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
 <figure class="align-default" id="gaussian-kernel">
-<img alt="../figures/gaussian_kernel.png" src="../figures/gaussian_kernel.png" />
+<img alt="../../_images/gaussian_kernel.png" src="../../_images/gaussian_kernel.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -599,7 +599,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-characteristics-fig">
-<img alt="../../_images/7d4c5c9949c71114514efe07f470579c271e5f6610ba823e72cbae35e20afaf4.png" src="../../_images/7d4c5c9949c71114514efe07f470579c271e5f6610ba823e72cbae35e20afaf4.png" />
+<img alt="../../_images/bf8046483fb759b5fd34e49bc6eab95ff12e3a71bfc03b121a7aecf00b6facbc.png" src="../../_images/bf8046483fb759b5fd34e49bc6eab95ff12e3a71bfc03b121a7aecf00b6facbc.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.10 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -621,7 +621,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 </details>
 </div>
 <figure class="align-center" id="gaussian-gaussian-analysis-fig">
-<img alt="../../_images/827db99334efb23f9af7a41a58e0ca06d5297697d5a162a7be7d246b7e56b7b4.png" src="../../_images/827db99334efb23f9af7a41a58e0ca06d5297697d5a162a7be7d246b7e56b7b4.png" />
+<img alt="../../_images/f9c03487049991c5e8fba06c472b16dab815409b6dd254273a5cb2a44994c993.png" src="../../_images/f9c03487049991c5e8fba06c472b16dab815409b6dd254273a5cb2a44994c993.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.11 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -681,7 +681,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="median-gaussian-characteristics-fig">
-<img alt="../../_images/6ed168af42693d31d4388a6a9a5a31201743fcb2f028fa1687ccb08b7e4a581c.png" src="../../_images/6ed168af42693d31d4388a6a9a5a31201743fcb2f028fa1687ccb08b7e4a581c.png" />
+<img alt="../../_images/af062bab7f7078180c056083487692a9b0a3685aff65ee156df3dea3461f1971.png" src="../../_images/af062bab7f7078180c056083487692a9b0a3685aff65ee156df3dea3461f1971.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.12 </span><span class="caption-text">Median Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#median-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -705,7 +705,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="median-snp-characteristics-fig">
-<img alt="../../_images/3368d750728f83143355d432081d0f294870c7cc0709ff750e52debbf3a7e895.png" src="../../_images/3368d750728f83143355d432081d0f294870c7cc0709ff750e52debbf3a7e895.png" />
+<img alt="../../_images/70c3d3fe90877607ff09165d5cc5b323cfee2c193a8393e88ac6434b548a4e43.png" src="../../_images/70c3d3fe90877607ff09165d5cc5b323cfee2c193a8393e88ac6434b548a4e43.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.13 </span><span class="caption-text">Median Filter Performance Characteristics with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -727,7 +727,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="median-snp-analysis-fig">
-<img alt="../../_images/0250eec2e3cdec5115600e2b169efc74cc999c20b7fbebc117af402a55596749.png" src="../../_images/0250eec2e3cdec5115600e2b169efc74cc999c20b7fbebc117af402a55596749.png" />
+<img alt="../../_images/3dea5b2cc5526a11da8ebbe0b66aefc21ff32eebe849bdb84b5727795c738da1.png" src="../../_images/3dea5b2cc5526a11da8ebbe0b66aefc21ff32eebe849bdb84b5727795c738da1.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.14 </span><span class="caption-text">Median Filter Performance Analysis with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -776,7 +776,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="bilateral-gaussian-characteristics-fig">
-<img alt="../../_images/e37f9feb210524451cdbbe2ef1413fd91936b6b7a9c2b06eda75c97107f786d2.png" src="../../_images/e37f9feb210524451cdbbe2ef1413fd91936b6b7a9c2b06eda75c97107f786d2.png" />
+<img alt="../../_images/9e10dbb8ce6f77318e3af3b8c67dcf9ecb120e3b3b3b08f46b62854171ea6821.png" src="../../_images/9e10dbb8ce6f77318e3af3b8c67dcf9ecb120e3b3b3b08f46b62854171ea6821.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.15 </span><span class="caption-text">Bilateral Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -797,7 +797,7 @@ Next, up? Non-linear filters.</p>
 </details>
 </div>
 <figure class="align-center" id="bilateral-gaussian-analysis-fig">
-<img alt="../../_images/0c4c98ae63ea943b03d4e387ab1366afc9c02e93ce8a16abe63739210ebf9a07.png" src="../../_images/0c4c98ae63ea943b03d4e387ab1366afc9c02e93ce8a16abe63739210ebf9a07.png" />
+<img alt="../../_images/924de63d8640731e2b0c68a3263d0939ab07a0189a2d06a977d1451f743ad774.png" src="../../_images/924de63d8640731e2b0c68a3263d0939ab07a0189a2d06a977d1451f743ad774.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.16 </span><span class="caption-text">Bilateral Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -843,7 +843,7 @@ Hence, the weights are defined as:</p>
 </details>
 </div>
 <figure class="align-center" id="nlmeans-gaussian-characteristics-fig">
-<img alt="../../_images/ea9c520cbc515f87d0639ea0703830701265ffc57da856b686a0eb25949bec3d.png" src="../../_images/ea9c520cbc515f87d0639ea0703830701265ffc57da856b686a0eb25949bec3d.png" />
+<img alt="../../_images/63c37095cccf1f74ba030815ee43133b7d3ba258ec6712977028a3e8f401c1cb.png" src="../../_images/63c37095cccf1f74ba030815ee43133b7d3ba258ec6712977028a3e8f401c1cb.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.17 </span><span class="caption-text">Non-Local Means Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -864,7 +864,7 @@ Hence, the weights are defined as:</p>
 </details>
 </div>
 <figure class="align-center" id="nlmeans-gaussian-analysis-fig">
-<img alt="../../_images/3c802b2def172adf0080fec716c87cab4d0e2067735c8580a51eb5293ea684ce.png" src="../../_images/3c802b2def172adf0080fec716c87cab4d0e2067735c8580a51eb5293ea684ce.png" />
+<img alt="../../_images/d2892262b521c5719158578a6e214dc1af2320ae2071cf19d5c562a191e3c4e4.png" src="../../_images/d2892262b521c5719158578a6e214dc1af2320ae2071cf19d5c562a191e3c4e4.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 5.18 </span><span class="caption-text">Non-Local Means Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
