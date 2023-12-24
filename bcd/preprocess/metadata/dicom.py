@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Tuesday December 19th 2023 08:00:48 pm                                              #
+# Modified   : Saturday December 23rd 2023 11:53:57 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -27,7 +27,6 @@ import joblib
 import numpy as np
 import pandas as pd
 import pydicom
-from tqdm import tqdm
 
 from bcd.preprocess.metadata.base import DataPrep
 
@@ -155,8 +154,7 @@ class DicomPrep(DataPrep):
     def _extract_dicom_data(self, filepaths: list, n_jobs: int = 6) -> pd.DataFrame:
         """Extracts dicom data and returns a DataFrame."""
         dicom_data = joblib.Parallel(n_jobs=n_jobs)(
-            joblib.delayed(self._read_dicom_data)(filepath)
-            for filepath in tqdm(filepaths)
+            joblib.delayed(self._read_dicom_data)(filepath) for filepath in filepaths
         )
         dicom_data = pd.DataFrame(data=dicom_data)
 

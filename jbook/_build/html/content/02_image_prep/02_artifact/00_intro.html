@@ -165,12 +165,13 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/02_toc.html">3. Table of Contents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../00_front_matter/03_dependencies.html">4. Dependency Version and Hardware</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../01_eda/00_data.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_eda/01_data_prep.html">2. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_eda_meta.html">3. Exploratory Data Analysis (EDA) 1.0 - Metadata</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_eda/03_eda_image.html">4. Exploratory Data Analysis of Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/00_intro.html">1. EDA Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/01_data.html">2. <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/02_data_prep.html">3. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/03_eda_meta.html">4. EDA Case Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_eda/04_eda_image.html">5. Exploratory Data Analysis of Images</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
@@ -479,15 +480,15 @@ document.write(`
 <figure class="align-center" id="artifacts-fig">
 <img alt="../../../_images/d300d60070e91acecb212bcf5bbff0b416b80ec57b680304e7b0270c804b262a.png" src="../../../_images/d300d60070e91acecb212bcf5bbff0b416b80ec57b680304e7b0270c804b262a.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3.2 </span><span class="caption-text">Artifacts in Mammogram Images</span><a class="headerlink" href="#artifacts-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Artifacts in Mammogram Images</span><a class="headerlink" href="#artifacts-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The images in <a class="reference internal" href="#artifacts-fig"><span class="std std-numref">Fig. 3.2</span></a> are not edge cases. Text and such artifacts were extant in 79 out of 88 (~89%) randomly sampled images from the CBIS-DDSM dataset.</p>
+<p>The images in <a class="reference internal" href="#artifacts-fig"><span class="std std-numref">Fig. 3.1</span></a> are not edge cases. Text and such artifacts were extant in 79 out of 88 (~89%) randomly sampled images from the CBIS-DDSM dataset.</p>
 <p>Before modeling and inference can take place, the breast tissue must be isolated and segmented annotations, and any artifacts that may compromise the detection and classification of anomalies in the mammogram.</p>
 <p>In this section, we describe a two-step process for removing artifacts.</p>
 <ol class="arabic simple">
 <li><p><strong>Thresholding</strong>: Partition the original grayscale image a binary image with two regions: a foreground region containing the breast region of interest, and a background region, using thresholding and binarization.</p></li>
-<li><p><strong>Breast Segmentation</strong>: From the binary image, detect the breast contours using a border following algorithm <span id="id1">[<a class="reference internal" href="../../99_references.html#id371" title="Satoshi Suzuki and KeiichiA Be. Topological structural analysis of digitized binary images by border following. Computer Vision, Graphics, and Image Processing, 30(1):32–46, April 1985. URL: https://linkinghub.elsevier.com/retrieve/pii/0734189X85900167 (visited on 2023-12-17), doi:10.1016/0734-189X(85)90016-7.">26</a>]</span> and segment the breast from artifacts.</p></li>
+<li><p><strong>Breast Segmentation</strong>: From the binary image, detect the breast contours using a border following algorithm <span id="id1">[<a class="reference internal" href="../../99_references.html#id371" title="Satoshi Suzuki and KeiichiA Be. Topological structural analysis of digitized binary images by border following. Computer Vision, Graphics, and Image Processing, 30(1):32–46, April 1985. URL: https://linkinghub.elsevier.com/retrieve/pii/0734189X85900167 (visited on 2023-12-17), doi:10.1016/0734-189X(85)90016-7.">32</a>]</span> and segment the breast from artifacts.</p></li>
 </ol>
 <div class="toctree-wrapper compound">
 </div>

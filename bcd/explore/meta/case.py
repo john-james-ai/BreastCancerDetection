@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Saturday December 23rd 2023 07:56:20 pm                                             #
+# Modified   : Sunday December 24th 2023 12:05:03 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -422,6 +422,8 @@ class CaseExplorer(Explorer):
             df=summary, morphology=morphology, by=by, figsize=figsize
         )
 
+        plt.close()
+
         return fig, summary
 
     def compare_morphology(
@@ -456,6 +458,8 @@ class CaseExplorer(Explorer):
             df=comparison, morphology=m1, by=m2, figsize=figsize, *args, **kwargs
         )
 
+        plt.close()
+
         return fig, comparison
 
     def morphology_analysis(self, a: str, b: str, figsize: tuple = (8, 4)) -> plt.Axes:
@@ -486,7 +490,7 @@ class CaseExplorer(Explorer):
         ax = sns.heatmap(g, cmap="crest", annot=True)
 
         title = f"Probability of Malignancy by {proper(a)} and {proper(b)}."
-        ax.set_title(title)
+        _ = ax.set_title(title)
 
         return ax
 
@@ -569,7 +573,7 @@ class CaseExplorer(Explorer):
                 data=group, x=by, y="proportion", ax=ax, title=value, *args, **kwargs
             )
 
-        fig.suptitle(suptitle)
+        _ = fig.suptitle(suptitle)
         plt.close()
 
         return fig
