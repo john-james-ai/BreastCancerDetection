@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="5.2. Thresholding" href="01_eda/052_threshold.html" />
+    <link rel="prev" title="4.2. Thresholding" href="01_eda/062_threshold.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -166,21 +166,20 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_eda/01_data.html">1. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_eda/02_data_prep.html">2. EDA Part 2: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_eda/03_eda_meta.html">3. EDA Part 3: Case Dataset Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_eda/04_eda_image.html">4. EDA Part 4: Image Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="01_eda/05_eda_methods.html">5. EDA Part 5: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="01_eda/051_denoise.html">5.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0511_noise_models.html">5.1.1. Noise Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0512_noise_types.html">5.1.2. Noise Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0513_denoisers.html">5.1.3. Denoiser Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/05131_spatial.html">5.1.4. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/05132_frequency.html">5.1.5. Frequency Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0514_experiment.html">5.1.6. Denoising Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/03_data_prep.html">1. EDA Part 3: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/04_eda_meta.html">2. EDA Part 4: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/05_eda_image.html">3. EDA Part 5: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="01_eda/06_eda_methods.html">4. EDA Part 6: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="01_eda/061_denoise.html">4.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0611_noise_models.html">4.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0612_noise_types.html">4.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0613_denoisers.html">4.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/06131_spatial.html">4.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/06132_frequency.html">4.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0614_experiment.html">4.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01_eda/052_threshold.html">5.2. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_eda/062_threshold.html">4.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -402,164 +401,156 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h1>
 <div class="docutils container" id="id1">
-<div class="citation" id="id290" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<p>USF Digital Mammography Home Page - http://www.eng.usf.edu/cvprg/mammography/database.html. URL: <a class="reference external" href="http://www.eng.usf.edu/cvprg/mammography/database.html">http://www.eng.usf.edu/cvprg/mammography/database.html</a> (visited on 2023-09-01).</p>
-</div>
 <div class="citation" id="id136" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
 <p>Rebecca Sawyer Lee, Francisco Gimenez, Assaf Hoogi, Kanae Kawai Miyake, Mia Gorovoy, and Daniel L. Rubin. A curated mammography data set for use in computer-aided detection and diagnosis research. <em>Scientific Data</em>, 4(1):170177, December 2017. URL: <a class="reference external" href="https://www.nature.com/articles/sdata2017177">https://www.nature.com/articles/sdata2017177</a> (visited on 2023-05-24), <a class="reference external" href="https://doi.org/10.1038/sdata.2017.177">doi:10.1038/sdata.2017.177</a>.</p>
 </div>
-<div class="citation" id="id305" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
-<p>Kenneth Clark, Bruce Vendt, Kirk Smith, John Freymann, Justin Kirby, Paul Koppel, Stephen Moore, Stanley Phillips, David Maffitt, Michael Pringle, Lawrence Tarbox, and Fred Prior. The Cancer Imaging Archive (TCIA): Maintaining and Operating a Public Information Repository. <em>Journal of Digital Imaging</em>, 26(6):1045–1057, December 2013. URL: <a class="reference external" href="http://link.springer.com/10.1007/s10278-013-9622-7">http://link.springer.com/10.1007/s10278-013-9622-7</a> (visited on 2023-09-04), <a class="reference external" href="https://doi.org/10.1007/s10278-013-9622-7">doi:10.1007/s10278-013-9622-7</a>.</p>
-</div>
 <div class="citation" id="id294" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
 <p>Breast Imaging Reporting &amp; Data System. URL: <a class="reference external" href="https://www.acr.org/Clinical-Resources/Reporting-and-Data-Systems/Bi-Rads">https://www.acr.org/Clinical-Resources/Reporting-and-Data-Systems/Bi-Rads</a> (visited on 2023-09-03).</p>
 </div>
 <div class="citation" id="id318" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
 <p>Shelly Lillé, Wendy Marshall, and Valerie Andolina. <em>Mammographic imaging: a practical guide</em>. Wolters Kluwer, Philadelphia, fourth edition edition, 2019. ISBN 978-1-4963-5202-6. OCLC: 1021062474.</p>
 </div>
 <div class="citation" id="id307" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
 <p>Dense Breasts: Answers to Commonly Asked Questions - NCI. February 2018. Archive Location: nciglobal,ncienterprise. URL: <a class="reference external" href="https://www.cancer.gov/types/breast/breast-changes/dense-breasts">https://www.cancer.gov/types/breast/breast-changes/dense-breasts</a> (visited on 2023-09-29).</p>
 </div>
 <div class="citation" id="id308" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></span>
 <p>Yara Abdou, Medhavi Gupta, Mariko Asaoka, Kristopher Attwood, Opyrchal Mateusz, Shipra Gandhi, and Kazuaki Takabe. Left sided breast cancer is associated with aggressive biology and worse outcomes than right sided breast cancer. <em>Scientific Reports</em>, 12(1):13377, August 2022. URL: <a class="reference external" href="https://www.nature.com/articles/s41598-022-16749-4">https://www.nature.com/articles/s41598-022-16749-4</a> (visited on 2023-09-29), <a class="reference external" href="https://doi.org/10.1038/s41598-022-16749-4">doi:10.1038/s41598-022-16749-4</a>.</p>
 </div>
 <div class="citation" id="id309" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></span>
 <p>Katrina E. Korhonen, Emily F. Conant, Eric A. Cohen, Marie Synnestvedt, Elizabeth S. McDonald, and Susan P. Weinstein. Breast Cancer Conspicuity on Simultaneously Acquired Digital Mammographic Images versus Digital Breast Tomosynthesis Images. <em>Radiology</em>, 292(1):69–76, July 2019. URL: <a class="reference external" href="http://pubs.rsna.org/doi/10.1148/radiol.2019182027">http://pubs.rsna.org/doi/10.1148/radiol.2019182027</a> (visited on 2023-09-29), <a class="reference external" href="https://doi.org/10.1148/radiol.2019182027">doi:10.1148/radiol.2019182027</a>.</p>
 </div>
 <div class="citation" id="id310" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></span>
 <p>Lawrence W. Bassett, Karen Conner, and Iv Ms. The Abnormal Mammogram. In <em>Holland-Frei Cancer Medicine. 6th edition</em>. BC Decker, 2003. URL: <a class="reference external" href="https://www.ncbi.nlm.nih.gov/books/NBK12642/">https://www.ncbi.nlm.nih.gov/books/NBK12642/</a> (visited on 2023-09-29).</p>
 </div>
 <div class="citation" id="id306" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></span>
 <p>Robin Smithuis and Frank Smithuis. The Radiology Assistant : Differential of Breast Calcifications. URL: <a class="reference external" href="https://radiologyassistant.nl/breast/calcifications/differential-of-breast-calcifications#diagnostic-approach-distribution">https://radiologyassistant.nl/breast/calcifications/differential-of-breast-calcifications#diagnostic-approach-distribution</a> (visited on 2023-09-28).</p>
 </div>
 <div class="citation" id="id380" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></span>
 <p>Kenny C. Lai, Priscilla J. Slanetz, and Ronald L. Eisenberg. Linear Breast Calcifications. <em>American Journal of Roentgenology</em>, 199(2):W151–W157, August 2012. URL: <a class="reference external" href="https://www.ajronline.org/doi/10.2214/AJR.11.7153">https://www.ajronline.org/doi/10.2214/AJR.11.7153</a> (visited on 2023-12-22), <a class="reference external" href="https://doi.org/10.2214/AJR.11.7153">doi:10.2214/AJR.11.7153</a>.</p>
 </div>
 <div class="citation" id="id381" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></span>
 <p>Po-Hao Chen, Erica T. Ghosh, Priscilla J. Slanetz, and Ronald L. Eisenberg. Segmental Breast Calcifications. <em>American Journal of Roentgenology</em>, 199(5):W532–W542, November 2012. URL: <a class="reference external" href="https://www.ajronline.org/doi/10.2214/AJR.11.8198">https://www.ajronline.org/doi/10.2214/AJR.11.8198</a> (visited on 2023-12-22), <a class="reference external" href="https://doi.org/10.2214/AJR.11.8198">doi:10.2214/AJR.11.8198</a>.</p>
 </div>
 <div class="citation" id="id382" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></span>
 <p>American College of Radiology, Carl J. D'Orsi, Edward A. Sickles, Ellen B. Mendelson, and Elizabeth A. Morris, editors. <em>ACR BI-RADS atlas: breast imaging reporting and data system ; mammography, ultrasound, magnetic resonance imaging, follow-up and outcome monitoring, data dictionary</em>. ACR, American College of Radiology, Reston, Va., 5th edition edition, 2013. ISBN 978-1-55903-016-8.</p>
 </div>
 <div class="citation" id="id332" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></span>
 <p>Alan C. Bovik, editor. <em>Handbook of image and video processing</em>. Academic Press series in communications, networking and multimedia. Academic Press, San Diego, 2000. ISBN 978-0-12-119790-2.</p>
 </div>
 <div class="citation" id="id342" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></span>
 <p>Volker Aurich and Jörg Weule. Non-Linear Gaussian Filters Performing Edge Preserving Diffusion. In W. Brauer, Gerhard Sagerer, Stefan Posch, and Franz Kummert, editors, <em>Mustererkennung 1995</em>, pages 538–545. Springer Berlin Heidelberg, Berlin, Heidelberg, 1995. URL: <a class="reference external" href="http://link.springer.com/10.1007/978-3-642-79980-8_63">http://link.springer.com/10.1007/978-3-642-79980-8_63</a> (visited on 2023-11-24), <a class="reference external" href="https://doi.org/10.1007/978-3-642-79980-8_63">doi:10.1007/978-3-642-79980-8_63</a>.</p>
 </div>
 <div class="citation" id="id343" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></span>
 <p>Ce Liu, W.T. Freeman, R. Szeliski, and Sing Bing Kang. Noise Estimation from a Single Image. In <em>2006 IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Volume 1 (CVPR'06)</em>, volume 1, 901–908. New York, NY, USA, 2006. IEEE. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1640848/">http://ieeexplore.ieee.org/document/1640848/</a> (visited on 2023-11-24), <a class="reference external" href="https://doi.org/10.1109/CVPR.2006.207">doi:10.1109/CVPR.2006.207</a>.</p>
 </div>
 <div class="citation" id="id344" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></span>
 <p>Frédo Durand and Julie Dorsey. Fast bilateral filtering for the display of high-dynamic-range images. <em>ACM Transactions on Graphics</em>, 21(3):257–266, July 2002. URL: <a class="reference external" href="https://dl.acm.org/doi/10.1145/566654.566574">https://dl.acm.org/doi/10.1145/566654.566574</a> (visited on 2023-11-25), <a class="reference external" href="https://doi.org/10.1145/566654.566574">doi:10.1145/566654.566574</a>.</p>
 </div>
 <div class="citation" id="id345" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></span>
 <p>M. Elad. On the origin of the bilateral filter and ways to improve it. <em>IEEE Transactions on Image Processing</em>, 11(10):1141–1151, October 2002. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1042377/">http://ieeexplore.ieee.org/document/1042377/</a> (visited on 2023-11-25), <a class="reference external" href="https://doi.org/10.1109/TIP.2002.801126">doi:10.1109/TIP.2002.801126</a>.</p>
 </div>
 <div class="citation" id="id346" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></span>
 <p>T.Q. Pham and L.J. Van Vliet. Separable Bilateral Filtering for Fast Video Preprocessing. In <em>2005 IEEE International Conference on Multimedia and Expo</em>, 454–457. Amsterdam, The Netherlands, 2005. IEEE. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1521458/">http://ieeexplore.ieee.org/document/1521458/</a> (visited on 2023-11-25), <a class="reference external" href="https://doi.org/10.1109/ICME.2005.1521458">doi:10.1109/ICME.2005.1521458</a>.</p>
 </div>
 <div class="citation" id="id348" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></span>
 <p>Sylvain Paris and Frédo Durand. A Fast Approximation of the Bilateral Filter Using a Signal Processing Approach. In Aleš Leonardis, Horst Bischof, and Axel Pinz, editors, <em>Computer Vision – ECCV 2006</em>, volume 3954, pages 568–580. Springer Berlin Heidelberg, Berlin, Heidelberg, 2006. URL: <a class="reference external" href="http://link.springer.com/10.1007/11744085_44">http://link.springer.com/10.1007/11744085_44</a> (visited on 2023-11-25), <a class="reference external" href="https://doi.org/10.1007/11744085_44">doi:10.1007/11744085_44</a>.</p>
 </div>
 <div class="citation" id="id349" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></span>
 <p>Ben Weiss. Fast median and bilateral filtering. <em>ACM Transactions on Graphics</em>, 25(3):519–526, July 2006. URL: <a class="reference external" href="https://dl.acm.org/doi/10.1145/1141911.1141918">https://dl.acm.org/doi/10.1145/1141911.1141918</a> (visited on 2023-11-25), <a class="reference external" href="https://doi.org/10.1145/1141911.1141918">doi:10.1145/1141911.1141918</a>.</p>
 </div>
 <div class="citation" id="id325" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></span>
 <p>A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In <em>2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05)</em>, volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1467423/">http://ieeexplore.ieee.org/document/1467423/</a> (visited on 2023-11-15), <a class="reference external" href="https://doi.org/10.1109/CVPR.2005.38">doi:10.1109/CVPR.2005.38</a>.</p>
 </div>
 <div class="citation" id="id338" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></span>
 <p>Jean-Baptiste-Joseph Fourier. <em>The analytical theory of heat</em>. Cosimo Classics, New York, 2007. ISBN 978-1-60206-856-8. OCLC: 913408199.</p>
 </div>
 <div class="citation" id="id354" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></span>
 <p>S Butterworth. On the theory of filter amplifiers. <em>Experimental Wireless and the Wireless Engineer</em>, 1930.</p>
 </div>
 <div class="citation" id="id355" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></span>
 <p>David L Donoho and Iain M Johnstone. Ideal spatial adaptation by wavelet shrinkage. <em>Biometrika</em>, 81(3):425–455, September 1994. URL: <a class="reference external" href="https://academic.oup.com/biomet/article/81/3/425/256924">https://academic.oup.com/biomet/article/81/3/425/256924</a> (visited on 2023-11-29), <a class="reference external" href="https://doi.org/10.1093/biomet/81.3.425">doi:10.1093/biomet/81.3.425</a>.</p>
 </div>
 <div class="citation" id="id356" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></span>
 <p>S.G. Chang, Bin Yu, and M. Vetterli. Adaptive wavelet thresholding for image denoising and compression. <em>IEEE Transactions on Image Processing</em>, 9(9):1532–1546, September 2000. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/862633/">http://ieeexplore.ieee.org/document/862633/</a> (visited on 2023-11-29), <a class="reference external" href="https://doi.org/10.1109/83.862633">doi:10.1109/83.862633</a>.</p>
 </div>
 <div class="citation" id="id357" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></span>
 <p>BT.500 : Methodologies for the subjective assessment of the quality of television images. URL: <a class="reference external" href="https://www.itu.int/rec/R-REC-BT.500-15-202305-I/en">https://www.itu.int/rec/R-REC-BT.500-15-202305-I/en</a> (visited on 2023-12-11).</p>
 </div>
 <div class="citation" id="id333" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></span>
 <p>Afnan Afnan, Faiz Ullah, Yaseen Yaseen, Jinhee Lee, Sonain Jamil, and Oh-Jin Kwon. Subjective Assessment of Objective Image Quality Metrics Range Guaranteeing Visually Lossless Compression. <em>Sensors</em>, 23(3):1297, January 2023. URL: <a class="reference external" href="https://www.mdpi.com/1424-8220/23/3/1297">https://www.mdpi.com/1424-8220/23/3/1297</a> (visited on 2023-11-21), <a class="reference external" href="https://doi.org/10.3390/s23031297">doi:10.3390/s23031297</a>.</p>
 </div>
 <div class="citation" id="id12" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></span>
 <p>Abhijith Reddy Beeravolu, Sami Azam, Mirjam Jonkman, Bharanidharan Shanmugam, Krishnan Kannoorpatti, and Adnan Anwar. Preprocessing of Breast Cancer Images to Create Datasets for Deep-CNN. <em>IEEE Access</em>, 9:33438–33463, 2021. URL: <a class="reference external" href="https://ieeexplore.ieee.org/document/9352727/">https://ieeexplore.ieee.org/document/9352727/</a> (visited on 2023-05-24), <a class="reference external" href="https://doi.org/10.1109/ACCESS.2021.3058773">doi:10.1109/ACCESS.2021.3058773</a>.</p>
 </div>
 <div class="citation" id="id335" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></span>
 <p>Illya Bakurov, Marco Buzzelli, Raimondo Schettini, Mauro Castelli, and Leonardo Vanneschi. Structural similarity index (SSIM) revisited: A data-driven approach. <em>Expert Systems with Applications</em>, 189:116087, March 2022. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0957417421014238">https://linkinghub.elsevier.com/retrieve/pii/S0957417421014238</a> (visited on 2023-11-22), <a class="reference external" href="https://doi.org/10.1016/j.eswa.2021.116087">doi:10.1016/j.eswa.2021.116087</a>.</p>
 </div>
 <div class="citation" id="id336" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></span>
 <p>Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. <em>IEEE Transactions on Image Processing</em>, 13(4):600–612, April 2004. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1284395/">http://ieeexplore.ieee.org/document/1284395/</a> (visited on 2023-11-22), <a class="reference external" href="https://doi.org/10.1109/TIP.2003.819861">doi:10.1109/TIP.2003.819861</a>.</p>
 </div>
 <div class="citation" id="id370" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></span>
 <p>G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. <em>Journal of Histochemistry &amp; Cytochemistry</em>, 25(7):741–753, July 1977. URL: <a class="reference external" href="http://journals.sagepub.com/doi/10.1177/25.7.70454">http://journals.sagepub.com/doi/10.1177/25.7.70454</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1177/25.7.70454">doi:10.1177/25.7.70454</a>.</p>
 </div>
 <div class="citation" id="id358" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
 <p>Ridler and Calvard. Picture Thresholding Using an Iterative Selection Method. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, 8(8):630–632, 1978. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/4310039/">http://ieeexplore.ieee.org/document/4310039/</a> (visited on 2023-12-11), <a class="reference external" href="https://doi.org/10.1109/TSMC.1978.4310039">doi:10.1109/TSMC.1978.4310039</a>.</p>
 </div>
 <div class="citation" id="id374" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
 <p>A. El-Zaart. Images thresholding using ISODATA technique with gamma distribution. <em>Pattern Recognition and Image Analysis</em>, 20(1):29–41, March 2010. URL: <a class="reference external" href="http://link.springer.com/10.1134/S1054661810010037">http://link.springer.com/10.1134/S1054661810010037</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1134/S1054661810010037">doi:10.1134/S1054661810010037</a>.</p>
 </div>
 <div class="citation" id="id369" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
 <p>Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, 9(1):62–66, January 1979. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/4310076/">http://ieeexplore.ieee.org/document/4310076/</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1109/TSMC.1979.4310076">doi:10.1109/TSMC.1979.4310076</a>.</p>
 </div>
 <div class="citation" id="id375" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>36<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
 <p>J. Kittler and J. Illingworth. On threshold selection using clustering criteria. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, SMC-15(5):652–655, September 1985. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/6313443/">http://ieeexplore.ieee.org/document/6313443/</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1109/TSMC.1985.6313443">doi:10.1109/TSMC.1985.6313443</a>.</p>
 </div>
 <div class="citation" id="id376" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>37<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
 <p>J. Kittler and J. Illingworth. Minimum error thresholding. <em>Pattern Recognition</em>, 19(1):41–47, January 1986. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/0031320386900300">https://linkinghub.elsevier.com/retrieve/pii/0031320386900300</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1016/0031-3203(86)90030-0">doi:10.1016/0031-3203(86)90030-0</a>.</p>
 </div>
 <div class="citation" id="id377" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>38<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>36<span class="fn-bracket">]</span></span>
 <p>C.H. Li and C.K. Lee. Minimum cross entropy thresholding. <em>Pattern Recognition</em>, 26(4):617–625, April 1993. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/003132039390115D">https://linkinghub.elsevier.com/retrieve/pii/003132039390115D</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1016/0031-3203(93)90115-D">doi:10.1016/0031-3203(93)90115-D</a>.</p>
 </div>
 <div class="citation" id="id378" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>39<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>37<span class="fn-bracket">]</span></span>
 <p>C.H. Li and P.K.S. Tam. An iterative algorithm for minimum cross entropy thresholding. <em>Pattern Recognition Letters</em>, 19(8):771–776, June 1998. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0167865598000579">https://linkinghub.elsevier.com/retrieve/pii/S0167865598000579</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1016/S0167-8655(98)00057-9">doi:10.1016/S0167-8655(98)00057-9</a>.</p>
 </div>
 <div class="citation" id="id379" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>40<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>38<span class="fn-bracket">]</span></span>
 <p>Jui-Cheng Yen, Fu-Juay Chang, and Shyang Chang. A new criterion for automatic multilevel thresholding. <em>IEEE Transactions on Image Processing</em>, 4(3):370–378, March 1995. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/366472/">http://ieeexplore.ieee.org/document/366472/</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1109/83.366472">doi:10.1109/83.366472</a>.</p>
 </div>
 </div>
@@ -598,12 +589,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_eda/052_threshold.html"
+       href="01_eda/062_threshold.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5.2. </span>Thresholding</p>
+        <p class="prev-next-title"><span class="section-number">4.2. </span>Thresholding</p>
       </div>
     </a>
 </div></div>
