@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(eda612)=
 # Noise Types
 
 The types of noise most inherent in digital mammography are summarized below.

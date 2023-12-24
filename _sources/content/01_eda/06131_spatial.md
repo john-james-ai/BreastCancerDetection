@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(eda6131)=
 # Spatial Domain Filtering
 
 ```{code-cell}

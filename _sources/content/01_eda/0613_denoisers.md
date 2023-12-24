@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(eda613)=
 # Denoiser Methods
 
 Having defined an image $f(x,y)$ as a function of an original image $s(x,y)$ and a noise component $n(x,y)$ ({eq}`additive_noise_model`, and {eq}`multiplicative_noise_model`), we can define the denoising task as follows:

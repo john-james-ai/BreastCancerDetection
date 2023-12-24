@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(eda614)=
 # Denoising Experiment
 
 An experiment was conducted to evaluate the various denoising techniques described above. Eighty-eight (88) images were selected using stratified sampling to ensure all case types and abnormalities were represented. The denoisers evaluated and their parameters are specified below.

@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(eda611)=
 # Noise Models
 
 Broadly speaking, noise can be modeled as additive, multiplicative, or impulse.

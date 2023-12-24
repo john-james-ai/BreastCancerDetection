@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(eda6132)=
 # Frequency Domain Filtering
 
 Normally, we think of an image as a rectangular array of pixels, each pixel representing an intensity at a position in the spatial domain. However, some denoising operations are complicated, or impossible to perform in the spatial domain.
