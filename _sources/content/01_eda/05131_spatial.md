@@ -13,7 +13,7 @@ kernelspec:
 
 # Spatial Domain Filtering
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [remove-cell]
 
 import os
@@ -21,6 +21,8 @@ if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
 
 import cv2
+from ipywidgets import interact, interactive, fixed, interact_manual
+import ipywidgets as widgets
 from matplotlib import pyplot as plt
 from myst_nb import glue
 import numpy as np
@@ -65,12 +67,16 @@ The process of convolving with a 3x3 mean filter is as follows:
 
 {numref}`mean_gaussian_characteristics_fig` illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
-analyzer = MeanFilterAnalyzer()
-analyzer.add_gaussian_noise(var=0.2)
-fig = analyzer.analyze()
+def evaluate_mean_filter(kernel: int = 3):
+    analyzer = MeanFilterAnalyzer()
+    analyzer.add_gaussian_noise(var=0.2)
+    fig = analyzer.analyze()
+    return fig
+mean_filter = interact_manual(evaluate_mean_filter, kernel=widgets.IntSlider(value=3, min=3, max=11, step=2, description="Kernel Size", disable=False, continuous_update=False, orientation='horizontal', readout=True, readout_format='d'))
+fig = mean_filter
 glue("mean_gaussian_characteristics", fig)
 ```
 
@@ -86,7 +92,7 @@ As shown in {numref}`mean_gaussian_characteristics_fig`, applying a 3×3 mean fi
 
 Let's examine the effects of various kernel sizes on performance.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 fig = analyzer.compare()
@@ -132,7 +138,7 @@ Producing such a kernel of discrete coefficients requires an approximation of th
 
 {numref}`gaussian_gaussian_characteristics_fig` illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 analyzer = GaussianFilterAnalyzer()
@@ -153,7 +159,7 @@ As shown in {numref}`gaussian_gaussian_characteristics_fig`, applying a 3×3 gau
 
 Let's examine the effects of various kernel sizes on performance.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 fig = analyzer.compare()
@@ -217,7 +223,7 @@ The median filter is, a non-linear denoising and smoothing filter that uses orde
 
 In {numref}`median_gaussian_characteristics_fig`, we have the results of a 3x3 median filter on a mammogram image degraded with Gaussian noise.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 analyzer = MedianFilterAnalyzer()
@@ -238,7 +244,7 @@ Median Filter Performance Characteristics with Gaussian Noise
 
 Where the median filter is quite distinguished is with noise that produces extreme changes in pixel intensity. In {numref}`median_snp_characteristics_fig`, we apply the median filter to an image corrupted by 'salt and pepper' noise.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 analyzer = MedianFilterAnalyzer()
@@ -259,7 +265,7 @@ Again, the noise is largely eliminated with little blurring effect.
 
 {numref}`median_snp_analysis_fig` displays the effect of varying median filter kernels on salt and pepper noise.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 fig = analyzer.compare()
@@ -314,7 +320,7 @@ The spatial, or domain parameter, $\sigma_s$, is related to the scale of the pix
 
 In {numref}`bilateral_gaussian_characteristics_fig`, a bilateral filter with $\sigma_r=25$, and $\sigma_s=25$ is applied to an image degraded with Gaussian noise.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 analyzer = BilateralFilterAnalyzer()
@@ -333,7 +339,7 @@ Bilateral Filter Performance Characteristics with Gaussian Noise
 
 {numref}`bilateral_gaussian_characteristics_fig`(c) exhibits noise reduction at the cost of some image detail. {numref}`bilateral_gaussian_analysis_fig` shows how $\sigma_r$, and $\sigma_s$ affect performance.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 fig = analyzer.compare()
@@ -394,7 +400,7 @@ The original NL-means algorithm compares the neighborhood of each pixel $i$, wit
 
 In {numref}`nlmeans_gaussian_characteristics_fig`, a non-local means filter with $h=40$, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 analyzer = NLMeansFilterAnalyzer()
@@ -413,7 +419,7 @@ Non-Local Means Filter Performance Characteristics with Gaussian Noise
 
 {numref}`nlmeans_gaussian_characteristics_fig`(c) shows some residual noise in the tissues which, upon close examination, obscures some fine detail. The histogram in {numref}`nlmeans_gaussian_characteristics_fig`(g) has a shape that more closely resembles those of the linear filters, than those of the other non-linear filters.
 
-```{code-cell}
+```{code-cell} ipython3
 :tags: [hide-cell, remove-output]
 
 fig = analyzer.compare()

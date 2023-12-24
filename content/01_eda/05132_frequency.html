@@ -635,11 +635,11 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-ideal-distance">
 <span class="eqno">(6.22)<a class="headerlink" href="#equation-ideal-distance" title="Permalink to this equation">#</a></span>\[D(u,v) = [(\mu-P/2)^2 + (v-Q/2)^2]^{1/2}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P=2M\)</span> and <span class="math notranslate nohighlight">\(Q=2N\)</span> are the padded sizes of the image.</p>
-<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 6.19</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
+<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 6.9</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
 <figure class="align-default" id="id3">
 <img alt="../../_images/ideal_filter.jpg" src="../../_images/ideal_filter.jpg" />
 <figcaption>
-<p><span class="caption-number">Fig. 6.19 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.9 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The point of transition between the values <span class="math notranslate nohighlight">\(H(u,v)=1\)</span> and <span class="math notranslate nohighlight">\(H(u,v)=0\)</span> is called the <em>cutoff frequency</em>, the frequency at which the filter’s response drops off.</p>
@@ -649,11 +649,11 @@ document.write(`
 <section id="butterworth-lowpass-filter">
 <h2>Butterworth Lowpass Filter<a class="headerlink" href="#butterworth-lowpass-filter" title="Permalink to this heading">#</a></h2>
 <p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id4">[<a class="reference internal" href="../99_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">24</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
-<p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 6.20</span></a></p>
+<p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 6.10</span></a></p>
 <figure class="align-default" id="butterworth-ideal">
 <img alt="../../_images/butterworth.png" src="../../_images/butterworth.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6.20 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.10 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Note that the higher-order filters come closer to the ‘ideal’ response. The transfer function of an <span class="math notranslate nohighlight">\(n^{th}\)</span> order Butterworth filter is given as:</p>
@@ -705,10 +705,10 @@ document.write(`
 <figure class="align-default" id="dwt">
 <img alt="../../_images/dwt.png" src="../../_images/dwt.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6.21 </span><span class="caption-text">Discrete Wavelet Transform (2-Level)</span><a class="headerlink" href="#dwt" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.11 </span><span class="caption-text">Discrete Wavelet Transform (2-Level)</span><a class="headerlink" href="#dwt" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As indicated in <a class="reference internal" href="#dwt"><span class="std std-numref">Fig. 6.21</span></a>, DWT first level decomposition separates the image into:</p>
+<p>As indicated in <a class="reference internal" href="#dwt"><span class="std std-numref">Fig. 6.11</span></a>, DWT first level decomposition separates the image into:</p>
 <ul class="simple">
 <li><p>low-frequency bands (<span class="math notranslate nohighlight">\(LL^1\)</span>) that approximate the original image;</p></li>
 <li><p>horizontal fluctuation detail containing both high and low frequencies (<span class="math notranslate nohighlight">\(LH^1\)</span>)</p></li>
