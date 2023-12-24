@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>5.1.6. Denoising Experiment &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>6.1.6. Denoising Experiment &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -68,8 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5.2. Thresholding" href="052_threshold.html" />
-    <link rel="prev" title="5.1.5. Frequency Domain Filtering" href="05132_frequency.html" />
+    <link rel="next" title="6.2. Thresholding" href="052_threshold.html" />
+    <link rel="prev" title="6.1.5. Frequency Domain Filtering" href="05132_frequency.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -169,21 +169,22 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_data.html">1. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">2. EDA Part 2: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">3. EDA Part 3: Case Dataset Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">4. EDA Part 4: Image Analysis</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="05_eda_methods.html">5. EDA Part 5: Algorithm Selection</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="051_denoise.html">5.1. Denoise</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">5.1.1. Noise Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">5.1.2. Noise Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">5.1.3. Denoiser Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05131_spatial.html">5.1.4. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">5.1.5. Frequency Domain Filtering</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">5.1.6. Denoising Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. EDA Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_data.html">2. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">3. EDA Part 2: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">4. EDA Part 3: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">5. EDA Part 4: Image Analysis</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="05_eda_methods.html">6. EDA Part 5: Algorithm Selection</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="051_denoise.html">6.1. Denoise</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">6.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">6.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">6.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05131_spatial.html">6.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">6.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">6.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">5.2. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">6.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -493,7 +494,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="denoising-experiment">
-<h1><span class="section-number">5.1.6. </span>Denoising Experiment<a class="headerlink" href="#denoising-experiment" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">6.1.6. </span>Denoising Experiment<a class="headerlink" href="#denoising-experiment" title="Permalink to this heading">#</a></h1>
 <p>An experiment was conducted to evaluate the various denoising techniques described above. Eighty-eight (88) images were selected using stratified sampling to ensure all case types and abnormalities were represented. The denoisers evaluated and their parameters are specified below.</p>
 <table class="table">
 <thead>
@@ -538,7 +539,7 @@ document.write(`
 <h2>Subjective Image Quality Assessment<a class="headerlink" href="#subjective-image-quality-assessment" title="Permalink to this heading">#</a></h2>
 <p>Subjective assessments were performed on a double stimulus continuous quality scale (DSCQS) <span id="id1">[<a class="reference internal" href="../99_references.html#id357" title="BT.500 : Methodologies for the subjective assessment of the quality of television images. URL: https://www.itu.int/rec/R-REC-BT.500-15-202305-I/en (visited on 2023-12-11).">27</a>]</span>, in which a random sampling of test images was compared to their associated ground truth images for noise reduction and preservation of fine detail in the breast tissue. Each randomly selected ground truth and associated test image was marked with a quality score in [0,100], and then the difference between the quality scores was computed. The DSCQS score was calculated by averaging the quality score differences for all images denoised by a given method. A lower value indicates better image quality and a larger value reflects poorer image quality. The subjective score was finally calculated for each denoiser method as follows:</p>
 <div class="math notranslate nohighlight" id="equation-subjective">
-<span class="eqno">(5.27)<a class="headerlink" href="#equation-subjective" title="Permalink to this equation">#</a></span>\[\text{Subjective Score} = 100-\text{DSCQS Score}\]</div>
+<span class="eqno">(6.27)<a class="headerlink" href="#equation-subjective" title="Permalink to this equation">#</a></span>\[\text{Subjective Score} = 100-\text{DSCQS Score}\]</div>
 <section id="objective-image-quality-assessment">
 <h3>Objective Image Quality Assessment<a class="headerlink" href="#objective-image-quality-assessment" title="Permalink to this heading">#</a></h3>
 <p>Objective methods are based on image quality metrics (IQMs) that are designed to estimate the quality of the image automatically, in qualitative terms as observed by human subjects <span id="id2">[<a class="reference internal" href="../99_references.html#id333" title="Afnan Afnan, Faiz Ullah, Yaseen Yaseen, Jinhee Lee, Sonain Jamil, and Oh-Jin Kwon. Subjective Assessment of Objective Image Quality Metrics Range Guaranteeing Visually Lossless Compression. Sensors, 23(3):1297, January 2023. URL: https://www.mdpi.com/1424-8220/23/3/1297 (visited on 2023-11-21), doi:10.3390/s23031297.">28</a>]</span>.  For this effort, three IQMs were used to assess image quality: mean squared error (MSE), peak signal-to-noise ratio (PSNR), and the structural similarity index measure (SSIM).</p>
@@ -546,7 +547,7 @@ document.write(`
 <h4>Mean Squared Error (MSE)<a class="headerlink" href="#mean-squared-error-mse" title="Permalink to this heading">#</a></h4>
 <p>MSE, the most common performance criterion for measuring image quality, characterizes the squared error among pixels contained in two images. Mathematically, MSE is defined as follows:</p>
 <div class="math notranslate nohighlight" id="equation-mse">
-<span class="eqno">(5.28)<a class="headerlink" href="#equation-mse" title="Permalink to this equation">#</a></span>\[\text{MSE} = \frac{1}{mn}\displaystyle\sum_{i=0}^{m-1}\displaystyle\sum_{j=0}^{n-1}(G(i,j)-P(i,j))^2\]</div>
+<span class="eqno">(6.28)<a class="headerlink" href="#equation-mse" title="Permalink to this equation">#</a></span>\[\text{MSE} = \frac{1}{mn}\displaystyle\sum_{i=0}^{m-1}\displaystyle\sum_{j=0}^{n-1}(G(i,j)-P(i,j))^2\]</div>
 <p>where, <strong>G</strong> is the ground truth image, and <strong>P</strong> is the processed image. The pixels of <strong>G</strong> and <strong>P</strong> are denoted by <strong>m</strong> and <strong>n</strong>. Lastly, the rows and columns of pixels <strong>m</strong>, and <strong>n</strong>, are denoted by <strong>i</strong>, and <strong>j</strong>.
 The objective here is to find the <em>minimum mean-squared error estimator</em> (MMSE).
 Though the use of MSE is widespread, it does have a shortcoming. The main problem with mean-squared error is that the measurement depends upon the image intensity scaling. An MSE of 100 for an 8-bit image with pixel values in the range 0-255 is objectionable, but an MSE of 100 for a 16-bit image with pixel values in [0,65536] would be barely noticeable.
@@ -555,9 +556,9 @@ Peak Signal-to-Noise Ratio (PSNR) avoids this problem by scaling the MSE accordi
 <section id="peak-signal-to-noise-ratio-psnr">
 <h4>Peak Signal-to-Noise Ratio (PSNR)<a class="headerlink" href="#peak-signal-to-noise-ratio-psnr" title="Permalink to this heading">#</a></h4>
 <p>PSNR expresses the ratio between a signal’s maximum possible value (power) and the power of the corrupting noise that affects the quality of its representation.  The higher the PSNR, the smaller the error, and the better the quality of the image vis-a-vis the original.</p>
-<p>Mathematically, PSNR is calculated with equation <a class="reference internal" href="#equation-psnr">(5.29)</a>.</p>
+<p>Mathematically, PSNR is calculated with equation <a class="reference internal" href="#equation-psnr">(6.29)</a>.</p>
 <div class="math notranslate nohighlight" id="equation-psnr">
-<span class="eqno">(5.29)<a class="headerlink" href="#equation-psnr" title="Permalink to this equation">#</a></span>\[\text{PSNR} = 20\text{log}_{10}\Bigg(\frac{(MAX)}{\sqrt{MSE}}\Bigg)\]</div>
+<span class="eqno">(6.29)<a class="headerlink" href="#equation-psnr" title="Permalink to this equation">#</a></span>\[\text{PSNR} = 20\text{log}_{10}\Bigg(\frac{(MAX)}{\sqrt{MSE}}\Bigg)\]</div>
 <p>where MAX is the maximum pixel value contained in the image and PSNR is measured in decibels (dB). An acceptable PSNR for an 8-bit image would be in the range of 30 to 50 dB <span id="id3">[<a class="reference internal" href="../99_references.html#id12" title="Abhijith Reddy Beeravolu, Sami Azam, Mirjam Jonkman, Bharanidharan Shanmugam, Krishnan Kannoorpatti, and Adnan Anwar. Preprocessing of Breast Cancer Images to Create Datasets for Deep-CNN. IEEE Access, 9:33438–33463, 2021. URL: https://ieeexplore.ieee.org/document/9352727/ (visited on 2023-05-24), doi:10.1109/ACCESS.2021.3058773.">29</a>]</span>.</p>
 </section>
 <section id="structural-similarity-index-measure-ssim">
@@ -570,26 +571,26 @@ Peak Signal-to-Noise Ratio (PSNR) avoids this problem by scaling the MSE accordi
 <h5>SSIM Luminance Component<a class="headerlink" href="#ssim-luminance-component" title="Permalink to this heading">#</a></h5>
 <p>Each image’s patch average <span class="math notranslate nohighlight">\(\mu\)</span> represents the luminance information. Hence, the comparison is given by:</p>
 <div class="math notranslate nohighlight" id="equation-luminance">
-<span class="eqno">(5.30)<a class="headerlink" href="#equation-luminance" title="Permalink to this equation">#</a></span>\[l(x,y) = \frac{2\mu_x\mu_y+C_1}{\mu_x^2 + \mu_y^2 + C_1},\]</div>
+<span class="eqno">(6.30)<a class="headerlink" href="#equation-luminance" title="Permalink to this equation">#</a></span>\[l(x,y) = \frac{2\mu_x\mu_y+C_1}{\mu_x^2 + \mu_y^2 + C_1},\]</div>
 <p>where <span class="math notranslate nohighlight">\(C_1\)</span> is a small quantity introduced for numerical stability. (Stand by, we’ll define that quantity at the end.)</p>
 </section>
 <section id="ssim-contrast-component">
 <h5>SSIM Contrast Component<a class="headerlink" href="#ssim-contrast-component" title="Permalink to this heading">#</a></h5>
 <p>Contrast is defined in terms of the standard deviation, and the comparison is given by:</p>
 <div class="math notranslate nohighlight" id="equation-contrast">
-<span class="eqno">(5.31)<a class="headerlink" href="#equation-contrast" title="Permalink to this equation">#</a></span>\[c(x,y) = \frac{2\sigma_x\sigma_y+C_2}{\sigma_x^2 + \sigma_y^2 + C_2},\]</div>
+<span class="eqno">(6.31)<a class="headerlink" href="#equation-contrast" title="Permalink to this equation">#</a></span>\[c(x,y) = \frac{2\sigma_x\sigma_y+C_2}{\sigma_x^2 + \sigma_y^2 + C_2},\]</div>
 </section>
 <section id="ssim-structure-component">
 <h5>SSIM Structure Component<a class="headerlink" href="#ssim-structure-component" title="Permalink to this heading">#</a></h5>
 <p>The structure element is represented by the inner product of the mean and standard deviation of each image. The comparison is given by:</p>
 <div class="math notranslate nohighlight" id="equation-structure">
-<span class="eqno">(5.32)<a class="headerlink" href="#equation-structure" title="Permalink to this equation">#</a></span>\[s(x,y) = \frac{\sigma_{xy}+C_3}{\sigma_x \sigma_y + C_3}\]</div>
+<span class="eqno">(6.32)<a class="headerlink" href="#equation-structure" title="Permalink to this equation">#</a></span>\[s(x,y) = \frac{\sigma_{xy}+C_3}{\sigma_x \sigma_y + C_3}\]</div>
 <p>where:</p>
 <div class="math notranslate nohighlight" id="equation-structure-var">
-<span class="eqno">(5.33)<a class="headerlink" href="#equation-structure-var" title="Permalink to this equation">#</a></span>\[\sigma_{xy} = \frac{1}{N-1}\displaystyle\sum_{i=1}^N (x_i-\mu_x)(y_i-\mu_y).\]</div>
+<span class="eqno">(6.33)<a class="headerlink" href="#equation-structure-var" title="Permalink to this equation">#</a></span>\[\sigma_{xy} = \frac{1}{N-1}\displaystyle\sum_{i=1}^N (x_i-\mu_x)(y_i-\mu_y).\]</div>
 <p>Finally, the three components are combined into a unique expression that is weighted with exponents <span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, and <span class="math notranslate nohighlight">\(\gamma\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-ssim">
-<span class="eqno">(5.34)<a class="headerlink" href="#equation-ssim" title="Permalink to this equation">#</a></span>\[SSIM(x,y) = [l(x,y)]^\alpha \cdot [c(x,y)]^\beta \cdot [s(x,y)]^\gamma\]</div>
+<span class="eqno">(6.34)<a class="headerlink" href="#equation-ssim" title="Permalink to this equation">#</a></span>\[SSIM(x,y) = [l(x,y)]^\alpha \cdot [c(x,y)]^\beta \cdot [s(x,y)]^\gamma\]</div>
 <p>The expressions refer to constants <span class="math notranslate nohighlight">\(C_1\)</span>, <span class="math notranslate nohighlight">\(C_2\)</span>, and <span class="math notranslate nohighlight">\(C_3\)</span> that are introduced for numerical stability. These three quantities are functions of the dynamic range of the pixel values L (L=255 for 8-bit gray-scale images) and two scalar constants <span class="math notranslate nohighlight">\(K_1 \ll 1\)</span> and <span class="math notranslate nohighlight">\(K_2 \ll 1\)</span>. Traditionally, <span class="math notranslate nohighlight">\(K_1\)</span>  and <span class="math notranslate nohighlight">\(K_2\)</span> are equal to 0.01, and 0.03, respectively. <span class="math notranslate nohighlight">\(C_1=(K_1,L)^2, C_2=(K_2,L)^2,  C_3=\frac{C_2}{2}\)</span>. In the original paper <span id="id6">[<a class="reference internal" href="../99_references.html#id336" title="Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE Transactions on Image Processing, 13(4):600–612, April 2004. URL: http://ieeexplore.ieee.org/document/1284395/ (visited on 2023-11-22), doi:10.1109/TIP.2003.819861.">31</a>]</span>, <span class="math notranslate nohighlight">\(\alpha= \beta = \gamma = 1\)</span>.</p>
 </section>
 </section>
@@ -638,7 +639,7 @@ Peak Signal-to-Noise Ratio (PSNR) avoids this problem by scaling the MSE accordi
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5.1.5. </span>Frequency Domain Filtering</p>
+        <p class="prev-next-title"><span class="section-number">6.1.5. </span>Frequency Domain Filtering</p>
       </div>
     </a>
     <a class="right-next"
@@ -646,7 +647,7 @@ Peak Signal-to-Noise Ratio (PSNR) avoids this problem by scaling the MSE accordi
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">5.2. </span>Thresholding</p>
+        <p class="prev-next-title"><span class="section-number">6.2. </span>Thresholding</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

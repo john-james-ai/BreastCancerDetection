@@ -17,7 +17,7 @@ kernelspec:
 
 import os
 if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("../../../..")))
+    os.chdir(os.path.abspath(os.path.join("../../..")))
 
 import numpy as np
 import cv2
@@ -123,7 +123,7 @@ For this effort, eight automated thresholding techniques {numref}`auto-thresh-tb
 
 The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`.
 
-```{figure} ../../../figures/triangle_zack.png
+```{figure} ../../figures/triangle_zack.png
 ---
 name: triangle
 ---

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>5.1.4. Spatial Domain Filtering &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>6.1.4. Spatial Domain Filtering &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -68,8 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5.1.5. Frequency Domain Filtering" href="05132_frequency.html" />
-    <link rel="prev" title="5.1.3. Denoiser Methods" href="0513_denoisers.html" />
+    <link rel="next" title="6.1.5. Frequency Domain Filtering" href="05132_frequency.html" />
+    <link rel="prev" title="6.1.3. Denoiser Methods" href="0513_denoisers.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -169,21 +169,22 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_data.html">1. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">2. EDA Part 2: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">3. EDA Part 3: Case Dataset Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">4. EDA Part 4: Image Analysis</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="05_eda_methods.html">5. EDA Part 5: Algorithm Selection</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="051_denoise.html">5.1. Denoise</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">5.1.1. Noise Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">5.1.2. Noise Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">5.1.3. Denoiser Methods</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">5.1.4. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">5.1.5. Frequency Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="0514_experiment.html">5.1.6. Denoising Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. EDA Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_data.html">2. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">3. EDA Part 2: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">4. EDA Part 3: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">5. EDA Part 4: Image Analysis</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="05_eda_methods.html">6. EDA Part 5: Algorithm Selection</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="051_denoise.html">6.1. Denoise</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">6.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">6.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">6.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">6.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">6.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0514_experiment.html">6.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">5.2. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">6.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -490,7 +491,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="spatial-domain-filtering">
-<h1><span class="section-number">5.1.4. </span>Spatial Domain Filtering<a class="headerlink" href="#spatial-domain-filtering" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">6.1.4. </span>Spatial Domain Filtering<a class="headerlink" href="#spatial-domain-filtering" title="Permalink to this heading">#</a></h1>
 <p>In spatial domain filtering, the value of a pixel is based upon both itself and the values of the surrounding pixels. Specifically, the output pixel value results from an algorithm that is applied to the values of the pixels in the neighborhood of a corresponding input pixel. Spatial domain filters are classified into two types: linear filters and non-linear filters.</p>
 <section id="linear-filters">
 <h2>Linear Filters<a class="headerlink" href="#linear-filters" title="Permalink to this heading">#</a></h2>
@@ -499,23 +500,23 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <section id="mean-filter">
 <h3>Mean Filter<a class="headerlink" href="#mean-filter" title="Permalink to this heading">#</a></h3>
 <p>Most commonly used to reduce additive Gaussian noise, the mean filter is a simple, intuitive, and easy to implement, filter of the linear class. It’s based on the idea that random noise consists of “sharp” transitions in the intensity of the signal. Mean filtering simply replaces each pixel value with the average value of the intensities in its neighborhood. By doing so, the “sharp” transitions in the intensities are reduced.</p>
-<p>The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  <a class="reference internal" href="#kernel"><span class="std std-numref">Fig. 5.6</span></a> illustrates a 3 x 3 kernel.</p>
+<p>The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  <a class="reference internal" href="#kernel"><span class="std std-numref">Fig. 6.6</span></a> illustrates a 3 x 3 kernel.</p>
 <figure class="align-default" id="kernel">
 <img alt="../../_images/kernel.png" src="../../_images/kernel.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.6 </span><span class="caption-text">3 x 3 Mean Filter Kernel</span><a class="headerlink" href="#kernel" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.6 </span><span class="caption-text">3 x 3 Mean Filter Kernel</span><a class="headerlink" href="#kernel" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The mean filter works by convolving the kernel over the image as follows. Let w(x,y) represent a set of coordinates in a  m x n rectangular window in the image, centered at point (x,y). The mean filtering process computes the average value of the corrupted image g(x,y) in the area defined by w(x,y). The value of the restored image at any point (x,y) is:</p>
 <div class="math notranslate nohighlight" id="equation-mean-filter">
-<span class="eqno">(5.12)<a class="headerlink" href="#equation-mean-filter" title="Permalink to this equation">#</a></span>\[^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)\]</div>
+<span class="eqno">(6.12)<a class="headerlink" href="#equation-mean-filter" title="Permalink to this equation">#</a></span>\[^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)\]</div>
 <div class="admonition-kernel-coefficients admonition">
 <p class="admonition-title">Kernel Coefficients</p>
 <p>Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  <span class="math notranslate nohighlight">\(\frac{1}{mn}\)</span>, is applied at the end.</p>
 </div>
 <p>The process of convolving with a 3x3 mean filter is as follows:
 <img alt="MeanFilter" src="../../_images/02_mean_filter.gif" /></p>
-<p><a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.7</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
+<p><a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.7</span></a> illustrates the results of a 3x3 mean filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -535,10 +536,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <figure class="align-center" id="mean-gaussian-characteristics-fig">
 <img alt="../../_images/b39b120aac49bc3a86d6869c45dd36f4adf4b393e0a83dd1d5c5bcdc894530b0.png" src="../../_images/b39b120aac49bc3a86d6869c45dd36f4adf4b393e0a83dd1d5c5bcdc894530b0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.7 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.7 </span><span class="caption-text">Mean Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.7</span></a>, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
+<p>As shown in <a class="reference internal" href="#mean-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.7</span></a>, applying a 3×3 mean filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -557,10 +558,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <figure class="align-center" id="mean-gaussian-analysis-fig">
 <img alt="../../_images/25056bafbd5f0e7e2e1f8f3b2b3c25faabb2e2cde2ae6583e1b9ab744f17c9bd.png" src="../../_images/25056bafbd5f0e7e2e1f8f3b2b3c25faabb2e2cde2ae6583e1b9ab744f17c9bd.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.8 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.8 </span><span class="caption-text">Mean Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#mean-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#mean-gaussian-analysis-fig"><span class="std std-numref">Fig. 5.8</span></a> shows the effect of increasing kernel sizes on images corrupted by Gaussian noise. A blurring effect, and loss of detail is increasingly evident with larger kernel sizes.</p>
+<p><a class="reference internal" href="#mean-gaussian-analysis-fig"><span class="std std-numref">Fig. 6.8</span></a> shows the effect of increasing kernel sizes on images corrupted by Gaussian noise. A blurring effect, and loss of detail is increasingly evident with larger kernel sizes.</p>
 <p>Due to its simplicity, and computational efficiency, the mean filter is one of the most widely used spatial domain filters in biomedical imaging. As a low-pass frequency filter, it reduces the spatial intensity derivatives in the image; thereby, reducing the amount of noise corrupting the representation. There are; however, two main challenges with the main filter:</p>
 <ol class="arabic simple">
 <li><p>The mean filter averaging is sensitive to unrepresentative pixel values, which can significantly affect the mean value of all pixels in the neighborhood.</p></li>
@@ -572,16 +573,16 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <h3>Gaussian Filter<a class="headerlink" href="#gaussian-filter" title="Permalink to this heading">#</a></h3>
 <p>The Gaussian Filter is similar to the mean filter, in that it works by convolving a 2-D point-spread function (kernel) with an image over a sliding window. Unlike the mean filter, however, the Gaussian filter’s kernel has a distribution equal to that of the 2-D Gaussian function:</p>
 <div class="math notranslate nohighlight" id="equation-gaussian-filter">
-<span class="eqno">(5.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
-<p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 5.9</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
+<span class="eqno">(6.13)<a class="headerlink" href="#equation-gaussian-filter" title="Permalink to this equation">#</a></span>\[G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}\]</div>
+<p><a class="reference internal" href="#gaussian-kernel"><span class="std std-numref">Fig. 6.9</span></a> shows a 5x5 Gaussian kernel with <span class="math notranslate nohighlight">\(\sigma\)</span> = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.</p>
 <figure class="align-default" id="gaussian-kernel">
 <img alt="../../_images/gaussian_kernel.png" src="../../_images/gaussian_kernel.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.9 </span><span class="caption-text">5 x 5 Gaussian Kernel</span><a class="headerlink" href="#gaussian-kernel" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Producing such a kernel of discrete coefficients requires an approximation of the Gaussian distribution. Theoretically, the Gaussian distribution is non-zero over its spatial extent from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(+\infty\)</span>. Covering the distribution would require a kernel of infinite size. But then, its values beyond, say, <span class="math notranslate nohighlight">\(5\sigma\)</span> are negligible. (Given that the total area of a 1-D normal Gaussian distribution is 1, the area under the curve from <span class="math notranslate nohighlight">\(5\sigma\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> is about <span class="math notranslate nohighlight">\(2.9 \times 10^{-7}\)</span>.) In practice, we can limit the kernel size to three standard deviations of the mean and still cover 99% of the distribution.</p>
-<p><a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.10</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.</p>
+<p><a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.10</span></a> illustrates the results of a 3x3 gaussian filter kernel on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -601,10 +602,10 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <figure class="align-center" id="gaussian-gaussian-characteristics-fig">
 <img alt="../../_images/bf8046483fb759b5fd34e49bc6eab95ff12e3a71bfc03b121a7aecf00b6facbc.png" src="../../_images/bf8046483fb759b5fd34e49bc6eab95ff12e3a71bfc03b121a7aecf00b6facbc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.10 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.10 </span><span class="caption-text">Gaussian Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As shown in <a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.10</span></a>, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
+<p>As shown in <a class="reference internal" href="#gaussian-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.10</span></a>, applying a 3×3 gaussian filter makes the image smoother, which is evident upon close examination of the features in the region of interest. The histograms illuminate the distribution of the signal vis-a-vis the noise. As (f) illustrates, most of the noise was in the brighter regions of the image.</p>
 <p>Let’s examine the effects of various kernel sizes on performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
@@ -623,7 +624,7 @@ Examples of linear filters include the mean filter and the Wiener filter.</p>
 <figure class="align-center" id="gaussian-gaussian-analysis-fig">
 <img alt="../../_images/f9c03487049991c5e8fba06c472b16dab815409b6dd254273a5cb2a44994c993.png" src="../../_images/f9c03487049991c5e8fba06c472b16dab815409b6dd254273a5cb2a44994c993.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.11 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.11 </span><span class="caption-text">Gaussian Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#gaussian-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Close examination shows some loss of detail, but not to the extent observed using the mean filter.</p>
@@ -663,7 +664,7 @@ Next, up? Non-linear filters.</p>
 <section id="median-filter">
 <h3>Median Filter<a class="headerlink" href="#median-filter" title="Permalink to this heading">#</a></h3>
 <p>The median filter is, a non-linear denoising and smoothing filter that uses ordering to compute the filtered value. A histogram is computed on the neighborhood, defined by a 2D kernel, and the central pixel value is replaced by the median of the pixel values in the neighborhood.</p>
-<p>In <a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.12</span></a>, we have the results of a 3x3 median filter on a mammogram image degraded with Gaussian noise.</p>
+<p>In <a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.12</span></a>, we have the results of a 3x3 median filter on a mammogram image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -683,11 +684,11 @@ Next, up? Non-linear filters.</p>
 <figure class="align-center" id="median-gaussian-characteristics-fig">
 <img alt="../../_images/af062bab7f7078180c056083487692a9b0a3685aff65ee156df3dea3461f1971.png" src="../../_images/af062bab7f7078180c056083487692a9b0a3685aff65ee156df3dea3461f1971.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.12 </span><span class="caption-text">Median Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#median-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.12 </span><span class="caption-text">Median Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#median-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.12</span></a> (c) shows the result of applying a median filter to an image corrupted by Gaussian noise. The noise is effectively, removed while preserving much of the fine detail. Note the shape of the histogram in <a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.12</span></a> (g) more closely resembles that of the original image than the histograms of the linear filters.</p>
-<p>Where the median filter is quite distinguished is with noise that produces extreme changes in pixel intensity. In <a class="reference internal" href="#median-snp-characteristics-fig"><span class="std std-numref">Fig. 5.13</span></a>, we apply the median filter to an image corrupted by ‘salt and pepper’ noise.</p>
+<p><a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.12</span></a> (c) shows the result of applying a median filter to an image corrupted by Gaussian noise. The noise is effectively, removed while preserving much of the fine detail. Note the shape of the histogram in <a class="reference internal" href="#median-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.12</span></a> (g) more closely resembles that of the original image than the histograms of the linear filters.</p>
+<p>Where the median filter is quite distinguished is with noise that produces extreme changes in pixel intensity. In <a class="reference internal" href="#median-snp-characteristics-fig"><span class="std std-numref">Fig. 6.13</span></a>, we apply the median filter to an image corrupted by ‘salt and pepper’ noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -707,11 +708,11 @@ Next, up? Non-linear filters.</p>
 <figure class="align-center" id="median-snp-characteristics-fig">
 <img alt="../../_images/70c3d3fe90877607ff09165d5cc5b323cfee2c193a8393e88ac6434b548a4e43.png" src="../../_images/70c3d3fe90877607ff09165d5cc5b323cfee2c193a8393e88ac6434b548a4e43.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.13 </span><span class="caption-text">Median Filter Performance Characteristics with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.13 </span><span class="caption-text">Median Filter Performance Characteristics with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Again, the noise is largely eliminated with little blurring effect.</p>
-<p><a class="reference internal" href="#median-snp-analysis-fig"><span class="std std-numref">Fig. 5.14</span></a> displays the effect of varying median filter kernels on salt and pepper noise.</p>
+<p><a class="reference internal" href="#median-snp-analysis-fig"><span class="std std-numref">Fig. 6.14</span></a> displays the effect of varying median filter kernels on salt and pepper noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -729,7 +730,7 @@ Next, up? Non-linear filters.</p>
 <figure class="align-center" id="median-snp-analysis-fig">
 <img alt="../../_images/3dea5b2cc5526a11da8ebbe0b66aefc21ff32eebe849bdb84b5727795c738da1.png" src="../../_images/3dea5b2cc5526a11da8ebbe0b66aefc21ff32eebe849bdb84b5727795c738da1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.14 </span><span class="caption-text">Median Filter Performance Analysis with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.14 </span><span class="caption-text">Median Filter Performance Analysis with Salt and Pepper Noise</span><a class="headerlink" href="#median-snp-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The performance of the median filter is a characteristic of two properties:</p>
@@ -746,10 +747,10 @@ Next, up? Non-linear filters.</p>
 <p>Introduced in 1995 by Volker Aurich et. al. <span id="id1">[<a class="reference internal" href="../99_references.html#id342" title="Volker Aurich and Jörg Weule. Non-Linear Gaussian Filters Performing Edge Preserving Diffusion. In W. Brauer, Gerhard Sagerer, Stefan Posch, and Franz Kummert, editors, Mustererkennung 1995, pages 538–545. Springer Berlin Heidelberg, Berlin, Heidelberg, 1995. URL: http://link.springer.com/10.1007/978-3-642-79980-8_63 (visited on 2023-11-24), doi:10.1007/978-3-642-79980-8_63.">15</a>]</span>, the bilateral filter is a non-linear technique that can smooth an image while preserving strong edges. It has become a standard denoising tool in interactive applications such as Adobe Photoshop<span class="math notranslate nohighlight">\(\circledR\)</span>.</p>
 <p>The bilateral filter is a weighted average of nearby pixels, similar to the Gaussian filter. The difference is that the bilateral filter considers the difference between a pixel value and that of its neighbors. The main idea is that a pixel is influenced by pixels that are not only nearby, but also have a similar intensity. The formulation is given by:</p>
 <div class="math notranslate nohighlight" id="equation-bilateral">
-<span class="eqno">(5.14)<a class="headerlink" href="#equation-bilateral" title="Permalink to this equation">#</a></span>\[BF[I] = \frac{1}{W_p}\displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|)I_q,\]</div>
+<span class="eqno">(6.14)<a class="headerlink" href="#equation-bilateral" title="Permalink to this equation">#</a></span>\[BF[I] = \frac{1}{W_p}\displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|)I_q,\]</div>
 <p>where the normalization factor <span class="math notranslate nohighlight">\(W_p\)</span> ensures the pixel weights sum to 1.0:</p>
 <div class="math notranslate nohighlight" id="equation-bilateral-normalizer">
-<span class="eqno">(5.15)<a class="headerlink" href="#equation-bilateral-normalizer" title="Permalink to this equation">#</a></span>\[W_p = \displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|).\]</div>
+<span class="eqno">(6.15)<a class="headerlink" href="#equation-bilateral-normalizer" title="Permalink to this equation">#</a></span>\[W_p = \displaystyle\sum_{q \in S} G_{\sigma_s}(||p-q||)G_{\sigma_r}(|I_p-I_q|).\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(I_p\)</span> is the intensity value of center pixel <span class="math notranslate nohighlight">\(p\)</span>,</p></li>
@@ -758,7 +759,7 @@ Next, up? Non-linear filters.</p>
 <li><p><span class="math notranslate nohighlight">\(G_{\sigma_r}\)</span> is a range Gaussian weighting that decreases the influence of pixels <span class="math notranslate nohighlight">\(q\)</span> with intensity values that differ from <span class="math notranslate nohighlight">\(I_p\)</span>.</p></li>
 </ul>
 <p>The spatial, or domain parameter, <span class="math notranslate nohighlight">\(\sigma_s\)</span>, is related to the scale of the pixel values and is found experimentally. The range parameter, <span class="math notranslate nohighlight">\(\sigma_r\)</span>, can be adapted from the noise level <span id="id2">[<a class="reference internal" href="../99_references.html#id343" title="Ce Liu, W.T. Freeman, R. Szeliski, and Sing Bing Kang. Noise Estimation from a Single Image. In 2006 IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Volume 1 (CVPR'06), volume 1, 901–908. New York, NY, USA, 2006. IEEE. URL: http://ieeexplore.ieee.org/document/1640848/ (visited on 2023-11-24), doi:10.1109/CVPR.2006.207.">16</a>]</span>. As <span class="math notranslate nohighlight">\(\sigma_r\)</span> increases, the bilateral filter gradually approximates the Gaussian filter. Best results have been achieved with  <span class="math notranslate nohighlight">\(\sigma_r = 1.95 \sigma_n\)</span>, where <span class="math notranslate nohighlight">\(\sigma_n\)</span> is the local noise level.</p>
-<p>In <a class="reference internal" href="#bilateral-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.15</span></a>, a bilateral filter with <span class="math notranslate nohighlight">\(\sigma_r=25\)</span>, and <span class="math notranslate nohighlight">\(\sigma_s=25\)</span> is applied to an image degraded with Gaussian noise.</p>
+<p>In <a class="reference internal" href="#bilateral-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.15</span></a>, a bilateral filter with <span class="math notranslate nohighlight">\(\sigma_r=25\)</span>, and <span class="math notranslate nohighlight">\(\sigma_s=25\)</span> is applied to an image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -778,10 +779,10 @@ Next, up? Non-linear filters.</p>
 <figure class="align-center" id="bilateral-gaussian-characteristics-fig">
 <img alt="../../_images/9e10dbb8ce6f77318e3af3b8c67dcf9ecb120e3b3b3b08f46b62854171ea6821.png" src="../../_images/9e10dbb8ce6f77318e3af3b8c67dcf9ecb120e3b3b3b08f46b62854171ea6821.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.15 </span><span class="caption-text">Bilateral Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.15 </span><span class="caption-text">Bilateral Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#bilateral-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.15</span></a>(c) exhibits noise reduction at the cost of some image detail. <a class="reference internal" href="#bilateral-gaussian-analysis-fig"><span class="std std-numref">Fig. 5.16</span></a> shows how <span class="math notranslate nohighlight">\(\sigma_r\)</span>, and <span class="math notranslate nohighlight">\(\sigma_s\)</span> affect performance.</p>
+<p><a class="reference internal" href="#bilateral-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.15</span></a>(c) exhibits noise reduction at the cost of some image detail. <a class="reference internal" href="#bilateral-gaussian-analysis-fig"><span class="std std-numref">Fig. 6.16</span></a> shows how <span class="math notranslate nohighlight">\(\sigma_r\)</span>, and <span class="math notranslate nohighlight">\(\sigma_s\)</span> affect performance.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -799,7 +800,7 @@ Next, up? Non-linear filters.</p>
 <figure class="align-center" id="bilateral-gaussian-analysis-fig">
 <img alt="../../_images/924de63d8640731e2b0c68a3263d0939ab07a0189a2d06a977d1451f743ad774.png" src="../../_images/924de63d8640731e2b0c68a3263d0939ab07a0189a2d06a977d1451f743ad774.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.16 </span><span class="caption-text">Bilateral Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.16 </span><span class="caption-text">Bilateral Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#bilateral-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The bilateral filter has several advantages. It has a simple formulation: a pixel’s value becomes the weighted average of the pixel values in its neighborhood. Consequently, its behavior can be understood intuitively and adapted to application-specific tasks. Another advantage is that the bilateral filter depends on only two parameters that specify the contrast and size of features to preserve. Therefore, it is easy to tune to application-specific requirements.</p>
@@ -813,19 +814,19 @@ Next, up? Non-linear filters.</p>
 <p>The NL-means algorithm <span id="id9">[<a class="reference internal" href="../99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">22</a>]</span> extends neighborhood filtering algorithms, such as the bilateral filter, by comparing the similarity not of the individual pixels, but of the neighborhoods centered at the pixels. Somewhat informally, each pixel <span class="math notranslate nohighlight">\(i\)</span>, in a neighborhood <span class="math notranslate nohighlight">\(\mathcal{N}_i\)</span> of some fixed size <span class="math notranslate nohighlight">\(s\)</span>, is the weighted sum of the similarities between <span class="math notranslate nohighlight">\(\mathcal{N}_i\)</span> and every other neighborhood <span class="math notranslate nohighlight">\(\mathcal{N}_j\)</span> for <span class="math notranslate nohighlight">\(j\in I\)</span>.</p>
 <p>More precisely, let <span class="math notranslate nohighlight">\(v=\{v(i) | i \in I\}\)</span> be a noisy image, <span class="math notranslate nohighlight">\(i\)</span>, be a pixel in that image, and <span class="math notranslate nohighlight">\(\mathcal{N}_i\)</span> be a (square) neighborhood of size <span class="math notranslate nohighlight">\(s\)</span> centered on pixel <span class="math notranslate nohighlight">\(i\)</span>, then the estimated value NL(v)(i), for pixel <span class="math notranslate nohighlight">\(i\)</span>, is:</p>
 <div class="math notranslate nohighlight" id="equation-nl-means">
-<span class="eqno">(5.16)<a class="headerlink" href="#equation-nl-means" title="Permalink to this equation">#</a></span>\[NL(v)(i) = \displaystyle\sum_{j \in I} w(i,j)v(i,j),\]</div>
+<span class="eqno">(6.16)<a class="headerlink" href="#equation-nl-means" title="Permalink to this equation">#</a></span>\[NL(v)(i) = \displaystyle\sum_{j \in I} w(i,j)v(i,j),\]</div>
 <p>where the set of weights <span class="math notranslate nohighlight">\({w(i,j)}_j\)</span> depend on the similarity between the neighborhoods of pixel <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(\mathcal{N}_i\)</span> and pixel <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(\mathcal{N}_j\)</span>,  and satisfy conditions <span class="math notranslate nohighlight">\(0 \le w(i,j) \le 1\)</span> and <span class="math notranslate nohighlight">\(\displaystyle\sum_j w(i,j) = 1\)</span>.</p>
 <p>We describe the similarity between the neighborhoods <span class="math notranslate nohighlight">\(\mathcal{N}_i\)</span> and <span class="math notranslate nohighlight">\(\mathcal{N}_j\)</span> in terms of the intensity gray level vectors <span class="math notranslate nohighlight">\(v(\mathcal{N}_i)\)</span> and <span class="math notranslate nohighlight">\(v(\mathcal{N}_j)\)</span>, where <span class="math notranslate nohighlight">\(\mathcal{N}_k\)</span> denotes a square neighborhood of fixed size and centered at pixel <span class="math notranslate nohighlight">\(k\)</span>.</p>
 <p>The similarity is measured as a decreasing function of the weighted Euclidean distance, <span class="math notranslate nohighlight">\(||v(\mathcal{N}_i) - v(\mathcal{N}_j)||^2_{2,\alpha}\)</span>, where <span class="math notranslate nohighlight">\(\alpha &gt; 0\)</span> is the standard deviation of the Gaussian kernel.
 Hence, the weights are defined as:</p>
 <div class="math notranslate nohighlight" id="equation-nl-means-weights">
-<span class="eqno">(5.17)<a class="headerlink" href="#equation-nl-means-weights" title="Permalink to this equation">#</a></span>\[w(i,j) = \frac{1}{Z(i)}e^{-\frac{||v(\mathcal{N}_i) - v(\mathcal{N}_j)||^2_{2,\alpha}}{h^2}},\]</div>
+<span class="eqno">(6.17)<a class="headerlink" href="#equation-nl-means-weights" title="Permalink to this equation">#</a></span>\[w(i,j) = \frac{1}{Z(i)}e^{-\frac{||v(\mathcal{N}_i) - v(\mathcal{N}_j)||^2_{2,\alpha}}{h^2}},\]</div>
 <p>where <span class="math notranslate nohighlight">\(Z(i)\)</span> is the normalizing constant:</p>
 <div class="math notranslate nohighlight" id="equation-nl-means-nc">
-<span class="eqno">(5.18)<a class="headerlink" href="#equation-nl-means-nc" title="Permalink to this equation">#</a></span>\[Z(i) = \sum_j e^{-\frac{||v(\mathcal{N}_i)-v(\mathcal{N}_j)||^2_{2,\alpha}}{h^2}},\]</div>
+<span class="eqno">(6.18)<a class="headerlink" href="#equation-nl-means-nc" title="Permalink to this equation">#</a></span>\[Z(i) = \sum_j e^{-\frac{||v(\mathcal{N}_i)-v(\mathcal{N}_j)||^2_{2,\alpha}}{h^2}},\]</div>
 <p>and the parameter <span class="math notranslate nohighlight">\(h\)</span> controls the decay of the exponential function and therefore the decay of the weights as a function of the Euclidean distances <span id="id10">[<a class="reference internal" href="../99_references.html#id325" title="A. Buades, B. Coll, and J.-M. Morel. A Non-Local Algorithm for Image Denoising. In 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR'05), volume 2, 60–65. San Diego, CA, USA, 2005. IEEE. URL: http://ieeexplore.ieee.org/document/1467423/ (visited on 2023-11-15), doi:10.1109/CVPR.2005.38.">22</a>]</span>.</p>
 <p>The original NL-means algorithm compares the neighborhood of each pixel <span class="math notranslate nohighlight">\(i\)</span>, with the neighborhoods of every other pixel <span class="math notranslate nohighlight">\(j\)</span> <span class="math notranslate nohighlight">\(\forall j \in I\)</span>! This has a computational complexity that is quadratic in the number of pixels in the image. In practice, the search for similar neighborhoods is often restricted to a search window centered on the pixel itself, instead of the whole image.</p>
-<p>In <a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.17</span></a>, a non-local means filter with <span class="math notranslate nohighlight">\(h=40\)</span>, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.</p>
+<p>In <a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.17</span></a>, a non-local means filter with <span class="math notranslate nohighlight">\(h=40\)</span>, kernel size = 7, and search window size = 21 is applied to an image degraded with Gaussian noise.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -845,10 +846,10 @@ Hence, the weights are defined as:</p>
 <figure class="align-center" id="nlmeans-gaussian-characteristics-fig">
 <img alt="../../_images/63c37095cccf1f74ba030815ee43133b7d3ba258ec6712977028a3e8f401c1cb.png" src="../../_images/63c37095cccf1f74ba030815ee43133b7d3ba258ec6712977028a3e8f401c1cb.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.17 </span><span class="caption-text">Non-Local Means Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.17 </span><span class="caption-text">Non-Local Means Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.17</span></a>(c) shows some residual noise in the tissues which, upon close examination, obscures some fine detail. The histogram in <a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 5.17</span></a>(g) has a shape that more closely resembles those of the linear filters, than those of the other non-linear filters.</p>
+<p><a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.17</span></a>(c) shows some residual noise in the tissues which, upon close examination, obscures some fine detail. The histogram in <a class="reference internal" href="#nlmeans-gaussian-characteristics-fig"><span class="std std-numref">Fig. 6.17</span></a>(g) has a shape that more closely resembles those of the linear filters, than those of the other non-linear filters.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -866,10 +867,10 @@ Hence, the weights are defined as:</p>
 <figure class="align-center" id="nlmeans-gaussian-analysis-fig">
 <img alt="../../_images/d2892262b521c5719158578a6e214dc1af2320ae2071cf19d5c562a191e3c4e4.png" src="../../_images/d2892262b521c5719158578a6e214dc1af2320ae2071cf19d5c562a191e3c4e4.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5.18 </span><span class="caption-text">Non-Local Means Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6.18 </span><span class="caption-text">Non-Local Means Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#nlmeans-gaussian-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In <a class="reference internal" href="#nlmeans-gaussian-analysis-fig"><span class="std std-numref">Fig. 5.18</span></a>, we see the effects of various Gaussian kernels on a noisy image. The amount of residual noise is a decreasing function of <span class="math notranslate nohighlight">\(h\)</span>; however, the blurring effect is shown to increase with larger Gaussian kernels. At <span class="math notranslate nohighlight">\(h=80\)</span>, almost all of the noise is removed; although, the amount of blur is objectionable.</p>
+<p>In <a class="reference internal" href="#nlmeans-gaussian-analysis-fig"><span class="std std-numref">Fig. 6.18</span></a>, we see the effects of various Gaussian kernels on a noisy image. The amount of residual noise is a decreasing function of <span class="math notranslate nohighlight">\(h\)</span>; however, the blurring effect is shown to increase with larger Gaussian kernels. At <span class="math notranslate nohighlight">\(h=80\)</span>, almost all of the noise is removed; although, the amount of blur is objectionable.</p>
 <p>This wraps up our discussion of spatial domain filtering. In the next section, we will explore filtering in the frequency domain.</p>
 </section>
 </section>
@@ -912,7 +913,7 @@ Hence, the weights are defined as:</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5.1.3. </span>Denoiser Methods</p>
+        <p class="prev-next-title"><span class="section-number">6.1.3. </span>Denoiser Methods</p>
       </div>
     </a>
     <a class="right-next"
@@ -920,7 +921,7 @@ Hence, the weights are defined as:</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">5.1.5. </span>Frequency Domain Filtering</p>
+        <p class="prev-next-title"><span class="section-number">6.1.5. </span>Frequency Domain Filtering</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
