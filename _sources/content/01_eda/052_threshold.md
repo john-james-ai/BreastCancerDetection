@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+(eda52)=
 # Thresholding
 
 ```{code-cell} ipython3
