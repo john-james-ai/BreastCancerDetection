@@ -4,16 +4,18 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.15.1
+    jupytext_version: 1.16.0
 kernelspec:
   display_name: bcd
   language: python
   name: python3
 ---
+
 # Spatial Domain Filtering
 
 ```{code-cell}
 :tags: [remove-cell]
+
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
@@ -86,6 +88,7 @@ Let's examine the effects of various kernel sizes on performance.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
+
 fig = analyzer.compare()
 glue("mean_gaussian_analysis", fig)
 ```
@@ -152,6 +155,7 @@ Let's examine the effects of various kernel sizes on performance.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
+
 fig = analyzer.compare()
 glue("gaussian_gaussian_analysis", fig)
 ```
@@ -257,6 +261,7 @@ Again, the noise is largely eliminated with little blurring effect.
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
+
 fig = analyzer.compare()
 glue("median_snp_analysis", fig)
 ```
@@ -330,6 +335,7 @@ Bilateral Filter Performance Characteristics with Gaussian Noise
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
+
 fig = analyzer.compare()
 glue("bilateral_gaussian_analysis", fig)
 ```
@@ -409,6 +415,7 @@ Non-Local Means Filter Performance Characteristics with Gaussian Noise
 
 ```{code-cell}
 :tags: [hide-cell, remove-output]
+
 fig = analyzer.compare()
 glue("nlmeans_gaussian_analysis", fig)
 ```
