@@ -6,8 +6,8 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.15.1
 ---
+(eda1)=
 
-(ed1)=
 # EDA Part 1: **CBIS-DDSM** Dataset
 
 Developed in 1997 through a grant from the DOD Breast Cancer Research Program and the US Army Research and Material Command, the *original* Digital Database for Screening Mammography (DDSM) {cite}`USFDigitalMammography` is a collection of 2620 cases obtained by patient consent from Massachusetts General Hospital, Wake Forest University School of Medicine, Sacred Heart Hospital, and Washington University of St. Louis School of Medicine. Its cases are annotated with ROIs for calcifications and masses, they include Breast Imaging Reporting and Data System (BI-RADS) descriptors for mass shape, mass margin, calcification type, calcification distribution, and breast density. They also include overall BI-RADS assessments from 0 to 5 and ratings of the subtlety of the abnormalities from 1 to 5.
@@ -20,7 +20,7 @@ This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) {cite}`leeCuratedMammogra
 
 CBIS-DDSM were obtained from the Cancer Imaging Archive {cite}`clarkCancerImagingArchive2013` and are summarized below:
 
-```{table} CBIS-DDSM Statistics
+```{table}
 
 | Collection Statistics  |        |
 | ---------------------- | ------ |
@@ -33,12 +33,14 @@ CBIS-DDSM were obtained from the Cancer Imaging Archive {cite}`clarkCancerImagin
 ```
 
 ## Dataset Organization
+
 The CBIS-DDSM comprises mass and calcification case descriptive data, DICOM image data, and DICOM series metadata.
 
 ### Case Descriptive Data
+
 Cases, defined by a particular abnormality seen on a cranial caudal (CC) or mediolateral oblique (MLO) image_view, are organized by BI-RADS categories: calcification and mass. Calcification and mass cases were further split into training (80%) and test (20%) sets of various levels of difficulty to support consistent evaluation of computer-aided diagnostics (CADx) systems. Their descriptions are contained in the following files.
 
-```{table} CBIS-DDSM Case Descriptions
+```{table}
 
 | Type | Filename                  | Format |
 | -----| ------------------------- | ------ |
@@ -49,6 +51,7 @@ Cases, defined by a particular abnormality seen on a cranial caudal (CC) or medi
 ```
 
 Each case description file contains the following variables:
+
 - Patient ID
 - Density category
 - Breast: Left or Right
@@ -64,7 +67,9 @@ Each case description file contains the following variables:
 - Path to image files
 
 ### DICOM Image Data
+
 As described above, the CBIS-DDSM contains full mammography, ROI mask, and cropped images in a directory structure organized by case. Each DICOM file comports with the DICOM standard and contains the image pixel data as well as image metadata such as:
+
 - SOP Class UID
 - SOP Instance UID
 - Content Date
@@ -85,7 +90,9 @@ As described above, the CBIS-DDSM contains full mammography, ROI mask, and cropp
 - Largest Image Pixel Value
 
 ### DICOM Series Metadata
+
 A series encapsulates full mammography, ROI mask, or cropped images for a patient and image image_view. The DICOM Series Metadata file, 'metadata.csv', maps series metadata to DICOM image file location and contains the following attributes:
+
 - Series, subject, and study identifiers
 - Data description URL
 - Study dates and download timestamps
