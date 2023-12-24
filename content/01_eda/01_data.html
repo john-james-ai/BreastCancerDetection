@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2. CBIS-DDSM Dataset &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>1. EDA Part 1: CBIS-DDSM Dataset &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -66,8 +66,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3. Data Preparation" href="02_data_prep.html" />
-    <link rel="prev" title="1. EDA Introduction" href="00_intro.html" />
+    <link rel="next" title="2. EDA Part 2: Data Preparation" href="02_data_prep.html" />
+    <link rel="prev" title="4. Dependency Version and Hardware" href="../00_front_matter/03_dependencies.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -167,28 +167,21 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. EDA Introduction</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">3. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">4. EDA Case Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">5. Exploratory Data Analysis of Images</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../02_image_prep/00_overview.html">1. Image Preprocessing Overview</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../02_image_prep/01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">2. EDA Part 2: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">3. EDA Part 3: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">4. EDA Part 4: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="05_eda_methods.html">5. EDA Part 5: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="051_denoise.html">5.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">5.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">5.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">5.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05131_spatial.html">5.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">5.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0514_experiment.html">5.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/02_artifact/00_intro.html">3. Artifact Removal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/02_artifact/01_threshold.html">3.1. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">5.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -395,7 +388,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>CBIS-DDSM Dataset</h1>
+    <h1>EDA Part 1: CBIS-DDSM Dataset</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -405,11 +398,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-statistics">2.1. Dataset Statistics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-organization">2.2. Dataset Organization</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-descriptive-data">2.2.1. Case Descriptive Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">2.2.2. DICOM Image Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-series-metadata">2.2.3. DICOM Series Metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-statistics">1.1. Dataset Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-organization">1.2. Dataset Organization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-descriptive-data">1.2.1. Case Descriptive Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">1.2.2. DICOM Image Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-series-metadata">1.2.3. DICOM Series Metadata</a></li>
 </ul>
 </li>
 </ul>
@@ -423,16 +416,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="cbis-ddsm-dataset">
-<span id="eda-dataset"></span><h1><span class="section-number">2. </span><strong>CBIS-DDSM</strong> Dataset<a class="headerlink" href="#cbis-ddsm-dataset" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="eda-part-1-cbis-ddsm-dataset">
+<span id="ed1"></span><h1><span class="section-number">1. </span>EDA Part 1: <strong>CBIS-DDSM</strong> Dataset<a class="headerlink" href="#eda-part-1-cbis-ddsm-dataset" title="Permalink to this heading">#</a></h1>
 <p>Developed in 1997 through a grant from the DOD Breast Cancer Research Program and the US Army Research and Material Command, the <em>original</em> Digital Database for Screening Mammography (DDSM) <span id="id1">[<a class="reference internal" href="../99_references.html#id290" title="USF Digital Mammography Home Page - http://www.eng.usf.edu/cvprg/mammography/database.html. URL: http://www.eng.usf.edu/cvprg/mammography/database.html (visited on 2023-09-01).">1</a>]</span> is a collection of 2620 cases obtained by patient consent from Massachusetts General Hospital, Wake Forest University School of Medicine, Sacred Heart Hospital, and Washington University of St. Louis School of Medicine. Its cases are annotated with ROIs for calcifications and masses, they include Breast Imaging Reporting and Data System (BI-RADS) descriptors for mass shape, mass margin, calcification type, calcification distribution, and breast density. They also include overall BI-RADS assessments from 0 to 5 and ratings of the subtlety of the abnormalities from 1 to 5.</p>
 <p>The DDSM, a powerful and extensively used resource for imaging research, presented certain challenges that limited its accessibility and utility.  For instance, the original DDSM was saved in lossless JPEG files (LJPEG); a non-standard, and obsolete compression format. Regions of interest marked the general area of legions; but, lacked the specificity of precise image segmentation, requiring researchers to implement segmentation algorithms for accurate feature extraction. Some annotations marked legions that could not be seen. Further, the metadata processing and image correction routines distributed with the dataset were a set of bash and C routines that were difficult to refactor.</p>
 <p>This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class="reference internal" href="../99_references.html#id136" title="Rebecca Sawyer Lee, Francisco Gimenez, Assaf Hoogi, Kanae Kawai Miyake, Mia Gorovoy, and Daniel L. Rubin. A curated mammography data set for use in computer-aided detection and diagnosis research. Scientific Data, 4(1):170177, December 2017. URL: https://www.nature.com/articles/sdata2017177 (visited on 2023-05-24), doi:10.1038/sdata.2017.177.">2</a>]</span> is an updated and standardized version of the original DDSM, developed to address some of the challenges. In particular, the questionable annotations were reimage_viewed by a trained mammographer, and 254 images were removed from the dataset. The images were converted from PVRG-JPEG to 8-bit raw binary bitmaps. Python tools were developed to convert the 8-bit images to 16-bit grayscale TIFF files, which were later converted to DICOM. The bash and C preprocessing tools were re-implemented in Python to be cross-platform. Convenience images were cropped around the region of interest for researchers analyzing only the abnormalities. Precise segmentation was applied to the calcification images providing much more accurate regions of interest, and the data were split into training and test sets, based on the BI-RADS category to support method evaluation and reproducibility.</p>
 <section id="dataset-statistics">
-<h2><span class="section-number">2.1. </span>Dataset Statistics<a class="headerlink" href="#dataset-statistics" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.1. </span>Dataset Statistics<a class="headerlink" href="#dataset-statistics" title="Permalink to this heading">#</a></h2>
 <p>CBIS-DDSM were obtained from the Cancer Imaging Archive <span id="id3">[<a class="reference internal" href="../99_references.html#id305" title="Kenneth Clark, Bruce Vendt, Kirk Smith, John Freymann, Justin Kirby, Paul Koppel, Stephen Moore, Stanley Phillips, David Maffitt, Michael Pringle, Lawrence Tarbox, and Fred Prior. The Cancer Imaging Archive (TCIA): Maintaining and Operating a Public Information Repository. Journal of Digital Imaging, 26(6):1045–1057, December 2013. URL: http://link.springer.com/10.1007/s10278-013-9622-7 (visited on 2023-09-04), doi:10.1007/s10278-013-9622-7.">3</a>]</span> and are summarized below:</p>
 <table class="table" id="id4">
-<caption><span class="caption-number">Table 2.1 </span><span class="caption-text">CBIS-DDSM Statistics</span><a class="headerlink" href="#id4" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">CBIS-DDSM Statistics</span><a class="headerlink" href="#id4" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Collection Statistics</p></th>
 <th class="head"><p></p></th>
@@ -461,13 +454,13 @@ document.write(`
 </table>
 </section>
 <section id="dataset-organization">
-<h2><span class="section-number">2.2. </span>Dataset Organization<a class="headerlink" href="#dataset-organization" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.2. </span>Dataset Organization<a class="headerlink" href="#dataset-organization" title="Permalink to this heading">#</a></h2>
 <p>The CBIS-DDSM comprises mass and calcification case descriptive data, DICOM image data, and DICOM series metadata.</p>
 <section id="case-descriptive-data">
-<h3><span class="section-number">2.2.1. </span>Case Descriptive Data<a class="headerlink" href="#case-descriptive-data" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.2.1. </span>Case Descriptive Data<a class="headerlink" href="#case-descriptive-data" title="Permalink to this heading">#</a></h3>
 <p>Cases, defined by a particular abnormality seen on a cranial caudal (CC) or mediolateral oblique (MLO) image_view, are organized by BI-RADS categories: calcification and mass. Calcification and mass cases were further split into training (80%) and test (20%) sets of various levels of difficulty to support consistent evaluation of computer-aided diagnostics (CADx) systems. Their descriptions are contained in the following files.</p>
 <table class="table" id="id5">
-<caption><span class="caption-number">Table 2.2 </span><span class="caption-text">CBIS-DDSM Case Descriptions</span><a class="headerlink" href="#id5" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">CBIS-DDSM Case Descriptions</span><a class="headerlink" href="#id5" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Type</p></th>
 <th class="head"><p>Filename</p></th>
@@ -511,7 +504,7 @@ document.write(`
 </ul>
 </section>
 <section id="dicom-image-data">
-<h3><span class="section-number">2.2.2. </span>DICOM Image Data<a class="headerlink" href="#dicom-image-data" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.2.2. </span>DICOM Image Data<a class="headerlink" href="#dicom-image-data" title="Permalink to this heading">#</a></h3>
 <p>As described above, the CBIS-DDSM contains full mammography, ROI mask, and cropped images in a directory structure organized by case. Each DICOM file comports with the DICOM standard and contains the image pixel data as well as image metadata such as:</p>
 <ul class="simple">
 <li><p>SOP Class UID</p></li>
@@ -535,7 +528,7 @@ document.write(`
 </ul>
 </section>
 <section id="dicom-series-metadata">
-<h3><span class="section-number">2.2.3. </span>DICOM Series Metadata<a class="headerlink" href="#dicom-series-metadata" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">1.2.3. </span>DICOM Series Metadata<a class="headerlink" href="#dicom-series-metadata" title="Permalink to this heading">#</a></h3>
 <p>A series encapsulates full mammography, ROI mask, or cropped images for a patient and image image_view. The DICOM Series Metadata file, ‘metadata.csv’, maps series metadata to DICOM image file location and contains the following attributes:</p>
 <ul class="simple">
 <li><p>Series, subject, and study identifiers</p></li>
@@ -582,12 +575,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="00_intro.html"
+       href="../00_front_matter/03_dependencies.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>EDA Introduction</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Dependency Version and Hardware</p>
       </div>
     </a>
     <a class="right-next"
@@ -595,7 +588,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Data Preparation</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>EDA Part 2: Data Preparation</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -617,11 +610,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-statistics">2.1. Dataset Statistics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-organization">2.2. Dataset Organization</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-descriptive-data">2.2.1. Case Descriptive Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">2.2.2. DICOM Image Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-series-metadata">2.2.3. DICOM Series Metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-statistics">1.1. Dataset Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-organization">1.2. Dataset Organization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-descriptive-data">1.2.1. Case Descriptive Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">1.2.2. DICOM Image Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-series-metadata">1.2.3. DICOM Series Metadata</a></li>
 </ul>
 </li>
 </ul>

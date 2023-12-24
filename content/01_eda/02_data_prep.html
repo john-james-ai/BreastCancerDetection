@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3. Data Preparation &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>2. EDA Part 2: Data Preparation &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -66,8 +66,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4. EDA Case Dataset" href="03_eda_meta.html" />
-    <link rel="prev" title="2. CBIS-DDSM Dataset" href="01_data.html" />
+    <link rel="next" title="3. EDA Part 3: Case Dataset Analysis" href="03_eda_meta.html" />
+    <link rel="prev" title="1. EDA Part 1: CBIS-DDSM Dataset" href="01_data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -167,28 +167,21 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. EDA Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_data.html">2. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">4. EDA Case Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">5. Exploratory Data Analysis of Images</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../02_image_prep/00_overview.html">1. Image Preprocessing Overview</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../02_image_prep/01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_data.html">1. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. EDA Part 2: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">3. EDA Part 3: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">4. EDA Part 4: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="05_eda_methods.html">5. EDA Part 5: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="051_denoise.html">5.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">5.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">5.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">5.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05131_spatial.html">5.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">5.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0514_experiment.html">5.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/02_artifact/00_intro.html">3. Artifact Removal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/02_artifact/01_threshold.html">3.1. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">5.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -461,7 +454,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Data Preparation</h1>
+    <h1>EDA Part 2: Data Preparation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -471,8 +464,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-case-dataset">3.1. Build Case Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-dicom-dataset">3.2. Build DICOM Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-case-dataset">2.1. Build Case Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-dicom-dataset">2.2. Build DICOM Dataset</a></li>
 </ul>
             </nav>
         </div>
@@ -484,8 +477,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="data-preparation">
-<span id="eda0"></span><h1><span class="section-number">3. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="eda-part-2-data-preparation">
+<span id="eda2"></span><h1><span class="section-number">2. </span>EDA Part 2: Data Preparation<a class="headerlink" href="#eda-part-2-data-preparation" title="Permalink to this heading">#</a></h1>
 <p>In the prior section, we obtained the CBIS-DDSM data from <a class="reference external" href="https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629">The Cancer Imaging Archive</a> (TCIA). This brief section aims to convert the data to a form well suited for exploratory data analyses.</p>
 <table class="table">
 <thead>
@@ -535,7 +528,7 @@ document.write(`
 </details>
 </div>
 <section id="build-case-dataset">
-<h2><span class="section-number">3.1. </span>Build Case Dataset<a class="headerlink" href="#build-case-dataset" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.1. </span>Build Case Dataset<a class="headerlink" href="#build-case-dataset" title="Permalink to this heading">#</a></h2>
 <p>The data are currently split into train and test sets by BI-RADS category. While convenient for modeling, this is rather cumbersome for the exploratory data analysis which considers the entire dataset, before making any assumptions. Our first task is to combine the calcification and mass train and test sets into a single case dataset, facilitating a top-down, comprehensive image_view of all the data for analysis.</p>
 <p>The target variable, pathology, has three values: ‘MALIGNANT’, ‘BENIGN’, and ‘BENIGN_WITHOUT_CALLBACK. The latter indicates that some aspect of the case as worth tracking; but, no follow-up is required. For our purposes, that is a distinction without a difference. Nonetheless, rather than modifying the variable and lose potentially useful information, we’ll create a new target variable, ‘cancer’, which will be True if pathology is ‘MALIGNANT’, and False otherwise.</p>
 <p>The CBIS-DDSM creators define a case as a particular abnormality as seen in the cranial caudal (CC) or mediolateral oblique (MLO) image_views; yet, the dataset lacks a unique case identifier. Consequently, five different variables are required to map metadata with their associated image. To enable direct matching between metadata and DICOM images, each case will be assigned a unique identifier, which will be cross-referenced to a full mammogram, ROI mask, or cropped image series dataset.</p>
@@ -575,7 +568,7 @@ The Case/Series XRef Dataset has been created with 7240 rows and 3 columns.
 </div>
 </section>
 <section id="build-dicom-dataset">
-<h2><span class="section-number">3.2. </span>Build DICOM Dataset<a class="headerlink" href="#build-dicom-dataset" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2. </span>Build DICOM Dataset<a class="headerlink" href="#build-dicom-dataset" title="Permalink to this heading">#</a></h2>
 <p>Developing an image preprocessing approach requires visibility into image metadata, currently buried in individual DICOM files. Our first task is to extract these data and store them in a more accessible format. Note: There are 10,239 images in the dataset according to <a class="reference external" href="https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629#2251662935562334b1e043a3a0512554ef512cad">TCIA</a>. The DICOM image file for case_id ‘P_01382_LEFT_mass_MLO_1’ was corrupt, and could not be read. Therefore, we will have a total of 10,238 images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -5690,7 +5683,7 @@ The Case/Series XRef Dataset has been created with 7240 rows and 3 columns.
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2. </span><strong>CBIS-DDSM</strong> Dataset</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</p>
       </div>
     </a>
     <a class="right-next"
@@ -5698,7 +5691,7 @@ The Case/Series XRef Dataset has been created with 7240 rows and 3 columns.
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>EDA Case Dataset</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>EDA Part 3: Case Dataset Analysis</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -5720,8 +5713,8 @@ The Case/Series XRef Dataset has been created with 7240 rows and 3 columns.
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-case-dataset">3.1. Build Case Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-dicom-dataset">3.2. Build DICOM Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-case-dataset">2.1. Build Case Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-dicom-dataset">2.2. Build DICOM Dataset</a></li>
 </ul>
   </nav></div>
 

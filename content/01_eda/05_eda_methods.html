@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>6. EDA Part III: Algorithm Selection &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>5. EDA Part 5: Algorithm Selection &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -66,8 +66,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="1. Image Preprocessing Overview" href="../02_image_prep/00_overview.html" />
-    <link rel="prev" title="5. EDA Part II: Images" href="04_eda_image.html" />
+    <link rel="next" title="5.1. Denoise" href="051_denoise.html" />
+    <link rel="prev" title="4. EDA Part 4: Image Analysis" href="04_eda_image.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -167,29 +167,21 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. EDA Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_data.html">2. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">3. Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">4. EDA Part I: Case Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">5. EDA Part II: Images</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. EDA Part III: Algorithm Selection</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Image Preprocessing</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../02_image_prep/00_overview.html">1. Image Preprocessing Overview</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/01_denoise.html">2. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/00_noise_models.html">2.1. Noise Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/01_noise_types.html">2.2. Noise Types</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../02_image_prep/01_denoise/02_denoisers.html">2.3. Denoiser Methods</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/020_spatial.html">2.3.1. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../02_image_prep/01_denoise/021_frequency.html">2.3.2. Frequency Domain Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_data.html">1. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_data_prep.html">2. EDA Part 2: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_eda_meta.html">3. EDA Part 3: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_eda_image.html">4. EDA Part 4: Image Analysis</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">5. EDA Part 5: Algorithm Selection</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="051_denoise.html">5.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="0511_noise_models.html">5.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0512_noise_types.html">5.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0513_denoisers.html">5.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05131_spatial.html">5.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05132_frequency.html">5.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0514_experiment.html">5.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/01_denoise/03_experiment.html">2.4. Denoising Experiment</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../02_image_prep/02_artifact/00_intro.html">3. Artifact Removal</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../02_image_prep/02_artifact/01_threshold.html">3.1. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="052_threshold.html">5.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -394,7 +386,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>EDA Part III: Algorithm Selection</h1>
+    <h1>EDA Part 5: Algorithm Selection</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -408,8 +400,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="eda-part-iii-algorithm-selection">
-<span id="eda3"></span><h1><span class="section-number">6. </span>EDA Part III: Algorithm Selection<a class="headerlink" href="#eda-part-iii-algorithm-selection" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="eda-part-5-algorithm-selection">
+<span id="eda5"></span><h1><span class="section-number">5. </span>EDA Part 5: Algorithm Selection<a class="headerlink" href="#eda-part-5-algorithm-selection" title="Permalink to this heading">#</a></h1>
+<p>Image data processing will involve denoising the images, artifact and pectoral muscle removal, image enhancement, and augmentation techniques in advance of statistical modeling. Model performance will, in part, rest on the selection of these algorithms and the degree to which their parameters have been optimized for the dataset.</p>
+<p>The goal of this section is to select and optimize the algorithms that will be used during the preprocessing stage. Specifically, our focus will be on selecting a denoiser algorithm and a binary threshold algorithm for breast segmentation.
+In section <a class="reference internal" href="051_denoise.html#eda51"><span class="std std-numref">Section 5.1</span></a>, we will review the types of noise inherent in digital mammography, review the most widely used denoising methods, and then evaluate, select, and parameterize the denoising algorithm that will be used downstream. Next, <code class="xref std std-numref docutils literal notranslate"><span class="pre">eda52</span></code> will review, select, and tune a binary threshold algorithm for breast segmentation.</p>
+<div class="toctree-wrapper compound">
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -449,15 +446,15 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>EDA Part II: Images</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>EDA Part 4: Image Analysis</p>
       </div>
     </a>
     <a class="right-next"
-       href="../02_image_prep/00_overview.html"
+       href="051_denoise.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>Image Preprocessing Overview</p>
+        <p class="prev-next-title"><span class="section-number">5.1. </span>Denoise</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
