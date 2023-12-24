@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/analyze/explore/multivariate/selection.py                                      #
+# Filename   : /bcd/explore/meta/multivariate/selection.py                                         #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday October 2nd 2023 06:55:34 am                                                 #
-# Modified   : Sunday November 5th 2023 09:18:51 am                                                #
+# Modified   : Saturday December 23rd 2023 09:36:26 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from sklearn.base import BaseEstimator
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import classification_report, recall_score
 from sklearn.model_selection import GridSearchCV
 
 # ------------------------------------------------------------------------------------------------ #
@@ -99,8 +99,8 @@ class ModelSelector:
             return self._best_model.predict(X)
 
     def score(self, y_true, y_pred) -> None:
-        accuracy = accuracy_score(y_true, y_pred)
-        msg = f"\n\t\tAccuracy of {self._best_model_name}: {round(accuracy,2)}"
+        recall = recall_score(y_true, y_pred)
+        msg = f"\n\t\tAccuracy of {self._best_model_name}: {round(recall,2)}"
         print(msg)
         msg = "\t\t\tClassification Report"
         print(msg)
@@ -143,7 +143,7 @@ class ModelSelector:
     def plot_feature_importance(
         self, title: str = None, ax: plt.Axes = None, palette: str = "Blues_r", **kwargs
     ) -> None:
-        sns.barplot(
+        ax = sns.barplot(
             data=self._feature_importance,
             x="Importance",
             y="Feature",
@@ -154,8 +154,14 @@ class ModelSelector:
         if title is not None:
             ax.set_title(title)
 
+        return ax
+
     def _run(
-        self, X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series
+        self,
+        X_train: pd.DataFrame,
+        y_train: pd.Series,
+        X_test: pd.DataFrame,
+        y_test: pd.Series,
     ) -> None:
         self._best_score = 0
         self._best_model_name = None
@@ -169,32 +175,40 @@ class ModelSelector:
             # Best params
             msg = f"Best Params: {gs.best_params_}"
             print(msg)
-            # Best training data accuracy
-            msg = f"Best Training Accuracy: {round(gs.best_score_,3)}"
+            # Best training data recall
+            msg = f"Best Training Recall: {round(gs.best_score_,3)}"
             print(msg)
             # Predict on test data with best params
             y_pred = gs.predict(X_test)
-            # Test data accuracy of model with best params
-            msg = f"Test set accuracy score for best params: {round(accuracy_score(y_test, y_pred),3)}."
+            # Test data recall of model with best params
+            msg = f"Test set recall score for best params: {round(recall_score(y_test, y_pred),3)}."
             print(msg)
-            # Capture accuracy and classification report for best model.
-            if accuracy_score(y_test, y_pred) > self._best_score:
-                self._best_score = accuracy_score(y_test, y_pred)
+            # Capture recall and classification report for best model.
+            if recall_score(y_test, y_pred) > self._best_score:
+                self._best_score = recall_score(y_test, y_pred)
                 self._best_classification_report = classification_report(
                     y_true=y_test, y_pred=y_pred
                 )
                 self._best_model = gs
                 self._best_model_name = name
-        msg = f"\nClassifier with best test set accuracy: {self._best_model_name}.\n"
+        msg = f"\nClassifier with best test set recall: {self._best_model_name}.\n"
         print(msg)
 
     def _extract_feature_importance(self) -> None:
         try:
             feature_imp = self._best_model.best_estimator_.named_steps["clf"].coef_
-            feature_imp = pd.DataFrame(data=feature_imp, columns=self._features).T.reset_index()
+
+            feature_imp = pd.DataFrame(
+                data=feature_imp, columns=self._features
+            ).T.reset_index()
         except AttributeError:
-            feature_imp = self._best_model.best_estimator_.named_steps["clf"].feature_importances_
-            feature_imp = pd.DataFrame(data=feature_imp, index=self._features).reset_index()
+            feature_imp = self._best_model.best_estimator_.named_steps[
+                "clf"
+            ].feature_importances_
+
+            feature_imp = pd.DataFrame(
+                data=feature_imp, index=self._features
+            ).reset_index()
 
         feature_imp.columns = ["Feature", "Importance"]
         # Add the absolute value of the coefficients for filtering and sorting

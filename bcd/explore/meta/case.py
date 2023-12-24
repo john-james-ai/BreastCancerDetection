@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Wednesday December 20th 2023 05:17:39 pm                                            #
+# Modified   : Saturday December 23rd 2023 07:56:20 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,8 +20,11 @@
 import logging
 import os
 import sys
+from typing import Union
 
+import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 from studioai.analysis.visualize.visualizer import SeabornCanvas
 
 from bcd.explore.meta import Explorer
@@ -31,7 +34,7 @@ from bcd.utils.string import proper
 logging.basicConfig(stream=sys.stdout)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
+sns.set_style("whitegrid")
 # ------------------------------------------------------------------------------------------------ #
 CALCIFICATION_DATA = [
     "case_id",
@@ -243,6 +246,37 @@ class CaseExplorer(Explorer):
         super().__init__(df=df)
         self._canvas = canvas
 
+    @property
+    def summary(self) -> pd.DataFrame:  # noqa
+        """Summarizes the case dataset"""
+        d = {}
+        d["Patients"] = self._df["patient_id"].nunique()
+        d["Cases"] = self._df["case_id"].nunique()
+        d["Calcification Cases"] = self._df.loc[
+            self._df["abnormality_type"] == "calcification"
+        ].shape[0]
+        d["Calcification Cases - Benign"] = self._df.loc[
+            (self._df["abnormality_type"] == "calcification")
+            & (self._df["cancer"] == False)  # noqa
+        ].shape[0]
+        d["Calcification Cases - Malignant"] = self._df.loc[
+            (self._df["abnormality_type"] == "calcification")
+            & (self._df["cancer"] == True)  # noqa
+        ].shape[0]
+
+        d["Mass Cases"] = self._df.loc[self._df["abnormality_type"] == "mass"].shape[0]
+        d["Mass Cases - Benign"] = self._df.loc[
+            (self._df["abnormality_type"] == "mass")
+            & (self._df["cancer"] == False)  # noqa
+        ].shape[0]
+        d["Mass Cases - Malignant"] = self._df.loc[
+            (self._df["abnormality_type"] == "mass")
+            & (self._df["cancer"] == True)  # noqa
+        ].shape[0]
+        df = pd.DataFrame(data=d, index=[0]).T
+        df.columns = ["Summary"]
+        return df
+
     def get_calc_data(self) -> pd.DataFrame:
         df = self._df.loc[self._df["abnormality_type"] == "calcification"]
         return df[CALCIFICATION_DATA]
@@ -310,27 +344,27 @@ class CaseExplorer(Explorer):
     def plot_feature_associations(self, *args, **kwargs) -> None:
         """Plots an association matrix showing strength (not direction) of the association between features."""
         df = self._get_feature_association_matrix(features=FEATURES)
-        title = f"CBIS-DDSM Case Feature Association Plot\nCramer's V"  # noqa
-        self.plot.heatmap(data=df, title=title, *args, **kwargs)
+        title = "CBIS-DDSM Case Feature Association Plot\nCramer's V"  # noqa
+        return self.plot.heatmap(data=df, title=title, *args, **kwargs)
 
     def plot_mass_feature_associations(self, *args, **kwargs) -> None:
         """Plots an association matrix showing strength (not direction) of the association between features."""
         df = self._get_feature_association_matrix(features=MASS_FEATURES)
-        title = f"CBIS-DDSM Mass Case Feature Association Plot\nCramer's V"  # noqa
-        self.plot.heatmap(data=df, title=title, *args, **kwargs)
+        title = "CBIS-DDSM Mass Case Feature Association Plot\nCramer's V"  # noqa
+        return self.plot.heatmap(data=df, title=title, *args, **kwargs)
 
     def plot_calc_feature_associations(self, *args, **kwargs) -> None:
         """Plots an association matrix showing strength (not direction) of the association between features."""
         df = self._get_feature_association_matrix(features=CALC_FEATURES)
         title = (
-            f"CBIS-DDSM Calcification Case Feature Association Plot\nCramer's V"  # noqa
+            "CBIS-DDSM Calcification Case Feature Association Plot\nCramer's V"  # noqa
         )
-        self.plot.heatmap(data=df, title=title, *args, **kwargs)
+        return self.plot.heatmap(data=df, title=title, *args, **kwargs)
 
     def plot_target_associations(self, *args, **kwargs) -> None:
         df = self._get_target_association_matrix()
-        title = f"CBIS-DDSM Target Association Plot\nCramer's V"  # noqa
-        self.plot.barplot(
+        title = "CBIS-DDSM Target Association Plot\nCramer's V"  # noqa
+        return self.plot.barplot(
             data=df, x="strength", y="variable", title=title, *args, **kwargs
         )
 
@@ -384,15 +418,15 @@ class CaseExplorer(Explorer):
             .sum()
             .sort_values(by=[morphology, "proportion"], ascending=[True, False])
         )
-        self._plot_morphology_by_feature(
+        fig = self._plot_morphology_by_feature(
             df=summary, morphology=morphology, by=by, figsize=figsize
         )
 
-        return summary
+        return fig, summary
 
     def compare_morphology(
-        self, m1: str, m2: str, figsize: tuple = (12, 8), *args, **kwargs
-    ) -> pd.DataFrame:
+        self, *args, m1: str, m2: str, figsize: tuple = (12, 8), **kwargs
+    ) -> Union[plt.Axes, pd.DataFrame]:
         """Compares two morphologies, providing proportions in which m2 is present for m1
 
         Args:
@@ -418,41 +452,43 @@ class CaseExplorer(Explorer):
         # Drop rows with proportion = 0
         comparison = comparison.loc[comparison["proportion"] > 0]
 
-        self._plot_morphology_by_feature(
+        fig = self._plot_morphology_by_feature(
             df=comparison, morphology=m1, by=m2, figsize=figsize, *args, **kwargs
         )
 
-        return comparison
+        return fig, comparison
 
-    def summary(self) -> pd.DataFrame:  # noqa
-        """Summarizes the case dataset"""
-        d = {}
-        d["Patients"] = self._df["patient_id"].nunique()
-        d["Cases"] = self._df["case_id"].nunique()
-        d["Calcification Cases"] = self._df.loc[
-            self._df["abnormality_type"] == "calcification"
-        ].shape[0]
-        d["Calcification Cases - Benign"] = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["cancer"] == False)  # noqa
-        ].shape[0]
-        d["Calcification Cases - Malignant"] = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["cancer"] == True)  # noqa
-        ].shape[0]
+    def morphology_analysis(self, a: str, b: str, figsize: tuple = (8, 4)) -> plt.Axes:
+        """Returns a heatmap of malignancy probabilities for pairs of morphological features
 
-        d["Mass Cases"] = self._df.loc[self._df["abnormality_type"] == "mass"].shape[0]
-        d["Mass Cases - Benign"] = self._df.loc[
-            (self._df["abnormality_type"] == "mass")
-            & (self._df["cancer"] == False)  # noqa
-        ].shape[0]
-        d["Mass Cases - Malignant"] = self._df.loc[
-            (self._df["abnormality_type"] == "mass")
-            & (self._df["cancer"] == True)  # noqa
-        ].shape[0]
-        df = pd.DataFrame(data=d, index=[0]).T
-        df.columns = ["Summary"]
-        return df
+        Args:
+            a,b (str): Morphological features
+            figsize (tuple): Width and height of figure in inches.
+        """
+        # Filter morphologies to include those most frequently encountered
+        if "mass" in a:
+            df = self._get_mass_morphology()
+        else:
+            df = self._get_calc_morphology()
+
+        # Compute the number of malignancies by group and normalize
+        # by the total number of malignancies for the base feature.
+        g = df.groupby(by=[a, b])["cancer"].sum()
+        g = g / df["cancer"].sum()
+        g = g.to_frame().reset_index()
+
+        # Pivot the dataframe such that the base feature
+        # is the index and the columns are values of
+        # the additive feature.
+        g = g.pivot(index=a, columns=b, values="cancer").fillna(0)
+
+        _, ax = plt.subplots(figsize=figsize)
+        ax = sns.heatmap(g, cmap="crest", annot=True)
+
+        title = f"Probability of Malignancy by {proper(a)} and {proper(b)}."
+        ax.set_title(title)
+
+        return ax
 
     def as_df(self, categorize_ordinals: bool = False) -> pd.DataFrame:
         """Returns the data as a DataFrame, converting the ordinals to category as requested
@@ -534,3 +570,52 @@ class CaseExplorer(Explorer):
             )
 
         fig.suptitle(suptitle)
+        plt.close()
+
+        return fig
+
+    def _get_mass_morphology(self) -> pd.DataFrame:
+        """Returns a DataFrame containing the top mass morphologies"""
+        # Filter to include theh top five mass shapes and margins
+        mass_shapes = [
+            "IRREGULAR",
+            "OVAL",
+            "LOBULATED",
+            "ROUND",
+            "ARCHITECTURAL_DISTORTION",
+        ]
+        mass_margins = [
+            "SPICULATED",
+            "CIRCUMSCRIBED",
+            "ILL_DEFINED",
+            "OBSCURED",
+            "MICROLOBULATED",
+        ]
+        df = self._df.loc[self._df["mass_shape"].isin(mass_shapes)]
+        df = df.loc[df["mass_margins"].isin(mass_margins)]
+        df["mass_shape"] = df["mass_shape"].astype(str)
+        df["mass_margins"] = df["mass_margins"].astype(str)
+        return df
+
+    def _get_calc_morphology(self) -> pd.DataFrame:
+        """Returns a DataFrame containing the top calc morphologies"""
+        calc_types = [
+            "PLEOMORPHIC",
+            "AMORPHOUS",
+            "PUNCTATE",
+            "LUCENT_CENTERED",
+            "FINE_LINEAR_BRANCHING",
+            "VASCULAR",
+        ]
+        calc_distributions = [
+            "CLUSTERED",
+            "SEGMENTAL",
+            "LINEAR",
+            "REGIONAL",
+            "DIFFUSELY_SCATTERED",
+        ]
+        df = self._df.loc[self._df["calc_type"].isin(calc_types)]
+        df = df.loc[df["calc_distribution"].isin(calc_distributions)]
+        df["calc_type"] = df["calc_type"].astype(str)
+        df["calc_distribution"] = df["calc_distribution"].astype(str)
+        return df

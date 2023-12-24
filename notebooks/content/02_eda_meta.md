@@ -11,8 +11,6 @@ kernelspec:
   name: python3
 ---
 
-+++
-
 # Exploratory Data Analysis (EDA) 1.0 - Metadata
 
 In this section, we conduct an exploratory data analysis of the CBIS-DDSM Case and DICOM datasets prepared in prior sections. The purpose of this EDA is three-fold:
@@ -142,7 +140,7 @@ CBIS-DDSM Dataset Summary
 ```
 
 ```{code-cell}
-:tags: [hide-input]
+:tags: [hide-input, remove-output]
 
 st = summary.T
 pct_calc = round(st['Calcification Cases'] / st['Cases'] * 100,2).values[0]
