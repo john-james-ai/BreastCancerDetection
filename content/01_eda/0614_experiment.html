@@ -278,6 +278,24 @@ const thebe_selector_output = ".output, .cell_output"
 </a>
 </li>
       
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
   </ul>
 </div>
 
@@ -606,8 +624,8 @@ Peak Signal-to-Noise Ratio (PSNR) avoids this problem by scaling the MSE accordi
     {
         requestKernel: true,
         binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
+            repo: "john-james-ai/BreastCancerDetection",
+            ref: "main",
         },
         codeMirrorConfig: {
             theme: "abcdef",

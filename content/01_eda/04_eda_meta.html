@@ -278,6 +278,24 @@ const thebe_selector_output = ".output, .cell_output"
 </a>
 </li>
       
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
   </ul>
 </div>
 
@@ -696,7 +714,6 @@ document.write(`
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
 <span class="kn">from</span> <span class="nn">bcd.explore.meta.case</span> <span class="kn">import</span> <span class="n">CaseExplorer</span>
-<span class="kn">from</span> <span class="nn">bcd.explore.meta.dicom</span> <span class="kn">import</span> <span class="n">DicomExplorer</span>
 <span class="kn">from</span> <span class="nn">bcd.explore.meta.multivariate.pipeline</span> <span class="kn">import</span> <span class="n">PipelineBuilder</span>
 <span class="kn">from</span> <span class="nn">bcd.explore.meta.multivariate.selection</span> <span class="kn">import</span> <span class="n">ModelSelector</span>
 
@@ -903,84 +920,84 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>396</th>
-      <td>Calcification-Train_P_00520_LEFT_MLO_1</td>
-      <td>P_00520</td>
+      <th>1501</th>
+      <td>Calcification-Train_P_02400_LEFT_CC_1</td>
+      <td>P_02400</td>
+      <td>1</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>FINE_LINEAR_BRANCHING</td>
+      <td>CLUSTERED</td>
+      <td>3</td>
+      <td>MALIGNANT</td>
       <td>2</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1671</th>
+      <td>Calcification-Test_P_00789_LEFT_MLO_1</td>
+      <td>P_00789</td>
+      <td>4</td>
       <td>LEFT</td>
       <td>MLO</td>
       <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
+      <td>AMORPHOUS</td>
+      <td>DIFFUSELY_SCATTERED</td>
       <td>4</td>
       <td>BENIGN</td>
-      <td>2</td>
+      <td>1</td>
+      <td>test</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>727</th>
+      <td>Calcification-Train_P_00925_RIGHT_CC_1</td>
+      <td>P_00925</td>
+      <td>3</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>AMORPHOUS</td>
+      <td>CLUSTERED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1256</th>
+      <td>Calcification-Train_P_01616_RIGHT_MLO_1</td>
+      <td>P_01616</td>
+      <td>4</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>AMORPHOUS</td>
+      <td>SEGMENTAL</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>3</td>
       <td>train</td>
       <td>False</td>
     </tr>
     <tr>
-      <th>1437</th>
-      <td>Calcification-Train_P_01864_LEFT_MLO_3</td>
-      <td>P_01864</td>
-      <td>2</td>
+      <th>1099</th>
+      <td>Calcification-Train_P_01408_LEFT_MLO_4</td>
+      <td>P_01408</td>
+      <td>3</td>
       <td>LEFT</td>
       <td>MLO</td>
-      <td>3</td>
-      <td>VASCULAR</td>
-      <td>LINEAR</td>
+      <td>4</td>
+      <td>LARGE_RODLIKE-ROUND_AND_REGULAR</td>
+      <td>REGIONAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>4</td>
+      <td>5</td>
       <td>train</td>
       <td>False</td>
-    </tr>
-    <tr>
-      <th>1855</th>
-      <td>Calcification-Test_P_02176_RIGHT_MLO_1</td>
-      <td>P_02176</td>
-      <td>4</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>AMORPHOUS-PLEOMORPHIC</td>
-      <td>REGIONAL</td>
-      <td>5</td>
-      <td>MALIGNANT</td>
-      <td>5</td>
-      <td>test</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>284</th>
-      <td>Calcification-Train_P_00398_LEFT_MLO_1</td>
-      <td>P_00398</td>
-      <td>3</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PUNCTATE</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>BENIGN</td>
-      <td>3</td>
-      <td>train</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>453</th>
-      <td>Calcification-Train_P_00559_RIGHT_MLO_1</td>
-      <td>P_00559</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>PLEOMORPHIC</td>
-      <td>CLUSTERED</td>
-      <td>4</td>
-      <td>MALIGNANT</td>
-      <td>3</td>
-      <td>train</td>
-      <td>True</td>
     </tr>
   </tbody>
 </table>
@@ -1019,20 +1036,36 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>2034</th>
-      <td>Mass-Train_P_00231_LEFT_CC_1</td>
-      <td>P_00231</td>
-      <td>3</td>
-      <td>LEFT</td>
+      <th>2123</th>
+      <td>Mass-Train_P_00376_RIGHT_CC_1</td>
+      <td>P_00376</td>
+      <td>1</td>
+      <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
-      <td>OVAL</td>
-      <td>OBSCURED</td>
+      <td>LYMPH_NODE</td>
+      <td>SPICULATED</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>3</td>
-      <td>BENIGN</td>
-      <td>1</td>
       <td>train</td>
       <td>False</td>
+    </tr>
+    <tr>
+      <th>2064</th>
+      <td>Mass-Train_P_00287_RIGHT_CC_1</td>
+      <td>P_00287</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>IRREGULAR</td>
+      <td>SPICULATED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>5</td>
+      <td>train</td>
+      <td>True</td>
     </tr>
     <tr>
       <th>3208</th>
@@ -1051,50 +1084,34 @@ document.write(`
       <td>False</td>
     </tr>
     <tr>
-      <th>3340</th>
-      <td>Mass-Test_P_00652_LEFT_CC_1</td>
-      <td>P_00652</td>
+      <th>2170</th>
+      <td>Mass-Train_P_00423_RIGHT_CC_1</td>
+      <td>P_00423</td>
       <td>3</td>
-      <td>LEFT</td>
+      <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
-      <td>ROUND</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>3</td>
-      <td>BENIGN</td>
-      <td>3</td>
-      <td>test</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3073</th>
-      <td>Mass-Train_P_01720_RIGHT_MLO_1</td>
-      <td>P_01720</td>
-      <td>2</td>
-      <td>RIGHT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>LOBULATED</td>
-      <td>CIRCUMSCRIBED</td>
-      <td>3</td>
-      <td>BENIGN</td>
+      <td>IRREGULAR</td>
+      <td>SPICULATED</td>
+      <td>0</td>
+      <td>MALIGNANT</td>
       <td>4</td>
       <td>train</td>
-      <td>False</td>
+      <td>True</td>
     </tr>
     <tr>
-      <th>2623</th>
-      <td>Mass-Train_P_01097_LEFT_CC_1</td>
-      <td>P_01097</td>
-      <td>4</td>
-      <td>LEFT</td>
+      <th>2780</th>
+      <td>Mass-Train_P_01290_RIGHT_CC_1</td>
+      <td>P_01290</td>
+      <td>2</td>
+      <td>RIGHT</td>
       <td>CC</td>
       <td>1</td>
-      <td>LOBULATED-ARCHITECTURAL_DISTORTION</td>
-      <td>OBSCURED-ILL_DEFINED</td>
-      <td>4</td>
+      <td>IRREGULAR-ARCHITECTURAL_DISTORTION</td>
+      <td>SPICULATED</td>
+      <td>5</td>
       <td>MALIGNANT</td>
-      <td>2</td>
+      <td>5</td>
       <td>train</td>
       <td>True</td>
     </tr>
@@ -3014,8 +3031,8 @@ weighted avg       0.80      0.79      0.79      1694
     {
         requestKernel: true,
         binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
+            repo: "john-james-ai/BreastCancerDetection",
+            ref: "main",
         },
         codeMirrorConfig: {
             theme: "abcdef",

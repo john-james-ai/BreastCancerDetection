@@ -11,6 +11,7 @@ kernelspec:
   name: python3
 ---
 (eda6131)=
+
 # Spatial Domain Filtering
 
 ```{code-cell}
@@ -28,7 +29,7 @@ from myst_nb import glue
 import numpy as np
 from skimage.util import random_noise
 
-from bcd.preprocess.image.noise import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer, NLMeansFilterAnalyzer
+from bcd.explore.methods.noise import MeanFilterAnalyzer, GaussianFilterAnalyzer, MedianFilterAnalyzer, BilateralFilterAnalyzer, NLMeansFilterAnalyzer
 ```
 
 In spatial domain filtering, the value of a pixel is based upon both itself and the values of the surrounding pixels. Specifically, the output pixel value results from an algorithm that is applied to the values of the pixels in the neighborhood of a corresponding input pixel. Spatial domain filters are classified into two types: linear filters and non-linear filters.
@@ -44,7 +45,7 @@ Most commonly used to reduce additive Gaussian noise, the mean filter is a simpl
 
 The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
 
-```{figure} ../../figures/kernel.png
+```{figure}
 ---
 name: kernel
 ---
@@ -58,7 +59,7 @@ The mean filter works by convolving the kernel over the image as follows. Let w(
 ^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)
 ```
 
-```{admonition} Kernel Coefficients
+```{admonition}
 Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  $\frac{1}{mn}$, is applied at the end.
 ```
 
@@ -76,7 +77,7 @@ fig = analyzer.analyze()
 glue("mean_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} mean_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: mean_gaussian_characteristics_fig
@@ -95,7 +96,7 @@ fig = analyzer.compare()
 glue("mean_gaussian_analysis", fig)
 ```
 
-```{glue:figure} mean_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: mean_gaussian_analysis_fig
@@ -123,7 +124,7 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
 
 {numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
-```{figure} ../../figures/gaussian_kernel.png
+```{figure}
 ---
 name: gaussian_kernel
 ---
@@ -143,7 +144,7 @@ fig = analyzer.analyze()
 glue("gaussian_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} gaussian_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: gaussian_gaussian_characteristics_fig
@@ -162,7 +163,7 @@ fig = analyzer.compare()
 glue("gaussian_gaussian_analysis", fig)
 ```
 
-```{glue:figure} gaussian_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: gaussian_gaussian_analysis_fig
@@ -228,7 +229,7 @@ fig = analyzer.analyze()
 glue("median_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} median_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: median_gaussian_characteristics_fig
@@ -249,7 +250,7 @@ fig = analyzer.analyze()
 glue("median_snp_characteristics", fig)
 ```
 
-```{glue:figure} median_snp_characteristics
+```{glue:figure}
 ---
 align: center
 name: median_snp_characteristics_fig
@@ -268,7 +269,7 @@ fig = analyzer.compare()
 glue("median_snp_analysis", fig)
 ```
 
-```{glue:figure} median_snp_analysis
+```{glue:figure}
 ---
 align: center
 name: median_snp_analysis_fig
@@ -325,7 +326,7 @@ fig = analyzer.analyze(sigma_range=25, sigma_domain=25)
 glue("bilateral_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} bilateral_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: bilateral_gaussian_characteristics_fig
@@ -342,7 +343,7 @@ fig = analyzer.compare()
 glue("bilateral_gaussian_analysis", fig)
 ```
 
-```{glue:figure} bilateral_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: bilateral_gaussian_analysis_fig
@@ -352,7 +353,7 @@ Bilateral Filter Performance Analysis with Gaussian Noise
 
 The bilateral filter has several advantages. It has a simple formulation: a pixel's value becomes the weighted average of the pixel values in its neighborhood. Consequently, its behavior can be understood intuitively and adapted to application-specific tasks. Another advantage is that the bilateral filter depends on only two parameters that specify the contrast and size of features to preserve. Therefore, it is easy to tune to application-specific requirements.
 
-An aspect that limits the applicability of the bilateral filter is its computational complexity, $O(S^2)$, where $S$ is the number of pixels. With quadratic complexity, the computational cost increases sharply with image size.  can explode the computational cost. Yet, there is no dearth of optimizations proposed ({cite}`durandFastBilateralFiltering2002`,{cite}`eladOriginBilateralFilter2002`, {cite}`phamSeparableBilateralFiltering2005`, {cite}`parisFastApproximationBilateral2006`, {cite}`weissFastMedianBilateral2006a`), which reduce the computation cost.
+An aspect that limits the applicability of the bilateral filter is its computational complexity, $O(S^2)$, where $S$ is the number of pixels. With quadratic complexity, the computational cost increases sharply with image size. Yet, there is no dearth of optimizations proposed ({cite}`durandFastBilateralFiltering2002`,{cite}`eladOriginBilateralFilter2002`, {cite}`phamSeparableBilateralFiltering2005`, {cite}`parisFastApproximationBilateral2006`, {cite}`weissFastMedianBilateral2006a`), which reduce the computation cost.
 
 Another limitation extends from one of its strengths. As mentioned, the bilateral filter considers the range of intensity values when computing the weights to apply. If a pixel value is too different from the values of neighboring pixels, it has less influence on the output. As a consequence, the bilateral filter is not the best filter for salt and pepper noise. Here, the difference between a pixel and its neighbors can span the entire range (e.g., 0-255 for 8-bit images). In such cases, the values are too different to influence the output. Several approaches have been proposed to improve its performance in such cases. An example involves mollification. Often, images containing extreme intensity gradients are mollified using a median filter first, to obtain an initial estimate. Then the bilateral filter is applied to produce a more precise final estimate.
 
@@ -405,7 +406,7 @@ fig = analyzer.analyze(h=40)
 glue("nlmeans_gaussian_characteristics", fig)
 ```
 
-```{glue:figure} nlmeans_gaussian_characteristics
+```{glue:figure}
 ---
 align: center
 name: nlmeans_gaussian_characteristics_fig
@@ -422,7 +423,7 @@ fig = analyzer.compare()
 glue("nlmeans_gaussian_analysis", fig)
 ```
 
-```{glue:figure} nlmeans_gaussian_analysis
+```{glue:figure}
 ---
 align: center
 name: nlmeans_gaussian_analysis_fig

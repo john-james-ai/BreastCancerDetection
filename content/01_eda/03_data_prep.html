@@ -276,6 +276,24 @@ const thebe_selector_output = ".output, .cell_output"
 </a>
 </li>
       
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
   </ul>
 </div>
 
@@ -521,8 +539,8 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span>  <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">bcd.preprocess.metadata.case</span> <span class="kn">import</span> <span class="n">CasePrep</span>
-<span class="kn">from</span> <span class="nn">bcd.preprocess.metadata.dicom</span> <span class="kn">import</span> <span class="n">DicomPrep</span>
+<span class="kn">from</span> <span class="nn">bcd.explore.prep.case</span> <span class="kn">import</span> <span class="n">CasePrep</span>
+<span class="kn">from</span> <span class="nn">bcd.explore.prep.dicom</span> <span class="kn">import</span> <span class="n">DicomPrep</span>
 </pre></div>
 </div>
 </div>
@@ -583,7 +601,7 @@ The Case/Series XRef Dataset has been created with 7240 rows and 3 columns.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dicom</span> <span class="o">=</span> <span class="n">DicomPrep</span><span class="p">()</span>
-<span class="n">dfd</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">prep</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">LOCATION</span><span class="p">,</span> <span class="n">dicom_fp</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">,</span> <span class="n">skip_list</span><span class="o">=</span><span class="n">SKIP_LIST</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dfd</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">prep</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">LOCATION</span><span class="p">,</span> <span class="n">dicom_fp</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">,</span> <span class="n">skip_list</span><span class="o">=</span><span class="n">SKIP_LIST</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">dfd</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">add_series_description</span><span class="p">(</span><span class="n">dicom_fp</span><span class="o">=</span><span class="n">DICOM_FP</span><span class="p">,</span> <span class="n">series_fp</span><span class="o">=</span><span class="n">CASE_SERIES_XREF_FP</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The DICOM Dataset has been created with </span><span class="si">{</span><span class="n">dfd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows and </span><span class="si">{</span><span class="n">dfd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns.&quot;</span><span class="p">)</span>
 </pre></div>
@@ -602,8 +620,8 @@ The Case/Series XRef Dataset has been created with 7240 rows and 3 columns.
     {
         requestKernel: true,
         binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
+            repo: "john-james-ai/BreastCancerDetection",
+            ref: "main",
         },
         codeMirrorConfig: {
             theme: "abcdef",

@@ -26,7 +26,7 @@ import cv2
 import matplotlib.pyplot as plt
 from myst_nb import glue
 
-from bcd.preprocess.image.threshold import (ThresholdAnalyzer,
+from bcd.explore.methods.threshold import (ThresholdAnalyzer,
     ThresholdLi, ThresholdISOData, ThresholdTriangle, ThresholdOTSU, ThresholdAdaptiveMean, ThresholdAdaptiveGaussian, ThresholdManual, ThresholdYen, ThresholdTriangleAnalyzer
 )
 from bcd.utils.visual import plot_images
@@ -73,7 +73,7 @@ fig = plot_binary_images(image=img3, thresholds=thresholds)
 glue("various_thresholds", fig)
 ```
 
-```{glue:figure} various_thresholds
+```{glue:figure}
 ---
 align: center
 name: various_thresholds_fig
@@ -87,14 +87,14 @@ Impact of Threshold Value on Binarization
 - **Information Loss**.  Threshold value and information loss are positively correlated. High thresholds can shrink objects to the background as indicated in {numref}`various_thresholds_fig`  (d).
 - **Artifact Removal**: On the other hand, some information loss is acceptable if that information is an artifact. Higher thresholds tend to be associated with greater artifact removal.
 
-And there's the trade-off. {numref}`various_thresholds_fig` clearly illustrates the importance of selecting an appropriate threshold, what principled techniques exist for selecting thresholds that balance information capture and artifact removal?
+And there's the trade-off. {numref}`various_thresholds_fig` clearly illustrates the importance of selecting an appropriate threshold, so what principled techniques exist for selecting thresholds that balance information capture and artifact removal?
 
 Well, manual techniques can be tedious, and time-consuming, and don’t reflect the inherent variability in digital mammography. No single threshold value will perform consistently across all images.  And though no universally superior *automated* thresholding method exists, several techniques have been proposed, each with distinct performance characteristics, strengths, and weaknesses, that have broad applicability across a range of image analysis and processing domains. We’ll examine those next.
 
 ## Automated Thresholding Algorithms
 
-Sezgin and Sankur {cite}sankurSurveyImageThresholding2004 cast the space of automated thresholding techniques as follows: [^thresholds]
-
+Sezgin and Sankur {cite}`sankurSurveyImageThresholding2004` cast the space of automated thresholding techniques as follows: [^thresholds]
+``
 - **Histogram shape-based** methods that analyze, for instance, the peaks, valleys, and curvatures of smoothed histograms.
 - **Clustering-based methods** cluster the gray-level samples into background and foreground. Alternatively, the image is modeled as a mixture of two Gaussians.
 - **Entropy-based methods** use the entropy of the foreground and background regions, the cross-entropy between the original and binarized image, etc.
@@ -104,7 +104,7 @@ Sezgin and Sankur {cite}sankurSurveyImageThresholding2004 cast the space of auto
 
 For this effort, eight automated thresholding techniques {numref}`auto-thresh-tbl` were selected based on the intrinsic properties of the CBIS-DDSM dataset.
 
-```{table} Automated Threshold Techniques
+```{table}
 :name: auto-thresh-tbl
 
 | # | Type                    | Method                               | Author(s)                                            | Publication                                                  |
@@ -123,7 +123,7 @@ For this effort, eight automated thresholding techniques {numref}`auto-thresh-tb
 
 The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`.
 
-```{figure} ../../figures/triangle_zack.png
+```{figure}
 ---
 name: triangle
 ---
@@ -144,7 +144,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_triangle", fig)
 ```
 
-```{glue:figure} threshold_triangle
+```{glue:figure}
 ---
 align: center
 name: threshold_triangle_fig
@@ -174,7 +174,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_isodata", fig)
 ```
 
-```{glue:figure} threshold_isodata
+```{glue:figure}
 ---
 align: center
 name: threshold_isodata_fig
@@ -263,7 +263,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_otsu", fig)
 ```
 
-```{glue:figure} threshold_otsu
+```{glue:figure}
 ---
 align: center
 name: threshold_otsu_fig
@@ -291,7 +291,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_li", fig)
 ```
 
-```{glue:figure} threshold_li
+```{glue:figure}
 ---
 align: center
 name: threshold_li_fig
@@ -332,7 +332,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_yen", fig)
 ```
 
-```{glue:figure} threshold_yen
+```{glue:figure}
 ---
 align: center
 name: threshold_yen_fig
@@ -375,7 +375,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_local_mean", fig)
 ```
 
-```{glue:figure} threshold_local_mean
+```{glue:figure}
 ---
 align: center
 name: threshold_local_mean_fig
@@ -395,7 +395,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_local_gaussian", fig)
 ```
 
-```{glue:figure} threshold_local_gaussian
+```{glue:figure}
 ---
 align: center
 name: threshold_local_gaussian_fig

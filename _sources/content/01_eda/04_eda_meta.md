@@ -85,7 +85,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
 from bcd.explore.meta.case import CaseExplorer
-from bcd.explore.meta.dicom import DicomExplorer
 from bcd.explore.meta.multivariate.pipeline import PipelineBuilder
 from bcd.explore.meta.multivariate.selection import ModelSelector
 

@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.15.1
+    jupytext_version: 1.16.0
 kernelspec:
   display_name: bcd
   language: python
@@ -12,15 +12,16 @@ kernelspec:
 ---
 
 (eda3)=
+
 # EDA Part 3: Data Preparation
 
 In the prior section, we obtained the CBIS-DDSM data from [The Cancer Imaging Archive](https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629) (TCIA). This brief section aims to convert the data to a form well suited for exploratory data analyses.
 
-| # | Dataset              | Description                                                                  |
-| - | -------------------- | ---------------------------------------------------------------------------- |
-| 1 | calc_cases.csv       | Calcification cases from the training and test sets.                         |
-| 2 | mass_cases.csv       | Mass cases from the training and test sets.                                  |
-| 3 | case_series_xref.csv | Case / Series Cross-Reference                                                |
+| # | Dataset              | Description                                                          |
+| - | -------------------- | -------------------------------------------------------------------- |
+| 1 | calc_cases.csv       | Calcification cases from the training and test sets.                 |
+| 2 | mass_cases.csv       | Mass cases from the training and test sets.                          |
+| 3 | case_series_xref.csv | Case / Series Cross-Reference                                        |
 | 4 | dicom.csv            | DICOM dataset containing resolution and pixel properties each image. |
 
 First, we'll build the case datasets (1,2,3), then we'll construct the DICOM image metadata and quality assessment dataset (4).
@@ -34,8 +35,8 @@ if 'jbook' in os.getcwd():
 
 import pandas as  pd
 
-from bcd.preprocess.metadata.case import CasePrep
-from bcd.preprocess.metadata.dicom import DicomPrep
+from bcd.explore.prep.case import CasePrep
+from bcd.explore.prep.dicom import DicomPrep
 ```
 
 ## Build Case Dataset
@@ -76,7 +77,7 @@ SKIP_LIST = ["Mass-Training_P_01382_LEFT_MLO/07-20-2016-DDSM-93921/1.000000-full
 
 ```{code-cell}
 dicom = DicomPrep()
-dfd = dicom.prep(location=LOCATION, dicom_fp=DICOM_FP, skip_list=SKIP_LIST, result=True, force=True)
+dfd = dicom.prep(location=LOCATION, dicom_fp=DICOM_FP, skip_list=SKIP_LIST, result=True, force=False)
 dfd = dicom.add_series_description(dicom_fp=DICOM_FP, series_fp=CASE_SERIES_XREF_FP)
 print(f"The DICOM Dataset has been created with {dfd.shape[0]} rows and {dfd.shape[1]} columns.")
 ```
