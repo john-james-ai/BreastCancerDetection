@@ -104,7 +104,7 @@ Sezgin and Sankur {cite}`sankurSurveyImageThresholding2004` cast the space of au
 
 For this effort, eight automated thresholding techniques {numref}`auto-thresh-tbl` were selected based on the intrinsic properties of the CBIS-DDSM dataset.
 
-```{table}
+```{table} Automatic Threshold Algorithms
 :name: auto-thresh-tbl
 
 | # | Type                    | Method                               | Author(s)                                            | Publication                                                  |
