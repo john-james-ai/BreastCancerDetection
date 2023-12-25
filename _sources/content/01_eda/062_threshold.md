@@ -73,7 +73,7 @@ fig = plot_binary_images(image=img3, thresholds=thresholds)
 glue("various_thresholds", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} various_thresholds
 ---
 align: center
 name: various_thresholds_fig
