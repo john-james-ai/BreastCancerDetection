@@ -45,7 +45,7 @@ Most commonly used to reduce additive Gaussian noise, the mean filter is a simpl
 
 The mean filter is based upon the notion of a m x n kernel or matrix, typically of size 3 x 3, which defines the shape and size of the neighborhood to be sampled when computing the mean average intensities.  {numref}`kernel` illustrates a 3 x 3 kernel.
 
-```{figure}
+```{figure} ../../figures/kernel.png
 ---
 name: kernel
 ---
@@ -59,7 +59,7 @@ The mean filter works by convolving the kernel over the image as follows. Let w(
 ^\hat{f}(x,y) = \frac{1}{mn}\displaystyle\sum_{(s,t)\in w(x,y)} g(s,t)
 ```
 
-```{admonition}
+```{admonition} Kernel Coefficients
 Note that the coefficients for the 3x3 kernel are 1 as opposed to 1/9. It is computationally more efficient to have coefficients valued at 1. Then, the normalization constant,  $\frac{1}{mn}$, is applied at the end.
 ```
 
@@ -77,7 +77,7 @@ fig = analyzer.analyze()
 glue("mean_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} mean_gaussian_characteristics
 ---
 align: center
 name: mean_gaussian_characteristics_fig
@@ -96,7 +96,7 @@ fig = analyzer.compare()
 glue("mean_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} mean_gaussian_analysis
 ---
 align: center
 name: mean_gaussian_analysis_fig
@@ -124,7 +124,7 @@ G(x,y) = \frac{1}{2\pi\sigma^2}e^{-\frac{x^2+y^2}{2\sigma^2}}
 
 {numref}`gaussian_kernel` shows a 5x5 Gaussian kernel with $\sigma$ = 1. Notice, the coefficients diminish with increasing distance from the kernel’s centre. Central pixels have a greater influence on the value of the output pixel than those on the periphery.
 
-```{figure}
+```{figure} ../../figures/gaussian_kernel.png
 ---
 name: gaussian_kernel
 ---
@@ -144,7 +144,7 @@ fig = analyzer.analyze()
 glue("gaussian_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} gaussian_gaussian_characteristics
 ---
 align: center
 name: gaussian_gaussian_characteristics_fig
@@ -163,7 +163,7 @@ fig = analyzer.compare()
 glue("gaussian_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} gaussian_gaussian_analysis
 ---
 align: center
 name: gaussian_gaussian_analysis_fig
@@ -229,7 +229,7 @@ fig = analyzer.analyze()
 glue("median_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} median_gaussian_characteristics
 ---
 align: center
 name: median_gaussian_characteristics_fig
@@ -250,7 +250,7 @@ fig = analyzer.analyze()
 glue("median_snp_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} median_snp_characteristics
 ---
 align: center
 name: median_snp_characteristics_fig
@@ -269,7 +269,7 @@ fig = analyzer.compare()
 glue("median_snp_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} median_snp_analysis
 ---
 align: center
 name: median_snp_analysis_fig
@@ -326,7 +326,7 @@ fig = analyzer.analyze(sigma_range=25, sigma_domain=25)
 glue("bilateral_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} bilateral_gaussian_characteristics
 ---
 align: center
 name: bilateral_gaussian_characteristics_fig
@@ -343,7 +343,7 @@ fig = analyzer.compare()
 glue("bilateral_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} bilateral_gaussian_analysis_fig
 ---
 align: center
 name: bilateral_gaussian_analysis_fig
@@ -406,7 +406,7 @@ fig = analyzer.analyze(h=40)
 glue("nlmeans_gaussian_characteristics", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} nlmeans_gaussian_characteristics
 ---
 align: center
 name: nlmeans_gaussian_characteristics_fig
@@ -423,7 +423,7 @@ fig = analyzer.compare()
 glue("nlmeans_gaussian_analysis", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} nlmeans_gaussian_analysis
 ---
 align: center
 name: nlmeans_gaussian_analysis_fig

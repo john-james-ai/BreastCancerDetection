@@ -123,7 +123,7 @@ For this effort, eight automated thresholding techniques {numref}`auto-thresh-tb
 
 The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`.
 
-```{figure}
+```{figure} ../../figures/triangle_zack.png
 ---
 name: triangle
 ---
@@ -144,7 +144,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_triangle", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_triangle
 ---
 align: center
 name: threshold_triangle_fig
@@ -174,7 +174,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_isodata", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_isodata
 ---
 align: center
 name: threshold_isodata_fig
@@ -263,7 +263,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_otsu", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_otsu
 ---
 align: center
 name: threshold_otsu_fig
@@ -291,7 +291,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_li", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_li
 ---
 align: center
 name: threshold_li_fig
@@ -332,7 +332,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_yen", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_yen
 ---
 align: center
 name: threshold_yen_fig
@@ -375,7 +375,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_local_mean", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_local_mean
 ---
 align: center
 name: threshold_local_mean_fig
@@ -395,7 +395,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_local_gaussian", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_local_gaussian
 ---
 align: center
 name: threshold_local_gaussian_fig
