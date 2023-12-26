@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/analyze/image/mammogram.py                                                     #
+# Filename   : /bcd/explore/image/mammogram.py                                                     #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday December 19th 2023 04:10:38 pm                                              #
-# Modified   : Wednesday December 20th 2023 05:05:26 pm                                            #
+# Modified   : Monday December 25th 2023 11:49:56 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -27,7 +27,7 @@ import pandas as pd
 
 from bcd import DataClass
 from bcd.data.image import ImageIO
-from bcd.utils.image import convert_uint8
+from bcd.utils.image import grayscale
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -200,7 +200,7 @@ class Mammogram(DataClass):
         if ax is None:
             _, ax = plt.subplots(figsize=figsize)
 
-        img = convert_uint8(self.pixel_data)
+        img = grayscale(self.pixel_data)
 
         hist = cv2.calcHist([img], [0], None, [256], [0, 256])
 

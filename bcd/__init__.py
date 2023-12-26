@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:35:50 pm                                               #
-# Modified   : Tuesday December 19th 2023 04:13:35 pm                                              #
+# Modified   : Tuesday December 26th 2023 12:05:22 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,14 +21,16 @@ from __future__ import annotations
 import json
 import logging
 import string
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Callable
+from typing import Any, Callable
 
 import numpy as np
 import pandas as pd
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=unused-argument
 # ------------------------------------------------------------------------------------------------ #
 IMMUTABLE_TYPES: tuple = (
     str,
@@ -133,6 +135,77 @@ class DataClass(ABC):
             for k, v in self.__dict__.items()
             if not k.startswith("_")
         }
+
+    @classmethod
+    def _export_config(cls, v):  # pragma: no cover
+        """Returns v with Configs converted to dicts, recursively."""
+        if isinstance(v, IMMUTABLE_TYPES):
+            return v
+        elif isinstance(v, SEQUENCE_TYPES):
+            return type(v)(map(cls._export_config, v))
+        elif isinstance(v, datetime):
+            return v
+        elif isinstance(v, dict):
+            return json.dumps(v)
+        elif hasattr(v, "as_dict"):
+            return v.as_dict()
+        elif isinstance(v, Callable):
+            return v.__name__
+        elif isinstance(v, object):
+            return v.__class__.__name__
+
+    def as_df(self) -> pd.DataFrame:
+        """Returns the project in DataFrame format"""
+        d = self.as_dict()
+        return pd.DataFrame(data=d, index=[0])
+
+
+# ------------------------------------------------------------------------------------------------ #
+class Task(ABC):
+    """Encapsulates the interface for tasks that perform."""
+
+    def __init__(self) -> None:
+        self._logger = logging.getLogger(f"{self.__class__.__name__}")
+
+    @property
+    def logger(self) -> logging:
+        return self._logger
+
+    @abstractmethod
+    def run(self, image: np.ndarray) -> Any:
+        """Runs the task."""
+
+    def __repr__(self) -> str:  # pragma: no cover tested, but missing in coverage
+        s = "{}({})".format(
+            self.__class__.__name__,
+            ", ".join(
+                "{}={!r}".format(k, v)
+                for k, v in self.__dict__.items()
+                if type(v) in IMMUTABLE_TYPES
+            ),
+        )
+        return s
+
+    def __str__(self) -> str:
+        width = 32
+        breadth = width * 2
+        s = f"\n\n{self.__class__.__name__.center(breadth, ' ')}"
+        d = self.as_dict()
+        for k, v in d.items():
+            if type(v) in IMMUTABLE_TYPES:
+                k = string.capwords(
+                    k.replace(
+                        "_",
+                        " ",
+                    )
+                )
+                s += f"\n{k.rjust(width,' ')} | {v}"
+        s += "\n\n"
+        return s
+
+    def as_dict(self) -> dict:
+        """Returns a dictionary representation of the the Config object."""
+        return {k: self._export_config(v) for k, v in self.__dict__.items()}
 
     @classmethod
     def _export_config(cls, v):  # pragma: no cover

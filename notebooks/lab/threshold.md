@@ -18,7 +18,7 @@ Various types of artifacts were found on breast mammogram images, as shown below
 import os
 import numpy as np
 import cv2
-from bcd.preprocess.image.threshold import ThresholdAnalyzer, ThresholdManual, ThresholdOTSU, ThresholdTriangle, ThresholdAdaptiveMean,  ThresholdAdaptiveGaussian, ThresholdISOData, ThresholdLi, ThresholdTriangleAnalyzer, ThresholdYen, ThresholdSurveyor
+from bcd.explore.methods.threshold import ThresholdAnalyzer, ThresholdManual, ThresholdOTSU, ThresholdTriangle, ThresholdAdaptiveMean,  ThresholdAdaptiveGaussian, ThresholdISOData, ThresholdLi, ThresholdTriangleAnalyzer, ThresholdYen, ThresholdSurveyor
 from bcd.utils.visual import plot_images
 ```
 
@@ -57,7 +57,7 @@ def plot_binary_images(image: np.ndarray, thresholds: list):
     return plot_images(images=images, titles=titles, title=title)
 
 thresholds = [32,64,128]
-fig = plot_binary_images(image=img3, thresholds=thresholds)    
+fig = plot_binary_images(image=img3, thresholds=thresholds)
 ```
 
 ## Manual Thresholding

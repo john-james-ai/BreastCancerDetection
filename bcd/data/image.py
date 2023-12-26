@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Thursday December 14th 2023 09:42:18 am                                             #
+# Modified   : Sunday December 24th 2023 08:33:10 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,9 +24,9 @@ import shutil
 from uuid import uuid4
 
 import cv2
+import dicomsdl as dicom
 import numpy as np
 import pandas as pd
-import pydicom
 from tqdm import tqdm
 
 from bcd.config import Config
@@ -101,12 +101,12 @@ class ImageIO:
     @classmethod
     def _read_dicom(cls, filepath: str) -> np.ndarray:
         try:
-            ds = pydicom.dcmread(filepath)
+            ds = dicom.open(filepath)
         except Exception as e:
             logging.exception(e)
             raise
         else:
-            return ds.pixel_array
+            return ds.pixelData()
 
     @classmethod
     def _read_image(cls, filepath: str, channels: int = 2) -> np.ndarray:

@@ -26,7 +26,7 @@ if 'jbook' in os.getcwd():
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from bcd.utils.image import convert_uint8
+from bcd.utils.image import grayscale
 from myst_nb import glue
 
 img1 = "data/image/1_dev/converted/train/benign/347c2455-cb62-40f8-a173-9e4eb9a21902.png"

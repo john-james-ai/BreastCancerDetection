@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon-32x32.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="5.2. Thresholding" href="01_eda/052_threshold.html" />
+    <link rel="prev" title="6.2. Thresholding" href="01_eda/062_threshold.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -166,21 +166,22 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_eda/01_data.html">1. EDA Part 1: <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_eda/02_data_prep.html">2. EDA Part 2: Data Preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_eda/03_eda_meta.html">3. EDA Part 3: Case Dataset Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_eda/04_eda_image.html">4. EDA Part 4: Image Analysis</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="01_eda/05_eda_methods.html">5. EDA Part 5: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="01_eda/051_denoise.html">5.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0511_noise_models.html">5.1.1. Noise Models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0512_noise_types.html">5.1.2. Noise Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0513_denoisers.html">5.1.3. Denoiser Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/05131_spatial.html">5.1.4. Spatial Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/05132_frequency.html">5.1.5. Frequency Domain Filtering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01_eda/0514_experiment.html">5.1.6. Denoising Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/01_intro.html">1. EDA Part 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/02_data.html">2. EDA Part 2: <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/03_data_prep.html">3. EDA Part 3: Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/04_eda_meta.html">4. EDA Part 4: Case Dataset Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda/05_eda_image.html">5. EDA Part 5: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="01_eda/06_eda_methods.html">6. EDA Part 6: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="01_eda/061_denoise.html">6.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0611_noise_models.html">6.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0612_noise_types.html">6.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0613_denoisers.html">6.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/06131_spatial.html">6.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/06132_frequency.html">6.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01_eda/0614_experiment.html">6.1.6. Denoising Experiment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01_eda/052_threshold.html">5.2. Thresholding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01_eda/062_threshold.html">6.2. Thresholding</a></li>
 </ul>
 </li>
 </ul>
@@ -526,40 +527,44 @@ document.write(`
 <span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
 <p>Z. Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli. Image Quality Assessment: From Error Visibility to Structural Similarity. <em>IEEE Transactions on Image Processing</em>, 13(4):600–612, April 2004. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/1284395/">http://ieeexplore.ieee.org/document/1284395/</a> (visited on 2023-11-22), <a class="reference external" href="https://doi.org/10.1109/TIP.2003.819861">doi:10.1109/TIP.2003.819861</a>.</p>
 </div>
-<div class="citation" id="id370" role="doc-biblioentry">
+<div class="citation" id="id367" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
+<p>Bu¨lent Sankur. Survey over image thresholding techniques and quantitative performance evaluation. <em>Journal of Electronic Imaging</em>, 13(1):146, January 2004. URL: <a class="reference external" href="http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315">http://electronicimaging.spiedigitallibrary.org/article.aspx?doi=10.1117/1.1631315</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1117/1.1631315">doi:10.1117/1.1631315</a>.</p>
+</div>
+<div class="citation" id="id370" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
 <p>G W Zack, W E Rogers, and S A Latt. Automatic measurement of sister chromatid exchange frequency. <em>Journal of Histochemistry &amp; Cytochemistry</em>, 25(7):741–753, July 1977. URL: <a class="reference external" href="http://journals.sagepub.com/doi/10.1177/25.7.70454">http://journals.sagepub.com/doi/10.1177/25.7.70454</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1177/25.7.70454">doi:10.1177/25.7.70454</a>.</p>
 </div>
 <div class="citation" id="id358" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
 <p>Ridler and Calvard. Picture Thresholding Using an Iterative Selection Method. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, 8(8):630–632, 1978. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/4310039/">http://ieeexplore.ieee.org/document/4310039/</a> (visited on 2023-12-11), <a class="reference external" href="https://doi.org/10.1109/TSMC.1978.4310039">doi:10.1109/TSMC.1978.4310039</a>.</p>
 </div>
 <div class="citation" id="id374" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
 <p>A. El-Zaart. Images thresholding using ISODATA technique with gamma distribution. <em>Pattern Recognition and Image Analysis</em>, 20(1):29–41, March 2010. URL: <a class="reference external" href="http://link.springer.com/10.1134/S1054661810010037">http://link.springer.com/10.1134/S1054661810010037</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1134/S1054661810010037">doi:10.1134/S1054661810010037</a>.</p>
 </div>
 <div class="citation" id="id369" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>36<span class="fn-bracket">]</span></span>
 <p>Nobuyuki Otsu. A Threshold Selection Method from Gray-Level Histograms. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, 9(1):62–66, January 1979. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/4310076/">http://ieeexplore.ieee.org/document/4310076/</a> (visited on 2023-12-15), <a class="reference external" href="https://doi.org/10.1109/TSMC.1979.4310076">doi:10.1109/TSMC.1979.4310076</a>.</p>
 </div>
 <div class="citation" id="id375" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>36<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>37<span class="fn-bracket">]</span></span>
 <p>J. Kittler and J. Illingworth. On threshold selection using clustering criteria. <em>IEEE Transactions on Systems, Man, and Cybernetics</em>, SMC-15(5):652–655, September 1985. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/6313443/">http://ieeexplore.ieee.org/document/6313443/</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1109/TSMC.1985.6313443">doi:10.1109/TSMC.1985.6313443</a>.</p>
 </div>
 <div class="citation" id="id376" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>37<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>38<span class="fn-bracket">]</span></span>
 <p>J. Kittler and J. Illingworth. Minimum error thresholding. <em>Pattern Recognition</em>, 19(1):41–47, January 1986. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/0031320386900300">https://linkinghub.elsevier.com/retrieve/pii/0031320386900300</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1016/0031-3203(86)90030-0">doi:10.1016/0031-3203(86)90030-0</a>.</p>
 </div>
 <div class="citation" id="id377" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>38<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>39<span class="fn-bracket">]</span></span>
 <p>C.H. Li and C.K. Lee. Minimum cross entropy thresholding. <em>Pattern Recognition</em>, 26(4):617–625, April 1993. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/003132039390115D">https://linkinghub.elsevier.com/retrieve/pii/003132039390115D</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1016/0031-3203(93)90115-D">doi:10.1016/0031-3203(93)90115-D</a>.</p>
 </div>
 <div class="citation" id="id378" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>39<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>40<span class="fn-bracket">]</span></span>
 <p>C.H. Li and P.K.S. Tam. An iterative algorithm for minimum cross entropy thresholding. <em>Pattern Recognition Letters</em>, 19(8):771–776, June 1998. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0167865598000579">https://linkinghub.elsevier.com/retrieve/pii/S0167865598000579</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1016/S0167-8655(98)00057-9">doi:10.1016/S0167-8655(98)00057-9</a>.</p>
 </div>
 <div class="citation" id="id379" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>40<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>41<span class="fn-bracket">]</span></span>
 <p>Jui-Cheng Yen, Fu-Juay Chang, and Shyang Chang. A new criterion for automatic multilevel thresholding. <em>IEEE Transactions on Image Processing</em>, 4(3):370–378, March 1995. URL: <a class="reference external" href="http://ieeexplore.ieee.org/document/366472/">http://ieeexplore.ieee.org/document/366472/</a> (visited on 2023-12-19), <a class="reference external" href="https://doi.org/10.1109/83.366472">doi:10.1109/83.366472</a>.</p>
 </div>
 </div>
@@ -570,8 +575,8 @@ document.write(`
     {
         requestKernel: true,
         binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
-            ref: "master",
+            repo: "john-james-ai/BreastCancerDetection",
+            ref: "main",
         },
         codeMirrorConfig: {
             theme: "abcdef",
@@ -598,12 +603,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_eda/052_threshold.html"
+       href="01_eda/062_threshold.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5.2. </span>Thresholding</p>
+        <p class="prev-next-title"><span class="section-number">6.2. </span>Thresholding</p>
       </div>
     </a>
 </div></div>

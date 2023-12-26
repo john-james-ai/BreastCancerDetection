@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 from skimage.util import random_noise
 from skimage.restoration import wiener
 
-from bcd.utils.image import convert_uint8
+from bcd.utils.image import grayscale
 
 
 FP_ORIG = "jbook/figures/mammogram.png"
@@ -31,7 +31,7 @@ fx = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
 
 # Add random Gaussian noise with zero mean and variance of 0.1
 gx = random_noise(fx, mode='gaussian', mean=0,var=0.1)
-gx = convert_uint8(gx)
+gx = grayscale(gx)
 # gx = gx[:,:]
 
 # Apply the Gaussian Kernel
@@ -85,7 +85,7 @@ orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
 
 # Add random Gaussian noise with zero mean and variance of 0.1
 img_gaussian = random_noise(orig, mode='gaussian', mean=0,var=0.1)
-img_gaussian = convert_uint8(img_gaussian)
+img_gaussian = grayscale(img_gaussian)
 
 # Create images with varying kernel sizes.
 img_1 = cv2.GaussianBlur(img_gaussian, (3,3), 0)

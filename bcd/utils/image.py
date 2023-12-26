@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday November 18th 2023 12:29:17 pm                                             #
-# Modified   : Wednesday December 13th 2023 04:51:46 pm                                            #
+# Modified   : Monday December 25th 2023 11:50:00 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,29 +19,60 @@
 """Images Utilities"""
 import numpy as np
 
+
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=no-member
 # ------------------------------------------------------------------------------------------------ #
-
-
-def convert_uint8(
-    img: np.ndarray, invert: bool = False, asfloat: bool = False
+#                                  PIXEL RANGE CONVERTER                                           #
+# ------------------------------------------------------------------------------------------------ #
+def convert_pixel_range(
+    image: np.ndarray, from_values: tuple, to_values: tuple
 ) -> np.ndarray:
-    """Converts floating point array in [0,1] to unit8 in [9,255]
-
-    This is used on the output of skimage random_noise function that returns a normalized
-    image with values in [0,1]. This function converts the pixel values back to that
-    of an 8-bit unsigned representation with values in [0,255].
+    """Changes pixel values from from_range to to_range
 
     Args:
-        img (np.ndarray): The image in numpy array format.
-        invert (bool): Whether to invert the colors
+        image (np.ndarray): Image in numpy array format.
+        from_values (tuple): Tuple in form (min_pixel_value,  max_pixel_value) indicating the
+            pixel values in the image.
+        to_values (tuple): Tuple in form (min_pixel_value,  max_pixel_value) indicating
+            the pixel values to which the image is to be converted.
+
+    Returns:
+        np.ndarrray: The converted image.
 
     """
-    img = img.astype(float)
-    img = np.array(255 * img, dtype="uint8")
+    from_range = from_values[1] - from_values[0]
+    to_range = to_values[1] - to_values[0]
+    scaled = np.array((image - from_values[0]) / float(from_range), dtype=float)
+    return to_values[0] + (scaled * to_range)
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                       GRAYSCALE                                                  #
+# ------------------------------------------------------------------------------------------------ #
+def grayscale(image: np.ndarray, invert: bool = False) -> np.ndarray:
+    """Returns a 2-dimensional grayscale image with pixel values in 0 to 255.
+
+    This method performs three tasks:
+        1. If the image is in 3-d, it is converted to a 2-d image.
+        2. If the range of pixels is converted to [0,255], if not in that range.
+        3. Image is converted to uint8 format.
+
+    It also has an invert option to invert the image intensity values.
+
+    Args:
+        image (np.ndarray): Image with 2d or 3d shape
+        invert (bool): Whether to invert the
+    """
+    if len(image.shape) > 2:
+        image = image[:, :, 0].squeeze()
+    # Converts range to [0,255] if needed.
+    if np.max(image) == 1.0:
+        image = convert_pixel_range(image=image, from_values=(0, 1), to_values=(0, 255))
+    elif np.max(image) > 255:
+        image = convert_pixel_range(
+            image=image, from_values=(0, np.max(image)), to_values=(0, 255)
+        )
     if invert:
-        img = 255 - img
-    if asfloat:
-        img = np.asfarray(img)
-    return img
+        image = 255 - image
+    return image.astype("uint8")

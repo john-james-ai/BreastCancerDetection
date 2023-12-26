@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Wednesday December 20th 2023 04:53:42 pm                                            #
+# Modified   : Tuesday December 26th 2023 12:11:00 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,10 +22,13 @@ import pytest
 
 from bcd.config import Config
 from bcd.container import BCDContainer
+from bcd.data.image import ImageIO
+from bcd.utils.image import grayscale
 
 # ------------------------------------------------------------------------------------------------ #
 collect_ignore_glob = ["data/**/*.*", "bcd/preprocess/**/*.*"]
 # ------------------------------------------------------------------------------------------------ #
+CASE_FP = "data/meta/2_clean/cases.csv"
 IMAGE_FP = "data/meta/2_clean/dicom.csv"
 EVALUATION_FP = "tests/data/3_denoise/results.csv"
 # ------------------------------------------------------------------------------------------------ #
@@ -55,7 +58,7 @@ def mode():
 # ------------------------------------------------------------------------------------------------ #
 #                             SET LOGGING LEVEL TO DEBUG                                           #
 # ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="session", autouse=False)
+@pytest.fixture(scope="session", autouse=True)
 def log_level():
     """Sets the log level to DEBUG"""
     prior_level = Config.get_log_level()
@@ -76,8 +79,8 @@ def container():
         modules=["bcd.data.load"],
         packages=[
             "bcd.dal",
-            "bcd.preprocess.image.flow",
-            "bcd.preprocess.image.experiment",
+            "bcd.explore.methods.flow",
+            "bcd.explore.methods.experiment",
         ],
     )
 
@@ -132,3 +135,20 @@ def image_meta():
     s = df.sample(n=1)
     s = s.squeeze()
     return s.to_dict()
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                          IMAGE                                                   #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="session", autouse=False)
+def image():
+    """Serves up a random MLO image for each function.
+
+    MLO images are selected because they often contain pectoral muscle, which can be used to
+    test pectoral removal tasks.
+    """
+    df = pd.read_csv(IMAGE_FP)
+    meta = df.loc[df["image_view"] == "MLO"].sample(n=1)
+    fp = meta["filepath"]
+    img = ImageIO.read(filepath=fp)
+    return grayscale(img)

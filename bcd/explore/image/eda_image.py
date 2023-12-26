@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday December 19th 2023 03:49:16 pm                                              #
-# Modified   : Friday December 22nd 2023 01:57:23 pm                                               #
+# Modified   : Monday December 25th 2023 11:49:56 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -28,7 +28,7 @@ import seaborn as sns
 from scipy.stats import ttest_ind
 
 from bcd.data.image import ImageIO
-from bcd.utils.image import convert_uint8
+from bcd.utils.image import grayscale
 from bcd.utils.math import find_factors
 
 # ------------------------------------------------------------------------------------------------ #
@@ -209,7 +209,7 @@ class ImageExplorer:
         n: int = 50,
         height: int = 9,
         width: int = 12,
-        cmap: str = "bone",
+        cmap: str = "turbo",
         sort_by: Union[str, list] = None,
         histogram: bool = False,
         title: str = None,
@@ -255,7 +255,7 @@ class ImageExplorer:
         for ax, (_, row) in zip(axes, df.iterrows()):
             img = self._io.read(row["filepath"])
             if histogram:
-                img = convert_uint8(img=img)
+                img = grayscale(img=img)
                 hist = cv2.calcHist([img], [0], None, [256], [0, 256])
                 ax.plot(hist)
             else:

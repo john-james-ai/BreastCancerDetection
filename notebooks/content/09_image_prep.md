@@ -48,8 +48,8 @@ if 'jbook' in os.getcwd():
 from bcd.config import Config
 from bcd.container import BCDContainer
 from bcd.etl.load import Loader
-from bcd.preprocess.image.experiment.denoise import DenoiseExperiment
-from bcd.preprocess.image.method.denoise import (
+from bcd.explore.methods.experiment.denoise import DenoiseExperiment
+from bcd.explore.methods.method.denoise import (
     BilateralFilter,
     GaussianFilter,
     MeanFilter,
@@ -71,7 +71,7 @@ container = BCDContainer()
 container.init_resources()
 container.wire(
     packages=[
-        "bcd.dal.repo", "bcd.preprocess.image.experiment", "bcd.dal.io", "bcd.etl"
+        "bcd.dal.repo", "bcd.explore.methods.experiment", "bcd.dal.io", "bcd.etl"
     ]
 )
 ```

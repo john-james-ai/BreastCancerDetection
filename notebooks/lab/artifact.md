@@ -19,7 +19,7 @@ import os
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from bcd.utils.image import convert_uint8
+from bcd.utils.image import grayscale
 ```
 
 ```{code-cell} ipython3
@@ -37,10 +37,10 @@ img4 = cv2.imread(img4, cv2.IMREAD_GRAYSCALE)
 ```
 
 ```{code-cell} ipython3
-img1 = convert_uint8(img1)
-img2 = convert_uint8(img2)
-img3 = convert_uint8(img3)
-img4 = convert_uint8(img4)
+img1 = grayscale(img1)
+img2 = grayscale(img2)
+img3 = grayscale(img3)
+img4 = grayscale(img4)
 ```
 
 ```{code-cell} ipython3

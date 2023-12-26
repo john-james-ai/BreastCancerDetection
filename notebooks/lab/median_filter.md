@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 from skimage.util import random_noise
 from skimage.restoration import wiener
 
-from bcd.utils.image import convert_uint8
+from bcd.utils.image import grayscale
 
 FP_ORIG = "jbook/figures/mammogram.png"
 CMAP = 'gray'
@@ -32,7 +32,7 @@ fx = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
 
 # Add random salt and pepper noise
 gx = random_noise(fx, mode='s&p', amount=0.30)
-gx = convert_uint8(gx)
+gx = grayscale(gx)
 # gx = gx[:,:]
 
 # Apply Median Filter
@@ -98,7 +98,7 @@ orig = cv2.imread(FP_ORIG, cv2.IMREAD_GRAYSCALE)
 
 # Add random Gaussian noise with zero mean and variance of 0.1
 img_gaussian = random_noise(orig, mode='s&p', amount=0.3)
-img_gaussian = convert_uint8(img_gaussian)
+img_gaussian = grayscale(img_gaussian)
 
 # Create images with varying kernel sizes.
 img_1 = cv2.medianBlur(img_gaussian, 3)

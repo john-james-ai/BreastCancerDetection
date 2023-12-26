@@ -17,7 +17,7 @@ kernelspec:
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-from bcd.utils.image import convert_uint8
+from bcd.utils.image import grayscale
 
 FP_WHITE = "../../figures/frequency_white.jpg"
 FP_HLINE = "../../figures/frequency_hline.png"
@@ -26,7 +26,7 @@ FP_VLINE = "../../figures/frequency_vline.png"
 def get_image(fp: str, size: int = 200):
     img = cv2.imread(fp, cv2.IMREAD_GRAYSCALE)
     return cv2.resize(img, (size,size))
-    #return convert_uint8(img=img, asfloat=True, invert=True)
+    #return grayscale(img=img, asfloat=True, invert=True)
 
 def transform_image(img):
     # Compute fourier transformation
