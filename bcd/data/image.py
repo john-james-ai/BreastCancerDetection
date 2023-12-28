@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Sunday December 24th 2023 08:33:10 pm                                               #
+# Modified   : Wednesday December 27th 2023 11:22:11 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,6 +21,8 @@ from __future__ import annotations
 import logging
 import os
 import shutil
+from dataclasses import dataclass
+from typing import Callable
 from uuid import uuid4
 
 import cv2
@@ -29,11 +31,86 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+from bcd import DataClass
 from bcd.config import Config
 
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=no-member
+# ------------------------------------------------------------------------------------------------ #
+#                                       IMAGE                                                      #
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class Image(DataClass):
+    """Encapsulates an image object."""
+
+    patient_id: str
+    uid: str
+    series_uid: str
+    case_id: str
+    series_description: str
+    image_view: str
+    breast_density: int
+    subtlety: int
+    breast_side: str
+    abnormality_id: int
+    abnormality_type: str
+    calc_type: str
+    calc_distribution: str
+    mass_shape: str
+    mass_margins: str
+    height: int
+    width: int
+    size: int
+    aspect_ratio: float
+    bit_depth: int
+    min_pixel_value: int
+    max_pixel_value: int
+    mean_pixel_value: float
+    std_pixel_value: float
+    pathology: str
+    assessment: int
+    cancer: bool
+    fileset: str
+    filepath: str
+    pixels: np.ndarray
+
+    @classmethod
+    def create(cls, pixels: np.ndarray, meta: pd.Series) -> Image:
+        return cls(
+            patient_id=meta["patient_id"],
+            uid=meta["uid"],
+            series_uid=meta["series_uid"],
+            case_id=meta["case_id"],
+            series_description=meta["series_description"],
+            image_view=meta["image_view"],
+            breast_density=meta["breast_density"],
+            subtlety=meta["subtlety"],
+            breast_side=meta["breast_side"],
+            abnormality_id=meta["abnormality_id"],
+            abnormality_type=meta["abnormality_type"],
+            calc_type=meta["calc_type"],
+            calc_distribution=meta["calc_distribution"],
+            mass_shape=meta["mass_shape"],
+            mass_margins=meta["mass_margins"],
+            height=meta["height"],
+            width=meta["width"],
+            size=meta["size"],
+            aspect_ratio=meta["aspect_ratio"],
+            bit_depth=meta["bit_depth"],
+            min_pixel_value=meta["min_pixel_value"],
+            max_pixel_value=meta["max_pixel_value"],
+            mean_pixel_value=meta["mean_pixel_value"],
+            std_pixel_value=meta["std_pixel_value"],
+            pathology=meta["pathology"],
+            assessment=meta["assessment"],
+            cancer=meta["cancer"],
+            fileset=meta["fileset"],
+            filepath=meta["filepath"],
+            pixels=pixels,
+        )
+
+
 # ------------------------------------------------------------------------------------------------ #
 #                                      IMAGE IO                                                    #
 # ------------------------------------------------------------------------------------------------ #
@@ -128,6 +205,41 @@ class ImageIO:
             filepath = filepath.values[0]
         filepath = os.path.abspath(filepath)
         return filepath
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                        IMAGE READER                                              #
+# ------------------------------------------------------------------------------------------------ #
+class ImageReader:
+    """Iterator class that serves up images matching user designated criteria."""
+
+    _FILEPATH = "data/meta/2_clean/dicom.csv"
+
+    def __init__(self, n: int = None, condition: Callable = None) -> None:
+        self._n = n
+        self._condition = condition
+        self._idx = 0
+        self._meta = None
+
+    def __iter__(self) -> ImageReader:
+        self._idx = 0
+        df = pd.read_csv(self.__FILEPATH)
+        if self._condition is not None:
+            df = df.loc[self._condition]
+        if self._n is not None:
+            df = df.sample(n=self._n)
+        self._meta = df
+        return self
+
+    def __next__(self) -> Image:
+        try:
+            meta = self._meta.iloc[self._idx]
+            pixels = ImageIO.read(filepath=meta["filepath"])
+            image = Image.create(pixels=pixels, meta=meta)
+            self._idx += 1
+            return image
+        except IndexError as exc:
+            raise StopIteration from exc
 
 
 # ------------------------------------------------------------------------------------------------ #

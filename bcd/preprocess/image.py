@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday December 25th 2023 03:13:51 pm                                               #
-# Modified   : Tuesday December 26th 2023 02:05:36 am                                              #
+# Modified   : Tuesday December 26th 2023 04:37:32 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,8 +22,6 @@ import cv2
 import numpy as np
 
 from bcd import Task
-from bcd.preprocess.threshold import Threshold
-from bcd.utils.image import grayscale
 from bcd.utils.profile import profiler
 
 
@@ -38,13 +36,13 @@ class Resizer(Task):
     Args:
         size (tuple): Size of resulting image as a tuple, i.e., (height, width)
         keep_aspect (bool): Whether to keep the aspect ratio. If True, padding will be added
-            before resizing.
+            before resizing. Default is False.
         center (bool): If keep_aspect is True, and padding is therefore added, should
             the image be centered or oriented to the top left of the resized image.
             Default is False.
         interpolation (str): Interpolation method corresponding to those supported by OpenCV
             Supported values are 'area', 'nearest', 'linear', 'cubic', 'nearest_exact', and
-            'linear_exact'.
+            'linear_exact'. Default is 'area'.
         padding_color (int): The value to use for padding, if keep_aspect is True. Default = 0.
 
     """
@@ -61,7 +59,7 @@ class Resizer(Task):
     def __init__(
         self,
         size: tuple = (256, 256),
-        keep_aspect: bool = True,
+        keep_aspect: bool = False,
         center: bool = False,
         interpolation: str = "area",
         padding_color: int = 0,

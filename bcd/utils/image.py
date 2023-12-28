@@ -11,12 +11,15 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday November 18th 2023 12:29:17 pm                                             #
-# Modified   : Monday December 25th 2023 11:50:00 pm                                               #
+# Modified   : Tuesday December 26th 2023 03:42:04 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Images Utilities"""
+from typing import Union
+
+import cv2
 import numpy as np
 
 
@@ -76,3 +79,35 @@ def grayscale(image: np.ndarray, invert: bool = False) -> np.ndarray:
     if invert:
         image = 255 - image
     return image.astype("uint8")
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                         ORIENT                                                   #
+# ------------------------------------------------------------------------------------------------ #
+def orient_image(image: np.ndarray, left: bool = True) -> Union[np.ndarray, bool]:
+    """Orients a mammogram to left or right side.
+
+    Counts the nonzero pixel values in the left and right 10% of the image. If the
+    left 10%  has a greater number of nonzero pixels than the right 10%, the image is
+    oriented left. Otherwise, it is oriented right. The image is flipped based upon the
+    desired orientation indicated by the 'left' parameter.
+
+    Args:
+        image (np.ndarray): Mammogram image in numpy format.
+        left (bool): Orient left if True, otherwise, orient right. Default is True.
+
+    Returns
+        np.ndarray: Image oriented
+        bool: Whether the image was flipped.
+    """
+    flipped = False
+    left_nonzero = cv2.countNonZero(image[:, 0 : int(image.shape[1] * 0.10)][0])
+    right_nonzero = cv2.countNonZero(image[:, int(image.shape[1] * 0.90) :][0])
+
+    if (left_nonzero < right_nonzero) and left:
+        image = cv2.flip(image, 1)
+        flipped = True
+    elif (left_nonzero > right_nonzero) and not left:
+        image = cv2.flip(image, 1)
+        flipped = True
+    return image, flipped

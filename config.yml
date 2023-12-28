@@ -1,40 +1,33 @@
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# ================================================================================================ #
+# Project    : Deep Learning for Breast Cancer Detection                                           #
+# Version    : 0.1.0                                                                               #
+# Python     : 3.10.12                                                                             #
+# Filename   : /config.yml                                                                         #
+# ------------------------------------------------------------------------------------------------ #
+# Author     : John James                                                                          #
+# Email      : john.james.ai.studio@gmail.com                                                      #
+# URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
+# ------------------------------------------------------------------------------------------------ #
+# Created    : Saturday October 21st 2023 07:46:07 pm                                              #
+# Modified   : Wednesday December 27th 2023 10:56:39 pm                                            #
+# ------------------------------------------------------------------------------------------------ #
+# License    : MIT License                                                                         #
+# Copyright  : (c) 2023 John James                                                                 #
+# ================================================================================================ #
 data:
-  image:
-    dev: data/image/1_dev/
-    prod: data/image/2_prod/
-    raw: data/image/0_raw/
-    test: tests/data/images/
-  metadata: data/meta/2_clean/dicom.csv
-logging:
-  disable_existing_loggers: false
-  formatters:
-    console:
-      datefmt: '%m/%d/%Y %I:%M:%S %p'
-      format: '[%(asctime)s] [%(levelname)s] [%(name)s] [%(funcName)s] : %(message)s'
-    file:
-      datefmt: '%m/%d/%Y %I:%M:%S %p'
-      format: '[%(asctime)s] [%(levelname)s] [%(name)s] [%(module)s] [%(funcName)s]
-        : %(message)s'
-  handlers:
-    console:
-      class: logging.StreamHandler
-      formatter: console
-      level: INFO
-      stream: ext://sys.stderr
-    file:
-      backupCount: 0
-      class: logging.handlers.TimedRotatingFileHandler
-      filename: log/bcd.log
-      formatter: file
-      interval: 1
-      level: DEBUG
-      when: midnight
-  root:
-    handlers:
-    - console
-    - file
-    level: DEBUG
-  version: 1
-models:
-  dev: models/1_dev/
-  prod: models/2_prod/
+  # Case, series, and DICOM metadata filepaths
+  filepaths:
+    mass_training: data/mass_case_description_train_set.csv
+    calc_training: data/calc_case_description_train_set.csv
+    mass_test: data/mass_case_description_test_set.csv
+    calc_test: data/calc_case_description_test_set.csv
+    metadata: data/metadata.csv
+    dicom: data/dicom.csv
+  # Directories for raw and final images.
+  directories:
+    raw: data/0_raw/
+    final: data/2_final/
+  # Directory for storing statistical models.
+models: models/

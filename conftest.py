@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Tuesday December 26th 2023 12:11:00 am                                              #
+# Modified   : Wednesday December 27th 2023 09:45:48 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,8 +20,6 @@ import cv2
 import pandas as pd
 import pytest
 
-from bcd.config import Config
-from bcd.container import BCDContainer
 from bcd.data.image import ImageIO
 from bcd.utils.image import grayscale
 
@@ -34,57 +32,6 @@ EVALUATION_FP = "tests/data/3_denoise/results.csv"
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=redefined-outer-name, no-member
 # ------------------------------------------------------------------------------------------------ #
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                    CURRENT MODE                                                  #
-# ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="module", autouse=False)
-def current_mode():
-    return Config.get_mode()
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                  SET MODE TO TEST                                                #
-# ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="session", autouse=True)
-def mode():
-    prior_mode = Config.get_mode()
-    Config.set_mode(mode="test")
-    yield
-    Config.set_mode(mode=prior_mode)
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                             SET LOGGING LEVEL TO DEBUG                                           #
-# ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="session", autouse=True)
-def log_level():
-    """Sets the log level to DEBUG"""
-    prior_level = Config.get_log_level()
-    Config.set_log_level("DEBUG")
-    yield
-    Config.set_log_level(prior_level)
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                DEPENDENCY INJECTION                                              #
-# ------------------------------------------------------------------------------------------------ #
-@pytest.fixture(scope="module", autouse=False)
-def container():
-    """Wires the container."""
-    ctr = BCDContainer()
-    ctr.init_resources()
-    ctr.wire(
-        modules=["bcd.data.load"],
-        packages=[
-            "bcd.dal",
-            "bcd.explore.methods.flow",
-            "bcd.explore.methods.experiment",
-        ],
-    )
-
-    return ctr
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -142,13 +89,38 @@ def image_meta():
 # ------------------------------------------------------------------------------------------------ #
 @pytest.fixture(scope="session", autouse=False)
 def image():
-    """Serves up a random MLO image for each function.
+    """Serves up a random image for each function."""
+    df = pd.read_csv(IMAGE_FP)
+    meta = df.sample(n=1)
+    fp = meta["filepath"]
+    img = ImageIO.read(filepath=fp)
+    return grayscale(img)
 
-    MLO images are selected because they often contain pectoral muscle, which can be used to
-    test pectoral removal tasks.
-    """
+
+@pytest.fixture(scope="session", autouse=False)
+def image_mlo():
+    """Serves up a random MLO image for each function."""
     df = pd.read_csv(IMAGE_FP)
     meta = df.loc[df["image_view"] == "MLO"].sample(n=1)
     fp = meta["filepath"]
     img = ImageIO.read(filepath=fp)
     return grayscale(img)
+
+
+@pytest.fixture(scope="session", autouse=False)
+def image_cc():
+    """Serves up a random CC image for each function."""
+    df = pd.read_csv(IMAGE_FP)
+    meta = df.loc[df["image_view"] == "CC"].sample(n=1)
+    fp = meta["filepath"]
+    img = ImageIO.read(filepath=fp)
+    return grayscale(img)
+
+
+@pytest.fixture(scope="session", autouse=False)
+def image_dicom():
+    """Serves up a random image for each function."""
+    df = pd.read_csv(IMAGE_FP)
+    meta = df.sample(n=1)
+    fp = meta["filepath"]
+    return ImageIO.read(filepath=fp)
