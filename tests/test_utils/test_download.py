@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday December 27th 2023 09:11:54 pm                                            #
-# Modified   : Wednesday December 27th 2023 10:03:06 pm                                            #
+# Modified   : Thursday December 28th 2023 10:01:29 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,7 @@ from datetime import datetime
 
 import pytest
 
-from bcd.config import Config
+from bcd.dal.file import FileManager
 from bcd.utils.download import Downloader
 
 # ------------------------------------------------------------------------------------------------ #
@@ -72,8 +72,7 @@ class TestDownloader:  # pragma: no cover
         dl.download_file(url=URL, destination=DESTINATION)
         assert os.path.exists(os.path.join(DESTINATION, os.path.basename(URL)))
 
-        with pytest.raises(FileExistsError):
-            dl.download_file(url=URL, destination=DESTINATION)
+        dl.download_file(url=URL, destination=DESTINATION)
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -106,16 +105,13 @@ class TestDownloader:  # pragma: no cover
         logger.info(single_line)
 
     # ============================================================================================ #
-    def test_download_package(self):
+    def test_download_package(self, urls):
         start = datetime.now()
         logger.info(
             f"\n\nStarted {self.__class__.__name__} {inspect.stack()[0][3]} at {start.strftime('%I:%M:%S %p')} on {start.strftime('%m/%d/%Y')}"
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        config = Config()
-
-        urls = config.get_case_file_urls()
         dl = Downloader(force=True, progressbar=False)
         dl.download_package(urls=urls, destination=DESTINATION)
         assert os.path.exists(os.path.join(DESTINATION, os.path.basename(URL)))

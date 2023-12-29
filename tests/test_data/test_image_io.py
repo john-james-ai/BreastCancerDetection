@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_dal/test_io/test_image_io.py                                            #
+# Filename   : /tests/test_data/test_image_io.py                                                   #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 01:30:49 pm                                              #
-# Modified   : Thursday December 14th 2023 02:00:24 am                                             #
+# Modified   : Thursday December 28th 2023 10:01:29 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,8 +24,8 @@ from datetime import datetime
 import numpy as np
 import pytest
 
-from bcd.config import Config
-from bcd.data.image import ImageIO
+from bcd.dal.file import FileManager
+from bcd.dal.image import ImageIO
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)

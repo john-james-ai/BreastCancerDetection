@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:35:50 pm                                               #
-# Modified   : Tuesday December 26th 2023 12:05:22 am                                              #
+# Modified   : Thursday December 28th 2023 10:01:29 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -129,7 +129,7 @@ class DataClass(ABC):
         return s
 
     def as_dict(self) -> dict:
-        """Returns a dictionary representation of the the Config object."""
+        """Returns a dictionary representation of the the FileManager object."""
         return {
             k: self._export_config(v)
             for k, v in self.__dict__.items()
@@ -138,7 +138,7 @@ class DataClass(ABC):
 
     @classmethod
     def _export_config(cls, v):  # pragma: no cover
-        """Returns v with Configs converted to dicts, recursively."""
+        """Returns v with FileManagers converted to dicts, recursively."""
         if isinstance(v, IMMUTABLE_TYPES):
             return v
         elif isinstance(v, SEQUENCE_TYPES):
@@ -204,12 +204,12 @@ class Task(ABC):
         return s
 
     def as_dict(self) -> dict:
-        """Returns a dictionary representation of the the Config object."""
+        """Returns a dictionary representation of the the FileManager object."""
         return {k: self._export_config(v) for k, v in self.__dict__.items()}
 
     @classmethod
     def _export_config(cls, v):  # pragma: no cover
-        """Returns v with Configs converted to dicts, recursively."""
+        """Returns v with FileManagers converted to dicts, recursively."""
         if isinstance(v, IMMUTABLE_TYPES):
             return v
         elif isinstance(v, SEQUENCE_TYPES):

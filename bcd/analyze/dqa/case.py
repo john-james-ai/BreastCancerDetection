@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/explore/quality/case.py                                                        #
+# Filename   : /bcd/analyze/dqa/case.py                                                            #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:51 am                                              #
-# Modified   : Wednesday December 20th 2023 05:17:00 pm                                            #
+# Modified   : Friday December 29th 2023 02:15:18 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,9 @@ import sys
 import numpy as np
 import pandas as pd
 
-from bcd.explore.quality.base import DQA, Validator
+from bcd.analyze.dqa.base import DQA, Validator
+from bcd.data.base import Dataset
+from bcd.utils.file import IOService
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -33,13 +35,42 @@ logger.setLevel(logging.DEBUG)
 
 # ------------------------------------------------------------------------------------------------ #
 class CaseDQA(DQA):
+    """Enapsulates the Case data quality analysis"""
+
+    # Keys used in the FileManager object to obtain the associated filenames.
+    __DATASETS = ["mass_train", "mass_test", "calc_train", "calc_test"]
+    __MORPHOLOGY = ["calc type", "calc distribution", "mass shape", "mass margins"]
+    __NAME = "Case"
+
     def __init__(
-        self, filepath: str, validator: Validator = Validator, name: str = None
+        self,
+        dataset: Dataset,
+        validator: Validator = Validator,
+        io: IOService = IOService,
     ) -> None:
-        super().__init__(filepath=filepath, name=name)
+        super().__init__(name=self.__NAME)
+        self._file_manager = file_manager
         self._validator = validator()
-        self._df = pd.read_csv(self._filepath)
+        self._io = io
+        self._df = None
         self._validation_mask = None
+        self.load_data()
+
+    def load_data(self) -> None:
+        """Loads the case data into a single data frame for analysis."""
+        case_datasets = []
+        for dataset in self.__DATASETS:
+            filepath = self._file_manager.get_raw_metadata_filepath(name=dataset)
+            df = self._io.read(filepath=filepath)
+            df = self._add_fileset(name=dataset, df=df)
+            case_datasets.append(df)
+        df = pd.concat(case_datasets, axis=0, join="outer")
+
+        # Calcification and mass morphologies are added and NaN must be
+        # changed to 'Not Applicable' as appropriate.
+        df[self.__MORPHOLOGY] = df[self.__MORPHOLOGY].fillna("Not Applicable")
+        logger.debug(df.head())
+        self._df = df
 
     def validate(self) -> np.ndarray:
         "Validates the data and returns a boolean mask of cell validity."
@@ -105,3 +136,9 @@ class CaseDQA(DQA):
             ]
 
         return self._validation_mask
+
+    def _add_fileset(self, name: str, df: pd.DataFrame) -> pd.DataFrame:
+        """Adds the fileset variable to the dataframe."""
+        fileset = name.split("_")[1]
+        df["fileset"] = fileset
+        return df

@@ -21,7 +21,7 @@ The CBIS-DDSM is comprised of:
 - **Mammographic Images**: Full mammography, mammogram and cropped images {numref}`cbis_ddsm_images` ,
 - **Case Data**: Calcification and mass case data {numref}`cbis_ddsm_cases`
 - **Series Data**: Series, study and subject identifiers and image file locations.
-- **DICOM Metadata**: Image modality information in DICOM imaging format.
+- **DICOM Metadata**: Image and modality information in DICOM imaging format.
 
 Next, we summarize the dataset statistics and review the data elements in each dataset.
 
@@ -114,4 +114,4 @@ Each DICOM image file comports with the DICOM standard and contains additional m
 - Smallest Image Pixel Value
 - Largest Image Pixel Value
 
-In the next section, we will prepare the metadata for the exploratory data analysis effort.
+In the next section, we will outline methods for obtaining the CBIS-DDSM dataset.

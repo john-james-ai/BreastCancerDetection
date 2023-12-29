@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Wednesday December 27th 2023 09:45:48 pm                                            #
+# Modified   : Thursday December 28th 2023 09:14:52 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,7 @@ import cv2
 import pandas as pd
 import pytest
 
-from bcd.data.image import ImageIO
+from bcd.dal.image import ImageIO
 from bcd.utils.image import grayscale
 
 # ------------------------------------------------------------------------------------------------ #
@@ -32,6 +32,21 @@ EVALUATION_FP = "tests/data/3_denoise/results.csv"
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=redefined-outer-name, no-member
 # ------------------------------------------------------------------------------------------------ #
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                           URLS                                                   #
+# ------------------------------------------------------------------------------------------------ #
+@pytest.fixture(scope="session", autouse=False)
+def urls():
+    urls = [
+        "https://wiki.cancerimagingarchive.net/download/attachments/22516629/CBIS-DDSM-All-doiJNLP-zzWs5zfZ.tcia?version=1&modificationDate=1534787024127&api=v2",
+        "https://wiki.cancerimagingarchive.net/download/attachments/22516629/mass_case_description_train_set.csv?version=1&modificationDate=1506796355038&api=v2",
+        "https://wiki.cancerimagingarchive.net/download/attachments/22516629/calc_case_description_train_set.csv?version=1&modificationDate=1506796349666&api=v2",
+        "https://wiki.cancerimagingarchive.net/download/attachments/22516629/mass_case_description_test_set.csv?version=1&modificationDate=1506796343175&api=v2",
+        "https://wiki.cancerimagingarchive.net/download/attachments/22516629/calc_case_description_test_set.csv?version=1&modificationDate=1506796343686&api=v2",
+    ]
+    return urls
 
 
 # ------------------------------------------------------------------------------------------------ #

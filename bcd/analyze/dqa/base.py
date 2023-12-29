@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/analyze/quality/base.py                                                        #
+# Filename   : /bcd/analyze/dqa/base.py                                                            #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:12 am                                            #
-# Modified   : Wednesday November 1st 2023 08:39:06 am                                             #
+# Modified   : Thursday December 28th 2023 11:33:26 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,6 @@
 from __future__ import annotations
 
 import os
-import string
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Union
@@ -53,7 +52,6 @@ class Completeness(DQASummary):
     """Encapsulates a summary of data completeness."""
 
     dataset: str
-    filename: str
     records: int
     complete_records: int
     record_completeness: float
@@ -68,7 +66,6 @@ class Uniqueness(DQASummary):
     """Encapsulates a summary of data uniqueness"""
 
     dataset: str
-    filename: str
     records: int
     unique_records: int
     record_uniqueness: float
@@ -83,7 +80,6 @@ class Validity(DQASummary):
     """Encapsulates a summary of data validity"""
 
     dataset: str
-    filename: str
     records: int
     valid_records: int
     record_validity: float
@@ -98,7 +94,6 @@ class Consistency(DQASummary):
     """Encapsulates a summary of data consistency"""
 
     dataset: str
-    filename: str
     records: int
     consistent_records: int
     record_consistency: float
@@ -111,17 +106,39 @@ class Consistency(DQASummary):
 class DQA(ABC):
     """Data Quality Analysis Base Class"""
 
-    def __init__(self, filepath: str, name: str = None) -> None:
-        self._filepath = os.path.abspath(filepath)
-        self._filename = os.path.basename(filepath)
-        self._name = name or string.capwords(
-            os.path.splitext(os.path.basename(self._filepath))[0].replace("_", " ")
-        )
+    def __init__(self, name: str = None) -> None:
+        self._name = name
         self._df = None
+
+    @abstractmethod
+    def load_data(self) -> None:
+        """Loads the data to be analyzed."""
 
     @abstractmethod
     def validate(self) -> None:
         "Creates the validation mask."
+
+    # -------------------------------------------------------------------------------------------- #
+    def summarize(self) -> pd.DataFrame:
+        """Summarizes the datasets variables, types, NA values, and uniqueness."""
+        cols = self._df.columns
+        dtypes = self._df.dtypes
+        nonna = self._df.count()
+        na = self._df.isna().sum(axis=0)
+        completeness = nonna / self._df.shape[0]
+        unique = self._df.nunique(axis=0)
+        uniqueness = unique / nonna
+        d = {
+            "Variable": cols,
+            "Data Types": dtypes,
+            "Non NA": nonna,
+            "NA": na,
+            "Completeness": completeness,
+            "Unique": unique,
+            "Uniqueness": uniqueness,
+        }
+        df = pd.DataFrame(data=d)
+        return df
 
     # -------------------------------------------------------------------------------------------- #
     def analyze_completeness(self) -> DQAResult:
@@ -147,7 +164,6 @@ class DQA(ABC):
 
         sc = Completeness(
             dataset=self._name,
-            filename=self._filename,
             records=nrows,
             complete_records=ncr,
             record_completeness=pcr,
@@ -183,7 +199,6 @@ class DQA(ABC):
 
         su = Uniqueness(
             dataset=self._name,
-            filename=self._filename,
             records=nrows,
             unique_records=nur,
             record_uniqueness=pur,
@@ -220,7 +235,6 @@ class DQA(ABC):
 
         vs = Validity(
             dataset=self._name,
-            filename=self._filename,
             records=nrows,
             valid_records=nvr,
             record_validity=pvr,

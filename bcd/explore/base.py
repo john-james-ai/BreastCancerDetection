@@ -4,33 +4,15 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /config.yml                                                                         #
+# Filename   : /bcd/explore/base.py                                                                #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday October 21st 2023 07:46:07 pm                                              #
-# Modified   : Thursday December 28th 2023 09:33:49 pm                                             #
+# Created    : Friday December 29th 2023 01:12:56 am                                               #
+# Modified   : Friday December 29th 2023 01:12:57 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-data:
-  basedir: data/
-
-  metadata:
-    raw:
-      mass_train: data/mass_case_description_train_set.csv
-      calc_train: data/calc_case_description_train_set.csv
-      mass_test: data/mass_case_description_test_set.csv
-      calc_test: data/calc_case_description_test_set.csv
-      series: data/metadata.csv
-    final: data/cbis.csv
-
-  images:
-    raw: data/0_raw/CBIS-DDSM/
-    exp: data/1_exp/CBIS-DDSM/
-    final: data/2_final/CBIS-DDSM/
-
-models: models/

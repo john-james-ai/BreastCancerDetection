@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /tests/test_analyze/test_explore/test_mammogram.py                                  #
+# Filename   : /tests/test_explore/test_image/test_mammogram.py                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday December 20th 2023 04:07:02 pm                                            #
-# Modified   : Wednesday December 20th 2023 05:14:47 pm                                            #
+# Modified   : Friday December 29th 2023 01:24:51 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,7 +22,7 @@ from datetime import datetime
 
 import pytest
 
-from bcd.explore.image.mammogram import Mammogram
+from bcd.data.mammogram import Mammogram
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=missing-class-docstring, line-too-long

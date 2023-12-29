@@ -45,7 +45,7 @@ Import modules
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../..")))
-from bcd.config import Config
+from bcd.dal.file import FileManager
 from bcd.container import BCDContainer
 from bcd.etl.load import Loader
 from bcd.explore.methods.experiment.denoise import DenoiseExperiment

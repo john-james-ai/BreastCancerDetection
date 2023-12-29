@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday November 5th 2023 11:02:05 am                                                #
-# Modified   : Sunday November 5th 2023 04:18:54 pm                                                #
+# Modified   : Thursday December 28th 2023 10:01:29 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,7 +21,7 @@ from datetime import datetime
 
 from keras import Model
 
-from bcd.config import Config
+from bcd.dal.file import FileManager
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -31,7 +31,9 @@ class BCDModel(Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         now = datetime.now()
-        self._name = self.__class__.__name__.lower() + "_" + now.strftime("%Y-%m-%d_%H-%M-%S")
+        self._name = (
+            self.__class__.__name__.lower() + "_" + now.strftime("%Y-%m-%d_%H-%M-%S")
+        )
 
     @property
     def name(self) -> str:
@@ -44,7 +46,7 @@ class BCDModel(Model):
         """Returns the config of the `Model`."""
 
     def save_model(self, overwrite: bool = True, **kwargs) -> None:
-        directory = Config.get_model_dir()
+        directory = FileManager.get_model_dir()
         os.makedirs(directory, exist_ok=True)
         filename = self.name + ".keras"
         filepath = os.path.join(directory, filename)

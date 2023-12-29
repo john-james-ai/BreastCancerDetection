@@ -4,54 +4,47 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/config.py                                                                      #
+# Filename   : /bcd/dal/base.py                                                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Sunday October 29th 2023 01:47:42 am                                                #
-# Modified   : Wednesday December 27th 2023 09:58:29 pm                                            #
+# Created    : Friday December 29th 2023 12:22:16 am                                               #
+# Modified   : Friday December 29th 2023 01:47:51 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-"""Configuration Manager Module"""
-import os
-
-from bcd.utils.file import IOService
+"""Base Module for Data Access Layer"""
+from abc import ABC, abstractmethod
+from typing import Any
 
 
 # ------------------------------------------------------------------------------------------------ #
-class Config:
-    """Configuration Manager."""
+class Database(ABC):
+    """Database Abstraction"""
 
-    @classmethod
-    def read_config(cls) -> dict:
-        filepath = os.path.abspath(os.getenv("CONFIG_FILEPATH"))
-        return IOService.read(filepath=filepath)
+    @abstractmethod
+    def create(self, *args, **kwargs) -> None:
+        """Creates an instance in the database"""
 
-    @classmethod
-    def write_config(cls, config: dict) -> None:
-        filepath = os.path.abspath(os.getenv("CONFIG_FILEPATH"))
-        IOService.write(filepath=filepath, data=config)
+    @abstractmethod
+    def read(self, *args, **kwargs) -> Any:
+        """Reads from the database"""
 
-    @classmethod
-    def get_data_dir(cls, stage: str) -> str:
-        config = cls.read_config()
-        return os.path.abspath(config["data"][stage])
+    @abstractmethod
+    def update(self, *args, **kwargs) -> None:
+        """Updates the database"""
 
-    @classmethod
-    def get_case_file_urls(cls) -> str:
-        config = cls.read_config()
-        return config["data"]["source_files"]
+    @abstractmethod
+    def delete(self, *args, **kwargs) -> None:
+        """Deletes an instance from the database."""
 
-    @classmethod
-    def get_filepath(cls, name) -> str:
-        config = cls.read_config()
-        return config["data"]["filepaths"][name]
+    @abstractmethod
+    def exists(self, name) -> bool:
+        """Determines whether a named Dataset object exists."""
 
-    @classmethod
-    def get_model_dir(cls) -> str:
-        config = cls.read_config()
-        return os.path.abspath(config["models"])
+    @abstractmethod
+    def save(self, *args, **kwargs) -> None:
+        """Saves an instance either through creation or update."""

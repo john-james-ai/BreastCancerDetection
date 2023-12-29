@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday December 27th 2023 06:38:39 pm                                            #
-# Modified   : Wednesday December 27th 2023 10:20:43 pm                                            #
+# Modified   : Thursday December 28th 2023 04:26:03 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -56,8 +56,10 @@ class Downloader:
                 data as it arrives.
 
         """
-        destination = self._check_filepath(url=url, destination=destination)
-        self._download_sync(url=url, destination=destination, chunksize=chunksize)
+        destination = self._format_filepath(url=url, destination=destination)
+        proceed = self._check_filepath(filepath=destination)
+        if proceed:
+            self._download_sync(url=url, destination=destination, chunksize=chunksize)
 
     def download_package(
         self,
@@ -82,16 +84,17 @@ class Downloader:
 
 
         """
-        self._check_directory(destination=destination)
-        if parallel:
-            self._download_async(
-                urls=urls, destination=destination, semaphore=semaphore
-            )
-        else:
-            for url in urls:
-                self.download_file(
-                    url=url, destination=destination, chunksize=chunksize
+        proceed = self._check_directory(directory=destination)
+        if proceed:
+            if parallel:
+                self._download_async(
+                    urls=urls, destination=destination, semaphore=semaphore
                 )
+            else:
+                for url in urls:
+                    self.download_file(
+                        url=url, destination=destination, chunksize=chunksize
+                    )
 
     def _download_async(self, urls: list, destination: str, semaphore: int = 5):
         """Downloads a list of URLs asynchronously to a destination directory."""
@@ -146,27 +149,38 @@ class Downloader:
                     for chunk in resp.iter_content(chunk_size=chunksize):
                         file.write(chunk)
 
-    def _check_filepath(self, url: str, destination: str) -> str:
-        """Checks file existence and handles vis-a-vis force."""
+    def _format_filepath(self, url: str, destination: str) -> str:
+        """Ensures the destination is a file path
 
+        If destination is a directory, the filename from the URL
+        is appended to the destination. If the destination
+        is a filename, it is not changed.
+
+        """
         if destination[-1] == os.sep:
             filename = os.path.basename(url)
             destination = os.path.join(destination, filename)
-
-        if os.path.exists(destination) and not self._force:
-            self._raise_file_exists_exception(filepath=destination)
-
-        os.makedirs(os.path.dirname(destination), exist_ok=True)
         return destination
 
-    def _check_directory(self, destination: str) -> str:
+    def _check_filepath(self, filepath: str) -> bool:
+        """Checks file existence and handles vis-a-vis force."""
+
+        if os.path.exists(filepath) and not self._force:
+            self._raise_file_exists_warning(filepath=filepath)
+            return False
+        else:
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
+            return True
+
+    def _check_directory(self, directory: str) -> bool:
         """Checks existence of directory and handles vis-a-vis force."""
-        if os.path.exists(destination) and not self._force:
-            self._raise_file_exists_exception(filepath=destination)
-        os.makedirs(destination, exist_ok=True)
-        return destination
+        if os.path.exists(directory) and not self._force:
+            self._raise_file_exists_warning(filepath=directory)
+            return False
+        else:
+            os.makedirs(directory, exist_ok=True)
+            return True
 
-    def _raise_file_exists_exception(self, filepath: str) -> None:
-        msg = f"{filepath} already exists. If you wish to download anyway, change force to True."
-        self._logger.exception(msg)
-        raise FileExistsError(msg)
+    def _raise_file_exists_warning(self, filepath: str) -> None:
+        msg = f"{filepath} already exists. If you wish to download and overwrite existing data, set force to True."
+        self._logger.warning(msg)

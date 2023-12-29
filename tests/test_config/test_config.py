@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday October 25th 2023 04:08:08 pm                                             #
-# Modified   : Monday October 30th 2023 10:45:50 pm                                                #
+# Modified   : Thursday December 28th 2023 10:01:29 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -22,7 +22,7 @@ from datetime import datetime
 
 import pytest
 
-from bcd.config import Config
+from bcd.dal.file import FileManager
 
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ single_line = f"\n{100 * '-'}"
 
 @pytest.mark.config
 class TestConfig:  # pragma: no cover
-    """Test Configuration"""
+    """Test FileManageruration"""
 
     # ============================================================================================ #
     def test_get_mode(self):
@@ -45,7 +45,7 @@ class TestConfig:  # pragma: no cover
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
 
-        assert Config.get_mode() == "test"
+        assert FileManager.get_mode() == "test"
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
@@ -64,7 +64,7 @@ class TestConfig:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        config = Config
+        config = FileManager
         config.set_mode(mode="dev")
         assert config.get_mode() == "dev"
 
@@ -88,7 +88,7 @@ class TestConfig:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        config = Config
+        config = FileManager
         assert config.get_log_level() == "DEBUG"
 
         # ---------------------------------------------------------------------------------------- #
@@ -108,7 +108,7 @@ class TestConfig:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        config = Config
+        config = FileManager
         config.set_log_level(level="INFO")
         assert config.get_log_level() == "INFO"
 
@@ -136,10 +136,10 @@ class TestConfig:  # pragma: no cover
         )
         logger.info(double_line)
         # ---------------------------------------------------------------------------------------- #
-        assert Config.get_data_dir() == "/home/john/projects/bcd/data/image/1_dev"
-        Config.set_mode(mode="test")
+        assert FileManager.get_data_dir() == "/home/john/projects/bcd/data/image/1_dev"
+        FileManager.set_mode(mode="test")
 
-        assert Config.get_data_dir() == "/home/john/projects/bcd/tests/data/images"
+        assert FileManager.get_data_dir() == "/home/john/projects/bcd/tests/data/images"
 
         # ---------------------------------------------------------------------------------------- #
         end = datetime.now()
