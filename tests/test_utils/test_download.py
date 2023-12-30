@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Wednesday December 27th 2023 09:11:54 pm                                            #
-# Modified   : Thursday December 28th 2023 10:01:29 pm                                             #
+# Modified   : Saturday December 30th 2023 03:22:26 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,7 @@ from datetime import datetime
 
 import pytest
 
-from bcd.dal.file import FileManager
+from bcd.dal.meta import FileManager
 from bcd.utils.download import Downloader
 
 # ------------------------------------------------------------------------------------------------ #

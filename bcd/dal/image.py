@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Thursday December 28th 2023 10:04:58 pm                                             #
+# Modified   : Saturday December 30th 2023 03:01:07 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -29,7 +29,6 @@ import numpy as np
 import pandas as pd
 
 from bcd import DataClass
-from bcd.dal.file import FileManager
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -188,39 +187,27 @@ class ImageIO:
 class ImageReader:
     """Iterator class that serves up images matching user designated criteria.
 
-    Images are stored in one of three stages: 'raw', 'exp', 'final'. This class provides
-    access to images of the requested stage.
-
-     Args:
-        n (int): Number of images to include in the iteration.
-        condition (Callable): A lambda statement to subset the data. For instance, obtaining
-            all calcification case images would require the following lambda condition:
-                lambda x: x['abnormality_type' == 'calc']
-        stage (str): Either 'raw', 'exp', or 'final'.
-        file_manager (Config): A file_manager object which controls the mapping of stages to metadata
-            file paths.
-
+    Args:
+       case_filepath (str): Path to file containing cases and image paths.
+       n (int): Number of images to include in the iteration.
+       condition (Callable): A lambda statement to subset the data. For instance, obtaining
+           all calcification case images would require the following lambda condition:
+               lambda x: x['abnormality_type' == 'calc']
 
     """
 
     def __init__(
-        self,
-        n: int = None,
-        condition: Callable = None,
-        stage: str = "raw",
-        file_manager: FileManager = FileManager,
+        self, case_filepath: str, n: int = None, condition: Callable = None
     ) -> None:
+        self._case_filepath = case_filepath
         self._n = n
         self._condition = condition
-        self._stage = stage
-        self._file_manager = file_manager
-        self._meta = None
         self._idx = 0
         self._meta = None
 
     def __iter__(self) -> ImageReader:
         self._idx = 0
-        df = pd.read_csv(self._file_manager.get_metadata_filepath())
+        df = pd.read_csv(self._case_filepath)
         if self._condition is not None:
             df = df.loc[self._condition]
         if self._n is not None:
@@ -231,6 +218,7 @@ class ImageReader:
     def __next__(self) -> Image:
         try:
             meta = self._meta.iloc[self._idx]
+            filepath = os.path.join()
             pixels = ImageIO.read(filepath=meta["filepath"])
             image = Image.create(pixels=pixels, meta=meta)
             self._idx += 1

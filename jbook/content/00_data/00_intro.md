@@ -114,4 +114,4 @@ Each DICOM image file comports with the DICOM standard and contains additional m
 - Smallest Image Pixel Value
 - Largest Image Pixel Value
 
-In the next section, we will outline methods for obtaining the CBIS-DDSM dataset.
+In the next section, we 'unbox' the data and prepare it for data quality analysis.

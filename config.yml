@@ -11,26 +11,48 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 07:46:07 pm                                              #
-# Modified   : Thursday December 28th 2023 09:33:49 pm                                             #
+# Modified   : Saturday December 30th 2023 03:22:12 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 data:
-  basedir: data/
+  directories:
+    base: data/
+    images:
+      raw: data/image/0_raw/CBIS-DDSM/
 
-  metadata:
-    raw:
-      mass_train: data/mass_case_description_train_set.csv
-      calc_train: data/calc_case_description_train_set.csv
-      mass_test: data/mass_case_description_test_set.csv
-      calc_test: data/calc_case_description_test_set.csv
-      series: data/metadata.csv
-    final: data/cbis.csv
+  meta:
+    urls:
+      calc_train: https://wiki.cancerimagingarchive.net/download/attachments/22516629/calc_case_description_train_set.csv?version=1&modificationDate=1506796349666&api=v2
+      calc_test: https://wiki.cancerimagingarchive.net/download/attachments/22516629/calc_case_description_test_set.csv?version=1&modificationDate=1506796343686&api=v2
+      mass_train: https://wiki.cancerimagingarchive.net/download/attachments/22516629/mass_case_description_train_set.csv?version=1&modificationDate=1506796355038&api=v2
+      mass_test: https://wiki.cancerimagingarchive.net/download/attachments/22516629/mass_case_description_test_set.csv?version=1&modificationDate=1506796343175&api=v2
+    files:
+      calc_train:
+        stage: raw
+        description: Calcification Training Set Description
+        filepath: data/meta/0_raw/calc_case_description_train_set.csv
+      calc_test:
+        stage: raw
+        description: Calciication Test Set Description
+        filepath: data/meta/0_raw/calc_case_description_test_set.csv
+      mass_train:
+        stage: raw
+        description: Mass Training Set Description
+        filepath: data/meta/0_raw/mass_case_description_train_set.csv
+      mass_test:
+        stage: raw
+        description: Mass Test Set Description
+        filepath: data/meta/0_raw/mass_case_description_test_set.csv
+      series:
+        stage: raw
+        description: Series Description
+        filepath: data/meta/0_raw/metadata.csv
+
 
   images:
-    raw: data/0_raw/CBIS-DDSM/
-    exp: data/1_exp/CBIS-DDSM/
-    final: data/2_final/CBIS-DDSM/
+    source: CBIS-DDSM-All-doiJNLP-zzWs5zfZ.tcia
+    destination: data/image/0_raw/
 
 models: models/

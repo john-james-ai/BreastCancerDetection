@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:51 am                                              #
-# Modified   : Friday December 29th 2023 02:15:18 am                                               #
+# Modified   : Friday December 29th 2023 02:18:57 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,8 +38,6 @@ class CaseDQA(DQA):
     """Enapsulates the Case data quality analysis"""
 
     # Keys used in the FileManager object to obtain the associated filenames.
-    __DATASETS = ["mass_train", "mass_test", "calc_train", "calc_test"]
-    __MORPHOLOGY = ["calc type", "calc distribution", "mass shape", "mass margins"]
     __NAME = "Case"
 
     def __init__(
@@ -49,28 +47,12 @@ class CaseDQA(DQA):
         io: IOService = IOService,
     ) -> None:
         super().__init__(name=self.__NAME)
-        self._file_manager = file_manager
+        self._dataset = dataset
         self._validator = validator()
         self._io = io
-        self._df = None
+        self._df = dataset.data
         self._validation_mask = None
         self.load_data()
-
-    def load_data(self) -> None:
-        """Loads the case data into a single data frame for analysis."""
-        case_datasets = []
-        for dataset in self.__DATASETS:
-            filepath = self._file_manager.get_raw_metadata_filepath(name=dataset)
-            df = self._io.read(filepath=filepath)
-            df = self._add_fileset(name=dataset, df=df)
-            case_datasets.append(df)
-        df = pd.concat(case_datasets, axis=0, join="outer")
-
-        # Calcification and mass morphologies are added and NaN must be
-        # changed to 'Not Applicable' as appropriate.
-        df[self.__MORPHOLOGY] = df[self.__MORPHOLOGY].fillna("Not Applicable")
-        logger.debug(df.head())
-        self._df = df
 
     def validate(self) -> np.ndarray:
         "Validates the data and returns a boolean mask of cell validity."
@@ -136,9 +118,3 @@ class CaseDQA(DQA):
             ]
 
         return self._validation_mask
-
-    def _add_fileset(self, name: str, df: pd.DataFrame) -> pd.DataFrame:
-        """Adds the fileset variable to the dataframe."""
-        fileset = name.split("_")[1]
-        df["fileset"] = fileset
-        return df

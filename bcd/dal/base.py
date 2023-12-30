@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday December 29th 2023 12:22:16 am                                               #
-# Modified   : Friday December 29th 2023 01:47:51 am                                               #
+# Modified   : Friday December 29th 2023 02:53:27 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -34,17 +34,9 @@ class Database(ABC):
         """Reads from the database"""
 
     @abstractmethod
-    def update(self, *args, **kwargs) -> None:
-        """Updates the database"""
-
-    @abstractmethod
     def delete(self, *args, **kwargs) -> None:
         """Deletes an instance from the database."""
 
     @abstractmethod
     def exists(self, name) -> bool:
         """Determines whether a named Dataset object exists."""
-
-    @abstractmethod
-    def save(self, *args, **kwargs) -> None:
-        """Saves an instance either through creation or update."""

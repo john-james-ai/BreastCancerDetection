@@ -4,27 +4,54 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/dal/repo.py                                                                    #
+# Filename   : /bcd/config.py                                                                      #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Wednesday December 27th 2023 10:32:55 am                                            #
-# Modified   : Thursday December 28th 2023 10:05:04 pm                                             #
+# Created    : Sunday October 29th 2023 01:47:42 am                                                #
+# Modified   : Saturday December 30th 2023 03:22:26 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
+"""Configuration Manager Module"""
 import logging
+import os
 
-import pandas as pd
+import dotenv
 
-from bcd.dal.file import FileManager
-from bcd.dal.image import ImageIO
+from bcd.utils.file import IOService
+
 
 # ------------------------------------------------------------------------------------------------ #
-class Repo:
-    """Image repository."""
-    def __init__(self, stage: str = 'exp') -> None:
-        self._stage =
+class Config:
+    """Configuration Manager."""
+
+    @classmethod
+    def read_config(cls) -> dict:
+        filepath = os.path.abspath(os.getenv("CONFIG_FILEPATH"))
+        return IOService.read(filepath=filepath)
+
+    @classmethod
+    def write_config(cls, config: dict) -> None:
+        filepath = os.path.abspath(os.getenv("CONFIG_FILEPATH"))
+        IOService.write(filepath=filepath, data=config)
+
+    @classmethod
+    def get_data_dir(cls) -> str:
+        config = cls.read_config()
+        mode = cls.get_mode()
+        return os.path.abspath(config["data"]["image"][mode])
+
+    @classmethod
+    def get_dicom_metadata_filepath(cls) -> str:
+        config = cls.read_config()
+        return os.path.abspath(config["data"]["metadata"])
+
+    @classmethod
+    def get_model_dir(cls) -> str:
+        config = cls.read_config()
+        mode = cls.get_mode()
+        return os.path.abspath(config["models"][mode])

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday December 29th 2023 12:00:22 am                                               #
-# Modified   : Friday December 29th 2023 02:15:17 am                                               #
+# Modified   : Saturday December 30th 2023 08:51:57 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,39 +20,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from typing import Any
 
 import pandas as pd
 
-from bcd import DataClass
 from bcd.analyze.dqa.base import DQA
 from bcd.dal.base import Database
 from bcd.explore.meta import Explorer
-
-
-# ------------------------------------------------------------------------------------------------ #
-@dataclass
-class DatasetDTO(DataClass):
-    """Data transfer object for the Dataset."""
-
-    name: str
-    description: str
-    dataset_type: str
-    stage: str
-    dataset_format: str
-    data: Any
-
-    @classmethod
-    def from_dict(cls, ds_dict: dict) -> DatasetDTO:
-        return cls(
-            name=ds_dict["name"],
-            description=ds_dict["description"],
-            dataset_type=ds_dict["dataset_type"],
-            stage=ds_dict["stage"],
-            dataset_format=ds_dict["dataset_format"],
-            data=ds_dict["data"],
-        )
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -61,13 +35,13 @@ class Dataset(ABC):
 
     def __init__(
         self,
-        database: Database,
         name: str,
         description: str,
         dataset_type: str = "metadata",
         stage: str = "exp",
         dataset_format: str = "csv",
         data: Any = None,
+        database: type[Database] = Database,
     ) -> None:
         self._database = database
         self._name = name
@@ -79,24 +53,38 @@ class Dataset(ABC):
         if self._data is None:
             self.load()
 
-        self._dqa = None
-        self._eda = None
-
-    @property
-    def data(self) -> Any:
-        return self._data
-
-    @property
-    def dqa(self) -> DQA:
-        return self._dqa
-
-    @dqa.setter
-    def dqa(self, dqa: DQA) -> None:
-        self._dqa = dqa
+        self.dqa = None
+        self.eda = None
 
     @abstractmethod
     def summarize(self) -> pd.DataFrame:
         """Summarizes the dataset"""
+
+    @classmethod
+    def create(cls, name: str) -> Dataset:
+        """Factory method that creates a Dataset instance from existing data in the Database.
+
+        Args:
+            name (str): Name of the data set in the DataBase
+
+        """
+        dataset = cls._database.read(name=name)
+
+    def add_dqa_module(self, dqa: type[DQA]) -> None:
+        """Adds a Data Quality Assessment Module to the Dataset
+
+        Args:
+            dqa (type[DQA]): A DQA Class
+        """
+        self.dqa = dqa(data=self._data)
+
+    def add_eda_module(self, eda: type[Explorer]) -> None:
+        """Adds an Exploratory Data Analysis Module to the Dataset
+
+        Args:
+            eda (type[Explorer]): An Explorer class
+        """
+        self.eda = eda(data=self._data)
 
     def load(self) -> None:
         """Loads the data into the Dataset object"""
@@ -104,11 +92,11 @@ class Dataset(ABC):
 
     def save(self) -> None:
         """Saves the Dataset's data to the database."""
-        self._database.save(self.as_dto)
+        self._database.create(self.as_dict)
 
-    def as_dto(self) -> dict:
+    def as_dict(self) -> dict:
         """Returns the Dataset as a dictionary"""
-        d = {
+        return {
             "name": self._name,
             "description": self._description,
             "dataset_type": self._dataset_type,
@@ -116,4 +104,3 @@ class Dataset(ABC):
             "dataset_format": self._dataset_format,
             "data": self._data,
         }
-        return DatasetDTO.from_dict(ds_dict=d)
