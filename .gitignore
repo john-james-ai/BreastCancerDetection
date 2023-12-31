@@ -7,7 +7,8 @@ __pycache__/
 *.so
 
 # Data
-/data
+/data/image/0_raw/
+/data/image/2_final/
 /tests/data
 
 # Logs
@@ -19,6 +20,7 @@ __pycache__/
 
 # Proprietary File Formats
 **/*.pptx
+**/*.docx
 
 # Notes and Research
 /notes

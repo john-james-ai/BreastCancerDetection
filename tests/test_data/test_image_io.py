@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 01:30:49 pm                                              #
-# Modified   : Saturday December 30th 2023 03:22:26 pm                                             #
+# Modified   : Saturday December 30th 2023 05:04:13 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,16 +24,18 @@ from datetime import datetime
 import numpy as np
 import pytest
 
+from bcd.config import Config
 from bcd.dal.image import ImageIO
-from bcd.dal.meta import FileManager
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=line-too-long
 # ------------------------------------------------------------------------------------------------ #
 logger = logging.getLogger(__name__)
 # ------------------------------------------------------------------------------------------------ #
 double_line = f"\n{100 * '='}"
 single_line = f"\n{100 * '-'}"
 
-FP_IN = "tests/data/raw/Calc-Test_P_00038_LEFT_CC_1/08-29-2017-DDSM-94942/1.000000-ROI mask images-18515/1-1.dcm"
+FP_IN = "tests/data/image/0_raw/Calc-Test_P_00038_LEFT_CC_1/08-29-2017-DDSM-94942/1.000000-ROI mask images-18515/1-1.dcm"
 FP_OUT = "tests/data/image/io/test_image.png"
 CASE_ID = "Calcification-Train_P_00005_RIGHT_CC_1"
 STATE = "test"

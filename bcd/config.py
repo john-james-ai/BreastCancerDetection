@@ -11,16 +11,13 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday October 29th 2023 01:47:42 am                                                #
-# Modified   : Saturday December 30th 2023 03:22:26 pm                                             #
+# Modified   : Saturday December 30th 2023 04:34:38 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """Configuration Manager Module"""
-import logging
 import os
-
-import dotenv
 
 from bcd.utils.file import IOService
 
@@ -40,18 +37,24 @@ class Config:
         IOService.write(filepath=filepath, data=config)
 
     @classmethod
-    def get_data_dir(cls) -> str:
-        config = cls.read_config()
-        mode = cls.get_mode()
-        return os.path.abspath(config["data"]["image"][mode])
+    def get_image_dir(cls, stage: str = "raw") -> str:
+        """Returns the directory containing images for the designated stage
 
-    @classmethod
-    def get_dicom_metadata_filepath(cls) -> str:
+        Three stages are supported:
+        - 'raw': the original CBIS-DDSM images in DICOM format.
+        - 'exp': Stratified random sample of the full dataset for
+            experimentation and exploration.
+        - 'final': The processed images for modeling.
+
+        Args:
+            stage (str): Stage must be in ['raw', 'exp', 'final']
+
+        """
+
         config = cls.read_config()
-        return os.path.abspath(config["data"]["metadata"])
+        return os.path.abspath(config["data"]["image"][stage])
 
     @classmethod
     def get_model_dir(cls) -> str:
         config = cls.read_config()
-        mode = cls.get_mode()
-        return os.path.abspath(config["models"][mode])
+        return os.path.abspath(config["models"])

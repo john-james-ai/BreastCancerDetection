@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Saturday December 30th 2023 03:01:07 pm                                             #
+# Modified   : Saturday December 30th 2023 05:07:54 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -196,6 +196,7 @@ class ImageReader:
 
     """
 
+    # TODO: Fix image reader if needed.
     def __init__(
         self, case_filepath: str, n: int = None, condition: Callable = None
     ) -> None:
