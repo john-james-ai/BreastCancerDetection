@@ -568,20 +568,32 @@ memory usage: 169.2+ KB
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_records</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Total record count</span>
+<span class="n">n_records</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Number of cases</span>
 <span class="n">n_cases</span> <span class="o">=</span>  <span class="n">df</span><span class="p">[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+
+<span class="c1"># Pathologies and patient counts.</span>
+<span class="n">pathologies</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">,</span> <span class="s1">&#39;pathology&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;pathology&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">pathologies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pathologies</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">pathologies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pathologies</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;pathology&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<span class="c1"># Number of patients with multiple abnormalities and diagnoses</span>
 <span class="n">case_pathologies</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;patient_id&#39;</span><span class="p">,</span> <span class="s1">&#39;pathology&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;patient_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 <span class="n">n_cases_multiple_pathologies</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">case_pathologies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">case_pathologies</span><span class="p">[</span><span class="s1">&#39;pathology&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">])</span>
+
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;n_records&#39;</span><span class="p">,</span> <span class="n">n_records</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;pathologies&#39;</span><span class="p">,</span> <span class="n">pathologies</span><span class="p">)</span>
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;n_cases&#39;</span><span class="p">,</span> <span class="n">n_cases</span><span class="p">)</span>
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;case_pathologies&#39;</span><span class="p">,</span> <span class="n">case_pathologies</span><span class="p">)</span>
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;n_cases_multiple_pathologies&#39;</span><span class="p">,</span> <span class="n">n_cases_multiple_pathologies</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 </div>
-<figure class="align-center" id="case-pathologies-df">
+<p>There are a total of <span class="output text_plain">1546</span> records and <span class="output text_plain">602</span> cases in the calcification training set. The following summarizes the pathologies.</p>
+<figure class="align-center" id="pathologies-fig">
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -601,64 +613,37 @@ memory usage: 169.2+ KB
     <tr style="text-align: right;">
       <th></th>
       <th>pathology</th>
-    </tr>
-    <tr>
       <th>patient_id</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>P_00005</th>
-      <td>1</td>
+      <th>0</th>
+      <td>BENIGN</td>
+      <td>258</td>
     </tr>
     <tr>
-      <th>P_00007</th>
-      <td>1</td>
+      <th>1</th>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>82</td>
     </tr>
     <tr>
-      <th>P_00008</th>
-      <td>1</td>
+      <th>2</th>
+      <td>MALIGNANT</td>
+      <td>276</td>
     </tr>
     <tr>
-      <th>P_00010</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>P_00011</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>P_02559</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>P_02563</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>P_02566</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>P_02572</th>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>P_02584</th>
-      <td>1</td>
+      <th>Total</th>
+      <td></td>
+      <td>616</td>
     </tr>
   </tbody>
 </table>
-<p>602 rows × 1 columns</p>
 </div></div><figcaption>
-<p><span class="caption-number">Fig. 2.1 </span><span class="caption-text">CBIS-DDSM Case Pathologies</span><a class="headerlink" href="#case-pathologies-df" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Patient Count by Pathology</span><a class="headerlink" href="#pathologies-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p><a class="reference internal" href="#pathologies-fig"><span class="std std-numref">Fig. 2.1</span></a> shows 14 more cases than expected. Indeed, there are <span class="output text_plain">14</span> patients with two pathologies, bringing our total to 616.</p>
 <p>Several observations can be made:</p>
 <ol class="arabic simple">
 <li><p>It would appear that we have three values for pathology: MALIGNANT, BENIGN, and BENIGN_WITHOUT_CALLBACK. While changing this to BENIGN might simplify things, we lose information that might be useful in understanding missing values, such as #2.</p></li>

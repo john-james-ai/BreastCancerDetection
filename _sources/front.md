@@ -109,5 +109,5 @@ The essential dependencies, versions, and hardware details are listed below.
 
 ```{code-cell}
 %load_ext watermark
-%watermark -v -m -p cv2,ipython,ipykernel,joblib,jupyter-book,logmatic,matplotlib,numpy,pandas,python,python-dotenv,pyyaml,requests,scipy,seaborn,skimage,sklearn,studioai,yaml
+%watermark -v -m -p cv2,ipykernel,joblib,jupyter-book,logmatic,matplotlib,numpy,pandas,python,python-dotenv,pyyaml,requests,scipy,seaborn,skimage,sklearn,studioai,yaml
 ```
