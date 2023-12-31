@@ -75,10 +75,6 @@ That said, for those with larger appetites (and an extra 163 GB of available sto
 
 Please follow the instructions [here](https://wiki.cancerimagingarchive.net/display/NBIA/Downloading+TCIA+Images). Again, the CBIS-DDSM imaging data weighs in at over 163 GB, so download times may be considerable depending on your available internet bandwidth and throttling at TCIA.
 
-```{admonition}
-The file locations are kept in a configuration file, `config.yml`, which is stored in the root directory of the repository. Once you've downloaded the data, check the configuration file to ensure that the file locations on your machine are correctly reflected in the configuration file.
-```
-
 ## Document Organization
 
 ## Acknowledgements

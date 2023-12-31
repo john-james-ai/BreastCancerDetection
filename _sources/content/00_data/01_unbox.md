@@ -19,6 +19,10 @@ Before conducting data quality or exploratory analyses, we unbox the data to ens
 3. Data structure facilitates the next stage of data quality analysis.
 
 ```{code-cell}
+:tags: [hide-input]
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../..")))
 from myst_nb import glue
 import pandas as pd
 ```
@@ -61,7 +65,7 @@ glue('case_pathologies', case_pathologies)
 glue('n_cases_multiple_pathologies', n_cases_multiple_pathologies)
 ```
 
-```{glue:figure}
+```{glue:figure} case_pathologies
 ---
 align: center
 name: case_pathologies_df
