@@ -12,6 +12,13 @@ kernelspec:
 ---
 # Deep Learning for Breast Cancer Detection - Modular, Extensible, Reproducible
 
+```{code-cell}
+:tags: [hide-input]
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("..")))
+```
+
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://github.com/john-james-ai/BreastCancerDetection)
 
 ```{image} Deep Learning for Breast Cancer Detection
@@ -59,7 +66,7 @@ The repository contains all metadata, raw and processed, for every image in the 
 
 All imaging analyses and exploration were conducted on this experimental dataset, which is also provided in the repository. {numref}`repo_data` outlines the file structure.
 
-```{table}
+```{table} Repository Data
 : name: repo_data
 | Type     | Stage        | Description                                      | Location                                   | Size   |
 |----------|--------------|--------------------------------------------------|--------------------------------------------|--------|
