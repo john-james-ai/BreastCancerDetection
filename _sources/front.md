@@ -10,13 +10,12 @@ kernelspec:
   language: python
   name: python3
 ---
-
-# Deep Learning for Breast Cancer Detection: Modular, Extensible, Reproducible
+# Deep Learning for Breast Cancer Detection - Modular, Extensible, Reproducible
 
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://github.com/john-james-ai/BreastCancerDetection)
 
 ```{image}
-:alt: Deep Learning for Breast Cancer Detection: Modular, Extensible, Reproducible
+:alt: Deep Learning for Breast Cancer Detection - Modular, Extensible, Reproducible
 :align: center
 ```
 
@@ -45,6 +44,7 @@ Once the download is complete, navigate to the root folder of the repository and
 ```{note}
 conda env create -f environment.yml
 ```
+
 3. Compile the jupyter book:
 
 Next, compile the jupyter book with the following command.
@@ -59,7 +59,7 @@ The repository contains all metadata, raw and processed, for every image in the 
 
 All imaging analyses and exploration were conducted on this experimental dataset, which is also provided in the repository. {numref}`repo_data` outlines the file structure.
 
-```{table} File Organization
+```{table}
 : name: repo_data
 | Type     | Stage        | Description                                      | Location                                   | Size   |
 |----------|--------------|--------------------------------------------------|--------------------------------------------|--------|
@@ -71,11 +71,11 @@ All imaging analyses and exploration were conducted on this experimental dataset
 | Imaging  | Experimental | CBIS-DDSM Imaging Dataset                        | data/1_exp/CBIS-DDSM/                      | 8.2 GB |
 ```
 
-That said, for those with larger appetites (and an extra 163 GB of available storage capacity), the CBIS-DDSM can be downloaded from [The Cancer Imaging Archive]( https://www.cancerimagingarchive.net/collection/cbis-ddsm/)(TCIA).  The images are downloaded using the [NBIA Data Retriever]( https://wiki.cancerimagingarchive.net/display/NBIA/NBIA+Data+Retriever+Command-Line+Interface+Guide) which must be installed on your local machine.
+That said, for those with larger appetites (and an extra 163 GB of available storage capacity), the CBIS-DDSM can be downloaded from [The Cancer Imaging Archive](https://www.cancerimagingarchive.net/collection/cbis-ddsm/)(TCIA).  The images are downloaded using the [NBIA Data Retriever](https://wiki.cancerimagingarchive.net/display/NBIA/NBIA+Data+Retriever+Command-Line+Interface+Guide) which must be installed on your local machine.
 
 Please follow the instructions [here](https://wiki.cancerimagingarchive.net/display/NBIA/Downloading+TCIA+Images). Again, the CBIS-DDSM imaging data weighs in at over 163 GB, so download times may be considerable depending on your available internet bandwidth and throttling at TCIA.
 
-```{admonition} File Organization FileManageruration
+```{admonition}
 The file locations are kept in a configuration file, `config.yml`, which is stored in the root directory of the repository. Once you've downloaded the data, check the configuration file to ensure that the file locations on your machine are correctly reflected in the configuration file.
 ```
 
@@ -107,9 +107,10 @@ year = {2024},
 ```
 
 ## Dependency Version and Hardware
+
 The essential dependencies, versions, and hardware details are listed below.
 
-```{code-cell} ipython3
+```{code-cell}
 %load_ext watermark
 %watermark -v -m -p cv2,ipython,ipykernel,joblib,jupyter-book,logmatic,matplotlib,numpy,pandas,python,python-dotenv,pyyaml,requests,scipy,seaborn,skimage,sklearn,studioai,yaml
 ```
