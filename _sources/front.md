@@ -12,16 +12,10 @@ kernelspec:
 ---
 # Deep Learning for Breast Cancer Detection - Modular, Extensible, Reproducible
 
-```{code-cell}
-:tags: [hide-input]
-import os
-if 'jbook' in os.getcwd():
-    os.chdir(os.path.abspath(os.path.join("..")))
-```
 
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://github.com/john-james-ai/BreastCancerDetection)
 
-```{image} Deep Learning for Breast Cancer Detection
+```{image} figures/logo.png
 :alt: Deep Learning for Breast Cancer Detection - Modular, Extensible, Reproducible
 :align: center
 ```
