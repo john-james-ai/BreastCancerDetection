@@ -31,7 +31,7 @@ In total, the CBIS-DDSM has 10,239 images of 1,644 cases for 1,566 patients.
 
 ### Imaging Dataset Statistics
 
-```{table}
+```{table} CBIS DDSM Statistics
 :name: cbis_ddsm_images
 
 | Collection Statistics  |        |
@@ -46,7 +46,7 @@ In total, the CBIS-DDSM has 10,239 images of 1,644 cases for 1,566 patients.
 
 ### Case Dataset Statistics
 
-```{table}
+```{table} CBIS DDSM Case Statistics
 :name: cbis_ddsm_cases
 | # | Dataset                   | Filename                            | Format | Size   | Cases | Benign | Benign Abnormalities | Malignant | Malignant Abnormalities |
 |---|---------------------------|-------------------------------------|--------|--------|-------|--------|----------------------|-----------|-------------------------|

@@ -14,7 +14,7 @@ kernelspec:
 
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://github.com/john-james-ai/BreastCancerDetection)
 
-```{image}
+```{image} Deep Learning for Breast Cancer Detection
 :alt: Deep Learning for Breast Cancer Detection - Modular, Extensible, Reproducible
 :align: center
 ```

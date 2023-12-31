@@ -409,8 +409,8 @@ document.write(`
 <p>This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class="reference internal" href="../80_references.html#id136" title="Rebecca Sawyer Lee, Francisco Gimenez, Assaf Hoogi, Kanae Kawai Miyake, Mia Gorovoy, and Daniel L. Rubin. A curated mammography data set for use in computer-aided detection and diagnosis research. Scientific Data, 4(1):170177, December 2017. URL: https://www.nature.com/articles/sdata2017177 (visited on 2023-05-24), doi:10.1038/sdata.2017.177.">2</a>]</span> is an updated and standardized version of the original DDSM, developed to address some of the challenges. In particular, the questionable annotations were reimage_viewed by a trained mammographer, and 254 images were removed from the dataset. The images were converted from PVRG-JPEG to 8-bit raw binary bitmaps. Python tools were developed to convert the 8-bit images to 16-bit grayscale TIFF files, which were later converted to the Digital Imaging and Communications in Medicine (DICOM) format. The bash and C preprocessing tools were re-implemented in Python to be cross-platform. Convenience images were cropped around the region of interest for researchers analyzing only the abnormalities. Precise segmentation was applied to the calcification images providing much more accurate regions of interest, and the data were split into training and test sets, based on the BI-RADS category to support method evaluation and reproducibility.</p>
 <p>The CBIS-DDSM is comprised of:</p>
 <ul class="simple">
-<li><p><strong>Mammographic Images</strong>: Full mammography, mammogram and cropped images <code class="xref std std-numref docutils literal notranslate"><span class="pre">cbis_ddsm_images</span></code> ,</p></li>
-<li><p><strong>Case Data</strong>: Calcification and mass case data <code class="xref std std-numref docutils literal notranslate"><span class="pre">cbis_ddsm_cases</span></code></p></li>
+<li><p><strong>Mammographic Images</strong>: Full mammography, mammogram and cropped images <a class="reference internal" href="#cbis-ddsm-images"><span class="std std-numref">Table 1.1</span></a> ,</p></li>
+<li><p><strong>Case Data</strong>: Calcification and mass case data <a class="reference internal" href="#cbis-ddsm-cases"><span class="std std-numref">Table 1.2</span></a></p></li>
 <li><p><strong>Series Data</strong>: Series, study and subject identifiers and image file locations.</p></li>
 <li><p><strong>DICOM Metadata</strong>: Image and modality information in DICOM imaging format.</p></li>
 </ul>
@@ -421,6 +421,7 @@ document.write(`
 <section id="imaging-dataset-statistics">
 <h3><span class="section-number">1.1.1. </span>Imaging Dataset Statistics<a class="headerlink" href="#imaging-dataset-statistics" title="Permalink to this heading">#</a></h3>
 <table class="table" id="cbis-ddsm-images">
+<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">CBIS DDSM Statistics</span><a class="headerlink" href="#cbis-ddsm-images" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Collection Statistics</p></th>
 <th class="head"><p></p></th>
@@ -451,6 +452,7 @@ document.write(`
 <section id="case-dataset-statistics">
 <h3><span class="section-number">1.1.2. </span>Case Dataset Statistics<a class="headerlink" href="#case-dataset-statistics" title="Permalink to this heading">#</a></h3>
 <table class="table" id="cbis-ddsm-cases">
+<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">CBIS DDSM Case Statistics</span><a class="headerlink" href="#cbis-ddsm-cases" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>#</p></th>
 <th class="head"><p>Dataset</p></th>
