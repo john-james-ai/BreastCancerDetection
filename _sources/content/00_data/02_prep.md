@@ -30,7 +30,7 @@ First up? The case dataset.
 ```{code-cell}
 :tags: [hide-cell]
 
-% load ../../../bcd/data_prep/case.py -r 40-165
+%load ../../../bcd/data_prep/case.py -r 40-165
 ```
 
 ## DICOM Image Metadata
