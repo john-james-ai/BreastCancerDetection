@@ -436,8 +436,55 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../..&quot;</span><span class="p">)))</span>
-<span class="n">data_prep</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;bcd&quot;</span><span class="p">,</span><span class="s2">&quot;data_prep&quot;</span><span class="p">,</span> <span class="s2">&quot;case.py&quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">load</span> $data_prep
+<span class="o">%</span><span class="k">load</span> bcd.data_prep.case.py
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:3832,</span> in <span class="ni">InteractiveShell.find_user_code</span><span class="nt">(self, target, raw, py_only, skip_encoding_cookie, search_ns)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3831</span> <span class="k">try</span><span class="p">:</span>                                              <span class="c1"># User namespace</span>
+<span class="ne">-&gt; </span><span class="mi">3832</span>     <span class="n">codeobj</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_ns</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3833</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+<span class="n">File</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">1</span>
+
+<span class="ne">NameError</span>: name &#39;bcd&#39; is not defined
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../..&quot;</span><span class="p">)))</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="s1">&#39;bcd.data_prep.case.py&#39;</span><span class="p">)</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:2417,</span> in <span class="ni">InteractiveShell.run_line_magic</span><span class="nt">(self, magic_name, line, _stack_depth)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2415</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2416</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2417</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2419</span> <span class="c1"># The code below prevents the output from being displayed</span>
+<span class="g g-Whitespace">   </span><span class="mi">2420</span> <span class="c1"># when using magics with decodator @output_can_be_silenced</span>
+<span class="g g-Whitespace">   </span><span class="mi">2421</span> <span class="c1"># when the last Python token in the expression is a &#39;;&#39;.</span>
+<span class="g g-Whitespace">   </span><span class="mi">2422</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">magic</span><span class="o">.</span><span class="n">MAGIC_OUTPUT_CAN_BE_SILENCED</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/magics/code.py:359,</span> in <span class="ni">CodeMagics.load</span><span class="nt">(self, arg_s)</span>
+<span class="g g-Whitespace">    </span><span class="mi">357</span> <span class="n">opts</span><span class="p">,</span><span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_options</span><span class="p">(</span><span class="n">arg_s</span><span class="p">,</span><span class="s1">&#39;yns:r:&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">358</span> <span class="n">search_ns</span> <span class="o">=</span> <span class="s1">&#39;n&#39;</span> <span class="ow">in</span> <span class="n">opts</span>
+<span class="ne">--&gt; </span><span class="mi">359</span> <span class="n">contents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">find_user_code</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">search_ns</span><span class="o">=</span><span class="n">search_ns</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">361</span> <span class="k">if</span> <span class="s1">&#39;s&#39;</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">362</span>     <span class="k">try</span><span class="p">:</span>
+
+<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:3834,</span> in <span class="ni">InteractiveShell.find_user_code</span><span class="nt">(self, target, raw, py_only, skip_encoding_cookie, search_ns)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3832</span>     <span class="n">codeobj</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_ns</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3833</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3834</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">((</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; was not found in history, as a file, url, &quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">3835</span>                         <span class="s2">&quot;nor in the user namespace.&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="n">target</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+<span class="g g-Whitespace">   </span><span class="mi">3837</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">codeobj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3838</span>     <span class="k">return</span> <span class="n">codeobj</span>
+
+<span class="ne">ValueError</span>: &#39;bcd.data_prep.case.py&#39; was not found in history, as a file, url, nor in the user namespace.
 </pre></div>
 </div>
 </div>

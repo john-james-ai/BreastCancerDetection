@@ -34,8 +34,7 @@ First up? The case dataset.
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
-data_prep = os.path.join("bcd","data_prep", "case.py")
-%load $data_prep
+%load bcd.data_prep.case.py
 ```
 
 ## DICOM Image Metadata
