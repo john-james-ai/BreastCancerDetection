@@ -8,6 +8,8 @@ __pycache__/
 
 # Data
 /data/image/CBIS-DDSM/
+/data/image/0_raw/
+/data/image/
 /tests/data
 
 # Logs

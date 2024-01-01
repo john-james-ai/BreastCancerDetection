@@ -11,17 +11,16 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday September 23rd 2023 12:45:39 am                                            #
-# Modified   : Sunday December 31st 2023 08:15:51 pm                                               #
+# Modified   : Monday January 1st 2024 03:18:15 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
-
 """Base module for Data Preparation"""
 from __future__ import annotations
 
+import os
 from abc import ABC, abstractmethod
-from typing import Union
 
 import pandas as pd
 
@@ -31,7 +30,10 @@ class DataPrep(ABC):
     """Defines the interface for metadata Data Preparation classes."""
 
     @abstractmethod
-    def prep(
-        self, force: bool = False, result: bool = False, **kwargs
-    ) -> Union[None, pd.DataFrame]:
+    def prep(self) -> pd.DataFrame:
         """Performs the data preparation task."""
+
+    def _save(self, df: pd.DataFrame, filepath: str) -> None:
+        """Saves the result to file"""
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        df.to_csv(filepath, index=False)

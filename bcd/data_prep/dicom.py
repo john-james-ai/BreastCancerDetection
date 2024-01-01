@@ -4,183 +4,136 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/preprocess/metadata/dicom.py                                                   #
+# Filename   : /bcd/data_prep/dicom.py                                                             #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Saturday October 28th 2023 10:57:31 pm                                              #
+# Modified   : Monday January 1st 2024 03:17:32 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 """DICOM Data Prep Module"""
-import logging
 import os
-import uuid
 from glob import glob
-from typing import Union
 
-import joblib
+import dask
 import numpy as np
 import pandas as pd
 import pydicom
-from tqdm import tqdm
 
-from bcd.preprocess.metadata.base import DataPrep
+from bcd.dal.file import IOService
+from bcd.data_prep.base import DataPrep
+from bcd.utils.file import getsize
+from bcd.utils.profile import profiler
 
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=arguments-renamed,arguments-differ
 # ------------------------------------------------------------------------------------------------ #
 class DicomPrep(DataPrep):
-    """Performs preprocessing of the DICOM data.
+    """Performs extraction of the DICOM data.
 
-    Reads the DICOM metadata, adds the series description and saves the file.
+    Iterates through the DICOM metadata in parallel, extracting subject, series, and file location
+    data. Then each DICOM file in the directory is parsed and the results are
+    combined into to a DataFrame and saved.
+
+    Args:
+        filepath (str): Path to the DICOM series metadata.
+        dicom_filepath (str) Path for the results
+        skip_list (list): List of filepaths to skip.
+        force (bool): Whether to force execution if output already exists. Default is False.
     """
 
-    def __init__(self) -> None:
-        super().__init__()
-        self._logger = logging.getLogger(f"{self.__class__.__name__}")
+    __BASEDIR = "data/image/0_raw/"
 
-    def prep(
+    def __init__(
         self,
-        location: str,
-        dicom_fp: str,
+        filepath: str,
+        dicom_filepath: str,
         skip_list: list = None,
         force: bool = False,
-        result: bool = False,
-    ) -> Union[None, pd.DataFrame]:
-        """Extracts image metadata from the DICOM image files.
+    ) -> None:
+        super().__init__()
+        self._filepath = os.path.abspath(filepath)
+        self._dicom_filepath = os.path.abspath(dicom_filepath)
+        self._skip_list = skip_list
+        self._force = force
 
-        Args:
-            location (str): The base location for the DICOM image files.
-            dicom_fp (str) Filename for the dicom metadata dataset.
-            skip_list (list): List of filepaths relative to the location to skip.
-            force (bool): Whether to force execution if output already exists. Default is False.
-            result (bool): Whether the result should be returned. Default is False.
-        """
-        location = os.path.abspath(location)
-        dicom_fp = os.path.abspath(dicom_fp)
+    @profiler
+    def prep(self) -> pd.DataFrame:
+        """Extracts image metadata from the DICOM image files."""
 
-        os.makedirs(os.path.dirname(dicom_fp), exist_ok=True)
+        if self._force or not os.path.exists(self._dicom_filepath):
+            # Reads the series metadata that contains subject, series, and
+            # file location information
+            studies = IOService.read(self._filepath)
 
-        if force or not os.path.exists(dicom_fp):
-            filepaths = self._get_filepaths(location, skip_list)
-            dicom_data = self._extract_dicom_data(filepaths=filepaths)
-            dicom_data.to_csv(dicom_fp, index=False)
-            msg = f"Shape of DICOM Data: {dicom_data.shape}"
-            self._logger.debug(msg)
+            # Add filepaths to the study data first to avoid batch
+            # operation exceptions with dask.
+            studies = self._get_filepaths(studies=studies)
 
-        if result:
-            return pd.read_csv(dicom_fp)
+            results = []
+            # Graph of work is created and executed lazily at compute time.
+            for study in studies:
+                image_result = dask.delayed(self._extract_data)(study)
+                results.append(image_result)
 
-    def merge_case_data(self, case_fp: str, dicom_fp: str, xref_fp: str, dicom_out_fp: str) -> None:
-        """Merges case data into the DICOM metadata
+            # Compute the results and convert to dataframe
+            results = dask.compute(*results)
+            df = pd.DataFrame(data=results)
 
-        Args:
-            case_fp (str): Case data filepath
-            dicom_fp (str): DICOM input filepath
-            xref_fp (str): Filepath to the case/series x-ref data
-            dicom_out_fp (str): Filepath to the DICOM output file.
-        """
-        case_variables = [
-            "case_id",
-            "left_or_right_breast",
-            "image_view",
-            "abnormality_type",
-            "assessment",
-            "breast_density",
-            "calc_type",
-            "calc_distribution",
-            "mass_shape",
-            "mass_margins",
-            "fileset",
-            "cancer",
-        ]
-        df_case = pd.read_csv(case_fp, usecols=case_variables)
-        df_dicom = pd.read_csv(dicom_fp)
-        df_xref = pd.read_csv(xref_fp)
+            self._save(df=df, filepath=self._dicom_filepath)
 
-        df_case = df_case.merge(df_xref, on="case_id")
-        df_dicom = df_dicom.merge(df_case, on=["series_uid", "series_description"])
-        df_dicom.to_csv(dicom_out_fp, index=False)
+            return df
 
-    def add_series_description(self, dicom_fp, series_fp: str) -> None:
-        """Adds series description to the DICOM data
+        return pd.read_csv(self._dicom_filepath)
 
-        Args:
-            dicom_fp (str) Filename for the dicom metadata dataset.
-            series_fp (str): Filepath to the series description data.
+    def _get_filepaths(self, studies: pd.Series) -> pd.DataFrame:
+        """Adds filepaths to the studies dataframe"""
+        studies_filepaths = []
+        for _, row in studies.iterrows():
+            location = row["file_location"].replace("./", "")
+            filepath = os.path.join(self.__BASEDIR, location)
+            filepaths = glob(filepath + "/*.dcm")
+            for file in filepaths:
+                row["filepath"] = file
+                studies_filepaths.append(row)
+        return studies_filepaths
 
-        Returns:
-            Dataset with series description added.
-        """
-        dicom = pd.read_csv(dicom_fp)
-        if "series_description" not in dicom.columns:
-            series = pd.read_csv(series_fp)
-            series = series[["series_uid", "series_description"]].drop_duplicates()
-            dicom = dicom.merge(series, on="series_uid", how="left")
-            dicom.to_csv(dicom_fp, index=False)
-        return dicom
+    def _extract_data(self, study: pd.Series) -> dict:
+        """Reads study and dicom data from a file."""
 
-    def _get_filepaths(self, location: str, skip_list: list = None) -> list:
-        """Returns a filtered list of DICOM filepaths"""
-        pattern = location + "/**/*.dcm"
-        filepaths = glob(pattern, recursive=True)
+        # Parse the study id
+        studyid = study["subject_id"].split("_")[0:5]
+        abtype, fileset = studyid[0].split("-")
 
-        msg = f"Number of filepaths: {len(filepaths)}"
-        self._logger.debug(msg)
-        if len(skip_list) > 0:
-            filepaths = self._filter_filepaths(filepaths=filepaths, skip_list=skip_list)
-        msg = f"Number of filtered filepaths: {len(filepaths)}"
-        self._logger.debug(msg)
-        return filepaths
-
-    def _filter_filepaths(self, filepaths: list, skip_list: list) -> bool:
-        """Indicates whether a filepath is in the list of files to be skipped"""
-        filtered_filepaths = []
-        for filepath in filepaths:
-            for skipfile in skip_list:
-                if not skipfile in filepath:  # noqa
-                    filtered_filepaths.append(filepath)
-        return filtered_filepaths
-
-    def _read_dicom_data(self, filepath) -> dict:
-        """Reads dicom data from a file."""
-
-        dcm = pydicom.dcmread(filepath)
+        # Extract the DICOM data
+        dcm = pydicom.dcmread(study["filepath"])
         img = dcm.pixel_array
 
-        dcm_data = {}
-        dcm_data["uid"] = str(uuid.uuid4())
-        dcm_data["series_uid"] = dcm.SeriesInstanceUID
-        dcm_data["filepath"] = os.path.relpath(filepath)
-        dcm_data["photometric_interpretation"] = dcm.PhotometricInterpretation
-        dcm_data["samples_per_pixel"] = int(dcm.SamplesPerPixel)
-        dcm_data["height"] = int(dcm.Rows)
-        dcm_data["width"] = int(dcm.Columns)
-        dcm_data["size"] = int(dcm.Columns) * int(dcm.Rows)
-        dcm_data["aspect_ratio"] = int(dcm.Columns) / int(dcm.Rows)
-        dcm_data["bit_depth"] = int(dcm.BitsStored)
-        dcm_data["min_pixel_value"] = int(dcm.SmallestImagePixelValue)
-        dcm_data["max_pixel_value"] = int(dcm.LargestImagePixelValue)
-        dcm_data["range_pixel_values"] = int(dcm.LargestImagePixelValue) - int(
-            dcm.SmallestImagePixelValue
-        )
-        dcm_data["mean_pixel_value"] = np.mean(img, axis=None)
-        dcm_data["median_pixel_value"] = np.median(img, axis=None)
-        dcm_data["std_pixel_value"] = np.std(img, axis=None)
+        d = {}
+        d["patient_id"] = ("_").join(studyid[1:3])
+        d["subject_id"] = study["subject_id"]
+        d["abnormality_type"] = abtype.lower()
+        d["laterality"] = studyid[3]
+        d["image_view"] = studyid[4]
+        d["fileset"] = fileset.lower()
+        d["series_description"] = study["series_description"]
+        d["photometric_interpretation"] = dcm.PhotometricInterpretation
+        d["bit_depth"] = dcm.BitsStored
+        d["rows"], d["cols"] = img.shape
+        d["aspect_ratio"] = d["cols"] / d["rows"]
+        d["size"] = d["rows"] * d["cols"]
+        d["file_size"] = getsize(study["filepath"])
+        d["min_pixel_value"] = dcm.SmallestImagePixelValue
+        d["max_pixel_value"] = dcm.LargestImagePixelValue
+        d["mean_pixel_value"] = np.mean(img)
+        d["std_pixel_value"] = np.std(img)
+        d["filepath"] = study["filepath"]
+        d["mmg_id"] = "_".join(study["subject_id"].split("_")[0:5])
 
-        return dcm_data
-
-    def _extract_dicom_data(self, filepaths: list, n_jobs: int = 6) -> pd.DataFrame:
-        """Extracts dicom data and returns a DataFrame."""
-        dicom_data = joblib.Parallel(n_jobs=n_jobs)(
-            joblib.delayed(self._read_dicom_data)(filepath) for filepath in tqdm(filepaths)
-        )
-        dicom_data = pd.DataFrame(data=dicom_data)
-
-        return dicom_data
+        return d

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Sunday December 31st 2023 09:59:16 pm                                               #
+# Modified   : Monday January 1st 2024 03:59:24 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -38,9 +38,18 @@ from bcd.data_prep.base import DataPrep
 # pylint: disable=unused-import, disable=arguments-differ
 # ------------------------------------------------------------------------------------------------ #
 class CasePrep(DataPrep):
-    """Performs Case metadata preparation."""
+    """Performs Case metadata preparation.
 
-    def prep(
+    Combines training and test cases into a single csv case file.
+
+    Args:
+        calc_train_fp, calc_test_fp, mass_train_fp, mass_test_fp (str): The file paths to the
+            calcification and mass training and test sets.
+        case_fp (str): Path to output calcification and mass datasets.
+        force (bool): Whether to force execution if output already exists. Default is False.
+    """
+
+    def __init__(
         self,
         calc_train_fp: str,
         calc_test_fp: str,
@@ -48,32 +57,28 @@ class CasePrep(DataPrep):
         mass_test_fp: str,
         case_fp: str,
         force: bool = False,
-        result: bool = False,
-    ) -> Union[None, pd.DataFrame]:
-        """Combines training and test cases into a single csv case file.
+    ) -> None:
+        super().__init__()
+        self._calc_train_fp = calc_train_fp
+        self._calc_test_fp = calc_test_fp
+        self._mass_train_fp = mass_train_fp
+        self._mass_test_fp = mass_test_fp
+        self._case_fp = case_fp
+        self._force = force
 
-        Args:
-            calc_train_fp, calc_test_fp, mass_train_fp, mass_test_fp (str): The file paths to the
-                calcification and mass training and test sets.
-            case_fp (str): Path to output calcification and mass datasets.
+    def prep(self) -> pd.DataFrame:
+        """Combines training and test cases into a single csv case file."""
+        self._case_fp = os.path.abspath(self._case_fp)
 
-            force (bool): Whether to force execution if output already exists. Default is False.
-            result (bool): Whether the result should be returned. Default is False.
+        os.makedirs(os.path.dirname(self._case_fp), exist_ok=True)
 
-        Returns
-            If result is True, the case dataframe is returned.
-        """
-        case_fp = os.path.abspath(case_fp)
-
-        os.makedirs(os.path.dirname(case_fp), exist_ok=True)
-
-        if force or not os.path.exists(case_fp):
+        if self._force or not os.path.exists(self._case_fp):
             # Merge all case data into a single DataFrame
             df_cases = self._merge_cases(
-                calc_train_fp=calc_train_fp,
-                calc_test_fp=calc_test_fp,
-                mass_train_fp=mass_train_fp,
-                mass_test_fp=mass_test_fp,
+                calc_train_fp=self._calc_train_fp,
+                calc_test_fp=self._calc_test_fp,
+                mass_train_fp=self._mass_train_fp,
+                mass_test_fp=self._mass_test_fp,
             )
 
             # Set morphological features to NA as appropriate
@@ -106,11 +111,14 @@ class CasePrep(DataPrep):
             ]
             df_cases = df_cases.drop(columns=columns_to_drop)
 
-            # Save datasets
-            df_cases.to_csv(case_fp, index=False)
+            # Change left_or_right_breast to laterality, the DICOM attribute
+            df_cases = df_cases.rename(columns={"left_or_right_breast": "laterality"})
 
-        if result:
-            return pd.read_csv(case_fp)
+            self._save(df=df_cases, filepath=self._case_fp)
+
+            return df_cases
+
+        return pd.read_csv(self._case_fp)
 
     def _merge_cases(
         self,

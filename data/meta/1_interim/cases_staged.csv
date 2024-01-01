@@ -1,4 +1,4 @@
-patient_id,breast_density,left_or_right_breast,image_view,abnormality_id,abnormality_type,calc_type,calc_distribution,assessment,pathology,subtlety,fileset,mass_shape,mass_margins,mmg_id,cancer
+patient_id,breast_density,laterality,image_view,abnormality_id,abnormality_type,calc_type,calc_distribution,assessment,pathology,subtlety,fileset,mass_shape,mass_margins,mmg_id,cancer
 P_00005,3,RIGHT,CC,1,calcification,AMORPHOUS,CLUSTERED,3,MALIGNANT,3,training,NOT APPLICABLE,NOT APPLICABLE,Calc-Training_P_00005_RIGHT_CC,True
 P_00005,3,RIGHT,MLO,1,calcification,AMORPHOUS,CLUSTERED,3,MALIGNANT,3,training,NOT APPLICABLE,NOT APPLICABLE,Calc-Training_P_00005_RIGHT_MLO,True
 P_00007,4,LEFT,CC,1,calcification,PLEOMORPHIC,LINEAR,4,BENIGN,4,training,NOT APPLICABLE,NOT APPLICABLE,Calc-Training_P_00007_LEFT_CC,False
