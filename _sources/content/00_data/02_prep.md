@@ -35,7 +35,7 @@ import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
 
-%load ../../../bcd/data_prep/case.py -r 40-165
+%load -r 40-165 bcd.data_prep.case.py
 ```
 
 ## DICOM Image Metadata
