@@ -1,0 +1,224 @@
+Found 2861 files belonging to 2 classes.
+Using 2289 files for training.
+Found 2861 files belonging to 2 classes.
+Using 572 files for validation.
+Model: "basemodel_2023-11-05_16-21-24"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ resizing (Resizing)         multiple                  0
+ rescaling (Rescaling)       multiple                  0
+ conv2d (Conv2D)             multiple                  448
+ max_pooling2d (MaxPooling2D  multiple                 0
+ )
+ conv2d_1 (Conv2D)           multiple                  4640
+ max_pooling2d_1 (MaxPooling  multiple                 0
+ 2D)
+ conv2d_2 (Conv2D)           multiple                  18496
+ max_pooling2d_2 (MaxPooling  multiple                 0
+ 2D)
+ dropout (Dropout)           multiple                  0
+ flatten (Flatten)           multiple                  0
+ dense (Dense)               multiple                  8388736
+ dense_1 (Dense)             multiple                  258
+=================================================================
+Total params: 8,412,578
+Trainable params: 8,412,578
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+144/144 [==============================] - 112s 748ms/step - loss: 0.6604 - accuracy: 0.6273 - val_loss: 0.6196 - val_accuracy: 0.6294 - duration: 110.5516 - total_duration: 110.5516
+Epoch 2/5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+144/144 [==============================] - 72s 502ms/step - loss: 0.5633 - accuracy: 0.6889 - val_loss: 0.6197 - val_accuracy: 0.6416 - duration: 71.2432 - total_duration: 181.7948
+Epoch 3/5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+144/144 [==============================] - 75s 524ms/step - loss: 0.4895 - accuracy: 0.7488 - val_loss: 0.6821 - val_accuracy: 0.6503 - duration: 74.2026 - total_duration: 255.9975
+Epoch 4/5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+144/144 [==============================] - 76s 529ms/step - loss: 0.3861 - accuracy: 0.8069 - val_loss: 0.9240 - val_accuracy: 0.6573 - duration: 75.0511 - total_duration: 331.0486
+Epoch 5/5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+144/144 [==============================] - 74s 511ms/step - loss: 0.2812 - accuracy: 0.8729 - val_loss: 0.9784 - val_accuracy: 0.6626 - duration: 72.5514 - total_duration: 403.5999

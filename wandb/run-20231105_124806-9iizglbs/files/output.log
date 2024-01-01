@@ -1,0 +1,16 @@
+Image Count
+Training Images:
+	Benign:		1680
+	Malignant:	1181
+	Total Train:	2861
+Test Images:
+	Benign:		428
+	Malignant:	276
+	Total Test:	704
+Total:			3565
+Found 2861 files belonging to 2 classes.
+Using 2289 files for training.
+Found 2861 files belonging to 2 classes.
+Using 572 files for validation.
+2023-11-05 12:48:18.649553: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.

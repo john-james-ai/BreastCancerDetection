@@ -1,0 +1,1559 @@
+2023-11-05 16:21:03,131 INFO    StreamThr :7090 [internal.py:wandb_internal():86] W&B internal server running at pid: 7090, started at: 2023-11-05 16:21:03.130003
+2023-11-05 16:21:03,134 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status
+2023-11-05 16:21:03,147 INFO    WriterThread:7090 [datastore.py:open_for_write():85] open: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/run-mnewb2bn.wandb
+2023-11-05 16:21:03,148 DEBUG   SenderThread:7090 [sender.py:send():380] send: header
+2023-11-05 16:21:03,319 DEBUG   SenderThread:7090 [sender.py:send():380] send: run
+2023-11-05 16:21:03,937 INFO    SenderThread:7090 [dir_watcher.py:__init__():211] watching files in: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files
+2023-11-05 16:21:03,937 INFO    SenderThread:7090 [sender.py:_start_run_threads():1122] run started: mnewb2bn with start time 1699219263.129414
+2023-11-05 16:21:03,945 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: check_version
+2023-11-05 16:21:03,946 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: check_version
+2023-11-05 16:21:04,287 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: run_start
+2023-11-05 16:21:04,409 DEBUG   HandlerThread:7090 [system_info.py:__init__():32] System info init
+2023-11-05 16:21:04,409 DEBUG   HandlerThread:7090 [system_info.py:__init__():47] System info init done
+2023-11-05 16:21:04,409 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:04,409 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:04,411 INFO    HandlerThread:7090 [system_monitor.py:probe():214] Collecting system info
+2023-11-05 16:21:04,411 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:04,414 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:04,415 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:04,417 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:04,418 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:04,438 DEBUG   HandlerThread:7090 [system_info.py:probe():196] Probing system
+2023-11-05 16:21:04,459 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:04,459 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:04,583 DEBUG   HandlerThread:7090 [system_info.py:_probe_git():181] Probing git
+2023-11-05 16:21:04,590 DEBUG   HandlerThread:7090 [system_info.py:_probe_git():189] Probing git done
+2023-11-05 16:21:04,590 DEBUG   HandlerThread:7090 [system_info.py:probe():244] Probing system done
+2023-11-05 16:21:04,590 DEBUG   HandlerThread:7090 [system_monitor.py:probe():223] {'os': 'Linux-5.15.90.1-microsoft-standard-WSL2-x86_64-with-glibc2.35', 'python': '3.10.12', 'heartbeatAt': '2023-11-05T21:21:04.438827', 'startedAt': '2023-11-05T21:21:03.117955', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '<python with no main file>', 'codePathLocal': None, 'git': {'remote': 'https://github.com/john-james-ai/BreastCancerDetection', 'commit': '66361e0232cdd42f246b7ad31a1cbda771735f6b'}, 'email': 'john.james.ai.studio@gmail.com', 'root': '/home/john/projects/bcd', 'host': 'Leviathan', 'username': 'john', 'executable': '/home/john/anaconda3/envs/bcd/bin/python', 'cpu_count': 12, 'cpu_count_logical': 24, 'cpu_freq': {'current': 2659.995000000001, 'min': 0.0, 'max': 0.0}, 'cpu_freq_per_core': [{'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}, {'current': 2659.995, 'min': 0.0, 'max': 0.0}], 'disk': {'/': {'total': 491.0844039916992, 'used': 325.0107192993164}}, 'gpu': 'Quadro P400', 'gpu_count': 1, 'gpu_devices': [{'name': 'Quadro P400', 'memory_total': 2147483648}], 'memory': {'total': 62.79635238647461}}
+2023-11-05 16:21:04,591 INFO    HandlerThread:7090 [system_monitor.py:probe():224] Finished collecting system info
+2023-11-05 16:21:04,591 INFO    HandlerThread:7090 [system_monitor.py:probe():227] Publishing system info
+2023-11-05 16:21:04,591 DEBUG   HandlerThread:7090 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2023-11-05 16:21:04,591 DEBUG   HandlerThread:7090 [system_info.py:_save_pip():68] Saving pip packages done
+2023-11-05 16:21:04,591 DEBUG   HandlerThread:7090 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2023-11-05 16:21:04,939 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/requirements.txt
+2023-11-05 16:21:04,939 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/conda-environment.yaml
+2023-11-05 16:21:06,462 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:06,462 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:08,465 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:08,466 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:10,469 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:10,469 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:12,473 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:12,473 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:13,941 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/conda-environment.yaml
+2023-11-05 16:21:14,222 DEBUG   HandlerThread:7090 [system_info.py:_save_conda():87] Saving conda packages done
+2023-11-05 16:21:14,223 INFO    HandlerThread:7090 [system_monitor.py:probe():229] Finished publishing system info
+2023-11-05 16:21:14,230 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:14,230 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: keepalive
+2023-11-05 16:21:14,230 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:14,232 DEBUG   SenderThread:7090 [sender.py:send():380] send: files
+2023-11-05 16:21:14,232 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-metadata.json with policy now
+2023-11-05 16:21:14,238 DEBUG   SenderThread:7090 [sender.py:send():380] send: telemetry
+2023-11-05 16:21:14,238 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:21:14,239 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:21:14,240 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:21:14,247 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:14,247 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:14,248 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:14,248 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:14,248 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:14,248 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:14,250 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:14,250 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:14,261 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:14,261 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:14,261 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:14,262 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:14,383 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:14,383 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:14,383 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:14,383 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:14,384 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:14,385 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:14,385 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:14,385 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:14,386 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:14,387 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:14,387 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:14,387 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:14,387 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:14,389 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:14,590 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:14,590 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:14,590 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:14,590 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:14,591 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:14,593 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:14,593 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:14,593 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:14,593 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:14,593 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:14,594 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:14,594 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:14,595 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:14,597 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:14,610 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:14,775 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:14,775 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:14,775 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:14,776 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:14,777 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:14,777 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:14,779 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:14,782 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:14,783 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:14,787 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:14,788 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:14,831 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:14,831 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:14,831 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:14,832 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:14,832 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:14,832 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:14,834 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:14,834 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:14,847 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:14,847 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:14,848 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:14,848 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:14,849 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:14,903 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/scz0w1qq-wandb-metadata.json
+2023-11-05 16:21:14,941 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-metadata.json
+2023-11-05 16:21:15,001 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:15,001 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:15,001 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:15,002 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:15,002 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:15,004 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:15,005 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:15,006 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:15,008 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:15,013 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:15,014 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:15,369 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:15,369 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:15,369 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:15,369 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:15,370 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:15,370 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:15,373 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:15,374 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:15,393 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:15,394 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:15,394 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:15,395 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:15,396 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:15,458 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:15,458 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:15,458 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:15,458 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:15,459 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:15,461 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:15,462 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:15,463 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:15,465 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:15,470 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:15,470 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:15,796 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:15,796 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:15,796 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:15,797 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:15,798 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:15,798 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:15,798 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:15,798 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:15,813 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:15,813 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:15,813 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:15,813 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:15,814 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:15,875 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:15,875 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:15,875 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:15,876 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:15,877 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:15,877 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:15,879 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:15,884 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:15,885 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:15,887 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:15,890 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:15,942 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:17,899 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:17,900 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:17,943 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:18,457 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:18,457 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:18,457 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:18,457 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:18,458 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:18,458 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:18,459 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:18,459 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:18,471 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:18,471 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:18,471 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:18,471 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:18,472 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:18,473 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:18,544 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:18,544 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:18,544 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:18,544 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:18,545 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:18,546 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:18,548 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:18,550 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:18,551 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:18,552 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:18,552 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:18,552 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:18,552 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:18,552 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:18,552 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:18,554 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:18,558 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:18,559 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:18,560 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:18,570 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:18,570 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:18,571 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:18,571 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:18,572 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:18,709 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:18,709 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:18,709 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:18,709 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:18,710 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:18,710 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:18,712 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:18,714 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:18,716 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:18,719 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:18,720 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:20,727 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:20,727 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:22,730 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:22,731 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:23,598 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:23,903 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:23,903 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:23,903 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:23,904 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:23,904 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:23,904 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:23,906 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:23,907 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:23,918 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:23,918 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:23,919 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:23,919 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:23,920 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:24,003 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:24,004 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:24,004 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:24,004 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:24,005 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:24,007 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:24,007 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:24,007 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:24,010 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:24,010 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:24,012 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:24,013 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:24,013 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:24,014 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:24,014 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:24,017 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:24,017 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,017 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,027 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:24,027 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:24,028 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:24,029 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:24,178 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:24,178 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:24,178 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:24,178 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:24,179 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:24,180 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:24,182 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:24,183 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:24,185 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:24,188 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,189 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,209 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:24,209 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:24,210 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:24,210 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:24,210 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:24,210 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:24,212 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:24,212 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:24,224 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:24,224 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:24,224 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:24,224 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:24,225 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:24,406 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:24,406 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:24,406 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:24,407 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:24,407 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:24,409 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:24,410 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:24,411 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:24,412 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:24,416 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,417 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,421 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:24,421 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:24,421 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:24,421 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:24,422 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:24,422 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:24,423 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:24,424 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:24,434 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:24,434 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:24,435 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:24,435 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:24,436 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:24,610 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:24,610 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:24,610 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:24,610 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:24,611 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:24,612 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:24,613 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:24,615 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:24,617 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:24,619 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,620 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,720 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:24,721 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:24,721 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:24,721 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:24,721 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:24,721 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:24,723 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:24,724 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:24,735 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:24,735 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:24,735 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:24,736 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:24,736 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:24,850 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:24,850 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:24,850 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:24,851 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:24,852 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:24,853 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:24,855 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:24,856 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:24,861 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:24,863 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,865 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:24,915 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:21:24,915 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:21:24,916 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:21:24,917 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:21:24,917 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:21:24,917 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:21:24,918 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:21:24,918 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:21:24,930 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:24,930 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:21:24,930 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:21:24,930 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:21:24,931 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:21:25,382 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:21:25,382 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:21:25,382 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:21:25,383 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:21:25,384 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:21:25,384 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:21:25,385 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:21:25,387 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:21:25,388 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:21:25,391 INFO    HandlerThread:7090 [handler.py:handle_tbrecord():764] handling tbrecord: tbrecord {
+  log_dir: "model/logs/base_model/20231105-162100/train"
+  save: true
+}
+control {
+  relay_id: "859c7e31d83e42648e0239dd2a204d1a"
+}
+_info {
+  stream_id: "mnewb2bn"
+}
+
+2023-11-05 16:21:25,393 DEBUG   HandlerThread:7090 [config_util.py:dict_from_config_file():101] no default config file found in config-defaults.yaml
+2023-11-05 16:21:25,393 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:25,395 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:25,909 DEBUG   SenderThread:7090 [sender.py:send():380] send: tbrecord
+2023-11-05 16:21:27,576 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:27,579 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:28,133 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:29,024 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:29,235 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:21:29,236 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:21:29,241 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:21:29,613 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:29,617 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:30,814 DEBUG   SenderThread:7090 [sender.py:send():380] send: files
+2023-11-05 16:21:30,814 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file train/events.out.tfevents.1699219285.Leviathan.7006.0.v2 with policy live
+2023-11-05 16:21:31,136 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:21:31,137 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train
+2023-11-05 16:21:31,207 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/ggvcz4j8-train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:21:31,628 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:31,631 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:32,137 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:33,635 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:33,636 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:34,139 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:34,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:35,141 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/config.yaml
+2023-11-05 16:21:35,640 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:35,641 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:36,140 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:37,644 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:37,644 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:38,142 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:39,618 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:39,648 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:39,648 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:40,146 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:41,652 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:41,653 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:42,147 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:43,664 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:43,665 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:44,159 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:44,234 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:21:44,237 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:21:44,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:21:45,202 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:45,668 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:45,668 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:46,159 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:47,685 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:47,687 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:48,161 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:49,692 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:49,694 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:50,174 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:50,659 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:51,698 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:51,699 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:52,175 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:53,702 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:53,702 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:54,177 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:55,746 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:21:55,758 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:55,759 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:56,036 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:21:56,180 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:57,761 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:57,762 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:58,184 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:21:59,236 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:21:59,242 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:21:59,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:21:59,769 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:21:59,771 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:00,186 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:01,451 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:01,777 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:01,777 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:02,188 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:03,785 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:03,787 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:04,190 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:05,792 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:05,794 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:06,193 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:06,755 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:07,806 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:07,808 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:08,195 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:09,812 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:09,813 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:10,196 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:11,817 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:11,817 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:12,102 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:12,200 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:13,821 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:13,822 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:14,203 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:14,236 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:22:14,238 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:22:14,244 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:22:15,825 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:15,826 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:16,206 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:17,333 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:17,837 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:17,837 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:18,208 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:19,871 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:19,872 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:20,211 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:21,875 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:21,875 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:22,213 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:22,417 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:23,879 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:23,880 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:24,214 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:25,388 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:22:25,393 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:22:25,931 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:22:25,946 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:25,946 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:26,216 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:27,827 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:27,951 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:27,952 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:28,218 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:29,235 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:22:29,237 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:22:29,240 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:22:29,956 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:29,957 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:30,220 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:31,962 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:31,962 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:32,221 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:33,225 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:33,966 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:33,966 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:34,223 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:35,982 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:35,983 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:36,226 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:37,992 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:37,993 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:38,228 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:38,747 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:39,996 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:39,996 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:40,231 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:42,000 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:42,000 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:42,237 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:44,006 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:44,006 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:44,235 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:22:44,236 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:22:44,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:22:44,247 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:44,354 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:46,011 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:46,011 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:46,248 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:48,015 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:48,016 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:48,250 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:49,682 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:50,022 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:50,023 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:50,254 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:52,026 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:52,027 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:52,256 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:54,031 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:54,031 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:54,257 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:55,091 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:22:55,400 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:22:56,090 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:22:56,103 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:56,106 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:56,258 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:58,110 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:58,110 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:22:58,260 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:22:59,235 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:22:59,236 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:22:59,240 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:23:00,113 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:00,114 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:00,262 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:00,417 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:02,119 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:02,119 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:02,270 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:04,131 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:04,135 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:04,271 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:04,317 INFO    HandlerThread:7090 [handler.py:handle_tbrecord():764] handling tbrecord: tbrecord {
+  log_dir: "model/logs/base_model/20231105-162100/validation"
+  save: true
+}
+control {
+  relay_id: "859c7e31d83e42648e0239dd2a204d1a"
+}
+_info {
+  stream_id: "mnewb2bn"
+}
+
+2023-11-05 16:23:04,319 DEBUG   SenderThread:7090 [sender.py:send():380] send: tbrecord
+2023-11-05 16:23:04,320 DEBUG   SenderThread:7090 [sender.py:send():380] send: files
+2023-11-05 16:23:04,321 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2 with policy live
+2023-11-05 16:23:04,634 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/lrgumqk9-validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:23:05,271 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:23:05,272 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation
+2023-11-05 16:23:06,140 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:06,141 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:06,273 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:06,322 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:08,145 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:08,146 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:10,150 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:10,150 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:11,324 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:12,161 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:12,162 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:14,169 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:14,171 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:14,236 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:23:14,237 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:23:14,241 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:23:16,181 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:16,197 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:16,288 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:23:16,288 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:23:16,378 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:23:16,378 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:23:16,388 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:23:16,392 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:17,288 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:23:17,289 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_created():271] file/dir created: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:23:18,200 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:18,201 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:18,294 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:20,206 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:20,207 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:20,295 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:21,631 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:22,211 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:22,212 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:22,316 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:24,219 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:24,219 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:24,318 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:25,404 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:23:26,269 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:23:26,272 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:26,274 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:26,321 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:26,766 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:28,289 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:28,293 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:28,324 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:29,235 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:23:29,236 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:23:29,240 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:23:30,297 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:30,298 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:30,325 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:31,901 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:32,312 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:32,312 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:32,330 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:34,315 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:34,316 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:34,332 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:36,325 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:36,327 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:36,338 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:37,126 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:38,331 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:38,332 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:38,339 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:40,337 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:40,342 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:40,346 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:42,302 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:42,348 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:42,349 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:42,350 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:44,236 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:23:44,237 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:23:44,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:23:44,350 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:44,354 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:44,355 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:46,351 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:46,362 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:46,362 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:47,529 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:48,353 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:48,372 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:48,373 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:50,358 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:50,377 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:50,378 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:52,362 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:52,383 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:52,384 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:52,720 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:54,363 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:54,387 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:54,387 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:55,414 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:23:56,366 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:56,425 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:23:56,428 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:56,429 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:58,131 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:23:58,369 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:23:58,432 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:58,432 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:23:59,236 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:23:59,237 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:23:59,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:24:00,374 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:00,439 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:00,439 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:02,375 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:02,442 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:02,443 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:03,309 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:04,379 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:04,447 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:04,448 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:06,382 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:06,454 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:06,455 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:08,386 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:08,458 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:08,458 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:08,482 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:10,388 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:10,461 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:10,462 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:12,392 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:12,466 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:12,467 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:13,669 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:14,238 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:24:14,239 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:24:14,249 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:24:14,393 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:14,470 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:14,471 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:16,397 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:16,474 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:16,474 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:18,402 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:18,477 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:18,478 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:18,895 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:20,405 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:20,484 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:20,486 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:22,407 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:22,489 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:22,490 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:24,191 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:24,408 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:24,495 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:24,495 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:25,416 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:24:26,414 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:26,540 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:24:26,547 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:26,563 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:28,366 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:24:28,371 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:24:28,377 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:24:28,417 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:24:28,417 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:24:28,419 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:24:28,553 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:24:28,554 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:24:28,557 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:24:28,626 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:28,633 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:28,797 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/xxa2zxim-validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:24:29,237 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:24:29,237 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:24:29,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:24:29,386 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:29,418 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:24:29,419 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:24:29,895 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/hxk35uhf-train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:24:30,421 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:30,636 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:30,637 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:32,424 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:32,642 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:32,643 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:34,430 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:34,489 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:34,652 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:34,653 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:36,431 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:36,658 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:36,658 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:38,437 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:38,663 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:38,666 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:39,607 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:40,441 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:40,671 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:40,673 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:42,442 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:42,678 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:42,680 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:44,237 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:24:44,237 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:24:44,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:24:44,446 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:44,684 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:44,684 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:44,751 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:46,448 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:46,703 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:46,707 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:48,455 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:48,716 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:48,718 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:49,948 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:50,456 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:50,723 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:50,723 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:52,459 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:52,728 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:52,729 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:54,460 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:54,732 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:54,733 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:55,418 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:24:55,420 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:24:56,461 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:56,776 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:24:56,778 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:56,780 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:58,465 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:24:58,783 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:58,784 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:24:59,237 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:24:59,238 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:24:59,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:25:00,468 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:00,787 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:00,787 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:00,832 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:02,471 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:02,790 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:02,791 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:04,476 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:04,794 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:04,795 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:06,256 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:06,478 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:06,798 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:06,799 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:08,481 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:08,808 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:08,809 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:10,483 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:10,813 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:10,813 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:11,300 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:12,485 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:12,822 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:12,823 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:14,238 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:25:14,238 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:25:14,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:25:14,489 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:14,828 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:14,828 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:16,491 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:16,817 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:16,834 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:16,834 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:18,494 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:18,844 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:18,846 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:20,497 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:20,856 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:20,857 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:21,942 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:22,500 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:22,867 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:22,867 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:24,502 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:24,870 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:24,870 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:25,424 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:25:26,511 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:26,908 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:25:26,910 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:26,913 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:26,962 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:28,515 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:28,917 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:28,918 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:29,237 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:25:29,238 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:25:29,244 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:25:30,517 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:30,924 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:30,924 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:32,404 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:32,520 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:32,930 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:32,930 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:34,525 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:34,934 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:34,934 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:36,529 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:36,938 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:36,938 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:37,493 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:38,534 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:38,951 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:38,951 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:40,536 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:40,955 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:40,958 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:42,541 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:42,651 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:42,961 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:42,962 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:43,546 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:25:43,553 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:25:43,557 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:25:43,561 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:25:43,562 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:25:43,563 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:25:43,774 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:25:43,774 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:25:43,776 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:25:43,985 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/ulojr2fi-validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:25:44,245 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:25:44,251 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:25:44,259 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:25:44,567 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:25:44,964 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:44,965 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:45,575 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:25:46,577 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:46,972 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:46,974 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:47,677 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:48,581 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:48,979 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:48,980 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:50,585 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:50,990 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:50,992 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:52,587 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:52,769 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:52,997 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:52,998 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:54,589 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:55,007 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:55,009 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:55,423 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:25:56,590 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:57,022 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:25:57,024 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:57,026 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:57,854 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:25:58,594 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:25:59,036 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:59,038 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:25:59,239 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:25:59,240 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:25:59,244 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:26:00,595 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:01,042 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:01,044 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:02,604 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:03,055 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:03,057 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:03,159 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:04,604 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:05,060 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:05,060 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:06,606 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:07,065 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:07,066 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:08,514 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:08,607 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:09,075 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:09,076 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:10,611 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:11,080 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:11,081 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:12,612 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:13,094 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:13,096 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:13,706 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:14,240 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:26:14,241 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:26:14,245 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:26:14,618 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:15,103 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:15,104 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:16,621 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:17,111 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:17,114 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:18,623 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:19,117 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:19,117 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:19,159 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:20,626 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:21,137 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:21,137 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:22,628 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:23,143 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:23,144 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:24,609 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:24,631 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:25,147 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:25,148 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:25,427 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:26:26,632 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:27,200 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:26:27,206 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:27,207 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:28,633 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:29,210 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:29,210 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:29,240 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:26:29,241 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:26:29,250 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:26:29,636 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:30,635 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:31,218 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:31,219 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:32,636 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:33,231 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:33,231 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:34,638 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:34,681 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:35,235 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:35,235 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:36,640 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:37,241 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:37,241 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:38,642 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:39,247 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:39,250 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:39,696 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:40,647 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:41,253 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:41,255 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:42,648 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:43,261 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:43,262 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:44,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:26:44,245 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:26:44,257 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:26:44,652 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:45,089 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:45,268 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:45,275 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:46,654 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:47,287 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:47,288 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:48,657 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:49,296 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:49,296 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:50,507 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:50,661 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:51,300 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:51,301 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:52,662 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:53,307 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:53,307 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:54,665 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:55,312 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:55,312 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:55,435 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:26:55,994 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:26:56,671 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:57,343 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:26:57,346 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:57,346 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:58,673 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:26:59,241 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:26:59,242 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:26:59,247 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:26:59,350 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:59,351 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:26:59,994 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:27:00,003 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:27:00,006 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:27:00,680 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:27:00,681 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:27:00,682 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:27:00,782 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:27:00,784 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:27:00,789 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:27:01,122 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/ns8kq5ek-validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:27:01,354 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:01,354 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:01,406 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:01,682 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:27:01,683 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:27:02,249 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/hza1vuzq-train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:27:02,682 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:03,357 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:03,357 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:04,684 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:05,365 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:05,366 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:06,691 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:06,758 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:07,370 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:07,371 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:08,694 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:09,380 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:09,380 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:10,698 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:11,387 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:11,387 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:12,248 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:12,699 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:13,391 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:13,392 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:14,241 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:27:14,241 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:27:14,247 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:27:14,701 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:15,398 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:15,398 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:16,704 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:17,408 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:17,409 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:17,462 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:18,709 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:19,412 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:19,413 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:20,709 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:21,416 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:21,417 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:22,713 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:22,791 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:23,427 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:23,428 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:24,716 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:25,434 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:25,444 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:25,449 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:27:26,717 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:27,498 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:27:27,502 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:27,503 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:28,221 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:28,718 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:29,241 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:27:29,245 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:27:29,250 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:27:29,507 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:29,508 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:30,724 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:31,516 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:31,517 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:32,726 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:33,526 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:33,528 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:33,627 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:34,728 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:35,533 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:35,534 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:36,731 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:37,539 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:37,540 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:38,733 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:38,913 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:39,549 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:39,551 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:40,736 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:41,555 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:41,555 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:42,739 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:43,563 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:43,564 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:44,127 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:44,244 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:27:44,250 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:27:44,254 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:27:44,742 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:45,570 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:45,570 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:46,743 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:47,576 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:47,576 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:48,745 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:49,406 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:49,579 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:49,580 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:50,748 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:51,585 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:51,586 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:52,750 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:53,594 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:53,597 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:54,634 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:27:54,756 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:55,446 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:27:55,601 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:55,601 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:56,758 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:57,662 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:27:57,670 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:57,670 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:58,759 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:27:59,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:27:59,242 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:27:59,247 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:27:59,675 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:59,676 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:27:59,832 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:00,761 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:28:01,683 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:01,683 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:02,775 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:28:03,687 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:03,687 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:04,765 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:28:05,064 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:05,692 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:05,693 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:06,768 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:28:07,703 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:07,703 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:08,770 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:28:09,706 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:09,707 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:10,775 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:28:10,929 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:11,709 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:11,710 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:13,731 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:13,739 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:13,781 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:28:13,787 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:28:14,079 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:28:14,086 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:28:14,097 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:28:14,203 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:28:14,205 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:28:14,216 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:28:14,246 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:28:14,250 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:28:14,255 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:28:14,396 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/50ozo3s2-validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:28:14,573 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:28:14,574 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:28:14,574 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:28:14,575 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:28:14,576 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:28:14,576 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:28:14,576 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:28:14,589 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:28:14,590 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:28:14,590 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:28:14,590 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:28:14,591 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:28:14,646 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:28:14,646 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:28:14,646 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:28:14,646 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:28:14,647 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:28:14,648 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:28:14,649 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:28:14,650 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:28:14,655 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:28:14,660 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:14,661 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:28:14,781 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:28:14,782 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:28:15,245 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:28:15,245 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:28:15,245 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:28:15,245 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:28:15,246 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:28:15,246 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:28:15,247 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:28:15,248 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:28:15,260 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:28:15,260 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:28:15,260 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:28:15,261 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:28:15,261 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:28:16,263 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:16,782 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:28:21,264 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:26,265 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:29,242 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:28:29,243 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:28:29,248 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:28:31,356 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:36,357 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:41,359 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:44,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:28:44,243 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:28:44,284 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:28:46,416 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:51,418 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:56,419 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:28:59,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:28:59,244 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:28:59,284 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:29:01,433 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:06,434 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:11,436 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:14,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:29:14,244 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:29:14,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:29:17,355 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:22,356 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:27,357 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:29,243 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:29:29,244 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:29:29,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:29:33,357 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:38,359 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:43,360 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:44,244 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:29:44,245 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:29:44,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:29:48,419 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:53,421 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:58,422 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:29:59,244 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:29:59,245 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:29:59,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:30:04,421 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:09,423 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:14,245 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:30:14,245 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:30:14,304 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:30:15,380 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:20,382 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:25,383 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:29,245 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:30:29,246 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:30:29,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:30:30,435 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:35,437 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:40,439 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:44,245 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:30:44,246 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:30:44,293 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:30:46,345 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:51,347 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:56,348 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:30:59,245 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:30:59,246 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:30:59,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:31:01,376 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:06,377 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:11,379 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:14,246 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:31:14,246 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:31:14,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:31:16,384 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:21,386 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:26,387 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:29,246 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:31:29,247 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:31:29,294 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:31:32,376 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:35,403 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:31:35,403 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:31:35,403 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:31:35,404 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:31:35,404 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:31:35,405 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:31:35,407 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:31:35,409 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:31:35,411 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:31:35,414 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:31:35,415 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:31:37,119 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: pause
+2023-11-05 16:31:37,120 INFO    HandlerThread:7090 [handler.py:handle_request_pause():705] stopping system metrics thread
+2023-11-05 16:31:37,120 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:31:37,121 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:31:37,121 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:31:37,121 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:31:37,123 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:31:37,123 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:31:37,135 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:31:37,135 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:31:37,136 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:31:37,136 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:31:37,136 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:31:38,138 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:43,139 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:44,246 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-05 16:31:44,247 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: stop_status
+2023-11-05 16:31:44,250 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:31:48,431 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:50,643 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: resume
+2023-11-05 16:31:50,643 INFO    HandlerThread:7090 [handler.py:handle_request_resume():696] starting system metrics thread
+2023-11-05 16:31:50,643 INFO    HandlerThread:7090 [system_monitor.py:start():194] Starting system monitor
+2023-11-05 16:31:50,643 INFO    SystemMonitor:7090 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-05 16:31:50,644 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started cpu monitoring
+2023-11-05 16:31:50,645 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started disk monitoring
+2023-11-05 16:31:50,646 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started gpu monitoring
+2023-11-05 16:31:50,649 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started memory monitoring
+2023-11-05 16:31:50,652 INFO    SystemMonitor:7090 [interfaces.py:start():190] Started network monitoring
+2023-11-05 16:31:50,654 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:31:50,655 ERROR   gpu       :7090 [interfaces.py:monitor():144] Failed to sample metric: Not Supported
+2023-11-05 16:31:50,694 DEBUG   SenderThread:7090 [sender.py:send():380] send: telemetry
+2023-11-05 16:31:50,694 DEBUG   SenderThread:7090 [sender.py:send():380] send: exit
+2023-11-05 16:31:50,695 INFO    SenderThread:7090 [sender.py:send_exit():585] handling exit code: 0
+2023-11-05 16:31:50,695 INFO    SenderThread:7090 [sender.py:send_exit():587] handling runtime: 430
+2023-11-05 16:31:50,696 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:31:50,696 INFO    SenderThread:7090 [sender.py:send_exit():593] send defer
+2023-11-05 16:31:50,697 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:50,697 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 0
+2023-11-05 16:31:50,697 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:50,697 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 0
+2023-11-05 16:31:50,697 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 1
+2023-11-05 16:31:50,698 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:50,698 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 1
+2023-11-05 16:31:50,698 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:50,698 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 1
+2023-11-05 16:31:50,698 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 2
+2023-11-05 16:31:50,699 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:50,699 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 2
+2023-11-05 16:31:50,699 INFO    HandlerThread:7090 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-05 16:31:50,699 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-05 16:31:50,699 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-05 16:31:50,700 DEBUG   SystemMonitor:7090 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-05 16:31:50,701 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-05 16:31:50,701 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined disk monitor
+2023-11-05 16:31:50,713 ERROR   gpu       :7090 [interfaces.py:aggregate():161] Failed to serialize metric: division by zero
+2023-11-05 16:31:50,713 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-05 16:31:50,713 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined memory monitor
+2023-11-05 16:31:50,713 INFO    HandlerThread:7090 [interfaces.py:finish():202] Joined network monitor
+2023-11-05 16:31:50,714 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:50,715 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 2
+2023-11-05 16:31:50,715 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 3
+2023-11-05 16:31:50,715 DEBUG   SenderThread:7090 [sender.py:send():380] send: stats
+2023-11-05 16:31:50,715 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:50,716 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 3
+2023-11-05 16:31:50,716 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:50,716 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 3
+2023-11-05 16:31:50,716 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 4
+2023-11-05 16:31:50,717 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:50,717 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 4
+2023-11-05 16:31:50,900 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:31:57,140 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-05 16:31:57,141 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:57,141 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: keepalive
+2023-11-05 16:31:57,143 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:57,143 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 4
+2023-11-05 16:31:57,143 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 5
+2023-11-05 16:31:57,144 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:57,144 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 5
+2023-11-05 16:31:57,145 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: poll_exit
+2023-11-05 16:31:57,154 DEBUG   SenderThread:7090 [sender.py:send():380] send: history
+2023-11-05 16:31:57,155 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: summary_record
+2023-11-05 16:31:57,157 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:31:57,158 DEBUG   SenderThread:7090 [sender.py:send():380] send: summary
+2023-11-05 16:31:57,159 INFO    SenderThread:7090 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-05 16:31:57,159 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:57,159 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 5
+2023-11-05 16:31:57,159 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 6
+2023-11-05 16:31:57,160 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:57,160 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 6
+2023-11-05 16:31:57,161 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:57,161 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 6
+2023-11-05 16:31:57,165 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: status_report
+2023-11-05 16:31:57,382 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 7
+2023-11-05 16:31:57,382 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:57,382 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 7
+2023-11-05 16:31:57,383 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:57,383 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 7
+2023-11-05 16:31:57,904 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:31:57,905 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/config.yaml
+2023-11-05 16:31:58,558 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 8
+2023-11-05 16:31:58,558 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:58,558 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 8
+2023-11-05 16:31:58,559 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:58,559 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 8
+2023-11-05 16:31:58,559 INFO    SenderThread:7090 [job_builder.py:build():281] Attempting to build job artifact
+2023-11-05 16:31:58,562 INFO    SenderThread:7090 [job_builder.py:_get_source_type():393] is repo sourced job
+2023-11-05 16:31:58,562 INFO    SenderThread:7090 [job_builder.py:_get_program_relpath():411] run is notebook based run
+2023-11-05 16:31:58,562 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 9
+2023-11-05 16:31:58,562 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:58,562 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 9
+2023-11-05 16:31:58,563 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:58,563 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 9
+2023-11-05 16:31:58,563 INFO    SenderThread:7090 [dir_watcher.py:finish():358] shutting down directory watcher
+2023-11-05 16:31:58,905 INFO    Thread-12 :7090 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:31:58,906 INFO    SenderThread:7090 [dir_watcher.py:finish():388] scan: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files
+2023-11-05 16:31:58,907 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log output.log
+2023-11-05 16:31:58,907 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/conda-environment.yaml conda-environment.yaml
+2023-11-05 16:31:58,907 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/config.yaml config.yaml
+2023-11-05 16:31:58,908 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-metadata.json wandb-metadata.json
+2023-11-05 16:31:58,909 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/requirements.txt requirements.txt
+2023-11-05 16:31:58,909 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json wandb-summary.json
+2023-11-05 16:31:58,926 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2 validation/events.out.tfevents.1699219384.Leviathan.7006.1.v2
+2023-11-05 16:31:58,931 INFO    SenderThread:7090 [dir_watcher.py:finish():402] scan save: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/train/events.out.tfevents.1699219285.Leviathan.7006.0.v2 train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:31:58,932 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 10
+2023-11-05 16:31:58,932 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:31:58,933 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 10
+2023-11-05 16:31:58,933 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:31:58,934 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 10
+2023-11-05 16:31:58,934 INFO    SenderThread:7090 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-05 16:31:59,185 INFO    wandb-upload_1:7090 [upload_job.py:push():131] Uploaded file /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/output.log
+2023-11-05 16:31:59,498 INFO    wandb-upload_3:7090 [upload_job.py:push():131] Uploaded file /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/requirements.txt
+2023-11-05 16:31:59,795 INFO    wandb-upload_4:7090 [upload_job.py:push():131] Uploaded file /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/wandb-summary.json
+2023-11-05 16:31:59,797 INFO    wandb-upload_2:7090 [upload_job.py:push():131] Uploaded file /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/config.yaml
+2023-11-05 16:31:59,809 INFO    wandb-upload_0:7090 [upload_job.py:push():131] Uploaded file /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/files/conda-environment.yaml
+2023-11-05 16:31:59,969 INFO    wandb-upload_5:7090 [upload_job.py:push():131] Uploaded file /tmp/tmpmo9cwmw4wandb/rn6jdd7o-train/events.out.tfevents.1699219285.Leviathan.7006.0.v2
+2023-11-05 16:32:00,170 INFO    Thread-11 (_thread_body):7090 [sender.py:transition_state():613] send defer: 11
+2023-11-05 16:32:00,170 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:32:00,171 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 11
+2023-11-05 16:32:00,172 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:32:00,172 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 11
+2023-11-05 16:32:00,172 INFO    SenderThread:7090 [file_pusher.py:join():181] waiting for file pusher
+2023-11-05 16:32:00,172 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 12
+2023-11-05 16:32:00,173 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:32:00,173 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 12
+2023-11-05 16:32:00,174 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:32:00,174 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 12
+2023-11-05 16:32:00,174 INFO    SenderThread:7090 [file_stream.py:finish():595] file stream finish called
+2023-11-05 16:32:00,804 INFO    SenderThread:7090 [file_stream.py:finish():599] file stream finish is done
+2023-11-05 16:32:00,805 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 13
+2023-11-05 16:32:00,805 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:32:00,805 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 13
+2023-11-05 16:32:00,806 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:32:00,806 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 13
+2023-11-05 16:32:00,806 INFO    SenderThread:7090 [sender.py:transition_state():613] send defer: 14
+2023-11-05 16:32:00,807 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: defer
+2023-11-05 16:32:00,807 INFO    HandlerThread:7090 [handler.py:handle_request_defer():172] handle defer: 14
+2023-11-05 16:32:00,808 DEBUG   SenderThread:7090 [sender.py:send():380] send: final
+2023-11-05 16:32:00,808 DEBUG   SenderThread:7090 [sender.py:send():380] send: footer
+2023-11-05 16:32:00,808 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: defer
+2023-11-05 16:32:00,808 INFO    SenderThread:7090 [sender.py:send_request_defer():609] handle sender defer: 14
+2023-11-05 16:32:00,809 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-05 16:32:00,810 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-05 16:32:00,811 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: poll_exit
+2023-11-05 16:32:00,812 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: server_info
+2023-11-05 16:32:00,812 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: get_summary
+2023-11-05 16:32:00,813 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: sampled_history
+2023-11-05 16:32:00,814 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: job_info
+2023-11-05 16:32:00,815 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: server_info
+2023-11-05 16:32:00,894 DEBUG   SenderThread:7090 [sender.py:send_request():407] send_request: job_info
+2023-11-05 16:32:00,896 DEBUG   HandlerThread:7090 [handler.py:handle_request():146] handle_request: shutdown
+2023-11-05 16:32:00,896 INFO    HandlerThread:7090 [handler.py:finish():866] shutting down handler
+2023-11-05 16:32:01,815 INFO    WriterThread:7090 [datastore.py:close():294] close: /home/john/projects/bcd/wandb/run-20231105_162103-mnewb2bn/run-mnewb2bn.wandb
+2023-11-05 16:32:01,895 INFO    SenderThread:7090 [sender.py:finish():1534] shutting down sender
+2023-11-05 16:32:01,895 INFO    SenderThread:7090 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-05 16:32:01,895 INFO    SenderThread:7090 [file_pusher.py:join():181] waiting for file pusher

@@ -1,0 +1,71 @@
+Traceback (most recent call last):
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/john/anaconda3/envs/bcd/lib/python3.10/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import os
+if 'jbook' in os.getcwd():
+    os.chdir(os.path.abspath(os.path.join("../../..")))
+%load bcd.data_prep.case.py
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:3832[0m, in [0;36mInteractiveShell.find_user_code[0;34m(self, target, raw, py_only, skip_encoding_cookie, search_ns)[0m
+[1;32m   3831[0m [38;5;28;01mtry[39;00m:                                              [38;5;66;03m# User namespace[39;00m
+[0;32m-> 3832[0m     codeobj [38;5;241m=[39m [38;5;28;43meval[39;49m[43m([49m[43mtarget[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43muser_ns[49m[43m)[49m
+[1;32m   3833[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m e:
+
+File [0;32m<string>:1[0m
+
+[0;31mNameError[0m: name 'bcd' is not defined
+
+The above exception was the direct cause of the following exception:
+
+[0;31mValueError[0m                                Traceback (most recent call last)
+Cell [0;32mIn[1], line 4[0m
+[1;32m      2[0m [38;5;28;01mif[39;00m [38;5;124m'[39m[38;5;124mjbook[39m[38;5;124m'[39m [38;5;129;01min[39;00m os[38;5;241m.[39mgetcwd():
+[1;32m      3[0m     os[38;5;241m.[39mchdir(os[38;5;241m.[39mpath[38;5;241m.[39mabspath(os[38;5;241m.[39mpath[38;5;241m.[39mjoin([38;5;124m"[39m[38;5;124m../../..[39m[38;5;124m"[39m)))
+[0;32m----> 4[0m [43mget_ipython[49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mrun_line_magic[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mload[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mbcd.data_prep.case.py[39;49m[38;5;124;43m'[39;49m[43m)[49m
+
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:2417[0m, in [0;36mInteractiveShell.run_line_magic[0;34m(self, magic_name, line, _stack_depth)[0m
+[1;32m   2415[0m     kwargs[[38;5;124m'[39m[38;5;124mlocal_ns[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_local_scope(stack_depth)
+[1;32m   2416[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mbuiltin_trap:
+[0;32m-> 2417[0m     result [38;5;241m=[39m [43mfn[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m   2419[0m [38;5;66;03m# The code below prevents the output from being displayed[39;00m
+[1;32m   2420[0m [38;5;66;03m# when using magics with decodator @output_can_be_silenced[39;00m
+[1;32m   2421[0m [38;5;66;03m# when the last Python token in the expression is a ';'.[39;00m
+[1;32m   2422[0m [38;5;28;01mif[39;00m [38;5;28mgetattr[39m(fn, magic[38;5;241m.[39mMAGIC_OUTPUT_CAN_BE_SILENCED, [38;5;28;01mFalse[39;00m):
+
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/magics/code.py:359[0m, in [0;36mCodeMagics.load[0;34m(self, arg_s)[0m
+[1;32m    357[0m opts,args [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mparse_options(arg_s,[38;5;124m'[39m[38;5;124myns:r:[39m[38;5;124m'[39m)
+[1;32m    358[0m search_ns [38;5;241m=[39m [38;5;124m'[39m[38;5;124mn[39m[38;5;124m'[39m [38;5;129;01min[39;00m opts
+[0;32m--> 359[0m contents [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mshell[49m[38;5;241;43m.[39;49m[43mfind_user_code[49m[43m([49m[43margs[49m[43m,[49m[43m [49m[43msearch_ns[49m[38;5;241;43m=[39;49m[43msearch_ns[49m[43m)[49m
+[1;32m    361[0m [38;5;28;01mif[39;00m [38;5;124m'[39m[38;5;124ms[39m[38;5;124m'[39m [38;5;129;01min[39;00m opts:
+[1;32m    362[0m     [38;5;28;01mtry[39;00m:
+
+File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:3834[0m, in [0;36mInteractiveShell.find_user_code[0;34m(self, target, raw, py_only, skip_encoding_cookie, search_ns)[0m
+[1;32m   3832[0m     codeobj [38;5;241m=[39m [38;5;28meval[39m(target, [38;5;28mself[39m[38;5;241m.[39muser_ns)
+[1;32m   3833[0m [38;5;28;01mexcept[39;00m [38;5;167;01mException[39;00m [38;5;28;01mas[39;00m e:
+[0;32m-> 3834[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(([38;5;124m"[39m[38;5;124m'[39m[38;5;132;01m%s[39;00m[38;5;124m'[39m[38;5;124m was not found in history, as a file, url, [39m[38;5;124m"[39m
+[1;32m   3835[0m                         [38;5;124m"[39m[38;5;124mnor in the user namespace.[39m[38;5;124m"[39m) [38;5;241m%[39m target) [38;5;28;01mfrom[39;00m [38;5;21;01me[39;00m
+[1;32m   3837[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(codeobj, [38;5;28mstr[39m):
+[1;32m   3838[0m     [38;5;28;01mreturn[39;00m codeobj
+
+[0;31mValueError[0m: 'bcd.data_prep.case.py' was not found in history, as a file, url, nor in the user namespace.
+ValueError: 'bcd.data_prep.case.py' was not found in history, as a file, url, nor in the user namespace.
+
