@@ -17,7 +17,7 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-%load ../../../bcd/data_prep/case.py -r 40-165
+%load ../../bcd/data_prep/case.py -r 40-165
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
@@ -33,7 +33,7 @@ The above exception was the direct cause of the following exception:
 
 [0;31mValueError[0m                                Traceback (most recent call last)
 Cell [0;32mIn[1], line 1[0m
-[0;32m----> 1[0m [43mget_ipython[49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mrun_line_magic[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mload[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43m../../../bcd/data_prep/case.py -r 40-165[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[0;32m----> 1[0m [43mget_ipython[49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mrun_line_magic[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mload[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43m../../bcd/data_prep/case.py -r 40-165[39;49m[38;5;124;43m'[39;49m[43m)[49m
 
 File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:2417[0m, in [0;36mInteractiveShell.run_line_magic[0;34m(self, magic_name, line, _stack_depth)[0m
 [1;32m   2415[0m     kwargs[[38;5;124m'[39m[38;5;124mlocal_ns[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_local_scope(stack_depth)
@@ -59,6 +59,6 @@ File [0;32m~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/inter
 [1;32m   3837[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(codeobj, [38;5;28mstr[39m):
 [1;32m   3838[0m     [38;5;28;01mreturn[39;00m codeobj
 
-[0;31mValueError[0m: '../../../bcd/data_prep/case.py -r 40-165' was not found in history, as a file, url, nor in the user namespace.
-ValueError: '../../../bcd/data_prep/case.py -r 40-165' was not found in history, as a file, url, nor in the user namespace.
+[0;31mValueError[0m: '../../bcd/data_prep/case.py -r 40-165' was not found in history, as a file, url, nor in the user namespace.
+ValueError: '../../bcd/data_prep/case.py -r 40-165' was not found in history, as a file, url, nor in the user namespace.
 

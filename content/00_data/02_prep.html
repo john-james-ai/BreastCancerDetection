@@ -398,8 +398,7 @@ document.write(`
 <h1><span class="section-number">3. </span>Data Preparation Part 1: Structural Upgrade<a class="headerlink" href="#data-preparation-part-1-structural-upgrade" title="Permalink to this heading">#</a></h1>
 <p>In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis efforts take place. Here, we apply a few upgrades that should streamline the data quality analysis in terms of structural consistency.</p>
 <p>The upgrades will involve the creation of two new datasets:</p>
-<table class="table" id="id2">
-<caption><span class="caption-number">Table 3.1 </span><span class="caption-text">Pre-Analysis Case and DICOM Datasets</span><a class="headerlink" href="#id2" title="Permalink to this table">#</a></caption>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>#</p></th>
 <th class="head"><p>Dataset</p></th>
@@ -423,7 +422,7 @@ document.write(`
 <ol class="arabic simple">
 <li><p>Clean up the inconsistency in the variable names,</p></li>
 <li><p>Combine the training and test sets for masses and calcifications into a single master case file. Provide views for morphology or abnormality type-specific analysis.</p></li>
-<li><p>Add <code class="docutils literal notranslate"><span class="pre">mmg_id</span></code>, a identifier for each mammogram comprised of &lt;abnormality_type&gt;-<fileset><em>&lt;patient_id&gt;</em>&lt;left_or_right_breast&gt;_&lt;image_view&gt;.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">mmg_id</span></code>, a identifier for each mammogram comprised of &lt;abnormality_type&gt;-<code class="docutils literal notranslate"><span class="pre">&lt;fileset&gt;</span></code><em>&lt;patient_id&gt;</em>&lt;left_or_right_breast&gt;_&lt;image_view&gt;.</p></li>
 <li><p>Add a Boolean ‘cancer’ target variable that is True if the case is Malignant, False otherwise.</p></li>
 </ol>
 <div class="cell tag_hide-cell docutils container">
@@ -433,7 +432,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load</span> ../../../bcd/data_prep/case.py -r 40-165
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load</span> ../../bcd/data_prep/case.py -r 40-165
 </pre></div>
 </div>
 </div>
@@ -451,7 +450,7 @@ document.write(`
 
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="s1">&#39;../../../bcd/data_prep/case.py -r 40-165&#39;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="s1">&#39;../../bcd/data_prep/case.py -r 40-165&#39;</span><span class="p">)</span>
 
 <span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/IPython/core/interactiveshell.py:2417,</span> in <span class="ni">InteractiveShell.run_line_magic</span><span class="nt">(self, magic_name, line, _stack_depth)</span>
 <span class="g g-Whitespace">   </span><span class="mi">2415</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
@@ -477,7 +476,7 @@ document.write(`
 <span class="g g-Whitespace">   </span><span class="mi">3837</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">codeobj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
 <span class="g g-Whitespace">   </span><span class="mi">3838</span>     <span class="k">return</span> <span class="n">codeobj</span>
 
-<span class="ne">ValueError</span>: &#39;../../../bcd/data_prep/case.py -r 40-165&#39; was not found in history, as a file, url, nor in the user namespace.
+<span class="ne">ValueError</span>: &#39;../../bcd/data_prep/case.py -r 40-165&#39; was not found in history, as a file, url, nor in the user namespace.
 </pre></div>
 </div>
 </div>
@@ -488,7 +487,6 @@ document.write(`
 <h2><span class="section-number">3.2. </span>DICOM Image Metadata<a class="headerlink" href="#dicom-image-metadata" title="Permalink to this heading">#</a></h2>
 <p>Here, our objective is to extract and augment the DICOM Image metadata from the DICOM files, producing the following dataset.</p>
 <table class="table" id="id1">
-<caption><span class="caption-number">Table 3.2 </span><span class="caption-text">DICOM Image Metadata</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>#</p></th>
 <th class="head"><p>Variable</p></th>
@@ -572,7 +570,7 @@ document.write(`
 <td><p></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>As <a class="reference internal" href="#id1"><span class="std std-numref">Table 3.2</span></a> shows, subject, series, and basic pixel data are extracted from the DICOM datasets.  We generate the image identifier, the mammogram identifier, the file path, the file size, the array size, as well as descriptive statistics on the image pixels.</p></td>
+<tr class="row-odd"><td><p>As <code class="xref std std-numref docutils literal notranslate"><span class="pre">dicom_image_metadata</span></code> shows, subject, series, and basic pixel data are extracted from the DICOM datasets.  We generate the image identifier, the mammogram identifier, the file path, the file size, the array size, as well as descriptive statistics on the image pixels.</p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
