@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Monday January 1st 2024 03:59:24 am                                                 #
+# Modified   : Monday January 1st 2024 03:59:06 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -68,18 +68,10 @@ class CasePrep(DataPrep):
 
     def prep(self) -> pd.DataFrame:
         """Combines training and test cases into a single csv case file."""
-        self._case_fp = os.path.abspath(self._case_fp)
-
-        os.makedirs(os.path.dirname(self._case_fp), exist_ok=True)
 
         if self._force or not os.path.exists(self._case_fp):
             # Merge all case data into a single DataFrame
-            df_cases = self._merge_cases(
-                calc_train_fp=self._calc_train_fp,
-                calc_test_fp=self._calc_test_fp,
-                mass_train_fp=self._mass_train_fp,
-                mass_test_fp=self._mass_test_fp,
-            )
+            df_cases = self._merge_cases()
 
             # Set morphological features to NA as appropriate
             df_cases.loc[
@@ -98,12 +90,12 @@ class CasePrep(DataPrep):
             # Assign the mammogram id.
             df_cases = self._assign_mmg_id(df=df_cases)
 
-            # Transform 'BENIGN WITHOUT CALLBACK' to 'BENIGN'
+            # Create the Boolean target corresponding to pathology
             df_cases["cancer"] = np.where(
                 df_cases["pathology"] == "MALIGNANT", True, False
             )
 
-            # Drop the filename columns.
+            # Drop the incorrect file path columns.
             columns_to_drop = [
                 "image_file_path",
                 "cropped_image_file_path",
@@ -120,34 +112,28 @@ class CasePrep(DataPrep):
 
         return pd.read_csv(self._case_fp)
 
-    def _merge_cases(
-        self,
-        calc_train_fp: str,
-        calc_test_fp: str,
-        mass_train_fp: str,
-        mass_test_fp: str,
-    ) -> pd.DataFrame:
+    def _merge_cases(self) -> pd.DataFrame:
         """Combines mass and calcification train and test files into a single file."""
         # Extracts absolute paths, a pre-emptive measure in case
         # jupyter book can't access the path
-        calc_train_fp = os.path.abspath(calc_train_fp)
-        calc_test_fp = os.path.abspath(calc_test_fp)
-        mass_train_fp = os.path.abspath(mass_train_fp)
-        mass_test_fp = os.path.abspath(mass_test_fp)
+        calc_train_fp = os.path.abspath(self._calc_train_fp)
+        calc_test_fp = os.path.abspath(self._calc_test_fp)
+        mass_train_fp = os.path.abspath(self._mass_train_fp)
+        mass_test_fp = os.path.abspath(self._mass_test_fp)
 
+        # Read the data
         df_calc_train = pd.read_csv(calc_train_fp)
         df_calc_test = pd.read_csv(calc_test_fp)
         df_mass_train = pd.read_csv(mass_train_fp)
         df_mass_test = pd.read_csv(mass_test_fp)
 
-        # Add the filesets so that we can distinguish training
-        # and test data
+        # Add the filesets
         df_calc_train["fileset"] = "training"
         df_calc_test["fileset"] = "test"
         df_mass_train["fileset"] = "training"
         df_mass_test["fileset"] = "test"
 
-        # Replace spaces in column names with underscores.
+        # Standardize column names with underscores in place of spaces.
         df_calc_train = self._format_column_names(df=df_calc_train)
         df_calc_test = self._format_column_names(df=df_calc_test)
         df_mass_train = self._format_column_names(df=df_mass_train)
