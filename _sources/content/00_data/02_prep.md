@@ -34,7 +34,7 @@ First up? The case dataset.
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
-%load bcd.data_prep.case.py
+%load /home/john/projects/bcd/bcd/data_prep/case.py
 ```
 
 ## DICOM Image Metadata
@@ -59,5 +59,6 @@ Here, our objective is to extract and augment the DICOM Image metadata from the 
 | 12 | mean_pixel_value   | generated | Average pixel value                                                                                                                                                                       |
 | 13 | std_pixel_value    | generated | Standard deviation of pixel values.                                                                                                                                                       |
 | 14 | mmg_id             | generated | Foreign mammogram identifier linking to cases.                                                                                                                                            |
-``
+```
+
 As {numref}`dicom_image_metadata` shows, subject, series, and basic pixel data are extracted from the DICOM datasets.  We generate the image identifier, the mammogram identifier, the file path, the file size, the array size, as well as descriptive statistics on the image pixels.
