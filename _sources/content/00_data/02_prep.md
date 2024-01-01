@@ -22,10 +22,11 @@ The upgrades will involve the creation of two new datasets:
 First up? The case dataset.
 
 ## Case Dataset Upgrades
-1.	Clean up the inconsistency in the variable names,
-2.	Combine the training and test sets for masses and calcifications into a single master case file. Provide views for morphology or abnormality type-specific analysis.
-3.	Add `mmg_id`, a identifier for each mammogram comprised of <abnormality_type>-<fileset>_<patient_id>_<left_or_right_breast>_<image_view>.
-4.	Add a Boolean ‘cancer’ target variable that is True if the case is Malignant, False otherwise.
+
+1. Clean up the inconsistency in the variable names,
+2. Combine the training and test sets for masses and calcifications into a single master case file. Provide views for morphology or abnormality type-specific analysis.
+3. Add `mmg_id`, a identifier for each mammogram comprised of "<abnormality_type>-<fileset>_<patient_id>_<left_or_right_breast>_<image_view>".
+4. Add a Boolean ‘cancer’ target variable that is True if the case is Malignant, False otherwise.
 
 ```{code-cell}
 :tags: [hide-cell]
@@ -34,7 +35,7 @@ import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
 
-%load ../bcd/data_prep/case.py -r 40-165
+%load ./bcd/data_prep/case.py -r 40-165
 ```
 
 ## DICOM Image Metadata
