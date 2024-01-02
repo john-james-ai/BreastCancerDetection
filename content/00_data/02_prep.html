@@ -1060,7 +1060,54 @@ memory usage: 1.2+ MB
 </section>
 <section id="dicom-image-metadata">
 <h2><span class="section-number">3.3. </span>DICOM Image Metadata<a class="headerlink" href="#dicom-image-metadata" title="Permalink to this heading">#</a></h2>
-<p>Next, we extract the DICOM data described in <code class="xref std std-numref docutils literal notranslate"><span class="pre">dicom_image_metadata</span></code> and merge that with the case data.</p>
+<p>Next, we extract the DICOM data described in <a class="reference internal" href="#id1"><span class="std std-numref">Table 3.1</span></a> and merge that with the case data.</p>
+<table class="table" id="id1">
+<caption><span class="caption-number">Table 3.1 </span><span class="caption-text">DICOM Image Metadata</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Name</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>bit_depth</p></td>
+<td><p>Number of bits used to define each pixel</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>rows</p></td>
+<td><p>Number of pixel rows in the image</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>cols</p></td>
+<td><p>Number of pixel columns in the image</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>aspect_ratio</p></td>
+<td><p>Ratio of width to height in image</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>size</p></td>
+<td><p>Product of width and height in image</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>min_pixel_value</p></td>
+<td><p>Minimum pixel value</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>max_pixel_value</p></td>
+<td><p>Maximum pixel value</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>mean_pixel_value</p></td>
+<td><p>Average pixel value</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>std_pixel_value</p></td>
+<td><p>Standard deviation of pixel values</p></td>
+</tr>
+</tbody>
+</table>
 <div class="cell tag_hide-cell docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">

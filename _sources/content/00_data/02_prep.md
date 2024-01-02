@@ -307,7 +307,6 @@ Next, we extract the DICOM data described in {numref}`dicom_image_metadata` and 
 | 8 | mean_pixel_value           | Average pixel value                                                                      |
 | 9 | std_pixel_value            | Standard deviation of pixel values                                                       |
 
-                                                                                                                                            |
 ```
 
 ```{code-cell} ipython3
