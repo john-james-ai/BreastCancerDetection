@@ -23,7 +23,7 @@ In this section, we will be analyzing the Case Dataset ({numref}`eda1_case_datas
 |----|----------------------|-------------|------------------------------------------------------------------------------------------------------------------------------|
 | 1  | patient_id           | Nominal     | Unique identifier for each patient.                                                                                          |
 | 2  | breast_density       | Discrete    | BI-RADS overall assessment of the volume of attenuating tissues in the breast.                                             |
-| 3  | left_or_right_breast | Nominal     | Which breast was imaged.                                                                                                     |
+| 3  | laterality | Nominal     | Which breast was imaged.                                                                                                     |
 | 4  | image_view           | Dichotomous | Either cranialcaudal or mediolateral oblique image_view.                                                                            |
 | 5  | abnormality_id       | Discrete    | Number of abnormalities for the patient.                                                                                       |
 | 6  | abnormality_type     | Dichotomous | BI-RADS category of the abnormality.                                                                                         |
@@ -35,7 +35,7 @@ In this section, we will be analyzing the Case Dataset ({numref}`eda1_case_datas
 | 12 | pathology            | Nominal     | Determination of the malignancy of the case.                                                                                 |
 | 13 | subtlety             | Discrete    | Degree of diagnostic difficulty                                                                                              |
 | 14 | fileset              | Nominal     | Indicates training or test set.                                                                                              |
-| 15 | case_id              | Nominal     | Unique identifier for the case.                                                                                              |
+| 15 | mmg_id              | Nominal     | Unique identifier for the case.                                                                                              |
 | 16 | cancer               | Dichotomous | Indicates whether the cancer is diagnosed.                                                                                   |
 ```
 
@@ -220,21 +220,21 @@ Distribution of Breast Density in CBIS-DDSM
 :tags: [remove-output, hide-input]
 
 fig, ax = plt.subplots(figsize=(12,4))
-ax = cases.plot.countplot(x='left_or_right_breast', ax=ax, title ="Distribution of Left/Right Breasts in CBIS-DDSM", plot_counts=True)
-glue("eda1_univariate_side", ax)
+ax = cases.plot.countplot(x='laterality', ax=ax, title ="Distribution of Left/Right Breasts in CBIS-DDSM", plot_counts=True)
+glue("eda1_univariate_laterality", ax)
 ```
 
-```{glue:figure} eda1_univariate_side
+```{glue:figure} eda1_univariate_laterality
 ---
 align: center
-name: eda1_univariate_side_fig
+name: eda1_univariate_laterality_fig
 ---
 Distribution of Breast Density in CBIS-DDSM
 ```
 
 +++
 
-As shown in {numref}`eda1_univariate_side_fig` the dataset is approximately balanced with respect to left or right breast images.
+As shown in {numref}`eda1_univariate_laterality_fig` the dataset is approximately balanced with respect to left or right breast images.
 
 +++
 
@@ -630,8 +630,8 @@ A 2022 study published in Nature {cite}`abdouLeftSidedBreast2022` suggests that 
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-prop = df[['left_or_right_breast', 'cancer']].groupby(by=['left_or_right_breast']).value_counts(normalize=True).to_frame().reset_index().sort_values(by=['left_or_right_breast','cancer'])
-p = sns.objects.Plot(prop, x='left_or_right_breast', y='proportion', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast Side").layout(size=(12,4), engine='tight').scale(color='crest')
+prop = df[['laterality', 'cancer']].groupby(by=['laterality']).value_counts(normalize=True).to_frame().reset_index().sort_values(by=['laterality','cancer'])
+p = sns.objects.Plot(prop, x='laterality', y='proportion', color='cancer').add(so.Bar(), so.Count(), so.Stack()).theme({**sns.axes_style("whitegrid"), "grid.linestyle": ":"}).label(title="Diagnosis by Breast Side").layout(size=(12,4), engine='tight').scale(color='crest')
 glue("eda1_bivariate_left_right", p)
 ```
 
@@ -650,7 +650,7 @@ If there is a slightly greater risk of cancer in the left breast, it is not evid
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-cv = cases.stats.cramersv(a='left_or_right_breast', b='cancer')
+cv = cases.stats.cramersv(a='laterality', b='cancer')
 print(cv)
 ```
 

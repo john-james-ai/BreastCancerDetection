@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Thursday December 28th 2023 09:14:52 pm                                             #
+# Modified   : Tuesday January 2nd 2024 04:19:16 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -53,12 +53,12 @@ def urls():
 #                                         CASE IDS                                                 #
 # ------------------------------------------------------------------------------------------------ #
 @pytest.fixture(scope="module", autouse=False)
-def case_ids():
+def mmg_ids():
     """Creates a list of case ids."""
     df = pd.read_csv(IMAGE_FP)
     df = df.loc[df["series_description"] == "full mammogram images"]
     df = df.sample(n=10)
-    return list(df["case_id"])
+    return list(df["mmg_id"])
 
 
 # ------------------------------------------------------------------------------------------------ #

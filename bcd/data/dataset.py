@@ -11,48 +11,102 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 1st 2024 04:52:28 am                                                 #
-# Modified   : Monday January 1st 2024 05:10:17 am                                                 #
+# Modified   : Tuesday January 2nd 2024 05:46:45 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-from abc import ABC, abstractmethod
-
-import numpy as np
 import pandas as pd
 
 from bcd.analyze.dqa.base import DQA
 from bcd.dal.file import IOService
+from bcd.data.base import Dataset
+from bcd.explore.meta import Explorer as EDA
+
+# ------------------------------------------------------------------------------------------------ #
 
 
-class Dataset(ABC):
+class CBISDataset(Dataset):
     """Encapsulates CBIS-DDSM data and analysis, visualization, and experimentation capabilities.
 
     Args:
-        case_filepath (str): Filepath to the case data
-        series_filepath (str): Filepath to image series data
+        filepath (str): Filepath to the CBIS-DDSM data
     """
 
-    def __init__(self, case_filepath: str, series_filepath: str) -> None:
-        self._case_filepath = case_filepath
-        self._series_filepath = series_filepath
-        self._case = None
-        self._series = None
-        self.load()
+    def __init__(self, filepath: str) -> None:
+        self._filepath = filepath
+        self._df = None
+        self._dqa = None
+        self._eda = None
+        self._show = None
+        self._load()
 
-    def add_dqa(self, dqa: DQA) -> None:
-        """Adds a data quality module to the Dataset
+    @property
+    def dqa(self) -> DQA:
+        """Access to the data quality analysis module"""
+        return self._dqa
+
+    @dqa.setter
+    def dqa(self, dqa: type[DQA]) -> None:
+        """Sets the DQA Module
 
         Args:
-            dqa (DQA): Data Quality Module.
+            dqa (type[DQA]); The DQA Class type
+
         """
+        self._dqa = dqa(data=self._df)
 
-    def load(self) -> None:
+    @property
+    def eda(self) -> EDA:
+        """Access to the exploratory data analysis module"""
+        return self._eda
+
+    @eda.setter
+    def eda(self, eda: type[EDA]) -> None:
+        """Sets the EDA Module
+
+        Args:
+            eda (type[EDA]); The EDA Class type
+
+        """
+        self._eda = eda(data=self._df)
+
+    # @property
+    # def show(self) -> EDA:
+    #     """Access to the image visualizer"""
+    #     return self._eda
+
+    # @show.setter
+    # def show(self, visualizer: type[Visualizer]) -> None:
+    #     """Sets the image visualizer
+
+    #     Args:
+    #         show (type[Visualizer]); The Visualizer Class type
+
+    #     """
+    #     self._show = visualizer(data=self._df)
+
+    def summarize(self) -> pd.DataFrame:
+        """Summarizes the datasets variables, types, NA values, and uniqueness."""
+        cols = self._df.columns
+        dtypes = self._df.dtypes
+        nonna = self._df.count()
+        na = self._df.isna().sum(axis=0)
+        completeness = nonna / self._df.shape[0]
+        unique = self._df.nunique(axis=0)
+        uniqueness = unique / nonna
+        d = {
+            "Variable": cols,
+            "Data Types": dtypes,
+            "Non NA": nonna,
+            "NA": na,
+            "Completeness": completeness,
+            "Unique": unique,
+            "Uniqueness": uniqueness,
+        }
+        df = pd.DataFrame(data=d)
+        return df
+
+    def _load(self) -> None:
         """Loads case and series data into the Dataset"""
-        self._case = IOService.read(self._case_filepath)
-        self._series = IOService.read(self._series_filepath)
-
-    def save(self) -> None:
-        """Saves case and series data to file."""
-        self._case.to_csv(self._case_filepath, index=False)
-        self._series.to_csv(self._series_filepath, index=False)
+        self._df = IOService.read(self._filepath)

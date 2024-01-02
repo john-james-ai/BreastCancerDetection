@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Saturday December 30th 2023 05:07:54 pm                                             #
+# Modified   : Tuesday January 2nd 2024 04:24:56 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -43,12 +43,12 @@ class Image(DataClass):
     patient_id: str
     uid: str
     series_uid: str
-    case_id: str
+    mmg_id: str
     series_description: str
     image_view: str
     breast_density: int
     subtlety: int
-    breast_side: str
+    laterality: str
     abnormality_id: int
     abnormality_type: str
     calc_type: str
@@ -77,12 +77,12 @@ class Image(DataClass):
             patient_id=meta["patient_id"],
             uid=meta["uid"],
             series_uid=meta["series_uid"],
-            case_id=meta["case_id"],
+            mmg_id=meta["mmg_id"],
             series_description=meta["series_description"],
             image_view=meta["image_view"],
             breast_density=meta["breast_density"],
             subtlety=meta["subtlety"],
-            breast_side=meta["breast_side"],
+            laterality=meta["laterality"],
             abnormality_id=meta["abnormality_id"],
             abnormality_type=meta["abnormality_type"],
             calc_type=meta["calc_type"],

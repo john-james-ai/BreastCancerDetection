@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday December 29th 2023 12:00:22 am                                               #
-# Modified   : Saturday December 30th 2023 08:51:57 am                                             #
+# Modified   : Tuesday January 2nd 2024 04:51:31 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,87 +20,47 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any
 
 import pandas as pd
 
 from bcd.analyze.dqa.base import DQA
-from bcd.dal.base import Database
-from bcd.explore.meta import Explorer
+from bcd.explore.meta import Explorer as EDA
 
 
 # ------------------------------------------------------------------------------------------------ #
 class Dataset(ABC):
     """Encapsulates a collection of Data in tabular form."""
 
-    def __init__(
-        self,
-        name: str,
-        description: str,
-        dataset_type: str = "metadata",
-        stage: str = "exp",
-        dataset_format: str = "csv",
-        data: Any = None,
-        database: type[Database] = Database,
-    ) -> None:
-        self._database = database
-        self._name = name
-        self._description = description
-        self._dataset_type = dataset_type
-        self._stage = stage
-        self._dataset_format = dataset_format
-        self._data = data
-        if self._data is None:
-            self.load()
+    @property
+    @abstractmethod
+    def dqa(self) -> DQA:
+        """Access to the data quality analysis module"""
 
-        self.dqa = None
-        self.eda = None
+    @abstractmethod
+    @dqa.setter
+    def dqa(self, dqa: type[DQA]) -> None:
+        """Sets the DQA Module
+
+        Args:
+            dqa (type[DQA]); The DQA Class type
+
+        """
+
+    @property
+    @abstractmethod
+    def eda(self) -> EDA:
+        """Access to the exploratory data analysis module"""
+
+    @abstractmethod
+    @eda.setter
+    def eda(self, eda: type[EDA]) -> None:
+        """Sets the EDA Module
+
+        Args:
+            dqa (type[EDA]); The EDA Class type
+
+        """
 
     @abstractmethod
     def summarize(self) -> pd.DataFrame:
         """Summarizes the dataset"""
-
-    @classmethod
-    def create(cls, name: str) -> Dataset:
-        """Factory method that creates a Dataset instance from existing data in the Database.
-
-        Args:
-            name (str): Name of the data set in the DataBase
-
-        """
-        dataset = cls._database.read(name=name)
-
-    def add_dqa_module(self, dqa: type[DQA]) -> None:
-        """Adds a Data Quality Assessment Module to the Dataset
-
-        Args:
-            dqa (type[DQA]): A DQA Class
-        """
-        self.dqa = dqa(data=self._data)
-
-    def add_eda_module(self, eda: type[Explorer]) -> None:
-        """Adds an Exploratory Data Analysis Module to the Dataset
-
-        Args:
-            eda (type[Explorer]): An Explorer class
-        """
-        self.eda = eda(data=self._data)
-
-    def load(self) -> None:
-        """Loads the data into the Dataset object"""
-        self._data = self._database.read(name=self._name)
-
-    def save(self) -> None:
-        """Saves the Dataset's data to the database."""
-        self._database.create(self.as_dict)
-
-    def as_dict(self) -> dict:
-        """Returns the Dataset as a dictionary"""
-        return {
-            "name": self._name,
-            "description": self._description,
-            "dataset_type": self._dataset_type,
-            "stage": self._stage,
-            "dataset_format": self._dataset_format,
-            "data": self._data,
-        }

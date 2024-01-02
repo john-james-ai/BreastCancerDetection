@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:38 am                                              #
-# Modified   : Monday January 1st 2024 03:59:06 pm                                                 #
+# Modified   : Tuesday January 2nd 2024 04:15:13 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -103,8 +103,8 @@ class CasePrep(DataPrep):
             ]
             df_cases = df_cases.drop(columns=columns_to_drop)
 
-            # Change left_or_right_breast to laterality, the DICOM attribute
-            df_cases = df_cases.rename(columns={"left_or_right_breast": "laterality"})
+            # Change laterality to laterality, the DICOM attribute
+            df_cases = df_cases.rename(columns={"laterality": "laterality"})
 
             self._save(df=df_cases, filepath=self._case_fp)
 
@@ -155,7 +155,7 @@ class CasePrep(DataPrep):
             + "_"
             + df["patient_id"]
             + "_"
-            + df["left_or_right_breast"].apply(lambda x: x.upper())
+            + df["laterality"].apply(lambda x: x.upper())
             + "_"
             + df["image_view"].apply(lambda x: x.upper())
         )
@@ -302,7 +302,7 @@ MASS_MARGINS = [
 
 ENC_VARS = {
     "abnormality_type": {"prefix": "AT", "values": ["calcification", "mass"]},
-    "left_or_right_breast": {"prefix": "LR", "values": ["LEFT", "RIGHT"]},
+    "laterality": {"prefix": "LR", "values": ["LEFT", "RIGHT"]},
     "image_view": {"prefix": "IV", "values": ["CC", "MLO"]},
     "calc_type": {"prefix": "CT", "values": CALC_TYPES},
     "calc_distribution": {"prefix": "CD", "values": CALC_DISTRIBUTIONS},

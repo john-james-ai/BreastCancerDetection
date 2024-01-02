@@ -67,7 +67,7 @@ print(f"The Case/Series XRef Dataset has been created with {df_xref.shape[0]} ro
 
 ## Build DICOM Dataset
 
-Developing an image preprocessing approach requires visibility into image metadata, currently buried in individual DICOM files. Our first task is to extract these data and store them in a more accessible format. Note: There are 10,239 images in the dataset according to [TCIA](https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629#2251662935562334b1e043a3a0512554ef512cad). The DICOM image file for case_id 'P_01382_LEFT_mass_MLO_1' was corrupt, and could not be read. Therefore, we will have a total of 10,238 images.
+Developing an image preprocessing approach requires visibility into image metadata, currently buried in individual DICOM files. Our first task is to extract these data and store them in a more accessible format. Note: There are 10,239 images in the dataset according to [TCIA](https://wiki.cancerimagingarchive.net/pages/image_viewpage.action?pageId=22516629#2251662935562334b1e043a3a0512554ef512cad). The DICOM image file for mmg_id 'P_01382_LEFT_mass_MLO_1' was corrupt, and could not be read. Therefore, we will have a total of 10,238 images.
 
 ```{code-cell}
 LOCATION = "data/image/0_raw"

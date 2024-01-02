@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Monday January 1st 2024 06:06:38 am                                                 #
+# Modified   : Tuesday January 2nd 2024 05:34:21 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -103,7 +103,7 @@ class CBISPrep(DataPrep):
         d["rows"], d["cols"] = img.shape
         d["aspect_ratio"] = d["cols"] / d["rows"]
         d["size"] = d["rows"] * d["cols"]
-        d["file_size"] = getsize(study["filepath"])
+        d["file_size"] = getsize(study["filepath"], as_bytes=True)
         d["min_pixel_value"] = dcm.SmallestImagePixelValue
         d["max_pixel_value"] = dcm.LargestImagePixelValue
         d["mean_pixel_value"] = np.mean(img)

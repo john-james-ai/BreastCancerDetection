@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/explore/image/mammogram.py                                                     #
+# Filename   : /bcd/data/mammogram.py                                                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday December 19th 2023 04:10:38 pm                                              #
-# Modified   : Thursday December 28th 2023 09:14:52 pm                                             #
+# Modified   : Tuesday January 2nd 2024 04:19:19 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -41,10 +41,10 @@ class Mammogram(DataClass):
 
     uid: str
     patient_id: str
-    case_id: str
+    mmg_id: str
     series_uid: str
     series_description: str
-    left_or_right_breast: str
+    laterality: str
     image_view: str
     abnormality_type: str
     abnormality_id: int
@@ -71,10 +71,10 @@ class Mammogram(DataClass):
         return (
             self.uid == other.uid
             and self.patient_id == other.patient_id
-            and self.case_id == other.case_id
+            and self.mmg_id == other.mmg_id
             and self.series_uid == other.series_uid
             and self.series_description == other.series_description
-            and self.left_or_right_breast == other.left_or_right_breast
+            and self.laterality == other.laterality
             and self.image_view == other.image_view
             and self.abnormality_type == other.abnormality_type
             and self.abnormality_id == other.abnormality_id
@@ -109,10 +109,10 @@ class Mammogram(DataClass):
         return cls(
             uid=data["uid"],
             patient_id=data["patient_id"],
-            case_id=data["case_id"],
+            mmg_id=data["mmg_id"],
             series_uid=data["series_uid"],
             series_description=data["series_description"],
-            left_or_right_breast=data["left_or_right_breast"],
+            laterality=data["laterality"],
             image_view=data["image_view"],
             abnormality_type=data["abnormality_type"],
             abnormality_id=data["abnormality_id"],
@@ -208,7 +208,7 @@ class Mammogram(DataClass):
 
         _ = ax.set_xlabel("Pixel Values")
 
-        title = f"Case {self.case_id}"
+        title = f"Case {self.mmg_id}"
         _ = ax.set_title(title, fontsize=12)
 
         return ax
@@ -217,10 +217,10 @@ class Mammogram(DataClass):
         d = {
             "uid": self.uid,
             "patient_id": self.patient_id,
-            "case_id": self.case_id,
+            "mmg_id": self.mmg_id,
             "series_uid": self.series_uid,
             "series_description": self.series_description,
-            "left_or_right_breast": self.left_or_right_breast,
+            "laterality": self.laterality,
             "image_view": self.image_view,
             "abnormality_type": self.abnormality_type,
             "abnormality_id": self.abnormality_id,

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Sunday December 24th 2023 12:05:03 am                                               #
+# Modified   : Tuesday January 2nd 2024 04:19:19 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -37,10 +37,10 @@ logger.setLevel(logging.DEBUG)
 sns.set_style("whitegrid")
 # ------------------------------------------------------------------------------------------------ #
 CALCIFICATION_DATA = [
-    "case_id",
+    "mmg_id",
     "patient_id",
     "breast_density",
-    "left_or_right_breast",
+    "laterality",
     "image_view",
     "abnormality_id",
     "calc_type",
@@ -52,10 +52,10 @@ CALCIFICATION_DATA = [
     "cancer",
 ]
 MASS_DATA = [
-    "case_id",
+    "mmg_id",
     "patient_id",
     "breast_density",
-    "left_or_right_breast",
+    "laterality",
     "image_view",
     "abnormality_id",
     "mass_shape",
@@ -67,10 +67,10 @@ MASS_DATA = [
     "cancer",
 ]
 CASE_DTYPES = {
-    "case_id": "str",
+    "mmg_id": "str",
     "patient_id": "str",
     "breast_density": "int32",
-    "left_or_right_breast": "category",
+    "laterality": "category",
     "image_view": "category",
     "abnormality_id": "int32",
     "abnormality_type": "category",
@@ -91,7 +91,7 @@ ORDINAL_DTYPES = {
 }
 FEATURES = {
     "breast_density": "ordinal",
-    "left_or_right_breast": "nominal",
+    "laterality": "nominal",
     "image_view": "nominal",
     "abnormality_type": "nominal",
     "calc_type": "nominal",
@@ -191,7 +191,7 @@ MASS_MODEL_FEATURES = [
 ]
 CALC_FEATURES = {
     "breast_density": "ordinal",
-    "left_or_right_breast": "nominal",
+    "laterality": "nominal",
     "image_view": "nominal",
     "calc_type": "nominal",
     "calc_distribution": "nominal",
@@ -200,7 +200,7 @@ CALC_FEATURES = {
 }
 MASS_FEATURES = {
     "breast_density": "ordinal",
-    "left_or_right_breast": "nominal",
+    "laterality": "nominal",
     "image_view": "nominal",
     "mass_shape": "nominal",
     "mass_margins": "nominal",
@@ -251,7 +251,7 @@ class CaseExplorer(Explorer):
         """Summarizes the case dataset"""
         d = {}
         d["Patients"] = self._df["patient_id"].nunique()
-        d["Cases"] = self._df["case_id"].nunique()
+        d["Cases"] = self._df["mmg_id"].nunique()
         d["Calcification Cases"] = self._df.loc[
             self._df["abnormality_type"] == "calcification"
         ].shape[0]
