@@ -13,12 +13,12 @@ kernelspec:
 
 # Data Preparation
 
-In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset. 
+In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset.
 
-Our process will take four steps: 
-1. Combine the calcification mass training and test sets into a single full mammogram dataset, 
+Our process will take four steps:
+1. Combine the calcification mass training and test sets into a single full mammogram dataset,
 2. Add DICOM image file paths to the *series* metadata,
-3. Extract the *DICOM* image metadata and merge it with the case data from #1. 
+3. Extract the *DICOM* image metadata and merge it with the case data from #1.
 4. Create the Dataset object, our access to the CBIS-DDSM data.
 
 The full dataset will have a few upgrades that will facilitate the analysis, detection, and classification tasks:
@@ -124,8 +124,8 @@ class CasePrep(DataPrep):
             ]
             df_cases = df_cases.drop(columns=columns_to_drop)
 
-            # Change left_or_right_breast to laterality, the DICOM attribute
-            df_cases = df_cases.rename(columns={"left_or_right_breast": "laterality"})
+            # Change laterality to laterality, the DICOM attribute
+            df_cases = df_cases.rename(columns={"laterality": "laterality"})
 
             self._save(df=df_cases, filepath=self._case_fp)
 
@@ -176,7 +176,7 @@ class CasePrep(DataPrep):
             + "_"
             + df["patient_id"]
             + "_"
-            + df["left_or_right_breast"].apply(lambda x: x.upper())
+            + df["laterality"].apply(lambda x: x.upper())
             + "_"
             + df["image_view"].apply(lambda x: x.upper())
         )
@@ -404,7 +404,7 @@ cbis.info()
 cbis.sample(n=5, random_state=55)
 ```
 
-We have all case information along with the DICOM image metadata in a single dataset. 
+We have all case information along with the DICOM image metadata in a single dataset.
 
 +++
 

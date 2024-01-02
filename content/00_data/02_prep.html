@@ -573,8 +573,8 @@ document.write(`
             <span class="p">]</span>
             <span class="n">df_cases</span> <span class="o">=</span> <span class="n">df_cases</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns_to_drop</span><span class="p">)</span>
 
-            <span class="c1"># Change left_or_right_breast to laterality, the DICOM attribute</span>
-            <span class="n">df_cases</span> <span class="o">=</span> <span class="n">df_cases</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;left_or_right_breast&quot;</span><span class="p">:</span> <span class="s2">&quot;laterality&quot;</span><span class="p">})</span>
+            <span class="c1"># Change laterality to laterality, the DICOM attribute</span>
+            <span class="n">df_cases</span> <span class="o">=</span> <span class="n">df_cases</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;laterality&quot;</span><span class="p">:</span> <span class="s2">&quot;laterality&quot;</span><span class="p">})</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_cases</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_case_fp</span><span class="p">)</span>
 
@@ -625,7 +625,7 @@ document.write(`
             <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
             <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;patient_id&quot;</span><span class="p">]</span>
             <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
-            <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;left_or_right_breast&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+            <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;laterality&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
             <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
             <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;image_view&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
         <span class="p">)</span>
