@@ -94,7 +94,7 @@ Very alright! Now the DICOM image metadata.
 ## DICOM Image Metadata
 
 ```{code-cell} ipython3
-fp = "data/image/0_raw/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm"
+fp = "data/image/0_raw/CBIS-DDSM/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm"
 pydicom.dcmread(fp)
 ```
 
