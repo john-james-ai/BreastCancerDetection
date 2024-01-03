@@ -13,12 +13,12 @@ kernelspec:
 
 # Data Preparation
 
-In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset.
+In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset. 
 
-Our process will take three steps:
-1. Combine the calcification mass training and test sets into a single full mammogram dataset,
+Our process will take three steps: 
+1. Combine the calcification mass training and test sets into a single full mammogram dataset, 
 2. Add DICOM image file paths to the *series* metadata,
-3. Extract the *DICOM* image metadata and merge it with the case data from #1.
+3. Extract the *DICOM* image metadata and merge it with the case data from #1. 
 
 The full dataset will have a few upgrades that will facilitate the analysis, detection, and classification tasks:
 1. A mammogram ID, consisting of abnormality type, fileset (train/test), patient_id, breast laterality, and view will uniquely identify each full mammogram image.
@@ -54,7 +54,7 @@ from bcd.data_prep.prep import CBISPrep
 ```{code-cell} ipython3
 :tags: [hide-cell]
 
-# %load -r 39-173 bcd/data_prep/case.py
+# %load -r 38-172 bcd/data_prep/prep.py
 class CasePrep(DataPrep):
     """Performs Case metadata preparation.
 
@@ -113,7 +113,7 @@ class CasePrep(DataPrep):
                 df_cases["pathology"] == "MALIGNANT", True, False
             )
 
-            # Drop the filename columns.
+            # Drop the incorrect file path columns.
             columns_to_drop = [
                 "image_file_path",
                 "cropped_image_file_path",
@@ -214,62 +214,7 @@ The dataset above has both mass and calcification training and test data, as wel
 Next, we add filepaths to the series metadata.
 
 ```{code-cell} ipython3
-# %load -r 31-88 bcd/data_prep/series.py
-# ------------------------------------------------------------------------------------------------ #
-class SeriesPrep(DataPrep):
-    """Adds filepaths to the Series dataset
-
-    Args:
-        filepath (str): Path to the DICOM series metadata.
-        series_filepath (str) Path for the results
-        force (bool): Whether to force execution if output already exists. Default is False.
-    """
-
-    __BASEDIR = "data/image/0_raw/"
-
-    def __init__(
-        self,
-        filepath: str,
-        series_filepath: str,
-        force: bool = False,
-    ) -> None:
-        super().__init__()
-        self._filepath = os.path.abspath(filepath)
-        self._series_filepath = os.path.abspath(series_filepath)
-        self._force = force
-
-    @profiler
-    def prep(self) -> pd.DataFrame:
-        """Extracts image metadata from the DICOM image files."""
-
-        if self._force or not os.path.exists(self._series_filepath):
-            # Reads the series metadata that contains subject, series, and
-            # file location information
-            studies = IOService.read(self._filepath)
-
-            # Add filepaths to the study data first to avoid batch
-            # operation exceptions with dask.
-            studies = self._get_filepaths(studies=studies)
-
-            df = pd.DataFrame(data=studies)
-
-            self._save(df=df, filepath=self._series_filepath)
-
-            return df
-
-        return pd.read_csv(self._series_filepath)
-
-    def _get_filepaths(self, studies: pd.Series) -> pd.DataFrame:
-        """Adds filepaths to the studies dataframe"""
-        studies_filepaths = []
-        for _, row in studies.iterrows():
-            location = row["file_location"].replace("./", "")
-            filepath = os.path.join(self.__BASEDIR, location)
-            filepaths = glob(filepath + "/*.dcm")
-            for file in filepaths:
-                row["filepath"] = file
-                studies_filepaths.append(row)
-        return studies_filepaths
+%load -r 176-230 bcd/data_prep/prep.py
 ```
 
 ```{code-cell} ipython3
@@ -309,9 +254,9 @@ Finally, we extract the DICOM data described in {numref}`dicom_image_metadata` a
 ```{code-cell} ipython3
 :tags: [hide-cell]
 
-# %load -r 35-143 bcd/data_prep/cbis.py
+# %load -r 235-314 bcd/data_prep/prep.py
 class CBISPrep(DataPrep):
-    """Extracts DICOM data and integrates it with a single Case dataset staged for quality assessment.
+    """Extracts DICOM data and integrates it with a single CBIS dataset.
 
     Iterates through the full mammography DICOM metadata in parallel, extracting image and pixel
     data and statistics, then combines the data with the case dataset.
