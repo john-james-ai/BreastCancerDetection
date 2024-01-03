@@ -482,20 +482,18 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="data-preparation">
 <h1><span class="section-number">3. </span>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading">#</a></h1>
 <p>In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset.</p>
-<p>Our process will take four steps:</p>
+<p>Our process will take three steps:</p>
 <ol class="arabic simple">
 <li><p>Combine the calcification mass training and test sets into a single full mammogram dataset,</p></li>
 <li><p>Add DICOM image file paths to the <em>series</em> metadata,</p></li>
 <li><p>Extract the <em>DICOM</em> image metadata and merge it with the case data from #1.</p></li>
-<li><p>Create the Dataset object, our access to the CBIS-DDSM data.</p></li>
 </ol>
 <p>The full dataset will have a few upgrades that will facilitate the analysis, detection, and classification tasks:</p>
 <ol class="arabic simple">
 <li><p>A mammogram ID, consisting of abnormality type, fileset (train/test), patient_id, breast laterality, and view will uniquely identify each full mammogram image.</p></li>
 <li><p>A Boolean target variable, ‘cancer’, will be added combining BENIGN and BENIGN_WITHOUT_CALLBACK into a single Boolean value.</p></li>
-<li><p>The Dataset will be a self-explanatory API for analysis, exploration, experimentation, and visualization.</p></li>
+<li><p>Pixel statistics such as the minimum, maximum, mean and standard deviation, will be added to the dataset.</p></li>
 </ol>
-<p>Alright.</p>
 <section id="case-dataset-integration">
 <h2><span class="section-number">3.1. </span>Case Dataset Integration<a class="headerlink" href="#case-dataset-integration" title="Permalink to this heading">#</a></h2>
 <p>The following code cells will integrate all case data into a single file.</p>
@@ -1060,7 +1058,7 @@ memory usage: 1.2+ MB
 </section>
 <section id="dicom-image-metadata">
 <h2><span class="section-number">3.3. </span>DICOM Image Metadata<a class="headerlink" href="#dicom-image-metadata" title="Permalink to this heading">#</a></h2>
-<p>Next, we extract the DICOM data described in <a class="reference internal" href="#id1"><span class="std std-numref">Table 3.1</span></a> and merge that with the case data.</p>
+<p>Finally, we extract the DICOM data described in <a class="reference internal" href="#id1"><span class="std std-numref">Table 3.1</span></a> and merge that with the case data.</p>
 <table class="table" id="id1">
 <caption><span class="caption-number">Table 3.1 </span><span class="caption-text">DICOM Image Metadata</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
 <thead>
@@ -1186,7 +1184,7 @@ memory usage: 1.2+ MB
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;aspect_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;file_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getsize</span><span class="p">(</span><span class="n">study</span><span class="p">[</span><span class="s2">&quot;filepath&quot;</span><span class="p">])</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;file_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getsize</span><span class="p">(</span><span class="n">study</span><span class="p">[</span><span class="s2">&quot;filepath&quot;</span><span class="p">],</span> <span class="n">as_bytes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;min_pixel_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">SmallestImagePixelValue</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;max_pixel_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">LargestImagePixelValue</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;mean_pixel_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
@@ -1238,13 +1236,13 @@ Data columns (total 27 columns):
  18  cols               3568 non-null   int64  
  19  aspect_ratio       3568 non-null   float64
  20  size               3568 non-null   int64  
- 21  file_size          3568 non-null   object 
+ 21  file_size          3568 non-null   int64  
  22  min_pixel_value    3568 non-null   int64  
  23  max_pixel_value    3568 non-null   int64  
  24  mean_pixel_value   3568 non-null   float64
  25  std_pixel_value    3568 non-null   float64
  26  filepath           3568 non-null   object 
-dtypes: bool(1), float64(3), int64(10), object(13)
+dtypes: bool(1), float64(3), int64(11), object(12)
 memory usage: 728.4+ KB
 </pre></div>
 </div>
@@ -1307,7 +1305,7 @@ memory usage: 728.4+ KB
       <td>2888</td>
       <td>0.64</td>
       <td>13053760</td>
-      <td>24.9 MB</td>
+      <td>26108614</td>
       <td>0</td>
       <td>61031</td>
       <td>12,100.82</td>
@@ -1331,7 +1329,7 @@ memory usage: 728.4+ KB
       <td>3048</td>
       <td>0.67</td>
       <td>13947648</td>
-      <td>26.6 MB</td>
+      <td>27896398</td>
       <td>0</td>
       <td>65535</td>
       <td>16,262.07</td>
@@ -1355,7 +1353,7 @@ memory usage: 728.4+ KB
       <td>3706</td>
       <td>0.69</td>
       <td>19960516</td>
-      <td>38.07 MB</td>
+      <td>39922120</td>
       <td>0</td>
       <td>65535</td>
       <td>12,696.90</td>
@@ -1379,7 +1377,7 @@ memory usage: 728.4+ KB
       <td>4096</td>
       <td>0.69</td>
       <td>24211456</td>
-      <td>46.18 MB</td>
+      <td>48424010</td>
       <td>0</td>
       <td>65535</td>
       <td>13,687.71</td>
@@ -1403,7 +1401,7 @@ memory usage: 728.4+ KB
       <td>2656</td>
       <td>0.56</td>
       <td>12578816</td>
-      <td>23.99 MB</td>
+      <td>25158730</td>
       <td>0</td>
       <td>65535</td>
       <td>18,227.27</td>
@@ -1416,7 +1414,6 @@ memory usage: 728.4+ KB
 </div></div></div>
 </div>
 <p>We have all case information along with the DICOM image metadata in a single dataset.</p>
-<p>Finally, we integrate the data into a Dataset for quality assessment and exploratory data analysis.</p>
 </section>
 </section>
 
