@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2. Unboxing CBIS-DDSM - A Structural Analysis &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>2. Unboxing CBIS-DDSM &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -165,8 +165,9 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Unboxing CBIS-DDSM - A Structural Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Unboxing CBIS-DDSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_prep.html">3. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_dqa.html">4. CBIS-DDSM Data Quality Analysis (DQA)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -455,7 +456,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Unboxing CBIS-DDSM - A Structural Analysis</h1>
+    <h1>Unboxing CBIS-DDSM</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -484,8 +485,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="unboxing-cbis-ddsm-a-structural-analysis">
-<h1><span class="section-number">2. </span>Unboxing CBIS-DDSM - A Structural Analysis<a class="headerlink" href="#unboxing-cbis-ddsm-a-structural-analysis" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="unboxing-cbis-ddsm">
+<h1><span class="section-number">2. </span>Unboxing CBIS-DDSM<a class="headerlink" href="#unboxing-cbis-ddsm" title="Permalink to this heading">#</a></h1>
 <p>Before conducting the exploratory analyses, we’ll unbox the data to ensure that the structure supports the analyses and that …<em>’ we got what we paid for</em>. In the next section, we’ll perform an analysis of the data quality along dimensions of validity, completeness, consistency, and uniqueness. The following exploratory analysis will harvest insight from the data.</p>
 <p>Our aim here is to get a general sense of the data <em>structure</em> and to make any structural changes necessary to facilitate the next stages of the analysis. First, we’ll examine the case training sets, then the series metadata, and finally, we’ll discover the structure of the DICOM metadata.</p>
 <div class="cell tag_hide-input docutils container">
