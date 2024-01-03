@@ -13,12 +13,12 @@ kernelspec:
 
 # Data Preparation
 
-In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset. 
+In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset.
 
-Our process will take three steps: 
-1. Combine the calcification mass training and test sets into a single full mammogram dataset, 
+Our process will take three steps:
+1. Combine the calcification mass training and test sets into a single full mammogram dataset,
 2. Add DICOM image file paths to the *series* metadata,
-3. Extract the *DICOM* image metadata and merge it with the case data from #1. 
+3. Extract the *DICOM* image metadata and merge it with the case data from #1.
 
 The full dataset will have a few upgrades that will facilitate the analysis, detection, and classification tasks:
 1. A mammogram ID, consisting of abnormality type, fileset (train/test), patient_id, breast laterality, and view will uniquely identify each full mammogram image.
@@ -274,7 +274,7 @@ class SeriesPrep(DataPrep):
 
 ```{code-cell} ipython3
 fpi = "data/meta/0_raw/metadata.csv"
-fpo = "data/meta/3_final/series.csv"
+fpo = "data/meta/4_final/series.csv"
 sp = SeriesPrep(filepath=fpi, series_filepath=fpo, force=False)
 series = sp.prep()
 series.info()
@@ -392,7 +392,7 @@ class CBISPrep(DataPrep):
 
 ```{code-cell} ipython3
 cases = "data/meta/1_interim/cases.csv"
-series = "data/meta/3_final/series.csv"
+series = "data/meta/4_final/series.csv"
 cbis = "data/meta/2_staged/cbis.csv"
 cp = CBISPrep(case_filepath=cases, series_filepath=series, cbis_filepath=cbis, force=False)
 cbis = cp.prep()
