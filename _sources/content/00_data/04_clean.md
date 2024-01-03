@@ -12,11 +12,11 @@ kernelspec:
 ---
 
 # Data Cleaning
-The prior data quality analysis revealed several data anomalies requiring attention. 
+The prior data quality analysis revealed several data anomalies requiring attention.
 
 1. Cases with invalid values for subtlety and breast density.
-2. Missing calcification type, calcification distribution, mass shape, and mass margins data. 
-3. Categories that have different spelling, but the same meaning. 
+2. Missing calcification type, calcification distribution, mass shape, and mass margins data.
+3. Categories that have different spelling, but the same meaning.
 
 As such, the data cleaning tasks are detailed in {numref}`data_cleaning_tasks`:
 
@@ -42,7 +42,7 @@ if 'jbook' in os.getcwd():
 import pandas as pd
 import numpy as np
 
-from bcd.data_prep.cbis import CBISImputer
+from bcd.data_prep.clean import CBISImputer
 from bcd.data.dataset import CBISDataset
 
 pd.options.display.max_rows = 999
