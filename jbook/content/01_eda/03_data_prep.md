@@ -35,7 +35,7 @@ if 'jbook' in os.getcwd():
 
 import pandas as  pd
 
-from bcd.explore.prep.case import CasePrep
+from bcd.explore.prep.prep import CasePrep
 from bcd.explore.prep.dicom import DicomPrep
 ```
 

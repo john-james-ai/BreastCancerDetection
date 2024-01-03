@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# CBIS-DDSM Data Quality Analysis (DQA)
+# Data Quality Analysis (DQA)
 In the previous section, we began the process of transforming the raw CBIS-DDSM case and DICOM data into a structure and format more suitable for analysis. The purpose of this effort is to identify potential data quality issues, errors, and anomalies requiring further data preprocessing, prior to the analysis stage. 
 
 ## Approach

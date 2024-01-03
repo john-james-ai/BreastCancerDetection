@@ -66,8 +66,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/bcdfavicon-32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="References" href="../80_references.html" />
-    <link rel="prev" title="2. Unboxing CBIS-DDSM - A Structural Analysis" href="01_unbox.html" />
+    <link rel="next" title="4. Data Quality Analysis (DQA)" href="03_dqa.html" />
+    <link rel="prev" title="2. Unboxing CBIS-DDSM" href="01_unbox.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -165,8 +165,11 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM - A Structural Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_dqa.html">4. Data Quality Analysis (DQA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_clean.html">5. Data Cleaning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_transform.html">6. Data Transformation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -891,7 +894,7 @@ memory usage: 421.7+ KB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpi</span> <span class="o">=</span> <span class="s2">&quot;data/meta/0_raw/metadata.csv&quot;</span>
-<span class="n">fpo</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_final/series.csv&quot;</span>
+<span class="n">fpo</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_clean/series.csv&quot;</span>
 <span class="n">sp</span> <span class="o">=</span> <span class="n">SeriesPrep</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">fpi</span><span class="p">,</span> <span class="n">series_filepath</span><span class="o">=</span><span class="n">fpo</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">series</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">prep</span><span class="p">()</span>
 <span class="n">series</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -1200,7 +1203,7 @@ memory usage: 1.2+ MB
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cases</span> <span class="o">=</span> <span class="s2">&quot;data/meta/1_interim/cases.csv&quot;</span>
-<span class="n">series</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_final/series.csv&quot;</span>
+<span class="n">series</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_clean/series.csv&quot;</span>
 <span class="n">cbis</span> <span class="o">=</span> <span class="s2">&quot;data/meta/2_staged/cbis.csv&quot;</span>
 <span class="n">cp</span> <span class="o">=</span> <span class="n">CBISPrep</span><span class="p">(</span><span class="n">case_filepath</span><span class="o">=</span><span class="n">cases</span><span class="p">,</span> <span class="n">series_filepath</span><span class="o">=</span><span class="n">series</span><span class="p">,</span> <span class="n">cbis_filepath</span><span class="o">=</span><span class="n">cbis</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">cbis</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">prep</span><span class="p">()</span>
@@ -1454,15 +1457,15 @@ memory usage: 728.4+ KB
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>Unboxing CBIS-DDSM - A Structural Analysis</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Unboxing CBIS-DDSM</p>
       </div>
     </a>
     <a class="right-next"
-       href="../80_references.html"
+       href="03_dqa.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Data Quality Analysis (DQA)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

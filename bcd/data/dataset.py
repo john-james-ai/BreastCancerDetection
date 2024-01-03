@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 1st 2024 04:52:28 am                                                 #
-# Modified   : Tuesday January 2nd 2024 08:34:40 pm                                                #
+# Modified   : Tuesday January 2nd 2024 09:02:20 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -35,11 +35,11 @@ class CBISDataset(Dataset):
 
     def __init__(self, filepath: str, dqa: type[CBISDQA] = CBISDQA) -> None:
         self._filepath = filepath
-        self._dqa = dqa
         self._df = None
         self._eda = None
         self._show = None
         self._load()
+        self._dqa = dqa(data=self._df)
 
     @property
     def dqa(self) -> CBISDQA:

@@ -1,0 +1,1404 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5. Data Cleaning &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/00_data/04_clean';</script>
+    <link rel="shortcut icon" href="../../_static/bcdfavicon-32.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6. Data Transformation" href="05_transform.html" />
+    <link rel="prev" title="4. Data Quality Analysis (DQA)" href="03_dqa.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../front.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../front.html">
+                    Deep Learning for Breast Cancer Detection - Modular, Extensible, Reproducible
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../00_intro.html">1. Introduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_prep.html">3. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_dqa.html">4. Data Quality Analysis (DQA)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Data Cleaning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_transform.html">6. Data Transformation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../80_references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/john-james-ai/BreastCancerDetection/main/v2/gh/john-james-ai/BreastCancerDetection/main?urlpath=tree/jbook/content/00_data/04_clean.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/john-james-ai/BreastCancerDetection/blob/main/jbook/content/00_data/04_clean.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/edit/main/jbook/content/00_data/04_clean.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/john-james-ai/BreastCancerDetection/issues/new?title=Issue%20on%20page%20%2Fcontent/00_data/04_clean.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/00_data/04_clean.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/content/00_data/04_clean.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Cleaning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">5.1. Load Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">5.2. Breast Density</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety">5.3. Subtlety</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#category-alignment">5.4. Category Alignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impute-missing-values">5.5. Impute Missing Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-sample-inspection">5.6. Random Sample Inspection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-quality-analysis-2-0">5.7. Data Quality Analysis 2.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completeness-analysis">5.7.1. Completeness Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uniqueness-analysis">5.7.2. Uniqueness Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validity-analysis">5.7.3. Validity Analysis</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-cleaning">
+<h1><span class="section-number">5. </span>Data Cleaning<a class="headerlink" href="#data-cleaning" title="Permalink to this heading">#</a></h1>
+<p>The prior data quality analysis revealed several data anomalies requiring attention.</p>
+<ol class="arabic simple">
+<li><p>Cases with invalid values for subtlety and breast density.</p></li>
+<li><p>Missing calcification type, calcification distribution, mass shape, and mass margins data.</p></li>
+<li><p>Categories that have different spelling, but the same meaning.</p></li>
+</ol>
+<p>As such, the data cleaning tasks are detailed in <a class="reference internal" href="#data-cleaning-tasks"><span class="std std-numref">Table 5.1</span></a>:</p>
+<table class="table" id="data-cleaning-tasks">
+<caption><span class="caption-number">Table 5.1 </span><span class="caption-text">Data Cleaning Tasks</span><a class="headerlink" href="#data-cleaning-tasks" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Task</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Replace invalid values for breast density with NA for imputation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Replace cases with invalid values for subtlety with NA for imputation</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Replace calcification types ‘LUCENT_CENTER’ with ‘LUCENT_CENTERED’, and ‘PLEOMORPHIC-PLEOMORPHIC’, with ‘PLEOMORPHIC’</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Impute missing values using Multiple Imputation by Chained Equations   (MICE)</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Conduct random inspection of imputations.</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Conduct final data quality analysis.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Once the case dataset has been cleaned, the case data will be merged into the DICOM dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../..&quot;</span><span class="p">)))</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">bcd.data_prep.clean</span> <span class="kn">import</span> <span class="n">CBISImputer</span>
+<span class="kn">from</span> <span class="nn">bcd.data.dataset</span> <span class="kn">import</span> <span class="n">CBISDataset</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_rows</span> <span class="o">=</span> <span class="mi">999</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FP_STAGED</span> <span class="o">=</span> <span class="s2">&quot;data/meta/2_staged/cbis.csv&quot;</span>
+<span class="n">FP_CLEAN</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_clean/cbis.csv&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="load-data">
+<h2><span class="section-number">5.1. </span>Load Data<a class="headerlink" href="#load-data" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">FP_STAGED</span><span class="p">)</span>
+<span class="n">df_orig</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="breast-density">
+<h2><span class="section-number">5.2. </span>Breast Density<a class="headerlink" href="#breast-density" title="Permalink to this heading">#</a></h2>
+<p>Replace invalid values for breast density with NA for downstream imputation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set invalid values for breast_density to NA</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;breast_density&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;breast_density&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NAN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="subtlety">
+<h2><span class="section-number">5.3. </span>Subtlety<a class="headerlink" href="#subtlety" title="Permalink to this heading">#</a></h2>
+<p>Replace invalid values for subtlety with NA.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set case and mass data to NOT APPLICABLE where appropriate.</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;subtlety&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;subtlety&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NAN</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="category-alignment">
+<h2><span class="section-number">5.4. </span>Category Alignment<a class="headerlink" href="#category-alignment" title="Permalink to this heading">#</a></h2>
+<p>Align categories that have the same meaning, but differ in spelling only.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;LUCENT_CENTER&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;LUCENT_CENTERED&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ROUND_AND_REGULAR-LUCENT_CENTER-DYSTROPHIC&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ROUND_AND_REGULAR-LUCENT_CENTERED-DYSTROPHIC&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PUNCTATE-LUCENT_CENTER&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PUNCTATE-LUCENT_CENTERED&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;VASCULAR-COARSE-LUCENT_CENTER-ROUND_AND_REGULAR-PUNCTATE&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;VASCULAR-COARSE-LUCENT_CENTERED-ROUND_AND_REGULAR-PUNCTATE&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ROUND_AND_REGULAR-LUCENT_CENTER&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ROUND_AND_REGULAR-LUCENT_CENTERED&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;LUCENT_CENTER-PUNCTATE&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;LUCENT_CENTERED-PUNCTATE&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COARSE-ROUND_AND_REGULAR-LUCENT_CENTER&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;COARSE-ROUND_AND_REGULAR-LUCENT_CENTERED&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ROUND_AND_REGULAR-LUCENT_CENTER-PUNCTATE&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ROUND_AND_REGULAR-LUCENT_CENTERED-PUNCTATE&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COARSE-LUCENT_CENTER&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;COARSE-LUCENT_CENTERED&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PLEOMORPHIC-PLEOMORPHIC&#39;</span><span class="p">,</span> <span class="s1">&#39;calc_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PLEOMORPHIC&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="impute-missing-values">
+<h2><span class="section-number">5.5. </span>Impute Missing Values<a class="headerlink" href="#impute-missing-values" title="Permalink to this heading">#</a></h2>
+<p>Multiple Imputation by Chained Equations (MICE) is a robust, informative method of estimating missing values in datasets. The procedure imputes missing data through an iterative series of predictive models which estimate the value of missing data using the other variables in the dataset. For this, we’ll use our CaseImputer which wraps scikit-learn’s IterativeImputer implementation of MICE.</p>
+<p>First, let’s capture the missing values as we will inspect them after imputation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Grab rows with missing data</span>
+<span class="n">null_mask</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_missing</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">null_mask</span><span class="p">]</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="n">df_missing</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows (approximately </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">df_missing</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">df_orig</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">% of the dataset) with missing data in the dataset.&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>There are 527 rows (approximately 14.8% of the dataset) with missing data in the dataset.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imp</span> <span class="o">=</span> <span class="n">CBISImputer</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">imp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;bcd.data_prep.clean.CBISImputer at 0x7f6383560520&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>With that, let’s save the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">FP_CLEAN</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_clean</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">FP_CLEAN</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="random-sample-inspection">
+<h2><span class="section-number">5.6. </span>Random Sample Inspection<a class="headerlink" href="#random-sample-inspection" title="Permalink to this heading">#</a></h2>
+<p>Let’s take a look at a random sampling of the missing data and compare.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_cases</span> <span class="o">=</span> <span class="n">df_missing</span><span class="p">[</span><span class="s1">&#39;mmg_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df_missing</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_missing</span><span class="p">[</span><span class="s1">&#39;mmg_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">sample_cases</span><span class="p">)]</span>
+<span class="n">df_clean</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_clean</span><span class="p">[</span><span class="s1">&#39;mmg_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">sample_cases</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>patient_id</th>
+      <th>breast_density</th>
+      <th>laterality</th>
+      <th>image_view</th>
+      <th>abnormality_id</th>
+      <th>abnormality_type</th>
+      <th>calc_type</th>
+      <th>calc_distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>...</th>
+      <th>rows</th>
+      <th>cols</th>
+      <th>aspect_ratio</th>
+      <th>size</th>
+      <th>file_size</th>
+      <th>min_pixel_value</th>
+      <th>max_pixel_value</th>
+      <th>mean_pixel_value</th>
+      <th>std_pixel_value</th>
+      <th>filepath</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>350</th>
+      <td>P_00476</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5768</td>
+      <td>4032</td>
+      <td>0.70</td>
+      <td>23256576</td>
+      <td>46514254</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,498.95</td>
+      <td>16,846.46</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
+    </tr>
+    <tr>
+      <th>351</th>
+      <td>P_00476</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5768</td>
+      <td>4032</td>
+      <td>0.70</td>
+      <td>23256576</td>
+      <td>46514254</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,498.95</td>
+      <td>16,846.46</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
+    </tr>
+    <tr>
+      <th>352</th>
+      <td>P_00476</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5768</td>
+      <td>4032</td>
+      <td>0.70</td>
+      <td>23256576</td>
+      <td>46514254</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,498.95</td>
+      <td>16,846.46</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
+    </tr>
+    <tr>
+      <th>370</th>
+      <td>P_00505</td>
+      <td>1.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>4440</td>
+      <td>3224</td>
+      <td>0.73</td>
+      <td>14314560</td>
+      <td>28630216</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,710.45</td>
+      <td>14,551.12</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+    </tr>
+    <tr>
+      <th>385</th>
+      <td>P_00510</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>ROUND_AND_REGULAR-PUNCTATE</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5680</td>
+      <td>4168</td>
+      <td>0.73</td>
+      <td>23674240</td>
+      <td>47349578</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>13,635.85</td>
+      <td>15,862.98</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+    </tr>
+    <tr>
+      <th>386</th>
+      <td>P_00510</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5680</td>
+      <td>4168</td>
+      <td>0.73</td>
+      <td>23674240</td>
+      <td>47349578</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>13,635.85</td>
+      <td>15,862.98</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+    </tr>
+    <tr>
+      <th>1207</th>
+      <td>P_01563</td>
+      <td>3.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>4536</td>
+      <td>3016</td>
+      <td>0.66</td>
+      <td>13680576</td>
+      <td>27362248</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,817.37</td>
+      <td>18,352.81</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
+    </tr>
+    <tr>
+      <th>1208</th>
+      <td>P_01563</td>
+      <td>3.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>4536</td>
+      <td>3016</td>
+      <td>0.66</td>
+      <td>13680576</td>
+      <td>27362248</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,817.37</td>
+      <td>18,352.81</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
+    </tr>
+    <tr>
+      <th>1302</th>
+      <td>P_01700</td>
+      <td>1.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>COARSE</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5696</td>
+      <td>4008</td>
+      <td>0.70</td>
+      <td>22829568</td>
+      <td>45660232</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,914.10</td>
+      <td>15,386.05</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_017...</td>
+    </tr>
+  </tbody>
+</table>
+<p>9 rows × 27 columns</p>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>patient_id</th>
+      <th>breast_density</th>
+      <th>laterality</th>
+      <th>image_view</th>
+      <th>abnormality_id</th>
+      <th>abnormality_type</th>
+      <th>calc_type</th>
+      <th>calc_distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>...</th>
+      <th>rows</th>
+      <th>cols</th>
+      <th>aspect_ratio</th>
+      <th>size</th>
+      <th>file_size</th>
+      <th>min_pixel_value</th>
+      <th>max_pixel_value</th>
+      <th>mean_pixel_value</th>
+      <th>std_pixel_value</th>
+      <th>filepath</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>350</th>
+      <td>P_00476</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5768</td>
+      <td>4032</td>
+      <td>1.00</td>
+      <td>23256576</td>
+      <td>46514254</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,499.00</td>
+      <td>16,846.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
+    </tr>
+    <tr>
+      <th>351</th>
+      <td>P_00476</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5768</td>
+      <td>4032</td>
+      <td>1.00</td>
+      <td>23256576</td>
+      <td>46514254</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,499.00</td>
+      <td>16,846.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
+    </tr>
+    <tr>
+      <th>352</th>
+      <td>P_00476</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5768</td>
+      <td>4032</td>
+      <td>1.00</td>
+      <td>23256576</td>
+      <td>46514254</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,499.00</td>
+      <td>16,846.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
+    </tr>
+    <tr>
+      <th>370</th>
+      <td>P_00505</td>
+      <td>1.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>4440</td>
+      <td>3224</td>
+      <td>1.00</td>
+      <td>14314560</td>
+      <td>28630216</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,710.00</td>
+      <td>14,551.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+    </tr>
+    <tr>
+      <th>385</th>
+      <td>P_00510</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>ROUND_AND_REGULAR-PUNCTATE</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5680</td>
+      <td>4168</td>
+      <td>1.00</td>
+      <td>23674240</td>
+      <td>47349578</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>13,636.00</td>
+      <td>15,863.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+    </tr>
+    <tr>
+      <th>386</th>
+      <td>P_00510</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5680</td>
+      <td>4168</td>
+      <td>1.00</td>
+      <td>23674240</td>
+      <td>47349578</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>13,636.00</td>
+      <td>15,863.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+    </tr>
+    <tr>
+      <th>1207</th>
+      <td>P_01563</td>
+      <td>3.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>4536</td>
+      <td>3016</td>
+      <td>1.00</td>
+      <td>13680576</td>
+      <td>27362248</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,817.00</td>
+      <td>18,353.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
+    </tr>
+    <tr>
+      <th>1208</th>
+      <td>P_01563</td>
+      <td>3.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>4536</td>
+      <td>3016</td>
+      <td>1.00</td>
+      <td>13680576</td>
+      <td>27362248</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,817.00</td>
+      <td>18,353.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
+    </tr>
+    <tr>
+      <th>1302</th>
+      <td>P_01700</td>
+      <td>1.00</td>
+      <td>LEFT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>COARSE</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5696</td>
+      <td>4008</td>
+      <td>1.00</td>
+      <td>22829568</td>
+      <td>45660232</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,914.00</td>
+      <td>15,386.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_017...</td>
+    </tr>
+  </tbody>
+</table>
+<p>9 rows × 27 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="data-quality-analysis-2-0">
+<h2><span class="section-number">5.7. </span>Data Quality Analysis 2.0<a class="headerlink" href="#data-quality-analysis-2-0" title="Permalink to this heading">#</a></h2>
+<p>Ok, let’s have another go at the data quality analysis.</p>
+<section id="completeness-analysis">
+<h3><span class="section-number">5.7.1. </span>Completeness Analysis<a class="headerlink" href="#completeness-analysis" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">CBISDataset</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">FP_CLEAN</span><span class="p">)</span>
+<span class="n">dqcc</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">dqa</span><span class="o">.</span><span class="n">analyze_completeness</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dqcc</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          Completeness                          
+                         Dataset | CBIS-DDSM
+                         Records | 3568
+                Complete Records | 3568
+             Record Completeness | 1.0
+                     Data Values | 96336
+            Complete Data Values | 96336
+         Data Value Completeness | 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’re complete.</p>
+</section>
+<section id="uniqueness-analysis">
+<h3><span class="section-number">5.7.2. </span>Uniqueness Analysis<a class="headerlink" href="#uniqueness-analysis" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dqcu</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">dqa</span><span class="o">.</span><span class="n">analyze_uniqueness</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dqcu</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                           Uniqueness                           
+                         Dataset | CBIS-DDSM
+                         Records | 3568
+                  Unique Records | 3568
+               Record Uniqueness | 1.0
+                     Data Values | 96336
+              Unique Data Values | 19864
+           Data Value Uniqueness | 0.206
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’re unique.</p>
+</section>
+<section id="validity-analysis">
+<h3><span class="section-number">5.7.3. </span>Validity Analysis<a class="headerlink" href="#validity-analysis" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dqcv</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">dqa</span><span class="o">.</span><span class="n">analyze_validity</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dqcv</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            Validity                            
+                         Dataset | CBIS-DDSM
+                         Records | 3568
+                   Valid Records | 3568
+                 Record Validity | 1.0
+                     Data Values | 96336
+               Valid Data Values | 96336
+             Data Value Validity | 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’re valid. That concludes this data cleaning section.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "john-james-ai/BreastCancerDetection",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/00_data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_dqa.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Data Quality Analysis (DQA)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_transform.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Data Transformation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">5.1. Load Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-density">5.2. Breast Density</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subtlety">5.3. Subtlety</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#category-alignment">5.4. Category Alignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impute-missing-values">5.5. Impute Missing Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-sample-inspection">5.6. Random Sample Inspection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-quality-analysis-2-0">5.7. Data Quality Analysis 2.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#completeness-analysis">5.7.1. Completeness Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uniqueness-analysis">5.7.2. Uniqueness Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#validity-analysis">5.7.3. Validity Analysis</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By John James
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
