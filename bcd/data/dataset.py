@@ -11,14 +11,14 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 1st 2024 04:52:28 am                                                 #
-# Modified   : Tuesday January 2nd 2024 05:46:45 pm                                                #
+# Modified   : Tuesday January 2nd 2024 08:34:40 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
 import pandas as pd
 
-from bcd.analyze.dqa.base import DQA
+from bcd.analyze.dqa.cbis import CBISDQA
 from bcd.dal.file import IOService
 from bcd.data.base import Dataset
 from bcd.explore.meta import Explorer as EDA
@@ -33,43 +33,23 @@ class CBISDataset(Dataset):
         filepath (str): Filepath to the CBIS-DDSM data
     """
 
-    def __init__(self, filepath: str) -> None:
+    def __init__(self, filepath: str, dqa: type[CBISDQA] = CBISDQA) -> None:
         self._filepath = filepath
+        self._dqa = dqa
         self._df = None
-        self._dqa = None
         self._eda = None
         self._show = None
         self._load()
 
     @property
-    def dqa(self) -> DQA:
+    def dqa(self) -> CBISDQA:
         """Access to the data quality analysis module"""
         return self._dqa
-
-    @dqa.setter
-    def dqa(self, dqa: type[DQA]) -> None:
-        """Sets the DQA Module
-
-        Args:
-            dqa (type[DQA]); The DQA Class type
-
-        """
-        self._dqa = dqa(data=self._df)
 
     @property
     def eda(self) -> EDA:
         """Access to the exploratory data analysis module"""
         return self._eda
-
-    @eda.setter
-    def eda(self, eda: type[EDA]) -> None:
-        """Sets the EDA Module
-
-        Args:
-            eda (type[EDA]); The EDA Class type
-
-        """
-        self._eda = eda(data=self._df)
 
     # @property
     # def show(self) -> EDA:

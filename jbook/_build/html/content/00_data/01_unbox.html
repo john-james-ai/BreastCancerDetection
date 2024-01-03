@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2. Unboxing CBIS-DDSM - A Structural Analysis &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+    <title>2. Unboxing CBIS-DDSM &#8212; &lt;p style=&#34;text-align:left&#34;&gt;&lt;span style=&#34;color:#002B5B&#34;&gt;&lt;span style=&#34;font-size:36px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;VoCMobile.ai&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;font-size:18px&#34;&gt;&lt;span style=&#34;font-family:Lato&#34;&gt;Breast Cancer Detection with Deep Learning&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </title>
   
   
@@ -165,8 +165,9 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Unboxing CBIS-DDSM - A Structural Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Unboxing CBIS-DDSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_prep.html">3. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_dqa.html">4. CBIS-DDSM Data Quality Analysis (DQA)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -455,7 +456,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Unboxing CBIS-DDSM - A Structural Analysis</h1>
+    <h1>Unboxing CBIS-DDSM</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -484,8 +485,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="unboxing-cbis-ddsm-a-structural-analysis">
-<h1><span class="section-number">2. </span>Unboxing CBIS-DDSM - A Structural Analysis<a class="headerlink" href="#unboxing-cbis-ddsm-a-structural-analysis" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="unboxing-cbis-ddsm">
+<h1><span class="section-number">2. </span>Unboxing CBIS-DDSM<a class="headerlink" href="#unboxing-cbis-ddsm" title="Permalink to this heading">#</a></h1>
 <p>Before conducting the exploratory analyses, we’ll unbox the data to ensure that the structure supports the analyses and that …<em>’ we got what we paid for</em>. In the next section, we’ll perform an analysis of the data quality along dimensions of validity, completeness, consistency, and uniqueness. The following exploratory analysis will harvest insight from the data.</p>
 <p>Our aim here is to get a general sense of the data <em>structure</em> and to make any structural changes necessary to facilitate the next stages of the analysis. First, we’ll examine the case training sets, then the series metadata, and finally, we’ll discover the structure of the DICOM metadata.</p>
 <div class="cell tag_hide-input docutils container">
@@ -1054,27 +1055,61 @@ memory usage: 741.1+ KB
 <h2><span class="section-number">2.3. </span>DICOM Image Metadata<a class="headerlink" href="#dicom-image-metadata" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;data/image/0_raw/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;data/image/0_raw/CBIS-DDSM/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm&quot;</span>
 <span class="n">pydicom</span><span class="o">.</span><span class="n">dcmread</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;data/image/0_raw/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm&quot;</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">pydicom</span><span class="o">.</span><span class="n">dcmread</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-
-<span class="nn">File ~/anaconda3/envs/bcd/lib/python3.10/site-packages/pydicom/filereader.py:1002,</span> in <span class="ni">dcmread</span><span class="nt">(fp, defer_size, stop_before_pixels, force, specific_tags)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1000</span>     <span class="n">caller_owns_file</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="g g-Whitespace">   </span><span class="mi">1001</span>     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Reading file &#39;</span><span class="si">{0}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fp</span><span class="p">))</span>
-<span class="ne">-&gt; </span><span class="mi">1002</span>     <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1003</span> <span class="k">elif</span> <span class="n">fp</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="s2">&quot;seek&quot;</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1004</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;dcmread: Expected a file path or a file-like, &quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1005</span>                     <span class="s2">&quot;but got &quot;</span> <span class="o">+</span> <span class="nb">type</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;data/image/0_raw/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset.file_meta -------------------------------
+(0002, 0000) File Meta Information Group Length  UL: 194
+(0002, 0001) File Meta Information Version       OB: b&#39;\x00\x01&#39;
+(0002, 0002) Media Storage SOP Class UID         UI: Secondary Capture Image Storage
+(0002, 0003) Media Storage SOP Instance UID      UI: 1.3.6.1.4.1.9590.100.1.2.317515537412043424519189666683030406469
+(0002, 0010) Transfer Syntax UID                 UI: Implicit VR Little Endian
+(0002, 0012) Implementation Class UID            UI: 1.2.40.0.13.1.1.1
+(0002, 0013) Implementation Version Name         SH: &#39;dcm4che-1.4.35&#39;
+-------------------------------------------------
+(0008, 0005) Specific Character Set              CS: &#39;ISO_IR 100&#39;
+(0008, 0016) SOP Class UID                       UI: Secondary Capture Image Storage
+(0008, 0018) SOP Instance UID                    UI: 1.3.6.1.4.1.9590.100.1.2.317515537412043424519189666683030406469
+(0008, 0020) Study Date                          DA: &#39;20160720&#39;
+(0008, 0023) Content Date                        DA: &#39;20160426&#39;
+(0008, 0030) Study Time                          TM: &#39;194140&#39;
+(0008, 0033) Content Time                        TM: &#39;150201.088000&#39;
+(0008, 0050) Accession Number                    SH: &#39;&#39;
+(0008, 0060) Modality                            CS: &#39;MG&#39;
+(0008, 0064) Conversion Type                     CS: &#39;WSD&#39;
+(0008, 0090) Referring Physician&#39;s Name          PN: &#39;&#39;
+(0008, 103e) Series Description                  LO: &#39;full mammogram images&#39;
+(0010, 0010) Patient&#39;s Name                      PN: &#39;Mass-Training_P_01981_RIGHT_CC&#39;
+(0010, 0020) Patient ID                          LO: &#39;Mass-Training_P_01981_RIGHT_CC&#39;
+(0010, 0030) Patient&#39;s Birth Date                DA: &#39;&#39;
+(0010, 0040) Patient&#39;s Sex                       CS: &#39;&#39;
+(0013, 0010) Private Creator                     LO: &#39;CTP&#39;
+(0013, 1010) Private tag data                    UN: b&#39;CBIS-DDSM &#39;
+(0013, 1013) Private tag data                    UN: b&#39;43352602&#39;
+(0018, 0015) Body Part Examined                  CS: &#39;BREAST&#39;
+(0018, 1016) Secondary Capture Device Manufactur LO: &#39;MathWorks&#39;
+(0018, 1018) Secondary Capture Device Manufactur LO: &#39;MATLAB&#39;
+(0020, 000d) Study Instance UID                  UI: 1.3.6.1.4.1.9590.100.1.2.352886575512288888838686163391725194258
+(0020, 000e) Series Instance UID                 UI: 1.3.6.1.4.1.9590.100.1.2.65146854411116044628397515693673807312
+(0020, 0010) Study ID                            SH: &#39;DDSM&#39;
+(0020, 0011) Series Number                       IS: &#39;1&#39;
+(0020, 0013) Instance Number                     IS: &#39;1&#39;
+(0020, 0020) Patient Orientation                 CS: &#39;CC&#39;
+(0020, 0060) Laterality                          CS: &#39;R&#39;
+(0028, 0002) Samples per Pixel                   US: 1
+(0028, 0004) Photometric Interpretation          CS: &#39;MONOCHROME2&#39;
+(0028, 0010) Rows                                US: 6001
+(0028, 0011) Columns                             US: 3001
+(0028, 0100) Bits Allocated                      US: 16
+(0028, 0101) Bits Stored                         US: 16
+(0028, 0102) High Bit                            US: 15
+(0028, 0103) Pixel Representation                US: 0
+(0028, 0106) Smallest Image Pixel Value          US: 0
+(0028, 0107) Largest Image Pixel Value           US: 55866
+(7fe0, 0010) Pixel Data                          OW: Array of 36018002 elements
 </pre></div>
 </div>
 </div>

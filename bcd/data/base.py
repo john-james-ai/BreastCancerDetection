@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday December 29th 2023 12:00:22 am                                               #
-# Modified   : Tuesday January 2nd 2024 04:51:31 pm                                                #
+# Modified   : Tuesday January 2nd 2024 08:30:42 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -36,30 +36,10 @@ class Dataset(ABC):
     def dqa(self) -> DQA:
         """Access to the data quality analysis module"""
 
-    @abstractmethod
-    @dqa.setter
-    def dqa(self, dqa: type[DQA]) -> None:
-        """Sets the DQA Module
-
-        Args:
-            dqa (type[DQA]); The DQA Class type
-
-        """
-
     @property
     @abstractmethod
     def eda(self) -> EDA:
         """Access to the exploratory data analysis module"""
-
-    @abstractmethod
-    @eda.setter
-    def eda(self, eda: type[EDA]) -> None:
-        """Sets the EDA Module
-
-        Args:
-            dqa (type[EDA]); The EDA Class type
-
-        """
 
     @abstractmethod
     def summarize(self) -> pd.DataFrame:

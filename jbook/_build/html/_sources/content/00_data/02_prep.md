@@ -15,18 +15,15 @@ kernelspec:
 
 In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset. 
 
-Our process will take four steps: 
+Our process will take three steps: 
 1. Combine the calcification mass training and test sets into a single full mammogram dataset, 
 2. Add DICOM image file paths to the *series* metadata,
 3. Extract the *DICOM* image metadata and merge it with the case data from #1. 
-4. Create the Dataset object, our access to the CBIS-DDSM data.
 
 The full dataset will have a few upgrades that will facilitate the analysis, detection, and classification tasks:
 1. A mammogram ID, consisting of abnormality type, fileset (train/test), patient_id, breast laterality, and view will uniquely identify each full mammogram image.
 2. A Boolean target variable, 'cancer', will be added combining BENIGN and BENIGN_WITHOUT_CALLBACK into a single Boolean value.
-3. The Dataset will be a self-explanatory API for analysis, exploration, experimentation, and visualization.
-
-Alright.
+3. Pixel statistics such as the minimum, maximum, mean and standard deviation, will be added to the dataset.
 
 ## Case Dataset Integration
 The following code cells will integrate all case data into a single file.
@@ -124,8 +121,8 @@ class CasePrep(DataPrep):
             ]
             df_cases = df_cases.drop(columns=columns_to_drop)
 
-            # Change left_or_right_breast to laterality, the DICOM attribute
-            df_cases = df_cases.rename(columns={"left_or_right_breast": "laterality"})
+            # Change laterality to laterality, the DICOM attribute
+            df_cases = df_cases.rename(columns={"laterality": "laterality"})
 
             self._save(df=df_cases, filepath=self._case_fp)
 
@@ -176,7 +173,7 @@ class CasePrep(DataPrep):
             + "_"
             + df["patient_id"]
             + "_"
-            + df["left_or_right_breast"].apply(lambda x: x.upper())
+            + df["laterality"].apply(lambda x: x.upper())
             + "_"
             + df["image_view"].apply(lambda x: x.upper())
         )
@@ -290,7 +287,7 @@ Full filepaths have been added for all 10,239 images in the CBIS-DDSM.
 
 ## DICOM Image Metadata
 
-Next, we extract the DICOM data described in {numref}`dicom_image_metadata` and merge that with the case data.
+Finally, we extract the DICOM data described in {numref}`dicom_image_metadata` and merge that with the case data.
 
 ```{table} DICOM Image Metadata
 :name: dicom_image_metadata
@@ -307,7 +304,6 @@ Next, we extract the DICOM data described in {numref}`dicom_image_metadata` and 
 | 8 | mean_pixel_value           | Average pixel value                                                                      |
 | 9 | std_pixel_value            | Standard deviation of pixel values                                                       |
 
-                                                                                                                                            |
 ```
 
 ```{code-cell} ipython3
@@ -384,7 +380,7 @@ class CBISPrep(DataPrep):
         d["rows"], d["cols"] = img.shape
         d["aspect_ratio"] = d["cols"] / d["rows"]
         d["size"] = d["rows"] * d["cols"]
-        d["file_size"] = getsize(study["filepath"])
+        d["file_size"] = getsize(study["filepath"], as_bytes=True)
         d["min_pixel_value"] = dcm.SmallestImagePixelValue
         d["max_pixel_value"] = dcm.LargestImagePixelValue
         d["mean_pixel_value"] = np.mean(img)
@@ -404,8 +400,4 @@ cbis.info()
 cbis.sample(n=5, random_state=55)
 ```
 
-We have all case information along with the DICOM image metadata in a single dataset. 
-
-+++
-
-Finally, we integrate the data into a Dataset for quality assessment and exploratory data analysis.
+We have all case information along with the DICOM image metadata in a single dataset.

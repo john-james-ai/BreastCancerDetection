@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:51 am                                              #
-# Modified   : Tuesday January 2nd 2024 05:22:55 pm                                                #
+# Modified   : Tuesday January 2nd 2024 07:29:28 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -49,7 +49,7 @@ class Validator:
         """
 
         mmg_ids = (
-            data["abnormality_type"].apply(lambda x: x.capitalize())
+            data["abnormality_type"].apply(lambda x: x[0:4].capitalize())
             + "-"
             + data["fileset"].apply(lambda x: x.capitalize())
             + "_"
@@ -171,12 +171,12 @@ class Validator:
         """Evaluates validity of fileset values
 
         Args:
-            fileset (pd.Series): Validates fileset is in ['train', 'test']
+            fileset (pd.Series): Validates fileset is in ['training', 'test']
 
         Returns: Boolean mask in Series format.
 
         """
-        values = ["train", "test"]
+        values = ["training", "test"]
         return fileset.isin(values)
 
     def validate_calc_type(self, calc_type: pd.Series) -> pd.Series:
@@ -439,7 +439,7 @@ class Validator:
         Args:
             df (pd.DataFrame): DataFrame containing the CBIS Data
         """
-        return (0 < df["mean_pixel_value"]) and (
+        return (0 < df["mean_pixel_value"]) & (
             df["mean_pixel_value"] < 2 ** df["bit_depth"]
         )
 

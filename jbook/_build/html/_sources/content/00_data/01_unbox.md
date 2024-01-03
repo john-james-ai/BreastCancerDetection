@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Unboxing CBIS-DDSM - A Structural Analysis
+# Unboxing CBIS-DDSM
 
 Before conducting the exploratory analyses, we'll unbox the data to ensure that the structure supports the analyses and that ...*' we got what we paid for*. In the next section, we'll perform an analysis of the data quality along dimensions of validity, completeness, consistency, and uniqueness. The following exploratory analysis will harvest insight from the data. 
 
@@ -94,7 +94,7 @@ Very alright! Now the DICOM image metadata.
 ## DICOM Image Metadata
 
 ```{code-cell} ipython3
-fp = "data/image/0_raw/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm"
+fp = "data/image/0_raw/CBIS-DDSM/Mass-Training_P_01981_RIGHT_CC/07-20-2016-DDSM-94258/1.000000-full mammogram images-07312/1-1.dcm"
 pydicom.dcmread(fp)
 ```
 
