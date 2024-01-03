@@ -510,150 +510,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 34-178 bcd/data_prep/transform.py</span>
-<span class="c1"># ------------------------------------------------------------------------------------------------ #</span>
-<span class="c1">#                                   CBIS TRANSFORMER                                               #</span>
-<span class="c1"># ------------------------------------------------------------------------------------------------ #</span>
-<span class="n">MODEL_VARS</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;breast_density&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;laterality&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image_view&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;abnormality_id&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;abnormality_type&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;calc_type&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;calc_distribution&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;subtlety&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mass_shape&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mass_margins&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;cancer&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mean_pixel_value&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;std_pixel_value&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="n">CALC_TYPES</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;AMORPHOUS&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;COARSE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DYSTROPHIC&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;EGGSHELL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;FINE_LINEAR_BRANCHING&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LARGE_RODLIKE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LUCENT_CENTERED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MILK_OF_CALCIUM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;PLEOMORPHIC&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;PUNCTATE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ROUND_AND_REGULAR&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SKIN&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;VASCULAR&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="n">CALC_DISTRIBUTIONS</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;CLUSTERED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LINEAR&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;REGIONAL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;DIFFUSELY_SCATTERED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SEGMENTAL&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="n">MASS_SHAPES</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;IRREGULAR&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ARCHITECTURAL_DISTORTION&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;OVAL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LYMPH_NODE&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LOBULATED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;FOCAL_ASYMMETRIC_DENSITY&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ROUND&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ASYMMETRIC_BREAST_TISSUE&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="n">MASS_MARGINS</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;SPICULATED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ILL_DEFINED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;CIRCUMSCRIBED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;OBSCURED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MICROLOBULATED&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="n">ENC_VARS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;abnormality_type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;AT&quot;</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;calcification&quot;</span><span class="p">,</span> <span class="s2">&quot;mass&quot;</span><span class="p">]},</span>
-    <span class="s2">&quot;laterality&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;LR&quot;</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;LEFT&quot;</span><span class="p">,</span> <span class="s2">&quot;RIGHT&quot;</span><span class="p">]},</span>
-    <span class="s2">&quot;image_view&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;IV&quot;</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CC&quot;</span><span class="p">,</span> <span class="s2">&quot;MLO&quot;</span><span class="p">]},</span>
-    <span class="s2">&quot;calc_type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;CT&quot;</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="n">CALC_TYPES</span><span class="p">},</span>
-    <span class="s2">&quot;calc_distribution&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;CD&quot;</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="n">CALC_DISTRIBUTIONS</span><span class="p">},</span>
-    <span class="s2">&quot;mass_shape&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;MS&quot;</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="n">MASS_SHAPES</span><span class="p">},</span>
-    <span class="s2">&quot;mass_margins&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;MM&quot;</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="n">MASS_MARGINS</span><span class="p">},</span>
-<span class="p">}</span>
-
-
-<span class="c1"># ------------------------------------------------------------------------------------------------ #</span>
-<span class="k">class</span> <span class="nc">CBISTransformer</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Collapses morphological categories and dummy encodes nominal variables.</span>
-
-<span class="sd">    The CBIS-DDSM has 45 calcification types, 9 calcification distributions, 20 mass shapes, and</span>
-<span class="sd">    19 mass margins, many of which are compound categories, in that two or more categories are</span>
-<span class="sd">    combined. For instance, calcification type &#39;ROUND_AND_REGULAR-PUNCTATE-AMORPHOUS&#39; indicates</span>
-<span class="sd">    three different types: &#39;ROUND_AND_REGULAR&#39;, &#39;PUNCTATE&#39;, and &#39;AMORPHOUS&#39;. Segregating these</span>
-<span class="sd">    compound categories into separate categories will drastically reduce the number of categories</span>
-<span class="sd">    to analyze. More importantly, it aligns our data and the analyses with the common morphological</span>
-<span class="sd">    taxonomy. So, task one is to extract the unary morphological categories from the</span>
-<span class="sd">    compound classifications.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        source_fp (str): Path to source file</span>
-<span class="sd">        destination_fp (str): Path to destination file</span>
-<span class="sd">        force (bool): Whether to force execution if the destination file already exists.</span>
-<span class="sd">            Default = False.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">source_fp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">destination_fp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_source_fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">source_fp</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_destination_fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">destination_fp</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="o">=</span> <span class="n">force</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs the transformation of the data.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_destination_fp</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force</span><span class="p">:</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_source_fp</span><span class="p">)</span>
-            <span class="c1"># Excluding identify variables</span>
-            <span class="n">df_model_vars</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">MODEL_VARS</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">df_model_vars</span><span class="p">[</span><span class="s2">&quot;cancer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-                <span class="n">df_model_vars</span><span class="p">[</span><span class="s2">&quot;cancer&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
-            <span class="p">)</span>  <span class="c1"># noqa</span>
-
-            <span class="c1"># One-hot encode variables</span>
-            <span class="n">df_enc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encode_dataset</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_model_vars</span><span class="p">)</span>
-            <span class="c1"># Dropping original string variables.</span>
-            <span class="n">df_numeric</span> <span class="o">=</span> <span class="n">df_enc</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">])</span>
-            <span class="c1"># Normalize all values to [0,1]</span>
-            <span class="n">df_norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_numeric</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_norm</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">df_norm</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_destination_fp</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_encode_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;One-hot encodes the dataset&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">feature</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">ENC_VARS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">]:</span>
-                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encode_column</span><span class="p">(</span>
-                    <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;prefix&quot;</span><span class="p">],</span> <span class="n">col</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span>
-                <span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
-
-    <span class="k">def</span> <span class="nf">_encode_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="s2">&quot;One-hot encodes column&quot;</span>
-        <span class="n">newcol</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">value</span>
-        <span class="n">df</span><span class="p">[</span><span class="n">newcol</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
-
-    <span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Normalizes all values to [0,1]&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
-        <span class="k">return</span> <span class="n">df</span>
-
-    <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_destination_fp</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_destination_fp</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load</span> -r 34-178 bcd/data_prep/transform.py
 </pre></div>
 </div>
 </div>
@@ -666,28 +523,65 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">x4mr</span> <span class="o">=</span> <span class="n">CBISTransformer</span><span class="p">(</span><span class="n">source_fp</span><span class="o">=</span><span class="n">FP_CBIS</span><span class="p">,</span> <span class="n">destination_fp</span><span class="o">=</span><span class="n">FP_CBIS_MODELING_DATA</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">df</span> <span class="o">=</span> <span class="n">x4mr</span><span class="o">.</span><span class="n">transform</span><span class="p">()</span>
-
-<span class="nn">Cell In[3], line 97,</span> in <span class="ni">CBISTransformer.__init__</span><span class="nt">(self, source_fp, destination_fp, force)</span>
-<span class="g g-Whitespace">     </span><span class="mi">95</span> <span class="bp">self</span><span class="o">.</span><span class="n">_destination_fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">destination_fp</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="o">=</span> <span class="n">force</span>
-<span class="ne">---&gt; </span><span class="mi">97</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;logging&#39; is not defined
-</pre></div>
-</div>
-</div>
 </div>
 <p>Ok, let’s check the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 3568 entries, 0 to 3567
+Data columns (total 43 columns):
+ #   Column                       Non-Null Count  Dtype  
+---  ------                       --------------  -----  
+ 0   breast_density               3568 non-null   float64
+ 1   abnormality_id               3568 non-null   float64
+ 2   subtlety                     3568 non-null   float64
+ 3   cancer                       3568 non-null   float64
+ 4   mean_pixel_value             3568 non-null   float64
+ 5   std_pixel_value              3568 non-null   float64
+ 6   AT_calcification             3568 non-null   float64
+ 7   AT_mass                      3568 non-null   float64
+ 8   LR_LEFT                      3568 non-null   float64
+ 9   LR_RIGHT                     3568 non-null   float64
+ 10  IV_CC                        3568 non-null   float64
+ 11  IV_MLO                       3568 non-null   float64
+ 12  CT_AMORPHOUS                 3568 non-null   float64
+ 13  CT_COARSE                    3568 non-null   float64
+ 14  CT_DYSTROPHIC                3568 non-null   float64
+ 15  CT_EGGSHELL                  3568 non-null   float64
+ 16  CT_FINE_LINEAR_BRANCHING     3568 non-null   float64
+ 17  CT_LARGE_RODLIKE             3568 non-null   float64
+ 18  CT_LUCENT_CENTERED           3568 non-null   float64
+ 19  CT_MILK_OF_CALCIUM           3568 non-null   float64
+ 20  CT_PLEOMORPHIC               3568 non-null   float64
+ 21  CT_PUNCTATE                  3568 non-null   float64
+ 22  CT_ROUND_AND_REGULAR         3568 non-null   float64
+ 23  CT_SKIN                      3568 non-null   float64
+ 24  CT_VASCULAR                  3568 non-null   float64
+ 25  CD_CLUSTERED                 3568 non-null   float64
+ 26  CD_LINEAR                    3568 non-null   float64
+ 27  CD_REGIONAL                  3568 non-null   float64
+ 28  CD_DIFFUSELY_SCATTERED       3568 non-null   float64
+ 29  CD_SEGMENTAL                 3568 non-null   float64
+ 30  MS_IRREGULAR                 3568 non-null   float64
+ 31  MS_ARCHITECTURAL_DISTORTION  3568 non-null   float64
+ 32  MS_OVAL                      3568 non-null   float64
+ 33  MS_LYMPH_NODE                3568 non-null   float64
+ 34  MS_LOBULATED                 3568 non-null   float64
+ 35  MS_FOCAL_ASYMMETRIC_DENSITY  3568 non-null   float64
+ 36  MS_ROUND                     3568 non-null   float64
+ 37  MS_ASYMMETRIC_BREAST_TISSUE  3568 non-null   float64
+ 38  MM_SPICULATED                3568 non-null   float64
+ 39  MM_ILL_DEFINED               3568 non-null   float64
+ 40  MM_CIRCUMSCRIBED             3568 non-null   float64
+ 41  MM_OBSCURED                  3568 non-null   float64
+ 42  MM_MICROLOBULATED            3568 non-null   float64
+dtypes: float64(43)
+memory usage: 1.2 MB
 </pre></div>
 </div>
 </div>
@@ -699,6 +593,304 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>breast_density</th>
+      <th>abnormality_id</th>
+      <th>subtlety</th>
+      <th>cancer</th>
+      <th>mean_pixel_value</th>
+      <th>std_pixel_value</th>
+      <th>AT_calcification</th>
+      <th>AT_mass</th>
+      <th>LR_LEFT</th>
+      <th>LR_RIGHT</th>
+      <th>IV_CC</th>
+      <th>IV_MLO</th>
+      <th>CT_AMORPHOUS</th>
+      <th>CT_COARSE</th>
+      <th>CT_DYSTROPHIC</th>
+      <th>CT_EGGSHELL</th>
+      <th>CT_FINE_LINEAR_BRANCHING</th>
+      <th>CT_LARGE_RODLIKE</th>
+      <th>CT_LUCENT_CENTERED</th>
+      <th>CT_MILK_OF_CALCIUM</th>
+      <th>CT_PLEOMORPHIC</th>
+      <th>CT_PUNCTATE</th>
+      <th>CT_ROUND_AND_REGULAR</th>
+      <th>CT_SKIN</th>
+      <th>CT_VASCULAR</th>
+      <th>CD_CLUSTERED</th>
+      <th>CD_LINEAR</th>
+      <th>CD_REGIONAL</th>
+      <th>CD_DIFFUSELY_SCATTERED</th>
+      <th>CD_SEGMENTAL</th>
+      <th>MS_IRREGULAR</th>
+      <th>MS_ARCHITECTURAL_DISTORTION</th>
+      <th>MS_OVAL</th>
+      <th>MS_LYMPH_NODE</th>
+      <th>MS_LOBULATED</th>
+      <th>MS_FOCAL_ASYMMETRIC_DENSITY</th>
+      <th>MS_ROUND</th>
+      <th>MS_ASYMMETRIC_BREAST_TISSUE</th>
+      <th>MM_SPICULATED</th>
+      <th>MM_ILL_DEFINED</th>
+      <th>MM_CIRCUMSCRIBED</th>
+      <th>MM_OBSCURED</th>
+      <th>MM_MICROLOBULATED</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2164</th>
+      <td>0.33</td>
+      <td>0.17</td>
+      <td>0.75</td>
+      <td>1.00</td>
+      <td>0.53</td>
+      <td>0.91</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>0.75</td>
+      <td>0.00</td>
+      <td>0.36</td>
+      <td>0.83</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>0.67</td>
+      <td>0.33</td>
+      <td>1.25</td>
+      <td>0.00</td>
+      <td>0.47</td>
+      <td>0.90</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1673</th>
+      <td>1.00</td>
+      <td>0.17</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.19</td>
+      <td>0.55</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2667</th>
+      <td>0.67</td>
+      <td>0.17</td>
+      <td>1.25</td>
+      <td>0.00</td>
+      <td>0.33</td>
+      <td>0.78</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>All values have been normalized and this dataset is ready for modeling. This completes the data transformation section. On to exploratory data analysis…finally!</p>
 </section>
