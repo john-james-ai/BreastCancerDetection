@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Wednesday January 3rd 2024 02:24:41 am                                              #
+# Modified   : Monday January 8th 2024 04:27:35 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,12 +21,8 @@
 """Data Cleaning Module"""
 from __future__ import annotations
 
-import os
-
-import dask
 import numpy as np
 import pandas as pd
-import pydicom
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 from studioai.preprocessing.encode import RankFrequencyEncoder
@@ -83,6 +79,10 @@ class CBISImputer:
 
         self._imp = IterativeImputer(
             max_iter=self._max_iter,
+            missing_values=np.nan,
+            add_indicator=True,
+            n_nearest_features=None,
+            sample_posterior=True,
             initial_strategy=self._initial_strategy,
             random_state=self._random_state,
         )

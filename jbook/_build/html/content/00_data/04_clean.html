@@ -528,8 +528,12 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>Once the case dataset has been cleaned, the case data will be merged into the DICOM dataset.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
@@ -537,6 +541,9 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_iterative_imputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">IterativeImputer</span>
+<span class="kn">from</span> <span class="nn">studioai.preprocessing.encode</span> <span class="kn">import</span> <span class="n">RankFrequencyEncoder</span>
 
 <span class="kn">from</span> <span class="nn">bcd.data_prep.clean</span> <span class="kn">import</span> <span class="n">CBISImputer</span>
 <span class="kn">from</span> <span class="nn">bcd.data.dataset</span> <span class="kn">import</span> <span class="n">CBISDataset</span>
@@ -545,6 +552,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -611,7 +619,7 @@ document.write(`
 </section>
 <section id="impute-missing-values">
 <h2><span class="section-number">5.5. </span>Impute Missing Values<a class="headerlink" href="#impute-missing-values" title="Permalink to this heading">#</a></h2>
-<p>Multiple Imputation by Chained Equations (MICE) is a robust, informative method of estimating missing values in datasets. The procedure imputes missing data through an iterative series of predictive models which estimate the value of missing data using the other variables in the dataset. For this, we’ll use our CaseImputer which wraps scikit-learn’s IterativeImputer implementation of MICE.</p>
+<p>Multiple Imputation by Chained Equations (MICE) is a robust, informative method of estimating missing values in datasets. The procedure imputes missing data through an iterative series of predictive models which estimate the value of missing data using the other variables in the dataset. For this, we’ll use our CBISImputer which wraps scikit-learn’s IterativeImputer implementation of MICE.</p>
 <p>First, let’s capture the missing values as we will inspect them after imputation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -629,16 +637,105 @@ document.write(`
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imp</span> <span class="o">=</span> <span class="n">CBISImputer</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">imp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-<span class="n">df_clean</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 37-119 bcd/data_prep/clean.py</span>
+<span class="k">class</span> <span class="nc">CBISImputer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Imputes the missing values in the case dataset using Multiple Imputation by Chained Equations</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        max_iter (int): Maximum number of imputation rounds to perform before returning</span>
+<span class="sd">        the imputations computed during the final round.</span>
+<span class="sd">        initial_strategy (str): Which strategy to use to initialize the missing values.</span>
+<span class="sd">            Valid values include: {&#39;mean&#39;, &#39;median&#39;, &#39;most_frequent&#39;, &#39;constant&#39;},</span>
+<span class="sd">            default=most_frequent&#39;</span>
+<span class="sd">        random_state (int): The seed of the pseudo random number generator to use.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">initial_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;most_frequent&quot;</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_strategy</span> <span class="o">=</span> <span class="n">initial_strategy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_encoded_values</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dtypes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enc</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_imp</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CBISImputer</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fits the data to the imputer</span>
+
+<span class="sd">        Instantiates the encoder, encodes the data and creates a</span>
+<span class="sd">        map of columns to valid encoded values. We capture these</span>
+<span class="sd">        values in order to map imputed values</span>
+<span class="sd">        back to valid values before we inverse transform.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (pd.DataFrame): Imputed DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dtypes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enc</span> <span class="o">=</span> <span class="n">RankFrequencyEncoder</span><span class="p">()</span>
+        <span class="n">df_enc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extract_encoded_values</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_enc</span><span class="p">)</span>
+
+        <span class="c1"># Get complete cases for imputer training (fit)</span>
+        <span class="n">df_enc_complete</span> <span class="o">=</span> <span class="n">df_enc</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_imp</span> <span class="o">=</span> <span class="n">IterativeImputer</span><span class="p">(</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_iter</span><span class="p">,</span>
+            <span class="n">initial_strategy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_strategy</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_random_state</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_imp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">df_enc_complete</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs the imputation and returns the imputed DataFrame</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (pd.DataFrame): Imputed DataFrame</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df_enc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enc</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">imp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">df_enc</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">df_imp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">imp</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">df_imp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_imputed_values</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_imp</span><span class="p">)</span>
+        <span class="n">df_imp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enc</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_imp</span><span class="p">)</span>
+        <span class="n">df_imp</span> <span class="o">=</span> <span class="n">df_imp</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dtypes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_imp</span>
+
+    <span class="k">def</span> <span class="nf">_extract_encoded_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a dictionary of valid values by column.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_encoded_values</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">valid</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_map_imputed_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maps values to valid values (used after imputation)&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_encoded_values</span><span class="p">[</span><span class="n">col</span><span class="p">]))</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">values</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">values</span><span class="p">))])</span>
+        <span class="k">return</span> <span class="n">df</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;bcd.data_prep.clean.CBISImputer at 0x7f6383560520&gt;
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imp</span> <span class="o">=</span> <span class="n">CBISImputer</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df_clean</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -708,130 +805,58 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>350</th>
-      <td>P_00476</td>
+      <th>315</th>
+      <td>P_00452</td>
       <td>2.00</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
       <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
+      <td>VASCULAR</td>
       <td>NaN</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5768</td>
-      <td>4032</td>
-      <td>0.70</td>
-      <td>23256576</td>
-      <td>46514254</td>
+      <td>4592</td>
+      <td>3104</td>
+      <td>0.68</td>
+      <td>14253568</td>
+      <td>28508238</td>
       <td>0</td>
       <td>65535</td>
-      <td>14,498.95</td>
-      <td>16,846.46</td>
+      <td>12,872.63</td>
+      <td>16,989.45</td>
       <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
     </tr>
     <tr>
-      <th>351</th>
-      <td>P_00476</td>
+      <th>316</th>
+      <td>P_00452</td>
       <td>2.00</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>2</td>
       <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
+      <td>VASCULAR</td>
       <td>NaN</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5768</td>
-      <td>4032</td>
-      <td>0.70</td>
-      <td>23256576</td>
-      <td>46514254</td>
+      <td>4592</td>
+      <td>3104</td>
+      <td>0.68</td>
+      <td>14253568</td>
+      <td>28508238</td>
       <td>0</td>
       <td>65535</td>
-      <td>14,498.95</td>
-      <td>16,846.46</td>
+      <td>12,872.63</td>
+      <td>16,989.45</td>
       <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
     </tr>
     <tr>
-      <th>352</th>
-      <td>P_00476</td>
+      <th>317</th>
+      <td>P_00452</td>
       <td>2.00</td>
       <td>RIGHT</td>
-      <td>MLO</td>
-      <td>3</td>
-      <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
-      <td>NaN</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>5768</td>
-      <td>4032</td>
-      <td>0.70</td>
-      <td>23256576</td>
-      <td>46514254</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>14,498.95</td>
-      <td>16,846.46</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
-    </tr>
-    <tr>
-      <th>370</th>
-      <td>P_00505</td>
-      <td>1.00</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
-      <td>NaN</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>4440</td>
-      <td>3224</td>
-      <td>0.73</td>
-      <td>14314560</td>
-      <td>28630216</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>11,710.45</td>
-      <td>14,551.12</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
-    </tr>
-    <tr>
-      <th>385</th>
-      <td>P_00510</td>
-      <td>2.00</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>calcification</td>
-      <td>ROUND_AND_REGULAR-PUNCTATE</td>
-      <td>NaN</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>5680</td>
-      <td>4168</td>
-      <td>0.73</td>
-      <td>23674240</td>
-      <td>47349578</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>13,635.85</td>
-      <td>15,862.98</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
-    </tr>
-    <tr>
-      <th>386</th>
-      <td>P_00510</td>
-      <td>2.00</td>
-      <td>LEFT</td>
       <td>MLO</td>
       <td>3</td>
       <td>calcification</td>
@@ -840,68 +865,20 @@ document.write(`
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5680</td>
-      <td>4168</td>
-      <td>0.73</td>
-      <td>23674240</td>
-      <td>47349578</td>
+      <td>4592</td>
+      <td>3104</td>
+      <td>0.68</td>
+      <td>14253568</td>
+      <td>28508238</td>
       <td>0</td>
       <td>65535</td>
-      <td>13,635.85</td>
-      <td>15,862.98</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+      <td>12,872.63</td>
+      <td>16,989.45</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
     </tr>
     <tr>
-      <th>1207</th>
-      <td>P_01563</td>
-      <td>3.00</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>calcification</td>
-      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
-      <td>NaN</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>4536</td>
-      <td>3016</td>
-      <td>0.66</td>
-      <td>13680576</td>
-      <td>27362248</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>14,817.37</td>
-      <td>18,352.81</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
-    </tr>
-    <tr>
-      <th>1208</th>
-      <td>P_01563</td>
-      <td>3.00</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>2</td>
-      <td>calcification</td>
-      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
-      <td>NaN</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>4536</td>
-      <td>3016</td>
-      <td>0.66</td>
-      <td>13680576</td>
-      <td>27362248</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>14,817.37</td>
-      <td>18,352.81</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
-    </tr>
-    <tr>
-      <th>1302</th>
-      <td>P_01700</td>
+      <th>785</th>
+      <td>P_01003</td>
       <td>1.00</td>
       <td>LEFT</td>
       <td>CC</td>
@@ -912,20 +889,284 @@ document.write(`
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5696</td>
-      <td>4008</td>
-      <td>0.70</td>
-      <td>22829568</td>
-      <td>45660232</td>
+      <td>4520</td>
+      <td>3056</td>
+      <td>0.68</td>
+      <td>13813120</td>
+      <td>27627336</td>
       <td>0</td>
       <td>65535</td>
-      <td>10,914.10</td>
-      <td>15,386.05</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_017...</td>
+      <td>10,926.29</td>
+      <td>15,954.34</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>859</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PUNCTATE</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>0.72</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.17</td>
+      <td>14,284.05</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>860</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>PUNCTATE</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>0.72</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.17</td>
+      <td>14,284.05</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>861</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>PUNCTATE</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>0.72</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.17</td>
+      <td>14,284.05</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>862</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>4</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>0.72</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.17</td>
+      <td>14,284.05</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>863</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>0.70</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,095.96</td>
+      <td>13,431.61</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>864</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>0.70</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,095.96</td>
+      <td>13,431.61</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>865</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>0.70</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,095.96</td>
+      <td>13,431.61</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>866</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>4</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>0.70</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,095.96</td>
+      <td>13,431.61</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>1440</th>
+      <td>P_01864</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5224</td>
+      <td>3744</td>
+      <td>0.72</td>
+      <td>19558656</td>
+      <td>39118406</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>9,874.18</td>
+      <td>12,318.39</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_018...</td>
+    </tr>
+    <tr>
+      <th>1441</th>
+      <td>P_01864</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5224</td>
+      <td>3744</td>
+      <td>0.72</td>
+      <td>19558656</td>
+      <td>39118406</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>9,874.18</td>
+      <td>12,318.39</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_018...</td>
+    </tr>
+    <tr>
+      <th>1442</th>
+      <td>P_01864</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5224</td>
+      <td>3744</td>
+      <td>0.72</td>
+      <td>19558656</td>
+      <td>39118406</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>9,874.18</td>
+      <td>12,318.39</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_018...</td>
     </tr>
   </tbody>
 </table>
-<p>9 rows × 27 columns</p>
+<p>15 rows × 27 columns</p>
 </div></div><div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -969,130 +1210,58 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>350</th>
-      <td>P_00476</td>
+      <th>315</th>
+      <td>P_00452</td>
       <td>2.00</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>1</td>
       <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
+      <td>VASCULAR</td>
       <td>SEGMENTAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5768</td>
-      <td>4032</td>
+      <td>4592</td>
+      <td>3104</td>
       <td>1.00</td>
-      <td>23256576</td>
-      <td>46514254</td>
+      <td>14253568</td>
+      <td>28508238</td>
       <td>0</td>
       <td>65535</td>
-      <td>14,499.00</td>
-      <td>16,846.00</td>
+      <td>12,873.00</td>
+      <td>16,989.00</td>
       <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
     </tr>
     <tr>
-      <th>351</th>
-      <td>P_00476</td>
+      <th>316</th>
+      <td>P_00452</td>
       <td>2.00</td>
       <td>RIGHT</td>
       <td>MLO</td>
       <td>2</td>
       <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
+      <td>VASCULAR</td>
       <td>SEGMENTAL</td>
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5768</td>
-      <td>4032</td>
+      <td>4592</td>
+      <td>3104</td>
       <td>1.00</td>
-      <td>23256576</td>
-      <td>46514254</td>
+      <td>14253568</td>
+      <td>28508238</td>
       <td>0</td>
       <td>65535</td>
-      <td>14,499.00</td>
-      <td>16,846.00</td>
+      <td>12,873.00</td>
+      <td>16,989.00</td>
       <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
     </tr>
     <tr>
-      <th>352</th>
-      <td>P_00476</td>
+      <th>317</th>
+      <td>P_00452</td>
       <td>2.00</td>
       <td>RIGHT</td>
-      <td>MLO</td>
-      <td>3</td>
-      <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>5768</td>
-      <td>4032</td>
-      <td>1.00</td>
-      <td>23256576</td>
-      <td>46514254</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>14,499.00</td>
-      <td>16,846.00</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
-    </tr>
-    <tr>
-      <th>370</th>
-      <td>P_00505</td>
-      <td>1.00</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>calcification</td>
-      <td>LUCENT_CENTERED</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>4440</td>
-      <td>3224</td>
-      <td>1.00</td>
-      <td>14314560</td>
-      <td>28630216</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>11,710.00</td>
-      <td>14,551.00</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
-    </tr>
-    <tr>
-      <th>385</th>
-      <td>P_00510</td>
-      <td>2.00</td>
-      <td>LEFT</td>
-      <td>MLO</td>
-      <td>1</td>
-      <td>calcification</td>
-      <td>ROUND_AND_REGULAR-PUNCTATE</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>5680</td>
-      <td>4168</td>
-      <td>1.00</td>
-      <td>23674240</td>
-      <td>47349578</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>13,636.00</td>
-      <td>15,863.00</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
-    </tr>
-    <tr>
-      <th>386</th>
-      <td>P_00510</td>
-      <td>2.00</td>
-      <td>LEFT</td>
       <td>MLO</td>
       <td>3</td>
       <td>calcification</td>
@@ -1101,68 +1270,20 @@ document.write(`
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5680</td>
-      <td>4168</td>
+      <td>4592</td>
+      <td>3104</td>
       <td>1.00</td>
-      <td>23674240</td>
-      <td>47349578</td>
+      <td>14253568</td>
+      <td>28508238</td>
       <td>0</td>
       <td>65535</td>
-      <td>13,636.00</td>
-      <td>15,863.00</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_005...</td>
+      <td>12,873.00</td>
+      <td>16,989.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_004...</td>
     </tr>
     <tr>
-      <th>1207</th>
-      <td>P_01563</td>
-      <td>3.00</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>1</td>
-      <td>calcification</td>
-      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>4536</td>
-      <td>3016</td>
-      <td>1.00</td>
-      <td>13680576</td>
-      <td>27362248</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>14,817.00</td>
-      <td>18,353.00</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
-    </tr>
-    <tr>
-      <th>1208</th>
-      <td>P_01563</td>
-      <td>3.00</td>
-      <td>LEFT</td>
-      <td>CC</td>
-      <td>2</td>
-      <td>calcification</td>
-      <td>ROUND_AND_REGULAR-LUCENT_CENTERED</td>
-      <td>SEGMENTAL</td>
-      <td>2</td>
-      <td>BENIGN_WITHOUT_CALLBACK</td>
-      <td>...</td>
-      <td>4536</td>
-      <td>3016</td>
-      <td>1.00</td>
-      <td>13680576</td>
-      <td>27362248</td>
-      <td>0</td>
-      <td>65535</td>
-      <td>14,817.00</td>
-      <td>18,353.00</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_015...</td>
-    </tr>
-    <tr>
-      <th>1302</th>
-      <td>P_01700</td>
+      <th>785</th>
+      <td>P_01003</td>
       <td>1.00</td>
       <td>LEFT</td>
       <td>CC</td>
@@ -1173,20 +1294,284 @@ document.write(`
       <td>2</td>
       <td>BENIGN_WITHOUT_CALLBACK</td>
       <td>...</td>
-      <td>5696</td>
-      <td>4008</td>
+      <td>4520</td>
+      <td>3056</td>
       <td>1.00</td>
-      <td>22829568</td>
-      <td>45660232</td>
+      <td>13813120</td>
+      <td>27627336</td>
       <td>0</td>
       <td>65535</td>
-      <td>10,914.00</td>
-      <td>15,386.00</td>
-      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_017...</td>
+      <td>10,926.00</td>
+      <td>15,954.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>859</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PUNCTATE</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>1.00</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.00</td>
+      <td>14,284.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>860</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>PUNCTATE</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>1.00</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.00</td>
+      <td>14,284.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>861</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>PUNCTATE</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>1.00</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.00</td>
+      <td>14,284.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>862</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>4</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>4064</td>
+      <td>1.00</td>
+      <td>23051008</td>
+      <td>46103114</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>11,203.00</td>
+      <td>14,284.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>863</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>1.00</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,096.00</td>
+      <td>13,432.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>864</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>1.00</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,096.00</td>
+      <td>13,432.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>865</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>1.00</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,096.00</td>
+      <td>13,432.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>866</th>
+      <td>P_01099</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>4</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5672</td>
+      <td>3960</td>
+      <td>1.00</td>
+      <td>22461120</td>
+      <td>44923336</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,096.00</td>
+      <td>13,432.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_010...</td>
+    </tr>
+    <tr>
+      <th>1440</th>
+      <td>P_01864</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>LUCENT_CENTERED</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5224</td>
+      <td>3744</td>
+      <td>1.00</td>
+      <td>19558656</td>
+      <td>39118406</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>9,874.00</td>
+      <td>12,318.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_018...</td>
+    </tr>
+    <tr>
+      <th>1441</th>
+      <td>P_01864</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5224</td>
+      <td>3744</td>
+      <td>1.00</td>
+      <td>19558656</td>
+      <td>39118406</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>9,874.00</td>
+      <td>12,318.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_018...</td>
+    </tr>
+    <tr>
+      <th>1442</th>
+      <td>P_01864</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>3</td>
+      <td>calcification</td>
+      <td>VASCULAR</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>...</td>
+      <td>5224</td>
+      <td>3744</td>
+      <td>1.00</td>
+      <td>19558656</td>
+      <td>39118406</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>9,874.00</td>
+      <td>12,318.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_018...</td>
     </tr>
   </tbody>
 </table>
-<p>9 rows × 27 columns</p>
+<p>15 rows × 27 columns</p>
 </div></div></div>
 </div>
 </section>

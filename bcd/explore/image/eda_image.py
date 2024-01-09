@@ -11,12 +11,13 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday December 19th 2023 03:49:16 pm                                              #
-# Modified   : Thursday December 28th 2023 09:14:52 pm                                             #
+# Modified   : Monday January 8th 2024 08:05:41 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
 # ================================================================================================ #
 import logging
+import os
 from typing import Callable, Union
 
 import cv2
@@ -40,10 +41,9 @@ sns.set_style("whitegrid")
 class ImageExplorer:
     """Encapsulates Image Exploratory Data Analysis"""
 
-    __FP = "data/meta/2_clean/dicom.csv"
-
-    def __init__(self, io: ImageIO = ImageIO) -> None:
-        self._meta = pd.read_csv(self.__FP)
+    def __init__(self, filepath: str, io: ImageIO = ImageIO) -> None:
+        self._filepath = os.path.abspath(filepath)
+        self._meta = pd.read_csv(self._filepath)
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
         self._io = io
         self._average_mean_pixel_value = None
@@ -54,7 +54,7 @@ class ImageExplorer:
         # Summarizing number of images by pathology and train vs test set
         features = ["fileset", "cancer"]
         data = (
-            self._meta.groupby(by=features)["uid"]
+            self._meta.groupby(by=features)["mmg_id"]
             .count()
             .sort_index(level=0, ascending=False)
             .reset_index()
@@ -122,19 +122,19 @@ class ImageExplorer:
         return t, pvalue
 
     def analyze_resolution(self) -> Union[plt.Figure, pd.DataFrame]:
-        """Plots height vs width, and aspect ratio"""
+        """Plots rows vs cols, and aspect ratio"""
 
-        features = ["height", "width", "aspect_ratio"]
+        features = ["rows", "cols", "aspect_ratio"]
         stats = self._meta[features].describe().T
 
         fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(12, 4))
 
         # Height Histogram
-        axes[0] = sns.histplot(data=self._meta, x="height", element="poly", ax=axes[0])
+        axes[0] = sns.histplot(data=self._meta, x="rows", element="poly", ax=axes[0])
         axes[0].set_title("Distribution of Image Height")
 
         # Width Histogram
-        axes[1] = sns.histplot(data=self._meta, x="width", element="poly", ax=axes[1])
+        axes[1] = sns.histplot(data=self._meta, x="cols", element="poly", ax=axes[1])
         axes[1].set_title("Distribution of Image Width")
 
         # Width Histogram
@@ -207,8 +207,8 @@ class ImageExplorer:
         self,
         condition: Callable = None,
         n: int = 50,
-        height: int = 9,
-        width: int = 12,
+        rows: int = 9,
+        cols: int = 12,
         cmap: str = "turbo",
         sort_by: Union[str, list] = None,
         histogram: bool = False,
@@ -220,8 +220,8 @@ class ImageExplorer:
         Args:
             condition (Callable): Lambda expression used to select cases.
             n (int): Number of images to plot. Must be a multiple of nrows.
-            height (int): Height of image in inches.
-            width (int): Width of image in inches.
+            rows (int): Height of image in inches.
+            cols (int): Width of image in inches.
             cmap (str): Color map for matplotlib. Default = 'gray'.
             sort_by (str): Value to sort the images by.
             label (str): The label to use for each image.
@@ -250,12 +250,12 @@ class ImageExplorer:
             df = df.sort_values(by=sort_by)
 
         # Create figure and axes objects, then  iteratively plot images.
-        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(width, height))
+        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(cols, rows))
         axes = axes.flatten()
         for ax, (_, row) in zip(axes, df.iterrows()):
             img = self._io.read(row["filepath"])
+            img = grayscale(image=img)
             if histogram:
-                img = grayscale(img=img)
                 hist = cv2.calcHist([img], [0], None, [256], [0, 256])
                 ax.plot(hist)
             else:

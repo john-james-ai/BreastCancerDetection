@@ -507,7 +507,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 39-173 bcd/data_prep/case.py</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 38-172 bcd/data_prep/prep.py</span>
 <span class="k">class</span> <span class="nc">CasePrep</span><span class="p">(</span><span class="n">DataPrep</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs Case metadata preparation.</span>
 
@@ -566,7 +566,7 @@ document.write(`
                 <span class="n">df_cases</span><span class="p">[</span><span class="s2">&quot;pathology&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;MALIGNANT&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span>
             <span class="p">)</span>
 
-            <span class="c1"># Drop the filename columns.</span>
+            <span class="c1"># Drop the incorrect file path columns.</span>
             <span class="n">columns_to_drop</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="s2">&quot;image_file_path&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;cropped_image_file_path&quot;</span><span class="p">,</span>
@@ -831,62 +831,7 @@ memory usage: 421.7+ KB
 <p>Next, we add filepaths to the series metadata.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 31-88 bcd/data_prep/series.py</span>
-<span class="c1"># ------------------------------------------------------------------------------------------------ #</span>
-<span class="k">class</span> <span class="nc">SeriesPrep</span><span class="p">(</span><span class="n">DataPrep</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds filepaths to the Series dataset</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        filepath (str): Path to the DICOM series metadata.</span>
-<span class="sd">        series_filepath (str) Path for the results</span>
-<span class="sd">        force (bool): Whether to force execution if output already exists. Default is False.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">__BASEDIR</span> <span class="o">=</span> <span class="s2">&quot;data/image/0_raw/&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">series_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_series_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">series_filepath</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="o">=</span> <span class="n">force</span>
-
-    <span class="nd">@profiler</span>
-    <span class="k">def</span> <span class="nf">prep</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extracts image metadata from the DICOM image files.&quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_series_filepath</span><span class="p">):</span>
-            <span class="c1"># Reads the series metadata that contains subject, series, and</span>
-            <span class="c1"># file location information</span>
-            <span class="n">studies</span> <span class="o">=</span> <span class="n">IOService</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">)</span>
-
-            <span class="c1"># Add filepaths to the study data first to avoid batch</span>
-            <span class="c1"># operation exceptions with dask.</span>
-            <span class="n">studies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filepaths</span><span class="p">(</span><span class="n">studies</span><span class="o">=</span><span class="n">studies</span><span class="p">)</span>
-
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">studies</span><span class="p">)</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_series_filepath</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="n">df</span>
-
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_series_filepath</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_get_filepaths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">studies</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds filepaths to the studies dataframe&quot;&quot;&quot;</span>
-        <span class="n">studies_filepaths</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">studies</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-            <span class="n">location</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;file_location&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;./&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__BASEDIR</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
-            <span class="n">filepaths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">filepath</span> <span class="o">+</span> <span class="s2">&quot;/*.dcm&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">filepaths</span><span class="p">:</span>
-                <span class="n">row</span><span class="p">[</span><span class="s2">&quot;filepath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span>
-                <span class="n">studies_filepaths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">studies_filepaths</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load</span> -r 176-230 bcd/data_prep/prep.py
 </pre></div>
 </div>
 </div>
@@ -1116,9 +1061,9 @@ memory usage: 1.2+ MB
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 35-143 bcd/data_prep/cbis.py</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 235-314 bcd/data_prep/prep.py</span>
 <span class="k">class</span> <span class="nc">CBISPrep</span><span class="p">(</span><span class="n">DataPrep</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extracts DICOM data and integrates it with a single Case dataset staged for quality assessment.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extracts DICOM data and integrates it with a single CBIS dataset.</span>
 
 <span class="sd">    Iterates through the full mammography DICOM metadata in parallel, extracting image and pixel</span>
 <span class="sd">    data and statistics, then combines the data with the case dataset.</span>

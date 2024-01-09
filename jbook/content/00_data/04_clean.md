@@ -12,11 +12,11 @@ kernelspec:
 ---
 
 # Data Cleaning
-The prior data quality analysis revealed several data anomalies requiring attention.
+The prior data quality analysis revealed several data anomalies requiring attention. 
 
 1. Cases with invalid values for subtlety and breast density.
-2. Missing calcification type, calcification distribution, mass shape, and mass margins data.
-3. Categories that have different spelling, but the same meaning.
+2. Missing calcification type, calcification distribution, mass shape, and mass margins data. 
+3. Categories that have different spelling, but the same meaning. 
 
 As such, the data cleaning tasks are detailed in {numref}`data_cleaning_tasks`:
 
@@ -25,27 +25,36 @@ As such, the data cleaning tasks are detailed in {numref}`data_cleaning_tasks`:
 | # | Task                                                                             |
 |---|----------------------------------------------------------------------------------|
 | 1 | Replace invalid values for breast density with NA for imputation.                |
-| 2 | Replace cases with invalid values for subtlety with NA for imputation            |
+| 2 | Replace invalid values for subtlety with NA for imputation            |
 | 3 | Replace calcification types 'LUCENT_CENTER' with 'LUCENT_CENTERED', and 'PLEOMORPHIC-PLEOMORPHIC', with 'PLEOMORPHIC' |
 | 4 | Impute missing values using Multiple Imputation by Chained Equations   (MICE)    |
 | 5 | Conduct random inspection of imputations.                                        |
 | 6 | Conduct final data quality analysis.                                        |
 ```
 
-Once the case dataset has been cleaned, the case data will be merged into the DICOM dataset.
-
 ```{code-cell} ipython3
+:tags: [remove-cell]
+
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
+```
+
+```{code-cell} ipython3
+:tags: [hide-cell]
+
 
 import pandas as pd
 import numpy as np
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+from studioai.preprocessing.encode import RankFrequencyEncoder
 
 from bcd.data_prep.clean import CBISImputer
 from bcd.data.dataset import CBISDataset
 
 pd.options.display.max_rows = 999
+pd.options.display.max_columns = 50
 ```
 
 ```{code-cell} ipython3
@@ -93,22 +102,23 @@ df.loc[df['calc_type'] == 'PLEOMORPHIC-PLEOMORPHIC', 'calc_type'] = 'PLEOMORPHIC
 ```
 
 ## Impute Missing Values
-Multiple Imputation by Chained Equations (MICE) is a robust, informative method of estimating missing values in datasets. The procedure imputes missing data through an iterative series of predictive models which estimate the value of missing data using the other variables in the dataset. For this, we'll use our CaseImputer which wraps scikit-learn's IterativeImputer implementation of MICE.
+Multiple Imputation by Chained Equations (MICE) is a robust, informative method of estimating missing values in datasets. The procedure imputes missing data through an iterative series of predictive models which estimate the value of missing data using the other variables in the dataset. For this, we'll use our CBISImputer which wraps scikit-learn's IterativeImputer implementation of MICE.
 
-First, let's capture the missing values as we will inspect them after imputation.
 
 ```{code-cell} ipython3
-# Grab rows with missing data
+
 null_mask = df.isnull().any(axis=1)
 df_missing = df[null_mask]
-msg = f"There are {df_missing.shape[0]} rows (approximately {round(df_missing.shape[0] / df_orig.shape[0] * 100,1)}% of the dataset) with missing data in the dataset."
+msg = f"There are {df_missing.shape[0]} rows (approximately {round(df_missing.shape[0] / df_orig.shape[0] * 100,1)}% of the rows) with missing data in the total dataset."
 print(msg)
 ```
 
 ```{code-cell} ipython3
 imp = CBISImputer(random_state=5)
-imp.fit(df=df)
+_ = imp.fit(df=df)
 df_clean = imp.transform(df=df)
+# Somehow aspect ratio gets corrupted during iterative imputation. IterativeImputer is experimental and the issue of modifying or imputing non-NA values has been raised. Until the issue is isolated and resolved...
+df_clean["aspect_ratio"] = df_clean["cols"] / df_clean["rows"]
 ```
 
 With that, let's save the data.
@@ -125,7 +135,7 @@ df_clean.to_csv(FP_CLEAN, index=False)
 Let's take a look at a random sampling of the missing data and compare.
 
 ```{code-cell} ipython3
-sample_cases = df_missing['mmg_id'].sample(5)
+sample_cases = df_missing['mmg_id'].sample(5, random_state=72)
 df_missing.loc[df_missing['mmg_id'].isin(sample_cases)]
 df_clean.loc[df_clean['mmg_id'].isin(sample_cases)]
 ```

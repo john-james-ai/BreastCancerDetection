@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:24:00 am                                              #
-# Modified   : Tuesday January 2nd 2024 04:19:19 pm                                                #
+# Modified   : Monday January 8th 2024 07:30:12 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -105,6 +105,7 @@ MODEL_FEATURES = [
     "AT_calcification",
     "AT_mass",
     "breast_density",
+    "assessment",
     "CD_CLUSTERED",
     "CD_DIFFUSELY_SCATTERED",
     "CD_LINEAR",
@@ -191,20 +192,20 @@ MASS_MODEL_FEATURES = [
 ]
 CALC_FEATURES = {
     "breast_density": "ordinal",
+    "assessment": "ordinal",
     "laterality": "nominal",
     "image_view": "nominal",
     "calc_type": "nominal",
     "calc_distribution": "nominal",
-    "assessment": "ordinal",
     "subtlety": "ordinal",
 }
 MASS_FEATURES = {
     "breast_density": "ordinal",
+    "assessment": "ordinal",
     "laterality": "nominal",
     "image_view": "nominal",
     "mass_shape": "nominal",
     "mass_margins": "nominal",
-    "assessment": "ordinal",
     "subtlety": "ordinal",
 }
 
@@ -218,71 +219,72 @@ MORPHOLOGY_PREFIX = {
 
 # ------------------------------------------------------------------------------------------------ #
 class CaseExplorer(Explorer):
-    """Encapsulates Case Data
-
-    Can be instantiated from a DataFrame or a file path to the data. If both are provided,
-    the DataFrame will be used as the data and the file path will be considered
-    the persistence location.
+    """Encapsulates Case Data Exploration
 
     Args:
-        df (pd.DataFrame): DataFrame containing cases. Optional. If not provided,
-            the filepath  will be used to obtain the data.
-        filepath (str): File path to the dataset. Optional. If not provided,
-            the df parameter must not be None.
+        cbis (pd.DataFrame): DataFrame containing cbis data. Either cbis or
+            cbis_filepath must be provided.
+        cbis_filepath (str): Path to the CBIS Data. Ignored if cbis is provided.
     """
 
     def __init__(
         self,
-        df: pd.DataFrame = None,
-        filepath: str = None,
+        cbis: pd.DataFrame = None,
+        cbis_filepath: str = None,
         canvas: SeabornCanvas = SeabornCanvas(),
     ) -> None:
-        if df is None and filepath is None:
-            msg = "Must provide 'df' and/or 'filepath' parameters."
+        if cbis is None and cbis_filepath is None:
+            msg = "Either cbis or cbis_filepath must be non None"
+            logging.exception(msg)
             raise ValueError(msg)
-        if df is None:
-            self._filepath = os.path.abspath(filepath)
-            df = pd.read_csv(self._filepath, dtype=CASE_DTYPES)
-        super().__init__(df=df)
+        if cbis is not None:
+            self._cbis = cbis
+        else:
+            self._cbis_filepath = os.path.abspath(cbis_filepath)
+            self._cbis = pd.read_csv(self._cbis_filepath)
+
+        super().__init__(df=self._cbis)
         self._canvas = canvas
 
     @property
     def summary(self) -> pd.DataFrame:  # noqa
         """Summarizes the case dataset"""
         d = {}
-        d["Patients"] = self._df["patient_id"].nunique()
-        d["Cases"] = self._df["mmg_id"].nunique()
-        d["Calcification Cases"] = self._df.loc[
-            self._df["abnormality_type"] == "calcification"
+        d["Patients"] = self._cbis["patient_id"].nunique()
+        d["Cases"] = self._cbis["mmg_id"].nunique()
+        d["Calcification Cases"] = self._cbis.loc[
+            self._cbis["abnormality_type"] == "calcification"
         ].shape[0]
-        d["Calcification Cases - Benign"] = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["cancer"] == False)  # noqa
+        d["Calcification Cases - Benign"] = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "calcification")
+            & (self._cbis["cancer"] == False)  # noqa
         ].shape[0]
-        d["Calcification Cases - Malignant"] = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["cancer"] == True)  # noqa
+        d["Calcification Cases - Malignant"] = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "calcification")
+            & (self._cbis["cancer"] == True)  # noqa
         ].shape[0]
 
-        d["Mass Cases"] = self._df.loc[self._df["abnormality_type"] == "mass"].shape[0]
-        d["Mass Cases - Benign"] = self._df.loc[
-            (self._df["abnormality_type"] == "mass")
-            & (self._df["cancer"] == False)  # noqa
+        d["Mass Cases"] = self._cbis.loc[
+            self._cbis["abnormality_type"] == "mass"
         ].shape[0]
-        d["Mass Cases - Malignant"] = self._df.loc[
-            (self._df["abnormality_type"] == "mass")
-            & (self._df["cancer"] == True)  # noqa
+        d["Mass Cases - Benign"] = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "mass")
+            & (self._cbis["cancer"] == False)  # noqa
+        ].shape[0]
+        d["Mass Cases - Malignant"] = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "mass")
+            & (self._cbis["cancer"] == True)  # noqa
         ].shape[0]
         df = pd.DataFrame(data=d, index=[0]).T
         df.columns = ["Summary"]
         return df
 
     def get_calc_data(self) -> pd.DataFrame:
-        df = self._df.loc[self._df["abnormality_type"] == "calcification"]
+        df = self._cbis.loc[self._cbis["abnormality_type"] == "calcification"]
         return df[CALCIFICATION_DATA]
 
     def get_mass_data(self) -> pd.DataFrame:
-        df = self._df.loc[self._df["abnormality_type"] == "mass"]
+        df = self._cbis.loc[self._cbis["abnormality_type"] == "mass"]
         return df[MASS_DATA]
 
     def get_model_data(self) -> tuple:
@@ -291,10 +293,10 @@ class CaseExplorer(Explorer):
         Returns:
             Tuple containing train test splits.
         """
-        X_train = self._df.loc[self._df["fileset"] == "train"][MODEL_FEATURES]
-        y_train = self._df.loc[self._df["fileset"] == "train"]["cancer"]
-        X_test = self._df.loc[self._df["fileset"] == "test"][MODEL_FEATURES]
-        y_test = self._df.loc[self._df["fileset"] == "test"]["cancer"]
+        X_train = self._cbis.loc[self._cbis["fileset"] == "train"][MODEL_FEATURES]
+        y_train = self._cbis.loc[self._cbis["fileset"] == "train"]["cancer"]
+        X_test = self._cbis.loc[self._cbis["fileset"] == "test"][MODEL_FEATURES]
+        y_test = self._cbis.loc[self._cbis["fileset"] == "test"]["cancer"]
         return (X_train, y_train, X_test, y_test)
 
     def get_calc_model_data(self) -> tuple:
@@ -303,21 +305,21 @@ class CaseExplorer(Explorer):
         Returns:
             Tuple containing train test splits.
         """
-        X_train = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["fileset"] == "train")
+        X_train = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "calcification")
+            & (self._cbis["fileset"] == "training")
         ][CALC_MODEL_FEATURES]
-        y_train = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["fileset"] == "train")
+        y_train = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "calcification")
+            & (self._cbis["fileset"] == "training")
         ]["cancer"]
-        X_test = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["fileset"] == "test")
+        X_test = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "calcification")
+            & (self._cbis["fileset"] == "test")
         ][CALC_MODEL_FEATURES]
-        y_test = self._df.loc[
-            (self._df["abnormality_type"] == "calcification")
-            & (self._df["fileset"] == "test")
+        y_test = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "calcification")
+            & (self._cbis["fileset"] == "test")
         ]["cancer"]
         return (X_train, y_train, X_test, y_test)
 
@@ -327,17 +329,21 @@ class CaseExplorer(Explorer):
         Returns:
             Tuple containing train test splits.
         """
-        X_train = self._df.loc[
-            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "train")
+        X_train = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "mass")
+            & (self._cbis["fileset"] == "training")
         ][MASS_MODEL_FEATURES]
-        y_train = self._df.loc[
-            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "train")
+        y_train = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "mass")
+            & (self._cbis["fileset"] == "training")
         ]["cancer"]
-        X_test = self._df.loc[
-            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "test")
+        X_test = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "mass")
+            & (self._cbis["fileset"] == "test")
         ][MASS_MODEL_FEATURES]
-        y_test = self._df.loc[
-            (self._df["abnormality_type"] == "mass") & (self._df["fileset"] == "test")
+        y_test = self._cbis.loc[
+            (self._cbis["abnormality_type"] == "mass")
+            & (self._cbis["fileset"] == "test")
         ]["cancer"]
         return (X_train, y_train, X_test, y_test)
 
@@ -376,7 +382,7 @@ class CaseExplorer(Explorer):
             n (int): The number of observations to return.
 
         """
-        calc = self._df.loc[self._df["abnormality_type"] == "calcification"]
+        calc = self._cbis.loc[self._cbis["abnormality_type"] == "calcification"]
         return self._get_most_malignant(data=calc, x=x, n=n)
 
     def get_most_malignant_mass(self, x: str, n: int = 10) -> pd.DataFrame:
@@ -387,7 +393,7 @@ class CaseExplorer(Explorer):
             n (int): The number of observations to return.
 
         """
-        mass = self._df.loc[self._df["abnormality_type"] == "mass"]
+        mass = self._cbis.loc[self._cbis["abnormality_type"] == "mass"]
         return self._get_most_malignant(data=mass, x=x, n=n)
 
     def summarize_morphology_by_feature(
@@ -405,7 +411,7 @@ class CaseExplorer(Explorer):
         """
         summary = pd.DataFrame()
         prefix = MORPHOLOGY_PREFIX[morphology]
-        df = self._df
+        df = self._cbis
         df[by] = df[by].astype("category")
         morph_columns = df.columns[df.columns.str.contains(prefix)].values
         for col in morph_columns:
@@ -435,7 +441,7 @@ class CaseExplorer(Explorer):
             m1,m2 (str): Complementary morphologies, e.g., mass_shape and mass_margins
             figsize (tuple): Tuple containing (max width, row_height)
         """
-        df = self._df
+        df = self._cbis
         proportions = []
         m1_cols = [col for col in df.columns if col.__contains__(MORPHOLOGY_PREFIX[m1])]
         m2_cols = [col for col in df.columns if col.__contains__(MORPHOLOGY_PREFIX[m2])]
@@ -449,6 +455,7 @@ class CaseExplorer(Explorer):
                     "proportion": abrows / arows,
                 }
                 proportions.append(d)
+
         comparison = pd.DataFrame(data=proportions).groupby(by=[m1, m2]).sum()
 
         # Drop rows with proportion = 0
@@ -503,9 +510,9 @@ class CaseExplorer(Explorer):
                 variable and not numeric.
         """
         if categorize_ordinals:
-            return self._df.astype(ORDINAL_DTYPES)
+            return self._cbis.astype(ORDINAL_DTYPES)
         else:
-            return self._df
+            return self._cbis
 
     def _get_feature_association_matrix(self, features: dict) -> pd.DataFrame:
         """Creates an association matrix using Cramer's V"""
@@ -595,7 +602,7 @@ class CaseExplorer(Explorer):
             "OBSCURED",
             "MICROLOBULATED",
         ]
-        df = self._df.loc[self._df["mass_shape"].isin(mass_shapes)]
+        df = self._cbis.loc[self._cbis["mass_shape"].isin(mass_shapes)]
         df = df.loc[df["mass_margins"].isin(mass_margins)]
         df["mass_shape"] = df["mass_shape"].astype(str)
         df["mass_margins"] = df["mass_margins"].astype(str)
@@ -618,7 +625,7 @@ class CaseExplorer(Explorer):
             "REGIONAL",
             "DIFFUSELY_SCATTERED",
         ]
-        df = self._df.loc[self._df["calc_type"].isin(calc_types)]
+        df = self._cbis.loc[self._cbis["calc_type"].isin(calc_types)]
         df = df.loc[df["calc_distribution"].isin(calc_distributions)]
         df["calc_type"] = df["calc_type"].astype(str)
         df["calc_distribution"] = df["calc_distribution"].astype(str)

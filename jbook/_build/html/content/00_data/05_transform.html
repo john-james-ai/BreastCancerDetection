@@ -474,19 +474,26 @@ document.write(`
 <h1><span class="section-number">6. </span>Data Transformation<a class="headerlink" href="#data-transformation" title="Permalink to this heading">#</a></h1>
 <p>Our final data preparation task before exploratory data analysis is to prepare a dataset for multivariate analysis.   For multivariate modeling, we will be one-hot encoding the morphological features and normalizing numeric data to values in [0,1].</p>
 <p>The multivariate analysis will include 12 independent variables: breast_density, laterality, image_view, abnormality_id, abnormality_type,  calc_type, calc_distribution, subtlety, mass_shape, mass_margins, mean_pixel_value, and std_pixel_value. The binary dependent target variable will be cancer. Variables not included in the analysis are pathology and assessment, since both of these variables are essentially proxies for the target.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../..&quot;</span><span class="p">)))</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">bcd.data_prep.transform</span> <span class="kn">import</span> <span class="n">CBISTransformer</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_columns</span> <span class="o">=</span> <span class="mi">99</span>
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -495,6 +502,19 @@ document.write(`
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load</span> -r 34-178 bcd/data_prep/transform.py
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

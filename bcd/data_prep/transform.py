@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:25:33 am                                              #
-# Modified   : Wednesday January 3rd 2024 03:31:11 am                                              #
+# Modified   : Monday January 8th 2024 06:07:02 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,10 +21,8 @@
 """Data Transform Module"""
 from __future__ import annotations
 
-import logging
 import os
 
-import dask
 import numpy as np
 import pandas as pd
 
@@ -35,21 +33,6 @@ import pandas as pd
 # ------------------------------------------------------------------------------------------------ #
 #                                   CBIS TRANSFORMER                                               #
 # ------------------------------------------------------------------------------------------------ #
-MODEL_VARS = [
-    "breast_density",
-    "laterality",
-    "image_view",
-    "abnormality_id",
-    "abnormality_type",
-    "calc_type",
-    "calc_distribution",
-    "subtlety",
-    "mass_shape",
-    "mass_margins",
-    "cancer",
-    "mean_pixel_value",
-    "std_pixel_value",
-]
 CALC_TYPES = [
     "AMORPHOUS",
     "COARSE",
@@ -103,7 +86,7 @@ ENC_VARS = {
 
 # ------------------------------------------------------------------------------------------------ #
 class CBISTransformer:
-    """Collapses morphological categories and dummy encodes nominal variables.
+    """One-hot encodes categorical variables.
 
     The CBIS-DDSM has 45 calcification types, 9 calcification distributions, 20 mass shapes, and
     19 mass margins, many of which are compound categories, in that two or more categories are
@@ -115,8 +98,8 @@ class CBISTransformer:
     compound classifications.
 
     Args:
-        source_fp (str): Path to source file
-        destination_fp (str): Path to destination file
+        source_fp (str): Filepath for input dataset
+        destination_fp (str): Filepath to output dataset
         force (bool): Whether to force execution if the destination file already exists.
             Default = False.
     """
@@ -127,27 +110,17 @@ class CBISTransformer:
         self._source_fp = os.path.abspath(source_fp)
         self._destination_fp = os.path.abspath(destination_fp)
         self._force = force
-        self._logger = logging.getLogger(f"{self.__class__.__name__}")
-        self._logger.setLevel(logging.DEBUG)
 
     def transform(self) -> pd.DataFrame:
         """Performs the transformation of the data."""
         if not os.path.exists(self._destination_fp) or self._force:
             df = pd.read_csv(self._source_fp)
-            # Excluding identify variables
-            df_model_vars = df[MODEL_VARS].copy()
-            df_model_vars["cancer"] = np.where(
-                df_model_vars["cancer"] == True, 1, 0
-            )  # noqa
+            df["cancer"] = np.where(df["cancer"] == True, 1, 0)  # noqa
 
             # One-hot encode variables
-            df_enc = self._encode_dataset(df=df_model_vars)
-            # Dropping original string variables.
-            df_numeric = df_enc.select_dtypes(exclude=["object"])
-            # Normalize all values to [0,1]
-            df_norm = self._normalize(df=df_numeric)
-            self._save(df=df_norm)
-            return df_norm
+            df_enc = self._encode_dataset(df=df)
+            self._save(df=df_enc)
+            return df_enc
         else:
             return pd.read_csv(self._destination_fp)
 
@@ -164,12 +137,6 @@ class CBISTransformer:
         "One-hot encodes column"
         newcol = prefix + "_" + value
         df[newcol] = np.where(df[col].str.contains(value), 1, 0)
-        return df
-
-    def _normalize(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Normalizes all values to [0,1]"""
-        for col in df.columns:
-            df[col] = df[col] / (df[col].abs().max() - df[col].abs().min())
         return df
 
     def _save(self, df: pd.DataFrame) -> None:
