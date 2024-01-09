@@ -17,22 +17,18 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-x4mr = CBISTransformer(source_fp=FP_CBIS, destination_fp=FP_CBIS_MODELING_DATA, force=False)
-df = x4mr.transform()
+filepath = "data/meta/2_staged/cbis.csv"
+cbis = CBISDataset(filepath=filepath)
+cbis.dqa = CBISDQA
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[4], line 1[0m
-[0;32m----> 1[0m x4mr [38;5;241m=[39m [43mCBISTransformer[49m[43m([49m[43msource_fp[49m[38;5;241;43m=[39;49m[43mFP_CBIS[49m[43m,[49m[43m [49m[43mdestination_fp[49m[38;5;241;43m=[39;49m[43mFP_CBIS_MODELING_DATA[49m[43m,[49m[43m [49m[43mforce[49m[38;5;241;43m=[39;49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m
-[1;32m      2[0m df [38;5;241m=[39m x4mr[38;5;241m.[39mtransform()
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[2], line 3[0m
+[1;32m      1[0m filepath [38;5;241m=[39m [38;5;124m"[39m[38;5;124mdata/meta/2_staged/cbis.csv[39m[38;5;124m"[39m
+[1;32m      2[0m cbis [38;5;241m=[39m CBISDataset(filepath[38;5;241m=[39mfilepath)
+[0;32m----> 3[0m [43mcbis[49m[38;5;241;43m.[39;49m[43mdqa[49m [38;5;241m=[39m CBISDQA
 
-Cell [0;32mIn[3], line 97[0m, in [0;36mCBISTransformer.__init__[0;34m(self, source_fp, destination_fp, force)[0m
-[1;32m     95[0m [38;5;28mself[39m[38;5;241m.[39m_destination_fp [38;5;241m=[39m os[38;5;241m.[39mpath[38;5;241m.[39mabspath(destination_fp)
-[1;32m     96[0m [38;5;28mself[39m[38;5;241m.[39m_force [38;5;241m=[39m force
-[0;32m---> 97[0m [38;5;28mself[39m[38;5;241m.[39m_logger [38;5;241m=[39m [43mlogging[49m[38;5;241m.[39mgetLogger([38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00m[38;5;28mself[39m[38;5;241m.[39m[38;5;18m__class__[39m[38;5;241m.[39m[38;5;18m__name__[39m[38;5;132;01m}[39;00m[38;5;124m"[39m)
-[1;32m     98[0m [38;5;28mself[39m[38;5;241m.[39m_logger[38;5;241m.[39msetLevel(logging[38;5;241m.[39mDEBUG)
-
-[0;31mNameError[0m: name 'logging' is not defined
-NameError: name 'logging' is not defined
+[0;31mAttributeError[0m: can't set attribute 'dqa'
+AttributeError: can't set attribute 'dqa'
 
