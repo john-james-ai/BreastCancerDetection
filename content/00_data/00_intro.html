@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/bcdfavicon-32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2. Unboxing CBIS-DDSM - A Structural Analysis" href="01_unbox.html" />
+    <link rel="next" title="2. Unboxing CBIS-DDSM" href="01_unbox.html" />
     <link rel="prev" title="1. Introduction" href="../00_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -165,8 +165,11 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM - A Structural Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_prep.html">3. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_dqa.html">4. Data Quality Analysis (DQA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_clean.html">5. Data Cleaning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_transform.html">6. Data Transformation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -392,6 +395,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">1.2.3. DICOM Image Data</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-unboxing">1.3. Dataset Unboxing</a></li>
 </ul>
             </nav>
         </div>
@@ -410,8 +414,8 @@ document.write(`
 <p>This Curated Breast Imaging Subset of DDSM (CBIS-DDSM) <span id="id2">[<a class="reference internal" href="../80_references.html#id136" title="Rebecca Sawyer Lee, Francisco Gimenez, Assaf Hoogi, Kanae Kawai Miyake, Mia Gorovoy, and Daniel L. Rubin. A curated mammography data set for use in computer-aided detection and diagnosis research. Scientific Data, 4(1):170177, December 2017. URL: https://www.nature.com/articles/sdata2017177 (visited on 2023-05-24), doi:10.1038/sdata.2017.177.">2</a>]</span> is an updated and standardized version of the original DDSM, developed to address some of the challenges. In particular, the questionable annotations were reimage_viewed by a trained mammographer, and 254 images were removed from the dataset. The images were converted from PVRG-JPEG to 8-bit raw binary bitmaps. Python tools were developed to convert the 8-bit images to 16-bit grayscale TIFF files, which were later converted to the Digital Imaging and Communications in Medicine (DICOM) format. The bash and C preprocessing tools were re-implemented in Python to be cross-platform. Convenience images were cropped around the region of interest for researchers analyzing only the abnormalities. Precise segmentation was applied to the calcification images providing much more accurate regions of interest, and the data were split into training and test sets, based on the BI-RADS category to support method evaluation and reproducibility.</p>
 <p>The CBIS-DDSM is comprised of:</p>
 <ul class="simple">
-<li><p><strong>Mammographic Images</strong>: Full mammography, mammogram and cropped images <a class="reference internal" href="#cbis-ddsm-images"><span class="std std-numref">Table 1.1</span></a> ,</p></li>
-<li><p><strong>Case Data</strong>: Calcification and mass case data <a class="reference internal" href="#cbis-ddsm-cases"><span class="std std-numref">Table 1.2</span></a></p></li>
+<li><p><strong>Mammographic Images</strong>: Full mammography, mammogram and cropped images <code class="xref std std-numref docutils literal notranslate"><span class="pre">cbis_ddsm_images</span></code> ,</p></li>
+<li><p><strong>Case Data</strong>: Calcification and mass case data <code class="xref std std-numref docutils literal notranslate"><span class="pre">cbis_ddsm_cases</span></code></p></li>
 <li><p><strong>Series Data</strong>: Series, study and subject identifiers and image file locations.</p></li>
 <li><p><strong>DICOM Metadata</strong>: Image and modality information in DICOM imaging format.</p></li>
 </ul>
@@ -422,7 +426,6 @@ document.write(`
 <section id="imaging-dataset-statistics">
 <h3><span class="section-number">1.1.1. </span>Imaging Dataset Statistics<a class="headerlink" href="#imaging-dataset-statistics" title="Permalink to this heading">#</a></h3>
 <table class="table" id="cbis-ddsm-images">
-<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">CBIS DDSM Statistics</span><a class="headerlink" href="#cbis-ddsm-images" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Collection Statistics</p></th>
 <th class="head"><p></p></th>
@@ -453,7 +456,6 @@ document.write(`
 <section id="case-dataset-statistics">
 <h3><span class="section-number">1.1.2. </span>Case Dataset Statistics<a class="headerlink" href="#case-dataset-statistics" title="Permalink to this heading">#</a></h3>
 <table class="table" id="cbis-ddsm-cases">
-<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">CBIS DDSM Case Statistics</span><a class="headerlink" href="#cbis-ddsm-cases" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>#</p></th>
 <th class="head"><p>Dataset</p></th>
@@ -469,17 +471,6 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1</p></td>
-<td><p>Mass Training Description</p></td>
-<td><p>mass_case_description_train_set.csv</p></td>
-<td><p>CSV</p></td>
-<td><p>755 Kb</p></td>
-<td><p>691</p></td>
-<td><p>355</p></td>
-<td><p>387</p></td>
-<td><p>336</p></td>
-<td><p>361</p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
 <td><p>Calc Training Description</p></td>
 <td><p>calc_case_description_train_set.csv</p></td>
 <td><p>CSV</p></td>
@@ -490,18 +481,7 @@ document.write(`
 <td><p>273</p></td>
 <td><p>304</p></td>
 </tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Mass Test Description</p></td>
-<td><p>mass_case_description_test_set.csv</p></td>
-<td><p>CSV</p></td>
-<td><p>212 Kb</p></td>
-<td><p>200</p></td>
-<td><p>117</p></td>
-<td><p>135</p></td>
-<td><p>83</p></td>
-<td><p>87</p></td>
-</tr>
-<tr class="row-odd"><td><p>4</p></td>
+<tr class="row-odd"><td><p>2</p></td>
 <td><p>Calc Test Description</p></td>
 <td><p>calc_case_description_test_set.csv</p></td>
 <td><p>CSV</p></td>
@@ -511,6 +491,28 @@ document.write(`
 <td><p>112</p></td>
 <td><p>66</p></td>
 <td><p>77</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Mass Training Description</p></td>
+<td><p>mass_case_description_train_set.csv</p></td>
+<td><p>CSV</p></td>
+<td><p>755 Kb</p></td>
+<td><p>691</p></td>
+<td><p>355</p></td>
+<td><p>387</p></td>
+<td><p>336</p></td>
+<td><p>361</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Mass Test Description</p></td>
+<td><p>mass_case_description_test_set.csv</p></td>
+<td><p>CSV</p></td>
+<td><p>212 Kb</p></td>
+<td><p>200</p></td>
+<td><p>117</p></td>
+<td><p>135</p></td>
+<td><p>83</p></td>
+<td><p>87</p></td>
 </tr>
 <tr class="row-even"><td><p></p></td>
 <td><p>Total</p></td>
@@ -525,7 +527,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>Of the 1,644 cases, 54% were benign, and 46% were malignant.</p>
+<p>Of the 1,644 cases, 54% are benign, and 46% are malignant.</p>
 </section>
 </section>
 <section id="dataset-dictionary">
@@ -585,8 +587,11 @@ document.write(`
 <li><p>Smallest Image Pixel Value</p></li>
 <li><p>Largest Image Pixel Value</p></li>
 </ul>
-<p>In the next section, we ‘unbox’ the data and prepare it for data quality analysis.</p>
 </section>
+</section>
+<section id="dataset-unboxing">
+<h2><span class="section-number">1.3. </span>Dataset Unboxing<a class="headerlink" href="#dataset-unboxing" title="Permalink to this heading">#</a></h2>
+<p>Before we launch into a data quality analysis (DQA), let’s ‘unbox’ the case and series datasets, just in case there are aspects to address before DQA.</p>
 </section>
 </section>
 
@@ -635,7 +640,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>Unboxing CBIS-DDSM - A Structural Analysis</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Unboxing CBIS-DDSM</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -668,6 +673,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">1.2.3. DICOM Image Data</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-unboxing">1.3. Dataset Unboxing</a></li>
 </ul>
   </nav></div>
 

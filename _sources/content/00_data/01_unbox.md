@@ -18,11 +18,16 @@ Before conducting the exploratory analyses, we'll unbox the data to ensure that 
 Our aim here is to get a general sense of the data *structure* and to make any structural changes necessary to facilitate the next stages of the analysis. First, we'll examine the case training sets, then the series metadata, and finally, we'll discover the structure of the DICOM metadata.
 
 ```{code-cell} ipython3
-:tags: [hide-input]
+:tags: [remove-cell]
 
 import os
 if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
+```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
 from myst_nb import glue
 import pandas as pd
 import pydicom

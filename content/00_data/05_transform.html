@@ -472,8 +472,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="data-transformation">
 <h1><span class="section-number">6. </span>Data Transformation<a class="headerlink" href="#data-transformation" title="Permalink to this heading">#</a></h1>
-<p>Our final data preparation task before exploratory data analysis is to prepare a dataset for multivariate analysis.   For multivariate modeling, we will be one-hot encoding the morphological features and normalizing numeric data to values in [0,1].</p>
-<p>The multivariate analysis will include 12 independent variables: breast_density, laterality, image_view, abnormality_id, abnormality_type,  calc_type, calc_distribution, subtlety, mass_shape, mass_margins, mean_pixel_value, and std_pixel_value. The binary dependent target variable will be cancer. Variables not included in the analysis are pathology and assessment, since both of these variables are essentially proxies for the target.</p>
+<p>Our final data preparation task before exploratory data analysis is to prepare a dataset for multivariate analysis.   For multivariate modeling, we will be one-hot encoding the morphological features and normalizing numeric data to range [0,1].</p>
+<p>The multivariate analysis will include 12 independent variables: breast_density, laterality, image_view, abnormality_id, abnormality_type, assessment,  calc_type, calc_distribution, subtlety, mass_shape, mass_margins, mean_pixel_value, and std_pixel_value. The binary dependent target variable will be cancer. Pathology will not be included in the multivariate analysis; however, BI-RADS assessment is expected to be a major influence on the target. It would be notable to the degree it is not.</p>
 <div class="cell tag_hide-cell docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -481,11 +481,7 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="k">if</span> <span class="s1">&#39;jbook&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">():</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;../../..&quot;</span><span class="p">)))</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">bcd.data_prep.transform</span> <span class="kn">import</span> <span class="n">CBISTransformer</span>
@@ -497,28 +493,15 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FP_CBIS</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_clean/cbis.csv&quot;</span>
-<span class="n">FP_CBIS_MODELING_DATA</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_clean/cbis_model_data.csv&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FP_CLEAN</span> <span class="o">=</span> <span class="s2">&quot;data/meta/3_clean/cbis.csv&quot;</span>
+<span class="n">FP_COOKED</span> <span class="o">=</span> <span class="s2">&quot;data/meta/4_cooked/cbis.csv&quot;</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load</span> -r 34-178 bcd/data_prep/transform.py
-</pre></div>
-</div>
-</div>
-</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x4mr</span> <span class="o">=</span> <span class="n">CBISTransformer</span><span class="p">(</span><span class="n">source_fp</span><span class="o">=</span><span class="n">FP_CBIS</span><span class="p">,</span> <span class="n">destination_fp</span><span class="o">=</span><span class="n">FP_CBIS_MODELING_DATA</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x4mr</span> <span class="o">=</span> <span class="n">CBISTransformer</span><span class="p">(</span><span class="n">source_fp</span><span class="o">=</span><span class="n">FP_CLEAN</span><span class="p">,</span> <span class="n">destination_fp</span><span class="o">=</span><span class="n">FP_COOKED</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">x4mr</span><span class="o">.</span><span class="n">transform</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -534,59 +517,80 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 3568 entries, 0 to 3567
-Data columns (total 43 columns):
+Data columns (total 64 columns):
  #   Column                       Non-Null Count  Dtype  
 ---  ------                       --------------  -----  
- 0   breast_density               3568 non-null   float64
- 1   abnormality_id               3568 non-null   float64
- 2   subtlety                     3568 non-null   float64
- 3   cancer                       3568 non-null   float64
- 4   mean_pixel_value             3568 non-null   float64
- 5   std_pixel_value              3568 non-null   float64
- 6   AT_calcification             3568 non-null   float64
- 7   AT_mass                      3568 non-null   float64
- 8   LR_LEFT                      3568 non-null   float64
- 9   LR_RIGHT                     3568 non-null   float64
- 10  IV_CC                        3568 non-null   float64
- 11  IV_MLO                       3568 non-null   float64
- 12  CT_AMORPHOUS                 3568 non-null   float64
- 13  CT_COARSE                    3568 non-null   float64
- 14  CT_DYSTROPHIC                3568 non-null   float64
- 15  CT_EGGSHELL                  3568 non-null   float64
- 16  CT_FINE_LINEAR_BRANCHING     3568 non-null   float64
- 17  CT_LARGE_RODLIKE             3568 non-null   float64
- 18  CT_LUCENT_CENTERED           3568 non-null   float64
- 19  CT_MILK_OF_CALCIUM           3568 non-null   float64
- 20  CT_PLEOMORPHIC               3568 non-null   float64
- 21  CT_PUNCTATE                  3568 non-null   float64
- 22  CT_ROUND_AND_REGULAR         3568 non-null   float64
- 23  CT_SKIN                      3568 non-null   float64
- 24  CT_VASCULAR                  3568 non-null   float64
- 25  CD_CLUSTERED                 3568 non-null   float64
- 26  CD_LINEAR                    3568 non-null   float64
- 27  CD_REGIONAL                  3568 non-null   float64
- 28  CD_DIFFUSELY_SCATTERED       3568 non-null   float64
- 29  CD_SEGMENTAL                 3568 non-null   float64
- 30  MS_IRREGULAR                 3568 non-null   float64
- 31  MS_ARCHITECTURAL_DISTORTION  3568 non-null   float64
- 32  MS_OVAL                      3568 non-null   float64
- 33  MS_LYMPH_NODE                3568 non-null   float64
- 34  MS_LOBULATED                 3568 non-null   float64
- 35  MS_FOCAL_ASYMMETRIC_DENSITY  3568 non-null   float64
- 36  MS_ROUND                     3568 non-null   float64
- 37  MS_ASYMMETRIC_BREAST_TISSUE  3568 non-null   float64
- 38  MM_SPICULATED                3568 non-null   float64
- 39  MM_ILL_DEFINED               3568 non-null   float64
- 40  MM_CIRCUMSCRIBED             3568 non-null   float64
- 41  MM_OBSCURED                  3568 non-null   float64
- 42  MM_MICROLOBULATED            3568 non-null   float64
-dtypes: float64(43)
-memory usage: 1.2 MB
+ 0   patient_id                   3568 non-null   object 
+ 1   breast_density               3568 non-null   float64
+ 2   laterality                   3568 non-null   object 
+ 3   image_view                   3568 non-null   object 
+ 4   abnormality_id               3568 non-null   int64  
+ 5   abnormality_type             3568 non-null   object 
+ 6   calc_type                    3568 non-null   object 
+ 7   calc_distribution            3568 non-null   object 
+ 8   assessment                   3568 non-null   int64  
+ 9   pathology                    3568 non-null   object 
+ 10  subtlety                     3568 non-null   float64
+ 11  fileset                      3568 non-null   object 
+ 12  mass_shape                   3568 non-null   object 
+ 13  mass_margins                 3568 non-null   object 
+ 14  mmg_id                       3568 non-null   object 
+ 15  cancer                       3568 non-null   int64  
+ 16  bit_depth                    3568 non-null   int64  
+ 17  rows                         3568 non-null   int64  
+ 18  cols                         3568 non-null   int64  
+ 19  aspect_ratio                 3568 non-null   float64
+ 20  size                         3568 non-null   int64  
+ 21  file_size                    3568 non-null   int64  
+ 22  min_pixel_value              3568 non-null   int64  
+ 23  max_pixel_value              3568 non-null   int64  
+ 24  mean_pixel_value             3568 non-null   float64
+ 25  std_pixel_value              3568 non-null   float64
+ 26  filepath                     3568 non-null   object 
+ 27  AT_calcification             3568 non-null   int64  
+ 28  AT_mass                      3568 non-null   int64  
+ 29  LR_LEFT                      3568 non-null   int64  
+ 30  LR_RIGHT                     3568 non-null   int64  
+ 31  IV_CC                        3568 non-null   int64  
+ 32  IV_MLO                       3568 non-null   int64  
+ 33  CT_AMORPHOUS                 3568 non-null   int64  
+ 34  CT_COARSE                    3568 non-null   int64  
+ 35  CT_DYSTROPHIC                3568 non-null   int64  
+ 36  CT_EGGSHELL                  3568 non-null   int64  
+ 37  CT_FINE_LINEAR_BRANCHING     3568 non-null   int64  
+ 38  CT_LARGE_RODLIKE             3568 non-null   int64  
+ 39  CT_LUCENT_CENTERED           3568 non-null   int64  
+ 40  CT_MILK_OF_CALCIUM           3568 non-null   int64  
+ 41  CT_PLEOMORPHIC               3568 non-null   int64  
+ 42  CT_PUNCTATE                  3568 non-null   int64  
+ 43  CT_ROUND_AND_REGULAR         3568 non-null   int64  
+ 44  CT_SKIN                      3568 non-null   int64  
+ 45  CT_VASCULAR                  3568 non-null   int64  
+ 46  CD_CLUSTERED                 3568 non-null   int64  
+ 47  CD_LINEAR                    3568 non-null   int64  
+ 48  CD_REGIONAL                  3568 non-null   int64  
+ 49  CD_DIFFUSELY_SCATTERED       3568 non-null   int64  
+ 50  CD_SEGMENTAL                 3568 non-null   int64  
+ 51  MS_IRREGULAR                 3568 non-null   int64  
+ 52  MS_ARCHITECTURAL_DISTORTION  3568 non-null   int64  
+ 53  MS_OVAL                      3568 non-null   int64  
+ 54  MS_LYMPH_NODE                3568 non-null   int64  
+ 55  MS_LOBULATED                 3568 non-null   int64  
+ 56  MS_FOCAL_ASYMMETRIC_DENSITY  3568 non-null   int64  
+ 57  MS_ROUND                     3568 non-null   int64  
+ 58  MS_ASYMMETRIC_BREAST_TISSUE  3568 non-null   int64  
+ 59  MM_SPICULATED                3568 non-null   int64  
+ 60  MM_ILL_DEFINED               3568 non-null   int64  
+ 61  MM_CIRCUMSCRIBED             3568 non-null   int64  
+ 62  MM_OBSCURED                  3568 non-null   int64  
+ 63  MM_MICROLOBULATED            3568 non-null   int64  
+dtypes: float64(5), int64(47), object(12)
+memory usage: 1.7+ MB
 </pre></div>
 </div>
 </div>
 </div>
-<p>We have 43 variables, 37 of which are one-hot encoded.</p>
+<p>We have 64 variables, 37 of which are one-hot encoded.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
@@ -612,12 +616,33 @@ memory usage: 1.2 MB
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>patient_id</th>
       <th>breast_density</th>
+      <th>laterality</th>
+      <th>image_view</th>
       <th>abnormality_id</th>
+      <th>abnormality_type</th>
+      <th>calc_type</th>
+      <th>calc_distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
       <th>subtlety</th>
+      <th>fileset</th>
+      <th>mass_shape</th>
+      <th>mass_margins</th>
+      <th>mmg_id</th>
       <th>cancer</th>
+      <th>bit_depth</th>
+      <th>rows</th>
+      <th>cols</th>
+      <th>aspect_ratio</th>
+      <th>size</th>
+      <th>file_size</th>
+      <th>min_pixel_value</th>
+      <th>max_pixel_value</th>
       <th>mean_pixel_value</th>
       <th>std_pixel_value</th>
+      <th>filepath</th>
       <th>AT_calcification</th>
       <th>AT_mass</th>
       <th>LR_LEFT</th>
@@ -660,239 +685,344 @@ memory usage: 1.2 MB
   <tbody>
     <tr>
       <th>2164</th>
-      <td>0.33</td>
-      <td>0.17</td>
-      <td>0.75</td>
+      <td>P_00420</td>
       <td>1.00</td>
-      <td>0.53</td>
-      <td>0.91</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>mass</td>
+      <td>NOT APPLICABLE</td>
+      <td>NOT APPLICABLE</td>
+      <td>4</td>
+      <td>MALIGNANT</td>
+      <td>3.00</td>
+      <td>training</td>
+      <td>IRREGULAR</td>
+      <td>ILL_DEFINED</td>
+      <td>Mass-Training_P_00420_RIGHT_CC</td>
+      <td>1</td>
+      <td>16</td>
+      <td>5224</td>
+      <td>2896</td>
+      <td>0.55</td>
+      <td>15128704</td>
+      <td>30258504</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>16,087.00</td>
+      <td>16,856.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Mass-Training_P_004...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>104</th>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.75</td>
-      <td>0.00</td>
-      <td>0.36</td>
-      <td>0.83</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>P_00112</td>
+      <td>3.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>6</td>
+      <td>calcification</td>
+      <td>ROUND_AND_REGULAR-EGGSHELL</td>
+      <td>SEGMENTAL</td>
+      <td>2</td>
+      <td>BENIGN_WITHOUT_CALLBACK</td>
+      <td>3.00</td>
+      <td>training</td>
+      <td>NOT APPLICABLE</td>
+      <td>NOT APPLICABLE</td>
+      <td>Calc-Training_P_00112_LEFT_MLO</td>
+      <td>0</td>
+      <td>16</td>
+      <td>4608</td>
+      <td>3008</td>
+      <td>0.65</td>
+      <td>13860864</td>
+      <td>27722826</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,951.00</td>
+      <td>15,315.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_001...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>217</th>
-      <td>0.67</td>
-      <td>0.33</td>
-      <td>1.25</td>
-      <td>0.00</td>
-      <td>0.47</td>
-      <td>0.90</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>P_00302</td>
+      <td>2.00</td>
+      <td>LEFT</td>
+      <td>MLO</td>
+      <td>2</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>5.00</td>
+      <td>training</td>
+      <td>NOT APPLICABLE</td>
+      <td>NOT APPLICABLE</td>
+      <td>Calc-Training_P_00302_LEFT_MLO</td>
+      <td>0</td>
+      <td>16</td>
+      <td>5688</td>
+      <td>3880</td>
+      <td>0.68</td>
+      <td>22069440</td>
+      <td>44139978</td>
+      <td>0</td>
+      <td>60547</td>
+      <td>14,239.00</td>
+      <td>16,556.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Training_P_003...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1673</th>
-      <td>1.00</td>
-      <td>0.17</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.19</td>
-      <td>0.55</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>P_00790</td>
+      <td>3.00</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>CLUSTERED</td>
+      <td>4</td>
+      <td>BENIGN</td>
+      <td>4.00</td>
+      <td>test</td>
+      <td>NOT APPLICABLE</td>
+      <td>NOT APPLICABLE</td>
+      <td>Calc-Test_P_00790_RIGHT_MLO</td>
+      <td>0</td>
+      <td>16</td>
+      <td>4680</td>
+      <td>2888</td>
+      <td>0.62</td>
+      <td>13515840</td>
+      <td>27032774</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>5,868.00</td>
+      <td>10,174.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Test_P_00790_R...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2667</th>
-      <td>0.67</td>
-      <td>0.17</td>
-      <td>1.25</td>
-      <td>0.00</td>
-      <td>0.33</td>
-      <td>0.78</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>P_01152</td>
+      <td>2.00</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>mass</td>
+      <td>NOT APPLICABLE</td>
+      <td>NOT APPLICABLE</td>
+      <td>3</td>
+      <td>BENIGN</td>
+      <td>5.00</td>
+      <td>training</td>
+      <td>LOBULATED</td>
+      <td>CIRCUMSCRIBED</td>
+      <td>Mass-Training_P_01152_RIGHT_CC</td>
+      <td>0</td>
+      <td>16</td>
+      <td>5776</td>
+      <td>4064</td>
+      <td>0.70</td>
+      <td>23473664</td>
+      <td>46948424</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,109.00</td>
+      <td>14,381.00</td>
+      <td>data/image/0_raw/CBIS-DDSM/Mass-Training_P_011...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>All values have been normalized and this dataset is ready for modeling. This completes the data transformation section. On to exploratory data analysis…finally!</p>
+<p>All values have been normalized and this completes the data transformation section. On to exploratory data analysis…finally!</p>
 </section>
 
     <script type="text/x-thebe-config">
