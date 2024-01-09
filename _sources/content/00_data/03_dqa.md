@@ -48,7 +48,6 @@ As a first step, we'll create the CBIS-DDSM Dataset object and install the DQA m
 ```{code-cell} ipython3
 filepath = "data/meta/2_staged/cbis.csv"
 cbis = CBISDataset(filepath=filepath)
-cbis.dqa = CBISDQA
 ```
 
 ## Completeness Analysis

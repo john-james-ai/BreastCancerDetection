@@ -559,19 +559,6 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;data/meta/2_staged/cbis.csv&quot;</span>
 <span class="n">cbis</span> <span class="o">=</span> <span class="n">CBISDataset</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">)</span>
-<span class="n">cbis</span><span class="o">.</span><span class="n">dqa</span> <span class="o">=</span> <span class="n">CBISDQA</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">filepath</span> <span class="o">=</span> <span class="s2">&quot;data/meta/2_staged/cbis.csv&quot;</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">cbis</span> <span class="o">=</span> <span class="n">CBISDataset</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">cbis</span><span class="o">.</span><span class="n">dqa</span> <span class="o">=</span> <span class="n">CBISDQA</span>
-
-<span class="ne">AttributeError</span>: can&#39;t set attribute &#39;dqa&#39;
 </pre></div>
 </div>
 </div>
@@ -586,6 +573,20 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          Completeness                          
+                         Dataset | CBIS-DDSM
+                         Records | 3568
+                Complete Records | 3043
+             Record Completeness | 0.853
+                     Data Values | 96336
+            Complete Data Values | 95809
+         Data Value Completeness | 0.995
+
+ 
+</pre></div>
+</div>
+</div>
 </div>
 <p>Record and data value completeness are 0.85 and 0.99 respectively. Let’s take a closer look.</p>
 <div class="cell docutils container">
@@ -594,6 +595,224 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>N</th>
+      <th>Complete</th>
+      <th>Missing</th>
+      <th>Completeness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>patient_id</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>breast_density</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>laterality</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>image_view</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>abnormality_id</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>abnormality_type</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>calc_type</th>
+      <td>3568</td>
+      <td>3544</td>
+      <td>24</td>
+      <td>0.99</td>
+    </tr>
+    <tr>
+      <th>calc_distribution</th>
+      <td>3568</td>
+      <td>3129</td>
+      <td>439</td>
+      <td>0.88</td>
+    </tr>
+    <tr>
+      <th>assessment</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>pathology</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>subtlety</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>fileset</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>mass_shape</th>
+      <td>3568</td>
+      <td>3564</td>
+      <td>4</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>mass_margins</th>
+      <td>3568</td>
+      <td>3508</td>
+      <td>60</td>
+      <td>0.98</td>
+    </tr>
+    <tr>
+      <th>mmg_id</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>cancer</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>bit_depth</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>rows</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>cols</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>aspect_ratio</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>size</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>file_size</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>min_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>max_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>mean_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>std_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>filepath</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Missingness for calc type, mass_shape, and mass_margins is 1%, &lt; 1%, and 2% respectively. Strictly speaking, we could drop those observations without a considerable loss of data. On the other hand, calc distribution missingness deserves a closer look. Let’s examine missingness vis-a-vis the pathology target.</p>
 <div class="cell docutils container">
@@ -602,6 +821,44 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>pathology</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>BENIGN_WITHOUT_CALLBACK</th>
+      <td>434</td>
+    </tr>
+    <tr>
+      <th>BENIGN</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>This is interesting. Over 98% of the records with missing calcification distribution have a pathology of BENIGN_WITHOUT_CALLBACK. This suggests that the calcification distribution data are Missing at Random (MAR). That is, the probability of encountering missing calcification distribution may be systematically related to a benign pathology. As the missingness seems to be related to <em>observed</em> data, the multiple imputation by chained equations (MICE) <span id="id1">[<a class="reference internal" href="../80_references.html#id317" title="Joseph L Schafer. Multiple imputation: a primer. Statistical Methods in Medical Research, 8(1):3–15, February 1999. URL: http://journals.sagepub.com/doi/10.1177/096228029900800102 (visited on 2023-10-18), doi:10.1177/096228029900800102.">3</a>]</span> is a principled method for dealing with such missing data while mitigating data loss and bias in the dataset.</p>
 <p>Let’s move on to the uniqueness analysis.</p>
@@ -612,6 +869,18 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dqu</span> <span class="o">=</span> <span class="n">cbis</span><span class="o">.</span><span class="n">dqa</span><span class="o">.</span><span class="n">analyze_uniqueness</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dqu</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                           Uniqueness                           
+                         Dataset | CBIS-DDSM
+                         Records | 3568
+                  Unique Records | 3568
+               Record Uniqueness | 1.0
+                     Data Values | 96336
+              Unique Data Values | 23101
+           Data Value Uniqueness | 0.24
 </pre></div>
 </div>
 </div>
@@ -627,6 +896,18 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            Validity                            
+                         Dataset | CBIS-DDSM
+                         Records | 3568
+                   Valid Records | 3009
+                 Record Validity | 0.843
+                     Data Values | 96336
+               Valid Data Values | 95608
+             Data Value Validity | 0.992
+</pre></div>
+</div>
+</div>
 </div>
 <p>Record and data value validity are 0.84 and 0.99, respectively. Note, missing data will have an impact on record validity. Still, let’s take a closer look at the invalid data.</p>
 <div class="cell docutils container">
@@ -635,11 +916,241 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>N</th>
+      <th>Valid</th>
+      <th>Invalid</th>
+      <th>Validity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mmg_id</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>patient_id</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>breast_density</th>
+      <td>3568</td>
+      <td>3566</td>
+      <td>2</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>laterality</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>image_view</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>abnormality_id</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>abnormality_type</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>calc_type</th>
+      <td>3568</td>
+      <td>3347</td>
+      <td>221</td>
+      <td>0.94</td>
+    </tr>
+    <tr>
+      <th>calc_distribution</th>
+      <td>3568</td>
+      <td>3129</td>
+      <td>439</td>
+      <td>0.88</td>
+    </tr>
+    <tr>
+      <th>mass_shape</th>
+      <td>3568</td>
+      <td>3564</td>
+      <td>4</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>mass_margins</th>
+      <td>3568</td>
+      <td>3508</td>
+      <td>60</td>
+      <td>0.98</td>
+    </tr>
+    <tr>
+      <th>assessment</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>pathology</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>subtlety</th>
+      <td>3568</td>
+      <td>3566</td>
+      <td>2</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>fileset</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>cancer</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>bit_depth</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>rows</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>cols</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>aspect_ratio</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>size</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>file_size</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>min_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>max_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>mean_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>std_pixel_value</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>filepath</th>
+      <td>3568</td>
+      <td>3568</td>
+      <td>0</td>
+      <td>1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The invalidity of calc distribution and mass_margins is explained by the missing data. Approximately 6% of the observations have invalid calcification types. Let’s take a look.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cbis</span><span class="o">.</span><span class="n">dqa</span><span class="o">.</span><span class="n">get_invalid_data</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;calc_type&#39;</span><span class="p">)[</span><span class="s1">&#39;calc_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([nan, &#39;ROUND_AND_REGULAR-LUCENT_CENTER-DYSTROPHIC&#39;,
+       &#39;PUNCTATE-LUCENT_CENTER&#39;,
+       &#39;VASCULAR-COARSE-LUCENT_CENTER-ROUND_AND_REGULAR-PUNCTATE&#39;,
+       &#39;LUCENT_CENTER&#39;, &#39;ROUND_AND_REGULAR-LUCENT_CENTER&#39;,
+       &#39;LUCENT_CENTER-PUNCTATE&#39;, &#39;PLEOMORPHIC-PLEOMORPHIC&#39;,
+       &#39;COARSE-ROUND_AND_REGULAR-LUCENT_CENTER&#39;,
+       &#39;ROUND_AND_REGULAR-LUCENT_CENTER-PUNCTATE&#39;, &#39;COARSE-LUCENT_CENTER&#39;],
+      dtype=object)
 </pre></div>
 </div>
 </div>
@@ -651,6 +1162,101 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>patient_id</th>
+      <th>breast_density</th>
+      <th>laterality</th>
+      <th>image_view</th>
+      <th>abnormality_id</th>
+      <th>abnormality_type</th>
+      <th>calc_type</th>
+      <th>calc_distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>...</th>
+      <th>rows</th>
+      <th>cols</th>
+      <th>aspect_ratio</th>
+      <th>size</th>
+      <th>file_size</th>
+      <th>min_pixel_value</th>
+      <th>max_pixel_value</th>
+      <th>mean_pixel_value</th>
+      <th>std_pixel_value</th>
+      <th>filepath</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1817</th>
+      <td>P_01743</td>
+      <td>0</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>DIFFUSELY_SCATTERED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>...</td>
+      <td>4576</td>
+      <td>1831</td>
+      <td>0.40</td>
+      <td>8378656</td>
+      <td>16758290</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,701.68</td>
+      <td>19,437.31</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Test_P_01743_RIGHT_CC/08-29-2017-DDSM-78699/1.000000-full mammogram images-62009/1-1.dcm</td>
+    </tr>
+    <tr>
+      <th>1818</th>
+      <td>P_01743</td>
+      <td>0</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>calcification</td>
+      <td>PLEOMORPHIC</td>
+      <td>DIFFUSELY_SCATTERED</td>
+      <td>5</td>
+      <td>MALIGNANT</td>
+      <td>...</td>
+      <td>5176</td>
+      <td>2716</td>
+      <td>0.52</td>
+      <td>14058016</td>
+      <td>28117014</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>14,108.36</td>
+      <td>20,763.14</td>
+      <td>data/image/0_raw/CBIS-DDSM/Calc-Test_P_01743_RIGHT_MLO/08-29-2017-DDSM-15483/1.000000-full mammogram images-98404/1-1.dcm</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 27 columns</p>
+</div></div></div>
 </div>
 <p>Both observations with breast density values of zero, are for the same patient. Let’s see what densities we have for similar malignant calcification cases.</p>
 <div class="cell docutils container">
@@ -669,6 +1275,56 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>breast_density</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>158</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>123</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Statistically, breast densities of 2,3 and 4 are equally probable for malignant PLEOMORPHIC cases. Let’s see if calcification distribution is more discriminative.</p>
 <div class="cell docutils container">
@@ -677,6 +1333,48 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>breast_density</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>We only have five DIFFUSELY_SCATTERED calcification cases, two of which are our invalid cases. Two cases have breast densities of 2, and another with a value of 3. Not a statistically significant difference in breast densities for DIFFUSELY_SCATTERED calcification cases. Though these invalid observations are relative, they represent 40% of the DIFFUSELY_SCATTERED calcification cases. We’ll attempt to impute these values rather than delete them.</p>
 <section id="invalid-mass-case-analysis">
@@ -688,6 +1386,101 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>patient_id</th>
+      <th>breast_density</th>
+      <th>laterality</th>
+      <th>image_view</th>
+      <th>abnormality_id</th>
+      <th>abnormality_type</th>
+      <th>calc_type</th>
+      <th>calc_distribution</th>
+      <th>assessment</th>
+      <th>pathology</th>
+      <th>...</th>
+      <th>rows</th>
+      <th>cols</th>
+      <th>aspect_ratio</th>
+      <th>size</th>
+      <th>file_size</th>
+      <th>min_pixel_value</th>
+      <th>max_pixel_value</th>
+      <th>mean_pixel_value</th>
+      <th>std_pixel_value</th>
+      <th>filepath</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2364</th>
+      <td>P_00710</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>CC</td>
+      <td>1</td>
+      <td>mass</td>
+      <td>NOT APPLICABLE</td>
+      <td>NOT APPLICABLE</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>...</td>
+      <td>4728</td>
+      <td>3112</td>
+      <td>0.66</td>
+      <td>14713536</td>
+      <td>29428168</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>6,370.67</td>
+      <td>12,047.63</td>
+      <td>data/image/0_raw/CBIS-DDSM/Mass-Training_P_00710_RIGHT_CC/07-20-2016-DDSM-01521/1.000000-full mammogram images-11222/1-1.dcm</td>
+    </tr>
+    <tr>
+      <th>2365</th>
+      <td>P_00710</td>
+      <td>2</td>
+      <td>RIGHT</td>
+      <td>MLO</td>
+      <td>1</td>
+      <td>mass</td>
+      <td>NOT APPLICABLE</td>
+      <td>NOT APPLICABLE</td>
+      <td>0</td>
+      <td>BENIGN</td>
+      <td>...</td>
+      <td>4688</td>
+      <td>3120</td>
+      <td>0.67</td>
+      <td>14626560</td>
+      <td>29254222</td>
+      <td>0</td>
+      <td>65535</td>
+      <td>10,743.82</td>
+      <td>15,182.58</td>
+      <td>data/image/0_raw/CBIS-DDSM/Mass-Training_P_00710_RIGHT_MLO/07-20-2016-DDSM-11749/1.000000-full mammogram images-15311/1-1.dcm</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 27 columns</p>
+</div></div></div>
 </div>
 <p>Similarly, these cases are for the same patient. Notably, these cases convey little information: missing mass shape and margins data. In this case deletion would be the best option.</p>
 </section>
