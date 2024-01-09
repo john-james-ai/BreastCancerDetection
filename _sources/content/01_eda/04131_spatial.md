@@ -343,7 +343,7 @@ fig = analyzer.compare()
 glue("bilateral_gaussian_analysis", fig)
 ```
 
-```{glue:figure} bilateral_gaussian_analysis_fig
+```{glue:figure} bilateral_gaussian_analysis
 ---
 align: center
 name: bilateral_gaussian_analysis_fig

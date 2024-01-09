@@ -74,7 +74,7 @@ fig = plot_binary_images(image=img3, thresholds=thresholds)
 glue("various_thresholds", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} various_thresholds
 ---
 align: center
 name: various_thresholds_fig
@@ -106,7 +106,7 @@ Sezgin and Sankur {cite}`sankurSurveyImageThresholding2004` cast the space of au
 
 For this effort, eight automated thresholding techniques {numref}`auto-thresh-tbl` were selected based on the intrinsic properties of the CBIS-DDSM dataset.
 
-```{table}
+```{table} Auto-Threshold Table
 :name: auto-thresh-tbl
 
 | # | Type                    | Method                               | Author(s)                                            | Publication                                                  |
@@ -125,7 +125,7 @@ For this effort, eight automated thresholding techniques {numref}`auto-thresh-tb
 
 The Triangle method was proposed in 1977 as a method for automatically detecting and counting sister chromatid exchanges in human chromosomes {cite}`zackAutomaticMeasurementSister1977`.
 
-```{figure}
+```{figure} ../../figures/triangle_zack.png
 ---
 name: triangle
 ---
@@ -146,7 +146,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_triangle", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_triangle
 ---
 align: center
 name: threshold_triangle_fig
@@ -176,7 +176,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_isodata", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_isodata
 ---
 align: center
 name: threshold_isodata_fig
@@ -265,7 +265,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_otsu", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_otsu
 ---
 align: center
 name: threshold_otsu_fig
@@ -293,7 +293,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_li", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_li
 ---
 align: center
 name: threshold_li_fig
@@ -334,7 +334,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_yen", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_yen
 ---
 align: center
 name: threshold_yen_fig
@@ -377,7 +377,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_local_mean", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_local_mean
 ---
 align: center
 name: threshold_local_mean_fig
@@ -397,7 +397,7 @@ fig = analyzer.analyze(images=images, threshold=threshold)
 glue("threshold_local_gaussian", fig)
 ```
 
-```{glue:figure}
+```{glue:figure} threshold_local_gaussian
 ---
 align: center
 name: threshold_local_gaussian_fig

@@ -619,14 +619,14 @@ document.write(`
 <figure class="align-center" id="fft-fig">
 <img alt="../../_images/f0f8292bbf1c8ce3a876f86669fcc37751aa3dd7dd0266ce9e0116663d69059c.png" src="../../_images/f0f8292bbf1c8ce3a876f86669fcc37751aa3dd7dd0266ce9e0116663d69059c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.18 </span><span class="caption-text">Discrete Fourier Transformation</span><a class="headerlink" href="#fft-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.19 </span><span class="caption-text">Discrete Fourier Transformation</span><a class="headerlink" href="#fft-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In <a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 4.18</span></a> we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles), a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a mammogram on the top row, along with their frequency spectrum images on the second row.</p>
+<p>In <a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 4.19</span></a> we see a constant white image on the left, a vertical sinusoidal grating with a wavelength of 200 pixels (5 cycles), a horizontal sinusoidal grating with a wavelength of 100 pixels (10 cycles), and a mammogram on the top row, along with their frequency spectrum images on the second row.</p>
 <p>The DFT of the white image (e) contains a single dot at the center (origin) of the frequency coordinate system. The color of the dot represents the average intensity in the image and its location indicates the amplitude of the zero-frequency wave, also called the direct current (DC) of the constant white image.</p>
 <p>Moving to the right (f), we have the DFT for the vertical sinusoid. Notice The DFT has two dots placed symmetrically along the <span class="math notranslate nohighlight">\(u-axis\)</span> about the center of the DFT image.  The distance each dot occupies from the origin indicates the frequency with which the intensities are changing.</p>
 <p>In the next image (g), we have twice the number of cycles (1/2 wavelength), rotated <span class="math notranslate nohighlight">\(\frac{\pi}{2}\)</span> radians. Notice in this case, the dots are oriented along the <span class="math notranslate nohighlight">\(v-axis\)</span>, the direction of the rate of change, and are twice the distance from the origin.</p>
-<p><a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 4.18</span></a> (h) shows the DFT for a mammogram image. Notice, the single blob about the origin. Most 8-bit gray-scale images tend to have an average value of about 128, and lots of low-frequency information close to the origin.</p>
+<p><a class="reference internal" href="#fft-fig"><span class="std std-numref">Fig. 4.19</span></a> (h) shows the DFT for a mammogram image. Notice, the single blob about the origin. Most 8-bit gray-scale images tend to have an average value of about 128, and lots of low-frequency information close to the origin.</p>
 <p>The above examples illuminate the important properties of the frequency spectrum of an image:</p>
 <ul class="simple">
 <li><p>Rotating <span class="math notranslate nohighlight">\(f(x,y)\)</span> by an angle <span class="math notranslate nohighlight">\(\theta_0\)</span> rotates <span class="math notranslate nohighlight">\(F(u,v)\)</span> by the same angle. Conversely, rotating <span class="math notranslate nohighlight">\(F(u,v)\)</span> rotates <span class="math notranslate nohighlight">\(f(x,y)\)</span> by the same angle,</p></li>
@@ -663,11 +663,11 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-ideal-distance">
 <span class="eqno">(4.22)<a class="headerlink" href="#equation-ideal-distance" title="Permalink to this equation">#</a></span>\[D(u,v) = [(\mu-P/2)^2 + (v-Q/2)^2]^{1/2}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P=2M\)</span> and <span class="math notranslate nohighlight">\(Q=2N\)</span> are the padded sizes of the image.</p>
-<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 4.19</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
+<p><a class="reference internal" href="#id3"><span class="std std-numref">Fig. 4.20</span></a> shows an ideal filter transfer function as an image. All frequencies on or inside the circle of radius <span class="math notranslate nohighlight">\(D_0\)</span> are passed; whereas, all frequencies outside the circle are completely attenuated.</p>
 <figure class="align-default" id="id3">
 <img alt="../../_images/ideal_filter.jpg" src="../../_images/ideal_filter.jpg" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.19 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.20 </span><span class="caption-text">Ideal Filter</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The point of transition between the values <span class="math notranslate nohighlight">\(H(u,v)=1\)</span> and <span class="math notranslate nohighlight">\(H(u,v)=0\)</span> is called the <em>cutoff frequency</em>, the frequency at which the filter’s response drops off.</p>
@@ -677,18 +677,18 @@ document.write(`
 <section id="butterworth-lowpass-filter">
 <h2>Butterworth Lowpass Filter<a class="headerlink" href="#butterworth-lowpass-filter" title="Permalink to this heading">#</a></h2>
 <p>A 1930 paper by Stephen Butterworth, a British engineer and physicist <span id="id4">[<a class="reference internal" href="../80_references.html#id354" title="S Butterworth. On the theory of filter amplifiers. Experimental Wireless and the Wireless Engineer, 1930.">24</a>]</span> showed that an ideal filter could be approximated by a low-pass filter whose cutoff frequency was normalized to 1 radian per second. The Butterworth filter has a flat passband and a more gradual transition to the stopband, which eliminates the ringing artifacts characteristic of the ideal low-pass filter.</p>
-<p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 4.20</span></a></p>
+<p>The Butterworth filter’s stopband begins at the cutoff frequency. The roll-off rate, a measure of how quickly the filter’s response decreases as the frequency increases beyond the cutoff frequency, is controlled by the <em>order</em> of the filter. Higher order filters have a steeper roll-off rate, than lower order filters as shown in <a class="reference internal" href="#butterworth-ideal"><span class="std std-numref">Fig. 4.21</span></a></p>
 <figure class="align-default" id="butterworth-ideal">
 <img alt="../../_images/butterworth.png" src="../../_images/butterworth.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.20 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.21 </span><span class="caption-text">Ideal Frequency Response for a Butterworth Filter</span><a class="headerlink" href="#butterworth-ideal" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Note that the higher-order filters come closer to the ‘ideal’ response. The transfer function of an <span class="math notranslate nohighlight">\(n^{th}\)</span> order Butterworth filter is given as:</p>
 <div class="math notranslate nohighlight" id="equation-butterworth-freq">
 <span class="eqno">(4.23)<a class="headerlink" href="#equation-butterworth-freq" title="Permalink to this equation">#</a></span>\[H(u,v) = \frac{1}{1+[D(u,v)/D_0]^{2n}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(n\)</span> represents the order of the filter, <span class="math notranslate nohighlight">\(D_0\)</span> indicates the cutoff frequency at a distance <span class="math notranslate nohighlight">\(D_0\)</span> from the origin, and <span class="math notranslate nohighlight">\(D(u,v)\)</span> is given by <a class="reference internal" href="#equation-ideal-distance">(4.22)</a>. The spatial domain image obtained from the BLPF of order 1 has no ringing. At orders 2 and 3, ringing is imperceptible; however, ringing can be significant in filters of higher order.</p>
-<p><a class="reference internal" href="#butterworth-characteristics-fig"><span class="std std-numref">Fig. 4.21</span></a> illustrates the behavior of the Butterworth Filter on an image degraded by Gaussian noise. The order was set at 10, the cutoff frequency was set to 2000.</p>
+<p><a class="reference internal" href="#butterworth-characteristics-fig"><span class="std std-numref">Fig. 4.22</span></a> illustrates the behavior of the Butterworth Filter on an image degraded by Gaussian noise. The order was set at 10, the cutoff frequency was set to 2000.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -709,10 +709,10 @@ document.write(`
 <figure class="align-center" id="butterworth-characteristics-fig">
 <img alt="../../_images/37a709016880da0fb2441db825c1f15c721e0708eb2eaabedc0f10567da04bb2.png" src="../../_images/37a709016880da0fb2441db825c1f15c721e0708eb2eaabedc0f10567da04bb2.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.21 </span><span class="caption-text">Butterworth Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#butterworth-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.22 </span><span class="caption-text">Butterworth Filter Performance Characteristics with Gaussian Noise</span><a class="headerlink" href="#butterworth-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#butterworth-characteristics-fig"><span class="std std-numref">Fig. 4.21</span></a> shows almost no reduction in noise and a slight blurring effect is extant. <a class="reference internal" href="#butterworth-analysis-fig"><span class="std std-numref">Fig. 4.22</span></a> displays the behavior over a range of orders and cutoff frequencies.</p>
+<p><a class="reference internal" href="#butterworth-characteristics-fig"><span class="std std-numref">Fig. 4.22</span></a> shows almost no reduction in noise and a slight blurring effect is extant. <a class="reference internal" href="#butterworth-analysis-fig"><span class="std std-numref">Fig. 4.23</span></a> displays the behavior over a range of orders and cutoff frequencies.</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -730,7 +730,7 @@ document.write(`
 <figure class="align-center" id="butterworth-analysis-fig">
 <img alt="../../_images/a7db1e1701cd3fc99f9dd33c41d4310335246d0bc8bd3518249d21c9f28a55a3.png" src="../../_images/a7db1e1701cd3fc99f9dd33c41d4310335246d0bc8bd3518249d21c9f28a55a3.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.22 </span><span class="caption-text">Butterworth Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#butterworth-analysis-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.23 </span><span class="caption-text">Butterworth Filter Performance Analysis with Gaussian Noise</span><a class="headerlink" href="#butterworth-analysis-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Order values were 6,8, and 10 for the first, second and third rows respectively. The frequency cutoffs were 500, 750, 1000 and 1500 for the first, second, third, and forth columns respectively. At the lower frequency cutoffs, we have a significant amount of blurring as well as apparent ringing effect, most notable at cutoff frequencies 500 and 750. Moving right, the blurring decreases; however, much of the Gaussian noise remains.</p>
@@ -745,10 +745,10 @@ document.write(`
 <figure class="align-default" id="dwt">
 <img alt="../../_images/dwt.png" src="../../_images/dwt.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.23 </span><span class="caption-text">Discrete Wavelet Transform (2-Level)</span><a class="headerlink" href="#dwt" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.24 </span><span class="caption-text">Discrete Wavelet Transform (2-Level)</span><a class="headerlink" href="#dwt" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As indicated in <a class="reference internal" href="#dwt"><span class="std std-numref">Fig. 4.23</span></a>, DWT first level decomposition separates the image into:</p>
+<p>As indicated in <a class="reference internal" href="#dwt"><span class="std std-numref">Fig. 4.24</span></a>, DWT first level decomposition separates the image into:</p>
 <ul class="simple">
 <li><p>low-frequency bands (<span class="math notranslate nohighlight">\(LL^1\)</span>) that approximate the original image;</p></li>
 <li><p>horizontal fluctuation detail containing both high and low frequencies (<span class="math notranslate nohighlight">\(LH^1\)</span>)</p></li>
@@ -772,7 +772,7 @@ document.write(`
 <span class="eqno">(4.25)<a class="headerlink" href="#equation-visushrink-noise" title="Permalink to this equation">#</a></span>\[\sigma = \frac{(\text{median}|Y_{ij}|)}{0.06745}\]</div>
 <p>where <span class="math notranslate nohighlight">\(Y_{ij} \in HH^1\)</span>.</p>
 <p>This is a universal threshold for the removal of additive Gaussian noise. Specifying <span class="math notranslate nohighlight">\(\sigma\)</span> at the noise standard deviation can result in an overly smooth result. Often <span class="math notranslate nohighlight">\(\sigma\)</span> less than the noise standard deviation reduces noise while retaining fine detail.</p>
-<p><a class="reference internal" href="#wavelet-visushrink-characteristics-fig"><span class="std std-numref">Fig. 4.24</span></a> displays wavelet denoising using a VisuShrink threshold with <span class="math notranslate nohighlight">\(\sigma^2=0.15\)</span>  on Gaussian noise with <span class="math notranslate nohighlight">\(\sigma^2=0.2\)</span></p>
+<p><a class="reference internal" href="#wavelet-visushrink-characteristics-fig"><span class="std std-numref">Fig. 4.25</span></a> displays wavelet denoising using a VisuShrink threshold with <span class="math notranslate nohighlight">\(\sigma^2=0.15\)</span>  on Gaussian noise with <span class="math notranslate nohighlight">\(\sigma^2=0.2\)</span></p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -793,7 +793,7 @@ document.write(`
 <figure class="align-center" id="wavelet-visushrink-characteristics-fig">
 <img alt="../../_images/b64bcd2b7ff09b2315177c713e44a2fd234173093da6d7632699258f9df1d42a.png" src="../../_images/b64bcd2b7ff09b2315177c713e44a2fd234173093da6d7632699258f9df1d42a.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.24 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with VisuShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-visushrink-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.25 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with VisuShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-visushrink-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -803,7 +803,7 @@ document.write(`
 <div class="math notranslate nohighlight" id="equation-bayesshrink">
 <span class="eqno">(4.26)<a class="headerlink" href="#equation-bayesshrink" title="Permalink to this equation">#</a></span>\[t_b = \frac{\sigma^2}{\sigma_s}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\sigma^2\)</span> is the noise variance and <span class="math notranslate nohighlight">\(\sigma_s\)</span> is the signal variance without noise. As with VisuShrink, the noise variance is estimated from the subband <span class="math notranslate nohighlight">\(HH^1\)</span></p>
-<p><a class="reference internal" href="#wavelet-bayesshrink-characteristics-fig"><span class="std std-numref">Fig. 4.25</span></a> displays a wavelet denoiser using BayesShrink threshold</p>
+<p><a class="reference internal" href="#wavelet-bayesshrink-characteristics-fig"><span class="std std-numref">Fig. 4.26</span></a> displays a wavelet denoiser using BayesShrink threshold</p>
 <div class="cell tag_hide-cell tag_remove-output docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -824,7 +824,7 @@ document.write(`
 <figure class="align-center" id="wavelet-bayesshrink-characteristics-fig">
 <img alt="../../_images/bc1061b06c71f34b78be2270975a81780b56c40ff5bd1209e8054f80c2c75596.png" src="../../_images/bc1061b06c71f34b78be2270975a81780b56c40ff5bd1209e8054f80c2c75596.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4.25 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-bayesshrink-characteristics-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4.26 </span><span class="caption-text">Wavelet Domain Filter Performance Characteristics with BayesShrink Threshold applied to Gaussian Noise</span><a class="headerlink" href="#wavelet-bayesshrink-characteristics-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Wavelet denoising can effectively remove both additive and multiplicative noise from images while preserving fine details and edges. However, it can be computational complex and may produce ‘ringing’ artifacts around sharp edges in the image.</p>
