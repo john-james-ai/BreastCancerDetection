@@ -12,6 +12,9 @@ __pycache__/
 /data/image/
 /tests/data
 
+# Notebooks
+/notebooks/lab/tf_dataset.ipynb
+
 # Logs
 /logs
 /log
