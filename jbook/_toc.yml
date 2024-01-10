@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 03:42:38 pm                                               #
-# Modified   : Wednesday January 3rd 2024 03:39:28 am                                              #
+# Modified   : Monday January 8th 2024 09:33:49 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ parts:
   numbered: 3
   chapters:
   - file: content/00_intro
-- caption: CBIS-DDSM
+- caption: Data
   numbered: 3
   chapters:
   - file: content/00_data/00_intro
@@ -35,25 +35,23 @@ parts:
   - file: content/00_data/03_dqa
   - file: content/00_data/04_clean
   - file: content/00_data/05_transform
-# - caption: Exploratory Data Analysis
-#   numbered: 3
-#   chapters:
-#   - file: content/01_eda/01_intro
-  # - file: content/01_eda/02_data
-  # - file: content/01_eda/03_data_prep
-  # - file: content/01_eda/04_eda_meta
-  # - file: content/01_eda/05_eda_image
-  # - file: content/01_eda/06_eda_methods
-  #   sections:
-  #   - file: content/01_eda/061_denoise
-  #     sections:
-  #     - file: content/01_eda/0611_noise_models
-  #     - file: content/01_eda/0612_noise_types
-  #     - file: content/01_eda/0613_denoisers
-  #     - file: content/01_eda/06131_spatial
-  #     - file: content/01_eda/06132_frequency
-  #     - file: content/01_eda/0614_experiment
-  #   - file: content/01_eda/062_threshold
+- caption: Exploratory Data Analysis
+  numbered: 3
+  chapters:
+  - file: content/01_eda/01_intro
+  - file: content/01_eda/02_eda_meta
+  - file: content/01_eda/03_eda_image
+  - file: content/01_eda/04_eda_methods
+    sections:
+    - file: content/01_eda/041_denoise
+      sections:
+      - file: content/01_eda/0411_noise_models
+      - file: content/01_eda/0412_noise_types
+      - file: content/01_eda/0413_denoisers
+      - file: content/01_eda/04131_spatial
+      - file: content/01_eda/04132_frequency
+      - file: content/01_eda/0414_experiment
+    - file: content/01_eda/042_threshold
 - caption: References
   numbered: false
   chapters:

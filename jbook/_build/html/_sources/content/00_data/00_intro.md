@@ -4,8 +4,9 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.15.1
+    jupytext_version: 1.16.0
 ---
+
 (eda00)=
 
 # **CBIS-DDSM** Dataset
@@ -31,7 +32,7 @@ In total, the CBIS-DDSM has 10,239 images of 1,644 cases for 1,566 patients.
 
 ### Imaging Dataset Statistics
 
-```{table} CBIS DDSM Statistics
+```{table} CBIS-DDSM Images
 :name: cbis_ddsm_images
 
 | Collection Statistics  |        |
@@ -46,18 +47,18 @@ In total, the CBIS-DDSM has 10,239 images of 1,644 cases for 1,566 patients.
 
 ### Case Dataset Statistics
 
-```{table} CBIS DDSM Case Statistics
+```{table} CBIS-DDSM Dataset Statistics
 :name: cbis_ddsm_cases
 | # | Dataset                   | Filename                            | Format | Size   | Cases | Benign | Benign Abnormalities | Malignant | Malignant Abnormalities |
 |---|---------------------------|-------------------------------------|--------|--------|-------|--------|----------------------|-----------|-------------------------|
-| 1 | Mass Training Description | mass_case_description_train_set.csv | CSV    | 755 Kb | 691   | 355    | 387                  | 336       | 361                     |
-| 2 | Calc Training Description | calc_case_description_train_set.csv | CSV    | 904 Kb | 602   | 329    | 552                  | 273       | 304                     |
-| 3 | Mass Test Description     | mass_case_description_test_set.csv  | CSV    | 212 Kb | 200   | 117    | 135                  | 83        | 87                      |
-| 4 | Calc Test Description     | calc_case_description_test_set.csv  | CSV    | 186 Kb | 151   | 85     | 112                  | 66        | 77                      |
+| 1 | Calc Training Description | calc_case_description_train_set.csv | CSV    | 904 Kb | 602   | 329    | 552                  | 273       | 304                     |
+| 2 | Calc Test Description     | calc_case_description_test_set.csv  | CSV    | 186 Kb | 151   | 85     | 112                  | 66        | 77                      |
+| 3 | Mass Training Description | mass_case_description_train_set.csv | CSV    | 755 Kb | 691   | 355    | 387                  | 336       | 361                     |
+| 4 | Mass Test Description     | mass_case_description_test_set.csv  | CSV    | 212 Kb | 200   | 117    | 135                  | 83        | 87                      |
 |   | Total                     |                                     |        |        | 1644  | 886    | 1186                 | 758       | 829                     |
 ```
 
-Of the 1,644 cases, 54% were benign, and 46% were malignant.
+Of the 1,644 cases, 54% are benign, and 46% are malignant.
 
 ## Dataset Dictionary
 
@@ -114,4 +115,6 @@ Each DICOM image file comports with the DICOM standard and contains additional m
 - Smallest Image Pixel Value
 - Largest Image Pixel Value
 
-In the next section, we 'unbox' the data and prepare it for data quality analysis.
+## Dataset Unboxing
+
+Before we launch into a data quality analysis (DQA), let's 'unbox' the case and series datasets, just in case there are aspects to address before DQA.

@@ -44,7 +44,7 @@ if 'jbook' in os.getcwd():
 ```
 
 ```{code-cell} ipython3
-:tags: [hide-cell, remove-output]
+:tags: [hide-cell]
 
 import warnings
 import numpy as np
@@ -66,8 +66,6 @@ fig, stats = x.summary()
 glue("edai_stats_df", stats)
 glue("edai_stats_plot", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_stats_plot
 ---
@@ -106,8 +104,6 @@ glue("edai_resolutions_df", stats)
 glue("edai_resolutions_plot", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_resolutions_plot
 ---
 align: center
@@ -128,7 +124,7 @@ Descriptive Statistics for Resolution and Aspect Ratio
 
 {numref}`edai_resolutions_plot_fig` and {numref}`edai_resolutions_df_fig` indicate high-resolution images with heights ranging from 3256 to 7111 pixels and widths of 1531 to 5431 pixels. The mean aspect ratio is 0.6 and ranges from 0.3 to 0.83.
 
-Images will be resized to 256x256 for the convolutional neural network model. Generally, there are two approaches to resizing:
+Images will be resized to 224x224 for the convolutional neural network model. Generally, there are two approaches to resizing:
 
 - **Destructive Resizing**: The image is resized without retaining the original aspect ratio.
 - **Non-Destructive Resizing**: Images are resized with padding to retain the original aspect ratio.
@@ -148,8 +144,6 @@ fig, stats = x.analyze_pixel_values()
 glue("edai_pixels_df", stats)
 glue("edai_pixels_plot", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_pixels_plot
 ---
@@ -178,7 +172,7 @@ Several observations can be made based upon {numref}`edai_pixels_plot_fig` and {
 Is the difference in average mean pixel intensities between classes significant?
 
 ```{code-cell} ipython3
-:tags: [hide-cell, remove-output]
+:tags: [hide-cell]
 
 # Create a lambda expression to filter the data
 cond_benign = lambda x: x['cancer'] == False
@@ -206,8 +200,6 @@ glue("pvalue", pvalue)
 glue("degrees_of_freedom", df)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 A student's t-test reveals that the average mean intensity values for the benign cases (M={glue:}`benign_mean`, SD={glue:}`benign_std`) were less than average mean pixel values for the malignant cases (M={glue:}`malignant_mean`, SD={glue:}`malignant_std`); t({glue:}`degrees_of_freedom`)={glue:}`t_statistic`, p < 0.01.
 
 +++ {"tags": ["remove-output"]}
@@ -222,8 +214,6 @@ fig = x.visualize(n=20, sort_by='cancer', histogram=True, title=title, cmap='tur
 
 glue("edai_histograms", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_histograms
 ---
@@ -248,8 +238,6 @@ fig = x.visualize(n=50, sort_by='cancer', random_state=5)
 glue("edai_dqa", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_dqa
 ---
 align: center
@@ -273,12 +261,40 @@ Our aim here is to identify imaging features that are indemic to craniocaudal (C
 ### Mediolateral Oblique View Analysis
 
 ```{code-cell} ipython3
-:tags: [remove-output]
-
 condition = lambda x: x['image_view'] == 'MLO'
-fig = x.visualize(n=50, sort_by='cancer', random_state=5)
-glue("edai_dqa", fig)
+fig = x.visualize(n=20, condition=condition, sort_by='cancer', random_state=5)
+glue("edai_mlo", fig)
 ```
+
+```{glue:figure} edai_mlo
+---
+align: center
+name: edai_mlo_fig
+---
+Mediolateral Oblique View Analysis
+```
+
+{numref}`edai_mlo_fig` presents pectoral muscle regions with dense tissue similar to that of the region of interest. Pectoral removal should be an elemental part of the preprocessing regime for MLO images.
+
+## Craniocaudal View Analysis
+
+```{code-cell} ipython3
+condition = lambda x: x['image_view'] == 'CC'
+fig = x.visualize(n=20, condition=condition, sort_by='cancer', random_state=5)
+glue("edai_cc", fig)
+```
+
+```{glue:figure} edai_cc
+---
+align: center
+name: edai_cc_fig
+---
+Craniocaudal View Analysis
+```
+
+{numref}`edai_cc_fig` doesn't show any pectoral muscle, but over 75% of the sample images have prominent artifacts to be removed.
+
++++
 
 ## Calcification Case Analysis
 
@@ -317,8 +333,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_lucent", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_lucent
 ---
 align: center
@@ -345,8 +359,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_punctate", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_punctate
 ---
 align: center
@@ -369,8 +381,6 @@ cond = lambda x: x['calc_type'] == 'PLEOMORPHIC'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_pleomorphic", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_pleomorphic
 ---
@@ -395,8 +405,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_amorphous", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_amorphous
 ---
 align: center
@@ -419,8 +427,6 @@ cond = lambda x: x['calc_type'] == 'FINE_LINEAR_BRANCHING'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_flb", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_flb
 ---
@@ -462,8 +468,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_clustered", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_clustered
 ---
 align: center
@@ -486,8 +490,6 @@ cond = lambda x: x['calc_distribution'] == 'LINEAR'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_linear", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_linear
 ---
@@ -512,8 +514,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_ds", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_ds
 ---
 align: center
@@ -534,8 +534,6 @@ cond = lambda x: x['calc_distribution'] == 'REGIONAL'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_regional", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_regional
 ---
@@ -559,8 +557,6 @@ cond = lambda x: x['calc_distribution'] == 'SEGMENTAL'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_segmental", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_segmental
 ---
@@ -609,8 +605,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_round", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_round
 ---
 align: center
@@ -646,8 +640,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_oval", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_oval
 ---
 align: center
@@ -670,8 +662,6 @@ cond = lambda x: x['mass_shape'] == 'IRREGULAR'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_irregular", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_irregular
 ---
@@ -729,8 +719,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_ill-defined", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_ill-defined
 ---
 align: center
@@ -753,8 +741,6 @@ cond = lambda x: x['mass_margins'] == 'MICROLOBULATED'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_microlobulated", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_microlobulated
 ---
@@ -781,8 +767,6 @@ fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='t
 glue("edai_spiculated", fig)
 ```
 
-+++ {"tags": ["remove-output"]}
-
 ```{glue:figure} edai_spiculated
 ---
 align: center
@@ -805,8 +789,6 @@ cond = lambda x: x['mass_margins'] == 'OBSCURED'
 fig = x.visualize(n=20, condition=cond, sort_by=['cancer'], title=title, cmap='turbo', random_state=20)
 glue("edai_obscured", fig)
 ```
-
-+++ {"tags": ["remove-output"]}
 
 ```{glue:figure} edai_obscured
 ---

@@ -32,7 +32,7 @@ In total, the CBIS-DDSM has 10,239 images of 1,644 cases for 1,566 patients.
 
 ### Imaging Dataset Statistics
 
-```{table}
+```{table} CBIS-DDSM Images
 :name: cbis_ddsm_images
 
 | Collection Statistics  |        |
@@ -47,7 +47,7 @@ In total, the CBIS-DDSM has 10,239 images of 1,644 cases for 1,566 patients.
 
 ### Case Dataset Statistics
 
-```{table}
+```{table} CBIS-DDSM Dataset Statistics
 :name: cbis_ddsm_cases
 | # | Dataset                   | Filename                            | Format | Size   | Cases | Benign | Benign Abnormalities | Malignant | Malignant Abnormalities |
 |---|---------------------------|-------------------------------------|--------|--------|-------|--------|----------------------|-----------|-------------------------|
@@ -116,4 +116,5 @@ Each DICOM image file comports with the DICOM standard and contains additional m
 - Largest Image Pixel Value
 
 ## Dataset Unboxing
+
 Before we launch into a data quality analysis (DQA), let's 'unbox' the case and series datasets, just in case there are aspects to address before DQA.

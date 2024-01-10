@@ -10,25 +10,27 @@ kernelspec:
   language: python
   name: python3
 ---
-
 # Data Preparation
 
-In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset. 
+In the prior section, we identified a few structural concerns worth addressing before any quality or exploratory analysis analyses take place. Here, we extract the relevant task-specific information from the CBIS-DDSM case and dicom datasets and integrate the data into a single, combined full mammogram dataset.
 
-Our process will take three steps: 
-1. Combine the calcification mass training and test sets into a single full mammogram dataset, 
+Our process will take three steps:
+
+1. Combine the calcification mass training and test sets into a single full mammogram dataset,
 2. Add DICOM image file paths to the *series* metadata,
-3. Extract the *DICOM* image metadata using the file paths above, and merge them with the case data from #1. 
+3. Extract the *DICOM* image metadata using the file paths above, and merge them with the case data from #1.
 
 The full dataset will have a few upgrades that will facilitate the analysis, detection, and classification tasks:
+
 1. A mammogram ID, consisting of abnormality type, fileset (train/test), patient_id, breast laterality, and view will uniquely identify each full mammogram image.
 2. A Boolean target variable, 'cancer', will be added combining BENIGN and BENIGN_WITHOUT_CALLBACK into a single Boolean value.
 3. Pixel statistics such as the minimum, maximum, mean, and standard deviation, will be added to the dataset.
 
 ## Case Dataset Integration
+
 The following code cells will integrate all case data into a single file. This doesn't rule out separation of mass and calcification cases as may be needed downstream, but it reduces a certain amount of redundancy and allows us to see both the forest and the trees.
 
-```{code-cell} ipython3
+```{code-cell}
 :tags: [remove-cell]
 
 import os
@@ -36,7 +38,7 @@ if 'jbook' in os.getcwd():
     os.chdir(os.path.abspath(os.path.join("../../..")))
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 :tags: [hide-cell]
 
 from typing import Union
@@ -56,7 +58,7 @@ from bcd.data_prep.prep import SeriesPrep
 from bcd.data_prep.prep import CBISPrep
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 
 calc_test = "data/meta/0_raw/calc_case_description_test_set.csv"
 calc_train = "data/meta/0_raw/calc_case_description_train_set.csv"
@@ -76,9 +78,10 @@ The dataset above has both mass and calcification training and test data, as wel
 +++
 
 ## Series Metadata
+
 Next, we add filepaths to the series metadata.
 
-```{code-cell} ipython3
+```{code-cell}
 fpi = "data/meta/0_raw/metadata.csv"
 fpo = "data/meta/3_clean/series.csv"
 sp = SeriesPrep(filepath=fpi, series_filepath=fpo, force=False)
@@ -95,7 +98,7 @@ Full filepaths have been added for all 10,239 images in the CBIS-DDSM.
 
 Finally, we extract the DICOM data described in {numref}`dicom_image_metadata` and merge that with the case data.
 
-```{table} DICOM Image Metadata
+```{table}
 :name: dicom_image_metadata
 
 | # | Name                       | Description                                                                              |
@@ -112,7 +115,7 @@ Finally, we extract the DICOM data described in {numref}`dicom_image_metadata` a
 
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 cases = "data/meta/1_interim/cases.csv"
 series = "data/meta/3_clean/series.csv"
 cbis = "data/meta/2_staged/cbis.csv"

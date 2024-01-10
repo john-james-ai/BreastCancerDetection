@@ -162,7 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../00_intro.html">1. Introduction</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="00_intro.html">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM</a></li>
@@ -170,6 +170,25 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="03_dqa.html">4. Data Quality Analysis (DQA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_clean.html">5. Data Cleaning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_transform.html">6. Data Transformation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01_eda/01_intro.html">1. EDA Part 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_eda/02_eda_meta.html">2. EDA Part 2: Case Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_eda/03_eda_image.html">3. EDA Part 3: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_eda/04_eda_methods.html">4. EDA Part 6: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../01_eda/041_denoise.html">4.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0411_noise_models.html">4.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0412_noise_types.html">4.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0413_denoisers.html">4.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/04131_spatial.html">4.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/04132_frequency.html">4.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0414_experiment.html">4.1.6. Denoising Experiment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../01_eda/042_threshold.html">4.2. Thresholding</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -489,17 +508,17 @@ document.write(`
 <ol class="arabic simple">
 <li><p>Combine the calcification mass training and test sets into a single full mammogram dataset,</p></li>
 <li><p>Add DICOM image file paths to the <em>series</em> metadata,</p></li>
-<li><p>Extract the <em>DICOM</em> image metadata and merge it with the case data from #1.</p></li>
+<li><p>Extract the <em>DICOM</em> image metadata using the file paths above, and merge them with the case data from #1.</p></li>
 </ol>
 <p>The full dataset will have a few upgrades that will facilitate the analysis, detection, and classification tasks:</p>
 <ol class="arabic simple">
 <li><p>A mammogram ID, consisting of abnormality type, fileset (train/test), patient_id, breast laterality, and view will uniquely identify each full mammogram image.</p></li>
 <li><p>A Boolean target variable, ‘cancer’, will be added combining BENIGN and BENIGN_WITHOUT_CALLBACK into a single Boolean value.</p></li>
-<li><p>Pixel statistics such as the minimum, maximum, mean and standard deviation, will be added to the dataset.</p></li>
+<li><p>Pixel statistics such as the minimum, maximum, mean, and standard deviation, will be added to the dataset.</p></li>
 </ol>
 <section id="case-dataset-integration">
 <h2><span class="section-number">3.1. </span>Case Dataset Integration<a class="headerlink" href="#case-dataset-integration" title="Permalink to this heading">#</a></h2>
-<p>The following code cells will integrate all case data into a single file.</p>
+<p>The following code cells will integrate all case data into a single file. This doesn’t rule out separation of mass and calcification cases as may be needed downstream, but it reduces a certain amount of redundancy and allows us to see both the forest and the trees.</p>
 <div class="cell tag_hide-cell docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -507,140 +526,21 @@ document.write(`
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 38-172 bcd/data_prep/prep.py</span>
-<span class="k">class</span> <span class="nc">CasePrep</span><span class="p">(</span><span class="n">DataPrep</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs Case metadata preparation.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 
-<span class="sd">    Combines training and test cases into a single csv case file.</span>
+<span class="kn">import</span> <span class="nn">dask</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pydicom</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        calc_train_fp, calc_test_fp, mass_train_fp, mass_test_fp (str): The file paths to the</span>
-<span class="sd">            calcification and mass training and test sets.</span>
-<span class="sd">        case_fp (str): Path to output calcification and mass datasets.</span>
-<span class="sd">        force (bool): Whether to force execution if output already exists. Default is False.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">calc_train_fp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">calc_test_fp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">mass_train_fp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">mass_test_fp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">case_fp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_calc_train_fp</span> <span class="o">=</span> <span class="n">calc_train_fp</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_calc_test_fp</span> <span class="o">=</span> <span class="n">calc_test_fp</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_train_fp</span> <span class="o">=</span> <span class="n">mass_train_fp</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mass_test_fp</span> <span class="o">=</span> <span class="n">mass_test_fp</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_case_fp</span> <span class="o">=</span> <span class="n">case_fp</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="o">=</span> <span class="n">force</span>
-
-    <span class="k">def</span> <span class="nf">prep</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Combines training and test cases into a single csv case file.&quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_case_fp</span><span class="p">):</span>
-            <span class="c1"># Merge all case data into a single DataFrame</span>
-            <span class="n">df_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_cases</span><span class="p">()</span>
-
-            <span class="c1"># Set morphological features to NA as appropriate</span>
-            <span class="n">df_cases</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-                <span class="n">df_cases</span><span class="p">[</span><span class="s2">&quot;abnormality_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;mass&quot;</span><span class="p">,</span> <span class="s2">&quot;calc_type&quot;</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;NOT APPLICABLE&quot;</span>
-            <span class="n">df_cases</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-                <span class="n">df_cases</span><span class="p">[</span><span class="s2">&quot;abnormality_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;mass&quot;</span><span class="p">,</span> <span class="s2">&quot;calc_distribution&quot;</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;NOT APPLICABLE&quot;</span>
-            <span class="n">df_cases</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-                <span class="n">df_cases</span><span class="p">[</span><span class="s2">&quot;abnormality_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;calcification&quot;</span><span class="p">,</span> <span class="s2">&quot;mass_shape&quot;</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;NOT APPLICABLE&quot;</span>
-            <span class="n">df_cases</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-                <span class="n">df_cases</span><span class="p">[</span><span class="s2">&quot;abnormality_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;calcification&quot;</span><span class="p">,</span> <span class="s2">&quot;mass_margins&quot;</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;NOT APPLICABLE&quot;</span>
-
-            <span class="c1"># Assign the mammogram id.</span>
-            <span class="n">df_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assign_mmg_id</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_cases</span><span class="p">)</span>
-
-            <span class="c1"># Create the Boolean target corresponding to pathology</span>
-            <span class="n">df_cases</span><span class="p">[</span><span class="s2">&quot;cancer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-                <span class="n">df_cases</span><span class="p">[</span><span class="s2">&quot;pathology&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;MALIGNANT&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span>
-            <span class="p">)</span>
-
-            <span class="c1"># Drop the incorrect file path columns.</span>
-            <span class="n">columns_to_drop</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s2">&quot;image_file_path&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;cropped_image_file_path&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;ROI_mask_file_path&quot;</span><span class="p">,</span>
-            <span class="p">]</span>
-            <span class="n">df_cases</span> <span class="o">=</span> <span class="n">df_cases</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns_to_drop</span><span class="p">)</span>
-
-            <span class="c1"># Change laterality to laterality, the DICOM attribute</span>
-            <span class="n">df_cases</span> <span class="o">=</span> <span class="n">df_cases</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;laterality&quot;</span><span class="p">:</span> <span class="s2">&quot;laterality&quot;</span><span class="p">})</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_cases</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_case_fp</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="n">df_cases</span>
-
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_case_fp</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_merge_cases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Combines mass and calcification train and test files into a single file.&quot;&quot;&quot;</span>
-        <span class="c1"># Extracts absolute paths, a pre-emptive measure in case</span>
-        <span class="c1"># jupyter book can&#39;t access the path</span>
-        <span class="n">calc_train_fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_calc_train_fp</span><span class="p">)</span>
-        <span class="n">calc_test_fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_calc_test_fp</span><span class="p">)</span>
-        <span class="n">mass_train_fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_train_fp</span><span class="p">)</span>
-        <span class="n">mass_test_fp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mass_test_fp</span><span class="p">)</span>
-
-        <span class="c1"># Read the data</span>
-        <span class="n">df_calc_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">calc_train_fp</span><span class="p">)</span>
-        <span class="n">df_calc_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">calc_test_fp</span><span class="p">)</span>
-        <span class="n">df_mass_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">mass_train_fp</span><span class="p">)</span>
-        <span class="n">df_mass_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">mass_test_fp</span><span class="p">)</span>
-
-        <span class="c1"># Add the filesets</span>
-        <span class="n">df_calc_train</span><span class="p">[</span><span class="s2">&quot;fileset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;training&quot;</span>
-        <span class="n">df_calc_test</span><span class="p">[</span><span class="s2">&quot;fileset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
-        <span class="n">df_mass_train</span><span class="p">[</span><span class="s2">&quot;fileset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;training&quot;</span>
-        <span class="n">df_mass_test</span><span class="p">[</span><span class="s2">&quot;fileset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
-
-        <span class="c1"># Standardize column names with underscores in place of spaces.</span>
-        <span class="n">df_calc_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_column_names</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_calc_train</span><span class="p">)</span>
-        <span class="n">df_calc_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_column_names</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_calc_test</span><span class="p">)</span>
-        <span class="n">df_mass_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_column_names</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_mass_train</span><span class="p">)</span>
-        <span class="n">df_mass_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_column_names</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_mass_test</span><span class="p">)</span>
-
-        <span class="c1"># Concatenate the files</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">df_calc_train</span><span class="p">,</span> <span class="n">df_calc_test</span><span class="p">,</span> <span class="n">df_mass_train</span><span class="p">,</span> <span class="n">df_mass_test</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">df</span>
-
-    <span class="k">def</span> <span class="nf">_assign_mmg_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assign a mammogram id to each observation.&quot;&quot;&quot;</span>
-        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;mmg_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;abnormality_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
-            <span class="o">+</span> <span class="s2">&quot;-&quot;</span>
-            <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;fileset&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
-            <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
-            <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;patient_id&quot;</span><span class="p">]</span>
-            <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
-            <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;laterality&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
-            <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
-            <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;image_view&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
-        <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">df</span>
-
-    <span class="k">def</span> <span class="nf">_format_column_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Replaces spaces in column names with underscores.&quot;&quot;&quot;</span>
-
-        <span class="k">def</span> <span class="nf">replace_columns</span><span class="p">(</span><span class="n">colname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">colname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
-
-        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_series</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">replace_columns</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">df</span>
+<span class="kn">from</span> <span class="nn">bcd.dal.file</span> <span class="kn">import</span> <span class="n">IOService</span>
+<span class="kn">from</span> <span class="nn">bcd.utils.file</span> <span class="kn">import</span> <span class="n">getsize</span>
+<span class="kn">from</span> <span class="nn">bcd.utils.profile</span> <span class="kn">import</span> <span class="n">profiler</span>
+<span class="kn">from</span> <span class="nn">bcd.data_prep.base</span> <span class="kn">import</span> <span class="n">DataPrep</span>
+<span class="kn">from</span> <span class="nn">bcd.data_prep.prep</span> <span class="kn">import</span> <span class="n">CasePrep</span>
+<span class="kn">from</span> <span class="nn">bcd.data_prep.prep</span> <span class="kn">import</span> <span class="n">SeriesPrep</span>
+<span class="kn">from</span> <span class="nn">bcd.data_prep.prep</span> <span class="kn">import</span> <span class="n">CBISPrep</span>
 </pre></div>
 </div>
 </div>
@@ -829,13 +729,6 @@ memory usage: 421.7+ KB
 <section id="series-metadata">
 <h2><span class="section-number">3.2. </span>Series Metadata<a class="headerlink" href="#series-metadata" title="Permalink to this heading">#</a></h2>
 <p>Next, we add filepaths to the series metadata.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load</span> -r 176-230 bcd/data_prep/prep.py
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpi</span> <span class="o">=</span> <span class="s2">&quot;data/meta/0_raw/metadata.csv&quot;</span>
@@ -1054,97 +947,6 @@ memory usage: 1.2+ MB
 </tr>
 </tbody>
 </table>
-<div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load -r 235-314 bcd/data_prep/prep.py</span>
-<span class="k">class</span> <span class="nc">CBISPrep</span><span class="p">(</span><span class="n">DataPrep</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extracts DICOM data and integrates it with a single CBIS dataset.</span>
-
-<span class="sd">    Iterates through the full mammography DICOM metadata in parallel, extracting image and pixel</span>
-<span class="sd">    data and statistics, then combines the data with the case dataset.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        case_filepath (str): Path to the case dataset.</span>
-<span class="sd">        series_filepath (str): Path to the series dataset.</span>
-<span class="sd">        cbis_filepath (str): Path to the combined case dicom dataset.</span>
-<span class="sd">        force (bool): Whether to force execution if output already exists. Default is False.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">case_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">series_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">cbis_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_case_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">case_filepath</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_series_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">series_filepath</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cbis_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">cbis_filepath</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="o">=</span> <span class="n">force</span>
-
-    <span class="nd">@profiler</span>
-    <span class="k">def</span> <span class="nf">prep</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extracts image metadata from the DICOM image files.&quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cbis_filepath</span><span class="p">):</span>
-            <span class="c1"># Reads the series metadata that contains subject, series, and</span>
-            <span class="c1"># file location information</span>
-            <span class="n">cases</span> <span class="o">=</span> <span class="n">IOService</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_case_filepath</span><span class="p">)</span>
-            <span class="n">series</span> <span class="o">=</span> <span class="n">IOService</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_series_filepath</span><span class="p">)</span>
-
-            <span class="c1"># Obtain the full mammogram images</span>
-            <span class="n">series</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">series</span><span class="p">[</span><span class="s2">&quot;series_description&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;full mammogram images&quot;</span><span class="p">]</span>
-
-            <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="c1"># Graph of work is created and executed lazily at compute time.</span>
-            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">series</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-                <span class="n">image_result</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extract_data</span><span class="p">)(</span><span class="n">study</span><span class="p">)</span>
-                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_result</span><span class="p">)</span>
-
-            <span class="c1"># Compute the results and convert to dataframe</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="o">*</span><span class="n">results</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">results</span><span class="p">)</span>
-
-            <span class="c1"># Merge the data with the case dataset</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">cases</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;mmg_id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cbis_filepath</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="n">df</span>
-
-        <span class="k">return</span> <span class="n">IOService</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cbis_filepath</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_extract_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">study</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reads study and dicom data from a file.&quot;&quot;&quot;</span>
-
-        <span class="n">dcm</span> <span class="o">=</span> <span class="n">pydicom</span><span class="o">.</span><span class="n">dcmread</span><span class="p">(</span><span class="n">study</span><span class="p">[</span><span class="s2">&quot;filepath&quot;</span><span class="p">])</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">pixel_array</span>
-
-        <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;mmg_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">study</span><span class="p">[</span><span class="s2">&quot;subject_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;bit_depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">BitsStored</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;aspect_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;rows&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;cols&quot;</span><span class="p">]</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;file_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getsize</span><span class="p">(</span><span class="n">study</span><span class="p">[</span><span class="s2">&quot;filepath&quot;</span><span class="p">],</span> <span class="n">as_bytes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;min_pixel_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">SmallestImagePixelValue</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;max_pixel_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">LargestImagePixelValue</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;mean_pixel_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;std_pixel_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;filepath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study</span><span class="p">[</span><span class="s2">&quot;filepath&quot;</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">d</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cases</span> <span class="o">=</span> <span class="s2">&quot;data/meta/1_interim/cases.csv&quot;</span>

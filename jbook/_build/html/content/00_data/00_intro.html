@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/bcdfavicon-32.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2. Unboxing CBIS-DDSM - A Structural Analysis" href="01_unbox.html" />
+    <link rel="next" title="2. Unboxing CBIS-DDSM" href="01_unbox.html" />
     <link rel="prev" title="1. Introduction" href="../00_intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -162,11 +162,33 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../00_intro.html">1. Introduction</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">CBIS-DDSM</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">1. <strong>CBIS-DDSM</strong> Dataset</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM - A Structural Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_unbox.html">2. Unboxing CBIS-DDSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_prep.html">3. Data Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_dqa.html">4. Data Quality Analysis (DQA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_clean.html">5. Data Cleaning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_transform.html">6. Data Transformation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01_eda/01_intro.html">1. EDA Part 1: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_eda/02_eda_meta.html">2. EDA Part 2: Case Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01_eda/03_eda_image.html">3. EDA Part 3: Image Analysis</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_eda/04_eda_methods.html">4. EDA Part 6: Algorithm Selection</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../01_eda/041_denoise.html">4.1. Denoise</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0411_noise_models.html">4.1.1. Noise Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0412_noise_types.html">4.1.2. Noise Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0413_denoisers.html">4.1.3. Denoiser Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/04131_spatial.html">4.1.4. Spatial Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/04132_frequency.html">4.1.5. Frequency Domain Filtering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_eda/0414_experiment.html">4.1.6. Denoising Experiment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../01_eda/042_threshold.html">4.2. Thresholding</a></li>
+</ul>
+</li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -392,6 +414,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">1.2.3. DICOM Image Data</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-unboxing">1.3. Dataset Unboxing</a></li>
 </ul>
             </nav>
         </div>
@@ -422,7 +445,7 @@ document.write(`
 <section id="imaging-dataset-statistics">
 <h3><span class="section-number">1.1.1. </span>Imaging Dataset Statistics<a class="headerlink" href="#imaging-dataset-statistics" title="Permalink to this heading">#</a></h3>
 <table class="table" id="cbis-ddsm-images">
-<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">CBIS DDSM Statistics</span><a class="headerlink" href="#cbis-ddsm-images" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">CBIS-DDSM Images</span><a class="headerlink" href="#cbis-ddsm-images" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Collection Statistics</p></th>
 <th class="head"><p></p></th>
@@ -453,7 +476,7 @@ document.write(`
 <section id="case-dataset-statistics">
 <h3><span class="section-number">1.1.2. </span>Case Dataset Statistics<a class="headerlink" href="#case-dataset-statistics" title="Permalink to this heading">#</a></h3>
 <table class="table" id="cbis-ddsm-cases">
-<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">CBIS DDSM Case Statistics</span><a class="headerlink" href="#cbis-ddsm-cases" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">CBIS-DDSM Dataset Statistics</span><a class="headerlink" href="#cbis-ddsm-cases" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>#</p></th>
 <th class="head"><p>Dataset</p></th>
@@ -469,17 +492,6 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1</p></td>
-<td><p>Mass Training Description</p></td>
-<td><p>mass_case_description_train_set.csv</p></td>
-<td><p>CSV</p></td>
-<td><p>755 Kb</p></td>
-<td><p>691</p></td>
-<td><p>355</p></td>
-<td><p>387</p></td>
-<td><p>336</p></td>
-<td><p>361</p></td>
-</tr>
-<tr class="row-odd"><td><p>2</p></td>
 <td><p>Calc Training Description</p></td>
 <td><p>calc_case_description_train_set.csv</p></td>
 <td><p>CSV</p></td>
@@ -490,18 +502,7 @@ document.write(`
 <td><p>273</p></td>
 <td><p>304</p></td>
 </tr>
-<tr class="row-even"><td><p>3</p></td>
-<td><p>Mass Test Description</p></td>
-<td><p>mass_case_description_test_set.csv</p></td>
-<td><p>CSV</p></td>
-<td><p>212 Kb</p></td>
-<td><p>200</p></td>
-<td><p>117</p></td>
-<td><p>135</p></td>
-<td><p>83</p></td>
-<td><p>87</p></td>
-</tr>
-<tr class="row-odd"><td><p>4</p></td>
+<tr class="row-odd"><td><p>2</p></td>
 <td><p>Calc Test Description</p></td>
 <td><p>calc_case_description_test_set.csv</p></td>
 <td><p>CSV</p></td>
@@ -511,6 +512,28 @@ document.write(`
 <td><p>112</p></td>
 <td><p>66</p></td>
 <td><p>77</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Mass Training Description</p></td>
+<td><p>mass_case_description_train_set.csv</p></td>
+<td><p>CSV</p></td>
+<td><p>755 Kb</p></td>
+<td><p>691</p></td>
+<td><p>355</p></td>
+<td><p>387</p></td>
+<td><p>336</p></td>
+<td><p>361</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Mass Test Description</p></td>
+<td><p>mass_case_description_test_set.csv</p></td>
+<td><p>CSV</p></td>
+<td><p>212 Kb</p></td>
+<td><p>200</p></td>
+<td><p>117</p></td>
+<td><p>135</p></td>
+<td><p>83</p></td>
+<td><p>87</p></td>
 </tr>
 <tr class="row-even"><td><p></p></td>
 <td><p>Total</p></td>
@@ -525,7 +548,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>Of the 1,644 cases, 54% were benign, and 46% were malignant.</p>
+<p>Of the 1,644 cases, 54% are benign, and 46% are malignant.</p>
 </section>
 </section>
 <section id="dataset-dictionary">
@@ -585,8 +608,11 @@ document.write(`
 <li><p>Smallest Image Pixel Value</p></li>
 <li><p>Largest Image Pixel Value</p></li>
 </ul>
-<p>In the next section, we ‘unbox’ the data and prepare it for data quality analysis.</p>
 </section>
+</section>
+<section id="dataset-unboxing">
+<h2><span class="section-number">1.3. </span>Dataset Unboxing<a class="headerlink" href="#dataset-unboxing" title="Permalink to this heading">#</a></h2>
+<p>Before we launch into a data quality analysis (DQA), let’s ‘unbox’ the case and series datasets, just in case there are aspects to address before DQA.</p>
 </section>
 </section>
 
@@ -635,7 +661,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>Unboxing CBIS-DDSM - A Structural Analysis</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Unboxing CBIS-DDSM</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -668,6 +694,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dicom-image-data">1.2.3. DICOM Image Data</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-unboxing">1.3. Dataset Unboxing</a></li>
 </ul>
   </nav></div>
 
