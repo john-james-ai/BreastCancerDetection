@@ -12,7 +12,7 @@ kernelspec:
 ---
 
 # Data Quality Analysis (DQA)
-In the previous section, we began the process of transforming the raw CBIS-DDSM case and DICOM data into a structure and format more suitable for analysis. The purpose of this effort is to identify potential data quality issues, errors, and anomalies requiring further data preprocessing, prior to the analysis stage. 
+In the previous section, we began the process of transforming the raw CBIS-DDSM case and DICOM data into a structure and format more suitable for analysis. The purpose of this effort is to identify potential data quality issues, errors, and anomalies requiring further data preprocessing, prior to the analysis stage.
 
 ## Approach
 Our approach will touch on three dimensions of data quality.
@@ -36,7 +36,7 @@ import pandas as pd
 from IPython.display import HTML, display_html
 import numpy as np
 
-from bcd.analyze.dqa.cbis import CBISDQA
+from bcd.dqa.cbis import CBISDQA
 from bcd.data.dataset import CBISDataset
 
 pd.set_option('display.max_colwidth', 200)
@@ -63,7 +63,7 @@ Record and data value completeness are 0.85 and 0.99 respectively. Let's take a 
 dqc.detail
 ```
 
-Missingness for calc type, mass_shape, and mass_margins is 1%, < 1%, and 2% respectively. Strictly speaking, we could drop those observations without a considerable loss of data. On the other hand, calc distribution missingness deserves a closer look. Let's examine missingness vis-a-vis the pathology target. 
+Missingness for calc type, mass_shape, and mass_margins is 1%, < 1%, and 2% respectively. Strictly speaking, we could drop those observations without a considerable loss of data. On the other hand, calc distribution missingness deserves a closer look. Let's examine missingness vis-a-vis the pathology target.
 
 ```{code-cell} ipython3
 cbis.dqa.get_incomplete_data(subset='calc_distribution')['pathology'].value_counts().to_frame()
@@ -87,14 +87,14 @@ No duplicate records exist in the data.
 +++
 
 ### Validity Analysis
-Here, we assess the degree to which the datasets contain valid values. 
+Here, we assess the degree to which the datasets contain valid values.
 
 ```{code-cell} ipython3
 dqv = cbis.dqa.analyze_validity()
 print(dqv.summary)
 ```
 
-Record and data value validity are 0.84 and 0.99, respectively. Note, missing data will have an impact on record validity. Still, let's take a closer look at the invalid data. 
+Record and data value validity are 0.84 and 0.99, respectively. Note, missing data will have an impact on record validity. Still, let's take a closer look at the invalid data.
 
 ```{code-cell} ipython3
 dqv.detail
@@ -132,7 +132,7 @@ Statistically, breast densities of 2,3 and 4 are equally probable for malignant 
 df_similar_dist['breast_density'].value_counts().to_frame()
 ```
 
-We only have five DIFFUSELY_SCATTERED calcification cases, two of which are our invalid cases. Two cases have breast densities of 2, and another with a value of 3. Not a statistically significant difference in breast densities for DIFFUSELY_SCATTERED calcification cases. Though these invalid observations are relative, they represent 40% of the DIFFUSELY_SCATTERED calcification cases. We'll attempt to impute these values rather than delete them. 
+We only have five DIFFUSELY_SCATTERED calcification cases, two of which are our invalid cases. Two cases have breast densities of 2, and another with a value of 3. Not a statistically significant difference in breast densities for DIFFUSELY_SCATTERED calcification cases. Though these invalid observations are relative, they represent 40% of the DIFFUSELY_SCATTERED calcification cases. We'll attempt to impute these values rather than delete them.
 
 +++
 

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/analyze/dqa/cbis.py                                                            #
+# Filename   : /bcd/dqa/cbis.py                                                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 03:23:51 am                                              #
-# Modified   : Tuesday January 2nd 2024 07:29:28 pm                                                #
+# Modified   : Wednesday January 10th 2024 06:20:10 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -26,7 +26,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-from bcd.analyze.dqa.base import DQA
+from bcd.dqa.base import DQA
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)

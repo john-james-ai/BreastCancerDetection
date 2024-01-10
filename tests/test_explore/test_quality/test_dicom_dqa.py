@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:38:22 am                                              #
-# Modified   : Thursday December 28th 2023 09:29:37 pm                                             #
+# Modified   : Wednesday January 10th 2024 06:20:11 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -23,7 +23,7 @@ from datetime import datetime
 import pandas as pd
 import pytest
 
-from bcd.analyze.dqa.dicom import DicomDQA
+from bcd.dqa.dicom import DicomDQA
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=missing-class-docstring, line-too-long, no-member, logging-format-interpolation
