@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday December 25th 2023 09:13:38 pm                                               #
-# Modified   : Tuesday December 26th 2023 02:15:25 am                                              #
+# Modified   : Thursday January 11th 2024 03:27:11 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,7 @@
 import cv2
 import numpy as np
 
-from bcd import Task
+from bcd.preprocess.base import Task
 from bcd.preprocess.threshold import Threshold
 from bcd.utils.image import grayscale
 
@@ -31,7 +31,7 @@ from bcd.utils.image import grayscale
 #                             ARTIFACT REMOVER CONTOUR-BASED                                       #
 # ------------------------------------------------------------------------------------------------ #
 class ArtifactRemoverContour(Task):
-    """Removes artifacts from grayscale images
+    """Removes artifacts from grayscale images using a border following algorithm.
 
     This algorithm segments the breast from the background and artifacts by first, binarizing the
     image using a global threshold. Then, the contours are extracted using a border-following
@@ -41,7 +41,6 @@ class ArtifactRemoverContour(Task):
 
     Args:
         binarizer (Threshold): A Threshold object.
-        crop (bool): Whether to crop the image around the segmented breast. Default = False
 
     Returns:
         np.ndarray: Image with artifacts removed.
@@ -55,10 +54,9 @@ class ArtifactRemoverContour(Task):
 
     """
 
-    def __init__(self, binarizer: Threshold, crop: bool = False) -> None:
+    def __init__(self, binarizer: Threshold) -> None:
         super().__init__()
         self._binarizer = binarizer
-        self._crop = crop
 
     def run(self, image: np.ndarray) -> np.ndarray:
         """Remove artifacts
@@ -90,10 +88,6 @@ class ArtifactRemoverContour(Task):
         )
         image_seg = cv2.bitwise_and(image, image, mask=mask)
 
-        if self._crop:
-            x, y, w, h = cv2.boundingRect(contours[idx])
-            image_seg = image_seg[y : y + h, x : x + w]
-
         return image_seg
 
 
@@ -110,7 +104,6 @@ class ArtifactRemoverConnection(Task):
 
     Args:
         binarizer (Threshold): A Threshold object.
-        crop (bool): Whether to crop the image around the segmented breast. Default = False
 
     Returns:
         np.ndarray: Image with artifacts removed.

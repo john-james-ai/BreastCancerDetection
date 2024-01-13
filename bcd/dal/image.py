@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Tuesday January 2nd 2024 04:24:56 pm                                                #
+# Modified   : Thursday January 11th 2024 03:58:31 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import logging
 import os
-from dataclasses import dataclass
 from typing import Callable
 
 import cv2
@@ -28,85 +27,12 @@ import dicomsdl as dicom
 import numpy as np
 import pandas as pd
 
-from bcd import DataClass
+# ------------------------------------------------------------------------------------------------ #
+METADATA_FILEPATH = "data/meta/3_clean/cbis.csv"
 
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=no-member
-# ------------------------------------------------------------------------------------------------ #
-#                                       IMAGE                                                      #
-# ------------------------------------------------------------------------------------------------ #
-@dataclass
-class Image(DataClass):
-    """Encapsulates an image object."""
-
-    patient_id: str
-    uid: str
-    series_uid: str
-    mmg_id: str
-    series_description: str
-    image_view: str
-    breast_density: int
-    subtlety: int
-    laterality: str
-    abnormality_id: int
-    abnormality_type: str
-    calc_type: str
-    calc_distribution: str
-    mass_shape: str
-    mass_margins: str
-    height: int
-    width: int
-    size: int
-    aspect_ratio: float
-    bit_depth: int
-    min_pixel_value: int
-    max_pixel_value: int
-    mean_pixel_value: float
-    std_pixel_value: float
-    pathology: str
-    assessment: int
-    cancer: bool
-    fileset: str
-    filepath: str
-    pixels: np.ndarray
-
-    @classmethod
-    def create(cls, pixels: np.ndarray, meta: pd.Series) -> Image:
-        return cls(
-            patient_id=meta["patient_id"],
-            uid=meta["uid"],
-            series_uid=meta["series_uid"],
-            mmg_id=meta["mmg_id"],
-            series_description=meta["series_description"],
-            image_view=meta["image_view"],
-            breast_density=meta["breast_density"],
-            subtlety=meta["subtlety"],
-            laterality=meta["laterality"],
-            abnormality_id=meta["abnormality_id"],
-            abnormality_type=meta["abnormality_type"],
-            calc_type=meta["calc_type"],
-            calc_distribution=meta["calc_distribution"],
-            mass_shape=meta["mass_shape"],
-            mass_margins=meta["mass_margins"],
-            height=meta["height"],
-            width=meta["width"],
-            size=meta["size"],
-            aspect_ratio=meta["aspect_ratio"],
-            bit_depth=meta["bit_depth"],
-            min_pixel_value=meta["min_pixel_value"],
-            max_pixel_value=meta["max_pixel_value"],
-            mean_pixel_value=meta["mean_pixel_value"],
-            std_pixel_value=meta["std_pixel_value"],
-            pathology=meta["pathology"],
-            assessment=meta["assessment"],
-            cancer=meta["cancer"],
-            fileset=meta["fileset"],
-            filepath=meta["filepath"],
-            pixels=pixels,
-        )
-
-
 # ------------------------------------------------------------------------------------------------ #
 #                                      IMAGE IO                                                    #
 # ------------------------------------------------------------------------------------------------ #
@@ -182,47 +108,141 @@ class ImageIO:
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        IMAGE READER                                              #
+#                                      IMAGE REPO                                                  #
 # ------------------------------------------------------------------------------------------------ #
-class ImageReader:
-    """Iterator class that serves up images matching user designated criteria.
+class ImageRepo:
+    """Provides a repository interface to Images
 
     Args:
-       case_filepath (str): Path to file containing cases and image paths.
-       n (int): Number of images to include in the iteration.
-       condition (Callable): A lambda statement to subset the data. For instance, obtaining
-           all calcification case images would require the following lambda condition:
-               lambda x: x['abnormality_type' == 'calc']
-
+        io (type[ImageIO]): ImageIO class type
+        force (bool): Overwrites existing data only if True. Default = False
     """
 
-    # TODO: Fix image reader if needed.
-    def __init__(
-        self, case_filepath: str, n: int = None, condition: Callable = None
+    def __init__(self, io: type[ImageIO] = ImageIO, force: bool = False) -> None:
+        self._io = io
+        self._force = force
+        self._meta = pd.read_csv(METADATA_FILEPATH)
+        self._logger = logging.getLogger(f"{self.__class__.__name__}")
+
+    @property
+    def force(self) -> bool:
+        return self._force
+
+    def query(
+        self,
+        n: int = None,
+        frac: float = None,
+        condition: Callable = None,
+        groupby: list = None,
+        columns: list = None,
+        random_state: int = None,
+    ) -> pd.DataFrame:
+        """Returns the raw image metadata matching the query parameters.
+
+        Args:
+            n (int): Number of records to return or the number of records
+                to return in each group, if groupby is not None. Default = None
+            frac (float): The fraction of all records to return or the
+                fraction of records by group if groupby is not None. Ignored
+                if n is not None. Default = None
+            condition (Callable): Lambda expression used to subset the metadata.
+                Default is None
+            groupby (list): List of grouping variables for stratified sampling.
+                Default is None.
+            columns (list): List of columns to select.
+            random_state (int): Seed for pseudo-randomization
+
+            If all parameters are None, all records are returned.
+        """
+        if n is not None and frac is not None:
+            msg = "Ambiguous parameters. n or frac must be None. "
+            self._logger.exception(msg)
+            raise ValueError(msg)
+
+        df = self._meta.copy(deep=True)
+
+        if condition is not None:
+            try:
+                df = df[condition].copy(deep=True)
+            except KeyError as exc:
+                msg = "Invalid condition. "
+                self._logger.exception(msg)
+                raise ValueError(msg) from exc
+
+        if groupby is not None:
+            df = df.groupby(by=groupby).sample(
+                n=n, frac=frac, random_state=random_state
+            )
+        elif n is not None or frac is not None:
+            df = df.sample(n=n, frac=frac, random_state=random_state)
+
+        if columns is not None:
+            df = df[columns].copy(deep=True)
+
+        df = df.drop_duplicates()
+
+        return df
+
+    def get(self, filepath: str) -> np.ndarray:
+        """Returns an image from the repository
+
+        Args:
+            filepath (str): Path to the image.
+
+        Raises: FileNotFound Exception if file not found.
+        """
+        return self._io.read(filepath=filepath)
+
+    def add(
+        self,
+        image: np.ndarray,
+        destination: str,
+        fileset: str,
+        label: bool,
+        filename: str,
     ) -> None:
-        self._case_filepath = case_filepath
-        self._n = n
-        self._condition = condition
-        self._idx = 0
-        self._meta = None
+        """Adds an image to the repository.
 
-    def __iter__(self) -> ImageReader:
-        self._idx = 0
-        df = pd.read_csv(self._case_filepath)
-        if self._condition is not None:
-            df = df.loc[self._condition]
-        if self._n is not None:
-            df = df.sample(n=self._n)
-        self._meta = df
-        return self
+        Args:
+            image (np.ndarray): Image in numpy array format.
+            destination (str): The parent directory for the data.
+            fileset (str): Whether the image is from the 'training' or 'test' set
+            label (bool): Whether the image represents a malignancy
+            filename (str): Name of the file
 
-    def __next__(self) -> Image:
-        try:
-            meta = self._meta.iloc[self._idx]
-            filepath = os.path.join()
-            pixels = ImageIO.read(filepath=meta["filepath"])
-            image = Image.create(pixels=pixels, meta=meta)
-            self._idx += 1
-            return image
-        except IndexError as exc:
-            raise StopIteration from exc
+        Raises FileExistError if file already exists and Force is False
+        """
+        filepath = self._get_filepath(
+            destination=destination, fileset=fileset, label=label, filename=filename
+        )
+        if os.path.exists(filepath) and not self._force:
+            msg = f"{filepath} already exists."
+            self._logger.exception(msg)
+            raise FileExistsError(msg)
+        else:
+            self._io.write(pixel_data=image, filepath=filepath, force=self._force)
+
+    def exists(
+        self, destination: str, fileset: str, label: bool, filename: str
+    ) -> bool:
+        """Evaluates existence of an image as specified.
+
+        Args:
+            destination (str): The parent directory for the data.
+            fileset (str): Whether the image is from the 'training' or 'test' set
+            label (bool): Whether the image represents a malignancy
+            filename (str): Name of the file
+
+
+        """
+        return os.path.exists(
+            self._get_filepath(
+                destination=destination, fileset=fileset, label=label, filename=filename
+            )
+        )
+
+    def _get_filepath(
+        self, destination: str, fileset: str, label: bool, filename: str
+    ) -> str:
+        pathology = "benign" if not label else "malignant"
+        return os.path.join(destination, fileset, pathology, filename)

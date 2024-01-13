@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday December 24th 2023 09:45:47 pm                                               #
-# Modified   : Sunday December 24th 2023 10:39:13 pm                                               #
+# Modified   : Thursday January 11th 2024 03:28:29 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -20,7 +20,7 @@ import cv2
 import numpy as np
 from scipy import signal
 
-from bcd import Task
+from bcd.preprocess.base import Task
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -91,7 +91,7 @@ class BilateralFilter(Task):
     """Bilateral Filter Denoiser"""
 
     def __init__(
-        self, d: int - 1, sigma_range: float = 25, sigma_domain: float = 25
+        self, d: int = 1, sigma_range: float = 25, sigma_domain: float = 25
     ) -> None:
         super().__init__()
         self._d = d

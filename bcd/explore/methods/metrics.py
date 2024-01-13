@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday December 24th 2023 08:54:39 pm                                               #
-# Modified   : Sunday December 24th 2023 09:04:19 pm                                               #
+# Modified   : Thursday January 11th 2024 03:27:10 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,7 +21,7 @@ from skimage.metrics import mean_squared_error as mse
 from skimage.metrics import peak_signal_noise_ratio as psnr
 from skimage.metrics import structural_similarity as ssim
 
-from bcd import Task
+from bcd.preprocess.base import Task
 
 
 # ------------------------------------------------------------------------------------------------ #

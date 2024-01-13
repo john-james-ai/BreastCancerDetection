@@ -3,102 +3,91 @@
 # ================================================================================================ #
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
-# Python     : 3.10.10                                                                             #
-# Filename   : /bcd/__init__.py                                                                    #
+# Python     : 3.10.12                                                                             #
+# Filename   : /bcd/preprocess/base.py                                                             #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Thursday August 31st 2023 07:35:50 pm                                               #
-# Modified   : Thursday January 11th 2024 03:09:50 pm                                              #
+# Created    : Thursday January 11th 2024 07:49:36 am                                              #
+# Modified   : Thursday January 11th 2024 12:33:32 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
-# Copyright  : (c) 2023 John James                                                                 #
+# Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
 from __future__ import annotations
 
 import json
-import logging
 import string
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Callable
 
 import numpy as np
 import pandas as pd
 
-# ------------------------------------------------------------------------------------------------ #
-# pylint: disable=unused-argument
-# ------------------------------------------------------------------------------------------------ #
-IMMUTABLE_TYPES: tuple = (
-    str,
-    int,
-    float,
-    bool,
-    np.int16,
-    np.int32,
-    np.int64,
-    np.int8,
-    np.uint8,
-    np.uint16,
-    np.float16,
-    np.float32,
-    np.float64,
-    np.float128,
-    np.bool_,
-    datetime,
-)
-SEQUENCE_TYPES: tuple = (
-    list,
-    tuple,
-)
-# ------------------------------------------------------------------------------------------------ #
-NUMERIC_TYPES = [
-    "int16",
-    "int32",
-    "int64",
-    "float16",
-    "float32",
-    "float64",
-    np.int16,
-    np.int32,
-    np.int64,
-    np.int8,
-    np.float16,
-    np.float32,
-    np.float64,
-    np.float128,
-    np.number,
-    int,
-    float,
-    complex,
-]
+from bcd import IMMUTABLE_TYPES, SEQUENCE_TYPES
 
 
 # ------------------------------------------------------------------------------------------------ #
-NON_NUMERIC_TYPES = ["category", "object"]
+class Job(ABC):
+    """Defines the interface for a job."""
+
+    @abstractmethod
+    def add_resources(self, *args, **kwargs) -> None:
+        """Adds available computational resources to the Job"""
+
+    @abstractmethod
+    def add_inputs(self, *args, **kwargs) -> None:
+        """Adds job inputs to the Job"""
+
+    @abstractmethod
+    def set_outputs(self, *args, **kwargs) -> None:
+        """Sets outputs for the Job."""
+
+    @abstractmethod
+    def add_task(self, task: Task) -> None:
+        """Adds a Task to the Job"""
+
+    @abstractmethod
+    def run(self) -> None:
+        """Runs the job"""
+
+    @abstractmethod
+    def validate(self) -> None:
+        """Validates the Job object."""
 
 
 # ------------------------------------------------------------------------------------------------ #
-@dataclass(eq=False)
-class DataClass(ABC):
-    """A dataclass with extensions for equality checks, string representation, and formatting."""
+class JobBuilder(ABC):
+    """Defines the interface for a job builder"""
 
-    def __eq__(self, other: DataClass) -> bool:
-        for key, value in self.__dict__.items():
-            if type(value) in IMMUTABLE_TYPES:
-                if value != other.__dict__[key]:
-                    return False
-            elif isinstance(value, np.ndarray):
-                if not np.array_equal(value, other.__dict__[key]):
-                    return False
-            elif isinstance(value, (pd.DataFrame, pd.Series)):
-                if not self.__dict__[key].equals(other.__dict__[key]):
-                    return False
+    @property
+    @abstractmethod
+    def job(self) -> Job:
+        """Returns the complete Job object."""
 
-        return True
+    @abstractmethod
+    def set_inputs(self, *args, **kwargs) -> None:
+        """Builds the inputs for the job."""
+
+    @abstractmethod
+    def set_outputs(self, *args, **kwargs) -> None:
+        """Specifies how the job will produce its output"""
+
+    @abstractmethod
+    def add_task(self, task: Task) -> None:
+        """Adds a task to the Job"""
+
+
+# ------------------------------------------------------------------------------------------------ #
+class Task(ABC):
+    """Encapsulates the interface for tasks that perform."""
+
+    @abstractmethod
+    def run(self, image: np.ndarray) -> Any:
+        """Runs the task."""
 
     def __repr__(self) -> str:  # pragma: no cover tested, but missing in coverage
         s = "{}({})".format(
@@ -130,11 +119,7 @@ class DataClass(ABC):
 
     def as_dict(self) -> dict:
         """Returns a dictionary representation of the the FileManager object."""
-        return {
-            k: self._export_config(v)
-            for k, v in self.__dict__.items()
-            if not k.startswith("_")
-        }
+        return {k: self._export_config(v) for k, v in self.__dict__.items()}
 
     @classmethod
     def _export_config(cls, v):  # pragma: no cover

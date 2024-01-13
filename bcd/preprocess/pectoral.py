@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday December 24th 2023 11:04:18 pm                                               #
-# Modified   : Tuesday December 26th 2023 05:50:21 pm                                              #
+# Modified   : Thursday January 11th 2024 03:27:11 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -21,7 +21,7 @@ import cv2
 import numpy as np
 from skimage.draw import polygon
 
-from bcd import Task
+from bcd.preprocess.base import Task
 from bcd.utils.image import orient_image
 
 
