@@ -17,6 +17,7 @@ __pycache__/
 
 # Model Checkpoints
 /models/checkpoints/
+/models/
 
 # Logs
 /logs
