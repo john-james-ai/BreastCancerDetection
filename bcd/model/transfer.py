@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday January 13th 2024 08:37:37 pm                                              #
-# Modified   : Monday January 15th 2024 03:39:05 pm                                                #
+# Modified   : Monday January 15th 2024 10:57:50 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -193,7 +193,7 @@ class X4Learner:
         val_ds: tf.data.Dataset,
         learning_rate: float = 0.0001,
         patience: int = 3,
-        metric: str = "val_loss",
+        metric: str = "accuracy",
         loss: str = "binary_crossentropy",
         activation: str = "sigmoid",
         callbacks: list = None,

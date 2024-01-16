@@ -11,14 +11,16 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 15th 2024 04:04:13 pm                                                #
-# Modified   : Monday January 15th 2024 06:25:23 pm                                                #
+# Modified   : Tuesday January 16th 2024 01:43:00 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
 import logging
 import os
+import re
 from datetime import datetime
+from glob import glob
 from typing import Union
 
 import numpy as np
@@ -62,7 +64,7 @@ class ModelRepo:
         self,
         model: tf.keras.Model,
         name: str,
-        description: str,
+        stage: str,
         history: tf.keras.callbacks.History,
         monitor: str = "val_loss",
     ) -> None:
@@ -71,7 +73,7 @@ class ModelRepo:
         Args:
             model (tf.keras.Model): Model to be saved to the repository.
             name (str): Name of the model
-            description (str): Description of the model.
+            stage (str): Stage of the model. Examples would be 'feature_extraction', or 'fine_tuning_session_2'.
             history (tf.keras.callbacks.History): A history object returned from the fit method
             monitor (str): The metric that was monitored
         """
@@ -81,6 +83,7 @@ class ModelRepo:
         epochs = self._get_epochs(history=history)
         filepath = self._format_filepath(
             name=name,
+            stage=stage,
             version=version,
             monitor=monitor,
             score=score,
@@ -94,7 +97,7 @@ class ModelRepo:
         data = {
             "name": name,
             "version": version,
-            "description": description,
+            "stage": stage,
             "monitor": monitor,
             "score": score,
             "epoch": epoch,
@@ -166,7 +169,10 @@ class ModelRepo:
     def _get_version(self, name: str) -> int:
         """Returns the next available version number for a model name."""
         df = self.registry
-        return df["name"].loc[df["name"] == name].count() + 1
+        try:
+            return df["name"].loc[df["name"] == name].count() + 1
+        except TypeError:
+            return 1
 
     def _get_best_score(
         self, history: tf.keras.callbacks.History, monitor: str = "val_loss"
@@ -242,3 +248,109 @@ class ModelRepo:
         else:
             msg = f"Model {name}-v{version} was not found."
             self._logger.warning(msg)
+
+
+# ------------------------------------------------------------------------------------------------ #
+class ModelCheckpointRepo:
+    """Repository for Model checkpoints
+
+    Args:
+        location (str): Directory containing model checkpoints.
+
+        monitor: The metric name to monitor. Typically the metrics are set by the Model.compile
+        method. Note: Prefix the name with "val_" to monitor validation metrics. Use "loss" or
+        "val_loss" to monitor the model's total loss. If you specify metrics as strings, like
+        "accuracy", pass the same string (with or without the "val_" prefix). If you pass
+        metrics.Metric objects, monitor should be set to metric.name If you're not sure about the
+        metric names you can check the contents of the history.history dictionary returned by
+        history = model.fit() Multi-output models set additional prefixes on the metric names.
+
+        mode (str): one of {"auto", "min", "max"}. If save_best_only=True, the decision to overwrite
+        the current save file is made based on either the maximization or the minimization of the
+        monitored quantity. For val_acc, this should be "max", for val_loss this should be "min",
+        etc. In "auto" mode, the mode is set to "max" if the quantities monitored are "acc" or start
+        with "fmeasure" and are set to "min" for the rest of the quantities.
+
+        save_weights_only (bool): if True, then only the model's weights will be saved
+        (model.save_weights(filepath)), else the full model is saved (model.save(filepath)).
+
+        save_freq (str): "epoch" or integer. When using "epoch", the callback saves the model after each
+        epoch. When using integer, the callback saves the model at end of this many batches. If the
+        Model is compiled with steps_per_execution=N, then the saving criteria will be checked every
+        Nth batch. Note that if the saving isn't aligned to epochs, the monitored metric may
+        potentially be less reliable (it could reflect as little as 1 batch, since the metrics get
+        reset every epoch). Defaults to "epoch".
+
+        verbose (int): Verbosity mode, 0 or 1. Mode 0 is silent, and mode 1 displays messages when
+        the callback takes an action.
+    """
+
+    __location = "models/"
+
+    def __init__(
+        self,
+        location: str = None,
+        monitor: str = "val_loss",
+        mode: str = "auto",
+        save_weights_only: bool = False,
+        save_best_only: bool = True,
+        save_freq: str = "epoch",
+        verbose: int = 1,
+    ) -> None:
+        self._location = location or self.__location
+        self._monitor = monitor
+        self._mode = mode
+        self._save_weights_only = save_weights_only
+        self._save_best_only = save_best_only
+        self._save_freq = save_freq
+        self._verbose = verbose
+
+        self._logger = logging.getLogger(f"{self.__class__.__name__}")
+        self._logger.setLevel(level=logging.DEBUG)
+
+    def get(self, name: str, stage: str) -> tf.keras.Model:
+        """Returns the latest model for the give name and stage
+
+        Args:
+            name (str): Model name
+            stage (str): Stage of the model.
+        """
+
+        directory = os.path.join(self._location, name, stage)
+        pattern = name + "_" + stage + "*.keras"
+        filepath = sorted(glob(directory + pattern, recursive=True))[-1]
+        if len(filepath) == 0:
+            msg = f"No model checkpoint found for {name}_{stage}"
+            self._logger.exception(msg)
+            raise FileNotFoundError(msg)
+
+        model = tf.keras.models.load_model(filepath)
+        epoch = self._get_epoch(filepath=filepath)
+        return model, epoch
+
+    def create_callback(
+        self, name: str, stage: str
+    ) -> tf.keras.callbacks.ModelCheckpoint:
+        """Creates and returns the ModelCheckpoint callback.
+
+        Args:
+            name (str): The name of the model
+            stage (str): Brief description of model stage.
+        """
+        filename = f"{name}_{stage}_"
+        filename = filename + "{epoch:02d}-val_loss_{val_loss:.2f}.keras"
+        filepath = os.path.join(self._location, name, stage, filename)
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+        return tf.keras.callbacks.ModelCheckpoint(
+            filepath=filepath,
+            monitor=self._monitor,
+            mode=self._mode,
+            save_weights_only=self._save_weights_only,
+            save_best_only=self._save_best_only,
+            save_freq=self._save_freq,
+            verbose=self._verbose,
+        )
+
+    def _get_epoch(self, filepath: str) -> int:
+        return list(map(int, re.findall("\d+", filepath)))[0]
