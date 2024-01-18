@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday January 13th 2024 08:37:37 pm                                              #
-# Modified   : Monday January 15th 2024 10:57:50 pm                                                #
+# Modified   : Thursday January 18th 2024 09:26:06 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -64,18 +64,16 @@ class X4LearnerLRSchedule:
 def thaw(
     model: tf.keras.Model,
     base_model_layer: int,
-    session: int,
-    thaw_rate: Union[float, int],
+    n: int,
 ) -> tf.keras.Model:
-    """Thaws n top layers of a TensorFlow model"""
+    """Thaws n top layers of a TensorFlow model
 
-    n_layers = len(model.layers[base_model_layer].layers)
+    Args:
+        model (tf.keras.Model): Model to thaw
+        base_model_layer (int): The layer containing the base model
+        n (int): Top number of layers in base model to thaw.
 
-    if thaw_rate > 1:
-        n = session * thaw_rate
-    else:
-        n = session * int(thaw_rate * n_layers)
-
+    """
     model.layers[base_model_layer].trainable = True
     for layer in model.layers[base_model_layer].layers[:-n]:
         layer.trainable = False
@@ -385,18 +383,16 @@ class X4Learner:
         self,
         model: tf.keras.Model,
         base_model_layer: int,
-        session: int,
-        thaw_rate: Union[float, int],
+        n: int,
     ) -> tf.keras.Model:
-        """Thaws n top layers of a TensorFlow model"""
+        """Thaws n top layers of a TensorFlow model
 
-        n_layers = len(model.layers[base_model_layer].layers)
+        Args:
+            model (tf.keras.Model): Model to thaw
+            base_model_layer (int): The layer containing the base model
+            n (int): Top number of layers in base model to thaw.
 
-        if thaw_rate > 1:
-            n = session * thaw_rate
-        else:
-            n = session * int(thaw_rate * n_layers)
-
+        """
         model.layers[base_model_layer].trainable = True
         for layer in model.layers[base_model_layer].layers[:-n]:
             layer.trainable = False
