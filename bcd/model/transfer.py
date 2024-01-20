@@ -11,21 +11,20 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday January 13th 2024 08:37:37 pm                                              #
-# Modified   : Thursday January 18th 2024 09:26:06 am                                              #
+# Modified   : Friday January 19th 2024 04:38:42 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
 import logging
-import os
 import sys
 from typing import Union
 
 import numpy as np
-import pandas as pd
 import tensorflow as tf
 
-from bcd.model.visual import X4LearningVisualizer
+from bcd.model.callback import Historian
+from bcd.model.repo import ModelRepo
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -33,31 +32,6 @@ logging.basicConfig(stream=sys.stdout)
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=line-too-long
-
-
-# ------------------------------------------------------------------------------------------------ #
-class X4LearnerLRSchedule:
-    """Transfer Learning Learning Rate Scheduler
-
-    Learning rate progressively decays with decay values in [2,6]. A list of decay factors, one
-    for each session, is created in the linear space between 2 and 6. The returned learning rate
-    for a  session is the initial learning rate / 10**learning rate factor for that session.
-
-    Args:
-        initial_learning_rate (float): Initial learning rate from feature extraction.
-        sessions (int): Number of fine tuning sessions
-    """
-
-    def __init__(self, initial_learning_rate: float, sessions: int) -> None:
-        self._initial_learning_rate = initial_learning_rate
-        self._learning_rate_factors = np.linspace(
-            2, 6, endpoint=True, num=sessions
-        ).round(0)
-
-    def __call__(self, session) -> float:
-        """Returns the learning rate for the session."""
-        factor = self._learning_rate_factors[session - 1]
-        return self._initial_learning_rate / 10**factor
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -81,305 +55,200 @@ def thaw(
     return model
 
 
-# ------------------------------------------------------------------------------------------------ #
-def fine_tune(
-    model: tf.keras.Model,
-    base_model_layer: int,
-    train_ds: tf.data.Dataset,
-    val_ds: tf.data.Dataset,
-    learning_rate: float = 0.0001,
-    initial_epoch: int = None,
-    strategy: str = "resume",
-    epochs: int = 10,
-    sessions: int = 10,
-    thaw_rate: Union[float, int] = 0.05,
-    lrschedule: type[X4LearnerLRSchedule] = X4LearnerLRSchedule,
-    loss: str = "binary_crossentropy",
-    metric: str = "val_loss",
-    callbacks: list = None,
-) -> None:
-    """Performs iterative fine tuning using gradual unfreezing of the base model.
+# ================================================================================================ #
+#                                       FINE TUNER                                                 #
+# ================================================================================================ #
+class FineTuner:
+    """Performs fine tuning of a model that has converged under feature extraction.
 
-    Choices of fine tuning strategy include: 'restart', and 'resume'. The 'restart' strategy
-    starts each session with the feature extraction model. The 'resume' strategy starts
-    with the prior model and epochs.
+    Fine tuning occurs up to a maximum number of sessions, subject to early stop. If the
+    monitored score hasn't improved in patience sessions, fine tuning stops. Fine tuning is
+    performed according to a thaw schedule. The thaw schedule contains the number of layers
+    to thaw and the associated learning rate for each session.
 
     Args:
-        model (tf.keras.Model): Model to be fine tuned.
-        base_model_layer (int): Index for the base model to be thawed.
-        strategy (str): Either 'restart' or 'resume'. Default is 'resume'.
-        epochs (int): Number of epochs per session. Default = 10
-        sessions (int): Number of fine tuning sessions to execute. Default is 10
-        learning_rate_decay (int): Factor by which the learning rate is reduced each session.
-        thaw_rate (Union[float, int]): Rate by which layers are thawed. This can be a raw
-            integer or a float proportion of base model layers. Default = 0.05.
+        name (str): Name of the model
+        train_ds (tf.data.Dataset)
     """
-
-    # Initialization
-    session = 0
-    lrs = lrschedule(initial_learning_rate=learning_rate, sessions=sessions)
-    starting_epoch = initial_epoch
-
-    while session < sessions:
-        session += 1
-
-        learning_rate = lrs(session=session)
-
-        if "restart" in strategy:
-            starting_epoch = initial_epoch
-
-        thaw(
-            model=model,
-            base_model_layer=base_model_layer,
-            session=session,
-            thaw_rate=thaw_rate,
-        )
-
-        model.compile(
-            loss=loss,
-            optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-            metrics=[metric],
-        )
-
-        total_epochs = epochs + initial_epoch
-        _ = model.fit(
-            train_ds,
-            epochs=total_epochs,
-            validation_data=val_ds,
-            initial_epoch=starting_epoch,
-            callbacks=[callbacks],
-        )
-
-
-# ------------------------------------------------------------------------------------------------ #
-class X4Learner:
-    """Performs transfer learning of a TensorFlow model containing a pre-trained, frozen base model.
-
-    Two methods are exposed: extract_features, and fine_tune. The extract_features method trains
-    the model on the given data using the designated learning rate. The fine_tune method
-    thaws one or more layers in the model, then trains it on a decayed learning rate. Each
-    fine tuning session decays the learning rate by a learning_rate_decay factor to mitigate
-    catastrophic forgetting.
-
-    Args:
-        name (str): Name of the model architecture.
-        model (tf.keras.Model): Model containing a frozen, pre-trained base model.
-        train_ds (tf.data.Dataset): TensorFlow training dataset.
-        val_ds (tf.data.Dataset): TensorFlow validation dataset.
-        base_model_layer (int): Index for the base model layer
-        learning_rate (float): The learning rate for feature extraction. Default = 0.0001
-        patience (int): Number of fine tuning sessions for which no improvement is tolerated. Default = 3.
-        metric (str): The metric used to evaluate model fit performance. Default = 'val_loss'
-        loss (str): The loss function. Default = 'binary_crossentropy'.
-        activation (str): Activation function. Default = 'sigmoid'.
-        thaw_rate (Union[float, int]): Rate at which layers are thawed. If float, this is the proportion
-            of additional base model layers to be thawed each session. If an integer, this is the
-            number of layers to be thawed each session.
-        callbacks (list): Callback list. Should include an early stopping callback if max_epochs and/or
-            feature_extraction_epochs are significant.
-
-    """
-
-    __model_directory = "models/"
 
     def __init__(
         self,
         name: str,
-        model: tf.keras.Model,
-        base_model_layer: int,
         train_ds: tf.data.Dataset,
-        val_ds: tf.data.Dataset,
-        learning_rate: float = 0.0001,
-        patience: int = 3,
-        metric: str = "accuracy",
+        validation_ds: tf.data.Dataset,
+        repo: ModelRepo,
         loss: str = "binary_crossentropy",
-        activation: str = "sigmoid",
-        callbacks: list = None,
-        visualizer: type[X4LearningVisualizer] = X4LearningVisualizer,
+        monitor: str = "val_loss",
+        metrics: list = None,
+        patience: int = 3,
+        min_delta: float = 0.0001,
+        initial_learning_rate: float = 1e-5,
+        final_learning_rate: float = 1e-10,
+        fine_tune_epochs: int = 50,
+        sessions: int = 10,
+        callbacks: Union[list, tf.keras.callbacks.Callback] = None,
     ) -> None:
         self._name = name
-        self._model = model
         self._train_ds = train_ds
-        self._val_ds = val_ds
-        self._base_model_layer = base_model_layer
-        self._learning_rate = learning_rate
-        self._patience = patience
-        self._metric = metric
+        self._validation_ds = validation_ds
+        self._repo = repo
         self._loss = loss
-        self._activation = activation
+        self._monitor = monitor
+        self._metrics = metrics
+        self._patience = patience
+        self._min_delta = min_delta
+        self._initial_learning_rate = initial_learning_rate
+        self._final_learning_rate = final_learning_rate
+        self._fine_tune_epochs = fine_tune_epochs
+        self._sessions = sessions
         self._callbacks = callbacks
-        self._visualizer = visualizer(name=self._name)
 
-        self._n_layers = len(self._model.layers[self._base_model_layer].layers)
-        self._best_score = np.inf if "loss" in self._metric else 0
+        self._best_score = np.inf if "loss" in self._monitor else 0
+
+        self._base_model_layer = None
+        self._thaw_layers = []
+        self._learning_rates = []
         self._early_stop_counter = 0
 
-        self._initial_epoch = None
-        self._model_scores = []
-        self._features_extracted = False
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
-
         self._logger.setLevel(level=logging.DEBUG)
 
-    @property
-    def scores(self) -> pd.DataFrame:
-        if not self._features_extracted:
-            msg = "Model has not been created"
-            self._logger.exception(msg)
-        else:
-            return pd.DataFrame(data=self._model_scores)
+    # -------------------------------------------------------------------------------------------- #
+    def tune(
+        self,
+        model: tf.keras.Model,
+        historian: Historian,
+        base_model_layer: int,
+        force: bool = False,
+    ) -> None:
+        """Performs fine tuning of the model
 
-    # ------------------------------------------------------------------------------------------------ #
-    def extract_features(self, epochs: int = 100) -> None:
-        """Performs the feature extraction phase of transfer learning
+        This method takes a model that has been trained to conversion during
+        feature extraction. A gradual fine tuning schedule is created which lists the
+        layers to unfreeze in session groups from 1 to all layers on a log scale.
+        Each session, the model is trained for sessions epochs, subject to early
+        stopping. At the end of each session, the monitored score is evaluated.
+        If the score hasn't improved in patience sessions,  fine tuning
+        stops.
 
         Args:
-            epochs (int): Number of epochs to execute
+            model (tf.keras.Model): The model to be fine tuned.
+            history (History): Historian object.
+            base_model_layer (int): Layer of the base model.
+            last_epoch (int): Last epoch
+            force (bool): Whether to force training if the model already exists.
         """
+        session = 0
+        # Create a layer thaw schedule based upon the number of sessions and
+        # the number of layers in the base model. The number of layers to
+        # thaw in each session grows logarithmically from 1 to num_layers in model
+        # for 'session' values.
+        self._create_thaw_schedule(model=model, base_model_layer=base_model_layer)
+        # Add the historian to the callbacks.
+        self._callbacks = self._add_callback(self._callbacks, historian)
 
-        modelname = self._name + "_feature_extraction"
-        msg = f"Starting feature extraction stage for {modelname}."
-        self._logger.info(msg)
+        while session < self._sessions:
+            session += 1
+            stage = f"fine_tuning_session_{session}"
+            # Get the model from the repository if it already exists
+            # and we're not forcing.
+            if self._repo.exists(name=self._name, stage=stage) and not force:
+                model = self._repo.get(name=self._name, stage=stage)
+            else:
+                # Start session
+                historian.on_session_begin(session=session)
+                # Remove existing checkpoints if they exist
+                self._repo.remove(name=self._name, stage=stage)
 
-        history = self._model.fit(
-            self._train_ds,
-            epochs=epochs,
-            validation_data=self._val_ds,
-            callbacks=[self._callbacks],
+                # Thaw top n layers according to thaw schedule
+                model = self._thaw(
+                    model=model,
+                    base_model_layer=base_model_layer,
+                    n=self._thaw_layers[session - 1],
+                )
+
+                print("\n")
+                msg = f"Thawing {self._thaw_layers[session-1]} layers and training with {self._learning_rates[session-1]} learning rate."
+                self._logger.info(msg)
+
+                # Recompile the model
+                model.compile(
+                    loss=self._loss,
+                    optimizer=tf.keras.optimizers.Adam(
+                        learning_rate=self._learning_rates[session - 1]
+                    ),
+                    metrics=self._metrics,
+                )
+
+                # Summarize the model
+                model.summary()
+
+                # Extract last epoch from historian
+                initial_epoch = historian.last_epoch + 1
+                epochs = initial_epoch + self._fine_tune_epochs
+
+                # Create checkpoint callback
+                checkpoint_callback = self._repo.create_callback(
+                    name=self._name, stage=stage
+                )
+
+                # Add the checkpoint callback to the callback list.
+                callbacks = self._add_callback(self._callbacks, checkpoint_callback)
+
+                # Fine tune the model
+                history = model.fit(
+                    self._train_ds,
+                    validation_data=self._validation_ds,
+                    epochs=epochs,
+                    initial_epoch=initial_epoch,
+                    callbacks=callbacks,
+                )
+
+                # Obtain best score
+                best_score = self._get_best_score(history=history)
+
+                if not self._has_improved(score=best_score):
+                    break
+
+    # -------------------------------------------------------------------------------------------- #
+    def _add_callback(
+        self,
+        callbacks: Union[None, tf.keras.callbacks.Callback, list],
+        callback: tf.keras.callbacks.Callback,
+    ) -> list:
+        # Create checkpoint for the session and add it to sessions
+        orig_callbacks = callbacks.copy()
+
+        if orig_callbacks is None:
+            return [callback]
+        elif isinstance(orig_callbacks, list):
+            orig_callbacks.append(callback)
+            return orig_callbacks
+        else:
+            return [orig_callbacks, callback]
+
+    # -------------------------------------------------------------------------------------------- #
+    def _create_thaw_schedule(
+        self, model: tf.keras.Model, base_model_layer: int
+    ) -> None:
+        """Computes a schedule of layers to thaw."""
+        n_layers = len(model.layers[base_model_layer].layers)
+        self._thaw_layers = list(
+            np.geomspace(
+                start=1, stop=n_layers, endpoint=True, num=self._sessions
+            ).astype(int)
+        )
+        self._learning_rates = list(
+            np.geomspace(
+                start=self._initial_learning_rate,
+                stop=self._final_learning_rate,
+                endpoint=True,
+                num=self._sessions,
+            )
         )
 
-        self._visualizer(history=history)
-
-        # Save the last feature extraction epoch for fine tune reset
-        self._initial_epoch = history.epoch[-1]
-
-        # self.save_model(modelname=modelname, model=self._model)
-
-        score = self._get_best_score(history)
-        self._record_best_score(modelname=modelname, score=score)
-
-        self._features_extracted = True
-
-        msg = f"Completed feature extraction stage for {modelname}."
-        self._logger.info(msg)
-
     # ------------------------------------------------------------------------------------------------ #
-    def fine_tune(
-        self,
-        model: tf.keras.Model = None,
-        initial_epoch: int = None,
-        strategy: str = "resume",
-        epochs: int = 10,
-        sessions: int = 10,
-        thaw_rate: Union[float, int] = 0.05,
-        lrschedule: type[X4LearnerLRSchedule] = X4LearnerLRSchedule,
-    ) -> None:
-        """Performs iterative fine tuning using gradual unfreezing of the base model.
-
-        Choices of fine tuning strategy include: 'restart', and 'resume'. The 'restart' strategy
-        starts each session with the feature extraction model. The 'resume' strategy starts
-        with the prior model and epochs.
-
-        Args:
-            model (tf.keras.Model): Model to be fine tuned.
-            strategy (str): Either 'restart' or 'resume'. Default is 'resume'.
-            epochs (int): Number of epochs per session. Default = 10
-            sessions (int): Number of fine tuning sessions to execute. Default is 10
-            learning_rate_decay (int): Factor by which the learning rate is reduced each session.
-            thaw_rate (Union[float, int]): Rate by which layers are thawed. This can be a raw
-                integer or a float proportion of base model layers. Default = 0.05.
-        """
-
-        # Initialization
-        session = 0
-        history = None
-        lrs = lrschedule(initial_learning_rate=self._learning_rate, sessions=sessions)
-        model = model or self._model
-        initial_epoch = initial_epoch or self._initial_epoch
-
-        while session < sessions:
-            session += 1
-
-            learning_rate = lrs(session=session)
-
-            modelname = self._name + "_fine_tune_" + strategy + "_" + str(session)
-
-            msg = f"Fine tuning {modelname} session #{session} with {strategy} strategy with learning rate {learning_rate:e}."
-            self._logger.info(msg)
-
-            if "resume" in strategy:
-                try:
-                    initial_epoch = history.epoch[-1]
-                except AttributeError:
-                    initial_epoch = initial_epoch or self._initial_epoch
-
-            self.thaw(
-                model=model,
-                base_model_layer=self._base_model_layer,
-                session=session,
-                thaw_rate=thaw_rate,
-            )
-
-            model.compile(
-                loss=self._loss,
-                optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-                metrics=[self._metric],
-            )
-
-            total_epochs = epochs + initial_epoch
-            history = model.fit(
-                self._train_ds,
-                epochs=total_epochs,
-                validation_data=self._val_ds,
-                initial_epoch=initial_epoch,
-                callbacks=[self._callbacks],
-            )
-
-            self._visualizer(history=history)
-
-            # self.save_model(modelname=modelname, model=model)
-
-            score = self._get_best_score(history)
-            self._record_best_score(modelname=modelname, score=score)
-
-            if not self._is_improving(modelname=modelname, score=score):
-                break
-
-    # ------------------------------------------------------------------------------------------------ #
-    #                                           MODEL IO                                               #
-    # ------------------------------------------------------------------------------------------------ #
-    def save_model(self, modelname: str, model: tf.keras.Model) -> None:
-        """Saves a TensorFlow model to file.
-
-        Args:
-            modelname (str): Name of the model.
-            model (tf.keras.Model): Model to save.
-        """
-        filename = modelname + ".keras"
-        filepath = os.path.join(self.__model_directory, self._name, filename)
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        model.save(filepath)
-        msg = f"Saved {modelname} to {filepath}."
-        self._logger.debug(msg)
-
-    def load_model(self, modelname: str, recompile: bool = True) -> tf.keras.Model:
-        """Loads a TensorFlow model from file.
-
-        Args:
-            modelname (str): Name of the model.
-            recompile (bool): Whether to compile the model during load.
-
-        Returns: tensorflow.keras.Model
-        """
-        filename = modelname + ".keras"
-        filepath = os.path.join(self.__model_directory, self._name, filename)
-        model = tf.keras.models.load_model(filepath, compile=recompile)
-        msg = f"Loaded {modelname} from {filepath}"
-        self._logger.debug(msg)
-        return model
-
-    # ------------------------------------------------------------------------------------------------ #
-    def thaw(
+    def _thaw(
         self,
         model: tf.keras.Model,
         base_model_layer: int,
@@ -393,162 +262,37 @@ class X4Learner:
             n (int): Top number of layers in base model to thaw.
 
         """
+
         model.layers[base_model_layer].trainable = True
         for layer in model.layers[base_model_layer].layers[:-n]:
             layer.trainable = False
 
         return model
 
-    # ------------------------------------------------------------------------------------------------ #
+    # -------------------------------------------------------------------------------------------- #
     def _get_best_score(self, history: tf.keras.callbacks.History) -> float:
-        if "loss" in self._metric:
-            return min(history.history[self._metric])
+        if "loss" in self._monitor:
+            return min(history.history[self._monitor])
         else:
-            return max(history.history[self._metric])
+            return max(history.history[self._monitor])
 
-    # ------------------------------------------------------------------------------------------------ #
-    def _record_best_score(self, modelname: str, score: float) -> float:
-        """Records best model score."""
-        d = {modelname: score}
-        self._model_scores.append(d)
-
-        msg = f"Best {self._metric} score for {modelname} is {round(score,4)}"
+    # -------------------------------------------------------------------------------------------- #
+    def _has_improved(self, score: float) -> bool:
+        if "loss" in self._monitor:
+            if score < self._best_score - self._min_delta:
+                msg = f"Fine tuning {self._name} {self._monitor} improved to {round(score,4)} from {round(self._best_score,4)}."
+                self._best_score = score
+                self._early_stop_counter = 0
+            else:
+                msg = f"Fine tuning {self._name} {self._monitor} did NOT improve {round(score)}. Performance dropped by {round((score-self._best_score)/self._best_score*100,4)}%"
+                self._early_stop_counter += 1
+        else:
+            if score > self._best_score + self._min_delta:
+                msg = f"Fine tuning {self._name} {self._monitor} improved to {round(score,4)} from {round(self._best_score,4)}."
+                self._best_score = score
+                self._early_stop_counter = 0
+            else:
+                msg = f"Fine tuning {self._name} {self._monitor} did NOT improve {round(score)}. Performance dropped by {round((self._best_score-score)/self._best_score*100,4)}%"
+                self._early_stop_counter += 1
         self._logger.info(msg)
-
-    # ------------------------------------------------------------------------------------------------ #
-    def _is_improving(self, modelname: str, score: float) -> bool:
-        if "loss" in self._metric:
-            if score < self._best_score:
-                msg = f"Fine tuning {modelname} {self._metric} improved to {round(score,4)} from {round(self._best_score,4)}."
-                self._best_score = score
-                self._early_stop_counter = 0
-            else:
-                msg = f"Fine tuning {modelname} {self._metric} did NOT improve {round(score)}. Performance dropped by {round((score-self._best_score)/self._best_score*100,4)}%"
-                self._early_stop_counter += 1
-        else:
-            if score >= self._best_score:
-                msg = f"Fine tuning {modelname} {self._metric} improved to {round(score,4)} from {round(self._best_score,4)}."
-                self._best_score = score
-                self._early_stop_counter = 0
-            else:
-                msg = f"Fine tuning {modelname} {self._metric} did NOT improve {round(score)}. Performance dropped by {round((self._best_score-score)/self._best_score*100,4)}%"
-                self._early_stop_counter += 1
-        logging.info(msg)
         return self._early_stop_counter < self._patience
-
-
-# ================================================================================================ #
-#                                     X4LEARNER LITE                                               #
-# ================================================================================================ #
-class X4LearnerLite:
-    """Performs transfer learning of a TensorFlow model containing a pre-trained base model.
-
-    Two methods are exposed: extract_features, and fine_tune. The extract_features method trains
-    the model on the given data using the designated learning rate. The fine_tune method
-    thaws one or more layers in the model, then trains it on a decayed learning rate. Each
-    fine tuning session decays the learning rate by a learning_rate_decay factor to mitigate
-    catastrophic forgetting.
-
-    Args:
-        model (tf.keras.Model): Model containing a frozen, pre-trained base model.
-        train_ds (tf.data.Dataset): TensorFlow training dataset.
-        val_ds (tf.data.Dataset): TensorFlow validation dataset.
-        base_model_layer (int): Index for the base model layer for thawing.
-        learning_rate (float): The learning rate for feature extraction. Default = 0.0001
-        metric (str): The metric used to evaluate model fit performance. Default = 'val_loss'
-        loss (str): The loss function. Default = 'binary_crossentropy'.
-        activation (str): Activation function. Default = 'sigmoid'.
-
-    """
-
-    def __init__(
-        self,
-        model: tf.keras.Model,
-        base_model_layer: int,
-        train_ds: tf.data.Dataset,
-        val_ds: tf.data.Dataset,
-        learning_rate: float = 0.0001,
-        metric: str = "val_loss",
-        loss: str = "binary_crossentropy",
-        activation: str = "sigmoid",
-    ) -> None:
-        self._model = model
-        self._base_model_layer = base_model_layer
-
-        self._train_ds = train_ds
-        self._val_ds = val_ds
-
-        self._learning_rate = learning_rate
-
-        self._metric = metric
-        self._loss = loss
-        self._activation = activation
-        # Used during the thawing process to determine number of layers to thaw as proportion of
-        # total number of layers in the underlying base model.
-        self._n_layers = len(self._model.layers[self._base_model_layer].layers)
-        self._initial_epoch = None
-
-    # ------------------------------------------------------------------------------------------------ #
-    def extract_features(self, epochs: int = 5) -> None:
-        """Performs the feature extraction phase of transfer learning
-
-        Args:
-            epochs (int): Number of epochs to execute
-        """
-
-        history = self._model.fit(
-            self._train_ds,
-            epochs=epochs,
-            validation_data=self._val_ds,
-        )
-
-        # Save the last feature extraction epoch for fine tune phase
-        self._initial_epoch = history.epoch[-1]
-
-    # ------------------------------------------------------------------------------------------------ #
-    def fine_tune(
-        self,
-        epochs: int = 10,
-        sessions: int = 10,
-        learning_rate_decay_factory: float = 0.1,
-        thaw_rate: Union[float, int] = 0.05,
-    ) -> None:
-        """Performs iterative fine tuning using gradual unfreezing of the base model.
-
-        Args:
-            epochs (int): Number of epochs per session. Default = 10
-            sessions (int): Number of fine tuning sessions to execute. Default is 10
-            learning_rate_decay_factor (float): Factor by which the learning rate is reduced each session.
-            thaw_rate (Union[float, int]): Rate by which layers are thawed. This can be a raw
-                integer or a float proportion of base model layers. Default = 0.05.
-        """
-        session = 0
-        learning_rate = self._learning_rate
-        initial_epoch = self._initial_epoch
-
-        while session < sessions:
-            session += 1
-
-            learning_rate *= learning_rate_decay_factory
-
-            # Thaw the top n layers of the base model according to the following
-            n = self._n_layers * thaw_rate * session
-            self._model.layers[self._base_model_layer].trainable = True
-            for layer in self._model.layers[self._base_model_layer].layers[:-n]:
-                layer.trainable = False
-
-            self._model.compile(
-                loss=self._loss,
-                optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-                metrics=[self._metric],
-            )
-
-            total_epochs = epochs + initial_epoch
-            history = self._model.fit(
-                self._train_ds,
-                epochs=total_epochs,
-                validation_data=self._val_ds,
-                initial_epoch=initial_epoch,
-            )
-
-            initial_epoch = history.epochs[-1]

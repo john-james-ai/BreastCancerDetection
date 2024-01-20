@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 15th 2024 04:04:13 pm                                                #
-# Modified   : Thursday January 18th 2024 10:38:48 am                                              #
+# Modified   : Friday January 19th 2024 03:00:02 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -21,7 +21,6 @@ import os
 import re
 import shutil
 from glob import glob
-from typing import Union
 
 import tensorflow as tf
 
@@ -35,6 +34,7 @@ class ModelRepo:
     """
 
     __location = "models/"
+    __history_filename = "_history.pkl"
 
     def __init__(
         self,
@@ -44,8 +44,8 @@ class ModelRepo:
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
         self._logger.setLevel(level=logging.DEBUG)
 
-    def get(self, name: str, stage: str) -> Union[tf.keras.Model, int]:
-        """Returns the model and the epoch for the state of the model.
+    def get(self, name: str, stage: str) -> tf.keras.Model:
+        """Returns the model for the designated name and stage.
 
         Args:
             name (str): Model name
@@ -62,10 +62,11 @@ class ModelRepo:
             raise FileNotFoundError(msg) from exc
 
         model = tf.keras.models.load_model(filepath)
-        epoch = self._get_epoch(name=name, stage=stage, filepath=filepath)
-        msg = f"Model {name}-{stage} epoch: {epoch} was found in the repository."
+
+        msg = f"Loaded {name}_{stage} model from the repository."
         self._logger.info(msg)
-        return model, epoch
+
+        return model
 
     def exists(self, name: str, stage: str) -> bool:
         """Determines whether models exist for the designated name and stage
@@ -120,34 +121,35 @@ class ModelRepo:
         """Creates and returns the ModelCheckpoint callback.
 
         Args:
-            name (str): The name of the model
-            stage (str): Brief description of model stage.
+            name (str): The name of the model stage (str): Brief description of model stage.
             monitor: The metric name to monitor. Typically the metrics are set by the Model.compile
             method. Note: Prefix the name with "val_" to monitor validation metrics. Use "loss" or
             "val_loss" to monitor the model's total loss. If you specify metrics as strings, like
             "accuracy", pass the same string (with or without the "val_" prefix). If you pass
-            metrics.Metric objects, monitor should be set to metric.name If you're not sure about the
-            metric names you can check the contents of the history.history dictionary returned by
-            history = model.fit() Multi-output models set additional prefixes on the metric names.
+            metrics.Metric objects, monitor should be set to metric.name If you're not sure about
+            the metric names you can check the contents of the history.history dictionary returned
+            by history = model.fit() Multi-output models set additional prefixes on the metric
+            names.
 
-            mode (str): one of {"auto", "min", "max"}. If save_best_only=True, the decision to overwrite
-            the current save file is made based on either the maximization or the minimization of the
-            monitored quantity. For val_acc, this should be "max", for val_loss this should be "min",
-            etc. In "auto" mode, the mode is set to "max" if the quantities monitored are "acc" or start
-            with "fmeasure" and are set to "min" for the rest of the quantities.
+            mode (str): one of {"auto", "min", "max"}. If save_best_only=True, the decision to
+            overwrite the current save file is made based on either the maximization or the
+            minimization of the monitored quantity. For val_acc, this should be "max", for val_loss
+            this should be "min", etc. In "auto" mode, the mode is set to "max" if the quantities
+            monitored are "acc" or start with "fmeasure" and are set to "min" for the rest of the
+            quantities.
 
             save_weights_only (bool): if True, then only the model's weights will be saved
             (model.save_weights(filepath)), else the full model is saved (model.save(filepath)).
 
-            save_freq (str): "epoch" or integer. When using "epoch", the callback saves the model after each
-            epoch. When using integer, the callback saves the model at end of this many batches. If the
-            Model is compiled with steps_per_execution=N, then the saving criteria will be checked every
-            Nth batch. Note that if the saving isn't aligned to epochs, the monitored metric may
-            potentially be less reliable (it could reflect as little as 1 batch, since the metrics get
-            reset every epoch). Defaults to "epoch".
+            save_freq (str): "epoch" or integer. When using "epoch", the callback saves the model
+            after each epoch. When using integer, the callback saves the model at end of this many
+            batches. If the Model is compiled with steps_per_execution=N, then the saving criteria
+            will be checked every Nth batch. Note that if the saving isn't aligned to epochs, the
+            monitored metric may potentially be less reliable (it could reflect as little as 1
+            batch, since the metrics get reset every epoch). Defaults to "epoch".
 
-            verbose (int): Verbosity mode, 0 or 1. Mode 0 is silent, and mode 1 displays messages when
-            the callback takes an action.
+            verbose (int): Verbosity mode, 0 or 1. Mode 0 is silent, and mode 1 displays messages
+            when the callback takes an action.
         """
         filename = f"{name}_{stage}_"
         filename = filename + "{epoch:02d}-val_loss_{val_loss:.2f}.keras"

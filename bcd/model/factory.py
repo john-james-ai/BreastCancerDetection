@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday January 12th 2024 08:35:25 pm                                                #
-# Modified   : Friday January 12th 2024 11:17:55 pm                                                #
+# Modified   : Thursday January 18th 2024 10:57:37 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -61,7 +61,7 @@ class ModelFactory(ABC):
         trainable: bool = False,
         loss: str = "binary_crossentropy",
         activation: str = "sigmoid",
-        metric: str = "accuracy",
+        metrics: list = None,
     ) -> tf.keras.Model:
         """Creates the model with built-in augmentation.
 
@@ -72,7 +72,7 @@ class ModelFactory(ABC):
             trainable (bool): Whether the base model is trainable. Default is False.
             loss (str): The loss function. Default is 'binary_crossentropy'.
             activation (str): The activation function. Default is "sigmoid".
-            metric (str): The metric used to evaluate performance. Default is "accuracy".
+            metrics (list): Metrics to track.
 
         Returns: Compiled TensorFlow Keras Model
         """
@@ -97,7 +97,7 @@ class ModelFactory(ABC):
         model.compile(
             loss=loss,
             optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-            metrics=[metric],
+            metrics=metrics,
         )
         return model
 
