@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday January 13th 2024 08:37:37 pm                                              #
-# Modified   : Saturday January 20th 2024 02:29:17 am                                              #
+# Modified   : Monday January 22nd 2024 03:06:58 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -20,11 +20,12 @@ import logging
 import sys
 from typing import Union
 
-import numpy as np
 import tensorflow as tf
+import wandb
 
-from bcd.model.callback import Historian
+from bcd.model.callback import Historian, LRLogger
 from bcd.model.repo import ModelRepo
+from bcd.model.schedule import LearningRateScheduleFactory, ThawSchedule
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -59,7 +60,7 @@ def thaw(
 #                                       FINE TUNER                                                 #
 # ================================================================================================ #
 class FineTuner:
-    """Performs fine tuning of a model that has converged under feature extraction.
+    """Performs feature extraction and fine tuning of a pre-trained model.
 
     Fine tuning occurs up to a maximum number of sessions, subject to early stop. If the
     monitored score hasn't improved in patience sessions, fine tuning stops. Fine tuning is
@@ -77,13 +78,11 @@ class FineTuner:
         train_ds: tf.data.Dataset,
         validation_ds: tf.data.Dataset,
         repo: ModelRepo,
+        thaw_schedule: ThawSchedule,
+        learning_rate: float = 0.0001,
         loss: str = "binary_crossentropy",
         monitor: str = "val_loss",
         metrics: list = None,
-        patience: int = 3,
-        min_delta: float = 0.0001,
-        initial_learning_rate: float = 1e-5,
-        final_learning_rate: float = 1e-10,
         fine_tune_epochs: int = 50,
         sessions: int = 10,
         callbacks: Union[list, tf.keras.callbacks.Callback] = None,
@@ -92,18 +91,14 @@ class FineTuner:
         self._train_ds = train_ds
         self._validation_ds = validation_ds
         self._repo = repo
+        self._thaw_schedule = thaw_schedule
+        self._learning_rate = learning_rate
         self._loss = loss
         self._monitor = monitor
         self._metrics = metrics
-        self._patience = patience
-        self._min_delta = min_delta
-        self._initial_learning_rate = initial_learning_rate
-        self._final_learning_rate = final_learning_rate
         self._fine_tune_epochs = fine_tune_epochs
         self._sessions = sessions
         self._callbacks = callbacks
-
-        self._best_score = np.inf if "loss" in self._monitor else 0
 
         self._base_model_layer = None
         self._thaw_layers = []
@@ -118,7 +113,6 @@ class FineTuner:
         self,
         model: tf.keras.Model,
         historian: Historian,
-        base_model_layer: int,
         force: bool = False,
     ) -> None:
         """Performs fine tuning of the model
@@ -139,11 +133,6 @@ class FineTuner:
             force (bool): Whether to force training if the model already exists.
         """
         session = 0
-        # Create a layer thaw schedule based upon the number of sessions and
-        # the number of layers in the base model. The number of layers to
-        # thaw in each session grows logarithmically from 1 to num_layers in model
-        # for 'session' values.
-        self._create_thaw_schedule(model=model, base_model_layer=base_model_layer)
         # Add the historian to the callbacks.
         self._callbacks = self._add_callback(self._callbacks, historian)
 
@@ -161,22 +150,18 @@ class FineTuner:
                 self._repo.remove(name=self._name, stage=stage)
 
                 # Thaw top n layers according to thaw schedule
-                model = self._thaw(
-                    model=model,
-                    base_model_layer=base_model_layer,
-                    n=self._thaw_layers[session - 1],
-                )
+                model = self._thaw_schedule(model=model, session=session)
 
-                print("\n")
-                msg = f"Thawing {self._thaw_layers[session-1]} layers and training with {self._learning_rates[session-1]} learning rate."
-                self._logger.info(msg)
+                # Adjust the learning rate
+                self._learning_rate = self._learning_rate * 0.5
+
+                # Create Optimizer
+                optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
 
                 # Recompile the model
                 model.compile(
                     loss=self._loss,
-                    optimizer=tf.keras.optimizers.Adam(
-                        learning_rate=self._learning_rates[session - 1]
-                    ),
+                    optimizer=optimizer,
                     metrics=self._metrics,
                 )
 
@@ -195,8 +180,14 @@ class FineTuner:
                 # Add the checkpoint callback to the callback list.
                 callbacks = self._add_callback(self._callbacks, checkpoint_callback)
 
+                # Create learning rate logger callback
+                lrlogger = LRLogger(optimizer=optimizer)
+
+                # Add learning rate logger callback to callback list
+                callbacks = self._add_callback(callbacks, lrlogger)
+
                 # Fine tune the model
-                history = model.fit(
+                _ = model.fit(
                     self._train_ds,
                     validation_data=self._validation_ds,
                     epochs=epochs,
@@ -204,11 +195,16 @@ class FineTuner:
                     callbacks=callbacks,
                 )
 
-                # Obtain best score
-                best_score = self._get_best_score(history=history)
-
-                if not self._has_improved(score=best_score):
-                    break
+                # Save the model to wandb
+                filepath = self._repo.get_filepath(name=self._name, stage=stage)
+                artifact = wandb.Artifact(
+                    f"{self._name}-{stage}-{wandb.run.id}", type="model"
+                )
+                artifact.add_file(filepath)
+                wandb.log_artifact(artifact, aliases=[stage, "best"])
+                wandb.run.link_artifact(
+                    artifact, "aistudio/breast_cancer_detection/DenseNet"
+                )
 
     # -------------------------------------------------------------------------------------------- #
     def _add_callback(
@@ -226,73 +222,3 @@ class FineTuner:
             return orig_callbacks
         else:
             return [orig_callbacks, callback]
-
-    # -------------------------------------------------------------------------------------------- #
-    def _create_thaw_schedule(
-        self, model: tf.keras.Model, base_model_layer: int
-    ) -> None:
-        """Computes a schedule of layers to thaw."""
-        n_layers = len(model.layers[base_model_layer].layers)
-        self._thaw_layers = list(
-            np.geomspace(
-                start=1, stop=n_layers, endpoint=True, num=self._sessions
-            ).astype(int)
-        )
-        self._learning_rates = list(
-            np.geomspace(
-                start=self._initial_learning_rate,
-                stop=self._final_learning_rate,
-                endpoint=True,
-                num=self._sessions,
-            )
-        )
-
-    # ------------------------------------------------------------------------------------------------ #
-    def _thaw(
-        self,
-        model: tf.keras.Model,
-        base_model_layer: int,
-        n: int,
-    ) -> tf.keras.Model:
-        """Thaws n top layers of a TensorFlow model
-
-        Args:
-            model (tf.keras.Model): Model to thaw
-            base_model_layer (int): The layer containing the base model
-            n (int): Top number of layers in base model to thaw.
-
-        """
-
-        model.layers[base_model_layer].trainable = True
-        for layer in model.layers[base_model_layer].layers[:-n]:
-            layer.trainable = False
-
-        return model
-
-    # -------------------------------------------------------------------------------------------- #
-    def _get_best_score(self, history: tf.keras.callbacks.History) -> float:
-        if "loss" in self._monitor:
-            return min(history.history[self._monitor])
-        else:
-            return max(history.history[self._monitor])
-
-    # -------------------------------------------------------------------------------------------- #
-    def _has_improved(self, score: float) -> bool:
-        if "loss" in self._monitor:
-            if score < self._best_score - self._min_delta:
-                msg = f"Fine tuning {self._name} {self._monitor} improved to {round(score,4)} from {round(self._best_score,4)}."
-                self._best_score = score
-                self._early_stop_counter = 0
-            else:
-                msg = f"Fine tuning {self._name} {self._monitor} did NOT improve {round(score)}. Performance dropped by {round((score-self._best_score)/self._best_score*100,4)}%"
-                self._early_stop_counter += 1
-        else:
-            if score > self._best_score + self._min_delta:
-                msg = f"Fine tuning {self._name} {self._monitor} improved to {round(score,4)} from {round(self._best_score,4)}."
-                self._best_score = score
-                self._early_stop_counter = 0
-            else:
-                msg = f"Fine tuning {self._name} {self._monitor} did NOT improve {round(score)}. Performance dropped by {round((self._best_score-score)/self._best_score*100,4)}%"
-                self._early_stop_counter += 1
-        self._logger.info(msg)
-        return self._early_stop_counter < self._patience

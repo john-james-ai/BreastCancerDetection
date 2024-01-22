@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday November 5th 2023 11:35:52 am                                                #
-# Modified   : Friday January 19th 2024 07:51:27 pm                                                #
+# Modified   : Sunday January 21st 2024 10:24:19 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -27,6 +27,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import tensorflow as tf
+import wandb
 
 # ------------------------------------------------------------------------------------------------ #
 sns.set_style("whitegrid")
@@ -161,6 +162,19 @@ class Historian(tf.keras.callbacks.Callback):
         except KeyError:
             pass
         return df
+
+
+# ------------------------------------------------------------------------------------------------ #
+class LRLogger(tf.keras.callbacks.Callback):
+    """Logs the learning rate."""
+
+    def __init__(self, optimizer):
+        super(LRLogger, self).__init__()
+        self.optimizer = optimizer
+
+    def on_epoch_end(self, epoch, logs):
+        lr = self.optimizer.learning_rate(self.optimizer.iterations)
+        wandb.log({"lr": lr}, commit=False)
 
 
 # ------------------------------------------------------------------------------------------------ #

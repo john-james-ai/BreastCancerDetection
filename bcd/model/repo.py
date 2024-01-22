@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 15th 2024 04:04:13 pm                                                #
-# Modified   : Friday January 19th 2024 03:00:02 am                                                #
+# Modified   : Monday January 22nd 2024 02:15:43 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -67,6 +67,25 @@ class ModelRepo:
         self._logger.info(msg)
 
         return model
+
+    def get_filepath(self, name: str, stage: str) -> str:
+        """Returns the filepath for the designated model.
+
+        Args:
+            name (str): Model name
+            stage (str): Stage of the model.
+        """
+
+        directory = os.path.join(self._location, name, stage)
+        pattern = name + "_" + stage + "*.keras"
+        try:
+            filepath = sorted(glob(directory + "/" + pattern, recursive=True))[-1]
+        except IndexError as exc:
+            msg = f"No model checkpoint found for {name}_{stage} in {directory}."
+            self._logger.exception(msg)
+            raise FileNotFoundError(msg) from exc
+
+        return filepath
 
     def exists(self, name: str, stage: str) -> bool:
         """Determines whether models exist for the designated name and stage
