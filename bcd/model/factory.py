@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday January 12th 2024 08:35:25 pm                                                #
-# Modified   : Sunday January 21st 2024 11:16:35 pm                                                #
+# Modified   : Thursday February 1st 2024 11:01:57 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -45,10 +45,6 @@ class ModelFactory(ABC):
         return keras.Sequential(
             [
                 layers.RandomFlip("horizontal"),
-                layers.RandomRotation(0.2),
-                layers.RandomZoom(0.2),
-                layers.RandomHeight(0.2),
-                layers.RandomWidth(0.2),
             ],
             name="data_augmentation",
         )

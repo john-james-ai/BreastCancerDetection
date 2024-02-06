@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday January 13th 2024 08:37:37 pm                                              #
-# Modified   : Monday January 22nd 2024 03:06:58 am                                                #
+# Modified   : Monday January 22nd 2024 04:09:47 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -23,9 +23,9 @@ from typing import Union
 import tensorflow as tf
 import wandb
 
-from bcd.model.callback import Historian, LRLogger
+from bcd.model.callback import Historian
 from bcd.model.repo import ModelRepo
-from bcd.model.schedule import LearningRateScheduleFactory, ThawSchedule
+from bcd.model.schedule import LearningRateSchedule, ThawSchedule
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -79,7 +79,7 @@ class FineTuner:
         validation_ds: tf.data.Dataset,
         repo: ModelRepo,
         thaw_schedule: ThawSchedule,
-        learning_rate: float = 0.0001,
+        learning_rate_schedule: LearningRateSchedule,
         loss: str = "binary_crossentropy",
         monitor: str = "val_loss",
         metrics: list = None,
@@ -92,7 +92,7 @@ class FineTuner:
         self._validation_ds = validation_ds
         self._repo = repo
         self._thaw_schedule = thaw_schedule
-        self._learning_rate = learning_rate
+        self._learning_rate_schedule = learning_rate_schedule
         self._loss = loss
         self._monitor = monitor
         self._metrics = metrics
@@ -152,11 +152,10 @@ class FineTuner:
                 # Thaw top n layers according to thaw schedule
                 model = self._thaw_schedule(model=model, session=session)
 
-                # Adjust the learning rate
-                self._learning_rate = self._learning_rate * 0.5
-
                 # Create Optimizer
-                optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+                optimizer = tf.keras.optimizers.Adam(
+                    learning_rate=self._learning_rate_schedule(session=session)
+                )
 
                 # Recompile the model
                 model.compile(
@@ -179,12 +178,6 @@ class FineTuner:
 
                 # Add the checkpoint callback to the callback list.
                 callbacks = self._add_callback(self._callbacks, checkpoint_callback)
-
-                # Create learning rate logger callback
-                lrlogger = LRLogger(optimizer=optimizer)
-
-                # Add learning rate logger callback to callback list
-                callbacks = self._add_callback(callbacks, lrlogger)
 
                 # Fine tune the model
                 _ = model.fit(
