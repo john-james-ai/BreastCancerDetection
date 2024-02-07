@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday February 6th 2024 12:39:23 am                                               #
-# Modified   : Wednesday February 7th 2024 06:57:11 am                                             #
+# Modified   : Wednesday February 7th 2024 07:14:48 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -93,9 +93,10 @@ class Experiment:
             wandb_callback = wandb.keras.WandbMetricsLogger()
             self._callbacks.append(wandb_callback)
 
-            # Clear Keras session prior to compile This may resolve
-            # Model save errors.
-            # https://stackoverflow.com/questions/72776335/valueerror-unable-to-create-dataset-name-already-exists-when-using-modelcheck
+            # To avoid model save errors (name already exists), clear Keras
+            # session prior to compile. This releases the global state
+            # keras maintains to implement the Functional API and to
+            # uniquify the autogeneration of layer names.
             tf.keras.backend.clear_session()
 
             # Compile the model

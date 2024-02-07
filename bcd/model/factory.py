@@ -11,13 +11,14 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 5th 2024 07:09:37 pm                                                #
-# Modified   : Wednesday February 7th 2024 12:08:48 am                                             #
+# Modified   : Wednesday February 7th 2024 09:05:17 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
 """Transfer Learning Model Centre"""
 from abc import ABC, abstractmethod
+from typing import Callable
 
 import keras
 import tensorflow as tf
@@ -48,17 +49,16 @@ class AbstractModelFactory(ABC):
         self._output_shape = output_shape
         self._activation = activation
 
-        self._pretrained_model = None
-        self._preprocess_input = lambda x: x
-
-    def reset(self) -> None:
-        self._pretrained_model = None
-        self._preprocess_input = lambda x: x
-
     @property
     @abstractmethod
     def version(self) -> str:
         """Return the model architecture version."""
+
+    @abstractmethod
+    def create_model(
+        self, alias: str, pretrained_model: tf.keras.Model, preprocess_input: Callable
+    ) -> tf.keras.Model:
+        """Builds a CNN model on the designated pre-trained model."""
 
     @property
     def augmentation(self) -> tf.Tensor:
@@ -74,102 +74,92 @@ class AbstractModelFactory(ABC):
             name="data_augmentation",
         )
 
-    @property
-    def pretrained_model(self) -> tf.keras.Model:
-        return self._pretrained_model
-
-    @abstractmethod
-    def create_model(self) -> tf.keras.Model:
-        """Builds a CNN model on the designated pre-trained model."""
-
     def create_densenet(self) -> tf.keras.Model:
-        self.reset()
-        self._pretrained_model = tf.keras.applications.densenet.DenseNet201(
-            include_top=False
+        alias = "DenseNet201"
+        pretrained_model = tf.keras.applications.densenet.DenseNet201(include_top=False)
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.densenet.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
         )
-        self._pretrained_model.trainable = False
-        self._preprocess_input = tf.keras.applications.densenet.preprocess_input
-        model = self.create_model()
-        model.alias = "DenseNet201"
-        return model
 
     def create_resnet(self) -> tf.keras.Model:
-        self.reset()
-        self._pretrained_model = tf.keras.applications.resnet_v2.ResNet152V2(
+        alias = "ResNet152V2"
+        pretrained_model = tf.keras.applications.resnet_v2.ResNet152V2(
             include_top=False
         )
-        self._pretrained_model.trainable = False
-        self._preprocess_input = tf.keras.applications.resnet_v2.preprocess_input
-        model = self.create_model()
-        model.alias = "ResNet152V2"
-        return model
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.resnet_v2.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
+        )
 
     def create_inception(self) -> tf.keras.Model:
-        self.reset()
-        self._pretrained_model = tf.keras.applications.inception_v3.InceptionV3(
+        alias = "InceptionV3"
+        pretrained_model = tf.keras.applications.inception_v3.InceptionV3(
             include_top=False
         )
-        self._pretrained_model.trainable = False
-        self._preprocess_input = tf.keras.applications.inception_v3.preprocess_input
-        model = self.create_model()
-        model.alias = "InceptionV3"
-        return model
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.inception_v3.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
+        )
 
     def create_efficientnet(self) -> tf.keras.Model:
-        self.reset()
-        self._pretrained_model = tf.keras.applications.efficientnet_v2.EfficientNetV2S(
+        alias = "EfficientNetV2"
+        pretrained_model = tf.keras.applications.efficientnet_v2.EfficientNetV2S(
             include_top=False
         )
-        self._pretrained_model.trainable = False
-        self._preprocess_input = tf.keras.applications.inception_v3.preprocess_input
-        model = self.create_model()
-        model.alias = "EfficientNetV2"
-        return model
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
+        )
 
     def create_inception_resnet(self) -> tf.keras.Model:
-        self.reset()
-        self._pretrained_model = (
-            tf.keras.applications.inception_resnet_v2.InceptionResNetV2(
-                include_top=False
-            )
+        alias = "InceptionResNetV2"
+        pretrained_model = tf.keras.applications.inception_resnet_v2.InceptionResNetV2(
+            include_top=False
         )
-        self._pretrained_model.trainable = False
-        self._preprocess_input = (
-            tf.keras.applications.inception_resnet_v2.preprocess_input
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.inception_resnet_v2.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
         )
-        model = self.create_model()
-        model.alias = "InceptionResNetV2"
-        return model
 
     def create_mobilenet(self) -> tf.keras.Model:
-        self.reset()
-        self._pretrained_model = tf.keras.applications.mobilenet_v2.MobileNetV2(
+        alias = "MobileNetV2"
+        pretrained_model = tf.keras.applications.mobilenet_v2.MobileNetV2(
             include_top=False
         )
-        self._pretrained_model.trainable = False
-        self._preprocess_input = tf.keras.applications.mobilenet_v2.preprocess_input
-        model = self.create_model()
-        model.alias = "MobileNetV2"
-        return model
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.mobilenet_v2.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
+        )
 
     def create_xception(self) -> tf.keras.Model:
-        self.reset()
-        self._pretrained_model = tf.keras.applications.xception.Xception(
-            include_top=False
+        alias = "Xception"
+        pretrained_model = tf.keras.applications.xception.Xception(include_top=False)
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.xception.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
         )
-        self._pretrained_model.trainable = False
-        self._preprocess_input = tf.keras.applications.xception.preprocess_input
-        model = self.create_model()
-        model.alias = "Xception"
-        return model
-
-    def preprocess_input(self, inputs: tf.Tensor) -> tf.Tensor:
-        """Performs preprocessing on inputs. Model-specific processing overridden in subclasses.
-
-        Args:
-            inputs (tf.Tensor): Model inputs
-        """
-        return self._preprocess_input(inputs)
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -213,38 +203,49 @@ class ModelFactoryV1(AbstractModelFactory):
         """Returns the model architecture version"""
         return "V1"
 
-    def create_model(self) -> tf.keras.Model:
-        # Confirm base model have been created.
-        assert self._pretrained_model is not None, "Base model must be created."
+    def create_model(
+        self, alias: str, pretrained_model: tf.keras.Model, preprocess_input: Callable
+    ) -> tf.keras.Model:
         # Create the input
         inputs = tf.keras.Input(
             shape=self._input_shape, batch_size=None, name="input_layer"
         )
         # Perform base model specific preprocessing
-        x = self.preprocess_input(inputs=inputs)
+        x = preprocess_input(x=inputs)
         # Augment the image data
         x = self.augmentation(x)
         # Feed base model
-        x = self.pretrained_model(x)
+        x = pretrained_model(x)
         # Pooling for dimensionality reduction
-        x = tf.keras.layers.GlobalAveragePooling2D(name="bcd_global_average_pooling")(x)
+        x = tf.keras.layers.GlobalAveragePooling2D(
+            name=f"{alias.lower()}_global_average_pooling"
+        )(x)
         # Add fully connected layers with dropout for regularization
-        x = tf.keras.layers.Dense(1024, activation="relu", name="bcd_dense_1")(x)
-        x = tf.keras.layers.Dropout(0.5, name="bcd_dropout_1")(x)
-        x = tf.keras.layers.Dense(1024, activation="relu", name="bcd_dense_2")(x)
-        x = tf.keras.layers.Dropout(0.3, name="bcd_dropout_2")(x)
-        x = tf.keras.layers.Dense(512, activation="relu", name="bcd_dense_3")(x)
+        x = tf.keras.layers.Dense(
+            1024, activation="relu", name=f"{alias.lower()}_dense_1"
+        )(x)
+        x = tf.keras.layers.Dropout(0.5, name=f"{alias.lower()}_dropout_1")(x)
+        x = tf.keras.layers.Dense(
+            1024, activation="relu", name=f"{alias.lower()}_dense_2"
+        )(x)
+        x = tf.keras.layers.Dropout(0.3, name=f"{alias.lower()}_dropout_2")(x)
+        x = tf.keras.layers.Dense(
+            512, activation="relu", name=f"{alias.lower()}_dense_3"
+        )(x)
 
         # Add Layers for classification
-        x = tf.keras.layers.Dense(128, activation="relu", name="bcd_dense_4")(x)
+        x = tf.keras.layers.Dense(
+            128, activation="relu", name=f"{alias.lower()}_dense_4"
+        )(x)
         outputs = layers.Dense(
             units=self._output_shape,
             activation=self._activation,
-            name="bcd_output_layer",
+            name=f"{alias.lower()}_output_layer",
         )(x)
-        # Create the model
+        # Create the model and add metadata
         model = tf.keras.Model(inputs, outputs)
 
+        model.alias = alias
         model.version = self.version
 
         return model
