@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday February 6th 2024 12:39:23 am                                               #
-# Modified   : Thursday February 8th 2024 04:48:18 am                                              #
+# Modified   : Thursday February 8th 2024 05:43:27 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -133,7 +133,9 @@ class Experiment:
             wandb.finish()
 
     def evaluate(self, data: tf.data.Dataset) -> dict:
-        return self._model.evaluate(data)
+        result = self._model.evaluate(data)
+        metrics = dict(zip(self._model.metrics_names, result))
+        self._add_evaluation_metrics(metrics=metrics)
 
     def predict(self, data: tf.data.Dataset) -> np.ndarray:
         return (self._model.predict(data) > 0.5).astype("int32")
@@ -184,8 +186,15 @@ class Experiment:
     def _register_model(self) -> None:
         """Registers the model as an artifact on wandb"""
         filepath = self._repo.get_filepath(name=self._name)
-        artifact = wandb.Artifact(f"{self._name}-{self._run.id}", type="model")
-        artifact.add_file(filepath)
-        wandb.log_artifact(artifact, aliases=[self._name, "best"])
-        artifact_path = self._entity + "/" + self._config["project"] + "/" + self._name
-        wandb.run.link_artifact(artifact, artifact_path)
+        # Upload the model to the wandb model registry
+        self._run.log_model(path=filepath, name=self._name)
+        # Get the wandb path to the model just logged
+        model_path = self._run.use_model(name=self._name)
+        # Link the model to the run
+        self._run.link_model(path=model_path, registered_model_name=self._name)
+
+    def _add_evaluation_metrics(self, metrics: dict) -> None:
+        for metric, value in metrics:
+            name = f"test_{metric}"
+            self._run.summary[name] = value
+        self._run.summary.update()
