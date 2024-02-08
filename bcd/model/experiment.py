@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday February 6th 2024 12:39:23 am                                               #
-# Modified   : Thursday February 8th 2024 05:43:27 am                                              #
+# Modified   : Thursday February 8th 2024 08:30:49 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -35,6 +35,8 @@ from bcd.model.repo import ModelRepo
 load_dotenv()
 
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=no-member
 # ------------------------------------------------------------------------------------------------ #
 class Experiment:
     """Encapsulates a single experiment or run of an experimental model."""
@@ -93,20 +95,21 @@ class Experiment:
         else:
             # Remove existing model if it exists
             self._repo.remove(name=self._name, ignore_errors=True)
+            # Remove existing run(s) for the experiment.
+            self.remove_existing_runs()
 
             # Instantiate a wandb run and callback
             self._run = wandb.init(
                 project=self._config["project"],
-                name=self._config["model"],
+                name=self._config["run_name"],
                 config=self._config,
             )
             wandb_callback = wandb.keras.WandbMetricsLogger()
             self._callbacks.append(wandb_callback)
 
-            # To avoid model save errors (name already exists), clear Keras
-            # session prior to compile. This releases the global state
-            # keras maintains to implement the Functional API and to
-            # uniquify the autogeneration of layer names.
+            # For memory and performance efficiency, release the
+            # global state keras maintains to implement the
+            # Functional API.
             tf.keras.backend.clear_session()
 
             # Compile the model
@@ -188,13 +191,19 @@ class Experiment:
         filepath = self._repo.get_filepath(name=self._name)
         # Upload the model to the wandb model registry
         self._run.log_model(path=filepath, name=self._name)
-        # Get the wandb path to the model just logged
-        model_path = self._run.use_model(name=self._name)
         # Link the model to the run
-        self._run.link_model(path=model_path, registered_model_name=self._name)
+        self._run.link_model(path=filepath, registered_model_name=self._name)
 
     def _add_evaluation_metrics(self, metrics: dict) -> None:
-        for metric, value in metrics:
-            name = f"test_{metric}"
-            self._run.summary[name] = value
-        self._run.summary.update()
+        api = wandb.Api()
+        run = api.run(f"{self._entity}/{self._config['project']}/{self._run.id}")
+        for metric, value in metrics.items():
+            name = f"evaluation/test_{metric}"
+            run.summary[name] = value
+        run.summary.update()
+
+    def remove_existing_runs(self) -> None:
+        runs = wandb.Api().runs(f"{self._entity}/{self._config['project']}")
+        for run in runs:
+            if run.name == self._config["run_name"]:
+                run.delete()

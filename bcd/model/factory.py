@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 5th 2024 07:09:37 pm                                                #
-# Modified   : Thursday February 8th 2024 03:19:09 am                                              #
+# Modified   : Thursday February 8th 2024 11:33:14 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -59,6 +59,10 @@ class AbstractModelFactory(ABC):
         self, alias: str, pretrained_model: tf.keras.Model, preprocess_input: Callable
     ) -> tf.keras.Model:
         """Builds a CNN model on the designated pre-trained model."""
+
+    @abstractmethod
+    def create_ensemble(self, models: list) -> tf.keras.Model:
+        """Creates an ensemble model for the given architecture."""
 
     @property
     def augmentation(self) -> tf.Tensor:
@@ -163,7 +167,7 @@ class AbstractModelFactory(ABC):
 
     def create_vgg(self) -> tf.keras.Model:
         alias = "VGG"
-        pretrained_model = tf.keras.applications.vgg19(include_top=False)
+        pretrained_model = tf.keras.applications.vgg19.VGG19(include_top=False)
         pretrained_model.trainable = False
         preprocess_input = tf.keras.applications.vgg19.preprocess_input
         return self.create_model(
@@ -217,6 +221,13 @@ class ModelFactoryV1(AbstractModelFactory):
     def create_model(
         self, alias: str, pretrained_model: tf.keras.Model, preprocess_input: Callable
     ) -> tf.keras.Model:
+        """Adds additional layers to pretrained model
+
+        Args:
+            alias (str): Model alias
+            pretrained_model (tf.keras.Model): Pretrained model
+            preprocess_input (Callable): Pretrained model input preprocessing function.
+        """
         # Create the input
         inputs = tf.keras.Input(
             shape=self._input_shape, batch_size=None, name="input_layer"
@@ -248,7 +259,7 @@ class ModelFactoryV1(AbstractModelFactory):
         x = tf.keras.layers.Dense(
             128, activation="relu", name=f"{alias.lower()}_dense_4"
         )(x)
-        outputs = layers.Dense(
+        outputs = tf.keras.layers.Dense(
             units=self._output_shape,
             activation=self._activation,
             name=f"{alias.lower()}_output_layer",
@@ -257,6 +268,37 @@ class ModelFactoryV1(AbstractModelFactory):
         model = tf.keras.Model(inputs, outputs)
 
         model.alias = alias
+        model.version = self.version
+
+        return model
+
+    def create_ensemble(self, models: list) -> tf.keras.Model:
+        """Creates an average ensemble model with the designated models
+
+        Args:
+            models (list): List of tensor flow models to include in the ensemble.
+        """
+
+        # Create the input
+        inputs = tf.keras.Input(
+            shape=self._input_shape, batch_size=None, name="input_layer"
+        )
+
+        # get output for each model.
+        outputs = [model(inputs) for model in models]
+
+        # Take average of the outputs
+        x = tf.keras.layers.Average()(outputs)
+
+        # Create output
+        output = tf.keras.layers.Dense(
+            units=self._output_shape,
+            activation=self._activation,
+            name=f"ensemble_{self.version}_output_layer",
+        )(x)
+
+        model = tf.keras.Model(inputs, output)
+        model.alias = "ensemble"
         model.version = self.version
 
         return model
