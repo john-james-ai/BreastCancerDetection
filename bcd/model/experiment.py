@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday February 6th 2024 12:39:23 am                                               #
-# Modified   : Wednesday February 7th 2024 07:14:48 am                                             #
+# Modified   : Thursday February 8th 2024 04:48:18 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -20,14 +20,19 @@
 # ------------------------------------------------------------------------------------------------ #
 import itertools
 import logging
+import os
 
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 import wandb
+from dotenv import load_dotenv
 from sklearn.metrics import classification_report, confusion_matrix
 
 from bcd.model.repo import ModelRepo
+
+# ------------------------------------------------------------------------------------------------ #
+load_dotenv()
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -55,6 +60,7 @@ class Experiment:
         self._history = None
         self._run = None
         self._name = model.alias + "_" + model.version + "-" + self._config["dataset"]
+        self._entity = os.getenv("WANDB_ENTITY")
 
         self._logger = logging.getLogger(f"{self.__class__.__name__}-{self._name}")
 
@@ -89,7 +95,11 @@ class Experiment:
             self._repo.remove(name=self._name, ignore_errors=True)
 
             # Instantiate a wandb run and callback
-            self._run = wandb.init(project=self._config["project"], config=self._config)
+            self._run = wandb.init(
+                project=self._config["project"],
+                name=self._config["model"],
+                config=self._config,
+            )
             wandb_callback = wandb.keras.WandbMetricsLogger()
             self._callbacks.append(wandb_callback)
 
@@ -177,5 +187,5 @@ class Experiment:
         artifact = wandb.Artifact(f"{self._name}-{self._run.id}", type="model")
         artifact.add_file(filepath)
         wandb.log_artifact(artifact, aliases=[self._name, "best"])
-        artifact_path = "aistudio/" + self._config["project"] + "/" + self._name
+        artifact_path = self._entity + "/" + self._config["project"] + "/" + self._name
         wandb.run.link_artifact(artifact, artifact_path)

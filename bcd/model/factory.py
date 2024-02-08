@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 5th 2024 07:09:37 pm                                                #
-# Modified   : Wednesday February 7th 2024 09:05:17 am                                             #
+# Modified   : Thursday February 8th 2024 03:19:09 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -75,7 +75,7 @@ class AbstractModelFactory(ABC):
         )
 
     def create_densenet(self) -> tf.keras.Model:
-        alias = "DenseNet201"
+        alias = "DenseNet"
         pretrained_model = tf.keras.applications.densenet.DenseNet201(include_top=False)
         pretrained_model.trainable = False
         preprocess_input = tf.keras.applications.densenet.preprocess_input
@@ -86,7 +86,7 @@ class AbstractModelFactory(ABC):
         )
 
     def create_resnet(self) -> tf.keras.Model:
-        alias = "ResNet152V2"
+        alias = "ResNet"
         pretrained_model = tf.keras.applications.resnet_v2.ResNet152V2(
             include_top=False
         )
@@ -99,7 +99,7 @@ class AbstractModelFactory(ABC):
         )
 
     def create_inception(self) -> tf.keras.Model:
-        alias = "InceptionV3"
+        alias = "Inception"
         pretrained_model = tf.keras.applications.inception_v3.InceptionV3(
             include_top=False
         )
@@ -112,7 +112,7 @@ class AbstractModelFactory(ABC):
         )
 
     def create_efficientnet(self) -> tf.keras.Model:
-        alias = "EfficientNetV2"
+        alias = "EfficientNet"
         pretrained_model = tf.keras.applications.efficientnet_v2.EfficientNetV2S(
             include_top=False
         )
@@ -125,7 +125,7 @@ class AbstractModelFactory(ABC):
         )
 
     def create_inception_resnet(self) -> tf.keras.Model:
-        alias = "InceptionResNetV2"
+        alias = "InceptionResNet"
         pretrained_model = tf.keras.applications.inception_resnet_v2.InceptionResNetV2(
             include_top=False
         )
@@ -138,7 +138,7 @@ class AbstractModelFactory(ABC):
         )
 
     def create_mobilenet(self) -> tf.keras.Model:
-        alias = "MobileNetV2"
+        alias = "MobileNet"
         pretrained_model = tf.keras.applications.mobilenet_v2.MobileNetV2(
             include_top=False
         )
@@ -155,6 +155,17 @@ class AbstractModelFactory(ABC):
         pretrained_model = tf.keras.applications.xception.Xception(include_top=False)
         pretrained_model.trainable = False
         preprocess_input = tf.keras.applications.xception.preprocess_input
+        return self.create_model(
+            alias=alias,
+            pretrained_model=pretrained_model,
+            preprocess_input=preprocess_input,
+        )
+
+    def create_vgg(self) -> tf.keras.Model:
+        alias = "VGG"
+        pretrained_model = tf.keras.applications.vgg19(include_top=False)
+        pretrained_model.trainable = False
+        preprocess_input = tf.keras.applications.vgg19.preprocess_input
         return self.create_model(
             alias=alias,
             pretrained_model=pretrained_model,
