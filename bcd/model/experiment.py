@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday February 6th 2024 12:39:23 am                                               #
-# Modified   : Thursday February 8th 2024 08:30:49 am                                              #
+# Modified   : Thursday February 8th 2024 05:22:29 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -203,7 +203,11 @@ class Experiment:
         run.summary.update()
 
     def remove_existing_runs(self) -> None:
-        runs = wandb.Api().runs(f"{self._entity}/{self._config['project']}")
-        for run in runs:
-            if run.name == self._config["run_name"]:
-                run.delete()
+        try:
+            runs = wandb.Api().runs(f"{self._entity}/{self._config['project']}")
+            for run in runs:
+                if run.name == self._config["run_name"]:
+                    run.delete()
+        except ValueError:
+            msg = f"No existing runs were found for project: {self._config['project']}"
+            self._logger.info(msg)
