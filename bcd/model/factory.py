@@ -10,91 +10,25 @@
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Monday February 5th 2024 07:09:37 pm                                                #
-# Modified   : Thursday February 8th 2024 07:11:49 pm                                              #
+# Created    : Saturday February 10th 2024 09:56:45 am                                             #
+# Modified   : Saturday February 10th 2024 10:36:38 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-"""Transfer Learning Model Centre"""
-import logging
+"""Model Factory Module"""
 from abc import ABC, abstractmethod
-from typing import Callable
 
-import keras
 import tensorflow as tf
-from keras import layers
+
+from bcd.model.base import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
-# pylint: disable=not-callable, consider-iterating-dictionary
+#                                     ModelFactory                                                 #
 # ------------------------------------------------------------------------------------------------ #
-#                                ABSTRACT MODEL FACTORY                                            #
-# ------------------------------------------------------------------------------------------------ #
-class AbstractModelFactory(ABC):
-    """Abstract Model Factory
-
-    Args:
-        input_shape (tuple): Shape of input. Default = (224,224,3).
-        output_shape (int): Shape of output. Default = 1.
-        activation (str): Output activation. Default = 'sigmoid'.
-    """
-
-    __model_selection = {
-        "DenseNet": {
-            "base_model": tf.keras.applications.densenet.DenseNet201,
-            "preprocessor": tf.keras.applications.densenet.preprocess_input,
-        },
-        "EfficientNet": {
-            "base_model": tf.keras.applications.efficientnet_v2.EfficientNetV2S,
-            "preprocessor": tf.keras.applications.efficientnet.preprocess_input,
-        },
-        "Inception": {
-            "base_model": tf.keras.applications.inception_v3.InceptionV3,
-            "preprocessor": tf.keras.applications.inception_v3.preprocess_input,
-        },
-        "InceptionResNet": {
-            "base_model": tf.keras.applications.inception_resnet_v2.InceptionResNetV2,
-            "preprocessor": tf.keras.applications.inception_resnet_v2.preprocess_input,
-        },
-        "MobileNet": {
-            "base_model": tf.keras.applications.mobilenet_v2.MobileNetV2,
-            "preprocessor": tf.keras.applications.mobilenet_v2.preprocess_input,
-        },
-        "ResNet": {
-            "base_model": tf.keras.applications.resnet_v2.ResNet152V2,
-            "preprocessor": tf.keras.applications.resnet_v2.preprocess_input,
-        },
-        "VGG": {
-            "base_model": tf.keras.applications.vgg19.VGG19,
-            "preprocessor": tf.keras.applications.vgg19.preprocess_input,
-        },
-        "Xception": {
-            "base_model": tf.keras.applications.xception.Xception,
-            "preprocessor": tf.keras.applications.xception.preprocess_input,
-        },
-    }
-
-    def __init__(
-        self,
-        version: str,
-        input_shape: tuple[int, int, int] = (224, 224, 3),
-        output_shape: int = 1,
-        activation: str = "sigmoid",
-    ) -> None:
-        self._version = version
-        self._input_shape = input_shape
-        self._output_shape = output_shape
-        self._activation = activation
-        self._input = tf.keras.Input(
-            shape=self._input_shape, batch_size=None, name="input_layer"
-        )
-
-        self._logger = logging.getLogger(f"{self.__class__.__name__}")
-
-    @property
-    def input(self) -> tf.keras.Input:
-        return self._input
+class ModelFactory(ABC):
+    """Base Model Factory"""
 
     @property
     def augmentation(self) -> tf.Tensor:
@@ -103,67 +37,28 @@ class AbstractModelFactory(ABC):
         Args:
             inputs (tf.Tensor): Input data
         """
-        return keras.Sequential(
+        return tf.keras.Sequential(
             [
-                layers.RandomFlip("horizontal"),
+                tf.keras.layers.RandomFlip("horizontal"),
             ],
             name="data_augmentation",
         )
 
-    @property
-    def version(self) -> str:
-        """Return the model architecture version."""
-        return self._version
-
     @abstractmethod
-    def extract_features(
-        self, x: tf.Tensor, pretrained_model: Callable, name: str
-    ) -> tf.Tensor:
-        """Extracts features from feature extraction layers
+    def create(self, base_model: BaseModel) -> tf.keras.Model:
+        """Creates a CNN transfer learning model for the given base model.
 
         Args:
-            x (tf.Tensor): TensorFlow Tensor
-            pretrained_model (tf.keras.Model): Pretrained model.
-            name (str): Name for the model.
+            base_model (BaseModel): Base model object containing the pretrained model
+                and the model specific preprocessor.
         """
 
-    @abstractmethod
-    def create_ensemble(self, names: list) -> tf.keras.Model:
-        """Creates an ensemble model for the given architecture."""
-
-    def create_model(self, name: str) -> tf.keras.Model:
-        """Creates a CNN model based on the designated base model."""
-
-        output = self.create_model_output(name=name)
-        # Create final model
-        model = tf.keras.Model(self.input, output)
-        # Add metadata for ML Ops
-        model.alias = name
-        model.version = self.version
-        return model
-
-    def create_model_output(self, name: str) -> tf.Tensor:
-        self._validate_model(name=name)
-        # Obtain the pretrained model and freeze all layers.
-        pretrained_model = self.__model_selection[name]["base_model"](include_top=False)
-        pretrained_model.trainable = False
-        # Perform model specific data preprocessing
-        x = self.__model_selection[name]["preprocessor"](self.input)
-        # Apply feature extraction layers to pretrained model and return output layer
-        return self.extract_features(x=x, pretrained_model=pretrained_model, name=name)
-
-    def _validate_model(self, name: str) -> None:
-        if name not in self.__model_selection.keys():
-            msg = f"Model {name} does not exist."
-            self._logger.exception(msg)
-            raise ValueError(msg)
-
 
 # ------------------------------------------------------------------------------------------------ #
-#                                   MODEL FACTORY v1                                               #
+#                                     ShaneNetFactory                                                 #
 # ------------------------------------------------------------------------------------------------ #
-class ModelFactoryV1(AbstractModelFactory):
-    """Factory for CNN Transfer Learning models
+class ShainNetFactory(ModelFactory):
+    """Factory for CNN ShainNet Transfer Learning model
 
     Models are comprised of a frozen pre-trained model upon which, the following layers are added:
     - Global Average Pooling Layer
@@ -182,89 +77,59 @@ class ModelFactoryV1(AbstractModelFactory):
 
     """
 
-    __version = "V1"
-
     def __init__(
         self,
         input_shape: tuple[int, int, int] = (224, 224, 3),
         output_shape: int = 1,
         activation: str = "sigmoid",
     ) -> None:
-        super().__init__(
-            version=self.__version,
-            input_shape=input_shape,
-            output_shape=output_shape,
-            activation=activation,
-        )
-        self._pretrained_model = None
+        self._input_shape = input_shape
+        self._output_shape = output_shape
+        self._activation = activation
 
-    def extract_features(
-        self, x: tf.Tensor, pretrained_model: Callable, name: str
-    ) -> tf.Tensor:
-        """Extracts features from feature extraction layers
+    def create(self, base_model: BaseModel) -> tf.keras.Model:
+        """Creates a CNN transfer learning model for the given base model.
 
         Args:
-            x (tf.Tensor): TensorFlow Tensor
-            pretrained_model (tf.keras.Model): Pretrained model.
+            base_model (BaseModel): Base model object containing the pretrained model
+                and the model specific preprocessor.
         """
-
+        # Designate a model name that will prepend layer names.
+        name = f"ShainNet_{base_model.name}"
+        # Create the input
+        inputs = tf.keras.Input(
+            shape=self._input_shape, batch_size=None, name=f"{name}_input_layer"
+        )
+        # Perform base model specific preprocessing
+        x = base_model.preprocessor(x=inputs)
         # Augment the image data
         x = self.augmentation(x)
         # Feed base model
-        x = pretrained_model(x)
+        x = base_model.model(x)
         # Pooling for dimensionality reduction
         x = tf.keras.layers.GlobalAveragePooling2D(
-            name=f"{name.lower()}_global_average_pooling"
+            name=f"{name}_global_average_pooling"
         )(x)
-
         # Add fully connected layers with dropout for regularization
-        x = tf.keras.layers.Dense(
-            1024, activation="relu", name=f"{name.lower()}_dense_1"
-        )(x)
-        x = tf.keras.layers.Dropout(0.5, name=f"{name.lower()}_dropout_1")(x)
-        x = tf.keras.layers.Dense(
-            1024, activation="relu", name=f"{name.lower()}_dense_2"
-        )(x)
-        x = tf.keras.layers.Dropout(0.3, name=f"{name.lower()}_dropout_2")(x)
-        x = tf.keras.layers.Dense(
-            512, activation="relu", name=f"{name.lower()}_dense_3"
-        )(x)
-        x = tf.keras.layers.Dense(
-            128, activation="relu", name=f"{name.lower()}_dense_4"
-        )(x)
+        x = tf.keras.layers.Dense(1024, activation="relu", name=f"{name}_dense_1")(x)
+        x = tf.keras.layers.Dropout(0.5, name=f"{name}_dropout_1")(x)
+        x = tf.keras.layers.Dense(1024, activation="relu", name=f"{name}_dense_2")(x)
+        x = tf.keras.layers.Dropout(0.3, name=f"{name}_dropout_2")(x)
+        x = tf.keras.layers.Dense(512, activation="relu", name=f"{name}_dense_3")(x)
 
-        # Apply output layer
+        # Add Layers for classification
+        x = tf.keras.layers.Dense(128, activation="relu", name=f"{name}_dense_4")(x)
         outputs = tf.keras.layers.Dense(
             units=self._output_shape,
             activation=self._activation,
-            name=f"{name.lower()}_output_layer",
+            name=f"{name}_output_layer",
         )(x)
-
-        return outputs
-
-    def create_ensemble(self, names: list) -> tf.keras.Model:
-        """Creates an average ensemble model with the designated models
-
-        Args:
-            names (list): List of model names for models to include in the ensemble.
-        """
-        # get output for each model.
-        outputs = [self.create_model_output(name) for name in names]
-
-        # Take average of the outputs
-        x = tf.keras.layers.Average()(outputs)
-
-        # Create output
-        output = tf.keras.layers.Dense(
-            units=self._output_shape,
-            activation=self._activation,
-            name=f"ensemble_{self.version}_output_layer",
-        )(x)
-
-        # Create average ensemble model
-        model = tf.keras.Model(self.input, output)
-        # Add metadata for ML Ops
-        model.alias = "Ensemble"
-        model.version = self.version
-
+        # Create the model and add metadata
+        model = tf.keras.Model(inputs, outputs)
+        model.alias = name
+        model.base_model = base_model.name
+        model.architecture = "ShainNet"
         return model
+
+
+# ------------------------------------------------------------------------------------------------ #

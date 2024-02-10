@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/repo.py                                                                  #
+# Filemodel_id   : /bcd/model/repo.py                                                                  #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 15th 2024 04:04:13 pm                                                #
-# Modified   : Wednesday February 7th 2024 07:00:23 am                                             #
+# Modified   : Thursday February 8th 2024 11:30:00 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -32,72 +32,72 @@ class ModelRepo:
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
         self._logger.setLevel(level=logging.DEBUG)
 
-    def get(self, name: str) -> tf.keras.Model:
-        """Returns the model for the designated name and stage.
+    def get(self, model_id: str) -> tf.keras.Model:
+        """Returns the model for the designated model_id and stage.
 
         Args:
-            name (str): Model name
+            model_id (str): Model model_id
         """
-        filepath = self.get_filepath(name=name)
+        filepath = self.get_filepath(model_id=model_id)
         try:
             model = tf.keras.models.load_model(filepath)
         except OSError as exc:
-            msg = f"Model {name} does not exist."
+            msg = f"Model {model_id} does not exist."
             self._logger.exception(msg=msg)
             raise FileNotFoundError from exc
 
-        msg = f"Loaded {name} model from the repository."
+        msg = f"Loaded {model_id} model from the repository."
         self._logger.info(msg)
 
         return model
 
-    def add(self, name: str, model: tf.keras.Model) -> None:
+    def add(self, model_id: str, model: tf.keras.Model) -> None:
         """Adds a model to the repository
 
         Args:
-            name (str): The model name
+            model_id (str): The model model_id
             model (tf.keras.Model): TensorFlow Model.
 
         """
-        filepath = self.get_filepath(name=name)
+        filepath = self.get_filepath(model_id=model_id)
 
         if not os.path.exists(filepath):
             model.save(filepath)
         else:
-            msg = f"Model {name} already exists and can't be added."
+            msg = f"Model {model_id} already exists and can't be added."
             self._logger.exception(msg)
             raise FileExistsError(msg)
 
-    def get_filepath(self, name: str) -> str:
+    def get_filepath(self, model_id: str) -> str:
         """Returns the filepath for the designated model.
 
         Args:
-            name (str): Model name
+            model_id (str): Model model_id
         """
-        filename = name + ".keras"
-        return os.path.join(self.__location, filename)
+        filemodel_id = model_id + ".keras"
+        return os.path.join(self.__location, filemodel_id)
 
-    def exists(self, name: str) -> bool:
-        """Determines whether models exist for the designated name and stage
+    def exists(self, model_id: str) -> bool:
+        """Determines whether models exist for the designated model_id and stage
 
         Args:
-            name (str): Model name
+            model_id (str): Model model_id
         """
-        filepath = self.get_filepath(name=name)
+        filepath = self.get_filepath(model_id=model_id)
         return os.path.exists(filepath)
 
-    def remove(self, name: str, ignore_errors: bool = True) -> bool:
+    def remove(self, model_id: str, ignore_errors: bool = True) -> bool:
         """Removes model from the repository
 
         Args:
-            name (str): Model name
+            model_id (str): Model model_id
         """
-        filepath = self.get_filepath(name=name)
+        filepath = self.get_filepath(model_id=model_id)
         try:
             os.remove(filepath)
         except FileNotFoundError:
             if not ignore_errors:
-                msg = f"Model {name} does not exist."
+                msg = f"Model {model_id} does not exist."
                 self._logger.info(msg)
                 raise
             else:

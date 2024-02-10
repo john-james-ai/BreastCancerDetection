@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday February 6th 2024 12:39:23 am                                               #
-# Modified   : Thursday February 8th 2024 05:22:29 pm                                              #
+# Modified   : Saturday February 10th 2024 10:41:16 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -29,11 +29,22 @@ import wandb
 from dotenv import load_dotenv
 from sklearn.metrics import classification_report, confusion_matrix
 
+from bcd.model.artifact import ModelArtifact
 from bcd.model.repo import ModelRepo
 
 # ------------------------------------------------------------------------------------------------ #
 load_dotenv()
 
+class Builder(ABC):
+    """Abstract base class for model builders."""
+
+    @property
+    @abstractmethod
+    def experiment(self) -> tf.keras.Model:
+        """Returns the model"""
+
+    @abstractmethod
+    def build_feature_extraction(self, name: str, )
 
 # ------------------------------------------------------------------------------------------------ #
 # pylint: disable=no-member
@@ -61,14 +72,18 @@ class Experiment:
 
         self._history = None
         self._run = None
-        self._name = model.alias + "_" + model.version + "-" + self._config["dataset"]
+        self._model_artifact = ModelArtifact(
+            name=model.alias, version=model.version, dataset=self._config["dataset"]
+        )
         self._entity = os.getenv("WANDB_ENTITY")
 
-        self._logger = logging.getLogger(f"{self.__class__.__name__}-{self._name}")
+        self._logger = logging.getLogger(
+            f"{self.__class__.__name__}-{self._model_artifact.id}"
+        )
 
     @property
-    def name(self) -> str:
-        return self._name
+    def model_artifact_id(self) -> str:
+        return self._model_artifact.id
 
     @property
     def model(self) -> tf.keras.Model:
@@ -90,11 +105,11 @@ class Experiment:
             val_ds (tf.data.Dataset): Validation Dataset
 
         """
-        if self._repo.exists(name=self._name) and not self._force:
-            self._model = self._repo.get(name=self._name)
+        if self._repo.exists(model_id=self._model_artifact.id) and not self._force:
+            self._model = self._repo.get(model_id=self._model_artifact.id)
         else:
             # Remove existing model if it exists
-            self._repo.remove(name=self._name, ignore_errors=True)
+            self._repo.remove(model_id=self._model_artifact.id, ignore_errors=True)
             # Remove existing run(s) for the experiment.
             self.remove_existing_runs()
 
@@ -127,7 +142,7 @@ class Experiment:
                 callbacks=self._callbacks,
             )
             # Save the model in the repository
-            self._repo.add(name=self._name, model=self._model)
+            self._repo.add(model_id=self._model_artifact.id, model=self._model)
 
             # Register the model as an artifact on wandb
             self._register_model()
@@ -135,72 +150,15 @@ class Experiment:
             # Finish the run
             wandb.finish()
 
-    def evaluate(self, data: tf.data.Dataset) -> dict:
-        result = self._model.evaluate(data)
-        metrics = dict(zip(self._model.metrics_names, result))
-        self._add_evaluation_metrics(metrics=metrics)
-
-    def predict(self, data: tf.data.Dataset) -> np.ndarray:
-        return (self._model.predict(data) > 0.5).astype("int32")
-
-    def classification_report(self, data: tf.data.Dataset) -> None:
-        actual = np.concatenate([y for x, y in data], axis=0)
-        predicted = self.predict(data=data)
-        print(classification_report(actual, predicted, target_names=data.class_names))
-
-    def plot_confusion_matrix(self, data: tf.data.Dataset) -> None:
-        """Plots a confusion matrix for the validation set.
-
-        Args:
-            data (tf.data.Dataset): Dataset for which the confusion matrix is
-                to be computed.
-
-        """
-        actual = np.concatenate([y for x, y in data], axis=0)
-        predicted = self.predict(data=data)
-
-        cm = confusion_matrix(actual, predicted)
-        cm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
-
-        plt.figure(figsize=(4, 4))
-        cmap = "Blues"
-        plt.imshow(cm, interpolation="nearest", cmap=cmap)
-        plt.title(f"{self._name}\nConfusion matrix", fontsize=12)
-
-        tick_marks = np.arange(len(data.class_names))
-        plt.xticks(tick_marks, data.class_names, rotation=90, fontsize=10)
-        plt.yticks(tick_marks, data.class_names, fontsize=10)
-
-        thresh = cm.max() / 2.0
-        for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-            plt.text(
-                j,
-                i,
-                format(cm[i, j], ".2f"),
-                horizontalalignment="center",
-                color="white" if cm[i, j] > thresh else "black",
-                fontsize=14,
-            )
-
-        plt.ylabel("True label", fontsize=10)
-        plt.xlabel("Predicted label", fontsize=10)
-        plt.show()
-
     def _register_model(self) -> None:
         """Registers the model as an artifact on wandb"""
-        filepath = self._repo.get_filepath(name=self._name)
+        filepath = self._repo.get_filepath(model_id=self._model_artifact.id)
         # Upload the model to the wandb model registry
-        self._run.log_model(path=filepath, name=self._name)
+        self._run.log_model(path=filepath, name=self._model_artifact.id)
         # Link the model to the run
-        self._run.link_model(path=filepath, registered_model_name=self._name)
-
-    def _add_evaluation_metrics(self, metrics: dict) -> None:
-        api = wandb.Api()
-        run = api.run(f"{self._entity}/{self._config['project']}/{self._run.id}")
-        for metric, value in metrics.items():
-            name = f"evaluation/test_{metric}"
-            run.summary[name] = value
-        run.summary.update()
+        self._run.link_model(
+            path=filepath, registered_model_name=self._model_artifact.id
+        )
 
     def remove_existing_runs(self) -> None:
         try:

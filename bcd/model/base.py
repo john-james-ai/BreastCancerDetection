@@ -10,46 +10,236 @@
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Sunday November 5th 2023 11:02:05 am                                                #
-# Modified   : Saturday December 30th 2023 05:05:43 pm                                             #
+# Created    : Friday February 9th 2024 01:39:56 am                                                #
+# Modified   : Saturday February 10th 2024 09:54:58 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
-# Copyright  : (c) 2023 John James                                                                 #
+# Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-# pylint: disable=import-error
-# ------------------------------------------------------------------------------------------------ #
-import os
-from datetime import datetime
+"""Pretrained Model Module"""
+from abc import ABC, abstractmethod
+from typing import Callable
 
-from keras import Model
-
-from bcd.config import Config
+import tensorflow as tf
 
 
 # ------------------------------------------------------------------------------------------------ #
-class BCDModel(Model):
-    """Base Model extending keras.Model definition."""
+class BaseModel(ABC):
+    """Abstract pretrained class for pre-trained CNN pretrained models."""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        now = datetime.now()
-        self._name = (
-            self.__class__.__name__.lower() + "_" + now.strftime("%Y-%m-%d_%H-%M-%S")
-        )
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        """Name for the pretrained model."""
+
+    @property
+    @abstractmethod
+    def model(self) -> tf.keras.Model:
+        """Returns the pretrained model."""
+
+    @property
+    @abstractmethod
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                         DenseNet                                                 #
+# ------------------------------------------------------------------------------------------------ #
+class DenseNet(BaseModel):
+    """Encapsulates the DenseNet model and input preprocessing."""
 
     @property
     def name(self) -> str:
-        return self._name
+        return self.__class__.__name__
 
-    def call(self, inputs, training=None, mask=None):
-        """Calls the model on the new inputs and returns the outputs as tensors."""
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.densenet.DenseNet201(include_top=False)
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
 
-    def get_config(self):
-        """Returns the config of the `Model`."""
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.densenet.preprocess_input
 
-    def save_model(self, overwrite: bool = True, **kwargs) -> None:
-        directory = Config.get_model_dir()
-        os.makedirs(directory, exist_ok=True)
-        filename = self.name + ".keras"
-        filepath = os.path.join(directory, filename)
-        self.save(filepath=filepath, overwrite=overwrite, save_format="tf", **kwargs)
+
+# ------------------------------------------------------------------------------------------------ #
+#                                         EfficientNet                                             #
+# ------------------------------------------------------------------------------------------------ #
+class EfficientNet(BaseModel):
+    """Encapsulates the EfficientNet model and input preprocessing."""
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.efficientnet_v2.EfficientNetV2S(include_top=False)
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.efficientnet.preprocess_input
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                         Inception                                                #
+# ------------------------------------------------------------------------------------------------ #
+class Inception(BaseModel):
+    """Encapsulates the Inception model and input preprocessing."""
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.inception_v3.InceptionV3(include_top=False)
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.inception_v3.preprocess_input
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                        InceptionResNet                                           #
+# ------------------------------------------------------------------------------------------------ #
+class InceptionResNet(BaseModel):
+    """Encapsulates the InceptionResNet model and input preprocessing."""
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.inception_resnet_v2.InceptionResNetV2(
+            include_top=False
+        )
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.inception_resnet_v2.preprocess_input
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                         MobileNet                                                #
+# ------------------------------------------------------------------------------------------------ #
+class MobileNet(BaseModel):
+    """Encapsulates the MobileNet model and input preprocessing."""
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.mobilenet_v2.MobileNetV2(include_top=False)
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.mobilenet_v2.preprocess_input
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                         ResNet                                                   #
+# ------------------------------------------------------------------------------------------------ #
+class ResNet(BaseModel):
+    """Encapsulates the ResNet model and input preprocessing."""
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.resnet_v2.ResNet152V2(include_top=False)
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.resnet_v2.preprocess_input
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                           VGG                                                    #
+# ------------------------------------------------------------------------------------------------ #
+class VGG(BaseModel):
+    """Encapsulates the VGG model and input preprocessing."""
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.vgg19.VGG19(include_top=False)
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.vgg19.preprocess_input
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                         Xception                                                 #
+# ------------------------------------------------------------------------------------------------ #
+class Xception(BaseModel):
+    """Encapsulates the Xception model and input preprocessing."""
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
+
+    @property
+    def model(self) -> tf.keras.Model:
+        """Instantiates and returns the feature extraction network."""
+        model = tf.keras.applications.xception.Xception(include_top=False)
+        model.trainable = True
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    @property
+    def preprocessor(self) -> Callable:
+        """Returns the model specific data preprocessor"""
+        return tf.keras.applications.xception.preprocess_input

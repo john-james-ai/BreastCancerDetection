@@ -11,23 +11,34 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday February 8th 2024 02:51:58 am                                              #
-# Modified   : Thursday February 8th 2024 01:13:03 pm                                              #
+# Modified   : Saturday February 10th 2024 10:41:17 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-# pylint: disable=wrong-import-order
+# pylint: disable=wrong-import-order, protected-access, consider-iterating-dictionary
 # ------------------------------------------------------------------------------------------------ #
 """Project Module"""
+import itertools
 import logging
 import os
 import warnings
+from datetime import datetime
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
+import tensorflow as tf
 import wandb
 from dotenv import load_dotenv
+from sklearn.metrics import classification_report, confusion_matrix
+
+from bcd.model.artifact import ModelArtifact
+from bcd.model.experiment import Experiment
+from bcd.model.factory_old import ModelFactory
+from bcd.model.repo import ModelRepo
+from bcd.utils.math import find_factors
 
 # ------------------------------------------------------------------------------------------------ #
 load_dotenv()
@@ -45,11 +56,184 @@ class Project:
 
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(
+        self,
+        name: str,
+        config: dict,
+        factory: ModelFactory,
+        train_ds: tf.data.Dataset,
+        val_ds: tf.data.Dataset,
+        repo: ModelRepo,
+        optimizer: tf.keras.optimizers,
+        callbacks: list,
+        metrics: list,
+        force: bool,
+    ) -> None:
         self._name = name
+        self._config = config
+        self._factory = factory
+        self._train_ds = train_ds
+        self._val_ds = val_ds
+        self._repo = repo
+        self._optimizer = optimizer
+        self._callbacks = callbacks
+        self._metrics = metrics
+        self._force = force
+
+        self._run_started = None
+
+        self._experiments = {}
+        self._models = {}
+        self._log = []
+
         self._entity = os.getenv("WANDB_ENTITY")
+        self._version = factory.version
+        self._dataset = config["dataset"]
         self._runs = None
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
+
+    @property
+    def log(self) -> pd.DataFrame:
+        return pd.DataFrame(data=self._log)
+
+    def run(self, names: list = None) -> None:
+        """Run the named experiments.
+
+        Args:
+            names (list): List of model names to run. Optional. If None
+                All models will be run..
+        """
+        names = names or self._factory.model_names
+        for name in names:
+            self.run_experiment(name=name)
+        return self.log
+
+    def run_experiment(self, name: str) -> None:
+        """Runs the experiment
+
+        Args:
+            name (str): Model name (alias of the model object.)
+        """
+        self._start_experiment(name=name)
+        model = self._factory.create_model(name=name)
+        model.summary()
+
+        self._config["run_name"] = name
+        experiment = Experiment(
+            model=model,
+            config=self._config,
+            repo=self._repo,
+            optimizer=self._optimizer,
+            callbacks=self._callbacks,
+            metrics=self._metrics,
+            force=self._force,
+        )
+        experiment.run(train_ds=self._train_ds, val_ds=self._val_ds)
+        self._models[name] = experiment.model
+        self._end_experiment(name)
+
+    def classification_report(self, name: str, data: tf.data.Dataset = None) -> None:
+        """Prints a classification report.
+
+        Classification report is for the given dataset or the validation
+        set if no data is None
+
+        Args:
+            name (str) The model name
+            data (tf.data.Dataset) A dataset for which the classification report
+                is to be rendered. If None, the validation set will be used.
+        """
+        data = data or self._val_ds
+
+        model = self._get_model(name=name, ignore_errors=False)
+
+        actual = np.concatenate([y for x, y in data], axis=0)
+        predicted = (model.predict(data) > 0.5).astype("int32")
+
+        print(classification_report(actual, predicted, target_names=data.class_names))
+
+    def plot_confusion_matrix(
+        self,
+        name: str,
+        data: tf.data.Dataset = None,
+        ax: plt.Axes = None,
+        normalize: bool = False,
+    ) -> None:
+        """Plots a confusion matrix for the validation set.
+
+        Args:
+            name (str) The model name
+            data (tf.data.Dataset): Dataset for which the confusion matrix is
+                to be computed. If None, the validation set will be used.
+            ax (plt.Axes): Matplotlib Axes object. Optional
+            normalize (bool): Whether to normalize the values to 1 across rows.
+
+        """
+        if ax is None:
+            _, ax = plt.subplots(figsize=(4, 4))
+
+        data = data or self._val_ds
+
+        model_id = ModelArtifact(
+            name=name, version=self._version, dataset=self._dataset
+        ).id
+
+        model = self._repo.get(model_id=model_id)
+
+        actual = np.concatenate([y for x, y in data], axis=0)
+        predicted = (model.predict(data) > 0.5).astype("int32")
+
+        cm = confusion_matrix(actual, predicted)
+        if normalize:
+            cm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
+
+        cmap = "Blues"
+        ax.imshow(cm, interpolation="nearest", cmap=cmap)
+        ax.set_title(f"{self._name}\nConfusion matrix", fontsize=9)
+
+        tick_marks = np.arange(len(data.class_names))
+        ax.set_xticks(tick_marks, data.class_names, rotation=90, fontsize=8)
+        ax.set_yticks(tick_marks, data.class_names, fontsize=8)
+
+        thresh = cm.max() / 2.0
+        for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+            plt.text(
+                j,
+                i,
+                format(cm[i, j], ".2f"),
+                horizontalalignment="center",
+                color="white" if cm[i, j] > thresh else "black",
+                fontsize=8,
+            )
+
+        ax.set_ylabel("True label", fontsize=9)
+        ax.set_xlabel("Predicted label", fontsize=9)
+
+    def plot_confusion_matrices(
+        self, data: tf.data.Dataset = None, normalize: bool = False
+    ) -> None:
+        """Plots a confusion matrix for each experiment.
+
+        Args:
+             data (tf.data.Dataset): Dataset for which the confusion matrix is
+                to be computed. If None, the validation set will be used.
+            normalize (bool): Whether to normalize the values to 1 across rows.
+        """
+        data = data or self._val_ds
+
+        # Dynamically format the axis geometry
+        names = self._factory.model_names
+        n = len(names)
+        nrows, ncols = find_factors(c=n)
+        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(12, 4 * nrows))
+
+        for idx, ax in enumerate(axes.flat):
+            self.plot_confusion_matrix(
+                name=names[idx], data=data, ax=ax, normalize=normalize
+            )
+
+        fig.suptitle(f"{self._name} Confusion Matrices", fontsize=10)
+        plt.tight_layout()
 
     def plot_learning_curve(self, name: str, ax: plt.Axes = None) -> None:
         """Plots the learning curve for a run.
@@ -166,6 +350,19 @@ class Project:
         fig.suptitle("Model Performance", fontsize=14)
         plt.tight_layout()
 
+    def summarize(self) -> pd.DataFrame:
+        """Returns all run summaries"""
+        api = wandb.Api()
+        runs = api.runs(self._entity + "/" + self._name)
+        summary_list, name_list = [], []
+        for run in runs:
+            # Summary contains key/value pairs for run metrics
+            summary_list.append(run.summary._json_dict)
+            # Human-readable name of the run
+            name_list.append(run.name)
+
+        return pd.DataFrame({"name": name_list, "summary": summary_list})
+
     def summarize_run(self, name: str) -> dict:
         """Returns the run summary for the designated run
 
@@ -190,3 +387,53 @@ class Project:
         if self._runs is None:
             api = wandb.Api()
             self._runs = api.runs(self._entity + "/" + self._name)
+
+    def _start_experiment(self, name: str) -> None:
+        self._run_started = datetime.now()
+        started = self._run_started.strftime("%Y-%m-%d %H:%M:%S")
+        print("\n\n____________________________________________________________")
+        print(f"                     Experiment: {name}")
+        print(f"                    {started}")
+        print("============================================================\n")
+
+    def _end_experiment(self, name: str) -> None:
+        log = {}
+        log["name"] = name
+        log["started"] = self._run_started
+        log["ended"] = datetime.now()
+        log["runtime"] = (log["ended"] - log["started"]).total_seconds()
+        self._log.append(log)
+
+        ended = log["ended"].strftime("%Y-%m-%d %H:%M:%S")
+        runtime = round(log["duration"], 2)
+
+        print("\n____________________________________________________________")
+        print(f"     Experiment: {name} Completed at {ended}")
+        print(f"                Runtime: {runtime} seconds")
+        print("============================================================\n\n")
+
+    def _get_model(self, name: str, ignore_errors: bool = True) -> tf.keras.Model:
+        """Retrieves a model by name.
+
+        This method attempts to obtain the model from the experiment in memory.
+        If not found, it checks the model_cache in case the model has already
+        been loaded. If the experiment nor the model exists in memory,
+        the repository is checked.
+        """
+        # Check the experiment cache.
+        if name in self._experiments.keys():
+            return self._experiments[name].model
+        # Check the model cache
+        elif name in self._models.keys():
+            return self._models[name]
+        else:
+            model_id = ModelArtifact(
+                name=name, version=self._version, dataset=self._dataset
+            ).id
+            try:
+                return self._repo.get(model_id=model_id)
+            except FileNotFoundError:
+                if ignore_errors:
+                    pass
+                else:
+                    raise

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/base_model.py                                                            #
+# Filename   : /bcd/model/archive/base_model.py                                                    #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday November 5th 2023 09:20:17 am                                                #
-# Modified   : Sunday November 5th 2023 11:27:01 am                                                #
+# Modified   : Thursday February 8th 2024 11:14:56 pm                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -19,7 +19,7 @@
 """Base Module for Breast Cancer Classification"""
 from keras import layers
 
-from bcd.model.base import BCDModel
+from bcd.model.archive.base import BCDModel
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -34,7 +34,9 @@ class BaseModel(BCDModel):
         self._img_width = img_width
         self._num_classes = num_classes
         self.resizing = layers.Resizing(height=img_height, width=img_width)
-        self.rescaling = layers.Rescaling(1.0 / 255, input_shape=(img_height, img_width, 3))
+        self.rescaling = layers.Rescaling(
+            1.0 / 255, input_shape=(img_height, img_width, 3)
+        )
         self.conv1 = layers.Conv2D(16, 3, padding="same", activation="relu")
         self.maxpooling1 = layers.MaxPooling2D()
         self.conv2 = layers.Conv2D(32, 3, padding="same", activation="relu")
