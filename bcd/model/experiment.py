@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Tuesday February 6th 2024 12:39:23 am                                               #
-# Modified   : Monday February 12th 2024 03:54:56 am                                               #
+# Modified   : Monday February 12th 2024 12:15:08 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -30,6 +30,7 @@ from dotenv import load_dotenv
 from bcd.model.network.base import Network
 from bcd.model.repo import ModelRepo
 from bcd.model.schedule import FineTuneSchedule
+from bcd.utils.hash import dict_hash
 
 # ------------------------------------------------------------------------------------------------ #
 load_dotenv()
@@ -49,7 +50,7 @@ class Experiment:
     to a maximum number of epochs designated in the config parameter.
 
     Args:
-        networks (list): List of Network objects containing TensorFlow models to be trained.
+        network (list): A Network object containing a TensorFlow models to be trained.
         config (dict): The experiment configuration.
 
         optimizer (tf.keras.optimizers): A TensorFlow Keras optimizer instance.
@@ -62,7 +63,7 @@ class Experiment:
 
     def __init__(
         self,
-        networks: list[Network],
+        network,
         config: dict,
         optimizer: type[tf.keras.optimizers.Optimizer],
         repo: ModelRepo,
@@ -71,7 +72,7 @@ class Experiment:
         metrics: list = None,
         force: bool = False,
     ) -> None:
-        self._networks = networks
+        self._network = network
         self._config = config
         self._optimizer = optimizer
         self._repo = repo
@@ -103,47 +104,51 @@ class Experiment:
         self._train_ds = train_ds
         self._val_ds = val_ds
 
-        for network in self._networks:
+        experiment_config = self._update_config(self._network)
+        if (
+            self._repo.experiment_exists(
+                name=self._network.name, config=experiment_config
+            )
+            and not self._force
+        ):
+            msg = f"Experiment {self._network.name} already exists. Experiment skipped."
+            self._logger.info(msg)
+        else:
+            # Generate a run_id for the next run.
+            run_id = wandb.util.generate_id()
+            # Instantiate a wandb run and callback
+            run = wandb.init(
+                id=run_id,
+                project=experiment_config["project"],
+                name=self._network.name,
+                config=experiment_config,
+                tags=[self._network.architecture, self._network.base_model.name],
+                resume="allow",
+            )
 
-            experiment_config = self._update_config(network)
-            if (
-                self._repo.experiment_exists(
-                    name=network.name, config=experiment_config
-                )
-                and not self._force
-            ):
-                msg = f"Experiment {network.name} already exists. Experiment skipped."
-                self._logger.info(msg)
-            else:
-                # Generate a run_id for the next run.
-                run_id = wandb.util.generate_id()
-                # Instantiate a wandb run and callback
-                run = wandb.init(
-                    id=run_id,
-                    project=experiment_config["project"],
-                    name=network.name,
-                    config=experiment_config,
-                    tags=[network.architecture, network.base_model.name],
-                    resume="allow",
-                )
+            callbacks = self._configure_callbacks(
+                run=run, network=self._network, config=experiment_config
+            )
 
-                callbacks = self._configure_callbacks(
-                    run=run, network=network, config=experiment_config
-                )
-
-                network = self._extract_features(
+            self._network = self._extract_features(
+                run=run,
+                network=self._network,
+                config=experiment_config,
+                callbacks=callbacks,
+            )
+            if self._fine_tune_schedule is not None:
+                self._fine_tune(
                     run=run,
-                    network=network,
+                    network=self._network,
                     config=experiment_config,
                     callbacks=callbacks,
                 )
-                if self._fine_tune_schedule is not None:
-                    self._fine_tune(
-                        run=run,
-                        network=network,
-                        config=experiment_config,
-                        callbacks=callbacks,
-                    )
+
+            val_accuracy = run.summary["epoch/val_accuracy"]
+
+            wandb.finish()
+
+            return val_accuracy
 
     def _extract_features(
         self, run: wandb.run, network: Network, config: dict, callbacks: list
@@ -166,8 +171,10 @@ class Experiment:
 
         # Compile the model
         network.model.compile(
-            loss=config["loss"],
-            optimizer=self._optimizer(learning_rate=self._config["learning_rate"]),
+            loss=config["training"]["loss"],
+            optimizer=self._optimizer(
+                learning_rate=config["training"]["learning_rate"]
+            ),
             metrics=self._metrics,
         )
 
@@ -175,7 +182,7 @@ class Experiment:
         _ = network.model.fit(
             self._train_ds,
             validation_data=self._val_ds,
-            epochs=config["epochs"],
+            epochs=config["training"]["epochs"],
             callbacks=callbacks,
         )
 
@@ -208,7 +215,7 @@ class Experiment:
 
             # Compile the model with the thawed layers.
             network.model.compile(
-                loss=config["loss"],
+                loss=config["training"]["loss"],
                 optimizer=optimizer,
                 metrics=self._metrics,
             )
@@ -255,11 +262,12 @@ class Experiment:
         )
 
     def _update_config(self, network: Network) -> dict:
-        """Adds network and optionally, fine tune configuration."""
+        """Adds network and (optionally) fine tune config and creates a hash. ."""
         config = self._config
         config["network"] = network.config
         if self._fine_tune_schedule is not None:
             config["fine_tune"] = self._fine_tune_schedule.as_dict()
+        config["hash"] = dict_hash(dictionary=config)
         return config
 
     def _configure_callbacks(
@@ -277,11 +285,11 @@ class Experiment:
         filepath = self._repo.get_filepath(name=network.name, run_id=run.id)
         model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
             filepath=filepath,
-            monitor=config["checkpoint_config"]["monitor"],
-            verbose=config["checkpoint_config"]["verbose"],
-            save_best_only=config["checkpoint_config"]["save_best_only"],
-            save_weights_only=config["checkpoint_config"]["save_weights_only"],
-            mode=config["checkpoint_config"]["mode"],
+            monitor=config["checkpoint"]["monitor"],
+            verbose=config["checkpoint"]["verbose"],
+            save_best_only=config["checkpoint"]["save_best_only"],
+            save_weights_only=config["checkpoint"]["save_weights_only"],
+            mode=config["checkpoint"]["mode"],
         )
         callbacks.append(model_checkpoint_callback)
         return callbacks

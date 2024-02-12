@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Sunday February 11th 2024 10:36:01 pm                                               #
+# Modified   : Monday February 12th 2024 12:47:12 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -22,7 +22,8 @@ from dataclasses import dataclass
 import tensorflow as tf
 
 from bcd.model.base import BaseModel
-from bcd.model.network.base import Network, NetworkConfig, NetworkFactory
+from bcd.model.config import NetworkConfig
+from bcd.model.network.base import Network, NetworkFactory
 
 
 # ------------------------------------------------------------------------------------------------ #

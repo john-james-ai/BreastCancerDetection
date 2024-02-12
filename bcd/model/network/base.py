@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday February 11th 2024 06:30:03 pm                                               #
-# Modified   : Monday February 12th 2024 03:56:28 am                                               #
+# Modified   : Monday February 12th 2024 12:45:31 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -23,8 +23,8 @@ from dataclasses import dataclass
 
 import tensorflow as tf
 
-from bcd import DataClass
 from bcd.model.base import BaseModel
+from bcd.model.config import NetworkConfig
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -34,26 +34,18 @@ from bcd.model.base import BaseModel
 class Network:
     """Network network class"""
 
-    name: str  # Combination of the network class name and the base model name
-    model: tf.keras.Model  # The model to be trained.
+    name: str = None  # Combination of the network class name and the base model name
+    model: tf.keras.Model = None  # The model to be trained.
     base_model: (
         BaseModel  # BaseModel object containing the underlying pretrained model.
+    ) = None
+    architecture: str = (
+        None  # The name for the architecture. This is derived from the factory class name.
     )
-    architecture: str  # The name for the architecture. This is derived from the factory class name.
     register_model: bool = (
         True  # Provided to avoid registering excessively large models.
     )
-    config: NetworkConfig  # Hyperparameters for the network configuration.
-
-
-# ------------------------------------------------------------------------------------------------ #
-#                                     Network Config                                               #
-# ------------------------------------------------------------------------------------------------ #
-@dataclass
-class NetworkConfig(DataClass):
-    """Base class for network configurations."""
-
-    activation: str = "sigmoid"
+    config: NetworkConfig = None  # Hyperparameters for the network configuration.
 
 
 # ------------------------------------------------------------------------------------------------ #

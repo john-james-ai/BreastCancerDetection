@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday September 22nd 2023 06:54:46 am                                              #
-# Modified   : Tuesday January 2nd 2024 04:19:16 pm                                                #
+# Modified   : Monday February 12th 2024 12:08:17 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -24,7 +24,12 @@ from bcd.dal.image import ImageIO
 from bcd.utils.image import grayscale
 
 # ------------------------------------------------------------------------------------------------ #
-collect_ignore_glob = ["data/**/*.*", "bcd/preprocess/**/*.*"]
+collect_ignore_glob = [
+    "data/**/*.*",
+    "bcd/preprocess/**/*.*",
+    "tests/test_data/**/*.*",
+    "tests/test_explore/**/*.*",
+]
 # ------------------------------------------------------------------------------------------------ #
 CASE_FP = "data/meta/2_clean/cases.csv"
 IMAGE_FP = "data/meta/2_clean/dicom.csv"

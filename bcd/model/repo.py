@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 15th 2024 04:04:13 pm                                                #
-# Modified   : Monday February 12th 2024 02:57:11 am                                               #
+# Modified   : Monday February 12th 2024 12:16:31 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -111,7 +111,8 @@ class ModelRepo:
             name (str): Model name
             run_id (str): The run id for the run producing the model.
         """
-        return f"{name}-{run_id}.keras"
+        filename = f"{name}-{run_id}.keras"
+        return os.path.join(self._directory, filename)
 
     def exists(self, name: str, config: dict = None, run_id: str = None) -> bool:
         """Checks existence of a model.
@@ -161,7 +162,7 @@ class ModelRepo:
         """
         runs = wandb.Api().runs(f"{self._entity}/{self._project}")
         for run in runs:
-            if run.config == config and run.name == name:
+            if run.config["hash"] == config["hash"] and run.name == name:
                 return True
         return False
 
@@ -171,6 +172,8 @@ class ModelRepo:
         Args:
             name (str): Model name
         """
+        self._remove_local_files(name=name)
+        self._remove_remote_files(name=name)
 
     def _remove_local_files(self, name: str) -> None:
         """Removes all files matching the name."""
@@ -198,13 +201,11 @@ class ModelRepo:
             go = input(f"{len(runs)} runs will be deleted. Confirm. [Y/N]")
             if "y" in go.lower():
                 for run in runs:
-                    if run.name == name:
-                        n_runs += 1
-                        for artifact in run.logged_artifacts():
-                            if artifact.type == "model":
-                                n_artifacts += 1
-                                artifact.delete(delete_aliases=True)
-                        run.delete()
+                    for artifact in run.logged_artifacts():
+                        if artifact.type == "model" and run.name == name:
+                            n_artifacts += 1
+                            artifact.delete(delete_aliases=True)
+                            run.delete()
                 msg = f"{n_runs} runs and {n_artifacts} artifacts have been deleted."
                 self._logger.info(msg)
 
