@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 12:36:45 pm                                               #
-# Modified   : Saturday February 17th 2024 10:28:17 am                                             #
+# Modified   : Saturday February 17th 2024 01:32:16 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -60,6 +60,8 @@ class NetworkConfig(Config):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class DatasetConfig(Config):
+    mode: str
+    name: str = None
     batch_size: int = 32
     labels: str = "inferred"
     color_mode: str = "rgb"
@@ -68,6 +70,14 @@ class DatasetConfig(Config):
     validation_split: float = 0.2
     interpolation: str = "bilinear"
     seed: int = 555
+
+    def __post_init__(self) -> None:
+        if "dev" in self.mode.lower():
+            self.name = "CBIS-DDSM-10"
+        elif "stage" in self.mode.lower():
+            self.name = "CBIS-DDSM-30"
+        else:
+            self.name = "CBIS-DDSM"
 
 
 # ------------------------------------------------------------------------------------------------ #
