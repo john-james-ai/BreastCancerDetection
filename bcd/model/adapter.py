@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday February 15th 2024 08:48:53 pm                                             #
-# Modified   : Saturday February 17th 2024 10:35:06 am                                             #
+# Modified   : Saturday February 17th 2024 12:58:24 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -76,19 +76,19 @@ class Adapter(ABC):
         """Returns the model directory."""
 
     def get_strategy(self) -> tf.distribute.Strategy:
-        """Returns the TensorFlow compute strategy."""
-        # Detect hardware, return appropriate distribution strategy
+        """Detect hardware, return appropriate distribution strategy"""
 
         try:
             # TPU detection. No parameters necessary if TPU_NAME environment variable is set. On Kaggle this is always the case.
             tpu = tf.distribute.cluster_resolver.TPUClusterResolver()
+            print("Running on TPU ", tpu.master())
         except ValueError:
             tpu = None
 
         if tpu:
             tf.config.experimental_connect_to_cluster(tpu)
             tf.tpu.experimental.initialize_tpu_system(tpu)
-            strategy = tf.distribute.experimental.TPUStrategy(tpu)
+            strategy = tf.distribute.TPUStrategy(tpu)
         else:
             strategy = (
                 tf.distribute.get_strategy()
