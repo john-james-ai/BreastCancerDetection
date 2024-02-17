@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 04:02:57 pm                                               #
-# Modified   : Saturday February 17th 2024 12:05:30 pm                                             #
+# Modified   : Saturday February 17th 2024 02:18:46 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -128,7 +128,6 @@ class FeatureExtractionExperiment(Experiment):
         config: Config,
         optimizer: type[tf.keras.optimizers.Optimizer],
         repo: ExperimentRepo,
-        strategy: tf.distribute.Strategy,
         callbacks: list = None,
         notes: str = None,
         tags: list = None,
@@ -139,7 +138,6 @@ class FeatureExtractionExperiment(Experiment):
         self._optimizer = optimizer
         self._repo = repo
         self._callbacks = callbacks
-        self._strategy = strategy
         self._notes = notes
         self._tags = tags
         self._force = force
@@ -203,31 +201,23 @@ class FeatureExtractionExperiment(Experiment):
                 weights_only=self._config.checkpoint.save_weights_only,
             )
 
-            # For memory and performance efficiency, release the
-            # global state keras maintains to implement the
-            # Functional API.
-            tf.keras.backend.clear_session()
+            metrics = [
+                "accuracy",
+                tf.keras.metrics.AUC(),
+                tf.keras.metrics.Precision(),
+                tf.keras.metrics.Recall(),
+            ]
+            optimizer = self._optimizer(learning_rate=self._config.train.learning_rate)
 
-            with self._strategy.scope():
-                metrics = [
-                    "accuracy",
-                    tf.keras.metrics.AUC(),
-                    tf.keras.metrics.Precision(),
-                    tf.keras.metrics.Recall(),
-                ]
-                optimizer = self._optimizer(
-                    learning_rate=self._config.train.learning_rate
-                )
+            # Compile the model
+            self._network.model.compile(
+                loss=self._config.train.loss,
+                optimizer=optimizer,
+                metrics=metrics,
+            )
 
-                # Compile the model
-                self._network.model.compile(
-                    loss=self._config.train.loss,
-                    optimizer=optimizer,
-                    metrics=metrics,
-                )
-
-                # Add a checkpoint callback.
-                callbacks = self._add_callbacks(checkpoint=checkpoint)
+            # Add a checkpoint callback.
+            callbacks = self._add_callbacks(checkpoint=checkpoint)
 
             # Fit the model
             _ = self._network.model.fit(
