@@ -4,19 +4,19 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/network/shainnet.py                                                      #
+# Filename   : /bcd/model/network/tmnetv2.py                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Friday February 16th 2024 05:52:40 pm                                               #
+# Modified   : Friday February 16th 2024 05:53:27 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-"""Model Factory Module"""
+"""TMNet Module"""
 from dataclasses import dataclass
 
 import tensorflow as tf
@@ -26,46 +26,29 @@ from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                    SHAIN NET CONFIG                                              #
+#                                        TMNet Config                                              #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class ShainNetConfig(NetworkConfig):
-    """Configuration for ShainNet Network"""
+class TMNetV2Config(NetworkConfig):
+    """TMNet configuration"""
 
     dense1: int = 1024
     dropout1: float = 0.5
     dense2: int = 1024
-    dropout2: float = 0.3
-    dense3: int = 512
-    dense4: int = 128
+    dropout2: float = 0.5
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                     ShaneNetFactory                                              #
+#                                       TMNet FActory                                              #
 # ------------------------------------------------------------------------------------------------ #
-class ShainNetFactory(NetworkFactory):
-    """Factory for CNN ShainNet Transfer Learning model
+class TMNetV2Factory(NetworkFactory):
+    """Factory for CNN TMNetV2 Transfer Learning model"""
 
-    Models are comprised of a frozen pre-trained model upon which, the following layers are added:
-    - Global Average Pooling Layer
-    - Dense layer with 1024 nodes and ReLU activation
-    - Dropout layer with rate = 0.5
-    - Dense layer with 1024 nodes and ReLU activation
-    - Dropout layer with rate - 0.3
-    - Dense llayer with 512 nodes and ReLU activation
-    - Dense layer with 128 nodes and ReLU activation
-    - Dense layer with sigmoid activation
-
-    Args:
-        config (ShainNetConfig): Object containing the network configuration
-
-    """
-
-    __name = "ShainNet"
+    __name = "TMNetV2"
 
     def __init__(
         self,
-        config: ShainNetConfig,
+        config: TMNetV2Config,
     ) -> None:
         self._config = config
 
@@ -90,7 +73,9 @@ class ShainNetFactory(NetworkFactory):
         x = tf.keras.layers.GlobalAveragePooling2D(
             name=f"{name}_global_average_pooling"
         )(x)
-        # Add fully connected layers with dropout for regularization
+        # Add Batch Normalization
+        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_normalization")(x)
+        # Add fully connected layers
         x = tf.keras.layers.Dense(
             self._config.dense1, activation="relu", name=f"{name}_dense_1"
         )(x)
@@ -99,23 +84,15 @@ class ShainNetFactory(NetworkFactory):
             self._config.dense2, activation="relu", name=f"{name}_dense_2"
         )(x)
         x = tf.keras.layers.Dropout(self._config.dropout2, name=f"{name}_dropout_2")(x)
-        x = tf.keras.layers.Dense(
-            self._config.dense3, activation="relu", name=f"{name}_dense_3"
-        )(x)
 
         # Add Layers for classification
-        x = tf.keras.layers.Dense(
-            self._config.dense4, activation="relu", name=f"{name}_dense_4"
-        )(x)
         outputs = tf.keras.layers.Dense(
             units=self._config.output_shape,
             activation=self._config.activation,
             name=f"{name}_output_layer",
         )(x)
-
         # Create the model
         model = tf.keras.Model(inputs, outputs)
-
         # Create the network
         name = self.__name + "_" + base_model.name
         network = Network(

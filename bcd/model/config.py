@@ -11,13 +11,12 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 12:36:45 pm                                               #
-# Modified   : Monday February 12th 2024 01:44:28 pm                                               #
+# Modified   : Saturday February 17th 2024 10:28:17 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
 """Model and Experiment Configuration Module"""
-import pathlib
 from dataclasses import dataclass
 
 from bcd import DataClass
@@ -28,7 +27,13 @@ from bcd.utils.hash import dict_hash
 # pylint: disable=missing-class-docstring
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class ProjectConfig(DataClass):
+class Config(DataClass):
+    """Base class for configuration objects"""
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class ProjectConfig(Config):
     mode: str
     name: str = None
 
@@ -38,7 +43,7 @@ class ProjectConfig(DataClass):
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class TrainConfig(DataClass):
+class TrainConfig(Config):
     epochs: int
     learning_rate: float = 1e-4
     loss: str = "binary_crossentropy"
@@ -46,43 +51,29 @@ class TrainConfig(DataClass):
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class NetworkConfig(DataClass):
+class NetworkConfig(Config):
     activation: str = "sigmoid"
-
-
-# ------------------------------------------------------------------------------------------------ #
-@dataclass
-class DatasetConfig(DataClass):
-    mode: str
-    dataset: str = None
-    batch_size: int = 32
     input_shape: tuple = (224, 224, 3)
     output_shape: int = 1
-    train_dir: str = None
-
-    def __post_init__(self) -> None:
-        datasets = {
-            "Development": {
-                "name": "CBIS-DDSM_10",
-                "directory": "data/image/1_final/training_10/training/",
-            },
-            "Stage": {
-                "name": "CBIS-DDSM_30",
-                "directory": "data/image/1_final/training_30/training/",
-            },
-            "Production": {
-                "name": "CBIS-DDSM",
-                "directory": "data/image/1_final/training/training/",
-            },
-        }
-        self.dataset = datasets[self.mode]["name"]
-        self.train_dir = datasets[self.mode]["directory"]
-        self.batch_size = 64 if self.mode == "Production" else 32
 
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class CheckPointConfig(DataClass):
+class DatasetConfig(Config):
+    batch_size: int = 32
+    labels: str = "inferred"
+    color_mode: str = "rgb"
+    image_size: tuple = (224, 224)
+    shuffle: bool = True
+    validation_split: float = 0.2
+    interpolation: str = "bilinear"
+    seed: int = 555
+
+
+# ------------------------------------------------------------------------------------------------ #
+@dataclass
+class CheckPointConfig(Config):
+    directory: str = None
     monitor: str = "val_accuracy"
     verbose: int = 1
     save_best_only: bool = True
@@ -92,7 +83,7 @@ class CheckPointConfig(DataClass):
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class EarlyStopConfig(DataClass):
+class EarlyStopConfig(Config):
     min_delta: float = 1e-4
     monitor: str = "val_loss"
     patience: int = 10
@@ -102,7 +93,7 @@ class EarlyStopConfig(DataClass):
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class LearningRateScheduleConfig(DataClass):
+class LearningRateScheduleConfig(Config):
     min_delta: float = 1e-4
     monitor: str = "val_loss"
     factor: float = 0.5
@@ -115,7 +106,7 @@ class LearningRateScheduleConfig(DataClass):
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class Config(DataClass):
+class ExperimentConfig(Config):
     project: ProjectConfig
     dataset: DatasetConfig
     train: TrainConfig

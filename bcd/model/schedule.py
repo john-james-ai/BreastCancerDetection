@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday January 21st 2024 03:44:39 pm                                                #
-# Modified   : Monday February 12th 2024 03:38:30 am                                               #
+# Modified   : Monday February 12th 2024 03:11:34 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -35,8 +35,6 @@ from bcd.model.network.base import Network
 class FineTuneSchedule(DataClass):
     """Abstract base class for fine tuning schedules"""
 
-    sessions: int = 5  # Number of fine tuning sessions
-    patience: int = 2  # Early stopping patience for sessions.
     thaw_schedule: list = None  # Number of layers to thaw each session
     learning_rate_schedule: list = None  # Learning rates each session
     epochs: list = None  # Number of epochs to train each session.
@@ -84,7 +82,7 @@ class FineTuneSchedule(DataClass):
 class LinearFineTuneSchedule(FineTuneSchedule):
     """Creates a linear fine tune schedule.
 
-    For this schedule, the number of layers to thaw grows linearly from 1 to the number of layers
+    For this schedule, the number of layers to thaw grows linearly to the number of layers
     in the base model. Likewise, the number of epochs to train grows linearly from a epochs init
     to a epochs end for the number of sessions, subject to any early stopping.
     Finally, the learning rate decays linearly from a maximum to a minimum value over the
@@ -92,6 +90,7 @@ class LinearFineTuneSchedule(FineTuneSchedule):
     """
 
     iceblocks: int = 10  # Number of partitions or blocks of layers to potentially thaw.
+    sessions: int = 5  # Number of fine tuning sessions
     learning_rate_init: float = 1e-5  #  The initial learning rate for the first session
     learning_rate_end: float = 1e-8  # The minimum learning rate over all sessions
     epochs_init: int = 5  # Number of epochs to train first session
@@ -145,6 +144,7 @@ class LogFineTuneSchedule(FineTuneSchedule):
     """
 
     iceblocks: int = 10  # Number of partitions or blocks of layers to potentially thaw.
+    sessions: int = 5  # Number of fine tuning sessions
     learning_rate_init: float = 1e-5  #  The initial learning rate for the first session
     learning_rate_end: float = 1e-8  # The minimum learning rate over all sessions
     epochs_init: int = 5  # Number of epochs to train first session
@@ -190,7 +190,6 @@ class CustomFineTuneSchedule(FineTuneSchedule):
     """Allows users to designated a custom fine tuning schedule
 
     The user provices:
-        - sessions (int): Number of fine tuning sessions.
         - thaw schedule: List of layers to thaw each session.
         - learning_rate_schedule: List of learning rates for each session
         - epochs; List of epochs to train each session.

@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Sunday February 11th 2024 07:01:57 pm                                               #
+# Modified   : Friday February 16th 2024 05:53:16 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -21,8 +21,8 @@ from dataclasses import dataclass
 
 import tensorflow as tf
 
-from bcd.model.base import BaseModel
 from bcd.model.network.base import Network, NetworkConfig, NetworkFactory
+from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -68,14 +68,8 @@ class TMNetFactory(NetworkFactory):
     def __init__(
         self,
         config: TMNetConfig,
-        input_shape: tuple[int, int, int] = (224, 224, 3),
-        output_shape: int = 1,
-        activation: str = "sigmoid",
     ) -> None:
         self._config = config
-        self._input_shape = input_shape
-        self._output_shape = output_shape
-        self._activation = activation
 
     def create(self, base_model: BaseModel) -> tf.keras.Model:
         """Creates a CNN transfer learning model for the given base model.
@@ -88,12 +82,10 @@ class TMNetFactory(NetworkFactory):
         name = f"{self.__name}_{base_model.name}"
         # Create the input
         inputs = tf.keras.Input(
-            shape=self._input_shape, batch_size=None, name=f"{name}_input_layer"
+            shape=self._config.input_shape, batch_size=None, name=f"{name}_input_layer"
         )
         # Perform base model specific preprocessing
         x = base_model.preprocessor(x=inputs)
-        # Augment the image data
-        x = self.augmentation(x)
         # Feed base model
         x = base_model.model(x)
         # Pooling for dimensionality reduction
@@ -112,8 +104,8 @@ class TMNetFactory(NetworkFactory):
 
         # Add Layers for classification
         outputs = tf.keras.layers.Dense(
-            units=self._output_shape,
-            activation=self._activation,
+            units=self._config.output_shape,
+            activation=self._config.activation,
             name=f"{name}_output_layer",
         )(x)
         # Create the model

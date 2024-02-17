@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday August 31st 2023 07:35:50 pm                                               #
-# Modified   : Thursday January 11th 2024 03:09:50 pm                                              #
+# Modified   : Tuesday February 13th 2024 05:14:03 am                                              #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -112,7 +112,7 @@ class DataClass(ABC):
         return s
 
     def __str__(self) -> str:
-        width = 32
+        width = 50
         breadth = width * 2
         s = f"\n\n{self.__class__.__name__.center(breadth, ' ')}"
         d = self.as_dict()

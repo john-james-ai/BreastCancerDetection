@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday January 13th 2024 08:37:37 pm                                              #
-# Modified   : Monday February 12th 2024 03:24:19 am                                               #
+# Modified   : Thursday February 15th 2024 11:24:14 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -24,8 +24,8 @@ import tensorflow as tf
 import wandb
 
 from bcd.model.callback import Historian
-from bcd.model.repo import ModelRepo
 from bcd.model.schedule import LearningRateSchedule, ThawSchedule
+from bcd.model.store import ExperimentRepo
 
 # ------------------------------------------------------------------------------------------------ #
 logging.basicConfig(stream=sys.stdout)
@@ -77,7 +77,7 @@ class FineTuner:
         name: str,
         train_ds: tf.data.Dataset,
         validation_ds: tf.data.Dataset,
-        repo: ModelRepo,
+        repo: ExperimentRepo,
         thaw_schedule: ThawSchedule,
         learning_rate_schedule: LearningRateSchedule,
         loss: str = "binary_crossentropy",

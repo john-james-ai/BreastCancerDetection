@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Monday February 12th 2024 12:47:12 pm                                               #
+# Modified   : Friday February 16th 2024 05:52:25 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -21,9 +21,9 @@ from dataclasses import dataclass
 
 import tensorflow as tf
 
-from bcd.model.base import BaseModel
 from bcd.model.config import NetworkConfig
 from bcd.model.network.base import Network, NetworkFactory
+from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -34,7 +34,9 @@ class AKNetConfig(NetworkConfig):
     """AKNet configuration"""
 
     dense1: int = 4096
+    dropout1: float = 0.5
     dense2: int = 4096
+    dropout2: float = 0.5
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -64,12 +66,8 @@ class AKNetFactory(NetworkFactory):
     def __init__(
         self,
         config: AKNetConfig,
-        input_shape: tuple[int, int, int] = (224, 224, 3),
-        output_shape: int = 1,
     ) -> None:
         self._config = config
-        self._input_shape = input_shape
-        self._output_shape = output_shape
 
     def create(self, base_model: BaseModel) -> tf.keras.Model:
         """Creates a CNN transfer learning model for the given base model.
@@ -82,12 +80,10 @@ class AKNetFactory(NetworkFactory):
         name = f"{self.__name}_{base_model.name}"
         # Create the input
         inputs = tf.keras.Input(
-            shape=self._input_shape, batch_size=None, name=f"{name}_input_layer"
+            shape=self._config.input_shape, batch_size=None, name=f"{name}_input_layer"
         )
         # Perform base model specific preprocessing
         x = base_model.preprocessor(x=inputs)
-        # Augment the image data
-        x = self.augmentation(x)
         # Feed base model
         x = base_model.model(x)
         # Flatten the output from the base model.
@@ -96,14 +92,16 @@ class AKNetFactory(NetworkFactory):
         x = tf.keras.layers.Dense(
             self._config.dense1, activation="relu", name=f"{name}_dense_1"
         )(x)
+        x = tf.keras.layers.Dropout(self._config.dropout1, name=f"{name}_dropout_1")(x)
         x = tf.keras.layers.Dense(
-            self._config.dense1, activation="relu", name=f"{name}_dense_2"
+            self._config.dense2, activation="relu", name=f"{name}_dense_2"
         )(x)
+        x = tf.keras.layers.Dropout(self._config.dropout2, name=f"{name}_dropout_2")(x)
 
         # Add Layers for classification
         outputs = tf.keras.layers.Dense(
-            units=self._output_shape,
-            activation=self._config["activation"],
+            units=self._config.output_shape,
+            activation=self._config.activation,
             name=f"{name}_output_layer",
         )(x)
         # Create the model

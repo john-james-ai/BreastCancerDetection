@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday February 11th 2024 06:30:03 pm                                               #
-# Modified   : Monday February 12th 2024 12:45:31 pm                                               #
+# Modified   : Friday February 16th 2024 05:51:51 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -23,8 +23,8 @@ from dataclasses import dataclass
 
 import tensorflow as tf
 
-from bcd.model.base import BaseModel
 from bcd.model.config import NetworkConfig
+from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -47,26 +47,15 @@ class Network:
     )
     config: NetworkConfig = None  # Hyperparameters for the network configuration.
 
+    def summary(self) -> None:
+        self.model.summary()
+
 
 # ------------------------------------------------------------------------------------------------ #
 #                                     NetworkFactory                                               #
 # ------------------------------------------------------------------------------------------------ #
 class NetworkFactory(ABC):
     """Base network factory"""
-
-    @property
-    def augmentation(self) -> tf.Tensor:
-        """Performs random horizontal flip and rotation of images.
-
-        Args:
-            inputs (tf.Tensor): Input data
-        """
-        return tf.keras.Sequential(
-            [
-                tf.keras.layers.RandomFlip("horizontal"),
-            ],
-            name="data_augmentation",
-        )
 
     @abstractmethod
     def create(self, base_model: BaseModel) -> tf.keras.Model:
