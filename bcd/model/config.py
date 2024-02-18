@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 12:36:45 pm                                               #
-# Modified   : Saturday February 17th 2024 01:32:16 pm                                             #
+# Modified   : Sunday February 18th 2024 04:18:03 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -38,7 +38,8 @@ class ProjectConfig(Config):
     name: str = None
 
     def __post_init__(self) -> None:
-        self.name = f"Breast-Cancer-Detection-{self.mode}"
+        if self.name is None:
+            self.name = f"Breast-Cancer-Detection-{self.mode}"
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -104,14 +105,10 @@ class EarlyStopConfig(Config):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class LearningRateScheduleConfig(Config):
-    min_delta: float = 1e-4
-    monitor: str = "val_loss"
-    factor: float = 0.5
-    patience: int = 3
-    restore_best_weights: bool = True
-    verbose: int = 1
-    mode: str = "auto"
-    min_lr = 1e-8
+    min_lr: float = 1e-8
+    max_lr: float = 1e-1
+    epochs: int = 10
+    steps_size: int = 4
 
 
 # ------------------------------------------------------------------------------------------------ #
