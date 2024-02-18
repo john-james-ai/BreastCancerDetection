@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 17th 2024 11:21:47 pm                                             #
-# Modified   : Sunday February 18th 2024 03:53:05 am                                               #
+# Modified   : Sunday February 18th 2024 10:14:56 am                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -79,14 +79,32 @@ class TriangleLearningRateScheduleCallback(tf.keras.callbacks.Callback):
 
     """
 
+    __max_lr = {
+        "TMNet_Xception": 0.01112,
+        "TMNet_ResNet": 0.01112,
+        "TMNet_MobileNet": 0.02223,
+        "TMNet_InceptionResNet": 0.1,
+        "TMNet_Inception": 0.01112,
+        "TMNet_EfficientNet": 0.01112,
+        "TMNet_DenseNet": 0.01112,
+        "default": 0.1,
+    }
+
     def __init__(
-        self, min_lr: float = 1e-5, max_lr: float = 0.1, step_size: int = 4
+        self,
+        name: str = None,
+        min_lr: float = 1e-5,
+        max_lr: float = None,
+        step_size: int = 4,
     ) -> None:
         self._min_lr = min_lr
-        self._max_lr = max_lr
+        self._max_lr = max_lr if max_lr is not None else self._set_max_lr(name=name)
         self._step_size = step_size
         self._logger = logging.getLogger(f"{self.__class__.__name__}")
         self._logger.setLevel(logging.INFO)
+
+        msg = f"Created a Triangle learning rate schedule:\n\tMinimum Learning Rate: {self._min_lr}\n\tMaximum Learning Rate: {self._max_lr}\n\tStepsize: {self._step_size}"
+        self._logger.info(msg)
 
     def on_epoch_begin(self, epoch: int, logs: dict = None) -> None:
         cycle = math.floor(1 + epoch / (2 * self._step_size))
@@ -95,3 +113,17 @@ class TriangleLearningRateScheduleCallback(tf.keras.callbacks.Callback):
         msg = f"Setting learning rate to {lr}."
         self._logger.info(msg)
         tf.keras.backend.set_value(self.model.optimizer.lr, lr)
+
+    def _set_max_lr(self, name: str) -> float:
+        """Sets the maximum learning rate for the network with the designated name."""
+        try:
+            return self.__max_lr[name]
+        except KeyError:
+            msg = f"{name} is not recognized. Proceed with default maximum learning rate of {self.__max_lr['default']}? [Y/N]"
+            go = input(msg)
+            if "y" in go.lower():
+                return self.__max_lr["default"]
+            else:
+                msg = f"Network {name} not recognized. Either the network name or a maximum learning rate must be provided. Learning rate schedule not be created."
+                self._logger.exception(msg)
+                raise
