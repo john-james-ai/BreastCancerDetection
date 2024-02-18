@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 04:02:57 pm                                               #
-# Modified   : Saturday February 17th 2024 02:18:46 pm                                             #
+# Modified   : Saturday February 17th 2024 11:19:48 pm                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -56,7 +56,6 @@ class Experiment(ABC):
         self,
         train_ds: tf.data.Dataset,
         val_ds: tf.data.Dataset,
-        checkpoint: bool = True,
     ) -> tf.keras.Model:
         """Runs the experiment."""
 
@@ -129,8 +128,10 @@ class FeatureExtractionExperiment(Experiment):
         optimizer: type[tf.keras.optimizers.Optimizer],
         repo: ExperimentRepo,
         callbacks: list = None,
+        metrics: list = None,
         notes: str = None,
         tags: list = None,
+        checkpoint: bool = False,
         force: bool = False,
     ) -> None:
         self._network = network
@@ -138,8 +139,10 @@ class FeatureExtractionExperiment(Experiment):
         self._optimizer = optimizer
         self._repo = repo
         self._callbacks = callbacks
+        self._metrics = metrics
         self._notes = notes
         self._tags = tags
+        self._checkpoint = checkpoint
         self._force = force
 
         self._run_id = None
@@ -161,7 +164,6 @@ class FeatureExtractionExperiment(Experiment):
         self,
         train_ds: tf.data.Dataset,
         val_ds: tf.data.Dataset,
-        checkpoint: bool = True,
     ) -> tf.keras.Model:
         """Compiles and fits the model.
 
@@ -182,7 +184,9 @@ class FeatureExtractionExperiment(Experiment):
             msg = f"Experiment {self._network.name} already exists. Experiment aborted."
             self._logger.warning(msg)
         else:
-            # Instantiate a Weights & Biases run
+            # ----------------------------------------------------------------------------------- #
+            #                       Instantiate a Weights & Biases run                            #
+            # ----------------------------------------------------------------------------------- #
             self._run_id = wandb.util.generate_id()
             self._run = wandb.init(
                 id=self._run_id,
@@ -193,68 +197,69 @@ class FeatureExtractionExperiment(Experiment):
                 tags=self._tags,
                 resume="allow",
             )
+            # ----------------------------------------------------------------------------------- #
+            #                                 Add Callbacks                                       #
+            # ----------------------------------------------------------------------------------- #
+            # Add Weights and Biases callback to track metrics.
+            wandb_callback = wandb.keras.WandbMetricsLogger()
+            self._callbacks.append(wandb_callback)
 
-            # Designate the filepath for the saved model
-            self._filepath = self._repo.get_filepath(
-                name=self._network.name,
-                model_id=self._run_id,
-                weights_only=self._config.checkpoint.save_weights_only,
-            )
-
-            metrics = [
-                "accuracy",
-                tf.keras.metrics.AUC(),
-                tf.keras.metrics.Precision(),
-                tf.keras.metrics.Recall(),
-            ]
             optimizer = self._optimizer(learning_rate=self._config.train.learning_rate)
 
-            # Compile the model
+            # Add a model checkpoint callback if indicated
+            if self._checkpoint:
+                # Designate the filepath for the saved model
+                self._filepath = self._repo.get_filepath(
+                    name=self._network.name,
+                    model_id=self._run_id,
+                    weights_only=self._config.checkpoint.save_weights_only,
+                )
+
+                self._add_checkpoint_callback()
+            # ----------------------------------------------------------------------------------- #
+            #                              Compile the Model                                      #
+            # ----------------------------------------------------------------------------------- #
             self._network.model.compile(
                 loss=self._config.train.loss,
                 optimizer=optimizer,
-                metrics=metrics,
+                metrics=self._metrics,
             )
-
-            # Add a checkpoint callback.
-            callbacks = self._add_callbacks(checkpoint=checkpoint)
-
-            # Fit the model
+            # ----------------------------------------------------------------------------------- #
+            #                               Fit the Model                                         #
+            # ----------------------------------------------------------------------------------- #
             _ = self._network.model.fit(
                 train_ds,
                 validation_data=val_ds,
                 epochs=self._config.train.epochs,
-                callbacks=callbacks,
+                callbacks=self._callbacks,
             )
-            if self._network.register_model and checkpoint:
+            # ----------------------------------------------------------------------------------- #
+            #                     Register the Model on Weights & Biases                          #
+            # ----------------------------------------------------------------------------------- #
+            if self._network.register_model and self._checkpoint:
                 self._repo.add(
                     run=self._run,
                     name=self._network.name,
                     filepath=self._filepath,
                 )
 
-            # Create ROC and Confusion Matrix plots
+            # ----------------------------------------------------------------------------------- #
+            #                      Create ROC Plot and Confusion Matrix                           #
+            # ----------------------------------------------------------------------------------- #
             self.create_plots(model=self._network.model, data=val_ds)
 
             wandb.finish()
 
-    def _add_callbacks(self, checkpoint: bool = True) -> list:
-        """Adds a metrics logger and checkpoint callback"""
-        callbacks = self._callbacks
+    def _add_checkpoint_callback(self) -> None:
+        """Adds a checkpoint callback to the callback instance variable"""
 
-        # Add Weights and Biases callback to track metrics.
-        wandb_callback = wandb.keras.WandbMetricsLogger()
-        callbacks.append(wandb_callback)
-
-        if checkpoint:
-            # Callback will save best model locally.
-            model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-                filepath=self._filepath,
-                monitor=self._config.checkpoint.monitor,
-                verbose=self._config.checkpoint.verbose,
-                save_best_only=self._config.checkpoint.save_best_only,
-                save_weights_only=self._config.checkpoint.save_weights_only,
-                mode=self._config.checkpoint.mode,
-            )
-            callbacks.append(model_checkpoint_callback)
-        return callbacks
+        # Callback will save best model locally.
+        model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+            filepath=self._filepath,
+            monitor=self._config.checkpoint.monitor,
+            verbose=self._config.checkpoint.verbose,
+            save_best_only=self._config.checkpoint.save_best_only,
+            save_weights_only=self._config.checkpoint.save_weights_only,
+            mode=self._config.checkpoint.mode,
+        )
+        self._callbacks.append(model_checkpoint_callback)
