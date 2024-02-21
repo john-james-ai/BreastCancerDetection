@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 12:36:45 pm                                               #
-# Modified   : Sunday February 18th 2024 11:38:09 am                                               #
+# Modified   : Wednesday February 21st 2024 08:34:11 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -49,11 +49,13 @@ class TrainConfig(Config):
     learning_rate: float = 1e-4
     loss: str = "binary_crossentropy"
     early_stop: bool = False
+    learning_rate_schedule: bool = True
 
 
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class NetworkConfig(Config):
+    description: str = None
     activation: str = "sigmoid"
     input_shape: tuple = (224, 224, 3)
     output_shape: int = 1
@@ -106,10 +108,18 @@ class EarlyStopConfig(Config):
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
 class LearningRateScheduleConfig(Config):
+    method: str = "reduce_on_plateau"
     min_lr: float = 1e-8
     max_lr: float = 1e-1
     epochs: int = 10
     steps_size: int = 4
+    min_delta: float = 1e-4
+    monitor: str = "val_loss"
+    factor: float = 0.5
+    patience: int = 5
+    restore_best_weights: bool = True
+    verbose: int = 1
+    mode: str = "auto"
 
 
 # ------------------------------------------------------------------------------------------------ #

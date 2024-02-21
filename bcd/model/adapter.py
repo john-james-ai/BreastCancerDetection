@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday February 15th 2024 08:48:53 pm                                             #
-# Modified   : Saturday February 17th 2024 12:58:24 pm                                             #
+# Modified   : Monday February 19th 2024 02:08:52 pm                                               #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -44,6 +44,8 @@ DATASETS = {
 # ------------------------------------------------------------------------------------------------ #
 class Adapter(ABC):
     """Defines interface for Adapter subclasses."""
+    def __init__(self) -> None:
+        self._device_type = None
 
     @property
     def tf_version(self) -> str:
@@ -51,9 +53,9 @@ class Adapter(ABC):
         return tf.__version__
 
     @property
-    @abstractmethod
     def device_type(self) -> str:
         """Return device type as 'CPU', 'GPU', or 'TPU'."""
+        return self._device_type
 
     @property
     @abstractmethod
@@ -81,18 +83,28 @@ class Adapter(ABC):
         try:
             # TPU detection. No parameters necessary if TPU_NAME environment variable is set. On Kaggle this is always the case.
             tpu = tf.distribute.cluster_resolver.TPUClusterResolver()
+            tf.config.experimental_connect_to_cluster(tpu)
+            tf.tpu.experimental.initialize_tpu_system(tpu)
+            strategy = tf.distribute.TPUStrategy(tpu)
+            self._device_type = "TPU"
             print("Running on TPU ", tpu.master())
         except ValueError:
             tpu = None
 
-        if tpu:
-            tf.config.experimental_connect_to_cluster(tpu)
-            tf.tpu.experimental.initialize_tpu_system(tpu)
-            strategy = tf.distribute.TPUStrategy(tpu)
-        else:
-            strategy = (
-                tf.distribute.get_strategy()
-            )  # default distribution strategy in Tensorflow. Works on CPU and single GPU.
+        if tpu is None:
+            ngpu = len(tf.config.experimental.list_physical_devices("GPU"))
+            if ngpu > 1:
+                print(f"Using {ngpu} GPUs")
+                self._device_type = "GPU"
+                strategy = tf.distribute.MirroredStrategy()
+            elif ngpu == 1:
+                print("Using single GPU")
+                self._device_type = "GPU"
+                strategy = tf.distribute.get_strategy()
+            else:
+                print("Using CPU")
+                self._device_type = "CPU"
+                strategy = tf.distribute.get_strategy()
 
         return strategy
 
