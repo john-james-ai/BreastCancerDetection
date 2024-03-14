@@ -4,19 +4,19 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/network/nlnetv2.py                                                       #
+# Filename   : /bcd/model/network/tmnetv7.py                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Wednesday February 21st 2024 10:50:34 am                                            #
+# Modified   : Tuesday March 12th 2024 03:30:43 pm                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-"""NLNetV2 Module"""
+"""TMNetV7 Module"""
 from dataclasses import dataclass
 
 import tensorflow as tf
@@ -26,29 +26,50 @@ from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        NLNetV2 Config                                            #
+#                                        TMNetV7 Config                                            #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class NLNetV2Config(NetworkConfig):
-    """NLNetV2 configuration"""
+class TMNetV7Config(NetworkConfig):
+    """TMNetV7 configuration"""
 
-    description: str = "Batchnorm x 2, Dense x 3"
-    dense1: int = 4096
-    dense2: int = 4096
-    dense3: int = 1024
+    dense1: int = 1024
+    l2reg1: float = 0.0001
+    dense2: int = 1024
+    l2reg2: float = 0.0001
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                       NLNetV2 FActory                                            #
+#                                       TMNetV7 FActory                                            #
 # ------------------------------------------------------------------------------------------------ #
-class NLNetV2Factory(NetworkFactory):
-    """Factory for CNN NLNetV2 Transfer Learning model"""
+class TMNetV7Factory(NetworkFactory):
+    """Factory for CNN TMNetV7 Transfer Learning model [1]_
 
-    __name = "NLNetV2"
+    Models are comprised of a frozen pre-trained model upon which, the following layers are added:
+    - Global Average Pooling Layer
+    - Batch Normalization Layer
+    - Dense layer with 1024 (default) nodes and ReLU activation
+    - Dense layer with 1024 (default) nodes and ReLU activation
+    - Dense layer with sigmoid activation
+
+    Args:
+        input_shape (tuple): Shape of input. Default = (224,224,3).
+        output_shape (int): Shape of output. Default = 1.
+        activation (str): Output activation. Default = 'sigmoid'.
+
+    Reference:
+    .. [1] T. Mahmood, J. Li, Y. Pei, and F. Akhtar, “An Automated In-Depth Feature Learning Algorithm
+    for Breast Abnormality Prognosis and Robust Characterization from Mammography Images
+    Using Deep Transfer Learning,” Biology, vol. 10, no. 9, p. 859, Sep. 2021,
+    doi: 10.3390/biology10090859.
+
+
+    """
+
+    __name = "TMNetV7"
 
     def __init__(
         self,
-        config: NLNetV2Config,
+        config: TMNetV7Config,
     ) -> None:
         self._config = config
 
@@ -73,18 +94,23 @@ class NLNetV2Factory(NetworkFactory):
         x = tf.keras.layers.GlobalAveragePooling2D(
             name=f"{name}_global_average_pooling"
         )(x)
+        # Add Batch Normalization
+        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_normalization")(x)
+        # Add fully connected layers
         x = tf.keras.layers.Dense(
-            self._config.dense1, activation="relu", name=f"{name}_dense_1"
+            self._config.dense1,
+            activation="relu",
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l2reg1),
+            name=f"{name}_dense_1",
         )(x)
-        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_1")(x)
         x = tf.keras.layers.Dense(
-            self._config.dense2, activation="relu", name=f"{name}_dense_2"
+            self._config.dense2,
+            activation="relu",
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l2reg2),
+            name=f"{name}_dense_2",
         )(x)
-        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_2")(x)
-        x = tf.keras.layers.Dense(
-            self._config.dense3, activation="relu", name=f"{name}_dense_3"
-        )(x)
-        # Add Layer for classification
+
+        # Add Layers for classification
         outputs = tf.keras.layers.Dense(
             units=self._config.output_shape,
             activation=self._config.activation,

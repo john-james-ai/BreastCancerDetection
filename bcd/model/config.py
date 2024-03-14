@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 12:36:45 pm                                               #
-# Modified   : Wednesday February 21st 2024 08:34:11 am                                            #
+# Modified   : Saturday March 9th 2024 06:26:39 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -47,9 +47,15 @@ class ProjectConfig(Config):
 class TrainConfig(Config):
     epochs: int
     learning_rate: float = 1e-4
+    use_ema: bool = False
+    momentum: float = 0.99
+    weight_decay: float = None
     loss: str = "binary_crossentropy"
     early_stop: bool = False
     learning_rate_schedule: bool = True
+    augmentation: bool = True
+    checkpoint: bool = True
+    fine_tune: bool = False
 
 
 # ------------------------------------------------------------------------------------------------ #

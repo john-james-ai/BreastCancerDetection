@@ -4,19 +4,19 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/network/nlnetv2.py                                                       #
+# Filename   : /bcd/model/network/tmnetv6.py                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Wednesday February 21st 2024 10:50:34 am                                            #
+# Modified   : Wednesday February 21st 2024 10:46:23 am                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-"""NLNetV2 Module"""
+"""TMNetV6 Module"""
 from dataclasses import dataclass
 
 import tensorflow as tf
@@ -26,29 +26,34 @@ from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        NLNetV2 Config                                            #
+#                                        TMNetV6 Config                                            #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class NLNetV2Config(NetworkConfig):
-    """NLNetV2 configuration"""
+class TMNetV6Config(NetworkConfig):
+    """TMNetV6 configuration"""
 
-    description: str = "Batchnorm x 2, Dense x 3"
+    description: str = "Four dense layers with L2 regularization."
     dense1: int = 4096
+    dropout1: float = 0.5
     dense2: int = 4096
+    dropout2: float = 0.5
     dense3: int = 1024
+    dropout3: float = 0.5
+    dense4: int = 1024
+    dropout4: float = 0.5
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                       NLNetV2 FActory                                            #
+#                                       TMNetV6 FActory                                            #
 # ------------------------------------------------------------------------------------------------ #
-class NLNetV2Factory(NetworkFactory):
-    """Factory for CNN NLNetV2 Transfer Learning model"""
+class TMNetV6Factory(NetworkFactory):
+    """Factory for CNN TMNetV6 Transfer Learning model"""
 
-    __name = "NLNetV2"
+    __name = "TMNetV6"
 
     def __init__(
         self,
-        config: NLNetV2Config,
+        config: TMNetV6Config,
     ) -> None:
         self._config = config
 
@@ -73,18 +78,34 @@ class NLNetV2Factory(NetworkFactory):
         x = tf.keras.layers.GlobalAveragePooling2D(
             name=f"{name}_global_average_pooling"
         )(x)
+        # Add fully connected layers
         x = tf.keras.layers.Dense(
-            self._config.dense1, activation="relu", name=f"{name}_dense_1"
+            self._config.dense1,
+            activation="elu",
+            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            name=f"{name}_dense_1",
         )(x)
-        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_1")(x)
         x = tf.keras.layers.Dense(
-            self._config.dense2, activation="relu", name=f"{name}_dense_2"
+            self._config.dense2,
+            activation="elu",
+            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            name=f"{name}_dense_2",
         )(x)
-        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_2")(x)
         x = tf.keras.layers.Dense(
-            self._config.dense3, activation="relu", name=f"{name}_dense_3"
+            self._config.dense3,
+            activation="elu",
+            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            name=f"{name}_dense_3",
         )(x)
-        # Add Layer for classification
+        x = tf.keras.layers.Dense(
+            self._config.dense4,
+            activation="elu",
+            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            name=f"{name}_dense_4",
+        )(x)
+        x = tf.keras.layers.Dropout(self._config.dropout4, name=f"{name}_dropout_4")(x)
+
+        # Add Layers for classification
         outputs = tf.keras.layers.Dense(
             units=self._config.output_shape,
             activation=self._config.activation,

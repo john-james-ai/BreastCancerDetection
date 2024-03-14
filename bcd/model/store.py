@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday January 15th 2024 04:04:13 pm                                                #
-# Modified   : Friday February 16th 2024 02:59:51 pm                                               #
+# Modified   : Wednesday February 21st 2024 09:39:38 pm                                            #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -21,6 +21,7 @@
 import logging
 import os
 
+import pandas as pd
 import tensorflow as tf
 import wandb
 from dotenv import load_dotenv
@@ -30,6 +31,8 @@ from bcd.model.adapter import Adapter
 load_dotenv()
 
 
+# ------------------------------------------------------------------------------------------------ #
+# pylint: disable=protected-access
 # ------------------------------------------------------------------------------------------------ #
 #                                     MODEL REPO                                                   #
 # ------------------------------------------------------------------------------------------------ #
@@ -144,3 +147,20 @@ class ExperimentRepo:
             return False
         except ValueError:
             return False
+
+    def export_runs(self, filepath: str) -> None:
+
+        api = wandb.Api()
+
+        # Project is specified by <entity/project-name>
+        runs = api.runs("aistudio/Breast-Cancer-Detection-Production")
+
+        summary_list = []
+        for run in runs:
+            # .summary contains the output keys/values for metrics like accuracy.
+            #  We call ._json_dict to omit large files
+            summary_list.append(run.summary._json_dict)
+
+        runs_df = pd.DataFrame(summary_list)
+
+        runs_df.to_csv(filepath)

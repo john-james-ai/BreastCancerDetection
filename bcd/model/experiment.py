@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 04:02:57 pm                                               #
-# Modified   : Sunday February 18th 2024 03:37:15 am                                               #
+# Modified   : Saturday February 24th 2024 01:24:19 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -38,7 +38,7 @@ logging.basicConfig(stream=sys.stdout)
 # ------------------------------------------------------------------------------------------------ #
 #                                     EXPERIMENT                                                   #
 # ------------------------------------------------------------------------------------------------ #
-class Experiment(ABC):
+class BaseExperiment(ABC):
     """Abstract base class for experiments."""
 
     @property
@@ -106,8 +106,8 @@ class Experiment(ABC):
 # ------------------------------------------------------------------------------------------------ #
 #                            FEATURE EXTRACTION EXPERIMENT                                         #
 # ------------------------------------------------------------------------------------------------ #
-class FeatureExtractionExperiment(Experiment):
-    """Performs feature extraction experiments.
+class Experiment(BaseExperiment):
+    """Performs transfer learning experiments with an optional fine tuning session.
 
     Args:
         network (Network): A Network object containing the model to be trained.
@@ -131,7 +131,6 @@ class FeatureExtractionExperiment(Experiment):
         metrics: list = None,
         notes: str = None,
         tags: list = None,
-        checkpoint: bool = False,
         force: bool = False,
     ) -> None:
         self._network = network
@@ -142,7 +141,6 @@ class FeatureExtractionExperiment(Experiment):
         self._metrics = metrics
         self._notes = notes
         self._tags = tags
-        self._checkpoint = checkpoint
         self._force = force
 
         self._run_id = None
@@ -207,7 +205,7 @@ class FeatureExtractionExperiment(Experiment):
             optimizer = self._optimizer(learning_rate=self._config.train.learning_rate)
 
             # Add a model checkpoint callback if indicated
-            if self._checkpoint:
+            if self._config.train.checkpoint:
                 # Designate the filepath for the saved model
                 self._filepath = self._repo.get_filepath(
                     name=self._network.name,
@@ -234,9 +232,27 @@ class FeatureExtractionExperiment(Experiment):
                 callbacks=self._callbacks,
             )
             # ----------------------------------------------------------------------------------- #
+            #                                    FINE TUNING                                      #
+            # ----------------------------------------------------------------------------------- #
+            if self._config.train.fine_tune:
+                # Thaw the model
+                self._network.model.trainable = True
+                # Reset the learning rate
+                tf.keras.backend.set_value(
+                    self._network.model.optimizer.lr,
+                    self._config.train.learning_rate * 0.1,
+                )
+                # Resume training
+                _ = self._network.model.fit(
+                    train_ds,
+                    validation_data=val_ds,
+                    epochs=self._config.train.epochs,
+                    callbacks=self._callbacks,
+                )
+            # ----------------------------------------------------------------------------------- #
             #                     Register the Model on Weights & Biases                          #
             # ----------------------------------------------------------------------------------- #
-            if self._network.register_model and self._checkpoint:
+            if self._network.register_model and self._config.train.checkpoint:
                 self._repo.add(
                     run=self._run,
                     name=self._network.name,

@@ -4,19 +4,20 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/network/nlnetv2.py                                                       #
+# Filename   : /bcd/model/network/zznet2.py                                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Wednesday February 21st 2024 10:50:34 am                                            #
+# Created    : Thursday March 14th 2024 05:12:02 am                                                #
+# Modified   : Thursday March 14th 2024 06:22:57 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-"""NLNetV2 Module"""
+"""ZZNetV2 Module"""
+
 from dataclasses import dataclass
 
 import tensorflow as tf
@@ -26,29 +27,37 @@ from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        NLNetV2 Config                                            #
+#                                        ZZNetV2 Config                                            #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class NLNetV2Config(NetworkConfig):
-    """NLNetV2 configuration"""
+class ZZNetV2Config(NetworkConfig):
+    """ZZNetV2 configuration"""
 
-    description: str = "Batchnorm x 2, Dense x 3"
-    dense1: int = 4096
-    dense2: int = 4096
-    dense3: int = 1024
+    description: str = "ZZNETV2: Two dense layers followed by dropout"
+    dense1: int = 1024
+    dense2: int = 512
+    dropout2: float = 0.5
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                       NLNetV2 FActory                                            #
+#                                       ZZNetV2 FActory                                            #
 # ------------------------------------------------------------------------------------------------ #
-class NLNetV2Factory(NetworkFactory):
-    """Factory for CNN NLNetV2 Transfer Learning model"""
+class ZZNetV2Factory(NetworkFactory):
+    """Factory for CNN ZZNetV2 Transfer Learning model
 
-    __name = "NLNetV2"
+    Reference:
+    [1] R. R and L. Kalaivani, “Breast Cancer Detection and Classification using Deeper
+    Convolutional Neural Networks based on Wavelet Packet Decomposition Techniques,”
+    In Review, preprint, Apr. 2021. doi: 10.21203/rs.3.rs-405990/v1.
+
+
+    """
+
+    __name = "ZZNetV2"
 
     def __init__(
         self,
-        config: NLNetV2Config,
+        config: ZZNetV2Config,
     ) -> None:
         self._config = config
 
@@ -69,21 +78,25 @@ class NLNetV2Factory(NetworkFactory):
         x = base_model.preprocessor(x=inputs)
         # Feed base model
         x = base_model.model(x)
+
         # Pooling for dimensionality reduction
         x = tf.keras.layers.GlobalAveragePooling2D(
             name=f"{name}_global_average_pooling"
         )(x)
+
+        # Dense, batch norm, followed by activation as per original paper
         x = tf.keras.layers.Dense(
             self._config.dense1, activation="relu", name=f"{name}_dense_1"
         )(x)
-        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_1")(x)
+
+        # Dense, batch norm, followed by activation as per original paper
         x = tf.keras.layers.Dense(
             self._config.dense2, activation="relu", name=f"{name}_dense_2"
         )(x)
-        x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_2")(x)
-        x = tf.keras.layers.Dense(
-            self._config.dense3, activation="relu", name=f"{name}_dense_3"
-        )(x)
+
+        # Dropout layer
+        x = tf.keras.layers.Dropout(self._config.dropout2)(x)
+
         # Add Layer for classification
         outputs = tf.keras.layers.Dense(
             units=self._config.output_shape,

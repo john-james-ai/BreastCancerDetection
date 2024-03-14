@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday February 15th 2024 08:48:53 pm                                             #
-# Modified   : Monday February 19th 2024 02:08:52 pm                                               #
+# Modified   : Thursday February 22nd 2024 12:51:37 am                                             #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -44,6 +44,7 @@ DATASETS = {
 # ------------------------------------------------------------------------------------------------ #
 class Adapter(ABC):
     """Defines interface for Adapter subclasses."""
+
     def __init__(self) -> None:
         self._device_type = None
 
@@ -212,3 +213,56 @@ class KaggleAdapter(Adapter):
     def model_dir(self) -> str:
         """Returns the model directory."""
         return "/kaggle/working/models/"
+
+
+# ------------------------------------------------------------------------------------------------ #
+#                                           COLAB                                                  #
+# ------------------------------------------------------------------------------------------------ #
+class ColabAdapter(Adapter):
+    """Encapsulates variables specific to the Colab environment.
+
+    Args:
+        mode (str): Either 'Development', 'Stage',  or 'Production'.
+    """
+
+    __train_dir = "data/image/1_final/training/"
+
+    def __init__(self, mode: str) -> None:
+        self._mode = mode
+
+    @property
+    def device_type(self) -> str:
+        """Return device type as 'CPU', 'GPU', or 'TPU'."""
+        device_name = tf.test.gpu_device_name()
+        if "GPU" in device_name:
+            return "GPU"
+        else:
+            try:
+                _ = tf.distribute.cluster_resolver.TPUClusterResolver()
+                return "TPU"
+            except ValueError:
+                return "CPU"
+
+    @property
+    def wandb_api_key(self) -> str:
+        """Returns the Weights & Biases API Key"""
+        from google.colab import userdata
+
+        return userdata.get("WANDB_API_KEY")
+
+    @property
+    def wandb_entity(self) -> str:
+        """Returns the Weights & Biases entity"""
+        from google.colab import userdata
+
+        return userdata.get("WANDB_ENTITY")
+
+    @property
+    def train_dir(self) -> str:
+        """Returns the base directory for the training set."""
+        return f"{self.__train_dir}"
+
+    @property
+    def model_dir(self) -> str:
+        """Returns the model directory."""
+        return "/models/"
