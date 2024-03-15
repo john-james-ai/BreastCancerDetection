@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Thursday March 14th 2024 05:10:08 am                                                #
+# Modified   : Thursday March 14th 2024 03:29:45 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -55,7 +55,7 @@ class NLNetV5Factory(NetworkFactory):
     ) -> None:
         self._config = config
 
-    def create(self, base_model: BaseModel) -> tf.keras.Model:
+    def create(self, base_model: BaseModel) -> Network:
         """Creates a CNN transfer learning model for the given base model.
 
         Args:

@@ -4,92 +4,97 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/network/simplenetv2.py                                                   #
+# Filename   : /bcd/model/ensemble.py                                                              #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Thursday March 14th 2024 03:29:46 pm                                                #
+# Created    : Thursday March 14th 2024 03:19:11 pm                                                #
+# Modified   : Thursday March 14th 2024 04:15:33 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-"""SimpleNetV2 Module"""
+"""Ensemble Module"""
 from dataclasses import dataclass
 
 import tensorflow as tf
 
-from bcd.model.network.base import Network, NetworkConfig, NetworkFactory
-from bcd.model.pretrained import BaseModel
+from bcd.model.config import NetworkConfig
+from bcd.model.network.base import Network
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        SimpleNetV2 Config                                          #
+#                                        ENSEMBLE CONFIG                                           #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class SimpleNetV2Config(NetworkConfig):
-    """SimpleNetV2 configuration"""
+class EnsembleConfig(NetworkConfig):
+    """Ensemble configuration"""
 
-    dense1: int = 1024
-    dropout1: float = 0.5
+    description: str = None
+    dense1: int = 16
+    dropout1: float = 0.3
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                       SimpleNetV2 FActory                                          #
+#                                       ENSEMBLE FACTORY                                           #
 # ------------------------------------------------------------------------------------------------ #
-class SimpleNetV2Factory(NetworkFactory):
-    """Factory for CNN SimpleNetV2 Transfer Learning model"""
+class EnsembleFactory:
+    """Creates an ensemble network"""
 
-    __name = "SimpleNetV2"
+    __name = "Ensemble"
 
     def __init__(
         self,
-        config: SimpleNetV2Config,
+        config: EnsembleConfig,
     ) -> None:
         self._config = config
 
-    def create(self, base_model: BaseModel) -> Network:
-        """Creates a CNN transfer learning model for the given base model.
+    def create(self, networks: list) -> Network:
 
-        Args:
-            base_model (BaseModel): Base model object containing the pretrained model
-                and the model specific preprocessor.
-        """
-        # Designate a model name that will be used to name runs.
-        name = f"{self.__name}_{base_model.name}"
+        self._config.description = ",".join([network.name for network in networks])
+
         # Create the input
         inputs = tf.keras.Input(
-            shape=self._config.input_shape, batch_size=None, name=f"{name}_input_layer"
+            shape=self._config.input_shape,
+            batch_size=None,
+            name=f"{self.__name}_input_layer",
         )
-        # Perform base model specific preprocessing
-        x = base_model.preprocessor(x=inputs)
-        # Feed base model
-        x = base_model.model(x)
-        # Pooling for dimensionality reduction
-        x = tf.keras.layers.GlobalAveragePooling2D(
-            name=f"{name}_global_average_pooling"
-        )(x)
+
+        # Obtain output for each input network model
+        outputs = [network.model(inputs) for network in networks]
+
+        # Average outputs
+        x = tf.keras.layers.Average()(outputs)
+
+        # Add fully connected layers
         x = tf.keras.layers.Dense(
-            self._config.dense1, activation="relu", name=f"{name}_dense_1"
+            self._config.dense1, activation="relu", name=f"{self.__name}_dense_1"
         )(x)
-        x = tf.keras.layers.Dropout(self._config.dropout1, name=f"{name}_dropout_1")(x)
-        # Add Layer for classification
-        outputs = tf.keras.layers.Dense(
+
+        # Add Drop out layer
+        x = tf.keras.layers.Dropout(
+            self._config.dropout1, name=f"{self.__name}_dropout_1"
+        )(x)
+
+        # Add Layers for classification
+        output = tf.keras.layers.Dense(
             units=self._config.output_shape,
             activation=self._config.activation,
-            name=f"{name}_output_layer",
+            name=f"{self.__name}_output_layer",
         )(x)
+
         # Create the model
-        model = tf.keras.Model(inputs, outputs)
+        model = tf.keras.Model(inputs, output)
+
         # Create the network
-        name = self.__name + "_" + base_model.name
         network = Network(
-            name=name,
+            name=self.__name,
             model=model,
-            base_model=base_model.model,
-            architecture=self.__name,
+            base_model=None,
+            architecture="ensemble",
+            register_model=False,
             config=self._config,
         )
 

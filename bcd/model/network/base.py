@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Sunday February 11th 2024 06:30:03 pm                                               #
-# Modified   : Friday February 16th 2024 05:51:51 pm                                               #
+# Modified   : Thursday March 14th 2024 03:29:45 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -58,7 +58,7 @@ class NetworkFactory(ABC):
     """Base network factory"""
 
     @abstractmethod
-    def create(self, base_model: BaseModel) -> tf.keras.Model:
+    def create(self, base_model: BaseModel) -> Network:
         """Creates a CNN transfer learning model for the given base model.
 
         Args:

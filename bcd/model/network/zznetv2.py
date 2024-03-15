@@ -4,19 +4,19 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/network/zznet3.py                                                        #
+# Filename   : /bcd/model/network/zznet2.py                                                        #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
-# Created    : Thursday March 14th 2024 05:13:52 am                                                #
-# Modified   : Thursday March 14th 2024 06:23:07 am                                                #
+# Created    : Thursday March 14th 2024 05:12:02 am                                                #
+# Modified   : Thursday March 14th 2024 03:29:46 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
 # ================================================================================================ #
-"""ZZNetV3 Module"""
+"""ZZNetV2 Module"""
 
 from dataclasses import dataclass
 
@@ -27,22 +27,23 @@ from bcd.model.pretrained import BaseModel
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                        ZZNetV3 Config                                            #
+#                                        ZZNetV2 Config                                            #
 # ------------------------------------------------------------------------------------------------ #
 @dataclass
-class ZZNetV3Config(NetworkConfig):
-    """ZZNetV3 configuration"""
+class ZZNetV2Config(NetworkConfig):
+    """ZZNetV2 configuration"""
 
-    description: str = "ZZNETV3: One dense layer followed by dropout"
+    description: str = "ZZNETV2: Two dense layers followed by dropout"
     dense1: int = 1024
-    dropout1: float = 0.6
+    dense2: int = 512
+    dropout2: float = 0.5
 
 
 # ------------------------------------------------------------------------------------------------ #
-#                                       ZZNetV3 FActory                                            #
+#                                       ZZNetV2 FActory                                            #
 # ------------------------------------------------------------------------------------------------ #
-class ZZNetV3Factory(NetworkFactory):
-    """Factory for CNN ZZNetV3 Transfer Learning model
+class ZZNetV2Factory(NetworkFactory):
+    """Factory for CNN ZZNetV2 Transfer Learning model
 
     Reference:
     [1] R. R and L. Kalaivani, “Breast Cancer Detection and Classification using Deeper
@@ -52,15 +53,15 @@ class ZZNetV3Factory(NetworkFactory):
 
     """
 
-    __name = "ZZNetV3"
+    __name = "ZZNetV2"
 
     def __init__(
         self,
-        config: ZZNetV3Config,
+        config: ZZNetV2Config,
     ) -> None:
         self._config = config
 
-    def create(self, base_model: BaseModel) -> tf.keras.Model:
+    def create(self, base_model: BaseModel) -> Network:
         """Creates a CNN transfer learning model for the given base model.
 
         Args:
@@ -88,8 +89,13 @@ class ZZNetV3Factory(NetworkFactory):
             self._config.dense1, activation="relu", name=f"{name}_dense_1"
         )(x)
 
+        # Dense, batch norm, followed by activation as per original paper
+        x = tf.keras.layers.Dense(
+            self._config.dense2, activation="relu", name=f"{name}_dense_2"
+        )(x)
+
         # Dropout layer
-        x = tf.keras.layers.Dropout(self._config.dropout1)(x)
+        x = tf.keras.layers.Dropout(self._config.dropout2)(x)
 
         # Add Layer for classification
         outputs = tf.keras.layers.Dense(

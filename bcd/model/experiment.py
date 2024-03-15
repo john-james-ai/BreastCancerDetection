@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday February 12th 2024 04:02:57 pm                                               #
-# Modified   : Saturday February 24th 2024 01:24:19 am                                             #
+# Modified   : Thursday March 14th 2024 05:21:52 pm                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -38,7 +38,7 @@ logging.basicConfig(stream=sys.stdout)
 # ------------------------------------------------------------------------------------------------ #
 #                                     EXPERIMENT                                                   #
 # ------------------------------------------------------------------------------------------------ #
-class BaseExperiment(ABC):
+class Experiment(ABC):
     """Abstract base class for experiments."""
 
     @property
@@ -106,13 +106,13 @@ class BaseExperiment(ABC):
 # ------------------------------------------------------------------------------------------------ #
 #                            FEATURE EXTRACTION EXPERIMENT                                         #
 # ------------------------------------------------------------------------------------------------ #
-class Experiment(BaseExperiment):
-    """Performs transfer learning experiments with an optional fine tuning session.
+class FeatureExtractionExperiment(Experiment):
+    """Performs feature extraction experiments.
 
     Args:
         network (Network): A Network object containing the model to be trained.
         config (Config): The experiment configuration object.
-        optimizer (type[tf.keras.optimizers.Optimizer]): An optimizer class
+        optimizer (tf.keras.optimizers.Optimizer): A keras optimizer
         repo (ExperimentRepo): Repository of Weights and Biases experiments
         callbacks (list): List of callbacks
         metrics (list): A list of TensorFlow Keras metrics to track.
@@ -125,7 +125,7 @@ class Experiment(BaseExperiment):
         self,
         network: Network,
         config: Config,
-        optimizer: type[tf.keras.optimizers.Optimizer],
+        optimizer: tf.keras.optimizers.Optimizer,
         repo: ExperimentRepo,
         callbacks: list = None,
         metrics: list = None,
@@ -202,8 +202,6 @@ class Experiment(BaseExperiment):
             wandb_callback = wandb.keras.WandbMetricsLogger()
             self._callbacks.append(wandb_callback)
 
-            optimizer = self._optimizer(learning_rate=self._config.train.learning_rate)
-
             # Add a model checkpoint callback if indicated
             if self._config.train.checkpoint:
                 # Designate the filepath for the saved model
@@ -219,7 +217,7 @@ class Experiment(BaseExperiment):
             # ----------------------------------------------------------------------------------- #
             self._network.model.compile(
                 loss=self._config.train.loss,
-                optimizer=optimizer,
+                optimizer=self._optimizer,
                 metrics=self._metrics,
             )
             # ----------------------------------------------------------------------------------- #
@@ -237,6 +235,8 @@ class Experiment(BaseExperiment):
             if self._config.train.fine_tune:
                 # Thaw the model
                 self._network.model.trainable = True
+                # print Summmary
+                self._network.model.summary()
                 # Reset the learning rate
                 tf.keras.backend.set_value(
                     self._network.model.optimizer.lr,
