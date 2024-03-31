@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/network/zznet1.py                                                        #
+# Filename   : /bcd/model/network/zznetv1.py                                                       #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Thursday March 14th 2024 05:05:50 am                                                #
-# Modified   : Thursday March 14th 2024 03:29:46 pm                                                #
+# Modified   : Friday March 15th 2024 06:33:29 am                                                  #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -78,7 +78,7 @@ class ZZNetV1Factory(NetworkFactory):
         # Perform base model specific preprocessing
         x = base_model.preprocessor(x=inputs)
         # Feed base model
-        x = base_model.model(x)
+        x = base_model.model(x, training=False)
 
         # Pooling for dimensionality reduction
         x = tf.keras.layers.GlobalAveragePooling2D(

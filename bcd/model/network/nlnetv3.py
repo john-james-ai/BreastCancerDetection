@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Thursday March 14th 2024 03:29:46 pm                                                #
+# Modified   : Saturday March 16th 2024 05:10:32 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -35,6 +35,9 @@ class NLNetV3Config(NetworkConfig):
     dense1: int = 4096
     dense2: int = 4096
     dense3: int = 2048
+    l2_1: float = 0.0001
+    l2_2: float = 0.0001
+    l2_3: float = 0.0001
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -67,7 +70,7 @@ class NLNetV3Factory(NetworkFactory):
         # Perform base model specific preprocessing
         x = base_model.preprocessor(x=inputs)
         # Feed base model
-        x = base_model.model(x)
+        x = base_model.model(x, training=False)
         # Pooling for dimensionality reduction
         x = tf.keras.layers.GlobalAveragePooling2D(
             name=f"{name}_global_average_pooling"
@@ -75,21 +78,21 @@ class NLNetV3Factory(NetworkFactory):
         x = tf.keras.layers.Dense(
             self._config.dense1,
             activation="elu",
-            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l2_1),
             name=f"{name}_dense_1",
         )(x)
         x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_1")(x)
         x = tf.keras.layers.Dense(
             self._config.dense2,
             activation="elu",
-            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l2_2),
             name=f"{name}_dense_2",
         )(x)
         x = tf.keras.layers.BatchNormalization(name=f"{name}_batch_norm_2")(x)
         x = tf.keras.layers.Dense(
             self._config.dense3,
             activation="elu",
-            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l2_3),
             name=f"{name}_dense_3",
         )(x)
         # Add Layer for classification

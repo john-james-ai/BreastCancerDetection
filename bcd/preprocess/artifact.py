@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Monday December 25th 2023 09:13:38 pm                                               #
-# Modified   : Thursday January 11th 2024 03:27:11 pm                                              #
+# Modified   : Sunday March 31st 2024 09:20:29 am                                                  #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -41,6 +41,8 @@ class ArtifactRemoverContour(Task):
 
     Args:
         binarizer (Threshold): A Threshold object.
+        smooth_boundary (bool): Whether to smooth the boundary of the binary mask
+        kernel_size (int): Kernel size for smoothing
 
     Returns:
         np.ndarray: Image with artifacts removed.
@@ -54,9 +56,16 @@ class ArtifactRemoverContour(Task):
 
     """
 
-    def __init__(self, binarizer: Threshold) -> None:
+    def __init__(
+        self,
+        binarizer: Threshold,
+        smooth_boundary: bool = True,
+        kernel_size: int = 15,
+    ) -> None:
         super().__init__()
         self._binarizer = binarizer
+        self._smooth_boundary = smooth_boundary
+        self._kernel_size = kernel_size
 
     def run(self, image: np.ndarray) -> np.ndarray:
         """Remove artifacts
@@ -69,26 +78,37 @@ class ArtifactRemoverContour(Task):
         image = grayscale(image)
 
         _, image_bin = self._binarizer.run(image=image)
+
+        # Smooth the binary mask if requested
+        if self._smooth_boundary:
+            image_bin = self._smooth_mask_boundary(mask=image_bin)
+
         # Extract contours using border following algorithm
         contours, _ = cv2.findContours(
-            image=image_bin.copy(), mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_SIMPLE
+            image=image_bin.copy(),
+            mode=cv2.RETR_EXTERNAL,
+            method=cv2.CHAIN_APPROX_SIMPLE,
         )
-        # Compute areas for the contours, and obtain index
-        # for largest contour
-        contour_areas = [cv2.contourArea(contour) for contour in contours]
-        idx = np.argmax(contour_areas)
+        # Get the contour with largest area
+        big_contour = max(contours, key=cv2.contourArea)
 
-        # Create a breast mask and apply it to the original image
+        # Create a mask from the contour
         mask = cv2.drawContours(
-            np.zeros_like(image_bin),
-            contours=contours,
-            contourIdx=idx,
+            np.zeros_like(image_bin, dtype=np.uint8),
+            contours=[big_contour],
+            contourIdx=0,
             color=255,
             thickness=-1,
         )
         image_seg = cv2.bitwise_and(image, image, mask=mask)
 
         return image_seg
+
+    def _smooth_mask_boundary(self, mask: np.ndarray) -> np.ndarray:
+        """Smooths mask boundary"""
+
+        kernel = np.ones((self._kernel_size, self._kernel_size), dtype=np.uint8)
+        return cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel=kernel)
 
 
 # ------------------------------------------------------------------------------------------------ #

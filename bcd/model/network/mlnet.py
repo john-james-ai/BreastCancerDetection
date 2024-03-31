@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Thursday March 14th 2024 03:29:45 pm                                                #
+# Modified   : Friday March 15th 2024 06:33:29 am                                                  #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -69,7 +69,7 @@ class MLNetFactory(NetworkFactory):
         # Perform base model specific preprocessing
         x = base_model.preprocessor(x=inputs)
         # Feed base model
-        x = base_model.model(x)
+        x = base_model.model(x, training=False)
         # Flatten the output to a vector
         x = tf.keras.layers.Flatten(name=f"{name}_flatten")(x)
         # Dropout

@@ -4,14 +4,14 @@
 # Project    : Deep Learning for Breast Cancer Detection                                           #
 # Version    : 0.1.0                                                                               #
 # Python     : 3.10.12                                                                             #
-# Filename   : /bcd/model/base.py                                                                  #
+# Filename   : /bcd/model/pretrained.py                                                            #
 # ------------------------------------------------------------------------------------------------ #
 # Author     : John James                                                                          #
 # Email      : john.james.ai.studio@gmail.com                                                      #
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday February 9th 2024 01:39:56 am                                                #
-# Modified   : Saturday February 10th 2024 09:54:58 am                                             #
+# Modified   : Friday March 15th 2024 04:40:47 am                                                  #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -56,7 +56,9 @@ class DenseNet(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.densenet.DenseNet201(include_top=False)
+        model = tf.keras.applications.densenet.DenseNet201(
+            input_shape=(224, 224, 3), include_top=False
+        )
         model.trainable = True
         for layer in model.layers:
             layer.trainable = False
@@ -81,7 +83,9 @@ class EfficientNet(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.efficientnet_v2.EfficientNetV2S(include_top=False)
+        model = tf.keras.applications.efficientnet_v2.EfficientNetV2S(
+            input_shape=(224, 224, 3), include_top=False
+        )
         model.trainable = True
         for layer in model.layers:
             layer.trainable = False
@@ -106,7 +110,9 @@ class Inception(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.inception_v3.InceptionV3(include_top=False)
+        model = tf.keras.applications.inception_v3.InceptionV3(
+            input_shape=(224, 224, 3), include_top=False
+        )
         model.trainable = True
         for layer in model.layers:
             layer.trainable = False
@@ -132,7 +138,7 @@ class InceptionResNet(BaseModel):
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
         model = tf.keras.applications.inception_resnet_v2.InceptionResNetV2(
-            include_top=False
+            input_shape=(224, 224, 3), include_top=False
         )
         model.trainable = True
         for layer in model.layers:
@@ -158,7 +164,9 @@ class MobileNet(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.mobilenet_v2.MobileNetV2(include_top=False)
+        model = tf.keras.applications.mobilenet_v2.MobileNetV2(
+            input_shape=(224, 224, 3), include_top=False
+        )
         model.trainable = True
         for layer in model.layers:
             layer.trainable = False
@@ -183,7 +191,9 @@ class ResNet(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.resnet_v2.ResNet152V2(include_top=False)
+        model = tf.keras.applications.resnet_v2.ResNet152V2(
+            input_shape=(224, 224, 3), include_top=False
+        )
         model.trainable = True
         for layer in model.layers:
             layer.trainable = False
@@ -208,7 +218,9 @@ class VGG(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.vgg19.VGG19(include_top=False)
+        model = tf.keras.applications.vgg19.VGG19(
+            input_shape=(224, 224, 3), include_top=False
+        )
         model.trainable = True
         for layer in model.layers:
             layer.trainable = False
@@ -233,7 +245,9 @@ class Xception(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.xception.Xception(include_top=False)
+        model = tf.keras.applications.xception.Xception(
+            input_shape=(224, 224, 3), include_top=False
+        )
         model.trainable = True
         for layer in model.layers:
             layer.trainable = False

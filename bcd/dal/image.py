@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday October 21st 2023 11:47:17 am                                              #
-# Modified   : Thursday January 11th 2024 03:58:31 pm                                              #
+# Modified   : Sunday March 31st 2024 06:20:29 am                                                  #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2023 John James                                                                 #
@@ -154,7 +154,7 @@ class ImageRepo:
 
             If all parameters are None, all records are returned.
         """
-        if n is not None and frac is not None:
+        if n and frac:
             msg = "Ambiguous parameters. n or frac must be None. "
             self._logger.exception(msg)
             raise ValueError(msg)
