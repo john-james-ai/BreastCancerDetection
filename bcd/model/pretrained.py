@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Friday February 9th 2024 01:39:56 am                                                #
-# Modified   : Friday March 15th 2024 04:40:47 am                                                  #
+# Modified   : Saturday April 6th 2024 06:47:35 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -218,7 +218,7 @@ class VGG(BaseModel):
     @property
     def model(self) -> tf.keras.Model:
         """Instantiates and returns the feature extraction network."""
-        model = tf.keras.applications.vgg19.VGG19(
+        model = tf.keras.applications.vgg16.VGG16(
             input_shape=(224, 224, 3), include_top=False
         )
         model.trainable = True
@@ -229,7 +229,7 @@ class VGG(BaseModel):
     @property
     def preprocessor(self) -> Callable:
         """Returns the model specific data preprocessor"""
-        return tf.keras.applications.vgg19.preprocess_input
+        return tf.keras.applications.vgg16.preprocess_input
 
 
 # ------------------------------------------------------------------------------------------------ #

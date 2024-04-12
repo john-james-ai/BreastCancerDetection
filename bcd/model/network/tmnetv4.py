@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Friday March 15th 2024 06:33:28 am                                                  #
+# Modified   : Wednesday April 3rd 2024 08:18:14 am                                                #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -33,12 +33,16 @@ class TMNetV4Config(NetworkConfig):
     """TMNetV4 configuration"""
 
     dense1: int = 4096
+    l21: float = 0.0001
     dropout1: float = 0.5
     dense2: int = 4096
+    l22: float = 0.0001
     dropout2: float = 0.5
     dense3: int = 1024
+    l23: float = 0.0001
     dropout3: float = 0.5
     dense4: int = 1024
+    l24: float = 0.0001
     dropout4: float = 0.5
 
 
@@ -81,28 +85,28 @@ class TMNetV4Factory(NetworkFactory):
         x = tf.keras.layers.Dense(
             self._config.dense1,
             activation="elu",
-            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l21),
             name=f"{name}_dense_1",
         )(x)
         x = tf.keras.layers.Dropout(self._config.dropout1, name=f"{name}_dropout_1")(x)
         x = tf.keras.layers.Dense(
             self._config.dense2,
             activation="elu",
-            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l22),
             name=f"{name}_dense_2",
         )(x)
         x = tf.keras.layers.Dropout(self._config.dropout2, name=f"{name}_dropout_2")(x)
         x = tf.keras.layers.Dense(
             self._config.dense3,
             activation="elu",
-            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l23),
             name=f"{name}_dense_3",
         )(x)
         x = tf.keras.layers.Dropout(self._config.dropout3, name=f"{name}_dropout_3")(x)
         x = tf.keras.layers.Dense(
             self._config.dense4,
             activation="elu",
-            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
+            kernel_regularizer=tf.keras.regularizers.l2(self._config.l24),
             name=f"{name}_dense_4",
         )(x)
         x = tf.keras.layers.Dropout(self._config.dropout4, name=f"{name}_dropout_4")(x)

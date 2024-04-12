@@ -11,7 +11,7 @@
 # URL        : https://github.com/john-james-ai/BreastCancerDetection                              #
 # ------------------------------------------------------------------------------------------------ #
 # Created    : Saturday February 10th 2024 09:56:45 am                                             #
-# Modified   : Friday March 15th 2024 06:33:29 am                                                  #
+# Modified   : Saturday April 6th 2024 07:26:38 am                                                 #
 # ------------------------------------------------------------------------------------------------ #
 # License    : MIT License                                                                         #
 # Copyright  : (c) 2024 John James                                                                 #
@@ -32,8 +32,8 @@ from bcd.model.pretrained import BaseModel
 class SimpleNetV2Config(NetworkConfig):
     """SimpleNetV2 configuration"""
 
-    dense1: int = 1024
     dropout1: float = 0.5
+    dense1: int = 256
 
 
 # ------------------------------------------------------------------------------------------------ #
@@ -68,13 +68,13 @@ class SimpleNetV2Factory(NetworkFactory):
         # Feed base model
         x = base_model.model(x, training=False)
         # Pooling for dimensionality reduction
-        x = tf.keras.layers.GlobalAveragePooling2D(
-            name=f"{name}_global_average_pooling"
-        )(x)
+        x = tf.keras.layers.Flatten(name=f"{name}_flatten")(x)
+        # Add dropout layer
+        x = tf.keras.layers.Dropout(self._config.dropout1, name=f"{name}_dropout")(x)
+        # Add Fully Connected Layer
         x = tf.keras.layers.Dense(
-            self._config.dense1, activation="relu", name=f"{name}_dense_1"
+            self._config.dense1, activation="relu", name=f"{name}_dense"
         )(x)
-        x = tf.keras.layers.Dropout(self._config.dropout1, name=f"{name}_dropout_1")(x)
         # Add Layer for classification
         outputs = tf.keras.layers.Dense(
             units=self._config.output_shape,
